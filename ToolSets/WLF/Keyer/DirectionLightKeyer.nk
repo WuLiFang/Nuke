@@ -1,0 +1,111 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+add_layer {BumpNormals BumpNormals.red BumpNormals.green BumpNormals.blue BumpNormals.alpha}
+add_layer {P P.red P.green P.blue}
+Group {
+ name DirectionLightKeyer1
+ tile_color 0xff00ff
+ selected true
+ xpos 748
+ ypos -410
+ addUserKnob {20 tab1 l DirectionLightKeyer_v0.4}
+ addUserKnob {26 dev2 l Input}
+ addUserKnob {41 normal l "normal vectors" T ReLight1.normal}
+ addUserKnob {41 position l "point positions" T ReLight1.position}
+ addUserKnob {26 dev1 l Light}
+ addUserKnob {41 intensity T Light1.intensity}
+ addUserKnob {7 rx l "direction xy" R 0 360}
+ rx 315
+ addUserKnob {7 ry l "" -STARTLINE R 0 360}
+ ry 305
+ addUserKnob {41 output T Keyer1.output}
+ addUserKnob {41 combine l "" -STARTLINE T Keyer1.combine}
+ addUserKnob {41 invert -STARTLINE T Keyer1.invert}
+ addUserKnob {41 size T Blur1.size}
+}
+ Diffuse {
+  inputs 0
+  white 0.82
+  name Diffuse1
+  xpos 180
+  ypos -34
+ }
+push 0
+ Light2 {
+  inputs 0
+  light_type directional
+  intensity 3.3
+  rotate {{parent.rx} {parent.ry} 0}
+  depthmap_slope_bias 0.01
+  name Light1
+  selected true
+  xpos 190
+  ypos 42
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -40
+  ypos -106
+ }
+ Dot {
+  name Dot1
+  note_font 微软雅黑
+  xpos -6
+  ypos -54
+ }
+set N915a9c00 [stack 0]
+ Dot {
+  name Dot2
+  note_font 微软雅黑
+  xpos 104
+  ypos -54
+ }
+ ReLight {
+  inputs 4
+  normal BumpNormals
+  position P
+  name ReLight1
+  xpos 70
+  ypos 62
+ }
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  label "输入通道 :\[value input]"
+  note_font 微软雅黑
+  xpos 70
+  ypos 109
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  label "\[knob this.channels \[value parent.Keyer1.output ] ]"
+  note_font 微软雅黑
+  xpos 70
+  ypos 165
+ }
+ Dot {
+  name Dot3
+  note_font 微软雅黑
+  xpos 104
+  ypos 258
+ }
+push $N915a9c00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  label "\[knob this.from0 \[value parent.Keyer1.output ] ]\n\[knob this.to0 \[value parent.Keyer1.output ] ]"
+  note_font 微软雅黑
+  xpos -40
+  ypos 245
+ }
+ Output {
+  name Output1
+  xpos -40
+  ypos 398
+ }
+end_group

@@ -1,0 +1,83 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Group {
+ name SphereMP
+ tile_color 0x9c0000ff
+ gl_color 0x32fffe00
+ note_font 微软雅黑
+ selected true
+ xpos 620
+ ypos -452
+ addUserKnob {20 tab1 l SphereMP_v0.2}
+ addUserKnob {6 use_custom_frame l 指定基准帧 -STARTLINE}
+ addUserKnob {3 custom_frame l "" -STARTLINE}
+ custom_frame 30
+ addUserKnob {3 frame l INVISIBLE +INVISIBLE}
+ frame {{"\[python -execlocal first,\\ last\\ =\\ nuke.numvalue('root.first_frame'),\\ nuke.numvalue('root.last_frame')\\nmiddle\\ =\\ (first\\ +\\ last)//2\\nthisNode\\ =\\ nuke.thisNode()\\nif\\ thisNode\\\['use_custom_frame'\\].value()\\ :\\n\\ \\ \\ \\ ret\\ =\\ thisNode\\\['custom_frame'\\].value()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ middle]"}}
+ addUserKnob {32 bt_first l 首帧 -STARTLINE T "knob use_custom_frame 1\nknob custom_frame \[value root.first_frame] "}
+ addUserKnob {32 bt_middle l 中间帧(默认) -STARTLINE T "knob this.use_custom_frame 0"}
+ addUserKnob {32 bt_last l 末帧 -STARTLINE T "knob use_custom_frame 1\nknob custom_frame \[value root.last_frame] "}
+ addUserKnob {13 offset}
+ addUserKnob {41 rotate T Sphere1.rotate}
+ addUserKnob {7 distance l 屏幕距离 R 0 10000}
+ distance 100
+}
+ Input {
+  inputs 0
+  name InputCamera
+  gl_color 0x32fff400
+  note_font 微软雅黑
+  xpos -255
+  ypos -539
+  number 1
+ }
+ Input {
+  inputs 0
+  name InputImage
+  gl_color 0x9732ff00
+  note_font 微软雅黑
+  xpos -370
+  ypos -539
+ }
+ Sphere {
+  radius {{parent.knob.distance}}
+  translate {{"(\[exists parent.input1] ? parent.input1.translate(parent.knob.frame) : 0) + parent.knob.offset"} {"(\[exists parent.input1] ? parent.input1.translate(parent.knob.frame) : 0) + parent.knob.offset"} {"(\[exists parent.input1] ? parent.input1.translate(parent.knob.frame) : 0) + parent.knob.offset"}}
+  name Sphere1
+  gl_color 0xdf32ff00
+  selected true
+  xpos -370
+  ypos -511
+ }
+ Scene {
+  name Scene2
+  gl_color 0xff32a100
+  xpos -360
+  ypos -497
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  motion_vectors_type distance
+  name ScanlineRender2
+  gl_color 0x32d1ff00
+  xpos -150
+  ypos -484
+ }
+ Expression {
+  channel0 depth
+  expr0 (z==0)?99999:1/z*0.0001
+  name Expression2
+  gl_color 0x32fffe00
+  label Depth:NukeToRedshift
+  xpos -150
+  ypos -458
+ }
+ Output {
+  name Output1
+  gl_color 0x32b8ff00
+  xpos -150
+  ypos -420
+ }
+end_group

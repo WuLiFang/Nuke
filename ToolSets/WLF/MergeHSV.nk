@@ -1,0 +1,104 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+push 0
+Group {
+ inputs 2
+ name MergeHSV2
+ tile_color 0x4b5ec6ff
+ label "\[\nset str \"\"\nif \{\[value this.h]\} \{set h red;set str \"\$str Hue\"\} \{set h \" \"\}\nif \{\[value this.s]\} \{set s green;set str \"\$str Sartuation\"\} \{set s \" \"\}\nif \{\[value this.v]\} \{set v blue;set str \"\$str Value\"\} \{set v \" \"\}\nknob this.Merge1.output \"\$h \$s \$v\"\nreturn \"\$str\"\n]"
+ note_font 微软雅黑
+ selected true
+ xpos 1045
+ ypos -785
+ addUserKnob {20 tab1 l MergeHSV_v0.41}
+ addUserKnob {41 h T Merge1.h}
+ addUserKnob {41 s -STARTLINE T Merge1.s}
+ addUserKnob {41 v -STARTLINE T Merge1.v}
+ addUserKnob {41 maskChannelInput l mask T Merge2.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T Merge2.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T Merge2.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T Merge2.fringe}
+ addUserKnob {41 mix T Merge2.mix}
+}
+ Input {
+  inputs 0
+  name InputA
+  xpos 510
+  ypos -634
+  number 1
+ }
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace3
+  xpos 510
+  ypos -608
+ }
+ Input {
+  inputs 0
+  name InputB
+  xpos 290
+  ypos -598
+ }
+set N9912dc00 [stack 0]
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace1
+  xpos 290
+  ypos -572
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  output {rgba.red rgba.green -rgba.blue}
+  name Merge1
+  note_font 微软雅黑
+  xpos 510
+  ypos -581
+  addUserKnob {20 User}
+  addUserKnob {6 h +STARTLINE}
+  h true
+  addUserKnob {6 s +STARTLINE}
+  s true
+  addUserKnob {6 v +STARTLINE}
+ }
+ Colorspace {
+  colorspace_in HSV
+  bradford_matrix true
+  name Colorspace2
+  xpos 510
+  ypos -537
+ }
+ Input {
+  inputs 0
+  name InputMask
+  note_font 微软雅黑
+  xpos 400
+  ypos -635
+  number 2
+ }
+push $N9912dc00
+ Copy {
+  inputs 2
+  from0 {{{parent.Merge2.maskChannelInput}}}
+  to0 {{{from0}}}
+  name Copy1
+  note_font 微软雅黑
+  xpos 400
+  ypos -511
+  disable {{"\[string match \[input parent 2] 0]" x1 1}}
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  name Merge2
+  note_font 微软雅黑
+  xpos 510
+  ypos -511
+ }
+ Output {
+  name Output1
+  xpos 510
+  ypos -467
+ }
+end_group

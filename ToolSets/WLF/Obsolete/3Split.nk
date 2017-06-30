@@ -1,0 +1,148 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Group {
+ name Depth3Split_1
+ tile_color 0xff00ff
+ selected true
+ xpos 114
+ ypos -23
+ addUserKnob {20 tab1 l Depth3Split_v1.5}
+ addUserKnob {22 bt_setViewe2Output l "view output" -STARTLINE T "try: \n    viewer_node = nuke.activeViewer().node()\n    input_channel =  'depth3split.close depth3split.middle depth3split.far depth3split.focus'\n    viewer_node.setInput(0, nuke.thisNode())\n    viewer_node\['channels'].setValue(input_channel)\n    nuke.activeViewer().activateInput(0)\nexcept AttributeError:\n    nuke.message('请先创建Viewer')"}
+ addUserKnob {22 bt_setViewer2rgba l "view rgba" -STARTLINE T "try: \n    viewer_node = nuke.activeViewer().node()\n    viewer_node.setInput(0, nuke.thisNode())\n    viewer_node\['channels'].setValue('rgba')\n    nuke.activeViewer().activateInput(0)\nexcept AttributeError:\n    nuke.message('请先创建Viewer')"}
+ addUserKnob {41 depth_channel l "depth channel" T Copy1.from0}
+ addUserKnob {41 range T group.Middle.range}
+ addUserKnob {32 avg_range l "Averge Range" T "set A \[value group.Middle.range.A]\nset B \[value group.Middle.range.B]\nset C \[value group.Middle.range.C]\nset D \[value group.Middle.range.D]\nset avg \[expr (\$D - \$A) / 3]\nknob group.Middle.range.B \[expr \$A+\$avg]\nknob group.Middle.range.C \[expr \$A+2*\$avg]" +STARTLINE}
+ addUserKnob {41 focal_point l "focal point" T ZDefocus1.focal_point}
+ addUserKnob {32 bt_close l Close -STARTLINE T "set tg \[value group.ZDefocus1.center]\nset a \[value this.range.A]\nset b \[value this.range.B]\nset c \[value this.range.C]\nset d \[value this.range.D]\nknob group.NoOp1.close \$tg\nknob this.range.A \$tg"}
+ addUserKnob {32 bt_far l Far -STARTLINE T "set tg \[value group.ZDefocus1.center]\nset a \[value this.range.A]\nset b \[value this.range.B]\nset c \[value this.range.C]\nset d \[value this.range.D]\nknob group.NoOp1.far \$tg\nknob this.range.D \$tg"}
+ addUserKnob {32 bt_middle l Middle -STARTLINE T "set tg \[value group.ZDefocus1.center]\nset a \[value this.range.A]\nset b \[value this.range.B]\nset c \[value this.range.C]\nset d \[value this.range.D]\nknob group.NoOp1.middle \$tg\nknob this.range.B \[expr (\$tg + \$a) / 2.0]\nknob this.range.C \[expr (\$tg + \$d) / 2.0]"}
+ addUserKnob {26 Focus_div l Focus}
+ addUserKnob {32 focus_close l "focus Close" T "set tar this\nknob group.Focus.range.A 0\nknob group.Focus.range.B 0\nknob group.Focus.range.C \[value \$tar.range.A]\nknob group.Focus.range.D \[value \$tar.range.D]" +STARTLINE}
+ addUserKnob {32 focus_middle l "focus Middle" -STARTLINE T "set tar group.Middle\nknob group.Focus.range.A \[value \$tar.range.A]\nknob group.Focus.range.B \[value \$tar.range.B]\nknob group.Focus.range.C \[value \$tar.range.C]\nknob group.Focus.range.D \[value \$tar.range.D]"}
+ addUserKnob {32 focus_far l "focus Far" -STARTLINE T "set tar this\nknob group.Focus.range.A \[value \$tar.range.A]\nknob group.Focus.range.B \[value \$tar.range.D]\nknob group.Focus.range.C 1\nknob group.Focus.range.D 1"}
+ addUserKnob {41 range_1 l range T Focus.range}
+ addUserKnob {7 focus_expand l expand R 0 0.01}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 size l "blur size" T Blur1.size}
+ addUserKnob {41 filter l "blur filter" T Blur1.filter}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 180
+  ypos -728
+ }
+add_layer {depth3split depth3split.close depth3split.middle depth3split.far depth3split.focus}
+ AddChannels {
+  channels depth3split
+  name AddChannels1
+  note_font 微软雅黑
+  xpos 180
+  ypos -691
+ }
+set N3b90400 [stack 0]
+push $N3b90400
+ Copy {
+  inputs 2
+  from0 depth.Z
+  to0 depth.Z
+  name Copy1
+  note_font 微软雅黑
+  xpos 180
+  ypos -643
+ }
+set N3b90000 [stack 0]
+ Keyer {
+  input {{{parent.Middle.input}}}
+  output depth3split.far
+  operation "red keyer"
+  range {{parent.Middle.range.C} {parent.Middle.range.D} 1 1}
+  name Far
+  xpos 180
+  ypos -581
+ }
+ Keyer {
+  input depth
+  output depth3split.middle
+  operation "red keyer"
+  range {0.0086309053 0.01679920667 0.02496750333 0.03313579783}
+  name Middle
+  label "\[\nknob this.parent.Far.operation \[value this.operation]\nknob this.parent.Close.operation \[value this.operation]\nknob this.parent.Focus.operation \[value this.operation]\nknob this.parent.Focus_expand.operation \[value this.operation]\nreturn \" \"\n]"
+  xpos 180
+  ypos -509
+ }
+ Keyer {
+  input {{{parent.Middle.input}}}
+  output depth3split.close
+  invert true
+  operation "red keyer"
+  range {{parent.Middle.range.A} {parent.Middle.range.B} 1 1}
+  name Close
+  xpos 180
+  ypos -437
+ }
+ Keyer {
+  input {{{parent.Middle.input}}}
+  output depth3split.focus
+  invert true
+  operation "red keyer"
+  range {0.0336251 0.04038468872 0.04741864278 0.0518967}
+  name Focus
+  xpos 180
+  ypos -359
+ }
+ Keyer {
+  input {{{parent.Middle.input}}}
+  output {{{parent.Focus.output}}}
+  invert true
+  operation "red keyer"
+  range {{"parent.Focus.range - parent.focus_expand"} {parent.Focus.range} {parent.Focus.range} {"parent.Focus.range + parent.focus_expand"}}
+  name Focus_expand
+  xpos 180
+  ypos -287
+ }
+ Grade {
+  channels {none none none depth3split.focus}
+  name Grade1
+  xpos 180
+  ypos -208
+ }
+ Blur {
+  channels {none none none depth3split.focus}
+  name Blur1
+  xpos 180
+  ypos -160
+ }
+ Output {
+  name Output1
+  xpos 180
+  ypos -12
+ }
+ NoOp {
+  inputs 0
+  name NoOp1
+  note_font 微软雅黑
+  xpos 400
+  ypos -323
+  addUserKnob {20 User}
+  addUserKnob {7 far}
+  far 0.03313579783
+  addUserKnob {7 middle}
+  middle 0.03881164268
+  addUserKnob {7 close}
+  close 0.0086309053
+ }
+push $N3b90000
+ ZDefocus2 {
+  center 0.0086309053
+  focal_point {1654 62}
+  blur_dof false
+  legacy_resize_mode false
+  show_legacy_resize_mode false
+  name ZDefocus1
+  note_font 微软雅黑
+  xpos 400
+  ypos -451
+ }
+end_group

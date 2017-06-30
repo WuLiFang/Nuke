@@ -1,0 +1,100 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+add_layer {P P.X P.Y P.Z P.red P.green P.blue}
+Group {
+ name PositionKeyer1
+ tile_color 0xff00ff
+ label "输入通道: \[value in]\n\[\npython -exec \{\nif not nuke.Root().modified() and nuke.thisNode()\['p0'].visible():\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\nif not nuke.thisNode()\['__initiated'].value():\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n    nuke.thisNode()\['bt_sampler_switch'].execute()\n    nuke.thisNode()\['__initiated'].setValue(True)\n\}\n]"
+ note_font 微软雅黑
+ selected true
+ xpos -40
+ ypos -153
+ addUserKnob {20 tab_positionkeyer l PositionKeyer_v1.0}
+ addUserKnob {41 in l "Position Layer" T Shuffle2.in}
+ addUserKnob {26 div_sampler l <b>取样器</b>}
+ addUserKnob {22 bt_sampler_switch l Enable(启用) t "启用控制器, 快速设置白点和黑点。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
+ addUserKnob {22 bt_reset_sampler_switch l INVISIBLE +INVISIBLE T "nuke.thisNode()\['bt_sampler_switch'].setLabel('Enable(启用)')\nnuke.thisNode()\['bt_sampler_switch'].setTooltip('启用控制器, 快速设置白点和黑点。')\nnuke.thisNode()\['p0'].setVisible(False)\nnuke.thisNode()\['p1'].setVisible(False)" +STARTLINE}
+ addUserKnob {12 p0 +HIDDEN}
+ p0 {616 202}
+ addUserKnob {12 p1 +HIDDEN}
+ p1 {1666 62}
+ addUserKnob {26 div_settings l <b>设置</b>}
+ addUserKnob {41 blackpoint l blackpoint(黑点) t 低于此值将为黑色 T Sampler.p0}
+ addUserKnob {41 whitepoint l whitepoint(白点) t 高于此值将为白色 T Sampler.p1}
+ addUserKnob {7 rotation l "rotation y(旋转y轴)" R 0 180}
+ addUserKnob {26 t_alpha_output l "alpha output"}
+ addUserKnob {6 x +STARTLINE}
+ x true
+ addUserKnob {6 invert_x l invert(反转) -STARTLINE}
+ addUserKnob {6 y +STARTLINE}
+ addUserKnob {6 invert_y l invert(反转) -STARTLINE}
+ addUserKnob {20 g_presets l presets(预设) n 1}
+ g_presets 0
+ addUserKnob {22 bt_rotation_0 l 0 -STARTLINE T "nuke.thisNode()\['x'].setValue(True)\nnuke.thisNode()\['y'].setValue(False)\nnuke.thisNode()\['rotation'].setValue(0)"}
+ addUserKnob {22 bt_rotation_90 l 90 -STARTLINE T "nuke.thisNode()\['x'].setValue(True)\nnuke.thisNode()\['y'].setValue(False)\nnuke.thisNode()\['rotation'].setValue(90)"}
+ addUserKnob {22 bt_y l Y -STARTLINE T "nuke.thisNode()\['x'].setValue(False)\nnuke.thisNode()\['y'].setValue(True)"}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {6 __initiated l INVISIBLE +INVISIBLE +STARTLINE}
+ __initiated false
+}
+ Input {
+  inputs 0
+  name Input
+  gl_color 0x327fff00
+  xpos 180
+  ypos -1234
+ }
+ Shuffle {
+  in P
+  name Shuffle2
+  gl_color 0x3282ff00
+  xpos 180
+  ypos -1208
+ }
+ NoOp {
+  name Sampler
+  gl_color 0x32ffc700
+  label 取样器
+  note_font 微软雅黑
+  xpos 180
+  ypos -1170
+  addUserKnob {20 Result}
+  addUserKnob {18 p0 l "point 0"}
+  p0 {1.83984375 2.74181366e-006 1179}
+  addUserKnob {6 p0_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 p1 l "point 1"}
+  p1 {-8.9140625 4.529953003e-006 1195}
+  addUserKnob {6 p1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ BlinkScript {
+  recompileCount 31
+  ProgramGroup 1
+  KernelDescription "2 \"PositionKeyer\" iterate pixelWise 4ee11b3a36877b43a87e74f64441cfdc5ccf5a9b319489c154078cfa275d20b0 2 \"position\" Read Point \"dst\" Write Point 7 \"invert_x\" Bool 1 AA== \"invert_y\" Bool 1 AA== \"enable_x\" Bool 1 AA== \"enable_y\" Bool 1 AA== \"rotate_y\" Float 1 AAAAAA== \"p0_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"p1_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== 7 \"invert_x\" 1 1 \"invert_y\" 1 1 \"enable_x\" 1 1 \"enable_y\" 1 1 \"rotate_y\" 1 1 \"p0_color\" 4 1 \"p1_color\" 4 1 2 \"p0\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"p1\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "// PositionKeyerKernel\n// VERSION: 0.31\nkernel PositionKeyer : ImageComputationKernel<ePixelWise> \{\n  Image<eRead, eAccessPoint, eEdgeClamped> position;\n  Image<eWrite, eAccessPoint> dst;\n\n  param:\n    bool invert_x;\n    bool invert_y;\n    bool enable_x;\n    bool enable_y;\n    float rotate_y;\n    float4 p0_color;\n    float4 p1_color;\n\n  local:\n    float4 p0;\n    float4 p1;\n\n  float4 pos_rotate_y(float4 pos, float ry) \{\n    float4 ret;\n    ret\[0] = cos(ry) * pos\[2] - sin(ry) * pos\[0];\n    ret\[1] = pos\[1];\n    ret\[2] = cos(ry) * pos\[0] + sin(ry) * pos\[2];\n    return ret;\n  \}\n  \n  float linear(float x, float p0, float p1) \{\n    return (x - p0) / (p1 - p0);\n  \}\n\n  void init() \{\n    p0 = pos_rotate_y(p0_color, rotate_y);\n    p1 = pos_rotate_y(p1_color, rotate_y);\n  \}\n\n  void process() \{\n    float4 pos = pos_rotate_y(position(), rotate_y);\n    const float x = pos\[0];\n    const float y = pos\[1];\n    const float z = pos\[2];    \n    \n    float4 result;\n    result\[0] = linear(x, p0\[0], p1\[0]);\n    result\[1] = linear(y, p0\[1], p1\[1]);\n    result\[2] = linear(z, p0\[2], p1\[2]);\n    result = clamp(result, float4(0.0f), float4(1.0f));\n    \n    result\[0] = invert_x ? (1 - result\[0]) : result\[0];\n    result\[1] = invert_y ? (1 - result\[1]) : result\[1];\n    result\[3] = (enable_x ? result\[0] : 1) * (enable_y ? result\[1] : 1);\n\n    dst() = result;\n  \}\n\};"
+  useGPUIfAvailable false
+  vectorize false
+  rebuild ""
+  PositionKeyer_invert_x {{parent.invert_x}}
+  PositionKeyer_invert_y {{parent.invert_y}}
+  PositionKeyer_enable_x {{parent.x}}
+  PositionKeyer_enable_y {{parent.y}}
+  PositionKeyer_rotate_y {{radians(parent.knob.rotation)}}
+  PositionKeyer_p0_color {{parent.Sampler.p0} {parent.Sampler.p0} {parent.Sampler.p0} {parent.Sampler.p0}}
+  PositionKeyer_p1_color {{parent.Sampler.p1} {parent.Sampler.p1} {parent.Sampler.p1} {parent.Sampler.p1}}
+  protectKernelWhenPublishing true
+  rebuild_finalise ""
+  name BlinkScript1
+  gl_color 0x3332ff00
+  note_font 微软雅黑
+  xpos 180
+  ypos -1126
+ }
+ Output {
+  name Output1
+  gl_color 0x32ff4100
+  note_font 微软雅黑
+  xpos 180
+  ypos -1082
+ }
+end_group

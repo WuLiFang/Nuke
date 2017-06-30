@@ -1,0 +1,241 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Dot {
+ name Dot9
+ note_font 微软雅黑
+ selected true
+ xpos -54
+ ypos -152
+}
+set N28e8f400 [stack 0]
+Group {
+ name DepthKeyer3
+ tile_color 0xff00ff
+ label "\[\nif \{! \[value this.selected]\} \{knob this.preview 0\}\nknob_default \[class this].range_gamma 1\nreturn \"输入通道: \[value this.input \"\"]\"\n]"
+ note_font 微软雅黑
+ selected true
+ xpos 41
+ ypos -124
+ addUserKnob {20 tab1 l DepthKeyer_v0.61}
+ addUserKnob {26 Range_div l Range}
+ addUserKnob {6 preview +STARTLINE}
+ addUserKnob {41 input l "depth channel" T Copy.from0}
+ addUserKnob {41 range T Keyer1.range}
+ addUserKnob {12 close_point}
+ close_point {496 66}
+ addUserKnob {12 middle_point}
+ middle_point {1204 340}
+ addUserKnob {12 far_point}
+ far_point {1656 584}
+ addUserKnob {32 bt_apply l Apply T "set close \[sample this.Sampler alpha this.knob.close_point.x this.knob.close_point.y]\nset middle \[sample this.Sampler alpha this.knob.middle_point.x this.knob.middle_point.y]\nset far \[sample this.Sampler alpha this.knob.far_point.x this.knob.far_point.y]\nknob this.range.A \$close\nknob this.range.B \[expr (\$middle + \$close) / 2.0]\nknob this.range.C \[expr (\$middle + \$far) / 2.0]\nknob this.range.D \$far" +STARTLINE}
+ addUserKnob {32 bt_averge l Averge -STARTLINE T "set A \[value this.range.A]\nset B \[value this.range.B]\nset C \[value this.range.C]\nset D \[value this.range.D]\nset avg \[expr (\$D - \$A) / 3]\nknob this.range.B \[expr \$A+\$avg]\nknob this.range.C \[expr \$A+2*\$avg]"}
+ addUserKnob {18 range_gamma l gamma R 0 4}
+ range_gamma 1
+ addUserKnob {6 range_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 size l erode T Dilate1.size}
+ addUserKnob {41 size_1 l "blur size" T Blur1.size}
+ addUserKnob {6 gamma_4_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 730
+  ypos -1594
+ }
+ Dot {
+  name Dot2
+  note_font 微软雅黑
+  xpos 764
+  ypos -1518
+ }
+set N2c0c0c00 [stack 0]
+push $N2c0c0c00
+ Copy {
+  inputs 2
+  from0 depth.Z
+  to0 rgba.alpha
+  name Copy
+  label "depth Channel"
+  xpos 728
+  ypos -1489
+ }
+ NoOp {
+  name Sampler
+  note_font 微软雅黑
+  xpos 730
+  ypos -1376
+ }
+ Keyer {
+  input alpha
+  output none
+  operation "red keyer"
+  range {0.00669712 0.00702733 0.00902037 0.0106832}
+  name Keyer1
+  label "Range Picker"
+  note_font 微软雅黑
+  xpos 730
+  ypos -1303
+ }
+ Dot {
+  name Dot7
+  note_font 微软雅黑
+  xpos 764
+  ypos -1110
+ }
+set N2c131c00 [stack 0]
+ Dot {
+  name Dot8
+  note_font 微软雅黑
+  xpos 764
+  ypos -1038
+ }
+set N2c131800 [stack 0]
+ Dot {
+  name Dot9
+  note_font 微软雅黑
+  xpos 764
+  ypos -966
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.C}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.r}}
+  white_clamp true
+  name Grade4
+  label "far to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -987
+ }
+set N2c131000 [stack 0]
+push $N2c131800
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.B}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.g}}
+  white_clamp true
+  name Grade3
+  label "middle to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -1059
+ }
+set N37969400 [stack 0]
+push $N2c131c00
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.A}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.b}}
+  white_clamp true
+  name Grade2
+  label "close to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -1131
+ }
+set N37969c00 [stack 0]
+push $N2c0c0c00
+ Dot {
+  name Dot5
+  xpos 874
+  ypos -1518
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.blue
+  name Copy3
+  xpos 840
+  ypos -472
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.green
+  name Copy2
+  xpos 840
+  ypos -400
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.red
+  name Copy1
+  xpos 840
+  ypos -328
+ }
+ Dot {
+  name Dot1
+  xpos 874
+  ypos -222
+ }
+push $N2c131000
+push 0
+push $N37969400
+push $N37969c00
+ Merge2 {
+  inputs 3+1
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name Merge3
+  note_font 微软雅黑
+  xpos 400
+  ypos -979
+ }
+ Multiply {
+  channels alpha
+  value 0.3333333333
+  name Multiply1
+  note_font 微软雅黑
+  xpos 400
+  ypos -907
+ }
+ Dilate {
+  name Dilate1
+  xpos 400
+  ypos -808
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos 400
+  ypos -712
+ }
+ Dot {
+  name Dot6
+  note_font 微软雅黑
+  xpos 434
+  ypos -582
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name SwitchPreview
+  label Preview
+  xpos 400
+  ypos -232
+ }
+ Output {
+  name Output1
+  xpos 400
+  ypos -178
+ }
+end_group
+push $N28e8f400
+Grade {
+ inputs 1+1
+ black {0.009 0.025133 0.045 0}
+ black_panelDropped true
+ unpremult rgba.alpha
+ name Grade12
+ label DepthFog
+ selected true
+ xpos -88
+ ypos -76
+}

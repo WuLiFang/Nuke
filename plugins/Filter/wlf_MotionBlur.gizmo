@@ -1,0 +1,81 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Gizmo {
+ inputs 2
+ note_font 微软雅黑
+ addUserKnob {20 MotionBlur}
+ addUserKnob {41 channels T VectorBlur2_3.channels}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T VectorBlur2_3.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {41 mv_presets l 运动向量预设 T VectorBlur2_3.mv_presets}
+ addUserKnob {26 vector_preprocessing l " 向量预处理"}
+ addUserKnob {41 output T VectorBlur2_3.output}
+ addUserKnob {41 blur_uv l 模糊uv T VectorBlur2_3.blur_uv}
+ addUserKnob {41 invert_uv l 反转uv -STARTLINE T VectorBlur2_3.invert_uv}
+ addUserKnob {41 uv_offset l "uv 偏移" T VectorBlur2_3.uv_offset}
+ addUserKnob {41 alpha l "uv alpha" T VectorBlur2_3.alpha}
+ addUserKnob {26 motion_blur l 运动模糊}
+ addUserKnob {41 blur_type l 模糊类型 T VectorBlur2_3.blur_type}
+ addUserKnob {41 scale l 运动强度 T VectorBlur2_3.scale}
+ addUserKnob {41 motion_falloff l 运动衰减 T VectorBlur2_3.motion_falloff}
+ addUserKnob {41 offset l 快门偏移 T VectorBlur2_3.offset}
+ addUserKnob {14 _grow_bbox l 扩展模糊边界框 t "设置添加到图像外边缘的像素数。 为裁剪过的图像手动设置非零uv通道。" R 0 100}
+ addUserKnob {26 "" l " "}
+ addUserKnob {6 soft_lines l 软线 t 启用时，通过绘制更宽的线条来增加运动模糊的柔软度，以较慢的处理为代价。 +STARTLINE}
+ soft_lines true
+ addUserKnob {6 blur_inside l 模糊内部 t 当软线被启用时，在零运动的区域内应用小的模糊，以便给具有运动模糊的区域更平滑的过渡。 -STARTLINE}
+ addUserKnob {6 normalize l 归一化 t "启用时，归一化结果以补偿渲染输出中的撕裂（出现在移动对象之后的孔）和碰撞（彼此之间移动的对象）。\n\n归一化可能会加剧撕裂和碰撞的影响，但它往往会比不正常化的模糊更柔软。" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannelInput l mask -STARTLINE T VectorBlur2_3.maskChannelInput}
+ addUserKnob {41 inject -STARTLINE T VectorBlur2_3.inject}
+ addUserKnob {41 invert_mask l invert -STARTLINE T VectorBlur2_3.invert_mask}
+ addUserKnob {41 fringe -STARTLINE T VectorBlur2_3.fringe}
+ addUserKnob {41 mix T VectorBlur2_3.mix}
+}
+ Input {
+  inputs 0
+  name InputMotion
+  gl_color 0x32ff5c00
+  xpos -40
+  ypos -250
+  number 1
+ }
+ Input {
+  inputs 0
+  name Input
+  gl_color 0xf732ff00
+  xpos -150
+  ypos -215
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  Achannels rgb
+  Bchannels none
+  output motion
+  name Merge14
+  gl_color 0xeaff3200
+  note_font 微软雅黑
+  xpos -40
+  ypos -224
+ }
+ VectorBlur2 {
+  uv motion
+  scale 10
+  grow_bbox {{parent._grow_bbox}}
+  soft_lines true
+  blur_inside {{parent.blur_inside x1 1}}
+  normalize false
+  name VectorBlur2_3
+  gl_color 0x32ff4700
+  note_font 微软雅黑
+  xpos -40
+  ypos -180
+ }
+ Output {
+  name Output1
+  gl_color 0xff803200
+  xpos -40
+  ypos -136
+ }
+end_group

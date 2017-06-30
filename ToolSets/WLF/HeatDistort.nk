@@ -1,0 +1,190 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Group {
+ name HeatDistort
+ tile_color 0xcc804eff
+ gl_color 0x32ff7a00
+ note_font 微软雅黑
+ selected true
+ xpos -510
+ ypos -1058
+ addUserKnob {20 tab1 l HeatDistort_v0.21}
+ addUserKnob {41 uv_scale l scale(强度) T IDistort1.uv_scale}
+ addUserKnob {14 smooth l smooth(平滑) R 0 100}
+ smooth 16.5
+ addUserKnob {14 range l range(范围) R 0 100}
+ range 7
+ addUserKnob {14 speed l speed(速度) R 0 100}
+ speed 1
+ addUserKnob {41 blur_scale l blur(模糊强度) T IDistort1.blur_scale}
+ addUserKnob {14 phase l phase(相位) R 0 100}
+ addUserKnob {41 mix T Merge10.mix}
+}
+ Constant {
+  inputs 0
+  channels alpha
+  color 1
+  name Constant1
+  gl_color 0x32f5ff00
+  note_font 微软雅黑
+  xpos 290
+  ypos -571
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  gl_color 0xd1ff3200
+  note_font 微软雅黑
+  xpos 180
+  ypos -479
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{"\[string equal \[input parent 1] 0]"}}
+  name Switch1
+  gl_color 0xfffc3200
+  note_font 微软雅黑
+  xpos 290
+  ypos -479
+ }
+ Input {
+  inputs 0
+  name Input
+  gl_color 0x3eff3200
+  xpos 70
+  ypos -47
+ }
+set Nb53e4c00 [stack 0]
+ Dot {
+  name Dot1
+  gl_color 0x32fffe00
+  note_font 微软雅黑
+  xpos 104
+  ypos -438
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 mask.a
+  name Copy1
+  gl_color 0x9bff3200
+  note_font 微软雅黑
+  xpos 290
+  ypos -451
+ }
+ FilterErode {
+  channels {none none none mask.a}
+  size {{"(parent.knob.range - 1) * -10"}}
+  filter gaussian
+  name FilterErode2
+  gl_color 0xff32ec00
+  xpos 290
+  ypos -407
+ }
+ Noise {
+  output {backward.u -backward.v}
+  replace true
+  maskChannelInput mask.a
+  type turbulence
+  size {{"10000 * parent.knob.phase.w + 4444"}}
+  zoffset {{"x / 20000 * parent.knob.speed.w"}}
+  octaves 141
+  lacunarity 10
+  gain 1
+  gamma 0.25
+  center {960 540}
+  name Noise1
+  gl_color 0xd532ff00
+  xpos 290
+  ypos -369
+ }
+ Noise {
+  output {-backward.u backward.v}
+  replace true
+  maskChannelInput mask.a
+  type turbulence
+  size {{"1234 * parent.knob.phase.h +5555"}}
+  zoffset {{"x / 20000 * parent.knob.speed.h"}}
+  octaves 141
+  lacunarity 10
+  gain 1
+  gamma 0.25
+  center {960 540}
+  name Noise2
+  gl_color 0xff6f3200
+  xpos 290
+  ypos -331
+ }
+ Clamp {
+  channels backward
+  name Clamp1
+  gl_color 0xa732ff00
+  note_font 微软雅黑
+  xpos 290
+  ypos -293
+ }
+ Grade {
+  channels backward
+  blackpoint 0.4
+  name Grade1
+  gl_color 0xff329400
+  note_font 微软雅黑
+  xpos 290
+  ypos -249
+ }
+ Grade {
+  channels backward
+  add -0.5
+  black_clamp false
+  maskChannelInput mask.a
+  name Grade8
+  gl_color 0x5032ff00
+  xpos 290
+  ypos -205
+ }
+ Blur {
+  channels backward
+  size {{parent.knob.smooth}}
+  name Blur4
+  gl_color 0xd5ff3200
+  xpos 290
+  ypos -167
+ }
+ IDistort {
+  uv backward
+  uv_scale 8.4
+  blur mask.a
+  blur_scale 0
+  name IDistort1
+  gl_color 0x32ffbf00
+  xpos 290
+  ypos -129
+ }
+ Remove {
+  channels mask
+  channels2 backward
+  name Remove1
+  gl_color 0xff325800
+  note_font 微软雅黑
+  xpos 290
+  ypos -91
+ }
+push $Nb53e4c00
+ Merge2 {
+  inputs 2
+  operation copy
+  also_merge all
+  name Merge10
+  gl_color 0xff32c800
+  xpos 290
+  ypos -47
+ }
+ Output {
+  name Output1
+  gl_color 0xffb63200
+  xpos 290
+  ypos -21
+ }
+end_group

@@ -1,0 +1,61 @@
+#! D:/Program Files/Nuke7.0v9/Nuke7.0.exe -nx
+version 7.0 v9
+Gizmo {
+ inputs 0
+ tile_color 0x1f1f1fff
+ postage_stamp true
+ addUserKnob {20 Scale}
+ addUserKnob {41 format T Constant.format}
+}
+ Constant {
+  inputs 0
+  color {0 0 0 1}
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Constant
+  xpos -571
+  ypos -187
+  postage_stamp false
+ }
+ Dot {
+  name Dot1
+  xpos -537
+  ypos -149
+ }
+set N1e73f170 [stack 0]
+ Rectangle {
+  output rgb
+  area {0 0 {Dot1.width} {Dot1.height}}
+  ramp linear
+  color {1 0 0 1}
+  p1 {{Dot1.width} 0}
+  p0 {0 0}
+  name Ramp1
+  xpos -633
+  ypos -128
+ }
+push $N1e73f170
+ Rectangle {
+  output rgb
+  area {0 0 {parent.Ramp1.area.r} {parent.Ramp1.area.t}}
+  ramp linear
+  color {0 1 0 1}
+  p1 {0 {Dot1.height}}
+  p0 {0 0}
+  name Ramp2
+  xpos -506
+  ypos -129
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge
+  xpos -574
+  ypos -70
+  postage_stamp true
+ }
+ Output {
+  name Output1
+  xpos -574
+  ypos 18
+ }
+end_group

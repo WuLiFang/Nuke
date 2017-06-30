@@ -1,0 +1,251 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+add_layer {BumpNormals BumpNormals.red BumpNormals.green BumpNormals.blue BumpNormals.alpha}
+Gizmo {
+ tile_color 0xff00ff
+ gl_color 0x7e32ff00
+ label "输入通道: \[value in]"
+ note_font 微软雅黑
+ addUserKnob {20 tab1 l NormalKeyer_v1.2}
+ addUserKnob {41 in l "Normal Layer" T Shuffle2.in}
+ addUserKnob {6 preview l "show normal" +STARTLINE}
+ preview true
+ addUserKnob {41 pos l Position T Mask3D_RS1.pos}
+ addUserKnob {41 rad l Radius T Mask3D_RS1.rad}
+ addUserKnob {41 fall l "Falloff Exponent" T Mask3D_RS1.fall}
+ addUserKnob {41 gain l Hardness T Mask3D_RS1.gain}
+}
+ Input {
+  inputs 0
+  name Input
+  gl_color 0x8132ff00
+  xpos 510
+  ypos -874
+ }
+ Dot {
+  name Dot13
+  gl_color 0x32ff4a00
+  xpos 544
+  ypos -678
+ }
+set N8a40000 [stack 0]
+ Dot {
+  name Dot4
+  gl_color 0xff32ab00
+  note_font 微软雅黑
+  xpos 654
+  ypos -678
+ }
+set N8a7fc00 [stack 0]
+ AddChannels {
+  channels alpha
+  color 1
+  name AddChannels1
+  gl_color 0x86ff3200
+  note_font 微软雅黑
+  xpos 620
+  ypos -595
+ }
+push $N8a7fc00
+ Dot {
+  name Dot3
+  gl_color 0xd6ff3200
+  note_font 微软雅黑
+  xpos 764
+  ypos -678
+ }
+ Shuffle {
+  in BumpNormals
+  in2 rgba
+  name Shuffle2
+  gl_color 0x32efff00
+  xpos 730
+  ypos -514
+ }
+set N8a7f000 [stack 0]
+ Group {
+  inputs 2
+  name Mask3D_RS1
+  tile_color 0x417c3eff
+  gl_color 0x7832ff00
+  xpos 620
+  ypos -514
+  addUserKnob {20 User}
+  addUserKnob {18 pos l Position t "Select the colour that corresponds to the position you want."}
+  pos {0.375 0.5009765625 0.7797851563}
+  addUserKnob {6 pos_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {13 rad l Radius}
+  rad {2 3 3}
+  addUserKnob {7 fall l "Falloff Exponent" R 1 10}
+  fall 10
+  addUserKnob {7 gain l Hardness}
+  gain 0.5
+ }
+  Input {
+   inputs 0
+   name alpha
+   gl_color 0xff9d3200
+   xpos -34
+   ypos 535
+   number 1
+  }
+  Input {
+   inputs 0
+   name normals
+   gl_color 0xff32ab00
+   xpos 101
+   ypos 473
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   gl_color 0xffda3200
+   xpos 95
+   ypos 533
+  }
+  Expression {
+   temp_name0 distR
+   temp_expr0 (Br-parent.pos.r)/rad.x
+   temp_name1 distG
+   temp_expr1 (Bg-parent.pos.g)/rad.y
+   temp_name2 distB
+   temp_expr2 (Bb-parent.pos.b)/rad.z
+   temp_name3 len
+   temp_expr3 sqrt((distR*distR)+(distG*distG)+(distB*distB))
+   expr0 pow(1-len,fall)
+   expr1 pow(1-len,fall)
+   expr2 pow(1-len,fall)
+   expr3 pow(1-len,fall)
+   maskChannelInput rgba.alpha
+   name __POSITION_KEY__
+   xpos 95
+   ypos 578
+  }
+  Clamp {
+   channels rgba
+   name Clamp1
+   gl_color 0x329dff00
+   xpos 95
+   ypos 612
+  }
+  Group {
+   name Perlin_gain
+   help "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."
+   tile_color 0xcc9d6d00
+   gl_color 0xff32b100
+   selected true
+   xpos 95
+   ypos 696
+   addUserKnob {20 "" l User}
+   addUserKnob {7 realGain l "Perlin Gain function" t "This is an implementation of Ken Perlin's gain function. It boosts micro-contrast (acutance, in photographic terms) without clipping. When set to 0.5, it has no effect. When >0.5, gain is boosted; when <.5, gain is muted. Only luminance is affected; not hue nor saturation. Superwhites remain untouched."}
+   realGain {{parent.gain x23 0.69}}
+  }
+   Input {
+    inputs 0
+    name Input1
+    gl_color 0x8cff3200
+    xpos 130
+    ypos -89
+   }
+   Expression {
+    temp_name0 gain
+    temp_expr0 parent.realGain
+    temp_name1 lum
+    temp_expr1 "0.2125*Br + 0.7154*Bg + 0.0721*Bb"
+    temp_name2 val
+    temp_expr2 .5*((lum<.5)?((1-gain)>0?pow(2*lum,log(1-gain)/log(0.5)):0):2-((1-gain)>0?pow(2-2*lum,log(1-gain)/log(0.5)):0))
+    expr0 r>1?r:r*(val/(lum+0.00001))
+    expr1 g>1?g:g*(val/(lum+0.00001))
+    expr2 b>1?b:b*(val/(lum+0.00001))
+    name KPGain
+    tile_color 0xd47f3b00
+    gl_color 0xd632ff00
+    label "TRUE GAIN\nFUNCTION"
+    selected true
+    xpos 130
+    ypos -24
+    addUserKnob {20 "" l User}
+   }
+   Output {
+    name Output1
+    gl_color 0xff32bf00
+    xpos 130
+    ypos 98
+   }
+  end_group
+  Clamp {
+   channels rgba
+   name Clamp2
+   gl_color 0x3240ff00
+   xpos 95
+   ypos 762
+  }
+set N8aa8400 [stack 0]
+  Output {
+   name Output1
+   gl_color 0xbfff3200
+   xpos 95
+   ypos 839
+  }
+push $N8aa8400
+  Viewer {
+   name Viewer1
+   gl_color 0xff443200
+   xpos -78
+   ypos 627
+  }
+ end_group
+ Dot {
+  name Dot2
+  gl_color 0x32ff3d00
+  note_font 微软雅黑
+  xpos 654
+  ypos -414
+ }
+set N8af5c00 [stack 0]
+push $N8a7f000
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  gl_color 0x8332ff00
+  note_font 微软雅黑
+  xpos 730
+  ypos -427
+ }
+ Dot {
+  name Dot1
+  gl_color 0xff32ec00
+  xpos 764
+  ypos -270
+ }
+push $N8af5c00
+push $N8a40000
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  gl_color 0xfff23200
+  note_font 微软雅黑
+  xpos 510
+  ypos -427
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch1
+  gl_color 0x3f32ff00
+  xpos 510
+  ypos -274
+ }
+ Output {
+  name Output1
+  gl_color 0x32ffdc00
+  xpos 510
+  ypos -58
+ }
+end_group

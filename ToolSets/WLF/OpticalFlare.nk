@@ -1,0 +1,206 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Group {
+ name OpticalFlare1
+ tile_color 0xcc804eff
+ label "(\[value this.knob.from0])"
+ note_font 微软雅黑
+ selected true
+ xpos 4767
+ ypos -3553
+ addUserKnob {20 tab1 l OpticalFlare_v0.12}
+ addUserKnob {20 group3 l flare(光斑) n 1}
+ addUserKnob {41 length l "distribution y(纵向分布)" T Glint1.length}
+ addUserKnob {41 rotation T Glint1.rotation}
+ addUserKnob {41 length_1 l "distribution x(横向分布)" T Glint2.length}
+ addUserKnob {41 rotation_1 l rotation T Glint2.rotation}
+ addUserKnob {41 saturation_1 l saturation(饱和度) T Saturation1.saturation}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 group2 l glow(辉光) n 1}
+ addUserKnob {41 brightness l brightness(强度) T Glow1.brightness}
+ addUserKnob {41 size l size(大小) T Glow1.size}
+ addUserKnob {41 saturation l saturation(饱和度) T Glow1.saturation}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 group1 l tint(染色) n 1}
+ addUserKnob {6 tint_enable l enable(启用) +STARTLINE}
+ addUserKnob {41 gain l color(颜色) T ColorCorrect1.gain}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {41 from0 l mask T Copy1.from0}
+ addUserKnob {7 mix}
+ mix 1
+ addUserKnob {6 effect_only l "effect only" -STARTLINE}
+}
+ Constant {
+  inputs 0
+  channels alpha
+  color 1
+  name Constant1
+  gl_color 0x32f5ff00
+  note_font 微软雅黑
+  xpos 627
+  ypos -936
+ }
+ Input {
+  inputs 0
+  name Inputmask
+  gl_color 0x32ff4700
+  note_font 微软雅黑
+  xpos 497
+  ypos -825
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{"\[string equal \[input parent 1] 0]"}}
+  name Switch1
+  gl_color 0xfffc3200
+  note_font 微软雅黑
+  xpos 620
+  ypos -815
+ }
+ Input {
+  inputs 0
+  name Input
+  gl_color 0xff32dd00
+  xpos 400
+  ypos -874
+ }
+ Dot {
+  name Dot2
+  gl_color 0xd2ff3200
+  note_font 微软雅黑
+  xpos 434
+  ypos -426
+ }
+set N69c93400 [stack 0]
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 mask.a
+  name Copy1
+  gl_color 0x9bff3200
+  note_font 微软雅黑
+  selected true
+  xpos 620
+  ypos -787
+ }
+ Glint {
+  length 2
+  rotation 36
+  steps 2
+  effect_only true
+  w_channel mask.a
+  tolerance 0
+  name Glint1
+  gl_color 0x32ff9d00
+  note_font 微软雅黑
+  xpos 620
+  ypos -743
+ }
+ Glint {
+  length 340
+  rotation 102
+  steps 20
+  tolerance 0
+  name Glint2
+  gl_color 0x32ff9d00
+  note_font 微软雅黑
+  xpos 620
+  ypos -699
+ }
+ Saturation {
+  saturation 1.44
+  name Saturation1
+  gl_color 0x6232ff00
+  note_font 微软雅黑
+  xpos 620
+  ypos -655
+ }
+ Grade {
+  white {{"(sin(x) + 1 )/2"}}
+  name Grade1
+  gl_color 0x329fff00
+  note_font 微软雅黑
+  xpos 620
+  ypos -627
+ }
+ Blur {
+  size 5
+  name Blur1
+  gl_color 0xff32be00
+  note_font 微软雅黑
+  xpos 620
+  ypos -599
+ }
+set N880d9c00 [stack 0]
+ Glow2 {
+  brightness 1.76
+  W mask.a
+  size 29
+  name Glow1
+  gl_color 0xff325500
+  note_font 微软雅黑
+  xpos 620
+  ypos -547
+ }
+push $N880d9c00
+ Merge2 {
+  inputs 2
+  operation screen
+  bbox B
+  name Merge1
+  gl_color 0x328eff00
+  note_font 微软雅黑
+  xpos 730
+  ypos -547
+ }
+ ColorCorrect {
+  saturation 0
+  name ColorCorrect1
+  gl_color 0xabff3200
+  label "tint 染色"
+  note_font 微软雅黑
+  xpos 730
+  ypos -519
+  disable {{"! parent.knob.tint_enable"}}
+ }
+ Multiply {
+  value {{parent.knob.mix}}
+  name Multiply1
+  gl_color 0xff883200
+  note_font 微软雅黑
+  xpos 730
+  ypos -475
+ }
+set N880d8c00 [stack 0]
+push $N880d8c00
+push $N69c93400
+ Merge2 {
+  inputs 2
+  operation screen
+  bbox B
+  name Merge16
+  gl_color 0x3296ff00
+  note_font 微软雅黑
+  xpos 730
+  ypos -423
+ }
+ Switch {
+  inputs 2
+  which {{parent.knob.effect_only}}
+  name Switch2
+  gl_color 0xffa93200
+  note_font 微软雅黑
+  xpos 840
+  ypos -423
+ }
+ Output {
+  name Output1
+  gl_color 0xff883200
+  xpos 840
+  ypos -395
+ }
+end_group

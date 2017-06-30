@@ -1,0 +1,171 @@
+#! C:/Program Files (x86)/Nuke6.0v4/Nuke6.0.exe -nx
+version 6.0 v3
+Gizmo {
+ label creatogether.com
+ addUserKnob {20 vibrance l Vibrance t "\"Vibrance\" isolates the highly saturated colors as well as the skin tones and saturates the image while using the resulting matte as a mask"}
+ addUserKnob {7 vibe l vibrance t "Vibrance creates the combination of a skin tone matte and a high saturation matte and uses it as mask for a saturating operation." R 0 2}
+ vibe 1
+ addUserKnob {18 customSkin l "custom skin tone" t "If 'use default skin' is deactivated, Vibrance will use this color instead of its own internal color sample to calculate the mask needed to preserve the skincolors"}
+ customSkin {0.5899999738 0.3427569866 0.2065000087}
+ addUserKnob {6 useDefSkin l "use default skin" t "If this is selected, Vibrance will use its internal color sample of skin for the calculations." +STARTLINE}
+ useDefSkin true
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0xff00e6ff
+  label "saturation_matte\n"
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 24
+  xpos 594
+  ypos 225
+  bdwidth 353
+  bdheight 153
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0xc68656ff
+  label skintone_matte
+  note_font "Verdana Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold Bold"
+  note_font_size 24
+  xpos 499
+  ypos -70
+  bdwidth 442
+  bdheight 157
+ }
+ Input {
+  inputs 0
+  name source
+  xpos 998
+  ypos -161
+ }
+ Dot {
+  name Dot4
+  xpos 1032
+  ypos 29
+ }
+set N8532b40 [stack 0]
+ Dot {
+  name Dot5
+  xpos 1032
+  ypos 253
+ }
+set N8532180 [stack 0]
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace2
+  xpos 844
+  ypos 249
+ }
+ Shuffle {
+  red green
+  blue green
+  alpha green
+  name Shuffle2
+  xpos 844
+  ypos 275
+ }
+ Invert {
+  name Invert1
+  xpos 844
+  ypos 301
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.038
+  whitepoint 0.61
+  white_clamp true
+  name Grade1
+  xpos 844
+  ypos 339
+ }
+push $N8532b40
+ OFXuk.co.thefoundry.keylight.keylight_v201 {
+  show "Final Result"
+  unPreMultiply false
+  screenColour {{custom_skintone.disable.main?default_skintone.color.main.r:parent.custom_skintone.color.main.r i x1 0.2460010052 x2413 0.2460010052} {custom_skintone.disable.main?default_skintone.color.main.g:parent.custom_skintone.color.main.g i x1 0.1289999932 x2413 0.1289999932} {custom_skintone.disable.main?default_skintone.color.main.b:parent.custom_skintone.color.main.b i x1 0.06706999987 x2413 0.06706999987}}
+  screenGain 1.285
+  screenBalance 0.5
+  alphaBias {0.5 0.5 0.5}
+  despillBias {0.5 0.5 0.5}
+  gangBiases false
+  preBlur 0
+  "Screen Matte" 1
+  screenClipMin 0
+  screenClipMax 1
+  screenClipRollback 0
+  screenGrowShrink 0
+  screenSoftness 0
+  screenDespotBlack 0
+  screenDespotWhite 0
+  screenReplaceMethod None
+  screenReplaceColour {0.5 0.5 0.5}
+  Tuning 1
+  midPoint 0.5
+  lowGain 1
+  midGain 0.905
+  highGain 1
+  "Inside Mask" 0
+  sourceAlphaHandling Ignore
+  insideReplaceMethod "Soft Colour"
+  insideReplaceColour {0.5 0.5 0.5}
+  Crops 0
+  SourceXMethod Colour
+  SourceYMethod Colour
+  SourceEdgeColour 0
+  SourceCropL 0
+  SourceCropR 1
+  SourceCropB 0
+  SourceCropT 1
+  balanceSet true
+  insideComponent None
+  outsideComponent None
+  cacheBreaker true
+  name Keylight2
+  xpos 734
+  ypos 25
+ }
+ ChannelMerge {
+  inputs 2
+  operation multiply
+  name ChannelMerge2
+  xpos 734
+  ypos 326
+ }
+ Dot {
+  name Dot6
+  xpos 768
+  ypos 492
+ }
+push $N8532180
+ Saturation {
+  inputs 1+1
+  saturation {{this.parent.vibe}}
+  name Saturation2
+  xpos 998
+  ypos 488
+ }
+ Output {
+  name out
+  xpos 998
+  ypos 572
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{this.parent.customSkin.r} {this.parent.customSkin.g} {this.parent.customSkin.b} 1}
+  name custom_skintone
+  xpos 527
+  ypos 1
+  disable {{this.parent.useDefSkin}}
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.2460010052 0.1289999932 0.06706999987 1}
+  name default_skintone
+  xpos 633
+  ypos -6
+ }
+end_group

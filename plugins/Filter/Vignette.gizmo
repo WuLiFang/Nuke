@@ -1,0 +1,162 @@
+
+Gizmo {
+ help "Vignette tool by Den Gheiko"
+ tile_color 0x7c7a51ff
+ addUserKnob {20 Form}
+ addUserKnob {41 Core T Input1.Core}
+ addUserKnob {41 Border T Input1.Border}
+ addUserKnob {41 Softness T Input1.Softness}
+ addUserKnob {20 Color}
+ addUserKnob {20 out l border n 1}
+ addUserKnob {41 gainout l gain T Input1.gainout}
+ addUserKnob {41 gammaout l gamma T Input1.gammaout}
+ addUserKnob {41 liftout l lift T Input1.liftout}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 in l core n 1}
+ addUserKnob {41 gainin l gain T Input1.gainin}
+ addUserKnob {41 gammain l gamma T Input1.gammain}
+ addUserKnob {41 liftin l lift T Input1.liftin}
+ addUserKnob {26 ""}
+ addUserKnob {32 NoChange T "knob gainout 1\nknob gammaout 1\nknob liftout 0\n\nknob gainin 1\nknob gammain 1\nknob liftin 0" +STARTLINE}
+ addUserKnob {32 Defaults -STARTLINE T "knob gainout 0.849\nknob gammaout 0.3\nknob liftout -0.03\n\nknob gainin 1.09\nknob gammain 1.134\nknob liftin 0"}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 Output}
+ addUserKnob {41 output l Output T Input1.output}
+ addUserKnob {26 ""}
+ addUserKnob {41 to0 l "Mask output" T Copy1.to0}
+ addUserKnob {41 invert -STARTLINE T Input1.invert}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 415
+  ypos -363
+  addUserKnob {20 User}
+  addUserKnob {7 gainin R 1 1.2}
+  gainin 1.09
+  addUserKnob {7 gammain R 1 1.2}
+  gammain 1.134
+  addUserKnob {7 liftin R -0.1 0.1}
+  addUserKnob {7 liftout R -0.1 0.1}
+  liftout -0.03
+  addUserKnob {7 gainout R 1 0.8}
+  gainout 0.849
+  addUserKnob {7 gammaout R 0.3 1}
+  gammaout 0.3
+  addUserKnob {7 Softness}
+  Softness 1
+  addUserKnob {7 amount}
+  amount 1
+  addUserKnob {4 output M {result mask}}
+  addUserKnob {6 invert +STARTLINE}
+  invert true
+  addUserKnob {7 Core}
+  Core 1
+  addUserKnob {7 Border}
+  Border 1
+ }
+ Dot {
+  name Dot5
+  xpos 443
+  ypos -285
+ }
+set N715c8cd0 [stack 0]
+ Radial {
+  replace true
+  area {{-width*(1-Input1.Border)} {area.x} {width-area.x} {height-area.y}}
+  name Radial3
+  xpos 540
+  ypos -282
+ }
+ Keyer {
+  input alpha
+  operation "luminance key"
+  range {0 {0.2*(1-Input1.Core)} 1 1}
+  name Keyer1
+  xpos 540
+  ypos -234
+ }
+ Blur {
+  size {{max(width,height)/3*Input1.Softness}}
+  name Blur1
+  xpos 540
+  ypos -190
+ }
+set N715c9720 [stack 0]
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 537
+  ypos -93
+ }
+set N71592920 [stack 0]
+ Invert {
+  name Invert1
+  xpos 539
+  ypos -29
+  disable {{1-parent.Input1.invert}}
+ }
+ Dot {
+  name Dot1
+  xpos 567
+  ypos 55
+ }
+set N71593000 [stack 0]
+push $N71592920
+push $N715c9720
+push $N715c9720
+push $N715c8cd0
+ Grade {
+  inputs 1+1
+  black {{parent.Input1.liftout}}
+  white {{parent.Input1.gainout}}
+  gamma {{parent.Input1.gammaout}}
+  invert_mask true
+  name GradeOut1
+  xpos 415
+  ypos -184
+ }
+ Grade {
+  inputs 1+1
+  black {{parent.Input1.liftin}}
+  white {{parent.Input1.gainin}}
+  gamma {{parent.Input1.gammain}}
+  name GradeIn1
+  xpos 415
+  ypos -145
+ }
+ Switch {
+  inputs 2
+  which {{Input1.output i}}
+  name Switch1
+  xpos 415
+  ypos -93
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 mask.a
+  name Copy1
+  xpos 418
+  ypos 52
+  addUserKnob {20 User}
+  addUserKnob {32 frwd -STARTLINE T "knob from0 \{rgba.red\}\nknob from1 \{rgba.green\}\nknob to0 \{forward.u\}\nknob to1 \{forward.v\}"}
+  addUserKnob {32 frwd -STARTLINE T "knob from0 \{rgba.red\}\nknob from1 \{rgba.green\}\nknob to0 \{forward.u\}\nknob to1 \{forward.v\}"}
+ }
+ Output {
+  name Output1
+  xpos 418
+  ypos 133
+ }
+push $N71593000
+ Viewer {
+  input_process false
+  name Viewer1
+  selected true
+  xpos 540
+  ypos -258
+ }
+end_group

@@ -1,0 +1,239 @@
+#! D:/Program Files/Nuke7.0v9/Nuke7.0.exe -nx
+version 7.0 v9
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 antialiasing l Pre_antialiasing T Matrix4.antialiasing}
+ addUserKnob {41 size l Pre_blur T Pre_blur.size}
+ addUserKnob {41 Pre_gamma T Pre_grade.gamma}
+ addUserKnob {41 Color T CVRGBCMYBW.Color}
+ addUserKnob {41 Post_gamma T Post_grade.gamma}
+ addUserKnob {41 size_1 l Post_blur T Post_blur.size}
+ addUserKnob {41 antialiasing_1 l Post_antialiasing T Matrix3.antialiasing}
+}
+ Input {
+  inputs 0
+  name img
+  label img
+  xpos -261
+  ypos -342
+ }
+ Matrix {
+  matrix {
+      {{"parent.Matrix4.antialiasing <= 1 ? 0 : parent.Matrix4.antialiasing-1"} {parent.Matrix4.antialiasing} {"parent.Matrix4.antialiasing <= 1 ? 0 : parent.Matrix4.antialiasing-1"}}
+      {{parent.Matrix4.antialiasing} {"( parent.Matrix4.antialiasing) >= 1 \n? \n( parent.Matrix4.antialiasing * 2 ) \n: \n( parent.Matrix4.antialiasing + 1 ) "} {parent.Matrix4.antialiasing}}
+      {{"parent.Matrix4.antialiasing <= 1 ? 0 : parent.Matrix4.antialiasing-1"} {parent.Matrix4.antialiasing} {"parent.Matrix4.antialiasing <= 1 ? 0 : parent.Matrix4.antialiasing-1"}}
+    }
+  normalize true
+  name Matrix4
+  xpos -261
+  ypos -240
+  addUserKnob {20 User}
+  addUserKnob {7 antialiasing R 0 4}
+ }
+ Blur {
+  name Pre_blur
+  xpos -260
+  ypos -130
+ }
+ Clamp {
+  minimum 0.0001
+  name Clamp3
+  xpos -260
+  ypos -52
+ }
+ Dot {
+  name Dot1
+  xpos -226
+  ypos 18
+ }
+set N33822080 [stack 0]
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r*g*b
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 r*g*b
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 r*g*b
+  name White_expression1
+  xpos 377
+  ypos 163
+ }
+ Dot {
+  name Dot2
+  xpos 411
+  ypos 280
+ }
+push $N33822080
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r+b+g
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 r+g+b
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 r+g+b
+  name Black_expression1
+  xpos 236
+  ypos 159
+ }
+ Invert {
+  name Invert2
+  xpos 236
+  ypos 187
+ }
+push $N33822080
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 (r*g)-b
+  expr1 -1
+  expr2 -1
+  name Yellow_expression1
+  xpos 70
+  ypos 157
+ }
+ Shuffle {
+  green red
+  name Shuffle6
+  xpos 70
+  ypos 185
+ }
+push $N33822080
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 -1
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 (b*r)-g
+  expr2 -1
+  name Magenta_expression1
+  xpos -40
+  ypos 157
+ }
+ Shuffle {
+  red green
+  green red
+  blue green
+  alpha green
+  name Shuffle7
+  xpos -40
+  ypos 185
+ }
+push $N33822080
+ Expression {
+  expr0 -r
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 -g
+  expr2 (b*g)-r
+  name Cyan_expression1
+  xpos -150
+  ypos 157
+ }
+ Shuffle {
+  red green
+  green blue
+  alpha blue
+  name Shuffle8
+  xpos -150
+  ypos 185
+ }
+push $N33822080
+ Expression {
+  expr0 -1
+  expr1 -1
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 b-(r+g)
+  name Blue_expression2
+  xpos -370
+  ypos 157
+ }
+push $N33822080
+ Expression {
+  expr0 -1
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 g-(r+b)
+  expr2 -1
+  name Green_expression2
+  xpos -480
+  ypos 157
+ }
+push $N33822080
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r-(b+g)
+  expr1 -1
+  expr2 -1
+  name Red_expression2
+  xpos -590
+  ypos 157
+ }
+push $N33822080
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  expr0 r+b+g
+  channel1 {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  expr1 r+g+b
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 r+g+b
+  name ColorValue_expression
+  xpos -810
+  ypos 157
+ }
+ Switch {
+  inputs 9
+  which {{parent.CVRGBCMYBW.Color i x1 0}}
+  name Switch1
+  xpos -260
+  ypos 397
+ }
+ Clamp {
+  minimum 0.0001
+  name Clamp7
+  xpos -167
+  ypos 502
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.0001
+  name Grade2
+  xpos -167
+  ypos 544
+ }
+ Grade {
+  channels rgba
+  white_clamp true
+  name Pre_grade
+  xpos -167
+  ypos 572
+ }
+ Blur {
+  name Post_blur
+  xpos -167
+  ypos 596
+ }
+ Grade {
+  channels rgba
+  white_clamp true
+  name Post_grade
+  xpos -167
+  ypos 650
+ }
+ Matrix {
+  matrix {
+      {{"parent.Matrix3.antialiasing <= 1 ? 0 : parent.Matrix3.antialiasing-1"} {parent.Matrix3.antialiasing} {"parent.Matrix3.antialiasing <= 1 ? 0 : parent.Matrix3.antialiasing-1"}}
+      {{parent.Matrix3.antialiasing} {"( parent.Matrix3.antialiasing) >= 1 \n? \n( parent.Matrix3.antialiasing * 2 ) \n: \n( parent.Matrix3.antialiasing + 1 ) "} {parent.Matrix3.antialiasing}}
+      {{"parent.Matrix3.antialiasing <= 1 ? 0 : parent.Matrix3.antialiasing-1"} {parent.Matrix3.antialiasing} {"parent.Matrix3.antialiasing <= 1 ? 0 : parent.Matrix3.antialiasing-1"}}
+    }
+  normalize true
+  name Matrix3
+  xpos -167
+  ypos 817
+  addUserKnob {20 User}
+  addUserKnob {7 antialiasing R 0 4}
+ }
+ Output {
+  name CVRGBCMYBW
+  xpos -269
+  ypos 870
+  addUserKnob {20 User}
+  addUserKnob {4 Color M {Color_Value Red Green Blue Cyan Magenta Yellow Black White "" "" "" "" "" "" ""}}
+  Color Red
+ }
+end_group

@@ -1,0 +1,100 @@
+Group {
+ name DeepOffset
+ tile_color 0x59ff
+ selected true
+ addUserKnob {20 User l DeepOffset}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 Deep_Offset l Offset T DeepExpression1.Deep_Offset}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 version l "" +STARTLINE T "               DeepOffset 1.00     ©    "}
+ addUserKnob {22 Linkedin l "Luc Julien" -STARTLINE T "import os\nimport sys\n\ntry:\n    import subprocess\n    def _run(cmd, shell, wait):\n        opener = subprocess.Popen(cmd, shell=shell)\n        if wait:\n            opener.wait()\n        return opener.pid\nexcept ImportError:\n    import popen2\n    def _run(cmd, shell, wait):\n        opener = popen2.Popen3(cmd)\n        if wait:\n            opener.wait()\n        return opener.pid\n\ndef _open(url, wait=0):\n    if sys.platform == \"darwin\":\n        cmd = \[\"open\", url]\n    elif hasattr(os, \"startfile\"):\n        return os.startfile(url)\n    elif os.environ.has_key(\"KDE_FULL_SESSION\") or os.environ.has_key(\"KDE_MULTIHEAD\") or \\\n        os.environ.has_key(\"GNOME_DESKTOP_SESSION_ID\") or os.environ.has_key(\"GNOME_KEYRING_SOCKET\"):\n        cmd = \[\"xdg-open\", url]\n    else:\n        raise OSError, \"Desktop not supported.\"\n\n    return _run(cmd, 0, wait)\n\n_open('http://www.linkedin.com/in/lucjulien')"}
+}
+ Input {
+  inputs 0
+  name mask
+  xpos 754
+  ypos 182
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 Check +STARTLINE}
+  Check {{"\[string first \".a\" \[channels \[topnode this 0]]]\n+\n\[string first \".r\" \[channels \[topnode this 0]]]\n+\n\[string first \".g\" \[channels \[topnode this 0]]]\n+\n\[string first \".b\" \[channels \[topnode this 0]]]"}}
+ }
+ Expression {
+  expr3 DeepOffset.mask.Check>0?a:1
+  name Expression1
+  xpos 754
+  ypos 310
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 512
+  ypos 179
+ }
+ Dot {
+  name Dot2
+  xpos 546
+  ypos 251
+ }
+set N354a6c40 [stack 0]
+ DeepToImage {
+  name DeepToImage1
+  xpos 596
+  ypos 248
+ }
+add_layer {maskOffset maskOffset.alpha}
+ ShuffleCopy {
+  inputs 2
+  in alpha
+  in2 none
+  red red
+  out maskOffset
+  name ShuffleCopy1
+  xpos 596
+  ypos 310
+  addUserKnob {20 User}
+  addUserKnob {6 error +STARTLINE}
+  error {{error}}
+ }
+push $N354a6c40
+ Dot {
+  name Dot1
+  xpos 546
+  ypos 370
+ }
+ DeepRecolor {
+  inputs 2
+  channels all
+  targetInputAlpha true
+  name DeepRecolor1
+  xpos 596
+  ypos 362
+ }
+ DeepExpression {
+  temp_name0 offset
+  temp_expr0 "\[value DeepExpression1.Deep_Offset]"
+  chans0 deep
+  chans1 none
+  deep.front deep.front+offset*maskOffset.alpha
+  deep.back deep.back+offset*maskOffset.alpha
+  name DeepExpression1
+  xpos 596
+  ypos 483
+  addUserKnob {20 User}
+  addUserKnob {7 Deep_Offset l Offset R -10 10}
+ }
+set N59b58430 [stack 0]
+ Output {
+  name Output1
+  xpos 596
+  ypos 584
+ }
+push $N59b58430
+ Viewer {
+  input_process false
+  name Viewer1
+  selected true
+  xpos 873
+  ypos 310
+ }
+end_group

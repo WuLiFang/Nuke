@@ -1,0 +1,332 @@
+#! D:/Program Files/Nuke7.0v10/Nuke7.0.exe -nx
+version 7.0 v10
+Gizmo {
+ tile_color 0xff
+ addUserKnob {20 EdgeControl l "Edge Control"}
+ addUserKnob {14 FilterErodeOut_size l "Edge Size" R -100 100}
+ FilterErodeOut_size 3.5
+ addUserKnob {4 Slice M {In Out Both}}
+ Slice Both
+ addUserKnob {14 AdjBBox1_numpixels l "Grow Bbox" R -1024 1024}
+ AdjBBox1_numpixels 165
+ addUserKnob {14 DilateInsideEdge_size l "Inside Edge Control" R -100 100}
+ DilateInsideEdge_size -100
+ addUserKnob {14 DilateOutsideEdge_size l "Outside Edge Control" R -100 100}
+ DilateOutsideEdge_size -10
+ addUserKnob {14 Blur2_size l Soft R 0 100}
+ Blur2_size 14
+ addUserKnob {19 EdgeMatteGrade_blackpoint l Choke R 0 0.9}
+ EdgeMatteGrade_blackpoint {0 0 0 0}
+ addUserKnob {6 EdgeMatteGrade_blackpoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 EdgeMatteGrade_whitepoint l "Blow Out" R 0.1 1}
+ EdgeMatteGrade_whitepoint 1
+ addUserKnob {6 EdgeMatteGrade_whitepoint_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 EdgeMatteGrade_gamma l Gamma R 0.2 5}
+ EdgeMatteGrade_gamma 0.88
+ addUserKnob {6 EdgeMatteGrade_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {20 NoiseControl l "Noise Control" n 1}
+ addUserKnob {6 SoftNoise l "Soft Noise Edge" +STARTLINE}
+ SoftNoise true
+ addUserKnob {14 NoiseBlur_size l "Noise Blur" R 0 100}
+ NoiseBlur_size 3.8
+ addUserKnob {78 Noise1_size l "Noise Size" R 1 1000 n 1}
+ Noise1_size 15
+ addUserKnob {8 Noise1_gain l "Noise Strength" R 0.1 1}
+ Noise1_gain 1
+ addUserKnob {14 Sharpen1_size l "Noise Sharpness" R 0 100}
+ Sharpen1_size 16
+ addUserKnob {20 endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Alpha
+  label Alpha
+  xpos 510
+  ypos -11
+ }
+ Dot {
+  name Dot1
+  xpos 544
+  ypos 42
+ }
+set N1be539a0 [stack 0]
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos 510
+  ypos 90
+ }
+ AdjBBox {
+  numpixels {{parent.AdjBBox1_numpixels.w} {parent.AdjBBox1_numpixels.h}}
+  name AdjBBox1
+  selected true
+  xpos 510
+  ypos 147
+ }
+ Dot {
+  name Dot79
+  xpos 544
+  ypos 186
+ }
+set N1be543f0 [stack 0]
+ Dot {
+  name Dot137
+  xpos 324
+  ypos 186
+ }
+set N1be54760 [stack 0]
+ Dot {
+  name Dot4
+  xpos 104
+  ypos 186
+ }
+ Dot {
+  name Dot5
+  xpos 104
+  ypos 402
+ }
+set N1c7202a0 [stack 0]
+ FilterErode {
+  size {{parent.FilterErodeOut.size}}
+  name FilterErode1
+  xpos 180
+  ypos 393
+ }
+push $N1be543f0
+ Dot {
+  name Dot135
+  xpos 544
+  ypos 186
+ }
+ FilterErode {
+  size {{-1*(parent.FilterErodeOut.size) i}}
+  name FilterErodeIn
+  xpos 510
+  ypos 200
+ }
+ Dot {
+  name Dot136
+  xpos 544
+  ypos 282
+ }
+push $N1be543f0
+ FilterErode {
+  size {{parent.FilterErodeOut_size.w} {parent.FilterErodeOut_size.h}}
+  name FilterErodeOut
+  xpos 510
+  ypos 200
+ }
+ Merge2 {
+  inputs 2
+  operation xor
+  name Merge110
+  xpos 510
+  ypos 278
+ }
+ Blur {
+  size {{parent.Blur2_size.w}}
+  name BlurEdge
+  xpos 510
+  ypos 320
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.EdgeMatteGrade_blackpoint.r}}
+  whitepoint {{parent.EdgeMatteGrade_whitepoint.r}}
+  gamma {{parent.EdgeMatteGrade_gamma.r}}
+  white_clamp true
+  name EdgeMatteGrade
+  label Clamped
+  xpos 510
+  ypos 358
+ }
+ Dot {
+  name Dot139
+  xpos 544
+  ypos 426
+ }
+set N1c722190 [stack 0]
+ Dot {
+  name Dot140
+  xpos 324
+  ypos 426
+ }
+ Dilate {
+  size {{parent.DilateOutsideEdge_size.w} {parent.DilateOutsideEdge_size.h}}
+  name DilateOutsideEdge
+  xpos 290
+  ypos 440
+ }
+set N1c722870 [stack 0]
+ Merge2 {
+  inputs 2
+  operation stencil
+  name OutsideEdge
+  xpos 180
+  ypos 494
+ }
+push $N1be54760
+ Invert {
+  name Invert1
+  xpos 290
+  ypos 320
+ }
+ Dilate {
+  size -3
+  name Dilate1
+  xpos 285
+  ypos 371
+ }
+set N1c7232c0 [stack 0]
+ FilterErode {
+  size {{parent.FilterErodeOut.size}}
+  name FilterErode4
+  xpos 404
+  ypos 459
+ }
+push $N1c722190
+ Dilate {
+  size {{parent.DilateInsideEdge_size.w} {parent.DilateInsideEdge_size.h}}
+  name DilateInsideEdge
+  xpos 510
+  ypos 440
+ }
+set N1c7239a0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation stencil
+  name InsideEdge
+  xpos 510
+  ypos 483
+ }
+set N1c805ed0 [stack 0]
+ Merge2 {
+  inputs 2
+  operation max
+  name Both
+  xpos 510
+  ypos 518
+ }
+push $N1c7202a0
+push $N1c722870
+ Merge2 {
+  inputs 2
+  operation stencil
+  name OutsideEdge1
+  xpos 70
+  ypos 470
+ }
+ Dot {
+  name Dot141
+  xpos 104
+  ypos 594
+ }
+push $N1c7232c0
+push $N1c7239a0
+ Merge2 {
+  inputs 2
+  operation stencil
+  name InsideEdge1
+  xpos 644
+  ypos 446
+ }
+ Dot {
+  name Dot142
+  xpos 654
+  ypos 594
+ }
+ Switch {
+  inputs 3
+  which {{parent.Slice i}}
+  name SliceSelector
+  xpos 510
+  ypos 590
+ }
+ Dot {
+  name Dot3
+  xpos 544
+  ypos 714
+ }
+set N1c807370 [stack 0]
+ FilterErode {
+  size {{parent.NoiseBlur.size/2}}
+  name FilterErode3
+  xpos 620
+  ypos 704
+ }
+ Blur {
+  size {{parent.NoiseBlur_size.w} {parent.NoiseBlur_size.h}}
+  name NoiseBlur
+  xpos 799
+  ypos 704
+ }
+push $N1be539a0
+ Dot {
+  name Dot2
+  xpos 984
+  ypos 42
+ }
+ Noise {
+  cliptype none
+  replace true
+  size {{parent.Noise1_size.0} {size.0}}
+  gain {{parent.Noise1_gain}}
+  gamma {{parent.Noise1_gain}}
+  center {1024 540}
+  name Noise1
+  xpos 950
+  ypos 289
+ }
+ Sharpen {
+  size {{parent.Sharpen1_size.w} {parent.Sharpen1_size.h}}
+  name Sharpen1
+  xpos 950
+  ypos 440
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge1
+  xpos 950
+  ypos 710
+ }
+push $N1c807370
+ FilterErode {
+  size {{parent.NoiseBlur.size/2}}
+  name FilterErode2
+  xpos 620
+  ypos 752
+ }
+ Blur {
+  size {{parent.NoiseBlur.size}}
+  name Blur2
+  xpos 620
+  ypos 824
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 950
+  ypos 830
+ }
+push $N1c807370
+ Switch {
+  inputs 2
+  which {{parent.SoftNoise}}
+  name SoftNoise
+  xpos 510
+  ypos 976
+ }
+ Output {
+  name EdgeMatte
+  label EdgeMatte
+  xpos 510
+  ypos 1088
+ }
+push $N1c805ed0
+ Viewer {
+  name Viewer1
+  xpos 620
+  ypos 476
+ }
+end_group

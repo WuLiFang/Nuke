@@ -1,0 +1,239 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Gizmo {
+ tile_color 0xff00ff
+ label "\[\nif \{! \[value this.selected]\} \{knob this.preview 0\}\nknob_default \[class this].range_gamma 1\nreturn \"输入通道: \[value this.input \"\"]\"\n]"
+ note_font 微软雅黑
+ addUserKnob {20 tab1 l DepthKeyer_v0.62}
+ addUserKnob {26 Range_div l Range}
+ addUserKnob {6 preview +STARTLINE}
+ addUserKnob {41 input l "depth channel" T Copy.from0}
+ addUserKnob {41 range T Keyer1.range}
+ addUserKnob {12 close_point}
+ close_point {1306 122}
+ addUserKnob {12 middle_point}
+ middle_point {1144 564}
+ addUserKnob {12 far_point}
+ far_point {1018 912}
+ addUserKnob {22 bt_apply l Apply T "close_point = nuke.thisNode()\['close_point'].value()\nmiddle_point = nuke.thisNode()\['middle_point'].value()\nfar_point = nuke.thisNode()\['far_point'].value()\n\nclose = nuke.thisNode().node('Sampler').sample('alpha', close_point\[0],  close_point\[1])\nmiddle = nuke.thisNode().node('Sampler').sample('alpha', middle_point\[0],  middle_point\[1])\nfar = nuke.thisNode().node('Sampler').sample('alpha', far_point\[0],  far_point\[1])\n\nA, B, C, D  = close, (middle + close) / 2.0, (middle + far) / 2.0, far\n\nnuke.thisNode()\['range'].setValue((A, B, C ,D))" +STARTLINE}
+ addUserKnob {32 bt_averge l Averge -STARTLINE T "set A \[value this.range.A]\nset B \[value this.range.B]\nset C \[value this.range.C]\nset D \[value this.range.D]\nset avg \[expr (\$D - \$A) / 3]\nknob this.range.B \[expr \$A+\$avg]\nknob this.range.C \[expr \$A+2*\$avg]"}
+ addUserKnob {18 range_gamma l gamma R 0 4}
+ range_gamma 1
+ addUserKnob {6 range_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 size l erode T Dilate1.size}
+ addUserKnob {41 size_1 l "blur size" T Blur1.size}
+ addUserKnob {6 gamma_4_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+}
+ Input {
+  inputs 0
+  name Input
+  gl_color 0x32ffe200
+  xpos 730
+  ypos -1594
+ }
+ Dot {
+  name Dot2
+  gl_color 0x32d2ff00
+  note_font 微软雅黑
+  xpos 764
+  ypos -1518
+ }
+set N3cde400 [stack 0]
+push $N3cde400
+ Copy {
+  inputs 2
+  from0 depth.Z
+  to0 rgba.alpha
+  name Copy
+  gl_color 0xa832ff00
+  label "depth Channel"
+  xpos 728
+  ypos -1489
+ }
+ NoOp {
+  name Sampler
+  gl_color 0xf0ff3200
+  note_font 微软雅黑
+  xpos 730
+  ypos -1376
+ }
+ Keyer {
+  input alpha
+  output none
+  operation "red keyer"
+  range {0.02057546563 0.02613938693 0.04113241658 0.05056152493}
+  name Keyer1
+  gl_color 0x32fff900
+  label "Range Picker"
+  note_font 微软雅黑
+  xpos 730
+  ypos -1303
+ }
+ Dot {
+  name Dot7
+  gl_color 0x32ffc900
+  note_font 微软雅黑
+  xpos 764
+  ypos -1110
+ }
+set N3cdf400 [stack 0]
+ Dot {
+  name Dot8
+  gl_color 0xffb73200
+  note_font 微软雅黑
+  xpos 764
+  ypos -1038
+ }
+set N3c0b7800 [stack 0]
+ Dot {
+  name Dot9
+  gl_color 0x32c7ff00
+  note_font 微软雅黑
+  xpos 764
+  ypos -966
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.C}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.r}}
+  white_clamp true
+  name Grade4
+  gl_color 0x32a5ff00
+  label "far to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -987
+ }
+set N3c0b7000 [stack 0]
+push $N3c0b7800
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.B}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.g}}
+  white_clamp true
+  name Grade3
+  gl_color 0xff943200
+  label "middle to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -1059
+ }
+set N3c0b6c00 [stack 0]
+push $N3cdf400
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.A}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.b}}
+  white_clamp true
+  name Grade2
+  gl_color 0x4132ff00
+  label "close to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -1131
+ }
+set N3c0b6800 [stack 0]
+push $N3cde400
+ Dot {
+  name Dot5
+  gl_color 0xf9ff3200
+  xpos 874
+  ypos -1518
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.blue
+  name Copy3
+  gl_color 0xa8ff3200
+  xpos 840
+  ypos -472
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.green
+  name Copy2
+  gl_color 0x32ffa800
+  xpos 840
+  ypos -400
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.red
+  name Copy1
+  gl_color 0xff7d3200
+  xpos 840
+  ypos -328
+ }
+ Dot {
+  name Dot1
+  gl_color 0x5732ff00
+  xpos 874
+  ypos -222
+ }
+push $N3c0b7000
+push 0
+push $N3c0b6c00
+push $N3c0b6800
+ Merge2 {
+  inputs 3+1
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name Merge3
+  gl_color 0xff32b200
+  note_font 微软雅黑
+  xpos 400
+  ypos -979
+ }
+ Multiply {
+  channels alpha
+  value 0.3333333333
+  name Multiply1
+  gl_color 0x52ff3200
+  note_font 微软雅黑
+  xpos 400
+  ypos -907
+ }
+ Dilate {
+  name Dilate1
+  gl_color 0x8dff3200
+  xpos 400
+  ypos -808
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  gl_color 0x32fff100
+  xpos 400
+  ypos -712
+ }
+ Dot {
+  name Dot6
+  gl_color 0xa4ff3200
+  note_font 微软雅黑
+  xpos 434
+  ypos -582
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name SwitchPreview
+  gl_color 0xf8ff3200
+  label Preview
+  xpos 400
+  ypos -232
+ }
+ Output {
+  name Output1
+  gl_color 0x32a6ff00
+  xpos 400
+  ypos -178
+ }
+end_group

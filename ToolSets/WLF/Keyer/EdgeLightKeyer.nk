@@ -1,0 +1,220 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Group {
+ name EdgeLightKeyer1
+ tile_color 0xff00ff
+ selected true
+ xpos 148
+ ypos -222
+ addUserKnob {20 tab1 l EdgeLightKeyer_v1.0}
+ addUserKnob {41 edge_channels l "edge channels" T Copy3.from0}
+ addUserKnob {41 output T Keyer1.output}
+ addUserKnob {41 combine l "" -STARTLINE T Keyer1.combine}
+ addUserKnob {41 invert -STARTLINE T Keyer1.invert}
+ addUserKnob {26 Range}
+ addUserKnob {41 translate T GodRays2.translate}
+ addUserKnob {41 rotate T GodRays2.rotate}
+ addUserKnob {41 scale T GodRays2.scale}
+ addUserKnob {41 skew T GodRays2.skew}
+ addUserKnob {41 center T GodRays2.center}
+ addUserKnob {41 size l "blur size" T Blur4.size}
+ addUserKnob {41 p0 l "point 0" T Ramp8.p0}
+ addUserKnob {41 p1 l "point 1" T Ramp8.p1}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 400
+  ypos -898
+ }
+ Dot {
+  name Dot4
+  note_font 微软雅黑
+  xpos 434
+  ypos -798
+ }
+set N80788000 [stack 0]
+ Dot {
+  name Dot37
+  xpos 544
+  ypos -798
+ }
+set N3d40400 [stack 0]
+ Dot {
+  name Dot1
+  xpos 654
+  ypos -798
+ }
+set N3d41800 [stack 0]
+push $N3d41800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  note_font 微软雅黑
+  xpos 620
+  ypos -763
+ }
+ Dot {
+  name Dot8
+  note_font 微软雅黑
+  xpos 654
+  ypos -654
+ }
+set N80788800 [stack 0]
+push $N80788800
+ Dot {
+  name Dot38
+  xpos 764
+  ypos -654
+ }
+set N332bf800 [stack 0]
+ Dot {
+  name Dot39
+  xpos 874
+  ypos -654
+ }
+ GodRays {
+  channels alpha
+  translate {{parent.GodRays2.translate} {parent.GodRays2.translate}}
+  center {{parent.GodRays2.center} {parent.GodRays2.center}}
+  steps 10
+  max true
+  name GodRays3
+  xpos 840
+  ypos -616
+ }
+ Dot {
+  name Dot3
+  note_font 微软雅黑
+  xpos 874
+  ypos -558
+ }
+push $N332bf800
+ EdgeDetectWrapper {
+  channels alpha
+  name EdgeDetect1
+  label "\[knob GodRays3.channels \[value this.channels]]"
+  xpos 730
+  ypos -623
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  xpos 730
+  ypos -562
+ }
+ GodRays {
+  translate {74 -68}
+  center {1318 940}
+  to_color 0
+  steps 10
+  max true
+  name GodRays2
+  xpos 730
+  ypos -520
+ }
+ Blur {
+  channels alpha
+  size 20
+  name Blur4
+  xpos 730
+  ypos -472
+ }
+ Ramp {
+  invert true
+  p0 {-500 600}
+  p1 {-100 600}
+  color 0
+  name Ramp8
+  xpos 730
+  ypos -418
+ }
+ Dot {
+  name Dot7
+  note_font 微软雅黑
+  xpos 764
+  ypos -366
+ }
+ ChannelMerge {
+  inputs 2
+  operation in
+  name ChannelMerge1
+  note_font 微软雅黑
+  xpos 620
+  ypos -387
+ }
+ Dot {
+  name Dot6
+  note_font 微软雅黑
+  xpos 654
+  ypos -270
+ }
+set N5da88c00 [stack 0]
+ Keyer {
+  input alpha
+  output mask.a
+  operation "red keyer"
+  name Keyer2
+  note_font 微软雅黑
+  xpos 620
+  ypos -195
+ }
+ Dot {
+  name Dot2
+  note_font 微软雅黑
+  xpos 654
+  ypos -102
+ }
+push $N5da88c00
+push $N3d40400
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 mask.a
+  name Copy1
+  note_font 微软雅黑
+  xpos 510
+  ypos -283
+ }
+ Keyer {
+  input mask
+  operation "red keyer"
+  name Keyer1
+  note_font 微软雅黑
+  xpos 510
+  ypos -195
+ }
+ Switch {
+  inputs 2
+  which {{"\[string equal \[value Keyer1.output] mask.a]"}}
+  name Switch1
+  note_font 微软雅黑
+  xpos 510
+  ypos -107
+ }
+ Dot {
+  name Dot5
+  note_font 微软雅黑
+  xpos 544
+  ypos -54
+ }
+push $N80788000
+ Copy {
+  inputs 2
+  from0 {{{parent.Keyer1.output}}}
+  to0 {{{from0}}}
+  name Copy2
+  note_font 微软雅黑
+  xpos 400
+  ypos -67
+ }
+ Output {
+  name Output1
+  xpos 400
+  ypos 17
+ }
+end_group

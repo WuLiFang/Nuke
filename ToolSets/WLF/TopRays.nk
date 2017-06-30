@@ -1,0 +1,87 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+Group {
+ inputs 0
+ name TopRays1
+ gl_color 0xff32dc00
+ label "\[knob_default speed 1]"
+ selected true
+ xpos -107
+ ypos -193
+ addUserKnob {20 tab1 l Rays}
+ addUserKnob {7 speed R 0 10}
+ speed 1
+ addUserKnob {41 translate T GodRays1.translate}
+ addUserKnob {41 rotate T GodRays1.rotate}
+ addUserKnob {41 scale T GodRays1.scale}
+ addUserKnob {41 skew T GodRays1.skew}
+ addUserKnob {41 center T GodRays1.center}
+ addUserKnob {41 from_color l "from color" T GodRays1.from_color}
+ addUserKnob {41 to_color l "to color" T GodRays1.to_color}
+ addUserKnob {41 gamma T GodRays1.gamma}
+ addUserKnob {41 steps T GodRays1.steps}
+ addUserKnob {41 max -STARTLINE T GodRays1.max}
+ addUserKnob {41 blur_size l "blur size" T Blur3.size}
+ addUserKnob {6 crop_disable l "crop to root format" +STARTLINE}
+ crop_disable true
+}
+ Noise {
+  inputs 0
+  replace true
+  size 84
+  zoffset {{x/100*parent.speed}}
+  octaves 91
+  center {960 540}
+  name Noise1
+  gl_color 0x32f4ff00
+  xpos 511
+  ypos -562
+ }
+ Crop {
+  box {0 {height-5} {width} {height}}
+  name Crop1
+  gl_color 0x32ffd300
+  xpos 511
+  ypos -508
+ }
+ GodRays {
+  translate {90 -975}
+  scale 1.75
+  center {1110 1690}
+  to_color 0
+  steps 9
+  max true
+  name GodRays1
+  gl_color 0x7732ff00
+  xpos 511
+  ypos -436
+ }
+ set C771a0400 [stack 0]
+clone $C771a0400 {
+  xpos 511
+  ypos -392
+  selected false
+ }
+ Blur {
+  size 11.2
+  name Blur3
+  gl_color 0xc032ff00
+  xpos 511
+  ypos -336
+ }
+ Crop {
+  box {0 0 {root.width} {root.height}}
+  name Crop2
+  gl_color 0xff423200
+  note_font 微软雅黑
+  xpos 511
+  ypos -306
+  disable {{"! parent.crop_disable"}}
+ }
+ Output {
+  name Output1
+  gl_color 0x3286ff00
+  xpos 511
+  ypos -199
+ }
+end_group

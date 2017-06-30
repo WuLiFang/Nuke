@@ -1,0 +1,257 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Group {
+ name Depth3Fog_1
+ tile_color 0xff8200ff
+ label "\[\nif \{! \[value this.selected]\} \{knob this.preview 0\}\nknob_default \[class this].range_gamma 1\n]"
+ selected true
+ xpos 1494
+ ypos -12908
+ addUserKnob {20 tab1 l Depth3Fog_v0.5}
+ addUserKnob {26 Range_div l Range}
+ addUserKnob {6 preview +STARTLINE}
+ preview true
+ addUserKnob {41 from0 l "depth channel" T Copy4.from0}
+ addUserKnob {41 range T Keyer1.range}
+ addUserKnob {32 avg_range l "Averge Range" T "set A \[value this.range.A]\nset B \[value this.range.B]\nset C \[value this.range.C]\nset D \[value this.range.D]\nset avg \[expr (\$D - \$A) / 3]\nknob this.range.B \[expr \$A+\$avg]\nknob this.range.C \[expr \$A+2*\$avg]" +STARTLINE}
+ addUserKnob {41 focal_point l "focal point" T ZDefocus1.focal_point}
+ addUserKnob {32 bt_close l Close -STARTLINE T "set tg \[value group.ZDefocus1.center]\nknob this.range.A \$tg"}
+ addUserKnob {32 bt_far l Far -STARTLINE T "set tg \[value group.ZDefocus1.center]\nknob this.range.D \$tg"}
+ addUserKnob {32 bt_middle l Middle -STARTLINE T "set tg \[value group.ZDefocus1.center]\nset a \[value this.range.A]\nset b \[value this.range.B]\nset c \[value this.range.C]\nset d \[value this.range.D]\nknob this.range.B \[expr (\$tg + \$a) / 2.0]\nknob this.range.C \[expr (\$tg + \$d) / 2.0]"}
+ addUserKnob {18 range_gamma l gamma R 0 4}
+ range_gamma 1
+ addUserKnob {6 range_gamma_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {41 size l erode T Dilate1.size}
+ addUserKnob {41 size_1 l "blur size" T Blur1.size}
+ addUserKnob {6 gamma_4_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 Color}
+ addUserKnob {41 black l lift T Grade1.black}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {41 add l offset T Grade1.add}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 unpremult l "(un)premult by" T Grade1.unpremult}
+ addUserKnob {41 mix T Grade1.mix}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 180
+  ypos -1594
+ }
+ Dot {
+  name Dot2
+  note_font 微软雅黑
+  xpos 214
+  ypos -1518
+ }
+set N23fefc00 [stack 0]
+ Dot {
+  name Dot4
+  note_font 微软雅黑
+  xpos 214
+  ypos -1446
+ }
+set Nd2405800 [stack 0]
+ Dot {
+  name Dot3
+  note_font 微软雅黑
+  xpos 764
+  ypos -1446
+ }
+set N9b52400 [stack 0]
+push $N9b52400
+ Copy {
+  inputs 2
+  from0 depth.Z
+  to0 rgba.alpha
+  name Copy4
+  label "depth Channel"
+  xpos 730
+  ypos -1391
+ }
+ Keyer {
+  input alpha
+  output none
+  operation "red keyer"
+  range {0.009208122268 0.01451340298 0.03698144298 0.05414418504}
+  name Keyer1
+  label "Range Picker"
+  note_font 微软雅黑
+  xpos 730
+  ypos -1331
+ }
+ ZDefocus2 {
+  channels none
+  center 0.01981868595
+  focal_point {998 442}
+  blur_dof false
+  legacy_resize_mode false
+  show_legacy_resize_mode false
+  name ZDefocus1
+  label "Depth inViewer Picker"
+  note_font 微软雅黑
+  xpos 730
+  ypos -1251
+ }
+ Dot {
+  name Dot7
+  note_font 微软雅黑
+  xpos 764
+  ypos -1110
+ }
+set N30ff2c00 [stack 0]
+ Dot {
+  name Dot8
+  note_font 微软雅黑
+  xpos 764
+  ypos -1038
+ }
+set N30ff2800 [stack 0]
+ Dot {
+  name Dot9
+  note_font 微软雅黑
+  xpos 764
+  ypos -966
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.C}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.r}}
+  white_clamp true
+  name Grade4
+  label "far to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -987
+ }
+set N30ff2000 [stack 0]
+push $N30ff2800
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.B}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.g}}
+  white_clamp true
+  name Grade3
+  label "middle to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -1059
+ }
+set N8b713c00 [stack 0]
+push $N30ff2c00
+ Grade {
+  channels alpha
+  blackpoint {{parent.Keyer1.range.A}}
+  whitepoint {{parent.Keyer1.range.D}}
+  gamma {{parent.range_gamma.b}}
+  white_clamp true
+  name Grade2
+  label "close to far"
+  note_font 微软雅黑
+  xpos 510
+  ypos -1131
+ }
+set N8b713800 [stack 0]
+push $N23fefc00
+ Dot {
+  name Dot5
+  xpos 874
+  ypos -1518
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.blue
+  name Copy3
+  xpos 840
+  ypos -472
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.green
+  name Copy2
+  xpos 840
+  ypos -400
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.red
+  name Copy1
+  xpos 840
+  ypos -328
+ }
+ Dot {
+  name Dot1
+  xpos 874
+  ypos -222
+ }
+push $N30ff2000
+push 0
+push $N8b713c00
+push $N8b713800
+ Merge2 {
+  inputs 3+1
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name Merge3
+  note_font 微软雅黑
+  xpos 400
+  ypos -979
+ }
+ Multiply {
+  channels alpha
+  value 0.3333333333
+  name Multiply1
+  note_font 微软雅黑
+  xpos 400
+  ypos -907
+ }
+ Dilate {
+  name Dilate1
+  xpos 400
+  ypos -808
+ }
+ Blur {
+  channels alpha
+  name Blur1
+  xpos 400
+  ypos -712
+ }
+ Dot {
+  name Dot6
+  note_font 微软雅黑
+  xpos 434
+  ypos -582
+ }
+push $Nd2405800
+ Grade {
+  inputs 1+1
+  black {0.009 0.025133 0.045 0}
+  black_panelDropped true
+  unpremult rgba.alpha
+  name Grade1
+  xpos 180
+  ypos -586
+ }
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name SwitchPreview
+  label Preview
+  xpos 180
+  ypos -232
+ }
+ Output {
+  name Output1
+  xpos 180
+  ypos -178
+ }
+end_group
