@@ -1,5 +1,4 @@
 # -*- coding=UTF-8 -*-
-
 import os
 import sys
 import re
@@ -7,14 +6,16 @@ import time
 import locale
 import traceback
 import json
-from subprocess import call, Popen
+import threading
+import pprint
+from subprocess import call, Popen, PIPE
 
 import nuke
 import nukescripts
 
 fps = 25
 format = 'HD_1080'
-VERSION = 1.0
+VERSION = 1.1
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -76,7 +77,7 @@ class Comp(object):
         'SH',
     ]
 
-    def __init__(self, config={}):
+    def __init__(self, config={}, multiple=False):
         self._config = dict(self.config)
         self._config.update(config)
         self._errors = []
@@ -85,13 +86,10 @@ class Comp(object):
             if isinstance(v, str):
                 self._config[k] = v.replace(u'\\', '/')
 
-        self._footage_dir = self.config['input_dir']
-
-        if config:
-            self.comp_shots()
+        if multiple:
+            self.comp_shots(config)
         else:
-            self.setup_nodes()
-            self.create_nodes()
+            self.comp_shot(config)
 
     def comp_shots(self):
         _shot_list = self.get_shot_list(self._config)
@@ -99,20 +97,16 @@ class Comp(object):
         for i, shot in enumerate(_shot_list):
             _savepath = '{}.nk'.format(os.path.join(self._config['output_dir'], shot))
             print(_savepath)
-            self._footage_dir = os.path.join(self._config['input_dir'], shot)
+            self._config['footage_dir']= os.path.join(self._config['input_dir'], shot)
 
             print(u'\n## [{1}/{2}]:\t\t{0}'.format(shot, i+1, len(_shot_list)))
                         
-            try: 
-                self.comp_shot()
-                self.output(_savepath)
-            except FootageError:
-                self._errors.append(u'{}:\t没有素材'.format(shot))
-            except:
-                self._errors.append(u'{}:\t未知错误'.format(shot))
-                traceback.printexc()
+            self.comp_shot()
+            self.output(_savepath)
 
-        # Logging.
+    def logging():
+        #TODO
+        return
         info = u'\n错误列表:\n{}\n总计:\t{}\n'.format(u'\n'.join(self._errors), len(self._errors))
         print(info)
         
@@ -123,11 +117,17 @@ class Comp(object):
             
         nukescripts.start(self._config['output_dir'].encode(SCRIPT_CODEC))
 
-    def comp_shot(self):
-        nuke.scriptClear()
-        self.import_resource()
+    def comp_shot(self, config=None):
+        pprint.pprint(config)
+        if config:
+            print(u'\n# {}'.format(config['shot']))
+            nuke.scriptClear()
+            self.import_resource()
         self.setup_nodes()
         self.create_nodes()
+        if config:
+            self.output()
+        print(u'{:-^50s}\n'.format(u'全部结束'))
 
     @staticmethod
     def get_shot_list(config):
@@ -142,6 +142,12 @@ class Comp(object):
             _ret = filter(lambda path: not os.path.exists(os.path.join(config[u'output_dir'], u'{}.nk'.format(path))), _ret)
         _ret = filter(lambda path: re.match(config['dir_pat'], path), _ret)
         _ret = filter(lambda dirname: os.path.isdir(os.path.join(_dir, dirname)), _ret)
+        
+        if not _ret:
+            _dir = _dir.rstrip('\\/')
+            _dirname = os.path.basename(_dir)
+            if re.match(config['dir_pat'], _dir):
+                _ret = [_dir]
         return _ret
 
     @staticmethod
@@ -150,27 +156,35 @@ class Comp(object):
     
     def import_resource(self):
         # Get all subdir
-        _dirs = list(x[0] for x in os.walk(self._footage_dir))
-        print(u'导入素材:')
+        _dirs = list(x[0] for x in os.walk(self._config['footage_dir']))
+        print(u'{:-^30s}'.format(u'开始 导入素材'))
         for d in _dirs:
             # Get footage in subdir
             print(u'文件夹 {}:'.format(d))
-            if not re.match(self._config['dir_pat'], os.path.basename(d)):
+            if not re.match(self._config['dir_pat'], os.path.basename(d.rstrip('\\/'))):
                 print(u'\t\t\t不匹配文件夹正则, 跳过\n'.format(d))
                 continue
 
             _footages = nuke.getFileNameList(d)
+            # if _footages:
+            _footages = filter(lambda path: not path.endswith(('副本', '.lock')), _footages)
+            _footages = filter(lambda path: re.match(self._config['footage_pat'], path), _footages)
             if _footages:
-                _footages = filter(lambda path: not path.endswith((u'副本', '.lock')), _footages)
-                _footages = filter(lambda path: re.match(self._config['footage_pat'], path), _footages)
                 for f in _footages:
                     nuke.createNode(u'Read', 'file {{{}/{}}}'.format(d, f))
                     print(u'\t' * 3 + f)
-            print(u'')
-        print(u'')
+            print('')
+        print(u'{:-^30s}'.format(u'结束 导入素材'))
+
+        if not nuke.allNodes(u'Read'):
+            raise FootageError(self._config['footage_dir'], u'没有素材')
 
     def setup_nodes(cls):
-        for n in nuke.allNodes(u'Read'):
+        _nodes = nuke.allNodes(u'Read')
+        if not _nodes:
+            raise FootageError(u'没有读取节点')
+
+        for n in _nodes:
             cls._setup_node(n)
 
         nuke.Root()['first_frame'].setValue(n['first'].value())
@@ -182,12 +196,6 @@ class Comp(object):
         _autograde = self._config['autograde']
         _tag_knob_name = self.tag_knob_name
         _bg_ch_nodes = self.get_nodes_by_tags(['BG', 'CH'])
-
-        for n in nuke.allNodes(u'Read'):
-            self._setup_node(n)
-
-        if not nuke.allNodes(u'Read'):
-            raise FootageError(u'没有读取节点')
 
         if not _bg_ch_nodes:
             raise FootageError(u'BG', u'CH')
@@ -230,6 +238,7 @@ class Comp(object):
                 label='白点: \[value this.whitepoint]\n混合:\[value this.mix]\n使亮度范围靠近0-1'
             )
             if _autograde:
+                print(u'{:-^30s}'.format(u'开始 自动亮度'))
                 _max = self._autograde_get_max(_read_node)
                 if _max < 0.5:
                     _mix = 0.3
@@ -237,7 +246,7 @@ class Comp(object):
                     _mix = 0.6
                 n['whitepoint'].setValue(_max)
                 n['mix'].setValue(_mix)
-
+                print(u'{:-^30s}'.format(u'结束 自动亮度'))
             n = nuke.nodes.Unpremult(inputs=[n])
             n = nuke.nodes.ColorCorrect(inputs=[n], label='亮度调整')
             n = nuke.nodes.ColorCorrect(inputs=[n], mix_luminance=1, label='颜色调整')
@@ -276,23 +285,34 @@ class Comp(object):
                     label=_read_node[_tag_knob_name].value()
                 )
             _bg_ch_nodes[i] = n
-
+        print(u'{:-^30s}'.format('BG CH 节点创建'))
         n = self._merge_depth(n, self.get_nodes_by_tags(['BG', 'CH']))
 
+        print(u'{:-^30s}'.format(u'整体深度节点创建'))
         self._add_zdefocus_control(n)
+        print(u'{:-^30s}'.format(u'添加虚焦控制'))
         self._add_depthfog_control(n)
+        print(u'{:-^30s}'.format(u'添加深度雾控制'))
         n = self._merge_mp(n, self._config['mp'])
-
+        print(u'{:-^30s}'.format(u'MP节点创建'))
+        
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
+        print(u'{:-^30s}'.format(u'输出节点创建'))
+        _read_jpg = nuke.nodes.Read(
+            file='[value _Write.Write_JPG_1.file]',
+            label='输出的单帧',
+            disable='{{! [file exist [value this.file]]}}',
+            tile_color=0xbfbf00ff,
+        )
+        _read_jpg.setName('Read_Write_JPG')
+        print(u'{:-^30s}'.format(u'读取输出节点创建'))
         
         map(nuke.delete, nuke.allNodes(u'Viewer'))
-        nuke.nodes.Viewer(inputs=[n.input(0), n.input(0), n, n])
+        nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
+        print(u'{:-^30s}'.format(u'设置查看器'))
 
-        if nuke.GUI:
-            autoplace_all()
-        else:
-            nuke.nodes.NoOp(label='[\npython {map(lambda n: nuke.autoplace(n), nuke.allNodes(group=nuke.Root()))}\ndelete this\n]')
+        autoplace_all()
 
     @classmethod
     def get_nodes_by_tags(cls, tags):
@@ -309,16 +329,17 @@ class Comp(object):
         _ret.sort(key=_nodes_order, reverse=True)
         return _ret
 
-    def output(self, path):
-        path = path.replace('\\', '/')
-        _dir = os.path.dirname(path)
+    def output(self):
+        print(u'{:-^30s}'.format(u'开始 输出'))
+        _path = self._config['save_path'].replace('\\', '/')
+        _dir = os.path.dirname(_path)
         if not os.path.exists(_dir):
             os.makedirs(_dir)
 
         # Save nk
-        print(u'保存为:\n\t\t\t{}\n'.format(path))
-        nuke.Root()['name'].setValue(path)
-        nuke.scriptSave(path)
+        print(u'保存为:\n\t\t\t{}\n'.format(_path))
+        nuke.Root()['name'].setValue(_path)
+        nuke.scriptSave(_path)
 
         # Render Single Frame
         write_node = nuke.toNode(u'_Write')
@@ -336,7 +357,9 @@ class Comp(object):
                     try:
                         nuke.execute(write_node, write_node.lastFrame(), write_node.lastFrame())
                     except RuntimeError:
-                        self._errors.append(u'{}:\t渲染出错'.format(os.path.basename(path)))
+                        self._errors.append(u'{}:\t渲染出错'.format(os.path.basename(_path)))
+                        raise RenderError('Write_JPG_1')
+        print(u'{:-^30s}'.format(u'结束 输出'))
 
     def _setup_node(self, n):
         def _add_knob(k):
@@ -395,6 +418,7 @@ class Comp(object):
             if rgb_max < 1:
                 break
             erode_size -= 1
+            print(u'收边 {}'.format(erode_size))
         nuke.delete(erode_node)
         
         return rgb_max
@@ -594,23 +618,48 @@ class CompDialog(nukescripts.PythonPanel):
 
     def knobChanged(self, knob):
         if knob is self.knobs()['OK']:
-            self.call_script()
+            threading.Thread(target=self.progress).start()
         elif knob is self.knobs()['info']:
             self.update()
         else:
             self.config[knob.name()] = knob.value()
             self.update()
     
-    def call_script(self):
-        self.write_config()
-        _cmd = u'START "吾立方自动合成" "{nuke}" -t {script} "{config}"'.format(
-            nuke=nuke.EXE_PATH,
-            script=os.path.normcase(__file__).rstrip(u'c'),
-            config=json.dumps(self.config).replace(u'"', r'\"').replace(u'^', r'^^')
-        ).encode(SYS_CODEC)
-        print(_cmd)
-        _proc = call(_cmd, shell=True)
-    
+    def progress(self):
+        _task = nuke.ProgressTask('批量合成')
+        _errors = ''
+
+        for i, shot in enumerate(self._shot_list):
+            if _task.isCancelled():
+              break;
+            _task.setMessage(shot)
+            _task.setProgress(i * 100 // len(self._shot_list))
+
+            self.config['shot'] = os.path.basename(shot)
+            self.config['save_path'] = os.path.join(self.config['output_dir'], '{}.nk'.format(self.config['shot']))
+            self.config['footage_dir'] = shot if os.path.isdir(shot) else os.path.join(self.config['input_dir'], self.config['shot'])
+            self.write_config()
+            _cmd = u'"{nuke}" -t {script} "{config}"'.format(
+                nuke=nuke.EXE_PATH,
+                script=os.path.normcase(__file__).rstrip(u'c'),
+                config=json.dumps(self.config).replace(u'"', r'\"').replace(u'^', r'^^')
+            ).encode(SYS_CODEC)
+            _proc = Popen(_cmd, shell=True, stderr=PIPE)
+            _stdout, _stderr = _proc.communicate()
+            if _stderr:
+                print(_stderr)
+                _errors += u'<tr><td>{}</td><td>{}</td></tr>\n'.format(self.config['shot'], _stderr.strip().split('\n')[-1])
+            if _proc.returncode:
+                _errors += u'<tr><td>{}</td><td>非正常退出码:{}</td></tr>\n'.format(self.config['shot'], _proc.returncode)
+                
+
+        if _errors:
+            _errors = u'<style>td{{padding:8px;}}</style><table><tr><th>镜头</th><th>错误</th></tr>\n{}</table>'.format(_errors)
+            with open(os.path.join(self.config['output_dir'], u'批量合成日志.html').encode(SYS_CODEC), 'w') as f:
+                f.write(_errors.encode('UTF-8'))
+            nuke.executeInMainThread(nuke.message, args=(_errors,))
+        nukescripts.start(self.config['output_dir'].encode(SCRIPT_CODEC))
+
     def update(self):
         self.update_info()
         self.set_enabled()
@@ -653,13 +702,16 @@ class CompDialog(nukescripts.PythonPanel):
 class FootageError(Exception):
     def __init__(self, *args):
         self.tags = args
-        if nuke.env['gui']:
-            nuke.message(u'找不到合成所需的素材: {}'.format(u';'.join(self.tags)))
-        else:
-            print("**错误** - 没有找到素材: {}".format(u';'.join(self.tags)).encode(SYS_CODEC))
-            
+
     def __str__(self):
-        return ';'.join(self.tags)
+        return u' # '.join(self.tags)
+
+class RenderError(Exception):
+    def __init__(self, *args):
+        self.tags = args
+
+    def __str__(self):
+        return u' # '.join(self.tags)
 
 def precomp_arnold():
     # set a ordered list of input layer
@@ -832,7 +884,13 @@ def autoplace_all():
         nuke.autoplace(n)
 
 def main():
-    Comp(json.loads(sys.argv[1]))
+    reload(sys)
+    sys.setdefaultencoding('UTF-8')
+    try:
+        Comp(json.loads(sys.argv[1]))
+    except FootageError as e:
+        print(u'** FootageError: {}\n\n'.format(e).encode(SYS_CODEC))
+        traceback.print_exc()
 
 def pause():
     # call(u'PAUSE', shell=True)
@@ -845,10 +903,9 @@ def pause():
 
 if __name__ == '__main__':
     try:
-        main()
+        main()  
     except SystemExit as e:
         exit(e)
     except:
         import traceback
-        traceback.printexc()
-        
+        traceback.print_exc()
