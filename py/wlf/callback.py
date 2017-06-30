@@ -44,9 +44,8 @@ def _cgtw():
     nuke.addOnScriptClose(on_close_callback)
 
 def _dropframe():
-    _dropframe = asset.DropFrameCheck()
-    nuke.addUpdateUI(lambda : _dropframe.getDropFrameRanges(nuke.thisNode()), nodeClass='Read')
-    nuke.addOnScriptSave(_dropframe.show)
+    nuke.addUpdateUI(lambda : asset.DropFrameCheck(nuke.thisNode()).start(), nodeClass='Read')
+    nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
 def _create_csheet():
     if nuke.numvalue('preferences.wlf_create_csheet', 0.0):

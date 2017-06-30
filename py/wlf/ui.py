@@ -22,7 +22,7 @@ def add_menu():
         m.addCommand("选中节点:添加Dots变成90度","wlf.edit.nodes_add_dots(nuke.selectedNodes())")
         m.addSeparator()
         m.addCommand("所有读取节点:修正错误" , "wlf.edit.fix_error_read()", 'F6')
-        m.addCommand("所有读取节点:检查缺帧", "wlf.asset.DropFrameCheck()()")
+        m.addCommand("所有读取节点:显示所有缺帧", "wlf.asset.DropFrameCheck.show_dialog(True)")
         m.addCommand("所有读取节点:序列替单帧", "wlf.edit.replace_sequence()")
         m.addSeparator()
         m.addCommand("所有节点:删除未使用的节点","wlf.edit.delete_unused_nodes(message=True)")
@@ -103,8 +103,6 @@ def custom_autolabel(enable_text_style=True) :
             df = ''
 
         if df :
-            if not this['disable'].value():
-                nuke.warning( '{}: [缺帧]{}'.format(this.name(), df))
 
             if enable_text_style:
                 df = '\n<span style=\"color:red\">缺帧:' + df + '</span>'
