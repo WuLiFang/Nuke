@@ -49,6 +49,5 @@ Temporary Items
 *.exe
 *.*~
 *.swp
-*/灯光合成模板_底板.jpg
 *.json
-video-processing/SceneTools/Backdrops/SNJYW_底板.jpg
+*.pyc
