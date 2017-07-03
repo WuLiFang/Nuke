@@ -1,0 +1,113 @@
+#! C:/Program Files/Nuke10.5v2/nuke-10.5.2.dll -nx
+version 10.5 v2
+Gizmo {
+tile_color 0xff7524ff
+label "mode: \[value this.mode]"
+note_font 微软雅黑
+addUserKnob {20 HighPassSharpen l HighPassSharpen_v0.1}
+addUserKnob {41 size T Blur1.size}
+addUserKnob {41 filter T Blur1.filter}
+addUserKnob {41 quality l "" -STARTLINE T Blur1.quality}
+addUserKnob {41 value l amount T Multiply1.value}
+addUserKnob {83 mode M {hard soft "highpass only"}}
+mode soft
+}
+Input {
+inputs 0
+name Input1
+gl_color 0x32ffb000
+xpos -370
+ypos -346
+}
+Dot {
+name Dot1
+gl_color 0x32ff6d00
+note_font 微软雅黑
+xpos -336
+ypos -320
+}
+set N28aae000 [stack 0]
+push $N28aae000
+Blur {
+size 37.5
+name Blur1
+gl_color 0x32ffc000
+note_font 微软雅黑
+xpos -370
+ypos -302
+}
+Merge2 {
+inputs 2
+operation minus
+name Merge1
+gl_color 0x324dff00
+note_font 微软雅黑
+xpos -260
+ypos -302
+}
+Multiply {
+value 1.04
+name Multiply1
+gl_color 0xff6c3200
+note_font 微软雅黑
+xpos -260
+ypos -274
+}
+Add {
+value 0.5
+name Add1
+gl_color 0x32ffe000
+note_font 微软雅黑
+xpos -260
+ypos -230
+}
+set N9f1bd400 [stack 0]
+Viewer {
+frame_range 1-100
+fps 25
+input_process false
+name Viewer1
+gl_color 0x32f9ff00
+note_font 微软雅黑
+xpos -260
+ypos -186
+}
+push $N9f1bd400
+push $N9f1bd400
+push $N28aae000
+Merge2 {
+inputs 2
+operation soft-light
+name Merge3
+gl_color 0x32ffbc00
+note_font 微软雅黑
+xpos -40
+ypos -186
+}
+push $N9f1bd400
+push $N28aae000
+Merge2 {
+inputs 2
+operation hard-light
+name Merge2
+gl_color 0x32ffbc00
+note_font 微软雅黑
+xpos -150
+ypos -158
+}
+Switch {
+inputs 3
+which {{parent.knob.mode}}
+name Switch1
+gl_color 0xff329d00
+note_font 微软雅黑
+xpos -40
+ypos -158
+}
+Output {
+name Output1
+gl_color 0xc532ff00
+xpos -40
+ypos -130
+}
+end_group
