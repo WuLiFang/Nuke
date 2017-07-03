@@ -13,7 +13,7 @@ if os.path.exists(CGTW_PATH):
     sys.path.append(CGTW_PATH)
     import cgtw
 else:
-    nuke.error(u'CGTeamWork路径不存在: {}'.format(CGTW_PATH).encode('UTF-8'))
+    nuke.error('CGTeamWork路径不存在: {}'.format(CGTW_PATH))
 
 
 VERSION = 0.21
@@ -135,15 +135,9 @@ class IDError(Exception):
         self.message = args
 
     def __str__(self):
-        return u'找不到对应条目:{}'.format(self.message).encode('UTF-8')
+        return '找不到对应条目:{}'.format(self.message)
 
 
 class LoginError(Exception):
     def __str__(self):
-        return u'CGTeamWork服务器未连接'.encode('UTF-8')
-    
-
-if __name__ == '__main__':
-    import cgteamwork
-    reload(cgteamwork)
-    addMenu()
+        return 'CGTeamWork服务器未连接'

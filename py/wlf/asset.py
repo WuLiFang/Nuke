@@ -25,7 +25,6 @@ class DropFrameCheck(threading.Thread):
         
     def run(self):
         self.lock.acquire()
-        self.setup_node()
         self.record()
         self.lock.release()
         
@@ -34,19 +33,19 @@ class DropFrameCheck(threading.Thread):
         if self._node.name().startswith(self._prefix):
             return _ret
         
-        _read_framerange = self._node.frameRange()
+        _read_framerange = xrange(self._node.firstFrame(), self._node.lastFrame() + 1)
         for f in _read_framerange:
             _file = self.expand_frame(nuke.filename(self._node), f)
-            if not os.path.isfile(_file):
+            if not os.path.isfile(_file.decode('UTF-8').encode(SYS_CODEC)):
                 _ret.add([f])
         _ret.compact()
         return _ret
 
     def setup_node(self):
         def _add_knob():
-                k = nuke.String_Knob(self.knob_name, '缺帧')
-                k.setEnabled(False)
-                self._node.addKnob(k)
+            k = nuke.String_Knob(self.knob_name, '缺帧')
+            k.setEnabled(False)
+            self._node.addKnob(k)
 
         if not nuke.exists(self._knob_tcl_name):
             nuke.executeInMainThreadWithResult(_add_knob)
@@ -54,10 +53,11 @@ class DropFrameCheck(threading.Thread):
     def record(self):
         _dropframes = str(self.dropframe_ranges())
         def _set_knob():
+            self.setup_node()
             self._node['dropframes'].setValue(_dropframes)
             if not self._node['disable'].value():
                 nuke.warning('{}: [缺帧]{}'.format(self._node.name(), _dropframes))
-        if _dropframes != self._node[self.knob_name].value():
+        if _dropframes != nuke.value(self._knob_tcl_name, ''):
             nuke.executeInMainThreadWithResult(_set_knob)
         
     def expand_frame(self, filename, frame):

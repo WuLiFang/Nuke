@@ -12,10 +12,13 @@ import pref
 import ui
 import cgtw
 
+
 SYS_CODEC = locale.getdefaultlocale()[1]
+
 
 def init():
     nuke.addBeforeRender(create_out_dirs, nodeClass='Write')
+
 
 def menu():
     _dropframe()
@@ -29,10 +32,12 @@ def menu():
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
-    nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(_create_csheet)
+    nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addAutolabel(ui.custom_autolabel)
+
+
 def _cgtw():
     def on_close_callback():
         if nuke.modified():
@@ -49,7 +54,8 @@ def _dropframe():
 
 def _create_csheet():
     if nuke.numvalue('preferences.wlf_create_csheet', 0.0):
-        csheet.create_csheet()
+        if not nuke.modified() and nuke.value('root.name'):
+            csheet.ContactSheetThread().run(new_process=True)
 
 def _check_project():
     if not nuke.value('root.project_directory'):
@@ -86,8 +92,8 @@ def _gizmo_to_group_on_create():
 
     if not isinstance(n, nuke.Gizmo):
         return
-        # Avoid scripted gizmo.
 
+    # Avoid scripted gizmo.
     if nuke.knobChangeds.get(n.Class()):
         return
 
