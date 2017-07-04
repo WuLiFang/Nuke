@@ -88,12 +88,11 @@ def custom_autolabel(enable_text_style=True) :
     '''
     add addition information on Node in Gui
     '''
-    a = autolabel().split( '\n' )[0]
-    b = '\n'.join( autolabel().split( '\n' )[1:] )
+    _autolabel = autolabel()
+    a = _autolabel.split( '\n' )[0]
+    b = '\n'.join( _autolabel.split( '\n' )[1:] )
     s = ''
     this = nuke.thisNode()
-    if not this:
-        return
     if this.Class() == 'Keyer' :
         s = '输入通道 : ' + nuke.value( 'this.input' )
     elif this.Class() == 'Read' :
