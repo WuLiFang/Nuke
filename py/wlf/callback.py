@@ -146,6 +146,9 @@ def add_dropdata_callback():
             
     def _else(type, data):
         if type == 'text/plain':
+            if data.startswith('file:///Y:'):
+                data = data[8:]
+                print(data)
             nuke.createNode('Read', 'file "{}"'.format(data))
             return True
         else:
@@ -178,6 +181,7 @@ def add_dropdata_callback():
     nukescripts.addDropDataCallback(_fbx)
     nukescripts.addDropDataCallback(_vf)
     nukescripts.addDropDataCallback(_db)
+    nukescripts.addDropDataCallback(_else)
     nukescripts.addDropDataCallback(_dir)
     
     def _catch_all(type, data):
