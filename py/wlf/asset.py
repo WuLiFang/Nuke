@@ -38,7 +38,7 @@ class DropFrameCheck(threading.Thread):
         _read_framerange = xrange(self._node.firstFrame(), self._node.lastFrame() + 1)
         for f in _read_framerange:
             _file = self.expand_frame(nuke.filename(self._node), f)
-            _file = os.path.join(nuke.Root()['project_directory'].evaluate(), _file)
+            _file = os.path.join(nuke.value('root.project_directory', ''), _file)
             if not os.path.isfile(_file.decode('UTF-8').encode(SYS_CODEC)):
                 _ret.add([f])
         _ret.compact()

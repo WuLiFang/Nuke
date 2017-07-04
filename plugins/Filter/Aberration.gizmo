@@ -363,7 +363,7 @@ push $N22af9000
  Transform {
   translate {{abbrX*grn} {abbrY*grn}}
   rotate {{abbrRot*(grn/10)}}
-  center {{input0.width/2} {input0.height2}}
+  center {{input0.width/2} {input0.height/2}}
   filter Mitchell
   clamp true
   black_outside false

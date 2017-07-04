@@ -88,35 +88,31 @@ def custom_autolabel(enable_text_style=True) :
     '''
     add addition information on Node in Gui
     '''
-    _autolabel = autolabel()
-    a = _autolabel.split( '\n' )[0]
-    b = '\n'.join( _autolabel.split( '\n' )[1:] )
-    s = ''
-    this = nuke.thisNode()
-    if this.Class() == 'Keyer' :
+    _class = nuke.thisNode().Class()
+    def _add_to_autolabel(s):
+        if not isinstance(s, str):
+            return
+        _ret = autolabel().split('\n')
+        _ret.insert(1, s)
+        _ret = '\n'.join(_ret).rstrip('\n')
+        return _ret
+        
+    if _class == 'Keyer' :
         s = '输入通道 : ' + nuke.value( 'this.input' )
-    elif this.Class() == 'Read' :
-        try:
-            df = this['dropframes'].value()
-        except NameError:
-            df = ''
-
-        if df :
-
+    elif _class == 'Read' :
+        df = nuke.value('this.dropframes', '')
+        if df:
             if enable_text_style:
-                df = '\n<span style=\"color:red\">缺帧:' + df + '</span>'
+                df = '\n<span style=\"color:red\">缺帧:{}</span>'.format(df)
             else:
                 df = '\n缺帧:' + df
-        else :
-            df = ''
-
         if enable_text_style:
             s = '<span style=\"color:#548DD4;font-family:微软雅黑\"><b> 帧范围 :</b></span> '\
                 '<span style=\"color:red\">' + nuke.value( 'this.first' ) + ' - ' + nuke.value( 'this.last' ) + '</span>'\
                 + df
         else:
-            s = '帧范围 :' + nuke.value( 'this.first' ) + ' - ' + nuke.value( 'this.last' ) + df
-    elif this.Class() == 'Shuffle' :
+            s = '帧范围 :' + nuke.value('this.first') + ' - ' + nuke.value('this.last')
+    elif _class == 'Shuffle' :
         ch = dict.fromkeys( [ 'in', 'in2', 'out', 'out2'], '' )
         for i in ch.keys() :
             v = nuke.value( 'this.' + i)
@@ -126,13 +122,4 @@ def custom_autolabel(enable_text_style=True) :
     else:
         return
 
-    # join result
-    if s :
-        result = '\n'.join( [ a, s, b ] )
-    elif b:
-        result = '\n'.join( [ a, b ] )
-    else :
-        result = a
-    result = result.rstrip( '\n' )
-    return result
-
+    return _add_to_autolabel(s)
