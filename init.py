@@ -8,4 +8,6 @@ import wlf
 nuke.pluginAddPath('plugins')
 wlf.callback.init()
 wlf.pref.set_knob_default()
-os.environ['NUKE_FONT_PATH'] = '//SERVER/scripts/NukePlugins/Fonts'
+# _dir = '//SERVER/scripts/NukePlugins/Fonts'
+# if os.path.isdir(_dir):
+    # os.environ['NUKE_FONT_PATH'] = _dir
