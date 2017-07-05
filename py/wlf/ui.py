@@ -36,7 +36,12 @@ def add_menu():
         m.addCommand('吾立方自动合成',"wlf.Comp()",icon='autocomp.png')
         m.addCommand('吾立方批量合成',"wlf.Comp.show_dialog()",icon='autocomp.png')
         m.addCommand('arnold预合成',"wlf.comp.precomp_arnold()",icon='autocomp.png')
-        m.addCommand('色板\\/成果上传', 'import wlf.SceneTools;wlf.SceneTools.call_from_nuke()')
+        _path = os.path.abspath(os.path.join(__file__, '../scenetools.exe'))
+        if os.path.isfile(_path):
+            _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
+        else:
+            _cmd = 'import wlf.scenetools;wlf.scenetools.call_from_nuke()'
+        m.addCommand('色板\\/成果上传', _cmd)
 
     def _nukecgtw(menu):
 

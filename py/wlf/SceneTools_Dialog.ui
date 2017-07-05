@@ -326,7 +326,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="openCSheetButton">
+          <widget class="QPushButton" name="openButton">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -459,7 +459,134 @@
     </widget>
    </item>
   </layout>
+  <action name="actionSheet">
+   <property name="text">
+    <string>sheet</string>
+   </property>
+  </action>
+  <action name="actionSync">
+   <property name="text">
+    <string>sync</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>open</string>
+   </property>
+  </action>
+  <action name="actionServer">
+   <property name="text">
+    <string>server</string>
+   </property>
+  </action>
+  <action name="actionDir">
+   <property name="text">
+    <string>dir</string>
+   </property>
+  </action>
+  <action name="actionNuke">
+   <property name="text">
+    <string>nuke</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>dirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionDir</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>195</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nukeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionNuke</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>140</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>syncButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionSync</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>386</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sheetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionSheet</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>160</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>openButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionOpen</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>serverButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionServer</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

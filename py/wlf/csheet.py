@@ -12,7 +12,6 @@ import nuke
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
-
 class ContactSheet(object):
     shot_width, shot_height = 1920, 1080
     contactsheet_shot_width, contactsheet_shot_height = 1920, 1160
@@ -97,8 +96,7 @@ class ContactSheet(object):
         _reformat_node = n
         n = nuke.nodes.Transform(
             inputs=[_contactsheet_node],
-            translate='{1250*_Reformat_Backdrop.scale} {100*_Reformat_Backdrop.scale}',
-            center='{input.width/2} {input.height/2}'
+            translate='{205*_Reformat_Backdrop.scale} {15*_Reformat_Backdrop.scale}',
         )
         _transform_node = n
         n = nuke.nodes.Merge2(inputs=[_reformat_node, _transform_node])
@@ -112,7 +110,7 @@ class ContactSheet(object):
         self._write_node = n
 
     def output(self):
-        #nuke.scriptSave('E:\\temp.nk')
+        nuke.scriptSave('E:\\temp.nk')
         print(u'输出色板:\t\t{}'.format(self._config['csheet']))
         nuke.render(self._write_node, 1, 1)
 
