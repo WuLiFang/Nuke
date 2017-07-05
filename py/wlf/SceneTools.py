@@ -472,6 +472,8 @@ if __name__ == '__main__':
         main()
     except SingleInstanceException as e:
         active_pid(Config()['PID'])
+    except SystemExit as e:
+        sys.exit(e)
     except:
         import traceback
         traceback.print_exc()
