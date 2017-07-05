@@ -57,8 +57,8 @@ class Config(dict):
         print(key, value)
         if key == 'DIR':
             self.change_dir(value)
-        self.set_path()
         dict.__setitem__(self, key, value)
+        self.set_path()
         self.write()
 
     def write(self):
@@ -268,30 +268,30 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         self.version_label.setText('v{}'.format(VERSION))
 
         self.edits_key = {
-                            self.serverEdit: 'SERVER', 
-                            self.videoFolderEdit: 'SVIDEO_FOLDER', 
-                            self.imageFolderEdit: 'SIMAGE_FOLDER', 
-                            self.nukeEdit: 'NUKE', 
-                            self.dirEdit: 'DIR', 
-                            self.projectEdit: 'PROJECT', 
-                            self.epEdit: 'EP', 
-                            self.scEdit: 'SCENE', 
-                            self.csheetFFNameEdit: 'CSHEET_FFNAME', 
-                            self.csheetPrefixEdit: 'CSHEET_PREFIX', 
-                            self.imageFNameEdit: 'IMAGE_FNAME', 
-                            self.videoFNameEdit: 'VIDEO_FNAME', 
-                            self.videoDestEdit: 'video_dest', 
-                            self.imageDestEdit: 'image_dest', 
-                            self.csheetNameEdit: 'csheet_name', 
-                            self.csheetDestEdit: 'csheet_dest',
-                            self.imageUpCheck: 'isImageUp', 
-                            self.imageDownCheck: 'isImageDown', 
-                            self.videoUpCheck: 'isVideoUp', 
-                            self.videoDownCheck: 'isVideoDown', 
-                            self.csheetUpCheck: 'isCSheetUp', 
-                            self.csheetOpenCheck: 'isCSheetOpen',
-                            self.backDropBox: 'backdrop_name'
-                         }
+            self.serverEdit: 'SERVER', 
+            self.videoFolderEdit: 'SVIDEO_FOLDER', 
+            self.imageFolderEdit: 'SIMAGE_FOLDER', 
+            self.nukeEdit: 'NUKE', 
+            self.dirEdit: 'DIR', 
+            self.projectEdit: 'PROJECT', 
+            self.epEdit: 'EP', 
+            self.scEdit: 'SCENE', 
+            self.csheetFFNameEdit: 'CSHEET_FFNAME', 
+            self.csheetPrefixEdit: 'CSHEET_PREFIX', 
+            self.imageFNameEdit: 'IMAGE_FNAME', 
+            self.videoFNameEdit: 'VIDEO_FNAME', 
+            self.videoDestEdit: 'video_dest', 
+            self.imageDestEdit: 'image_dest', 
+            self.csheetNameEdit: 'csheet_name', 
+            self.csheetDestEdit: 'csheet_dest',
+            self.imageUpCheck: 'isImageUp', 
+            self.imageDownCheck: 'isImageDown', 
+            self.videoUpCheck: 'isVideoUp', 
+            self.videoDownCheck: 'isVideoDown', 
+            self.csheetUpCheck: 'isCSheetUp', 
+            self.csheetOpenCheck: 'isCSheetOpen',
+            self.backDropBox: 'backdrop_name'
+        }
         self._config = Config()
         self._sync = Sync()
 
@@ -341,10 +341,8 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         self.show()
 
     def open_sheet(self):
-        csheet = self._config['csheet']
         if os.path.exists(self._config['csheet']):
-            cmd = u'EXPLORER "{}"'.format(csheet)
-            cmd = unicode(cmd).encode(SYS_CODEC)
+            url_open('file://' + self._config['csheet'])
 
     def update(self):
         def _edits():
@@ -455,7 +453,11 @@ def call_from_nuke():
     frame.show()
 
 def active_pid(pid):
-    Popen('"{}" "{}"'.format(os.path.abspath(os.path.join(__file__, '../active_pid.exe')), format(pid)))
+    Popen('"{}" "{}"'.format(os.path.abspath(os.path.join(__file__, '../active_pid.exe')), pid))
+
+def url_open(url):
+    _cmd = "rundll32.exe url.dll,FileProtocolHandler {}".format(url)
+    Popen(_cmd)
 
 if __name__ == '__main__':
     try:

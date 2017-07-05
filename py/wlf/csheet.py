@@ -20,6 +20,7 @@ class ContactSheet(object):
         self.read_config()
         nuke.scriptClear()
         nuke.Root()['project_directory'].setValue(os.getcwd().replace('\\', '/'))
+        nuke.knob('root.format', '1920 1080')
         self.create_nodes()
         self.output()
 
@@ -74,8 +75,8 @@ class ContactSheet(object):
         n.addKnob(k)
         _contactsheet_node = n
 
+        print(u'使用背板:\t\t{}'.format(self._config['backdrop']))
         if os.path.isfile(self._config['backdrop'].encode(SYS_CODEC)):
-            print(u'使用背板:\t\t{}'.format(self._config['backdrop']))
             n = nuke.nodes.Read()
             n['file'].fromUserText(self._config['backdrop'].encode('UTF-8'))
             if n.hasError():
@@ -89,15 +90,17 @@ class ContactSheet(object):
             type='scale',
             scale='{_Csheet.width/input.width*backdrop_scale}'
         )
-        n.setName('_Reformat_Backdrop')
         k = nuke.Double_Knob('backdrop_scale', '背板缩放')
         k.setValue(1.13365)
         n.addKnob(k)
+        n.setName('_Reformat_Backdrop')
+        print(u'底板 scale: {}, width: {}, height: {}'.format(n['scale'].value(), n.width(), n.height()))
         _reformat_node = n
         n = nuke.nodes.Transform(
             inputs=[_contactsheet_node],
-            translate='{205*_Reformat_Backdrop.scale} {15*_Reformat_Backdrop.scale}',
+            translate='{0.108*_Reformat_Backdrop.width} {0.018*_Reformat_Backdrop.height}',
         )
+        print(u'联系表 translate: {}'.format(n['translate'].value(),))
         _transform_node = n
         n = nuke.nodes.Merge2(inputs=[_reformat_node, _transform_node])
         n = nuke.nodes.Write(
@@ -110,7 +113,7 @@ class ContactSheet(object):
         self._write_node = n
 
     def output(self):
-        nuke.scriptSave('E:\\temp.nk')
+        # nuke.scriptSave('E:\\temp.nk')
         print(u'输出色板:\t\t{}'.format(self._config['csheet']))
         nuke.render(self._write_node, 1, 1)
 
