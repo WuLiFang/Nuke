@@ -25,7 +25,7 @@ class Config(dict):
         'SIMAGE_FOLDER': r'Comp\image', 
         'SVIDEO_FOLDER': r'Comp\mov', 
         'NUKE': r'C:\Program Files\Nuke10.0v4\Nuke10.0.exe', 
-        'DIR': '', 
+        'DIR': 'N://', 
         'PROJECT': 'SNJYW', 
         'EP': '', 
         'SCENE': '', 
@@ -51,7 +51,10 @@ class Config(dict):
     def __init__(self):
         self.update(dict(self.default))
         self.read()
-        os.chdir(self['DIR'])
+        try:
+            os.chdir(self['DIR'])
+        except WindowsError as e:
+            print(e)
 
     def __setitem__(self, key, value):
         print(key, value)
