@@ -54,13 +54,12 @@ def add_menu():
         m.addCommand("批量下载", r'nukescripts.start(r"\\SERVER\scripts\NukePlugins\CGTeamWork工具\nukecgtw批量下载.bat")')
 
     def _create_node_menu():
-        _plugin_path = '../../plugins'
+        _plugin_path = '../../../plugins'
 
         m = nuke.menu("Nodes")
         m = m.addMenu('吾立方', icon='Modify.png')
-        os.chdir(os.path.dirname(__file__))
-        
-        create_menu_by_dir(m, _plugin_path)
+        nuke.tprint(os.path.abspath(os.path.join(__file__, _plugin_path)))
+        create_menu_by_dir(m, os.path.abspath(os.path.join(__file__, _plugin_path)))
         m.addCommand("吾立方网站", "nukescripts.start('http://www.wlf-studio.com/')")
 
     _menubar = nuke.menu("Nuke")
@@ -83,12 +82,13 @@ def create_menu_by_dir(parent, dir):
         if i == 'icons':
             continue
         _abspath = os.path.join(_dir, i)
-        _name, _ext = os.path.splitext(i)
         if os.path.isdir(_abspath):
-            n = parent.addMenu(i, icon='{}.png'.format(i))            
-            create_menu_by_dir(n, _abspath)
-        elif _ext.lower() == '.gizmo':
-            parent.addCommand(_name, 'nuke.createNode("{0}")'.format(_name), icon='{}.png'.format(_name))
+            m = nuke.menu('Nodes').findItem(i) or parent.addMenu(i, icon='{}.png'.format(i))      
+            create_menu_by_dir(m, _abspath)
+        else:
+            _name, _ext = os.path.splitext(i)
+            if _ext.lower() == '.gizmo':
+                parent.addCommand(_name, 'nuke.createNode("{0}")'.format(_name), icon='{}.png'.format(_name))
             
 def custom_autolabel(enable_text_style=True) :
     '''

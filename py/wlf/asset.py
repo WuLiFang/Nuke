@@ -59,11 +59,11 @@ class DropFrameCheck(threading.Thread):
     def record(self):
         _dropframes = str(self.dropframe_ranges())
         def _set_knob():
-            self.setup_node()
             self._node['dropframes'].setValue(_dropframes)
             if _dropframes:
                 nuke.warning('{}: [dropframnes]{}'.format(self._node.name(), _dropframes))
         if _dropframes != nuke.value(self._knob_tcl_name, ''):
+            self.setup_node()
             nuke.executeInMainThreadWithResult(_set_knob)
         
     def expand_frame(self, filename, frame):
