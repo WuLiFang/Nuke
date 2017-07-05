@@ -36,7 +36,13 @@ def add_menu():
         m.addCommand('吾立方自动合成',"wlf.Comp()",icon='autocomp.png')
         m.addCommand('吾立方批量合成',"wlf.Comp.show_dialog()",icon='autocomp.png')
         m.addCommand('arnold预合成',"wlf.comp.precomp_arnold()",icon='autocomp.png')
-        m.addCommand('色板\\/成果上传', 'import wlf.SceneTools;wlf.SceneTools.call_from_nuke()')
+        _path = os.path.abspath(os.path.join(__file__, '../scenetools.exe'))
+        if os.path.isfile(_path):
+            _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
+        else:
+            nuke.tprint('wlf.scenetools: use uncomplied version')
+            _cmd = 'import wlf.scenetools;wlf.scenetools.call_from_nuke()'
+        m.addCommand('色板\\/成果上传', _cmd)
 
     def _nukecgtw(menu):
 
@@ -88,36 +94,31 @@ def custom_autolabel(enable_text_style=True) :
     '''
     add addition information on Node in Gui
     '''
-    a = autolabel().split( '\n' )[0]
-    b = '\n'.join( autolabel().split( '\n' )[1:] )
-    s = ''
-    this = nuke.thisNode()
-    if not this:
-        return
-    if this.Class() == 'Keyer' :
+    _class = nuke.thisNode().Class()
+    def _add_to_autolabel(s):
+        if not isinstance(s, str):
+            return
+        _ret = autolabel().split('\n')
+        _ret.insert(1, s)
+        _ret = '\n'.join(_ret).rstrip('\n')
+        return _ret
+        
+    if _class == 'Keyer' :
         s = '输入通道 : ' + nuke.value( 'this.input' )
-    elif this.Class() == 'Read' :
-        try:
-            df = this['dropframes'].value()
-        except NameError:
-            df = ''
-
-        if df :
-
+    elif _class == 'Read' :
+        df = nuke.value('this.dropframes', '')
+        if df:
             if enable_text_style:
-                df = '\n<span style=\"color:red\">缺帧:' + df + '</span>'
+                df = '\n<span style=\"color:red\">缺帧:{}</span>'.format(df)
             else:
                 df = '\n缺帧:' + df
-        else :
-            df = ''
-
         if enable_text_style:
             s = '<span style=\"color:#548DD4;font-family:微软雅黑\"><b> 帧范围 :</b></span> '\
                 '<span style=\"color:red\">' + nuke.value( 'this.first' ) + ' - ' + nuke.value( 'this.last' ) + '</span>'\
                 + df
         else:
-            s = '帧范围 :' + nuke.value( 'this.first' ) + ' - ' + nuke.value( 'this.last' ) + df
-    elif this.Class() == 'Shuffle' :
+            s = '帧范围 :' + nuke.value('this.first') + ' - ' + nuke.value('this.last')
+    elif _class == 'Shuffle' :
         ch = dict.fromkeys( [ 'in', 'in2', 'out', 'out2'], '' )
         for i in ch.keys() :
             v = nuke.value( 'this.' + i)
@@ -127,13 +128,4 @@ def custom_autolabel(enable_text_style=True) :
     else:
         return
 
-    # join result
-    if s :
-        result = '\n'.join( [ a, s, b ] )
-    elif b:
-        result = '\n'.join( [ a, b ] )
-    else :
-        result = a
-    result = result.rstrip( '\n' )
-    return result
-
+    return _add_to_autolabel(s)

@@ -1,5 +1,4 @@
 #! C:/Program Files/Nuke10.5v2/nuke-10.5.2.dll -nx
-version 10.5 v2
 Gizmo {
 tile_color 0xff7524ff
 label "mode: \[value this.mode]"

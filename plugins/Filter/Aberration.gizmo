@@ -1,8 +1,10 @@
-#! D:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
-version 7.0 v6
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
 Gizmo {
  inputs 2
  tile_color 0xe89900ff
+ gl_color 0xf832ff00
+ note_font 微软雅黑
  addUserKnob {20 aberration l "Chromatic Aberration"}
  addUserKnob {7 colorBalance l "Aberration Multiplier" R -1 1}
  colorBalance 0.2
@@ -38,30 +40,30 @@ Gizmo {
  addUserKnob {6 cntrMask l "Use Center Mask" +STARTLINE}
  cntrMask true
  addUserKnob {7 maskErode l Shape R -300 300}
- maskErode 40
  addUserKnob {7 maskSoft l Soften R 0 1000.3}
- maskSoft 265
  addUserKnob {7 scaleMask l Scale R 0.1 2}
- scaleMask 0.99
+ scaleMask 1
  addUserKnob {6 showMask l "Show Mask" +STARTLINE}
  addUserKnob {41 MaskColor l "Mask Color" T Multiply1.value}
  addUserKnob {20 endGroup_3 l endGroup n -1}
  addUserKnob {26 ""}
  addUserKnob {41 which l Mix T DissolveMask.which}
- addUserKnob {6 invrt l "Use Mask" -STARTLINE}
+ addUserKnob {6 usmask l "Use Mask" -STARTLINE}
+ addUserKnob {6 invrt l Invert -STARTLINE}
 }
  Input {
   inputs 0
   name Image
+  gl_color 0x3264ff00
   xpos 643
   ypos -278
  }
-set N2779d2a0 [stack 0]
-push $N2779d2a0
+set N21a1e400 [stack 0]
+push $N21a1e400
  Input {
   inputs 0
   name Mask
-  selected true
+  gl_color 0x32ffa900
   xpos 326
   ypos 272
   number 1
@@ -96,9 +98,8 @@ push $N2779d2a0
   toolbar_source_transform_center {960 540}
   view {}
   motionblur_on true
-  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
   name Roto1
-  selected true
+  gl_color 0xffef3200
   xpos 326
   ypos 298
  }
@@ -106,39 +107,44 @@ push $N2779d2a0
   channels rgba
   clamp true
   name Invert1
+  gl_color 0x32fffc00
   selected true
   xpos 326
   ypos 324
   disable {{invrt==0}}
  }
-push $N2779d2a0
-push $N2779d2a0
+push $N21a1e400
+push $N21a1e400
  Radial {
   cliptype none
   replace true
   area {{curve i} {curve i} {input0.width i} {input0.height i}}
   name Radial1
+  gl_color 0x32eaff00
   xpos -540
   ypos -278
  }
  Invert {
   channels rgba
   name Invert2
+  gl_color 0x32ffb600
   xpos -540
   ypos -252
  }
-set N2779e3d0 [stack 0]
+set N21a60000 [stack 0]
  Dot {
   name Dot2
+  gl_color 0x32ff7400
   xpos -506
   ypos 402
  }
-push $N2779d2a0
+push $N21a1e400
  Radial {
   cliptype none
   replace true
   area {{curve} {curve} {input0.width} {input0.height}}
   name Radial2
+  gl_color 0x325cff00
   xpos 102
   ypos -185
  }
@@ -146,12 +152,14 @@ push $N2779d2a0
   scale {{scaleMask}}
   center {{input0.width/2} {input.height/2}}
   name scale_mask
+  gl_color 0x3292ff00
   xpos 102
   ypos -159
  }
  Clamp {
   channels rgba
   name Clamp1
+  gl_color 0xffb13200
   xpos 102
   ypos -133
  }
@@ -159,6 +167,7 @@ push $N2779d2a0
   channels rgba
   size {{-1*maskErode}}
   name FilterErode1
+  gl_color 0x32ff4200
   xpos 102
   ypos -102
  }
@@ -166,24 +175,27 @@ push $N2779d2a0
   channels rgba
   size {{maskSoft}}
   name Blur4
+  gl_color 0x32ff3400
   xpos 102
   ypos -76
  }
-set N279106d0 [stack 0]
-push $N2779d2a0
+set N21aae800 [stack 0]
+push $N21a1e400
  Shuffle {
   alpha white
   name Shuffle1
+  gl_color 0xa732ff00
   label "\[knob in]"
   xpos 276
   ypos -105
  }
-set N27910a40 [stack 0]
+set N21aae400 [stack 0]
  Shuffle {
   green red
   blue red
   alpha white
   name ShuffleRed1
+  gl_color 0xff32a300
   xpos 153
   ypos 22
  }
@@ -191,10 +203,11 @@ set N27910a40 [stack 0]
   inputs 2
   operation mask
   name Merge7
+  gl_color 0xff32fe00
   xpos 102
   ypos 73
  }
-push $N2779e3d0
+push $N21a60000
  Transform {
   translate {{curve R 0 1} {curve R 0 1}}
   rotate {{curve R 0 1}}
@@ -202,16 +215,18 @@ push $N2779e3d0
   motionblur 1
   shutteroffset centred
   name vectorGen
+  gl_color 0x4c32ff00
   xpos -477
   ypos 188
  }
-set N27911490 [stack 0]
-push $N2779e3d0
-push $N2779d2a0
+set N22af9800 [stack 0]
+push $N21a60000
+push $N21a1e400
  Grade {
   multiply {{1/parent.channelSelectOffst.multiply}}
   black_clamp false
   name Grade1
+  gl_color 0xff6d3200
   xpos -202
   ypos -216
  }
@@ -219,15 +234,17 @@ push $N2779d2a0
   multiply 34516
   black_clamp false
   name channelSelectOffst
+  gl_color 0xffb53200
   xpos -202
   ypos -190
  }
-set N27911b70 [stack 0]
+set N22af9000 [stack 0]
  Shuffle {
   green red
   blue red
   alpha red
   name ShuffleRed
+  gl_color 0x327bff00
   xpos -352
   ypos -120
  }
@@ -239,6 +256,7 @@ set N27911b70 [stack 0]
   clamp true
   black_outside false
   name abbr_red
+  gl_color 0xeaff3200
   xpos -352
   ypos -94
  }
@@ -246,6 +264,7 @@ set N27911b70 [stack 0]
   skewX {{abrTop*red i}}
   center {{input0.width/2 i} 0}
   name abrTop2
+  gl_color 0xffbe3200
   xpos -352
   ypos -68
  }
@@ -253,6 +272,7 @@ set N27911b70 [stack 0]
   skewX {{abrBtm*red i}}
   center {{input0.width/2 i} {input0.height i}}
   name abrBottom2
+  gl_color 0xd8ff3200
   xpos -352
   ypos -42
  }
@@ -262,22 +282,25 @@ set N27911b70 [stack 0]
   center {{input0.width/2} {input0.height/2}}
   steps 10
   name RadialAbbr1
+  gl_color 0x32ffe700
   xpos -352
   ypos 148
  }
  Blur {
   inputs 1+1
   channels rgb
-  size {{soft*red i}}
+  size {{soft*red}}
   name Blur1
-  xpos -352
-  ypos 174
-  disable {{usmask==0 i}}
+  gl_color 0xff963200
+  xpos -363
+  ypos 185
+  disable {{usmask==0}}
  }
  MotionBlur2D {
   inputs 2
   shutteroffset centred
   name MotionBlur2D1
+  gl_color 0x6e32ff00
   xpos -352
   ypos 219
  }
@@ -286,29 +309,33 @@ set N27911b70 [stack 0]
   uv forward
   scale {{blend*(red/100)}}
   name OpticalBlur1
+  gl_color 0x8032ff00
   xpos -352
   ypos 245
  }
  Merge2 {
   inputs 2
   name Merge4
+  gl_color 0x3233ff00
   xpos -352
   ypos 302
   disable {{cntrMask==0}}
  }
  Dot {
   name Dot1
+  gl_color 0xff327b00
   xpos -318
   ypos 335
  }
-push $N279106d0
-push $N27910a40
+push $N21aae800
+push $N21aae400
  Shuffle {
   red green
   blue green
   alpha white
   name ShuffleGreen1
   tile_color 0x2e7435ff
+  gl_color 0xeb32ff00
   xpos 240
   ypos 95
  }
@@ -316,29 +343,32 @@ push $N27910a40
   inputs 2
   operation mask
   name Merge6
+  gl_color 0xffd73200
   xpos 203
   ypos 133
  }
-push $N27911490
-push $N2779e3d0
-push $N27911b70
+push $N22af9800
+push $N21a60000
+push $N22af9000
  Shuffle {
   red green
   blue green
   alpha green
   name ShuffleGreen
   tile_color 0x2e7435ff
+  gl_color 0x3932ff00
   xpos -202
   ypos -100
  }
  Transform {
   translate {{abbrX*grn} {abbrY*grn}}
   rotate {{abbrRot*(grn/10)}}
-  center {{input0.width/2} {input0.height2}}
+  center {{input0.width/2} {input0.height/2}}
   filter Mitchell
   clamp true
   black_outside false
   name abbr_green
+  gl_color 0xc4ff3200
   xpos -202
   ypos -74
  }
@@ -346,6 +376,7 @@ push $N27911b70
   skewX {{abrTop*grn i}}
   center {{input0.width/2 i} 0}
   name abrTop1
+  gl_color 0x32ffeb00
   xpos -202
   ypos -48
  }
@@ -353,6 +384,7 @@ push $N27911b70
   skewX {{abrBtm*grn i}}
   center {{input0.width/2 i} {input0.height i}}
   name abrBottom1
+  gl_color 0xff783200
   xpos -202
   ypos -22
  }
@@ -362,6 +394,7 @@ push $N27911b70
   center {{input0.width/2} {input0.height/2}}
   steps 10
   name RadialAbbr2
+  gl_color 0x32ffab00
   xpos -202
   ypos 154
  }
@@ -370,6 +403,7 @@ push $N27911b70
   channels rgb
   size {{soft*grn}}
   name Blur2
+  gl_color 0xff32a000
   xpos -202
   ypos 180
   disable {{usmask==0}}
@@ -378,6 +412,7 @@ push $N27911b70
   inputs 2
   shutteroffset centred
   name MotionBlur2D2
+  gl_color 0xff32a600
   xpos -202
   ypos 219
  }
@@ -386,12 +421,14 @@ push $N27911b70
   uv forward
   scale {{blend*(grn/100)}}
   name OpticalBlur2
+  gl_color 0xff7e3200
   xpos -202
   ypos 245
  }
  Merge2 {
   inputs 2
   name Merge3
+  gl_color 0xff32a100
   xpos -202
   ypos 305
   disable {{cntrMask==0}}
@@ -402,17 +439,19 @@ push $N27911b70
   blue black
   alpha black
   name ShuffleCopy1
+  gl_color 0x325bff00
   xpos -202
   ypos 331
  }
-push $N279106d0
-push $N27910a40
+push $N21aae800
+push $N21aae400
  Shuffle {
   red blue
   green blue
   alpha white
   name ShuffleBlue1
   tile_color 0x1b4274ff
+  gl_color 0x32ff4600
   xpos 356
   ypos 82
  }
@@ -420,18 +459,20 @@ push $N27910a40
   inputs 2
   operation mask
   name Merge1
+  gl_color 0xd2ff3200
   xpos 356
   ypos 126
  }
-push $N27911490
-push $N2779e3d0
-push $N27911b70
+push $N22af9800
+push $N21a60000
+push $N22af9000
  Shuffle {
   red blue
   green blue
   alpha blue
   name ShuffleBlue
   tile_color 0x1b4274ff
+  gl_color 0xff32dd00
   xpos -26
   ypos -96
  }
@@ -443,6 +484,7 @@ push $N27911b70
   clamp true
   black_outside false
   name abbr_blue
+  gl_color 0xf6ff3200
   xpos -26
   ypos -70
  }
@@ -450,6 +492,7 @@ push $N27911b70
   skewX {{abrTop*blu i}}
   center {{input0.width/2 i} {0 i}}
   name abrTop
+  gl_color 0xff328400
   xpos -26
   ypos -44
  }
@@ -457,6 +500,7 @@ push $N27911b70
   skewX {{abrBtm*blu i}}
   center {{input0.width/2 i} {input0.height i}}
   name abrBottom
+  gl_color 0xff326500
   xpos -26
   ypos -18
  }
@@ -466,6 +510,7 @@ push $N27911b70
   center {{input0.width/2} {input0.height/2}}
   steps 10
   name RadialAbbr3
+  gl_color 0x32eaff00
   xpos -26
   ypos 152
  }
@@ -474,6 +519,7 @@ push $N27911b70
   channels rgb
   size {{soft*blu x1 11.55}}
   name Blur3
+  gl_color 0xff4b3200
   xpos -26
   ypos 178
   disable {{usmask==0}}
@@ -482,6 +528,7 @@ push $N27911b70
   inputs 2
   shutteroffset centred
   name MotionBlur2D3
+  gl_color 0x32ffa500
   xpos -26
   ypos 219
  }
@@ -490,12 +537,14 @@ push $N27911b70
   uv forward
   scale {{blend*(blu/100)}}
   name OpticalBlur3
+  gl_color 0xffc43200
   xpos -26
   ypos 245
  }
  Merge2 {
   inputs 2
   name Merge2
+  gl_color 0xff32e200
   xpos -26
   ypos 305
   disable {{cntrMask==0}}
@@ -506,6 +555,7 @@ push $N27911b70
   green green
   alpha black
   name ShuffleCopy2
+  gl_color 0x4e32ff00
   xpos -26
   ypos 331
  }
@@ -517,6 +567,7 @@ push $N27911b70
   crop false
   mix 0.5
   name Sharpen1
+  gl_color 0x9f32ff00
   xpos -26
   ypos 398
   disable {{usmask==0 x1 1 1}}
@@ -525,15 +576,17 @@ push $N27911b70
   inputs 2+1
   which 1
   name Dissolve1
+  gl_color 0x9732ff00
   xpos 404
   ypos 392
  }
-push $N2779d2a0
+push $N21a1e400
  Dissolve {
   inputs 2
   channels rgba
   which 1
   name DissolveMask
+  gl_color 0xff793200
   xpos 502
   ypos 398
  }
@@ -547,31 +600,35 @@ push $N2779d2a0
   green2 alpha
   out2 motion
   name ShuffleCopy3
+  gl_color 0x32ff4400
   label restoreMotionChan
   xpos 612
   ypos 392
  }
-set N242315e0 [stack 0]
-push $N279106d0
+set N23c43000 [stack 0]
+push $N21aae800
  Multiply {
   channels rgba
   value {1 0.375005722 0 1}
   name Multiply1
+  gl_color 0xffc73200
   xpos 707
   ypos 161
  }
-push $N2779d2a0
+push $N21a1e400
  Merge2 {
   inputs 2
   name Merge5
+  gl_color 0x32e3ff00
   xpos 707
   ypos 199
  }
-push $N242315e0
+push $N23c43000
  Switch {
   inputs 2
   which {{showMask}}
   name showMask1
+  gl_color 0x32ff7100
   label "\[knob which]"
   xpos 734
   ypos 392
@@ -581,6 +638,7 @@ push $N242315e0
   inputs 2
   which {{cntrMask==0}}
   name Switch1
+  gl_color 0xff663200
   label "\[knob which]"
   xpos 691
   ypos 476
@@ -588,6 +646,7 @@ push $N242315e0
  ShuffleCopy {
   inputs 2
   name ShuffleCopy4
+  gl_color 0xb9ff3200
   xpos 845
   ypos 505
  }
@@ -596,11 +655,13 @@ push $N242315e0
   reformat true
   crop false
   name Crop1
+  gl_color 0xffb33200
   xpos 845
   ypos 576
  }
  Output {
   name Output1
+  gl_color 0xc732ff00
   xpos 845
   ypos 657
  }
