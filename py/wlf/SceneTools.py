@@ -25,7 +25,7 @@ class Config(dict):
         'SIMAGE_FOLDER': r'Comp\image', 
         'SVIDEO_FOLDER': r'Comp\mov', 
         'NUKE': r'C:\Program Files\Nuke10.0v4\Nuke10.0.exe', 
-        'DIR': 'N:\\', 
+        'DIR': '', 
         'PROJECT': 'SNJYW', 
         'EP': '', 
         'SCENE': '', 
