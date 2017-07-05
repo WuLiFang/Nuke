@@ -79,7 +79,7 @@ def create_menu_by_dir(parent, dir):
     _listdir = os.listdir(_dir)
     _listdir.sort(key=_order)
     for i in _listdir:
-        if i == 'icons':
+        if i in ['icons', 'Obsolete']:
             continue
         _abspath = os.path.join(_dir, i)
         if os.path.isdir(_abspath):

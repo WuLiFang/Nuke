@@ -1,82 +1,392 @@
 #! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
 Gizmo {
- inputs 2
- tile_color 0xe89900ff
- gl_color 0xf832ff00
+ tile_color 0xcc804eff
  note_font 微软雅黑
- addUserKnob {20 aberration l "Chromatic Aberration"}
- addUserKnob {7 colorBalance l "Aberration Multiplier" R -1 1}
- colorBalance 0.2
- addUserKnob {7 blu l INVISIBLE +INVISIBLE}
- blu {{colorBalance+(grn*2)}}
+ addUserKnob {20 Aberration l Aberration_v0.1}
+ addUserKnob {6 blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 distortion1}
+ distortion1 {0.015 0 0.01}
+ addUserKnob {6 distortion1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {18 distortion2}
+ distortion2 {-0.01 0 0}
+ addUserKnob {6 distortion2_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {12 center}
+ center {960 540}
+ addUserKnob {32 centre -STARTLINE T "knob this.knob.center.x \[expr \[value this.input.width] / 2]\nknob this.knob.center.y \[expr \[value this.input.height] / 2]"}
+ addUserKnob {41 operation T Merge7.operation}
+ addUserKnob {41 mix l Mix T Merge7.mix}
+ addUserKnob {41 saturation T ColorCorrect1.saturation}
+ addUserKnob {18 blur R -100 100}
+ blur {10 0 0}
+ addUserKnob {6 blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 non_blur_range l "non blur range" R 0 4}
+ non_blur_range 2
+ addUserKnob {20 Transform}
+ addUserKnob {18 scale R 0 4}
+ scale {-0.6 0.2 0.6}
+ addUserKnob {6 scale_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {26 ""}
- addUserKnob {7 grn l INVISIBLE +INVISIBLE}
- grn {{colorBalance R x1 -0}}
- addUserKnob {7 red l INVISIBLE +INVISIBLE}
- red {{-1*blu}}
- addUserKnob {20 Axial l "Axial Controls" n 1}
- addUserKnob {7 abbrRad l Radial R 0 5}
- addUserKnob {7 abbrRot l Rotational R -10 10}
- addUserKnob {20 endGroup n -1}
- addUserKnob {26 ""}
- addUserKnob {20 Transverse l "Transverse Controls" n 1}
- addUserKnob {7 abbrX l "Offset X" R -10 10}
- abbrX 2
- addUserKnob {7 abbrY l "Offset  Y" R -10 10}
- addUserKnob {7 abrTop l Top R -0.01 0.01}
- addUserKnob {7 abrBtm l Bottom R -0.01 0.01}
- addUserKnob {20 endGroup_1 l endGroup n -1}
- addUserKnob {26 ""}
- addUserKnob {20 channels_1 l "Channel Filters" n 1}
- addUserKnob {7 blend l Blend R 0 100}
- blend 69
- addUserKnob {7 soft l Soften R 0 100}
- soft 9.5
- addUserKnob {41 channels l "Channel Select" T channelSelectOffst.channels}
- addUserKnob {20 endGroup_2 l endGroup n -1}
- addUserKnob {26 ""}
- addUserKnob {20 mask l "Mask Controls" n 1}
- addUserKnob {6 cntrMask l "Use Center Mask" +STARTLINE}
- cntrMask true
- addUserKnob {7 maskErode l Shape R -300 300}
- addUserKnob {7 maskSoft l Soften R 0 1000.3}
- addUserKnob {7 scaleMask l Scale R 0.1 2}
- scaleMask 1
- addUserKnob {6 showMask l "Show Mask" +STARTLINE}
- addUserKnob {41 MaskColor l "Mask Color" T Multiply1.value}
- addUserKnob {20 endGroup_3 l endGroup n -1}
- addUserKnob {26 ""}
- addUserKnob {41 which l Mix T DissolveMask.which}
- addUserKnob {6 usmask l "Use Mask" -STARTLINE}
- addUserKnob {6 invrt l Invert -STARTLINE}
+ addUserKnob {12 translate}
+ addUserKnob {7 rotate R 0 180}
+ addUserKnob {7 scale_1 l scale R 0 10}
+ scale_1 1
+ addUserKnob {7 skewX l "skew X"}
+ addUserKnob {7 skewY l "skew Y"}
+ addUserKnob {12 center_1 l center}
+ center_1 {960 540}
+ addUserKnob {41 skew_order l "skew order" T Transform1.skew_order}
+ addUserKnob {6 invert_matrix l invert +STARTLINE}
+ addUserKnob {41 filter T Transform1.filter}
+ addUserKnob {6 clamp -STARTLINE}
+ addUserKnob {6 black_outside l "black outside" -STARTLINE}
+ addUserKnob {7 motionblur R 0 4}
+ addUserKnob {7 shutter R 0 2}
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform1.shutteroffset}
+ addUserKnob {7 shuttercustomoffset l "" -STARTLINE}
 }
+ Radial {
+  inputs 0
+  invert true
+  area {{"parent.center.x - input.width / 4 * parent.non_blur_range"} {"parent.center.y - input.height / 4 * parent.non_blur_range"} {"parent.center.x + input.width / 4 * parent.non_blur_range"} {"parent.center.y + input.height / 4 * parent.non_blur_range"}}
+  name Radial1
+  gl_color 0x32ff8e00
+  note_font 微软雅黑
+  selected true
+  xpos 78
+  ypos -96
+ }
+set N9f245400 [stack 0]
  Input {
   inputs 0
-  name Image
-  gl_color 0x3264ff00
-  xpos 643
-  ypos -278
+  name Input
+  gl_color 0xff3f3200
+  xpos -590
+  ypos -58
  }
-set N21a1e400 [stack 0]
-push $N21a1e400
- Input {
+set Nc3d0ac00 [stack 0]
+ Dot {
+  name Dot3
+  gl_color 0xff32c300
+  note_font 微软雅黑
+  xpos -6
+  ypos -54
+  hide_input true
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{parent.knob.distortion1.b}}
+  distortion2 {{parent.knob.distortion2.b}}
+  distortionCenter {{"parent.knob.center / input.width - 0.5"} {"parent.knob.center / input.height - 0.5"}}
+  cardScale {1.018279076 1.018279076 1}
+  a 0.02477518283
+  b -0.04300927743
+  c -0.005434063263
+  name LensDistortion_BLUE
+  gl_color 0xddff3200
+  xpos -40
+  ypos -36
+ }
+ Transform {
+  translate {{parent.translate.x*parent.scale.b} {parent.translate.y*parent.scale.b}}
+  rotate {{parent.rotate*parent.scale.b}}
+  scale {{"1 + (1 - parent.scale_1)*parent.scale.b"}}
+  skewX {{parent.skewX*parent.scale.b}}
+  skewY {{parent.skewY*parent.scale.b}}
+  center {{parent.center_1} {parent.center_1}}
+  invert_matrix {{parent.invert_matrix}}
+  clamp {{parent.clamp}}
+  black_outside {{parent.black_outside}}
+  motionblur {{parent.motionblur*parent.scale.b}}
+  shutter {{parent.shutter*parent.scale.b}}
+  shuttercustomoffset {{parent.shuttercustomoffset*parent.scale.b}}
+  name Transform3
+  gl_color 0xf632ff00
+  note_font 微软雅黑
+  xpos -40
+  ypos -10
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.blur.b}}
+  name Blur3
+  gl_color 0xff32f400
+  note_font 微软雅黑
+  xpos -40
+  ypos 18
+ }
+push $N9f245400
+push $Nc3d0ac00
+ Dot {
+  name Dot2
+  gl_color 0x326cff00
+  note_font 微软雅黑
+  xpos -116
+  ypos -54
+  hide_input true
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{parent.knob.distortion1.g}}
+  distortion2 {{parent.knob.distortion2.g}}
+  distortionCenter {{"parent.knob.center / input.width - 0.5"} {"parent.knob.center / input.height - 0.5"}}
+  cardScale {1.018279076 1.018279076 1}
+  a 0.02477518283
+  b -0.04300927743
+  c -0.005434063263
+  name LensDistortion_GREEN
+  gl_color 0xe5ff3200
+  xpos -150
+  ypos -36
+ }
+ Transform {
+  translate {{parent.translate.x*parent.scale.g} {parent.translate.y*parent.scale.g}}
+  rotate {{parent.rotate*parent.scale.g}}
+  scale {{"1 + (1 - parent.scale_1)*parent.scale.g"}}
+  skewX {{parent.skewX*parent.scale.g}}
+  skewY {{parent.skewY*parent.scale.g}}
+  center {{parent.center_1} {parent.center_1}}
+  invert_matrix {{parent.invert_matrix}}
+  clamp {{parent.clamp}}
+  black_outside {{parent.black_outside}}
+  motionblur {{parent.motionblur*parent.scale.g}}
+  shutter {{parent.shutter*parent.scale.g}}
+  shuttercustomoffset {{parent.shuttercustomoffset*parent.scale.g}}
+  name Transform2
+  gl_color 0xf632ff00
+  note_font 微软雅黑
+  xpos -150
+  ypos -10
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.blur.g}}
+  name Blur2
+  gl_color 0xff32f400
+  note_font 微软雅黑
+  xpos -150
+  ypos 18
+ }
+push $N9f245400
+push $Nc3d0ac00
+ Dot {
+  name Dot4
+  gl_color 0x32ffc100
+  note_font 微软雅黑
+  xpos -226
+  ypos -54
+  hide_input true
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  distortion1 {{parent.knob.distortion1.r}}
+  distortion2 {{parent.knob.distortion2.r}}
+  distortionCenter {{"parent.knob.center / input.width - 0.5"} {"parent.knob.center / input.height - 0.5"}}
+  filter Simon
+  cardScale {1.083185554 1.083185554 1}
+  a 0.2126580477
+  b -0.2791982889
+  c -0.03704775497
+  name LensDistortion_RED
+  gl_color 0x32ffdf00
+  xpos -260
+  ypos -36
+ }
+ Transform {
+  translate {{parent.translate.x*parent.scale.r} {parent.translate.y*parent.scale.r}}
+  rotate {{parent.rotate*parent.scale.r}}
+  scale {{"1 + (1 - parent.scale_1)*parent.scale.r"}}
+  skewX {{parent.skewX*parent.scale.r}}
+  skewY {{parent.skewY*parent.scale.r}}
+  center {{parent.center_1} {parent.center_1}}
+  invert_matrix {{parent.invert_matrix}}
+  clamp {{parent.clamp}}
+  black_outside {{parent.black_outside}}
+  motionblur {{parent.motionblur*parent.scale.r}}
+  shutter {{parent.shutter*parent.scale.r}}
+  shuttercustomoffset {{parent.shuttercustomoffset*parent.scale.r}}
+  name Transform1
+  gl_color 0xf632ff00
+  note_font 微软雅黑
+  xpos -260
+  ypos -10
+ }
+ Blur {
+  inputs 1+1
+  size {{parent.blur.r}}
+  name Blur1
+  gl_color 0xff32f400
+  note_font 微软雅黑
+  xpos -254
+  ypos 54
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.green
+  name Copy1
+  gl_color 0xffcc3200
+  note_font 微软雅黑
+  xpos -150
+  ypos 62
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.blue
+  name Copy2
+  gl_color 0xffcc3200
+  note_font 微软雅黑
+  xpos -40
+  ypos 62
+ }
+push $Nc3d0ac00
+ Dot {
+  name Dot1
+  gl_color 0xff328700
+  note_font 微软雅黑
+  xpos -336
+  ypos 110
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge6
+  gl_color 0xff324700
+  xpos -40
+  ypos 106
+ }
+ Expression {
+  expr3 "(r + g + b) / 3"
+  name Expression1
+  gl_color 0x5d32ff00
+  note_font 微软雅黑
+  xpos -40
+  ypos 132
+ }
+ ColorCorrect {
+  name ColorCorrect1
+  gl_color 0x324bff00
+  note_font 微软雅黑
+  xpos -40
+  ypos 160
+ }
+ LensDistortion {
+  serializeKnob ""
+  serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
+  name LensDistortion1
+  gl_color 0xff443200
+  xpos -40
+  ypos 188
+ }
+push $Nc3d0ac00
+ Dot {
+  name Dot5
+  gl_color 0xff9a3200
+  note_font 微软雅黑
+  xpos -446
+  ypos 218
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge7
+  gl_color 0xff923200
+  xpos -40
+  ypos 214
+ }
+ Output {
+  name Output1
+  gl_color 0x8cff3200
+  xpos -40
+  ypos 240
+ }
+ Group {
   inputs 0
-  name Mask
-  gl_color 0x32ffa900
-  xpos 326
-  ypos 272
-  number 1
+  name Group1
+  tile_color 0xe89900ff
+  gl_color 0xf832ff00
+  note_font 微软雅黑
+  xpos 118
+  ypos 26
+  addUserKnob {20 aberration l "Chromatic Aberration"}
+  addUserKnob {7 colorBalance l "Aberration Multiplier" R -1 1}
+  colorBalance 0.2
+  addUserKnob {7 blu l INVISIBLE +INVISIBLE}
+  blu {{colorBalance+(grn*2)}}
+  addUserKnob {26 ""}
+  addUserKnob {7 grn l INVISIBLE +INVISIBLE}
+  grn {{colorBalance R x1 -0}}
+  addUserKnob {7 red l INVISIBLE +INVISIBLE}
+  red {{-1*blu}}
+  addUserKnob {20 Axial l "Axial Controls" n 1}
+  addUserKnob {7 abbrRad l Radial R 0 5}
+  addUserKnob {7 abbrRot l Rotational R -10 10}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {20 Transverse l "Transverse Controls" n 1}
+  addUserKnob {7 abbrX l "Offset X" R -10 10}
+  abbrX 2
+  addUserKnob {7 abbrY l "Offset  Y" R -10 10}
+  addUserKnob {7 abrTop l Top R -0.01 0.01}
+  addUserKnob {7 abrBtm l Bottom R -0.01 0.01}
+  addUserKnob {20 endGroup_1 l endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {20 channels_1 l "Channel Filters" n 1}
+  addUserKnob {7 blend l Blend R 0 100}
+  blend 69
+  addUserKnob {7 soft l Soften R 0 100}
+  soft 9.5
+  addUserKnob {41 channels l "Channel Select" T channelSelectOffst.channels}
+  addUserKnob {20 endGroup_2 l endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {20 mask l "Mask Controls" n 1}
+  addUserKnob {6 cntrMask l "Use Center Mask" +STARTLINE}
+  cntrMask true
+  addUserKnob {7 maskErode l Shape R -300 300}
+  addUserKnob {7 maskSoft l Soften R 0 1000.3}
+  addUserKnob {7 scaleMask l Scale R 0.1 2}
+  scaleMask 1
+  addUserKnob {6 showMask l "Show Mask" +STARTLINE}
+  addUserKnob {41 MaskColor l "Mask Color" T Multiply1.value}
+  addUserKnob {20 endGroup_3 l endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {41 which l Mix T DissolveMask.which}
+  addUserKnob {6 usmask l "Use Mask" -STARTLINE}
+  addUserKnob {6 invrt l Invert -STARTLINE}
  }
- Roto {
-  curves {{{v x3f99999a}
+  Input {
+   inputs 0
+   name Image
+   gl_color 0x3264ff00
+   xpos 643
+   ypos -278
+  }
+set Nc64dec00 [stack 0]
+push $Nc64dec00
+  Input {
+   inputs 0
+   name Mask
+   gl_color 0x32ffa900
+   xpos 326
+   ypos 272
+   number 1
+  }
+  Roto {
+   curves {{{v x3f99999a}
   {f 0}
   {n
    {layer Root
     {f 512}
     {t x44700000 x44070000}
     {a}}}}}
-  toolbox {createBezier {
+   toolbox {createBezier {
   { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
   { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
   { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
@@ -93,576 +403,577 @@ push $N21a1e400
   { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
   { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
 } }
-  toolbar_brush_hardness 0.200000003
-  toolbar_source_transform_scale {1 1}
-  toolbar_source_transform_center {960 540}
-  view {}
-  motionblur_on true
-  name Roto1
-  gl_color 0xffef3200
-  xpos 326
-  ypos 298
- }
- Invert {
-  channels rgba
-  clamp true
-  name Invert1
-  gl_color 0x32fffc00
-  selected true
-  xpos 326
-  ypos 324
-  disable {{invrt==0}}
- }
-push $N21a1e400
-push $N21a1e400
- Radial {
-  cliptype none
-  replace true
-  area {{curve i} {curve i} {input0.width i} {input0.height i}}
-  name Radial1
-  gl_color 0x32eaff00
-  xpos -540
-  ypos -278
- }
- Invert {
-  channels rgba
-  name Invert2
-  gl_color 0x32ffb600
-  xpos -540
-  ypos -252
- }
-set N21a60000 [stack 0]
- Dot {
-  name Dot2
-  gl_color 0x32ff7400
-  xpos -506
-  ypos 402
- }
-push $N21a1e400
- Radial {
-  cliptype none
-  replace true
-  area {{curve} {curve} {input0.width} {input0.height}}
-  name Radial2
-  gl_color 0x325cff00
-  xpos 102
-  ypos -185
- }
- Transform {
-  scale {{scaleMask}}
-  center {{input0.width/2} {input.height/2}}
-  name scale_mask
-  gl_color 0x3292ff00
-  xpos 102
-  ypos -159
- }
- Clamp {
-  channels rgba
-  name Clamp1
-  gl_color 0xffb13200
-  xpos 102
-  ypos -133
- }
- FilterErode {
-  channels rgba
-  size {{-1*maskErode}}
-  name FilterErode1
-  gl_color 0x32ff4200
-  xpos 102
-  ypos -102
- }
- Blur {
-  channels rgba
-  size {{maskSoft}}
-  name Blur4
-  gl_color 0x32ff3400
-  xpos 102
-  ypos -76
- }
-set N21aae800 [stack 0]
-push $N21a1e400
- Shuffle {
-  alpha white
-  name Shuffle1
-  gl_color 0xa732ff00
-  label "\[knob in]"
-  xpos 276
-  ypos -105
- }
-set N21aae400 [stack 0]
- Shuffle {
-  green red
-  blue red
-  alpha white
-  name ShuffleRed1
-  gl_color 0xff32a300
-  xpos 153
-  ypos 22
- }
- Merge2 {
-  inputs 2
-  operation mask
-  name Merge7
-  gl_color 0xff32fe00
-  xpos 102
-  ypos 73
- }
-push $N21a60000
- Transform {
-  translate {{curve R 0 1} {curve R 0 1}}
-  rotate {{curve R 0 1}}
-  center {960 540}
-  motionblur 1
-  shutteroffset centred
-  name vectorGen
-  gl_color 0x4c32ff00
-  xpos -477
-  ypos 188
- }
-set N22af9800 [stack 0]
-push $N21a60000
-push $N21a1e400
- Grade {
-  multiply {{1/parent.channelSelectOffst.multiply}}
-  black_clamp false
-  name Grade1
-  gl_color 0xff6d3200
-  xpos -202
-  ypos -216
- }
- Grade {
-  multiply 34516
-  black_clamp false
-  name channelSelectOffst
-  gl_color 0xffb53200
-  xpos -202
-  ypos -190
- }
-set N22af9000 [stack 0]
- Shuffle {
-  green red
-  blue red
-  alpha red
-  name ShuffleRed
-  gl_color 0x327bff00
-  xpos -352
-  ypos -120
- }
- Transform {
-  translate {{abbrX*red} {abbrY*red}}
-  rotate {{abbrRot*(red/10)}}
-  center {{input0.width/2} {input0.height/2}}
-  filter Mitchell
-  clamp true
-  black_outside false
-  name abbr_red
-  gl_color 0xeaff3200
-  xpos -352
-  ypos -94
- }
- Transform {
-  skewX {{abrTop*red i}}
-  center {{input0.width/2 i} 0}
-  name abrTop2
-  gl_color 0xffbe3200
-  xpos -352
-  ypos -68
- }
- Transform {
-  skewX {{abrBtm*red i}}
-  center {{input0.width/2 i} {input0.height i}}
-  name abrBottom2
-  gl_color 0xd8ff3200
-  xpos -352
-  ypos -42
- }
- GodRays {
-  channels rgb
-  scale {{1+abbrRad*(red/100)}}
-  center {{input0.width/2} {input0.height/2}}
-  steps 10
-  name RadialAbbr1
-  gl_color 0x32ffe700
-  xpos -352
-  ypos 148
- }
- Blur {
-  inputs 1+1
-  channels rgb
-  size {{soft*red}}
-  name Blur1
-  gl_color 0xff963200
-  xpos -363
-  ypos 185
-  disable {{usmask==0}}
- }
- MotionBlur2D {
-  inputs 2
-  shutteroffset centred
-  name MotionBlur2D1
-  gl_color 0x6e32ff00
-  xpos -352
-  ypos 219
- }
- VectorBlur {
-  channels rgb
-  uv forward
-  scale {{blend*(red/100)}}
-  name OpticalBlur1
-  gl_color 0x8032ff00
-  xpos -352
-  ypos 245
- }
- Merge2 {
-  inputs 2
-  name Merge4
-  gl_color 0x3233ff00
-  xpos -352
-  ypos 302
-  disable {{cntrMask==0}}
- }
- Dot {
-  name Dot1
-  gl_color 0xff327b00
-  xpos -318
-  ypos 335
- }
-push $N21aae800
-push $N21aae400
- Shuffle {
-  red green
-  blue green
-  alpha white
-  name ShuffleGreen1
-  tile_color 0x2e7435ff
-  gl_color 0xeb32ff00
-  xpos 240
-  ypos 95
- }
- Merge2 {
-  inputs 2
-  operation mask
-  name Merge6
-  gl_color 0xffd73200
-  xpos 203
-  ypos 133
- }
-push $N22af9800
-push $N21a60000
-push $N22af9000
- Shuffle {
-  red green
-  blue green
-  alpha green
-  name ShuffleGreen
-  tile_color 0x2e7435ff
-  gl_color 0x3932ff00
-  xpos -202
-  ypos -100
- }
- Transform {
-  translate {{abbrX*grn} {abbrY*grn}}
-  rotate {{abbrRot*(grn/10)}}
-  center {{input0.width/2} {input0.height/2}}
-  filter Mitchell
-  clamp true
-  black_outside false
-  name abbr_green
-  gl_color 0xc4ff3200
-  xpos -202
-  ypos -74
- }
- Transform {
-  skewX {{abrTop*grn i}}
-  center {{input0.width/2 i} 0}
-  name abrTop1
-  gl_color 0x32ffeb00
-  xpos -202
-  ypos -48
- }
- Transform {
-  skewX {{abrBtm*grn i}}
-  center {{input0.width/2 i} {input0.height i}}
-  name abrBottom1
-  gl_color 0xff783200
-  xpos -202
-  ypos -22
- }
- GodRays {
-  channels rgb
-  scale {{1+abbrRad*(grn/100)}}
-  center {{input0.width/2} {input0.height/2}}
-  steps 10
-  name RadialAbbr2
-  gl_color 0x32ffab00
-  xpos -202
-  ypos 154
- }
- Blur {
-  inputs 1+1
-  channels rgb
-  size {{soft*grn}}
-  name Blur2
-  gl_color 0xff32a000
-  xpos -202
-  ypos 180
-  disable {{usmask==0}}
- }
- MotionBlur2D {
-  inputs 2
-  shutteroffset centred
-  name MotionBlur2D2
-  gl_color 0xff32a600
-  xpos -202
-  ypos 219
- }
- VectorBlur {
-  channels rgb
-  uv forward
-  scale {{blend*(grn/100)}}
-  name OpticalBlur2
-  gl_color 0xff7e3200
-  xpos -202
-  ypos 245
- }
- Merge2 {
-  inputs 2
-  name Merge3
-  gl_color 0xff32a100
-  xpos -202
-  ypos 305
-  disable {{cntrMask==0}}
- }
- ShuffleCopy {
-  inputs 2
-  red red
-  blue black
-  alpha black
-  name ShuffleCopy1
-  gl_color 0x325bff00
-  xpos -202
-  ypos 331
- }
-push $N21aae800
-push $N21aae400
- Shuffle {
-  red blue
-  green blue
-  alpha white
-  name ShuffleBlue1
-  tile_color 0x1b4274ff
-  gl_color 0x32ff4600
-  xpos 356
-  ypos 82
- }
- Merge2 {
-  inputs 2
-  operation mask
-  name Merge1
-  gl_color 0xd2ff3200
-  xpos 356
-  ypos 126
- }
-push $N22af9800
-push $N21a60000
-push $N22af9000
- Shuffle {
-  red blue
-  green blue
-  alpha blue
-  name ShuffleBlue
-  tile_color 0x1b4274ff
-  gl_color 0xff32dd00
-  xpos -26
-  ypos -96
- }
- Transform {
-  translate {{abbrX*blu} {abbrY*blu}}
-  rotate {{abbrRot*(blu/10)}}
-  center {{input0.width/2} {input0.height/2}}
-  filter Rifman
-  clamp true
-  black_outside false
-  name abbr_blue
-  gl_color 0xf6ff3200
-  xpos -26
-  ypos -70
- }
- Transform {
-  skewX {{abrTop*blu i}}
-  center {{input0.width/2 i} {0 i}}
-  name abrTop
-  gl_color 0xff328400
-  xpos -26
-  ypos -44
- }
- Transform {
-  skewX {{abrBtm*blu i}}
-  center {{input0.width/2 i} {input0.height i}}
-  name abrBottom
-  gl_color 0xff326500
-  xpos -26
-  ypos -18
- }
- GodRays {
-  channels rgb
-  scale {{1+abbrRad*(blu/100)}}
-  center {{input0.width/2} {input0.height/2}}
-  steps 10
-  name RadialAbbr3
-  gl_color 0x32eaff00
-  xpos -26
-  ypos 152
- }
- Blur {
-  inputs 1+1
-  channels rgb
-  size {{soft*blu x1 11.55}}
-  name Blur3
-  gl_color 0xff4b3200
-  xpos -26
-  ypos 178
-  disable {{usmask==0}}
- }
- MotionBlur2D {
-  inputs 2
-  shutteroffset centred
-  name MotionBlur2D3
-  gl_color 0x32ffa500
-  xpos -26
-  ypos 219
- }
- VectorBlur {
-  channels rgb
-  uv forward
-  scale {{blend*(blu/100)}}
-  name OpticalBlur3
-  gl_color 0xffc43200
-  xpos -26
-  ypos 245
- }
- Merge2 {
-  inputs 2
-  name Merge2
-  gl_color 0xff32e200
-  xpos -26
-  ypos 305
-  disable {{cntrMask==0}}
- }
- ShuffleCopy {
-  inputs 2
-  red red
-  green green
-  alpha black
-  name ShuffleCopy2
-  gl_color 0x4e32ff00
-  xpos -26
-  ypos 331
- }
- Sharpen {
-  inputs 1+1
-  channels rgb
-  amount 5
-  size {{soft*grn/2}}
-  crop false
-  mix 0.5
-  name Sharpen1
-  gl_color 0x9f32ff00
-  xpos -26
-  ypos 398
-  disable {{usmask==0 x1 1 1}}
- }
- Dissolve {
-  inputs 2+1
-  which 1
-  name Dissolve1
-  gl_color 0x9732ff00
-  xpos 404
-  ypos 392
- }
-push $N21a1e400
- Dissolve {
-  inputs 2
-  channels rgba
-  which 1
-  name DissolveMask
-  gl_color 0xff793200
-  xpos 502
-  ypos 398
- }
- ShuffleCopy {
-  inputs 2
-  in motion
-  alpha alpha2
-  black red
-  white green
-  red2 blue
-  green2 alpha
-  out2 motion
-  name ShuffleCopy3
-  gl_color 0x32ff4400
-  label restoreMotionChan
-  xpos 612
-  ypos 392
- }
-set N23c43000 [stack 0]
-push $N21aae800
- Multiply {
-  channels rgba
-  value {1 0.375005722 0 1}
-  name Multiply1
-  gl_color 0xffc73200
-  xpos 707
-  ypos 161
- }
-push $N21a1e400
- Merge2 {
-  inputs 2
-  name Merge5
-  gl_color 0x32e3ff00
-  xpos 707
-  ypos 199
- }
-push $N23c43000
- Switch {
-  inputs 2
-  which {{showMask}}
-  name showMask1
-  gl_color 0x32ff7100
-  label "\[knob which]"
-  xpos 734
-  ypos 392
-  disable {{"\$gui==0"}}
- }
- Switch {
-  inputs 2
-  which {{cntrMask==0}}
-  name Switch1
-  gl_color 0xff663200
-  label "\[knob which]"
-  xpos 691
-  ypos 476
- }
- ShuffleCopy {
-  inputs 2
-  name ShuffleCopy4
-  gl_color 0xb9ff3200
-  xpos 845
-  ypos 505
- }
- Crop {
-  box {{curve} {curve} {input0.width} {input0.height}}
-  reformat true
-  crop false
-  name Crop1
-  gl_color 0xffb33200
-  xpos 845
-  ypos 576
- }
- Output {
-  name Output1
-  gl_color 0xc732ff00
-  xpos 845
-  ypos 657
- }
+   toolbar_brush_hardness 0.200000003
+   toolbar_source_transform_scale {1 1}
+   toolbar_source_transform_center {960 540}
+   view {}
+   motionblur_on true
+   name Roto1
+   gl_color 0xffef3200
+   xpos 326
+   ypos 298
+  }
+  Invert {
+   channels rgba
+   clamp true
+   name Invert1
+   gl_color 0x32fffc00
+   xpos 326
+   ypos 324
+   disable {{invrt==0}}
+  }
+push $Nc64dec00
+push $Nc64dec00
+  Radial {
+   cliptype none
+   replace true
+   area {{curve} {curve} {input0.width} {input0.height}}
+   name Radial1
+   gl_color 0x32eaff00
+   selected true
+   xpos -540
+   ypos -278
+  }
+  Invert {
+   channels rgba
+   name Invert2
+   gl_color 0x32ffb600
+   xpos -540
+   ypos -252
+  }
+set N549c3800 [stack 0]
+  Dot {
+   name Dot2
+   gl_color 0x32ff7400
+   xpos -506
+   ypos 402
+  }
+push $Nc64dec00
+  Radial {
+   cliptype none
+   replace true
+   area {{curve} {curve} {input0.width} {input0.height}}
+   name Radial2
+   gl_color 0x325cff00
+   xpos 102
+   ypos -185
+  }
+  Transform {
+   scale {{scaleMask}}
+   center {{input0.width/2} {input.height/2}}
+   name scale_mask
+   gl_color 0x3292ff00
+   xpos 102
+   ypos -159
+  }
+  Clamp {
+   channels rgba
+   name Clamp1
+   gl_color 0xffb13200
+   xpos 102
+   ypos -133
+  }
+  FilterErode {
+   channels rgba
+   size {{-1*maskErode}}
+   name FilterErode1
+   gl_color 0x32ff4200
+   xpos 102
+   ypos -102
+  }
+  Blur {
+   channels rgba
+   size {{maskSoft}}
+   name Blur4
+   gl_color 0x32ff3400
+   xpos 102
+   ypos -76
+  }
+set N549c2000 [stack 0]
+push $Nc64dec00
+  Shuffle {
+   alpha white
+   name Shuffle1
+   gl_color 0xa732ff00
+   label "\[knob in]"
+   xpos 276
+   ypos -105
+  }
+set Nc537bc00 [stack 0]
+  Shuffle {
+   green red
+   blue red
+   alpha white
+   name ShuffleRed1
+   gl_color 0xff32a300
+   xpos 153
+   ypos 22
+  }
+  Merge2 {
+   inputs 2
+   operation mask
+   name Merge7
+   gl_color 0xff32fe00
+   xpos 102
+   ypos 73
+  }
+push $N549c3800
+  Transform {
+   translate {{curve R 0 1} {curve R 0 1}}
+   rotate {{curve R 0 1}}
+   center {960 540}
+   motionblur 1
+   shutteroffset centred
+   name vectorGen
+   gl_color 0x4c32ff00
+   xpos -477
+   ypos 188
+  }
+set Nc537b000 [stack 0]
+push $N549c3800
+push $Nc64dec00
+  Grade {
+   multiply {{1/parent.channelSelectOffst.multiply}}
+   black_clamp false
+   name Grade1
+   gl_color 0xff6d3200
+   xpos -202
+   ypos -216
+  }
+  Grade {
+   multiply 34516
+   black_clamp false
+   name channelSelectOffst
+   gl_color 0xffb53200
+   xpos -202
+   ypos -190
+  }
+set Nc537a800 [stack 0]
+  Shuffle {
+   green red
+   blue red
+   alpha red
+   name ShuffleRed
+   gl_color 0x327bff00
+   xpos -352
+   ypos -120
+  }
+  Transform {
+   translate {{abbrX*red} {abbrY*red}}
+   rotate {{abbrRot*(red/10)}}
+   center {{input0.width/2} {input0.height/2}}
+   filter Mitchell
+   clamp true
+   black_outside false
+   name abbr_red
+   gl_color 0xeaff3200
+   xpos -352
+   ypos -94
+  }
+  Transform {
+   skewX {{abrTop*red i}}
+   center {{input0.width/2 i} 0}
+   name abrTop2
+   gl_color 0xffbe3200
+   xpos -352
+   ypos -68
+  }
+  Transform {
+   skewX {{abrBtm*red i}}
+   center {{input0.width/2 i} {input0.height i}}
+   name abrBottom2
+   gl_color 0xd8ff3200
+   xpos -352
+   ypos -42
+  }
+  GodRays {
+   channels rgb
+   scale {{1+abbrRad*(red/100)}}
+   center {{input0.width/2} {input0.height/2}}
+   steps 10
+   name RadialAbbr1
+   gl_color 0x32ffe700
+   xpos -352
+   ypos 148
+  }
+  Blur {
+   inputs 1+1
+   channels rgb
+   size {{soft*red}}
+   name Blur1
+   gl_color 0xff963200
+   xpos -363
+   ypos 185
+   disable {{usmask==0}}
+  }
+  MotionBlur2D {
+   inputs 2
+   shutteroffset centred
+   name MotionBlur2D1
+   gl_color 0x6e32ff00
+   xpos -352
+   ypos 219
+  }
+  VectorBlur {
+   channels rgb
+   uv forward
+   scale {{blend*(red/100)}}
+   name OpticalBlur1
+   gl_color 0x8032ff00
+   xpos -352
+   ypos 245
+  }
+  Merge2 {
+   inputs 2
+   name Merge4
+   gl_color 0x3233ff00
+   xpos -352
+   ypos 302
+   disable {{cntrMask==0}}
+  }
+  Dot {
+   name Dot1
+   gl_color 0xff327b00
+   xpos -318
+   ypos 335
+  }
+push $N549c2000
+push $Nc537bc00
+  Shuffle {
+   red green
+   blue green
+   alpha white
+   name ShuffleGreen1
+   tile_color 0x2e7435ff
+   gl_color 0xeb32ff00
+   xpos 240
+   ypos 95
+  }
+  Merge2 {
+   inputs 2
+   operation mask
+   name Merge6
+   gl_color 0xffd73200
+   xpos 203
+   ypos 133
+  }
+push $Nc537b000
+push $N549c3800
+push $Nc537a800
+  Shuffle {
+   red green
+   blue green
+   alpha green
+   name ShuffleGreen
+   tile_color 0x2e7435ff
+   gl_color 0x3932ff00
+   xpos -202
+   ypos -100
+  }
+  Transform {
+   translate {{abbrX*grn} {abbrY*grn}}
+   rotate {{abbrRot*(grn/10)}}
+   center {{input0.width/2} {input0.height/2}}
+   filter Mitchell
+   clamp true
+   black_outside false
+   name abbr_green
+   gl_color 0xc4ff3200
+   xpos -202
+   ypos -74
+  }
+  Transform {
+   skewX {{abrTop*grn i}}
+   center {{input0.width/2 i} 0}
+   name abrTop1
+   gl_color 0x32ffeb00
+   xpos -202
+   ypos -48
+  }
+  Transform {
+   skewX {{abrBtm*grn i}}
+   center {{input0.width/2 i} {input0.height i}}
+   name abrBottom1
+   gl_color 0xff783200
+   xpos -202
+   ypos -22
+  }
+  GodRays {
+   channels rgb
+   scale {{1+abbrRad*(grn/100)}}
+   center {{input0.width/2} {input0.height/2}}
+   steps 10
+   name RadialAbbr2
+   gl_color 0x32ffab00
+   xpos -202
+   ypos 154
+  }
+  Blur {
+   inputs 1+1
+   channels rgb
+   size {{soft*grn}}
+   name Blur2
+   gl_color 0xff32a000
+   xpos -202
+   ypos 180
+   disable {{usmask==0}}
+  }
+  MotionBlur2D {
+   inputs 2
+   shutteroffset centred
+   name MotionBlur2D2
+   gl_color 0xff32a600
+   xpos -202
+   ypos 219
+  }
+  VectorBlur {
+   channels rgb
+   uv forward
+   scale {{blend*(grn/100)}}
+   name OpticalBlur2
+   gl_color 0xff7e3200
+   xpos -202
+   ypos 245
+  }
+  Merge2 {
+   inputs 2
+   name Merge3
+   gl_color 0xff32a100
+   xpos -202
+   ypos 305
+   disable {{cntrMask==0}}
+  }
+  ShuffleCopy {
+   inputs 2
+   red red
+   blue black
+   alpha black
+   name ShuffleCopy1
+   gl_color 0x325bff00
+   xpos -202
+   ypos 331
+  }
+push $N549c2000
+push $Nc537bc00
+  Shuffle {
+   red blue
+   green blue
+   alpha white
+   name ShuffleBlue1
+   tile_color 0x1b4274ff
+   gl_color 0x32ff4600
+   xpos 356
+   ypos 82
+  }
+  Merge2 {
+   inputs 2
+   operation mask
+   name Merge1
+   gl_color 0xd2ff3200
+   xpos 356
+   ypos 126
+  }
+push $Nc537b000
+push $N549c3800
+push $Nc537a800
+  Shuffle {
+   red blue
+   green blue
+   alpha blue
+   name ShuffleBlue
+   tile_color 0x1b4274ff
+   gl_color 0xff32dd00
+   xpos -26
+   ypos -96
+  }
+  Transform {
+   translate {{abbrX*blu} {abbrY*blu}}
+   rotate {{abbrRot*(blu/10)}}
+   center {{input0.width/2} {input0.height/2}}
+   filter Rifman
+   clamp true
+   black_outside false
+   name abbr_blue
+   gl_color 0xf6ff3200
+   xpos -26
+   ypos -70
+  }
+  Transform {
+   skewX {{abrTop*blu i}}
+   center {{input0.width/2 i} {0 i}}
+   name abrTop
+   gl_color 0xff328400
+   xpos -26
+   ypos -44
+  }
+  Transform {
+   skewX {{abrBtm*blu i}}
+   center {{input0.width/2 i} {input0.height i}}
+   name abrBottom
+   gl_color 0xff326500
+   xpos -26
+   ypos -18
+  }
+  GodRays {
+   channels rgb
+   scale {{1+abbrRad*(blu/100)}}
+   center {{input0.width/2} {input0.height/2}}
+   steps 10
+   name RadialAbbr3
+   gl_color 0x32eaff00
+   xpos -26
+   ypos 152
+  }
+  Blur {
+   inputs 1+1
+   channels rgb
+   size {{soft*blu x1 11.55}}
+   name Blur3
+   gl_color 0xff4b3200
+   xpos -26
+   ypos 178
+   disable {{usmask==0}}
+  }
+  MotionBlur2D {
+   inputs 2
+   shutteroffset centred
+   name MotionBlur2D3
+   gl_color 0x32ffa500
+   xpos -26
+   ypos 219
+  }
+  VectorBlur {
+   channels rgb
+   uv forward
+   scale {{blend*(blu/100)}}
+   name OpticalBlur3
+   gl_color 0xffc43200
+   xpos -26
+   ypos 245
+  }
+  Merge2 {
+   inputs 2
+   name Merge2
+   gl_color 0xff32e200
+   xpos -26
+   ypos 305
+   disable {{cntrMask==0}}
+  }
+  ShuffleCopy {
+   inputs 2
+   red red
+   green green
+   alpha black
+   name ShuffleCopy2
+   gl_color 0x4e32ff00
+   xpos -26
+   ypos 331
+  }
+  Sharpen {
+   inputs 1+1
+   channels rgb
+   amount 5
+   size {{soft*grn/2}}
+   crop false
+   mix 0.5
+   name Sharpen1
+   gl_color 0x9f32ff00
+   xpos -26
+   ypos 398
+   disable {{usmask==0 x1 1 1}}
+  }
+  Dissolve {
+   inputs 2+1
+   which 1
+   name Dissolve1
+   gl_color 0x9732ff00
+   xpos 404
+   ypos 392
+  }
+push $Nc64dec00
+  Dissolve {
+   inputs 2
+   channels rgba
+   which 1
+   name DissolveMask
+   gl_color 0xff793200
+   xpos 502
+   ypos 398
+  }
+  ShuffleCopy {
+   inputs 2
+   in motion
+   alpha alpha2
+   black red
+   white green
+   red2 blue
+   green2 alpha
+   out2 motion
+   name ShuffleCopy3
+   gl_color 0x32ff4400
+   label restoreMotionChan
+   xpos 612
+   ypos 392
+  }
+set N9c0fb000 [stack 0]
+push $N549c2000
+  Multiply {
+   channels rgba
+   value {1 0.375005722 0 1}
+   name Multiply1
+   gl_color 0xffc73200
+   xpos 707
+   ypos 161
+  }
+push $Nc64dec00
+  Merge2 {
+   inputs 2
+   name Merge5
+   gl_color 0x32e3ff00
+   xpos 707
+   ypos 199
+  }
+push $N9c0fb000
+  Switch {
+   inputs 2
+   which {{showMask}}
+   name showMask1
+   gl_color 0x32ff7100
+   label "\[knob which]"
+   xpos 734
+   ypos 392
+   disable {{"\$gui==0"}}
+  }
+  Switch {
+   inputs 2
+   which {{cntrMask==0}}
+   name Switch1
+   gl_color 0xff663200
+   label "\[knob which]"
+   xpos 691
+   ypos 476
+  }
+  ShuffleCopy {
+   inputs 2
+   name ShuffleCopy4
+   gl_color 0xb9ff3200
+   xpos 845
+   ypos 505
+  }
+  Crop {
+   box {{curve} {curve} {input0.width} {input0.height}}
+   reformat true
+   crop false
+   name Crop1
+   gl_color 0xffb33200
+   xpos 845
+   ypos 576
+  }
+  Output {
+   name Output1
+   gl_color 0xc732ff00
+   xpos 845
+   ypos 657
+  }
+ end_group
 end_group
