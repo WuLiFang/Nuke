@@ -34,11 +34,14 @@ class DropFrameCheck(threading.Thread):
         _ret = nuke.FrameRanges()
         if self._node.name().startswith(self._prefix):
             return _ret
-        
+
+        _filename = os.path.join(nuke.value('root.project_directory', ''), nuke.filename(self._node))
+        if self.expand_frame(_filename, 1) == _filename:
+            return _ret
+
         _read_framerange = xrange(self._node.firstFrame(), self._node.lastFrame() + 1)
         for f in _read_framerange:
-            _file = self.expand_frame(nuke.filename(self._node), f)
-            _file = os.path.join(nuke.value('root.project_directory', ''), _file)
+            _file = self.expand_frame(_filename, f)
             if not os.path.isfile(_file.decode('UTF-8').encode(SYS_CODEC)):
                 _ret.add([f])
         _ret.compact()
@@ -59,7 +62,7 @@ class DropFrameCheck(threading.Thread):
             self.setup_node()
             self._node['dropframes'].setValue(_dropframes)
             if _dropframes:
-                nuke.warning('{}: [缺帧]{}'.format(self._node.name(), _dropframes))
+                nuke.warning('{}: [dropframnes]{}'.format(self._node.name(), _dropframes))
         if _dropframes != nuke.value(self._knob_tcl_name, ''):
             nuke.executeInMainThreadWithResult(_set_knob)
         
