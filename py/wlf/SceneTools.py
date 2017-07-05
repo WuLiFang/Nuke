@@ -11,7 +11,7 @@ import PySide.QtCore, PySide.QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
 from ui_SceneTools_Dialog import Ui_Dialog
 
-VERSION = 0.45
+VERSION = 0.5
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 script_codec = 'UTF-8'
@@ -453,7 +453,12 @@ def call_from_nuke():
     frame.show()
 
 def active_pid(pid):
-    Popen('"{}" "{}"'.format(os.path.abspath(os.path.join(__file__, '../active_pid.exe')), pid))
+    if __name__ == '__main__':
+        _file = sys.argv[0]
+    else:
+        _file = __file__
+    _cmd = '"{}" "{}"'.format(os.path.abspath(os.path.join(_file, '../active_pid.exe')), pid)
+    Popen(_cmd)
 
 def url_open(url):
     _cmd = "rundll32.exe url.dll,FileProtocolHandler {}".format(url)
