@@ -51,3 +51,7 @@ Temporary Items
 *.swp
 *.json
 *.pyc
+
+# Build file
+py/wlf/build/scenetools/
+*.spec

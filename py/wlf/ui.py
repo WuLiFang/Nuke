@@ -40,6 +40,7 @@ def add_menu():
         if os.path.isfile(_path):
             _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
         else:
+            nuke.tprint('wlf.scenetools: use uncomplied version')
             _cmd = 'import wlf.scenetools;wlf.scenetools.call_from_nuke()'
         m.addCommand('色板\\/成果上传', _cmd)
 
