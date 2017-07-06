@@ -11,7 +11,7 @@ from PySide import QtCore, QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
 from ui_scenetools_dialog import Ui_Dialog
 
-VERSION = 0.52
+VERSION = 0.6
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 script_codec = 'UTF-8'
@@ -53,6 +53,7 @@ class Config(dict):
     }
     path = os.path.expanduser('~/.wlf.scenetools.json')
     psetting_bname = '.projectsettings.json'
+    instance = None
 
     def __init__(self):
         self.update(dict(self.default))
@@ -62,10 +63,20 @@ class Config(dict):
         except WindowsError as e:
             print(e)
 
+    def __new__(cls):
+        if not cls.instance:
+            cls.instance = super(Config, cls).__new__(cls)
+        return cls.instance
+
     def __setitem__(self, key, value):
         print(key, value)
-        if key == 'DIR':
+        if key == 'DIR' and value != self['DIR'] and os.path.isdir(value):
             self.change_dir(value)
+            pat = re.compile(r'.*\\(ep.*?)\\.*\\(.+)', flags=re.I)
+            match = pat.match(self['DIR'])
+            if match:
+                 dict.__setitem__(self, 'EP', match.groups()[0])
+                 dict.__setitem__(self, 'SCENE', match.groups()[1])
         dict.__setitem__(self, key, value)
         self.set_path()
         self.write()
@@ -102,46 +113,91 @@ class Config(dict):
                 self.update(dict(json.load(f)))
 
     def set_path(self):
-        self.setConfigByDir()
-        self.setSyncPath()
-        self.setCSheetPath()
-        self.setBackDropPath()
+        def _dest():
+            _value =  os.path.join(
+                self['SERVER'],
+                self['PROJECT'],
+                self['SIMAGE_FOLDER'],
+                time.strftime('%m%d')
+            )
+            dict.__setitem__(self, 'csheet_dest', _value)
+
+            _value = os.path.join(
+                self['SERVER'],
+                self['PROJECT'],
+                self['SIMAGE_FOLDER'],
+                self['EP'],
+                self['SCENE']
+            )
+            dict.__setitem__(self, 'image_dest', _value)
+
+            _value = os.path.join(
+                self['SERVER'],
+                self['PROJECT'],
+                self['SVIDEO_FOLDER'],
+                self['EP'],
+                self['SCENE']
+            )
+            dict.__setitem__(self, 'video_dest', _value)
+
+        def _csheet():
+            _csheet_name = self['CSHEET_PREFIX']
+            if self['EP'] and self['SCENE']:
+                _csheet_name += '_{}_{}.jpg'.format(
+                    self['EP'],
+                    self['SCENE']
+                )
+            else:
+                _csheet_name += '_{}.jpg'.format(
+                    time.strftime('%y%m%d_%H%M')
+                )
+            dict.__setitem__(self, 'csheet_name', _csheet_name)
+
+            _value = os.path.join(
+                self['DIR'], 
+                self['csheet_name']
+            )
+            dict.__setitem__(self, 'csheet', _value)
+
+            _value = os.path.join(
+                self['SERVER'],
+                self['PROJECT'],
+                self['SIMAGE_FOLDER'],
+                time.strftime('%m%d')
+            )
+            dict.__setitem__(self, 'csheet_dest', _value)
+
+            _value = os.path.join(
+                self['DIR'],
+                self['CSHEET_FFNAME']
+            )
+            dict.__setitem__(self, 'csheet_footagedir', _value)
+
+            _value = os.path.join(
+                self['BACKDROP_DIR'],
+                self['backdrop_name']
+            )
+            dict.__setitem__(self, 'backdrop', _value)
+            
+        _dest()
+        _csheet()
 
     def change_dir(self, dir):
-        if os.path.isdir(dir) and dir != self['DIR']:
-            os.chdir(dir)
-            print(u'工作目录改为: {}'.format(os.getcwd()))
-            self.read()
+        os.chdir(dir)
+        print(u'工作目录改为: {}'.format(os.getcwd()))
+        self.read()
 
-    def setSyncPath(self):
-        dict.__setitem__(self, 'csheet_dest', os.path.join(self['SERVER'], self['PROJECT'], self['SIMAGE_FOLDER'], time.strftime('%m%d')))
-        dict.__setitem__(self, 'image_dest', os.path.join(self['SERVER'], self['PROJECT'], self['SIMAGE_FOLDER'], self['EP'], self['SCENE']))
-        dict.__setitem__(self, 'video_dest', os.path.join(self['SERVER'], self['PROJECT'], self['SVIDEO_FOLDER'], self['EP'], self['SCENE']))
-
-    def setCSheetPath(self):
-        _csheet_name = self['CSHEET_PREFIX']
-        if self['EP'] and self['SCENE']:
-            _csheet_name += '_{}_{}.jpg'.format(self['EP'], self['SCENE'])
-        else:
-            _csheet_name += '_{}.jpg'.format(time.strftime('%y%m%d_%H%M'))
-        dict.__setitem__(self, 'csheet_name', _csheet_name)
-        dict.__setitem__(self, 'csheet', os.path.join(self['DIR'], self['csheet_name']))
-        dict.__setitem__(self, 'csheet_dest', os.path.join(self['SERVER'], self['PROJECT'], self['SIMAGE_FOLDER'], time.strftime('%m%d')))
-        dict.__setitem__(self, 'csheet_footagedir', os.path.join(self['DIR'], self['CSHEET_FFNAME']))
-
-    def setBackDropPath(self):
-         dict.__setitem__(self, 'backdrop', os.path.join(self['BACKDROP_DIR'], self['backdrop_name']))
-        
-    def setConfigByDir(self):
-        pat = re.compile(r'.*\\(ep.*?)\\.*\\(.+)', flags=re.I)
-        match = pat.match(self['DIR'])
-        if match:
-             dict.__setitem__(self, 'EP', match.groups()[0])
-             dict.__setitem__(self, 'SCENE', match.groups()[1])
+def is_same(src, dst):
+    if not os.path.isfile(dst):
+        return False
+    elif os.path.getmtime(src) == os.path.getmtime(dst):
+        return True
+    else:
+        return False
 
 def copy(src, dst):
-    cmd = u'XCOPY /Y /V "{}" "{}"'.format(unicode(src), unicode(dst)).encode(SYS_CODEC)
-    call(cmd)
+    _cmd = u'XCOPY /Y /V "{}" "{}"'.format(unicode(src), unicode(dst))
+    call(_cmd.encode(SYS_CODEC))
 
 class SingleInstanceException(Exception):
     def __str__(self):
@@ -157,7 +213,10 @@ class SingleInstance(object):
 
     def is_pid_exists(self, pid):
         if sys.platform == 'win32':
-            _proc = Popen('TASKLIST /FI "PID eq {}" /FO CSV /NH'.format(pid), stdout=PIPE)
+            _proc = Popen(
+                'TASKLIST /FI "PID eq {}" /FO CSV /NH'.format(pid),
+                stdout=PIPE
+            )
             _stdout = _proc.communicate()[0]
             return '"{}"'.format(pid) in _stdout
 
@@ -171,7 +230,7 @@ class Sync(object):
         self._image_ignore = []
         _dir = self._config['IMAGE_FNAME']
         if not os.path.isdir(_dir):
-            return False
+            raise ValueError
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.jpg'))
         
         if os.path.isdir(self._config['image_dest']):
@@ -180,17 +239,18 @@ class Sync(object):
             for i in _all_items:
                 _src = os.path.join(self._config['IMAGE_FNAME'], i)
                 _dst = os.path.join(self._config['image_dest'], i)
-                if os.path.isfile(_dst) and os.path.getmtime(_src) == os.path.getmtime(_dst):
-                    self._image_ignore.append(i)
-                else:
+                if not is_same(_src, _dst):
                     _ret.append(i)
+                else:
+                    self._image_ignore.append(i)
         return _ret
+
 
     def video_list(self):
         self._video_ignore = []
         _dir = self._config['VIDEO_FNAME']
         if not os.path.isdir(_dir):
-            return False
+            raise ValueError
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.mov'))
 
         if os.path.isdir(self._config['video_dest']):
@@ -199,21 +259,13 @@ class Sync(object):
             for i in _all_items:
                 _src = os.path.join(self._config['VIDEO_FNAME'], i)
                 _dst = os.path.join(self._config['video_dest'], i)
-                if os.path.isfile(_dst) and os.path.getmtime(_src) == os.path.getmtime(_dst):
-                    self._video_ignore.append(i)
-                else:
+                if not is_same(_src, _dst):
                     _ret.append(i)
-        return _ret
-
-    def ignore_list(self):
-        _ret = []
-        if self._config['isVideoUp']:
-            _ret += self._image_ignore
-        if self._config['isImageUp']:
-            _ret += self._video_ignore
+                else:
+                    self._video_ignore.append(i)
         return _ret
     
-    def uploadVideos(self):
+    def upload_videos(self):
         video_dest = unicode(self._config['video_dest'])
 
         if os.path.exists(os.path.dirname(video_dest)):
@@ -228,10 +280,10 @@ class Sync(object):
             dst = video_dest
             copy(src, dst)
 
-    def downloadVideos():
+    def download_videos():
         pass
 
-    def uploadImages(self):
+    def upload_images(self):
         dest = unicode(self._config['image_dest'])
         print(dest)
         if os.path.isdir(os.path.dirname(dest)):
@@ -246,13 +298,13 @@ class Sync(object):
             dst = dest
             copy(src, dst)
 
-    def downloadImages(self):
+    def download_images(self):
         src = self._config['image_dest']
         dst = self._config['IMAGE_FNAME']
         print(u'## 下载单帧: {} -> {}'.format(src, dst))
         call('XCOPY /Y /D /I /V "{}\\*.jpg" "{}"'.format(src, dst))
 
-    def uploadCSheet(self):
+    def upload_sheet(self):
         dest = self._config['csheet_dest']
 
         if os.path.isdir(os.path.dirname(dest)):
@@ -267,10 +319,92 @@ class Sync(object):
 class Dialog(QDialog, Ui_Dialog, SingleInstance):
 
     def __init__(self, parent=None):
+        def _backdrop():
+            self._config['BACKDROP_DIR'] = unicode(
+                os.path.join(
+                    os.path.dirname(unicode(sys.argv[0], SYS_CODEC)),
+                    u'Backdrops'
+                )
+            )
+            dir = self._config['BACKDROP_DIR']
+            box = self.backDropBox
+            if not os.path.exists(dir):
+                os.mkdir(dir)
+            bd_list = os.listdir(dir)
+            for item in bd_list:
+                box.addItem(item)
+            self._config['backdrop_name'] = box.currentText()
+            box.addItem(u'纯黑')
+
+        def _icon():
+            _stdicon = self.style().standardIcon
+
+            _icon = _stdicon(QtGui.QStyle.SP_FileDialogListView)
+            self.setWindowIcon(_icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_DirOpenIcon)
+            self.toolButtonOpenDir.setIcon(_icon)
+            self.toolButtonOpenServer.setIcon(_icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_DialogOpenButton)
+            self.dirButton.setIcon(_icon)
+            self.serverButton.setIcon(_icon)
+            self.nukeButton.setIcon(_icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_MediaPlay)
+            self.sheetButton.setIcon(_icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_FileIcon)
+            self.openButton.setIcon(_icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_FileDialogToParent)
+            self.syncButton.setIcon(_icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_FileDialogListView)
+            self.toolBox.setItemIcon(0, _icon)
+
+            _icon = _stdicon(QtGui.QStyle.SP_ComputerIcon)
+            self.toolBox.setItemIcon(1, _icon)
+
+        def _actions():
+            self.actionSheet.triggered.connect(self.create_sheet)
+            self.actionDir.triggered.connect(self.ask_dir)
+            self.actionNuke.triggered.connect(self.ask_nuke)
+            self.actionOpen.triggered.connect(self.open_sheet)
+            self.actionSync.triggered.connect(self.sync)
+            self.actionServer.triggered.connect(self.ask_server)
+            self.actionUpdateUI.triggered.connect(self.update)
+            self.actionOpenDir.triggered.connect(self.open_dir)
+            self.actionOpenServer.triggered.connect(self.open_server)
+
+        def _edits():
+            def _set_config(k, v):
+                self._config[k] = v
+
+            for edit, key in self.edits_key.iteritems():
+                if isinstance(edit, QtGui.QLineEdit):
+                    edit.textChanged.connect(
+                        lambda text, k=key: _set_config(k, text)
+                    )
+                    edit.textChanged.connect(self.update)
+                elif isinstance(edit, QtGui.QCheckBox):
+                    edit.stateChanged.connect(
+                        lambda state, k=key: _set_config(k, state)
+                    )
+                    edit.stateChanged.connect(self.update)
+                elif isinstance(edit, QtGui.QComboBox):
+                    edit.currentIndexChanged.connect(
+                        lambda index, e=edit, k=key: _set_config(
+                            k,
+                            e.itemText(index)
+                        )
+                    )
+                else:
+                    print(u'待处理的控件: {} {}'.format(type(edit), edit))
+
         SingleInstance.__init__(self)
         QDialog.__init__(self, parent)
         self.setupUi(self)
-        self.version_label.setText('v{}'.format(VERSION))
 
         self.edits_key = {
             self.serverEdit: 'SERVER', 
@@ -299,77 +433,13 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         }
         self._config = Config()
         self._sync = Sync()
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogListView)
-        self.setWindowIcon(_icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_DirOpenIcon)
-        self.toolButtonOpenDir.setIcon(_icon)
-        self.toolButtonOpenServer.setIcon(_icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_DialogOpenButton)
-        self.dirButton.setIcon(_icon)
-        self.serverButton.setIcon(_icon)
-        self.nukeButton.setIcon(_icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_MediaPlay)
-        self.sheetButton.setIcon(_icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileIcon)
-        self.openButton.setIcon(_icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogToParent)
-        self.syncButton.setIcon(_icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogListView)
-        self.toolBox.setItemIcon(0, _icon)
-        _icon = self.style().standardIcon(QtGui.QStyle.SP_ComputerIcon)
-        self.toolBox.setItemIcon(1, _icon)
-
-        self.initBackdrop()
         self.update()
+        self.version_label.setText('v{}'.format(VERSION))
 
-        self.connect_actions()
-        self.connectEdits()
-
-    def connect_actions(self):
-        self.actionSheet.triggered.connect(self.create_sheet)
-        self.actionDir.triggered.connect(self.ask_dir)
-        self.actionNuke.triggered.connect(self.ask_nuke)
-        self.actionOpen.triggered.connect(self.open_sheet)
-        self.actionSync.triggered.connect(self.sync)
-        self.actionServer.triggered.connect(self.ask_server)
-        self.actionUpdateUI.triggered.connect(self.update)
-        self.actionOpenDir.triggered.connect(self.open_dir)
-        self.actionOpenServer.triggered.connect(self.open_server)
-
-    def connectEdits(self):
-        for edit, key in self.edits_key.iteritems():
-            if isinstance(edit, QtGui.QLineEdit):
-                edit.textChanged.connect(lambda text, k=key: self._config.__setitem__(k, text))
-                edit.textChanged.connect(self.update)
-            elif isinstance(edit, QtGui.QCheckBox):
-                edit.stateChanged.connect(lambda state, k=key: self._config.__setitem__(k, state))
-                edit.stateChanged.connect(self.update)
-            elif isinstance(edit, QtGui.QComboBox):
-                edit.currentIndexChanged.connect(lambda index, e=edit, k=key: self._config.__setitem__(k, e.itemText(index)))
-            else:
-                print(u'待处理的控件: {} {}'.format(type(edit), edit))
-
-    def create_sheet(self):
-        self.hide()
-        active_pid(self._config['PID'])
-        cfg = self._config
-        if __name__ == '__main__':
-            script = os.path.join(unicode(sys.argv[0], SYS_CODEC), '../csheet.py')
-        else:
-            script = os.path.join(__file__, '../csheet.py')
-        _json = os.path.join(cfg['DIR'], Config.psetting_bname)
-        _cmd = u'"{NUKE}" -t "{script}" "{json}"'.format(NUKE=cfg['NUKE'], script=script, json=_json)
-        print(_cmd)
-        call(_cmd.encode(SYS_CODEC))
-        if self._config['isCSheetOpen']:
-            self.open_sheet()
-        if self._config['isCSheetUp']:
-            self._sync.uploadCSheet()
-        self.show()
-
-    def open_sheet(self):
-        if os.path.exists(self._config['csheet']):
-            url_open('file://' + self._config['csheet'])
+        _icon()
+        _backdrop()
+        _actions()
+        _edits()
 
     def update(self):
         def _edits():
@@ -378,7 +448,9 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
                     if isinstance(q, QtGui.QLineEdit):
                         q.setText(self._config[k])
                     elif isinstance(q, QtGui.QCheckBox):
-                        q.setCheckState(QtCore.Qt.CheckState(self._config[k]))
+                        q.setCheckState(
+                            QtCore.Qt.CheckState(self._config[k])
+                        )
                     elif isinstance(q, QtGui.QComboBox):
                         q.setCurrentIndex(q.findText(self._config[k]))
                 except KeyError as e:
@@ -403,62 +475,78 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
             _page_index = self.toolBox.currentIndex()
             print('_page_index', _page_index)
             _list.clear()
-            if _page_index == 1:
-                _all_items = []
-                _info = []
-                if self._config['isImageUp']:
-                    _image_list = self._sync.image_list()
-                    if isinstance(_image_list, list):
-                        _all_items += _image_list
-                    else:
-                        _info += [u'#图像文件夹不存在']
-                if self._config['isVideoUp']:
-                    _video_list = self._sync.video_list()
-                    if isinstance(_video_list, list):
-                        _all_items += _video_list
-                    else:
-                        _info += [u'#视频文件夹不存在']
-                map(_list.addItem, _info)
-                map(lambda x: _list.addItem(u'将上传: {}'.format(x)), _all_items)
-                for i in self._sync.ignore_list():
-                    _list.addItem(u'无需上传: {}'.format(i))
-            elif _page_index == 2:
+            if _page_index == 0:
                 pass
-        print('upadeted')
+            elif _page_index == 1:
+                _not_ignore = []
+                _ignore = []
+                if self._config['isImageUp']:
+                    try:
+                        _image_list = self._sync.image_list()
+                        if _image_list:
+                            _not_ignore += [
+                                '# {}/'.format(self._config['IMAGE_FNAME'])
+                            ]
+                        _not_ignore += _image_list
+                        if self._sync._image_ignore:
+                            _ignore += [
+                                '## {}/'.format(self._config['IMAGE_FNAME'])
+                            ]
+                            _ignore += self._sync._image_ignore
+                    except ValueError:
+                        _not_ignore += ([u'#单帧文件夹不存在'])
+                        
+
+                if self._config['isVideoUp']:
+                    try:
+                        _video_list = self._sync.video_list()
+                        if _video_list:
+                            _not_ignore += [
+                                '# {}/'.format(self._config['VIDEO_FNAME'])
+                            ]
+                        _not_ignore += _video_list
+                        _video_ignore = self._sync._video_ignore
+                        if self._sync._video_ignore:
+                            _ignore += [
+                                '## {}/'.format(self._config['VIDEO_FNAME'])
+                            ]
+                            _ignore += self._sync._video_ignore
+                    except ValueError:
+                        _not_ignore += ([u'#视频文件夹不存在'])
+                map(_list.addItem, _not_ignore)
+                if _ignore:
+                    _list.addItem(u'# 无需上传')
+                    map(_list.addItem, _ignore)
+
         _edits()
         _button_enabled()
         _list_widget()
+        print('upadeted')
 
     def ask_dir(self):
         _fileDialog = QFileDialog()
-        _dir = _fileDialog.getExistingDirectory(dir=os.path.dirname(self._config['DIR']))
+        _dir = _fileDialog.getExistingDirectory(
+            dir=os.path.dirname(self._config['DIR'])
+        )
         if _dir:
             self._config['DIR'] = _dir
             self.update()
 
     def ask_nuke(self):
         _fileDialog = QFileDialog()
-        _fileNames, _selectedFilter = _fileDialog.getOpenFileName(dir=os.getenv('ProgramFiles'), filter='*.exe')
+        _fileNames, _selectedFilter = _fileDialog.getOpenFileName(
+            dir=os.getenv('ProgramFiles'),
+            filter='*.exe'
+        )
         if _fileNames:
             self._config['NUKE'] = _fileNames
             self.update()
 
-            
-    def initBackdrop(self):
-        self._config['BACKDROP_DIR'] = unicode(os.path.join(os.path.dirname(unicode(sys.argv[0], SYS_CODEC)), u'Backdrops'))
-        dir = self._config['BACKDROP_DIR']
-        box = self.backDropBox
-        if not os.path.exists(dir):
-            os.mkdir(dir)
-        bd_list = os.listdir(dir)
-        for item in bd_list:
-            box.addItem(item)
-        self._config['backdrop_name'] = box.currentText()
-        box.addItem(u'纯黑')
-        
     def ask_server(self):
         fileDialog = QFileDialog()
-        dir = fileDialog.getExistingDirectory(dir=os.path.dirname(self._config['SERVER']))
+        dir = fileDialog.getExistingDirectory(
+            dir=os.path.dirname(self._config['SERVER'])
+        )
         if dir:
             self._config['SERVER'] = dir
             self.update()
@@ -466,11 +554,11 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
     def sync(self):
         cfg = self._config
         if cfg['isImageDown']:
-            self._sync.downloadImages()
+            self._sync.download_images()
         if cfg['isImageUp']:
-            self._sync.uploadImages()
+            self._sync.upload_images()
         if cfg['isVideoUp']:
-            self._sync.uploadVideos()
+            self._sync.upload_videos()
         self.update()
 
     def open_dir(self):
@@ -478,6 +566,35 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
 
     def open_server(self):
         url_open('file://{}'.format(self._config['SERVER']))
+
+    def create_sheet(self):
+        self.hide()
+        active_pid(self._config['PID'])
+        cfg = self._config
+        if __name__ == '__main__':
+            script = os.path.join(
+                unicode(sys.argv[0], SYS_CODEC),
+                '../csheet.py'
+            )
+        else:
+            script = os.path.join(__file__, '../csheet.py')
+        _json = os.path.join(cfg['DIR'], Config.psetting_bname)
+        _cmd = u'"{NUKE}" -t "{script}" "{json}"'.format(
+            NUKE=cfg['NUKE'],
+            script=script,
+            json=_json
+        )
+        print(_cmd)
+        call(_cmd.encode(SYS_CODEC))
+        if self._config['isCSheetOpen']:
+            self.open_sheet()
+        if self._config['isCSheetUp']:
+            self._sync.upload_sheet()
+        self.show()
+
+    def open_sheet(self):
+        if os.path.exists(self._config['csheet']):
+            url_open('file://' + self._config['csheet'])
 
 def main():
     call(u'CHCP 936 & TITLE scenetools.console & CLS', shell=True)
@@ -495,7 +612,10 @@ def active_pid(pid):
         _file = sys.argv[0]
     else:
         _file = __file__
-    _cmd = '"{}" "{}"'.format(os.path.abspath(os.path.join(_file, '../active_pid.exe')), pid)
+    _cmd = '"{}" "{}"'.format(
+        os.path.abspath(os.path.join(_file, '../active_pid.exe')),
+        pid
+    )
     Popen(_cmd)
 
 def url_open(url):
