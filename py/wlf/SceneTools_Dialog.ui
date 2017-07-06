@@ -13,71 +13,103 @@
   <property name="windowTitle">
    <string>场集工具</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_7">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_4">
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
      <item>
       <widget class="QLabel" name="label_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>工作目录</string>
        </property>
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_9">
-       <item>
-        <widget class="QLineEdit" name="dirEdit">
-         <property name="dragEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="dirButton">
-         <property name="text">
-          <string>浏览</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QToolButton" name="openDirButton">
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_12">
-       <item>
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>工程名</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="projectEdit"/>
-       </item>
-      </layout>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <item>
+      <widget class="QLineEdit" name="dirEdit">
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLineEdit" name="epEdit"/>
-       </item>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>集</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="scEdit"/>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>场</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QToolButton" name="dirButton">
+       <property name="text">
+        <string>浏览</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_12">
+     <item>
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>工程名</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="projectEdit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLineEdit" name="epEdit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>集</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="scEdit"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>场</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -127,7 +159,7 @@
             <x>0</x>
             <y>0</y>
             <width>207</width>
-            <height>300</height>
+            <height>292</height>
            </rect>
           </property>
           <attribute name="label">
@@ -224,6 +256,19 @@
             </widget>
            </item>
            <item>
+            <spacer name="verticalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QPushButton" name="sheetButton">
              <property name="minimumSize">
               <size>
@@ -252,6 +297,7 @@
           <zorder>openButton</zorder>
           <zorder>csheetOpenCheck</zorder>
           <zorder>csheetUpCheck</zorder>
+          <zorder>verticalSpacer_3</zorder>
          </widget>
          <widget class="QWidget" name="toolBoxPage2">
           <property name="geometry">
@@ -259,7 +305,7 @@
             <x>0</x>
             <y>0</y>
             <width>211</width>
-            <height>300</height>
+            <height>292</height>
            </rect>
           </property>
           <attribute name="label">
@@ -348,6 +394,13 @@
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>上传</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QCheckBox" name="videoUpCheck">
                <property name="text">
                 <string>视频</string>
@@ -364,14 +417,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>上传</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <layout class="QHBoxLayout" name="horizontalLayout_8">
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>下载</string>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QCheckBox" name="videoDownCheck">
                <property name="enabled">
@@ -395,11 +448,17 @@
             </layout>
            </item>
            <item>
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>下载</string>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
              </property>
-            </widget>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
            </item>
            <item>
             <widget class="QPushButton" name="syncButton">
@@ -568,6 +627,16 @@
     <string>nuke</string>
    </property>
   </action>
+  <action name="actionUpdateUI">
+   <property name="text">
+    <string>updateUI</string>
+   </property>
+  </action>
+  <action name="actionOpenDir">
+   <property name="text">
+    <string>openDir</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -660,6 +729,38 @@
     <hint type="sourcelabel">
      <x>345</x>
      <y>405</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolBox</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>actionUpdateUI</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>347</x>
+     <y>318</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>openDirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionOpenDir</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>19</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>

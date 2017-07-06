@@ -7,17 +7,23 @@ import time
 import json
 
 from subprocess import call, Popen, PIPE
-import PySide.QtCore, PySide.QtGui
+from PySide import QtCore, QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
 from ui_SceneTools_Dialog import Ui_Dialog
 
-VERSION = 0.5
+VERSION = 0.52
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 script_codec = 'UTF-8'
 
 def pause():
-    call('PAUSE', shell=True)
+    # call(u'PAUSE', shell=True)
+    print(u'')
+    for i in range(5)[::-1]:
+        sys.stdout.write(u'\r{:2d}'.format(i+1))
+        time.sleep(1)
+    sys.stdout.write(u'\r          ')
+    print(u'')
 
 class Config(dict):
     default = {
@@ -134,7 +140,7 @@ class Config(dict):
              dict.__setitem__(self, 'SCENE', match.groups()[1])
 
 def copy(src, dst):
-    cmd = u'XCOPY /Y /V "{}" "{}"'.format(unicode(src), unicode(dst)).encode(sys_codec)
+    cmd = u'XCOPY /Y /V "{}" "{}"'.format(unicode(src), unicode(dst)).encode(SYS_CODEC)
     call(cmd)
 
 class SingleInstanceException(Exception):
@@ -162,43 +168,41 @@ class Sync(object):
         self._video_ignore = []
 
     def image_list(self):
+        self._image_ignore = []
         _dir = self._config['IMAGE_FNAME']
         if not os.path.isdir(_dir):
             return False
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.jpg'))
         
         if os.path.isdir(self._config['image_dest']):
-            _all_item = _ret
+            _all_items = _ret
             _ret = []
-            for i in _all_item:
+            for i in _all_items:
                 _src = os.path.join(self._config['IMAGE_FNAME'], i)
                 _dst = os.path.join(self._config['image_dest'], i)
                 if os.path.isfile(_dst) and os.path.getmtime(_src) == os.path.getmtime(_dst):
                     self._image_ignore.append(i)
                 else:
                     _ret.append(i)
-            else:
-                _ret.append(i)
         return _ret
 
     def video_list(self):
+        self._video_ignore = []
         _dir = self._config['VIDEO_FNAME']
         if not os.path.isdir(_dir):
             return False
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.mov'))
 
         if os.path.isdir(self._config['video_dest']):
-            _all_item = _ret
+            _all_items = _ret
             _ret = []
-            for i in _all_item:
+            for i in _all_items:
                 _src = os.path.join(self._config['VIDEO_FNAME'], i)
                 _dst = os.path.join(self._config['video_dest'], i)
                 if os.path.isfile(_dst) and os.path.getmtime(_src) == os.path.getmtime(_dst):
                     self._video_ignore.append(i)
                 else:
                     _ret.append(i)
-            else:
-                _ret.append(i)
         return _ret
 
     def ignore_list(self):
@@ -210,8 +214,7 @@ class Sync(object):
         return _ret
     
     def uploadVideos(self):
-        cfg = self._config
-        video_dest = unicode(cfg['video_dest'])
+        video_dest = unicode(self._config['video_dest'])
 
         if os.path.exists(os.path.dirname(video_dest)):
             if not os.path.exists(video_dest):
@@ -220,8 +223,8 @@ class Sync(object):
             print(u'**错误** 视频上传文件夹不存在, 将不会上传。')
             return False
 
-        for i in cfg['video_list']:
-            src = os.path.join(cfg['VIDEO_FNAME'], i)
+        for i in self.video_list():
+            src = os.path.join(self._config['VIDEO_FNAME'], i)
             dst = video_dest
             copy(src, dst)
 
@@ -229,36 +232,35 @@ class Sync(object):
         pass
 
     def uploadImages(self):
-        cfg = self._config
-        dest = unicode(cfg['image_dest'])
-        if os.path.exists(os.path.dirname(dest)):
-            if not os.path.exists(dest):
+        dest = unicode(self._config['image_dest'])
+        print(dest)
+        if os.path.isdir(os.path.dirname(dest)):
+            if not os.path.isdir(dest):
                 os.mkdir(dest)
         else:
             print(u'**错误** 图片上传文件夹不存在, 将不会上传。')
             return False
 
-        for i in cfg['image_list']:
-            src = os.path.join(cfg['IMAGE_FNAME'], i)
+        for i in self.image_list():
+            src = os.path.join(self._config['IMAGE_FNAME'], i)
             dst = dest
             copy(src, dst)
 
     def downloadImages(self):
-        cfg = self._config
-        src = cfg['image_dest']
-        dst = cfg['IMAGE_FNAME']
+        src = self._config['image_dest']
+        dst = self._config['IMAGE_FNAME']
         print(u'## 下载单帧: {} -> {}'.format(src, dst))
-        call(' '.join(['XCOPY', '/Y', '/D', '/I', '/V', src, dst]))
+        call('XCOPY /Y /D /I /V "{}\\*.jpg" "{}"'.format(src, dst))
 
     def uploadCSheet(self):
         dest = self._config['csheet_dest']
 
-        if not os.path.exists(os.path.dirname(dest)):
+        if os.path.isdir(os.path.dirname(dest)):
+            if not os.path.isdir(dest):
+                os.mkdir(dest)
+        else:
             return False
             print(u'**错误** 色板上传文件夹不存在, 将不会上传。')
-
-        if not os.path.exists(dest):
-            os.mkdir(dest)
 
         copy(self._config['csheet'], dest)
 
@@ -297,6 +299,22 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         }
         self._config = Config()
         self._sync = Sync()
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogListView)
+        self.setWindowIcon(_icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_DirOpenIcon)
+        self.openDirButton.setIcon(_icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_DialogOpenButton)
+        self.dirButton.setIcon(_icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_MediaPlay)
+        self.sheetButton.setIcon(_icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileIcon)
+        self.openButton.setIcon(_icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogToParent)
+        self.syncButton.setIcon(_icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogListView)
+        self.toolBox.setItemIcon(0, _icon)
+        _icon = self.style().standardIcon(QtGui.QStyle.SP_ComputerIcon)
+        self.toolBox.setItemIcon(1, _icon)
 
         self.initBackdrop()
         self.update()
@@ -311,16 +329,18 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         self.actionOpen.triggered.connect(self.open_sheet)
         self.actionSync.triggered.connect(self.sync)
         self.actionServer.triggered.connect(self.ask_server)
+        self.actionUpdateUI.triggered.connect(self.update)
+        self.actionOpenDir.triggered.connect(self.open_dir)
 
     def connectEdits(self):
         for edit, key in self.edits_key.iteritems():
-            if isinstance(edit, PySide.QtGui.QLineEdit):
+            if isinstance(edit, QtGui.QLineEdit):
                 edit.textChanged.connect(lambda text, k=key: self._config.__setitem__(k, text))
                 edit.textChanged.connect(self.update)
-            elif isinstance(edit, PySide.QtGui.QCheckBox):
+            elif isinstance(edit, QtGui.QCheckBox):
                 edit.stateChanged.connect(lambda state, k=key: self._config.__setitem__(k, state))
                 edit.stateChanged.connect(self.update)
-            elif isinstance(edit, PySide.QtGui.QComboBox):
+            elif isinstance(edit, QtGui.QComboBox):
                 edit.currentIndexChanged.connect(lambda index, e=edit, k=key: self._config.__setitem__(k, e.itemText(index)))
             else:
                 print(u'待处理的控件: {} {}'.format(type(edit), edit))
@@ -351,11 +371,11 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         def _edits():
             for q, k in self.edits_key.iteritems():
                 try:
-                    if isinstance(q, PySide.QtGui.QLineEdit):
+                    if isinstance(q, QtGui.QLineEdit):
                         q.setText(self._config[k])
-                    elif isinstance(q, PySide.QtGui.QCheckBox):
-                        q.setCheckState(PySide.QtCore.Qt.CheckState(self._config[k]))
-                    elif isinstance(q, PySide.QtGui.QComboBox):
+                    elif isinstance(q, QtGui.QCheckBox):
+                        q.setCheckState(QtCore.Qt.CheckState(self._config[k]))
+                    elif isinstance(q, QtGui.QComboBox):
                         q.setCurrentIndex(q.findText(self._config[k]))
                 except KeyError as e:
                     print(e)
@@ -376,25 +396,30 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
 
         def _list_widget():
             _list = self.listWidget
+            _page_index = self.toolBox.currentIndex()
+            print('_page_index', _page_index)
             _list.clear()
-            _all_item = []
-            _info = []
-            if self._config['isImageUp']:
-                _image_list = self._sync.image_list()
-                if _image_list:
-                    _all_item += _image_list
-                else:
-                    _info += [u'#图像文件夹不存在']
-            if self._config['isVideoUp']:
-                _video_list = self._sync.video_list()
-                if _video_list:
-                    _all_item += _video_list
-                else:
-                    _info += [u'#视频文件夹不存在']
-            map(_list.addItem, _info)
-            map(lambda x: _list.addItem(u'将上传: {}'.format(x)), _all_item)
-            for i in self._sync.ignore_list():
-                _list.addItem(u'无需上传: {}'.format(i))
+            if _page_index == 1:
+                _all_items = []
+                _info = []
+                if self._config['isImageUp']:
+                    _image_list = self._sync.image_list()
+                    if isinstance(_image_list, list):
+                        _all_items += _image_list
+                    else:
+                        _info += [u'#图像文件夹不存在']
+                if self._config['isVideoUp']:
+                    _video_list = self._sync.video_list()
+                    if isinstance(_video_list, list):
+                        _all_items += _video_list
+                    else:
+                        _info += [u'#视频文件夹不存在']
+                map(_list.addItem, _info)
+                map(lambda x: _list.addItem(u'将上传: {}'.format(x)), _all_items)
+                for i in self._sync.ignore_list():
+                    _list.addItem(u'无需上传: {}'.format(i))
+            elif _page_index == 2:
+                pass
         print('upadeted')
         _edits()
         _button_enabled()
@@ -437,15 +462,18 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
     def sync(self):
         cfg = self._config
         if cfg['isImageDown']:
-            self.downloadImages()
+            self._sync.downloadImages()
         if cfg['isImageUp']:
-            self.uploadImages()
+            self._sync.uploadImages()
         if cfg['isVideoUp']:
-            self.uploadVideos()
+            self._sync.uploadVideos()
         self.update()
 
+    def open_dir(self):
+        url_open('file://{}'.format(self._config['DIR']))
+
 def main():
-    call(u'CHCP 936 & TITLE SceneTools_v{} & CLS'.format(VERSION).encode('GBK'), shell=True)
+    call(u'CHCP 936 & TITLE scenetools.console & CLS', shell=True)
     app = QApplication(sys.argv)
     frame = Dialog()
     frame.show()
@@ -472,6 +500,7 @@ if __name__ == '__main__':
         main()
     except SingleInstanceException as e:
         active_pid(Config()['PID'])
+        print(u'激活已经打开的实例')
     except SystemExit as e:
         sys.exit(e)
     except:
