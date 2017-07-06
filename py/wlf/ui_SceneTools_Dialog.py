@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'SceneTools_Dialog.ui'
+# Form implementation generated from reading ui file 'scenetools_dialog.ui'
 #
-# Created: Thu Jul 06 12:00:40 2017
+# Created: Thu Jul 06 13:32:18 2017
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,10 +25,10 @@ class Ui_Dialog(object):
         self.label_6.setSizePolicy(sizePolicy)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_5.addWidget(self.label_6)
-        self.openDirButton = QtGui.QToolButton(Dialog)
-        self.openDirButton.setAutoRaise(True)
-        self.openDirButton.setObjectName("openDirButton")
-        self.horizontalLayout_5.addWidget(self.openDirButton)
+        self.toolButtonOpenDir = QtGui.QToolButton(Dialog)
+        self.toolButtonOpenDir.setAutoRaise(True)
+        self.toolButtonOpenDir.setObjectName("toolButtonOpenDir")
+        self.horizontalLayout_5.addWidget(self.toolButtonOpenDir)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_5.addItem(spacerItem)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
@@ -232,13 +232,20 @@ class Ui_Dialog(object):
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtGui.QWidget()
         self.tab_2.setObjectName("tab_2")
-        self.horizontalLayout_4 = QtGui.QHBoxLayout(self.tab_2)
-        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.verticalLayout_2 = QtGui.QVBoxLayout()
+        self.verticalLayout_2 = QtGui.QVBoxLayout(self.tab_2)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_4 = QtGui.QLabel(self.tab_2)
         self.label_4.setObjectName("label_4")
-        self.verticalLayout_2.addWidget(self.label_4)
+        self.horizontalLayout_4.addWidget(self.label_4)
+        self.toolButtonOpenServer = QtGui.QToolButton(self.tab_2)
+        self.toolButtonOpenServer.setAutoRaise(True)
+        self.toolButtonOpenServer.setObjectName("toolButtonOpenServer")
+        self.horizontalLayout_4.addWidget(self.toolButtonOpenServer)
+        spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout_4.addItem(spacerItem3)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_3 = QtGui.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.serverEdit = QtGui.QLineEdit(self.tab_2)
@@ -246,6 +253,7 @@ class Ui_Dialog(object):
         self.serverEdit.setObjectName("serverEdit")
         self.horizontalLayout_3.addWidget(self.serverEdit)
         self.serverButton = QtGui.QToolButton(self.tab_2)
+        self.serverButton.setAutoRaise(True)
         self.serverButton.setObjectName("serverButton")
         self.horizontalLayout_3.addWidget(self.serverButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
@@ -279,12 +287,12 @@ class Ui_Dialog(object):
         self.nukeEdit.setObjectName("nukeEdit")
         self.horizontalLayout_2.addWidget(self.nukeEdit)
         self.nukeButton = QtGui.QToolButton(self.tab_2)
+        self.nukeButton.setAutoRaise(True)
         self.nukeButton.setObjectName("nukeButton")
         self.horizontalLayout_2.addWidget(self.nukeButton)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
-        spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem3)
-        self.horizontalLayout_4.addLayout(self.verticalLayout_2)
+        spacerItem4 = QtGui.QSpacerItem(20, 184, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem4)
         self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout.addWidget(self.tabWidget)
         self.version_label = QtGui.QLabel(Dialog)
@@ -307,6 +315,8 @@ class Ui_Dialog(object):
         self.actionUpdateUI.setObjectName("actionUpdateUI")
         self.actionOpenDir = QtGui.QAction(Dialog)
         self.actionOpenDir.setObjectName("actionOpenDir")
+        self.actionOpenServer = QtGui.QAction(Dialog)
+        self.actionOpenServer.setObjectName("actionOpenServer")
 
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(0)
@@ -317,13 +327,14 @@ class Ui_Dialog(object):
         QtCore.QObject.connect(self.syncButton, QtCore.SIGNAL("clicked()"), self.actionSync.trigger)
         QtCore.QObject.connect(self.sheetButton, QtCore.SIGNAL("clicked()"), self.actionSheet.trigger)
         QtCore.QObject.connect(self.toolBox, QtCore.SIGNAL("currentChanged(int)"), self.actionUpdateUI.trigger)
-        QtCore.QObject.connect(self.openDirButton, QtCore.SIGNAL("clicked()"), self.actionOpenDir.trigger)
+        QtCore.QObject.connect(self.toolButtonOpenDir, QtCore.SIGNAL("clicked()"), self.actionOpenDir.trigger)
+        QtCore.QObject.connect(self.toolButtonOpenServer, QtCore.SIGNAL("clicked()"), self.actionOpenServer.trigger)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "场集工具", None, QtGui.QApplication.UnicodeUTF8))
         self.label_6.setText(QtGui.QApplication.translate("Dialog", "工作目录", None, QtGui.QApplication.UnicodeUTF8))
-        self.openDirButton.setText(QtGui.QApplication.translate("Dialog", "...", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolButtonOpenDir.setText(QtGui.QApplication.translate("Dialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.dirButton.setText(QtGui.QApplication.translate("Dialog", "浏览", None, QtGui.QApplication.UnicodeUTF8))
         self.label_13.setText(QtGui.QApplication.translate("Dialog", "工程名", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("Dialog", "集", None, QtGui.QApplication.UnicodeUTF8))
@@ -352,6 +363,7 @@ class Ui_Dialog(object):
         self.toolBox.setItemText(self.toolBox.indexOf(self.toolBoxPage2), QtGui.QApplication.translate("Dialog", "上传下载", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("Dialog", "工具", None, QtGui.QApplication.UnicodeUTF8))
         self.label_4.setText(QtGui.QApplication.translate("Dialog", "服务器路径", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolButtonOpenServer.setText(QtGui.QApplication.translate("Dialog", "...", None, QtGui.QApplication.UnicodeUTF8))
         self.serverButton.setText(QtGui.QApplication.translate("Dialog", "浏览", None, QtGui.QApplication.UnicodeUTF8))
         self.label_7.setText(QtGui.QApplication.translate("Dialog", "服务器视频路径", None, QtGui.QApplication.UnicodeUTF8))
         self.label_10.setText(QtGui.QApplication.translate("Dialog", "服务器单帧文件夹", None, QtGui.QApplication.UnicodeUTF8))
@@ -367,4 +379,5 @@ class Ui_Dialog(object):
         self.actionNuke.setText(QtGui.QApplication.translate("Dialog", "nuke", None, QtGui.QApplication.UnicodeUTF8))
         self.actionUpdateUI.setText(QtGui.QApplication.translate("Dialog", "updateUI", None, QtGui.QApplication.UnicodeUTF8))
         self.actionOpenDir.setText(QtGui.QApplication.translate("Dialog", "openDir", None, QtGui.QApplication.UnicodeUTF8))
+        self.actionOpenServer.setText(QtGui.QApplication.translate("Dialog", "openServer", None, QtGui.QApplication.UnicodeUTF8))
 

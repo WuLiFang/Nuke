@@ -9,7 +9,7 @@ import json
 from subprocess import call, Popen, PIPE
 from PySide import QtCore, QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
-from ui_SceneTools_Dialog import Ui_Dialog
+from ui_scenetools_dialog import Ui_Dialog
 
 VERSION = 0.52
 
@@ -302,9 +302,12 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         _icon = self.style().standardIcon(QtGui.QStyle.SP_FileDialogListView)
         self.setWindowIcon(_icon)
         _icon = self.style().standardIcon(QtGui.QStyle.SP_DirOpenIcon)
-        self.openDirButton.setIcon(_icon)
+        self.toolButtonOpenDir.setIcon(_icon)
+        self.toolButtonOpenServer.setIcon(_icon)
         _icon = self.style().standardIcon(QtGui.QStyle.SP_DialogOpenButton)
         self.dirButton.setIcon(_icon)
+        self.serverButton.setIcon(_icon)
+        self.nukeButton.setIcon(_icon)
         _icon = self.style().standardIcon(QtGui.QStyle.SP_MediaPlay)
         self.sheetButton.setIcon(_icon)
         _icon = self.style().standardIcon(QtGui.QStyle.SP_FileIcon)
@@ -331,6 +334,7 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         self.actionServer.triggered.connect(self.ask_server)
         self.actionUpdateUI.triggered.connect(self.update)
         self.actionOpenDir.triggered.connect(self.open_dir)
+        self.actionOpenServer.triggered.connect(self.open_server)
 
     def connectEdits(self):
         for edit, key in self.edits_key.iteritems():
@@ -360,7 +364,7 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         if self._config['isCSheetOpen']:
             self.open_sheet()
         if self._config['isCSheetUp']:
-            self.uploadCSheet()
+            self._sync.uploadCSheet()
         self.show()
 
     def open_sheet(self):
@@ -471,6 +475,9 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
 
     def open_dir(self):
         url_open('file://{}'.format(self._config['DIR']))
+
+    def open_server(self):
+        url_open('file://{}'.format(self._config['SERVER']))
 
 def main():
     call(u'CHCP 936 & TITLE scenetools.console & CLS', shell=True)
