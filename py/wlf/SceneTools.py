@@ -5,16 +5,16 @@ import locale
 import re
 import time
 import json
-
 from subprocess import call, Popen, PIPE
+
 from PySide import QtCore, QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
+
 from ui_scenetools_dialog import Ui_Dialog
 
 VERSION = 0.6
 
 SYS_CODEC = locale.getdefaultlocale()[1]
-script_codec = 'UTF-8'
 
 def pause():
     # call(u'PAUSE', shell=True)
