@@ -1,10 +1,13 @@
 #! usr/bin/env python
 # -*- coding=UTF-8 -*-
-
+"""
+cgteamwork integration with nuke.
+"""
 import os
 import sys
 import locale
 import shutil
+import re
 from subprocess import call
 
 import nuke
@@ -13,10 +16,10 @@ if os.path.exists(CGTW_PATH):
     sys.path.append(CGTW_PATH)
     import cgtw
 else:
-    nuke.error('CGTeamWork路径不存在: {}'.format(CGTW_PATH))
+    nuke.error('CGTeamWork not found: {}'.format(CGTW_PATH))
 
 
-VERSION = 0.21
+VERSION = '0.2.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 def copy(src, dst):
@@ -27,7 +30,7 @@ def copy(src, dst):
     print(u'{} -> {}'.format(src, dst))
 
 class CGTeamWork(object):
-    database = u'proj_big'
+    database = u'proj_qqfc_2017'
 
     def __init__(self):
         self._tw = cgtw.tw()
@@ -56,6 +59,7 @@ class Shot(CGTeamWork):
     pipeline_name = u'comp'
     module = u'shot_task'
     work_folder = u'work'
+    shot_task_folder = u'shot_work'
     image_folder = u'Image'
     server = u'Z:\\CGteamwork_Test'
 
@@ -71,9 +75,10 @@ class Shot(CGTeamWork):
         self._task_module.init_with_id(self._id)
 
     def get_name(self):
-        ret = nuke.scriptName()
+        ret = nuke.value('root.name', '')
         ret = os.path.basename(ret)
         ret = os.path.splitext(ret)[0]
+        ret = re.sub(r'_v\d+$', '', ret)
         return ret
     
     def get_id(self):
@@ -97,7 +102,9 @@ class Shot(CGTeamWork):
 
     def get_image_dest(self):
         infos = self._task_module.get(['shot.shot', 'eps.project_code', 'eps.eps_name'])[0]
-        ret = os.path.join(self.server, infos['eps.project_code'], self.module, self.pipeline_name, infos['eps.eps_name'], infos['shot.shot'], self.image_folder, infos['shot.shot'] + '.jpg')
+        ret = os.path.join(self.server, infos['eps.project_code'], self.shot_task_folder, self.pipeline_name, infos['eps.eps_name'], infos['shot.shot'], self.image_folder, infos['shot.shot'] + '.jpg')
+        if not os.path.isdir(os.path.dirname(ret)):
+            raise FolderError(ret)
         return ret
 
     def upload_nk_file(self):
@@ -109,13 +116,14 @@ class Shot(CGTeamWork):
     def upload_image(self):
         w = nuke.toNode('_Write.Write_JPG_1')
         if w:
-            src = os.path.normcase(nuke.filename(w) % nuke.numvalue('_Write.knob.frame'))
+            src = os.path.join(nuke.value('root.project_directory', ''), nuke.filename(w))
             dst = self.get_image_dest()
             if os.path.exists(dst) and (os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06):
                 return None
             else:
                 copy(src, dst)
                 self.add_note(u'[log]上传单帧: {}'.format(os.path.basename(src)))
+                nuke.message('上传完毕')
                 return dst
         else:
             return False
@@ -129,7 +137,6 @@ class Shot(CGTeamWork):
         if s:
             self.add_note(s)
 
-
 class IDError(Exception):
     def __init__(self, *args):
         self.message = args
@@ -137,7 +144,15 @@ class IDError(Exception):
     def __str__(self):
         return '找不到对应条目:{}'.format(self.message)
 
+class FolderError(Exception):
+    def __init__(self, *args):
+        self.message = args
+
+    def __str__(self):
+        return '服务器上无对应文件夹:{}'.format(self.message)
+
 
 class LoginError(Exception):
     def __str__(self):
         return 'CGTeamWork服务器未连接'
+        
