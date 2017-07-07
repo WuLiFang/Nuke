@@ -55,6 +55,11 @@ class Config(dict):
     psetting_bname = '.projectsettings.json'
     instance = None
 
+    def __new__(cls):
+        if not cls.instance:
+            cls.instance = super(Config, cls).__new__(cls)
+        return cls.instance
+
     def __init__(self):
         self.update(dict(self.default))
         self.read()
@@ -62,11 +67,6 @@ class Config(dict):
             os.chdir(self['DIR'])
         except WindowsError as e:
             print(e)
-
-    def __new__(cls):
-        if not cls.instance:
-            cls.instance = super(Config, cls).__new__(cls)
-        return cls.instance
 
     def __setitem__(self, key, value):
         print(key, value)
