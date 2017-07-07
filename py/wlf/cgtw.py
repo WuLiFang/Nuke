@@ -114,28 +114,22 @@ class Shot(CGTeamWork):
         src = os.path.normcase(nuke.scriptName())
         dst = self.workfile_dest
         copy(src, dst)
-        self.add_note(u'[log]上传nk文件: {}'.format(os.path.basename(src)))
 
     def upload_image(self):
         n = nuke.toNode('_Write') or nuke.toNode('wlf_Write1') or nuke.allNodes('wlf_Write')
         if isinstance(n, list):
             n = n[0]
-        w = n.node('Write_JPG_1')
-        if w:
-            src = os.path.join(nuke.value('root.project_directory', ''), nuke.filename(w))
+        if n:
+            src = os.path.join(nuke.value('root.project_directory', ''), nuke.filename(n.node('Write_JPG_1')))
             dst = self.image_dest
-            if os.path.exists(dst) and (os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06):
-                return None
-            else:
+            if not (os.path.exists(dst) and (os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06)):
                 copy(src, dst)
-                self.add_note(u'[log]上传单帧: {}'.format(os.path.basename(src)))
-                return dst
+            return dst
         else:
             return False
     
     def sumbit_all(self):
-        self.upload_image()
-        self.submit([self.image_dest])
+        self.upload_image() and self.submit([self.image_dest])
         
     def add_note(self, s):
         self._task_module.create_note(s)

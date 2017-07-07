@@ -1,6 +1,8 @@
 # -*- coding: UTF-8 -*-
 import os
+import sys
 import locale
+import traceback
 
 import nuke
 import nukescripts
@@ -42,9 +44,12 @@ def _cgtw():
     def on_close_callback():
         if nuke.modified():
             return False
-
-        if os.path.basename(nuke.value('root.name')).startswith('SNJYW'):
-            cgtw.Shot().upload_image()
+        try:
+            shot = cgtw.Shot()
+            shot.upload_image()
+            shot.upload_nk_file()
+        except:
+            traceback.print_exc()
 
     nuke.addOnScriptClose(on_close_callback)
 
