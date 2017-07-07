@@ -114,11 +114,15 @@ class Shot(CGTeamWork):
         self.add_note(u'[log]上传nk文件: {}'.format(os.path.basename(src)))
 
     def upload_image(self):
-        w = nuke.toNode('_Write.Write_JPG_1')
+        n = nuke.toNode('_Write') or nuke.toNode('wlf_Write1') or nuke.allNodes('wlf_Write')
+        if isinstance(n, list):
+            n = n[0]
+        w = n.node('Write_JPG_1')
         if w:
             src = os.path.join(nuke.value('root.project_directory', ''), nuke.filename(w))
             dst = self.get_image_dest()
             if os.path.exists(dst) and (os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06):
+                nuke.message('无需上传')
                 return None
             else:
                 copy(src, dst)
