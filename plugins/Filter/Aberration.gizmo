@@ -2,14 +2,14 @@
 version 10.0 v4
 Gizmo {
  tile_color 0xcc804eff
- gl_color 0x3242ff00
  note_font 微软雅黑
- addUserKnob {20 Aberration l Aberration_v0.1.1}
+ addUserKnob {20 Aberration l Aberration_v0.1.2}
  addUserKnob {6 blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {18 distortion1}
+ addUserKnob {18 distortion1 R 0 0.01}
  distortion1 {0 0 0}
  addUserKnob {6 distortion1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {18 distortion2}
+ distortion1_panelDropped true
+ addUserKnob {18 distortion2 R 0 0.01}
  distortion2 {0 0 0}
  addUserKnob {6 distortion2_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {12 center}
@@ -57,7 +57,7 @@ Gizmo {
   xpos 78
   ypos -96
  }
-set N3927bc00 [stack 0]
+set N8e0d8800 [stack 0]
  Input {
   inputs 0
   name Input
@@ -65,7 +65,7 @@ set N3927bc00 [stack 0]
   xpos -590
   ypos -58
  }
-set N3927b800 [stack 0]
+set Nde534400 [stack 0]
  Dot {
   name Dot3
   gl_color 0xff32c300
@@ -117,8 +117,8 @@ set N3927b800 [stack 0]
   xpos -40
   ypos 18
  }
-push $N3927bc00
-push $N3927b800
+push $N8e0d8800
+push $Nde534400
  Dot {
   name Dot2
   gl_color 0x326cff00
@@ -170,8 +170,8 @@ push $N3927b800
   xpos -150
   ypos 18
  }
-push $N3927bc00
-push $N3927b800
+push $N8e0d8800
+push $Nde534400
  Dot {
   name Dot4
   gl_color 0x32ffc100
@@ -244,7 +244,7 @@ push $N3927b800
   xpos -40
   ypos 62
  }
-push $N3927b800
+push $Nde534400
  Dot {
   name Dot1
   gl_color 0xff328700
@@ -284,7 +284,7 @@ push $N3927b800
   xpos -40
   ypos 188
  }
-push $N3927b800
+push $Nde534400
  Dot {
   name Dot5
   gl_color 0xff9a3200
@@ -369,8 +369,8 @@ push $N3927b800
    xpos 643
    ypos -278
   }
-set N39298c00 [stack 0]
-push $N39298c00
+set Ne4ebc800 [stack 0]
+push $Ne4ebc800
   Input {
    inputs 0
    name Mask
@@ -423,8 +423,8 @@ push $N39298c00
    ypos 324
    disable {{invrt==0}}
   }
-push $N39298c00
-push $N39298c00
+push $Ne4ebc800
+push $Ne4ebc800
   Radial {
    cliptype none
    replace true
@@ -442,14 +442,14 @@ push $N39298c00
    xpos -540
    ypos -252
   }
-set N3929b800 [stack 0]
+set Nbec62000 [stack 0]
   Dot {
    name Dot2
    gl_color 0x32ff7400
    xpos -506
    ypos 402
   }
-push $N39298c00
+push $Ne4ebc800
   Radial {
    cliptype none
    replace true
@@ -490,8 +490,8 @@ push $N39298c00
    xpos 102
    ypos -76
   }
-set N35ea0400 [stack 0]
-push $N39298c00
+set N8e17f000 [stack 0]
+push $Ne4ebc800
   Shuffle {
    alpha white
    name Shuffle1
@@ -500,7 +500,7 @@ push $N39298c00
    xpos 276
    ypos -105
   }
-set N35ea0800 [stack 0]
+set Ndc573400 [stack 0]
   Shuffle {
    green red
    blue red
@@ -518,7 +518,7 @@ set N35ea0800 [stack 0]
    xpos 102
    ypos 73
   }
-push $N3929b800
+push $Nbec62000
   Transform {
    translate {{curve R 0 1} {curve R 0 1}}
    rotate {{curve R 0 1}}
@@ -530,9 +530,9 @@ push $N3929b800
    xpos -477
    ypos 188
   }
-set N35ea1400 [stack 0]
-push $N3929b800
-push $N39298c00
+set Nd94be000 [stack 0]
+push $Nbec62000
+push $Ne4ebc800
   Grade {
    multiply {{1/parent.channelSelectOffst.multiply}}
    black_clamp false
@@ -549,7 +549,7 @@ push $N39298c00
    xpos -202
    ypos -190
   }
-set N392d0000 [stack 0]
+set Nde2bec00 [stack 0]
   Shuffle {
    green red
    blue red
@@ -638,8 +638,8 @@ set N392d0000 [stack 0]
    xpos -318
    ypos 335
   }
-push $N35ea0400
-push $N35ea0800
+push $N8e17f000
+push $Ndc573400
   Shuffle {
    red green
    blue green
@@ -658,9 +658,9 @@ push $N35ea0800
    xpos 203
    ypos 133
   }
-push $N35ea1400
-push $N3929b800
-push $N392d0000
+push $Nd94be000
+push $Nbec62000
+push $Nde2bec00
   Shuffle {
    red green
    blue green
@@ -754,8 +754,8 @@ push $N392d0000
    xpos -202
    ypos 331
   }
-push $N35ea0400
-push $N35ea0800
+push $N8e17f000
+push $Ndc573400
   Shuffle {
    red blue
    green blue
@@ -774,9 +774,9 @@ push $N35ea0800
    xpos 356
    ypos 126
   }
-push $N35ea1400
-push $N3929b800
-push $N392d0000
+push $Nd94be000
+push $Nbec62000
+push $Nde2bec00
   Shuffle {
    red blue
    green blue
@@ -891,7 +891,7 @@ push $N392d0000
    xpos 404
    ypos 392
   }
-push $N39298c00
+push $Ne4ebc800
   Dissolve {
    inputs 2
    channels rgba
@@ -916,8 +916,8 @@ push $N39298c00
    xpos 612
    ypos 392
   }
-set N38005800 [stack 0]
-push $N35ea0400
+set Ne42ebc00 [stack 0]
+push $N8e17f000
   Multiply {
    channels rgba
    value {1 0.375005722 0 1}
@@ -926,7 +926,7 @@ push $N35ea0400
    xpos 707
    ypos 161
   }
-push $N39298c00
+push $Ne4ebc800
   Merge2 {
    inputs 2
    name Merge5
@@ -934,7 +934,7 @@ push $N39298c00
    xpos 707
    ypos 199
   }
-push $N38005800
+push $Ne42ebc00
   Switch {
    inputs 2
    which {{showMask}}

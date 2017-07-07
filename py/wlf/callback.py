@@ -23,8 +23,6 @@ def init():
 
 
 def menu():
-    _dropframe()
-    _cgtw()
     add_dropdata_callback()
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
     nuke.addOnCreate(lambda: edit.randomGlColor(nuke.thisNode()))
@@ -34,32 +32,51 @@ def menu():
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
-    nuke.addOnScriptClose(_create_csheet)
     nuke.addOnScriptClose(_render_jpg)
+    nuke.addOnScriptClose(_create_csheet)
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addAutolabel(ui.custom_autolabel)
+    _dropframe()
+    _cgtw()
 
 
-def _cgtw():
-    def on_close_callback():
-        if nuke.modified():
-            return False
+def ignore_exc(func):
+    def _func():
         try:
-            shot = cgtw.Shot()
-            shot.upload_image()
-            shot.upload_nk_file()
+            func()
         except:
             traceback.print_exc()
+    return _func
 
-    nuke.addOnScriptClose(on_close_callback)
+def abort_modified(func):
+    def _func():
+        if nuke.modified():
+            return False
+        func()
+    return _func
+
+def _cgtw():
+    @abort_modified
+    @ignore_exc
+    def _image():
+        cgtw.Shot().upload_image()
+
+    @abort_modified
+    @ignore_exc
+    def _nk_file():
+        cgtw.Shot().upload_nk_file()
+
+    nuke.addOnScriptClose(_image)
+    nuke.addOnScriptSave(_nk_file)
 
 def _dropframe():
     nuke.addOnUserCreate(lambda : asset.DropFrameCheck(nuke.thisNode()).start(), nodeClass='Read')
     nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
+@abort_modified
 def _create_csheet():
     if nuke.numvalue('preferences.wlf_create_csheet', 0.0):
-        if not nuke.modified() and nuke.value('root.name'):
+        if nuke.value('root.name'):
             csheet.ContactSheetThread().run(new_process=True)
 
 def _check_project():
@@ -76,17 +93,13 @@ def _jump_frame():
         nuke.frame(nuke.numvalue('_Write.knob.frame'));
         nuke.Root().setModified(False)
 
-def _send_to_render_dir():
-    if nuke.modified():
-        return False
-    
+@abort_modified
+def _send_to_render_dir():    
     if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
         asset.sent_to_dir(nuke.value('preferences.wlf_render_dir'))
 
+@abort_modified
 def _render_jpg():
-    if nuke.modified():
-        return False
-
     if nuke.numvalue('preferences.wlf_send_to_dir', 0.0) and nuke.exists('_Write.bt_render_JPG'):
         nuke.toNode('_Write')['bt_render_JPG'].execute()
         

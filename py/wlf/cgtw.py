@@ -23,7 +23,9 @@ def copy(src, dst):
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
     shutil.copy2(src, dst)
-    print(u'{} -> {}'.format(src, dst))
+    message = u'{} -> {}'.format(src, dst)
+    print(message)
+    nuke.tprint(message)
 
 class CGTeamWork(object):
     database = u'proj_qqfc_2017'
