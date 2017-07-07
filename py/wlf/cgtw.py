@@ -8,16 +8,12 @@ import sys
 import locale
 import shutil
 import re
+import importlib
+cgtw = importlib.import_module('cgtw', r"C:\cgteamwork\bin\base")
+
 from subprocess import call
 
 import nuke
-CGTW_PATH = r"C:\cgteamwork\bin\base"
-if os.path.exists(CGTW_PATH):
-    sys.path.append(CGTW_PATH)
-    import cgtw
-else:
-    nuke.error('CGTeamWork not found: {}'.format(CGTW_PATH))
-
 
 VERSION = '0.2.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
@@ -95,26 +91,30 @@ class Shot(CGTeamWork):
     def get_path(self):
         self.check_login()
     
-    def get_workfile_dest(self):
+    @property
+    def workfile_dest(self):
         infos = self._task_module.get(['shot.shot', 'eps.project_code', 'eps.eps_name'])[0]
         ret = os.path.join(self.server, infos['eps.project_code'], self.shot_task_folder, self.pipeline_name, infos['eps.eps_name'], infos['shot.shot'], self.work_folder) + '\\'
         if not os.path.isdir(os.path.dirname(ret)):
             raise FolderError(ret)
         return ret
 
-    def get_image_dest(self):
+    @property
+    def image_dest(self):
         infos = self._task_module.get(['shot.shot', 'eps.project_code', 'eps.eps_name'])[0]
         ret = os.path.join(self.server, infos['eps.project_code'], self.shot_task_folder, self.pipeline_name, infos['eps.eps_name'], infos['shot.shot'], self.image_folder, infos['shot.shot'] + '.jpg')
         if not os.path.isdir(os.path.dirname(ret)):
             raise FolderError(ret)
         return ret
 
+    def submit(self, files, folders=[], note=u'自nuke提交'):
+        self._task_module.submit(files, note, folders)
+    
     def upload_nk_file(self):
         src = os.path.normcase(nuke.scriptName())
-        dst = self.get_workfile_dest()
+        dst = self.workfile_dest
         copy(src, dst)
         self.add_note(u'[log]上传nk文件: {}'.format(os.path.basename(src)))
-        nuke.message('上传完毕')
 
     def upload_image(self):
         n = nuke.toNode('_Write') or nuke.toNode('wlf_Write1') or nuke.allNodes('wlf_Write')
@@ -123,18 +123,20 @@ class Shot(CGTeamWork):
         w = n.node('Write_JPG_1')
         if w:
             src = os.path.join(nuke.value('root.project_directory', ''), nuke.filename(w))
-            dst = self.get_image_dest()
+            dst = self.image_dest
             if os.path.exists(dst) and (os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06):
-                nuke.message('无需上传')
                 return None
             else:
                 copy(src, dst)
                 self.add_note(u'[log]上传单帧: {}'.format(os.path.basename(src)))
-                nuke.message('上传完毕')
                 return dst
         else:
             return False
-
+    
+    def sumbit_all(self):
+        self.upload_image()
+        self.submit([self.image_dest])
+        
     def add_note(self, s):
         self._task_module.create_note(s)
             
