@@ -2,9 +2,10 @@
 version 10.0 v4
 Gizmo {
  tile_color 0xbfbf00ff
+ gl_color 0xff326000
  label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]"
  note_font 微软雅黑
- addUserKnob {20 Write l Write_v4.61}
+ addUserKnob {20 Write l Write_v1.46.3}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -16,7 +17,7 @@ Gizmo {
  addUserKnob {26 ""}
  addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
  addUserKnob {32 bt_render_JPG l 渲染单帧 -STARTLINE T "knob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]"}
- addUserKnob {22 bt_explorer l 浏览输出文件夹 -STARTLINE T "_path = os.path.join(nuke.value('root.project_directory'), '/images/')\nif os.path.exists(_path):\n    nukescripts.start('file://'+_path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {22 bt_explorer l 浏览输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
 }
  Input {
   inputs 0
@@ -25,7 +26,7 @@ Gizmo {
   xpos 180
   ypos -418
  }
-set N73b1e400 [stack 0]
+set N41895400 [stack 0]
  Text2 {
   font_size_toolbar 100
   font_width_toolbar 100
@@ -123,7 +124,7 @@ set N73b1e400 [stack 0]
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $N73b1e400
+push $N41895400
  Write {
   file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
   proxy "images/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
@@ -149,7 +150,7 @@ push $N73b1e400
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $N73b1e400
+push $N41895400
  Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   proxy "mov/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -169,6 +170,8 @@ push $N73b1e400
   mov64_b_frames 0
   checkHashOnRead false
   version 18
+  in_colorspace linear
+  out_colorspace linear
   beforeRender "# Create output folder;\ndef mkOutputFolder(knob):\n    if not nuke.Root()\['project_directory'].value():\n        nuke.error('工程目录未设置');\n        nuke.cancel();\n    file = nuke.tcl('eval list \{'+knob.value()+'\}');\n    absolutePath = os.path.splitdrive(file)\[0];\n    project_directory = nuke.tcl('eval list \{'+nuke.root()\[\"project_directory\"].value()+'\}');\n    pathHead = '' if absolutePath else project_directory+'/';\n    target = pathHead+os.path.dirname(file)\n    if os.path.exists(target):\n        pass;\n    else:\n        os.makedirs(target);\n#\nmkOutputFolder(nuke.thisNode()\[\"file\"]);\nmkOutputFolder(nuke.thisNode()\[\"proxy\"]);"
   name Write_MOV_1
   gl_color 0xbc32ff00
