@@ -49,7 +49,7 @@ def _cgtw():
     nuke.addOnScriptClose(on_close_callback)
 
 def _dropframe():
-    nuke.addUpdateUI(lambda : asset.DropFrameCheck(nuke.thisNode()).start(), nodeClass='Read')
+    nuke.addOnUserCreate(lambda : asset.DropFrameCheck(nuke.thisNode()).start(), nodeClass='Read')
     nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
 def _create_csheet():
