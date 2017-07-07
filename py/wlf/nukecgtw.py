@@ -97,7 +97,9 @@ class Shot(CGTeamWork):
     
     def get_workfile_dest(self):
         infos = self._task_module.get(['shot.shot', 'eps.project_code', 'eps.eps_name'])[0]
-        ret = os.path.join(self.server, infos['eps.project_code'], self.module, self.pipeline_name, infos['eps.eps_name'], infos['shot.shot'], self.work_folder) + '\\'
+        ret = os.path.join(self.server, infos['eps.project_code'], self.shot_task_folder, self.pipeline_name, infos['eps.eps_name'], infos['shot.shot'], self.work_folder) + '\\'
+        if not os.path.isdir(os.path.dirname(ret)):
+            raise FolderError(ret)
         return ret
 
     def get_image_dest(self):
@@ -112,6 +114,7 @@ class Shot(CGTeamWork):
         dst = self.get_workfile_dest()
         copy(src, dst)
         self.add_note(u'[log]上传nk文件: {}'.format(os.path.basename(src)))
+        nuke.message('上传完毕')
 
     def upload_image(self):
         n = nuke.toNode('_Write') or nuke.toNode('wlf_Write1') or nuke.allNodes('wlf_Write')
