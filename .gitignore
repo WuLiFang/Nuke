@@ -49,7 +49,7 @@ Temporary Items
 *.exe
 *.*~
 *.swp
-*.json
+# *.json
 *.pyc
 
 # Build file

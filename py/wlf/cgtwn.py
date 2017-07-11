@@ -25,6 +25,8 @@ sys.setdefaultencoding('UTF-8')
 
 def copy(src, dst):
     """Copy src to dst."""
+    if not os.path.exists(src):
+        return
     dst_dir = os.path.dirname(dst)
     if not os.path.exists(dst_dir):
         os.makedirs(dst_dir)
