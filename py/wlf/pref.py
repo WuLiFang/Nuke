@@ -1,8 +1,12 @@
 # -*- coding=UTF-8 -*-
+"""Custom nuke preference."""
+
 import nuke
-import nukescripts
+
 
 def set_knob_default():
+    """Set nuke knob default when node create."""
+
     def _vectorblur2():
         nuke.knobDefault("VectorBlur2.uv", "motion")
         nuke.knobDefault("VectorBlur2.blur_uv", "uniform")
@@ -14,7 +18,8 @@ def set_knob_default():
     def _root():
         nuke.knobDefault("Root.fps", "25")
         nuke.knobDefault("Root.format", "1920 1080 0 0 1920 1080 1 HD_1080")
-        nuke.knobDefault("Root.project_directory", "[python {nuke.script_directory()}]")
+        nuke.knobDefault("Root.project_directory",
+                         "[python {nuke.script_directory()}]")
         # nuke.knobDefault("Root.free_type_font_path", "//SERVER/scripts/NukePlugins/Fonts")
 
     def _zdefocus2():
@@ -34,25 +39,28 @@ def set_knob_default():
     if k.value() == 11:
         k.setValue(12)
 
+
 def add_preferences():
-    p = nuke.toNode('preferences')
+    """Add a prefrences panel."""
+
+    pref = nuke.toNode('preferences')
     k = nuke.Tab_Knob('wlf_tab', '吾立方')
-    p.addKnob(k)
-    
+    pref.addKnob(k)
+
     def _remove_old():
         for k in ['wlf_lock_connection', 'wlf_tab']:
             try:
-                p.removeKnob(p[k])
+                pref.removeKnob(pref[k])
             except NameError:
                 pass
 
     def _add_knob(k):
         _knob_tcl_name = 'preferences.{}'.format(k.name())
         if nuke.exists(_knob_tcl_name):
-            k.setValue(p[k.name()].value())
-            p.removeKnob(p[k.name()])
+            k.setValue(pref[k.name()].value())
+            pref.removeKnob(pref[k.name()])
         k.setFlag(nuke.ALWAYS_SAVE)
-        p.addKnob(k)
+        pref.addKnob(k)
 
     k = nuke.Boolean_Knob('wlf_gizmo_to_group', '创建Gizmo时尝试转换为Group')
     k.setFlag(nuke.STARTLINE)

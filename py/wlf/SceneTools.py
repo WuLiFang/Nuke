@@ -1,6 +1,8 @@
 # -*- coding=UTF-8 -*-
+"""A tool intend to help create contact sheet and upload/download resource for a scene."""
 
-import os, sys
+import os
+import sys
 import locale
 import re
 import time
@@ -10,41 +12,46 @@ from subprocess import call, Popen, PIPE
 from PySide import QtCore, QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
 
-from ui_scenetools_dialog import Ui_Dialog
+from .ui_scenetools_dialog import Ui_Dialog
 
 VERSION = 0.6
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
+
 def pause():
-    # call(u'PAUSE', shell=True)
+    """Pause prompt with a countdown."""
+
     print(u'')
     for i in range(5)[::-1]:
-        sys.stdout.write(u'\r{:2d}'.format(i+1))
+        sys.stdout.write(u'\r{:2d}'.format(i + 1))
         time.sleep(1)
     sys.stdout.write(u'\r          ')
     print(u'')
 
+
 class Config(dict):
+    """A disk config can be manipulated like a dict."""
+
     default = {
-        'SERVER': r'\\192.168.1.7\z', 
-        'SIMAGE_FOLDER': r'Comp\image', 
-        'SVIDEO_FOLDER': r'Comp\mov', 
-        'NUKE': r'C:\Program Files\Nuke10.0v4\Nuke10.0.exe', 
-        'DIR': 'N://', 
-        'PROJECT': 'SNJYW', 
-        'EP': '', 
-        'SCENE': '', 
-        'CSHEET_FFNAME': 'images', 
-        'CSHEET_PREFIX': 'Contactsheet', 
-        'VIDEO_FNAME': 'mov', 
-        'IMAGE_FNAME': 'images', 
-        'isImageUp': 2, 
-        'isImageDown': 2, 
-        'isVideoUp': 2, 
-        'isVideoDown': 0, 
-        'isCSheetUp': 0, 
-        'isCSheetOpen': 2, 
+        'SERVER': r'\\192.168.1.7\z',
+        'SIMAGE_FOLDER': r'Comp\image',
+        'SVIDEO_FOLDER': r'Comp\mov',
+        'NUKE': r'C:\Program Files\Nuke10.0v4\Nuke10.0.exe',
+        'DIR': 'N://',
+        'PROJECT': 'SNJYW',
+        'EP': '',
+        'SCENE': '',
+        'CSHEET_FFNAME': 'images',
+        'CSHEET_PREFIX': 'Contactsheet',
+        'VIDEO_FNAME': 'mov',
+        'IMAGE_FNAME': 'images',
+        'isImageUp': 2,
+        'isImageDown': 2,
+        'isVideoUp': 2,
+        'isVideoDown': 0,
+        'isCSheetUp': 0,
+        'isCSheetOpen': 2,
         'csheet': '',
         'BACKDROP_DIR': '',
         'backdrop_name': '',
@@ -61,12 +68,13 @@ class Config(dict):
         return cls.instance
 
     def __init__(self):
+        super(Config, self).__init__()
         self.update(dict(self.default))
         self.read()
         try:
             os.chdir(self['DIR'])
-        except WindowsError as e:
-            print(e)
+        except WindowsError as ex:
+            print(ex)
 
     def __setitem__(self, key, value):
         print(key, value)
@@ -75,8 +83,8 @@ class Config(dict):
             pat = re.compile(r'.*\\(ep.*?)\\.*\\(.+)', flags=re.I)
             match = pat.match(self['DIR'])
             if match:
-                 dict.__setitem__(self, 'EP', match.groups()[0])
-                 dict.__setitem__(self, 'SCENE', match.groups()[1])
+                dict.__setitem__(self, 'EP', match.groups()[0])
+                dict.__setitem__(self, 'SCENE', match.groups()[1])
         dict.__setitem__(self, key, value)
         self.set_path()
         self.write()
@@ -114,7 +122,7 @@ class Config(dict):
 
     def set_path(self):
         def _dest():
-            _value =  os.path.join(
+            _value = os.path.join(
                 self['SERVER'],
                 self['PROJECT'],
                 self['SIMAGE_FOLDER'],
@@ -154,7 +162,7 @@ class Config(dict):
             dict.__setitem__(self, 'csheet_name', _csheet_name)
 
             _value = os.path.join(
-                self['DIR'], 
+                self['DIR'],
                 self['csheet_name']
             )
             dict.__setitem__(self, 'csheet', _value)
@@ -178,61 +186,72 @@ class Config(dict):
                 self['backdrop_name']
             )
             dict.__setitem__(self, 'backdrop', _value)
-            
+
         _dest()
         _csheet()
 
-    def change_dir(self, dir):
-        os.chdir(dir)
+    def change_dir(self, dir_):
+        os.chdir(dir_)
         print(u'工作目录改为: {}'.format(os.getcwd()))
         self.read()
+
 
 def is_same(src, dst):
     if not os.path.isfile(dst):
         return False
-    elif os.path.getmtime(src) == os.path.getmtime(dst):
+    if os.path.getmtime(src) == os.path.getmtime(dst):
         return True
-    else:
-        return False
+
+    return False
+
 
 def copy(src, dst):
     _cmd = u'XCOPY /Y /V "{}" "{}"'.format(unicode(src), unicode(dst))
     call(_cmd.encode(SYS_CODEC))
+
 
 class SingleInstanceException(Exception):
     def __str__(self):
         return u'已经有另一个实例在运行了'
 
 
-class SingleInstance(object):
-    def __init__(self):
-        PID = Config()['PID']
-        if isinstance(PID, int) and self.is_pid_exists(PID):
-            raise SingleInstanceException
-        Config()['PID'] = os.getpid()
+def check_single_instance():
+    """Raise SingleInstanceException if not run in singleinstance."""
 
-    def is_pid_exists(self, pid):
-        if sys.platform == 'win32':
-            _proc = Popen(
-                'TASKLIST /FI "PID eq {}" /FO CSV /NH'.format(pid),
-                stdout=PIPE
-            )
-            _stdout = _proc.communicate()[0]
-            return '"{}"'.format(pid) in _stdout
+    pid = Config()['PID']
+    if isinstance(pid, int) and is_pid_exists(pid):
+        raise SingleInstanceException
+    Config()['PID'] = os.getpid()
+
+
+def is_pid_exists(pid):
+    """Check if pid existed.(Windows only)"""
+
+    if sys.platform == 'win32':
+        _proc = Popen(
+            'TASKLIST /FI "PID eq {}" /FO CSV /NH'.format(pid),
+            stdout=PIPE
+        )
+        _stdout = _proc.communicate()[0]
+        return '"{}"'.format(pid) in _stdout
+
 
 class Sync(object):
+    image_ignore = []
+    video_ignore = []
+
     def __init__(self):
         self._config = Config()
-        self._image_ignore = []
-        self._video_ignore = []
+        self.image_ignore = []
+        self.video_ignore = []
 
     def image_list(self):
-        self._image_ignore = []
+        self.image_ignore = []
         _dir = self._config['IMAGE_FNAME']
         if not os.path.isdir(_dir):
             raise ValueError
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.jpg'))
-        
+
         if os.path.isdir(self._config['image_dest']):
             _all_items = _ret
             _ret = []
@@ -242,12 +261,11 @@ class Sync(object):
                 if not is_same(_src, _dst):
                     _ret.append(i)
                 else:
-                    self._image_ignore.append(i)
+                    self.image_ignore.append(i)
         return _ret
 
-
     def video_list(self):
-        self._video_ignore = []
+        self.video_ignore = []
         _dir = self._config['VIDEO_FNAME']
         if not os.path.isdir(_dir):
             raise ValueError
@@ -262,9 +280,9 @@ class Sync(object):
                 if not is_same(_src, _dst):
                     _ret.append(i)
                 else:
-                    self._video_ignore.append(i)
+                    self.video_ignore.append(i)
         return _ret
-    
+
     def upload_videos(self):
         video_dest = unicode(self._config['video_dest'])
 
@@ -280,7 +298,7 @@ class Sync(object):
             dst = video_dest
             copy(src, dst)
 
-    def download_videos():
+    def download_videos(self):
         pass
 
     def upload_images(self):
@@ -311,12 +329,13 @@ class Sync(object):
             if not os.path.isdir(dest):
                 os.mkdir(dest)
         else:
-            return False
             print(u'**错误** 色板上传文件夹不存在, 将不会上传。')
+            return False
 
         copy(self._config['csheet'], dest)
 
-class Dialog(QDialog, Ui_Dialog, SingleInstance):
+
+class Dialog(QDialog, Ui_Dialog):
 
     def __init__(self, parent=None):
         def _backdrop():
@@ -326,11 +345,11 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
                     u'Backdrops'
                 )
             )
-            dir = self._config['BACKDROP_DIR']
+            dir_ = self._config['BACKDROP_DIR']
             box = self.backDropBox
-            if not os.path.exists(dir):
-                os.mkdir(dir)
-            bd_list = os.listdir(dir)
+            if not os.path.exists(dir_):
+                os.mkdir(dir_)
+            bd_list = os.listdir(dir_)
             for item in bd_list:
                 box.addItem(item)
             self._config['backdrop_name'] = box.currentText()
@@ -394,40 +413,40 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
                     edit.stateChanged.connect(self.update)
                 elif isinstance(edit, QtGui.QComboBox):
                     edit.currentIndexChanged.connect(
-                        lambda index, e=edit, k=key: _set_config(
+                        lambda index, ex=edit, k=key: _set_config(
                             k,
-                            e.itemText(index)
+                            ex.itemText(index)
                         )
                     )
                 else:
                     print(u'待处理的控件: {} {}'.format(type(edit), edit))
 
-        SingleInstance.__init__(self)
+        check_single_instance()
         QDialog.__init__(self, parent)
         self.setupUi(self)
 
         self.edits_key = {
-            self.serverEdit: 'SERVER', 
-            self.videoFolderEdit: 'SVIDEO_FOLDER', 
-            self.imageFolderEdit: 'SIMAGE_FOLDER', 
-            self.nukeEdit: 'NUKE', 
-            self.dirEdit: 'DIR', 
-            self.projectEdit: 'PROJECT', 
-            self.epEdit: 'EP', 
-            self.scEdit: 'SCENE', 
-            self.csheetFFNameEdit: 'CSHEET_FFNAME', 
-            self.csheetPrefixEdit: 'CSHEET_PREFIX', 
-            self.imageFNameEdit: 'IMAGE_FNAME', 
-            self.videoFNameEdit: 'VIDEO_FNAME', 
-            self.videoDestEdit: 'video_dest', 
-            self.imageDestEdit: 'image_dest', 
-            self.csheetNameEdit: 'csheet_name', 
+            self.serverEdit: 'SERVER',
+            self.videoFolderEdit: 'SVIDEO_FOLDER',
+            self.imageFolderEdit: 'SIMAGE_FOLDER',
+            self.nukeEdit: 'NUKE',
+            self.dirEdit: 'DIR',
+            self.projectEdit: 'PROJECT',
+            self.epEdit: 'EP',
+            self.scEdit: 'SCENE',
+            self.csheetFFNameEdit: 'CSHEET_FFNAME',
+            self.csheetPrefixEdit: 'CSHEET_PREFIX',
+            self.imageFNameEdit: 'IMAGE_FNAME',
+            self.videoFNameEdit: 'VIDEO_FNAME',
+            self.videoDestEdit: 'video_dest',
+            self.imageDestEdit: 'image_dest',
+            self.csheetNameEdit: 'csheet_name',
             self.csheetDestEdit: 'csheet_dest',
-            self.imageUpCheck: 'isImageUp', 
-            self.imageDownCheck: 'isImageDown', 
-            self.videoUpCheck: 'isVideoUp', 
-            self.videoDownCheck: 'isVideoDown', 
-            self.csheetUpCheck: 'isCSheetUp', 
+            self.imageUpCheck: 'isImageUp',
+            self.imageDownCheck: 'isImageDown',
+            self.videoUpCheck: 'isVideoUp',
+            self.videoDownCheck: 'isVideoDown',
+            self.csheetUpCheck: 'isCSheetUp',
             self.csheetOpenCheck: 'isCSheetOpen',
             self.backDropBox: 'backdrop_name'
         }
@@ -443,22 +462,23 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
 
     def update(self):
         def _edits():
-            for q, k in self.edits_key.iteritems():
+            for qt_edit, k in self.edits_key.iteritems():
                 try:
-                    if isinstance(q, QtGui.QLineEdit):
-                        q.setText(self._config[k])
-                    elif isinstance(q, QtGui.QCheckBox):
-                        q.setCheckState(
+                    if isinstance(qt_edit, QtGui.QLineEdit):
+                        qt_edit.setText(self._config[k])
+                    elif isinstance(qt_edit, QtGui.QCheckBox):
+                        qt_edit.setCheckState(
                             QtCore.Qt.CheckState(self._config[k])
                         )
-                    elif isinstance(q, QtGui.QComboBox):
-                        q.setCurrentIndex(q.findText(self._config[k]))
-                except KeyError as e:
-                    print(e)
+                    elif isinstance(qt_edit, QtGui.QComboBox):
+                        qt_edit.setCurrentIndex(
+                            qt_edit.findText(self._config[k]))
+                except KeyError as ex:
+                    print(ex)
 
         def _button_enabled():
-            dir = self._config['DIR']
-            if os.path.isdir(dir):
+            dir_ = self._config['DIR']
+            if os.path.isdir(dir_):
                 self.sheetButton.setEnabled(True)
                 self.syncButton.setEnabled(True)
             else:
@@ -488,14 +508,13 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
                                 '# {}/'.format(self._config['IMAGE_FNAME'])
                             ]
                         _not_ignore += _image_list
-                        if self._sync._image_ignore:
+                        if self._sync.image_ignore:
                             _ignore += [
                                 '## {}/'.format(self._config['IMAGE_FNAME'])
                             ]
-                            _ignore += self._sync._image_ignore
+                            _ignore += self._sync.image_ignore
                     except ValueError:
                         _not_ignore += ([u'#单帧文件夹不存在'])
-                        
 
                 if self._config['isVideoUp']:
                     try:
@@ -505,12 +524,12 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
                                 '# {}/'.format(self._config['VIDEO_FNAME'])
                             ]
                         _not_ignore += _video_list
-                        _video_ignore = self._sync._video_ignore
-                        if self._sync._video_ignore:
+                        _video_ignore = self._sync.video_ignore
+                        if self._sync.video_ignore:
                             _ignore += [
                                 '## {}/'.format(self._config['VIDEO_FNAME'])
                             ]
-                            _ignore += self._sync._video_ignore
+                            _ignore += self._sync.video_ignore
                     except ValueError:
                         _not_ignore += ([u'#视频文件夹不存在'])
                 map(_list.addItem, _not_ignore)
@@ -524,8 +543,8 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         print('upadeted')
 
     def ask_dir(self):
-        _fileDialog = QFileDialog()
-        _dir = _fileDialog.getExistingDirectory(
+        file_dialog = QFileDialog()
+        _dir = file_dialog.getExistingDirectory(
             dir=os.path.dirname(self._config['DIR'])
         )
         if _dir:
@@ -533,24 +552,24 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
             self.update()
 
     def ask_nuke(self):
-        _fileDialog = QFileDialog()
-        _fileNames, _selectedFilter = _fileDialog.getOpenFileName(
+        file_dialog = QFileDialog()
+        file_names = file_dialog.getOpenFileName(
             dir=os.getenv('ProgramFiles'),
             filter='*.exe'
-        )
-        if _fileNames:
-            self._config['NUKE'] = _fileNames
+        )[0]
+        if file_names:
+            self._config['NUKE'] = file_names
             self.update()
 
     def ask_server(self):
-        fileDialog = QFileDialog()
-        dir = fileDialog.getExistingDirectory(
-            dir=os.path.dirname(self._config['SERVER'])
+        file_dialog = QFileDialog()
+        dir_ = file_dialog.getExistingDirectory(
+            dir_=os.path.dirname(self._config['SERVER'])
         )
-        if dir:
-            self._config['SERVER'] = dir
+        if dir_:
+            self._config['SERVER'] = dir_
             self.update()
-      
+
     def sync(self):
         cfg = self._config
         if cfg['isImageDown']:
@@ -596,6 +615,7 @@ class Dialog(QDialog, Ui_Dialog, SingleInstance):
         if os.path.exists(self._config['csheet']):
             url_open('file://' + self._config['csheet'])
 
+
 def main():
     call(u'CHCP 936 & TITLE scenetools.console & CLS', shell=True)
     app = QApplication(sys.argv)
@@ -603,9 +623,11 @@ def main():
     frame.show()
     sys.exit(app.exec_())
 
+
 def call_from_nuke():
     frame = Dialog()
     frame.show()
+
 
 def active_pid(pid):
     if __name__ == '__main__':
@@ -616,21 +638,19 @@ def active_pid(pid):
         os.path.abspath(os.path.join(_file, '../active_pid.exe')),
         pid
     )
-    Popen(_cmd)
+    return Popen(_cmd)
+
 
 def url_open(url):
     _cmd = "rundll32.exe url.dll,FileProtocolHandler {}".format(url)
     Popen(_cmd)
 
+
 if __name__ == '__main__':
     try:
         main()
-    except SingleInstanceException as e:
+    except SingleInstanceException as ex:
         active_pid(Config()['PID'])
         print(u'激活已经打开的实例')
-    except SystemExit as e:
-        sys.exit(e)
-    except:
-        import traceback
-        traceback.print_exc()
-        pause()
+    except SystemExit as ex:
+        sys.exit(ex)

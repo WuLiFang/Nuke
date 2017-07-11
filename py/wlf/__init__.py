@@ -5,15 +5,8 @@ import os
 
 import nuke
 
-import asset
-import comp
-from comp import Comp
-import nukecgtw
-import csheet
-import pref
-import callback
-import ui
-import backdrop
+from .comp import Comp
+from . import asset, comp, pref, ui, callback, backdrop, csheet, cgtwn
 
-__all__ = ['asset', 'autocomp', 'nukecgtw', 'comp', 'csheet']
+__all__ = ['asset', 'comp', 'edit', 'csheet']
 __version__ = '1.0.0'

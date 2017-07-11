@@ -1,41 +1,60 @@
 # -*- coding=UTF-8 -*-
+"""Create contact sheet from all shot images."""
 
 import os
 import sys
 import locale
 import json
 import threading
-from subprocess import call, Popen, PIPE, STDOUT
 
+from subprocess import call
 import nuke
 
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
+
 class ContactSheet(object):
+    """Create contactsheet in new script."""
+
     shot_width, shot_height = 1920, 1080
     contactsheet_shot_width, contactsheet_shot_height = 1920, 1160
 
-    def __init__(self, config=None):
-        self.read_config()
-        nuke.scriptClear()
-        nuke.Root()['project_directory'].setValue(os.getcwd().replace('\\', '/'))
-        nuke.knob('root.format', '1920 1080')
-        self.create_nodes()
-        self.output()
+    def __init__(self):
+        try:
+            self.read_config()
+        except IOError:
+            print('没有.projectsettings.json, 不会生成色板')
+        else:
+            nuke.scriptClear()
+            nuke.Root()['project_directory'].setValue(
+                os.getcwd().replace('\\', '/'))
+            nuke.knob('root.format', '1920 1080')
+            self.create_nodes()
+            self.output()
 
     def read_config(self):
+        """Set instance config from disk."""
+
         with open(self.json_path()) as f:
             self._config = json.load(f)
 
-    def json_path(self):
+    @staticmethod
+    def json_path():
+        """Return current json config path."""
+
         if __name__ == '__main__':
-            return sys.argv[1]
+            result = sys.argv[1]
         else:
-            return os.path.join(os.path.dirname(nuke.value('root.name')), '.projectsettings.json')
+            result = os.path.join(os.path.dirname(
+                nuke.value('root.name')), '.projectsettings.json')
+        return result
 
     def create_nodes(self):
-        nuke.addFormat('{} {} contactsheet_shot'.format(self.contactsheet_shot_width, self.contactsheet_shot_height))
+        """Create node tree for rendering contactsheet."""
+
+        nuke.addFormat('{} {} contactsheet_shot'.format(
+            self.contactsheet_shot_width, self.contactsheet_shot_height))
         _nodes = []
         for i in self.image_list():
             n = nuke.nodes.Read(file=i.replace('\\', '/').encode('UTF-8'))
@@ -51,7 +70,8 @@ class ContactSheet(object):
             )
             n = nuke.nodes.Transform(
                 inputs=[n],
-                translate='0 {}'.format(self.contactsheet_shot_height-self.shot_height)
+                translate='0 {}'.format(
+                    self.contactsheet_shot_height - self.shot_height)
             )
             n = nuke.nodes.Text2(
                 inputs=[n],
@@ -71,7 +91,8 @@ class ContactSheet(object):
             roworder='TopBottom')
         n.setName('_Csheet')
         k = nuke.WH_Knob('shot_format')
-        k.setValue([self.contactsheet_shot_width, self.contactsheet_shot_height])
+        k.setValue([self.contactsheet_shot_width,
+                    self.contactsheet_shot_height])
         n.addKnob(k)
         _contactsheet_node = n
 
@@ -94,7 +115,8 @@ class ContactSheet(object):
         k.setValue(1.13365)
         n.addKnob(k)
         n.setName('_Reformat_Backdrop')
-        print(u'底板 scale: {}, width: {}, height: {}'.format(n['scale'].value(), n.width(), n.height()))
+        print(u'底板 scale: {}, width: {}, height: {}'.format(
+            n['scale'].value(), n.width(), n.height()))
         _reformat_node = n
         n = nuke.nodes.Transform(
             inputs=[_contactsheet_node],
@@ -113,18 +135,24 @@ class ContactSheet(object):
         self._write_node = n
 
     def output(self):
+        """Write contactsheet to disk."""
+
         # nuke.scriptSave('E:\\temp.nk')
         print(u'输出色板:\t\t{}'.format(self._config['csheet']))
         nuke.render(self._write_node, 1, 1)
 
     def image_list(self):
+        """Return all image in csheet_footagedir."""
+
         _dir = self._config['csheet_footagedir']
-        _images = list(os.path.join(_dir, i.decode(SYS_CODEC)) for i in os.listdir(_dir))
+        _images = list(os.path.join(_dir, i.decode(SYS_CODEC))
+                       for i in os.listdir(_dir))
 
         if not _images:
             raise FootageError
-        
-        _images.sort(key=lambda file: os.stat(file.encode(SYS_CODEC)).st_mtime, reverse=True)
+
+        _images.sort(key=lambda file: os.stat(
+            file.encode(SYS_CODEC)).st_mtime, reverse=True)
         _shots = []
         _ret = []
         for image in _images:
@@ -143,11 +171,15 @@ class ContactSheet(object):
 
 
 class ContactSheetThread(threading.Thread, ContactSheet):
+    """Thread that create contact sheet."""
     lock = threading.Lock()
-    def __init__(self):
-        threading.Thread.__init__(self)
 
-    def run(self, new_process=False):
+    def __init__(self, new_process=False):
+        ContactSheet.__init__(self)
+        threading.Thread.__init__(self)
+        self._new_process = new_process
+
+    def run(self):
         _json = self.json_path()
         if not os.path.isfile(_json):
             return
@@ -159,30 +191,29 @@ class ContactSheetThread(threading.Thread, ContactSheet):
             script=__file__.rstrip('cd'),
             json=_json
         )
-        if new_process: 
+        if self._new_process:
             _cmd = ''.join([u'START "生成色板" ', _cmd])
-        call(_cmd.encode(SYS_CODEC), shell=new_process)
+        call(_cmd.encode(SYS_CODEC), shell=self._new_process)
         _task.setProgress(100)
         self.lock.release()
 
 
 class FootageError(Exception):
+    """Indicate no footage available."""
+
     def __init__(self):
+        super(FootageError, self).__init__()
         print(u'\n**错误** - 在images文件夹中没有可用图像\n')
 
 
 def main():
+    """Use for run as script."""
+
     reload(sys)
     sys.setdefaultencoding('UTF-8')
 
     ContactSheet()
 
-    
+
 if __name__ == '__main__':
-    try:
-        main()
-    except SystemExit, e:
-        exit(e)
-    except:
-        import traceback
-        traceback.print_exc()
+    main()
