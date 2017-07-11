@@ -440,7 +440,7 @@ def shuffle_rgba(node):
     """Create rgba shuffle."""
     channels = ['red', 'green', 'blue', 'alpha']
     for channel in channels:
-        shuffle = nuke.nodes.Shuffle()
+        shuffle = nuke.nodes.Shuffle(label=channel)
         shuffle.setInput(0, node)
         for color in channels:
             shuffle[color].setValue(channel)
