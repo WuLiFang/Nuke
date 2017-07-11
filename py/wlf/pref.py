@@ -19,7 +19,7 @@ def set_knob_default():
         nuke.knobDefault("Root.fps", "25")
         nuke.knobDefault("Root.format", "1920 1080 0 0 1920 1080 1 HD_1080")
         nuke.knobDefault("Root.project_directory",
-                         "[python {os.path.abspath(os.path.join(nuke.value('root.name', ''), '../')).replace('\\', '/')}]")
+                         "[python {os.path.abspath(os.path.join('D:/temp', nuke.value('root.name', ''), '../')).replace('\\', '/')}]")
         # nuke.knobDefault("Root.free_type_font_path", "//SERVER/scripts/NukePlugins/Fonts")
 
     def _zdefocus2():
