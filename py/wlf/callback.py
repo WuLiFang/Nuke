@@ -36,9 +36,9 @@ def menu():
     nuke.addOnScriptSave(_check_fps)
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
-    nuke.addOnScriptClose(_render_jpg)
-    nuke.addOnScriptClose(_create_csheet)
-    nuke.addOnScriptClose(_send_to_render_dir)
+    # nuke.addOnScriptClose(_render_jpg)
+    # nuke.addOnScriptClose(_create_csheet)
+    # nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addAutolabel(ui.custom_autolabel)
     _dropframe()
     _cgtwn()
@@ -91,9 +91,10 @@ def _check_project():
     project_directory = nuke.value('root.project_directory')
     if not project_directory:
         nuke.message('工程目录未设置')
-    elif project_directory == '[python {nuke.script_directory()}]':
+    elif project_directory == '[python {nuke.script_directory()}]'\
+            or project_directory == "[python {os.path.abspath(os.path.join('D:/temp', nuke.value('root.name', ''), '../')).replace('\\', '/')}]":
         nuke.knob('root.project_directory',
-                  "[python {os.path.abspath(os.path.join('D:/temp', nuke.value('root.name', ''), '../')).replace('\\', '/')}]")
+                  r"[python {os.path.abspath(os.path.join('D:/temp', nuke.value('root.name', ''), '../')).replace('\\', '/')}]")
 
 
 def _check_fps():
