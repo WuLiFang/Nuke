@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-VERSION = 1.01
+__version__ = 1.01
 
 
 def all_knobs_name(node):

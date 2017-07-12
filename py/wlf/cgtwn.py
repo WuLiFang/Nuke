@@ -23,7 +23,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-VERSION = '0.2.2'
+__version__ = '0.2.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -54,7 +54,7 @@ class CGTeamWork(object):
 
         ret = cgtw.tw().sys().get_socket_status()
         cls.is_logged_in = ret
-        print('CGTeamWork连接正常' if ret else 'CGTeamWork未连接')
+        print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
         return ret
 
     @classmethod

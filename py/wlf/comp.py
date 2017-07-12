@@ -17,7 +17,7 @@ import nukescripts
 
 FPS = 25
 FORMAT = 'HD_1080'
-VERSION = 1.1
+__version__ = 1.1
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'

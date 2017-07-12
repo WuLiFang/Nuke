@@ -14,7 +14,7 @@ from PySide.QtGui import QDialog, QApplication, QFileDialog
 
 from .ui_scenetools_dialog import Ui_Dialog
 
-VERSION = 0.6
+__version__ = 0.6
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -453,7 +453,7 @@ class Dialog(QDialog, Ui_Dialog):
         self._config = Config()
         self._sync = Sync()
         self.update()
-        self.version_label.setText('v{}'.format(VERSION))
+        self.version_label.setText('v{}'.format(__version__))
 
         _icon()
         _backdrop()
