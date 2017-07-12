@@ -92,11 +92,13 @@ def _check_project():
     if not project_directory:
         nuke.message('工程目录未设置')
     # avoid ValueError of script_directory() when no root.name.
-    elif project_directory == '[python {nuke.script_directory()}]':
+    elif project_directory == r"[python {os.path.abspath(os.path.join("\
+        r"'D:/temp', nuke.value('root.name', ''), '../'"\
+            r")).replace('\\', '/')}]":
         nuke.knob('root.project_directory',
-                  r"[python {os.path.abspath(os.path.join("
-                  r"'D:/temp', nuke.value('root.name', ''), '../'"
-                  r")).replace('\\', '/')}]")
+                  r"[python {os.path.join("
+                  r"nuke.value('root.name', ''), '../'"
+                  r").replace('\\', '/')}]")
 
 
 def _check_fps():
