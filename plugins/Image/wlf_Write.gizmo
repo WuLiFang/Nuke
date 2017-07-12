@@ -5,7 +5,7 @@ Gizmo {
  gl_color 0xff326000
  label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]"
  note_font 微软雅黑
- addUserKnob {20 Write l Write_v1.46.3}
+ addUserKnob {20 Write l Write_v1.47.0}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -15,9 +15,10 @@ Gizmo {
  addUserKnob {32 bt_middle l 中间帧(默认) -STARTLINE T "knob this.use_custom_frame 0\nframe \[value this.knob.frame]"}
  addUserKnob {32 bt_last l 末帧 -STARTLINE T "set last_frame \[value root.last_frame] \nknob use_custom_frame 1\nknob custom_frame \$last_frame\nframe \$last_frame"}
  addUserKnob {26 ""}
- addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
- addUserKnob {32 bt_render_JPG l 渲染单帧 -STARTLINE T "knob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]"}
- addUserKnob {22 bt_explorer l 浏览输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {32 bt_render_JPG l 渲染单帧 +STARTLINE T "knob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]"}
+ addUserKnob {22 bt_jpg_dir l 单帧输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {22 bt_render l 渲染MOV +STARTLINE T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
+ addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
 }
  Input {
   inputs 0
