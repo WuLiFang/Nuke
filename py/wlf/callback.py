@@ -121,7 +121,8 @@ def _jump_frame():
 @abort_modified
 def _send_to_render_dir():
     if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-        asset.sent_to_dir(nuke.value('preferences.wlf_render_dir'))
+        asset.sent_to_dir(
+            unicode(nuke.value('preferences.wlf_render_dir'), 'UTF-8'))
 
 
 @abort_modified

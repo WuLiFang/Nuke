@@ -6,7 +6,7 @@ import os
 import re
 import threading
 import time
-from subprocess import PIPE, STDOUT, Popen
+import shutil
 
 import nuke
 import nukescripts
@@ -122,20 +122,21 @@ def expand_frame(filename, frame):
 
 
 def sent_to_dir(dir_):
-    """Send current working file to server."""
+    """Send current working file to dir."""
+    copy(nuke.value('root.name'), dir_)
 
-    if not nuke.value('root.name'):
-        return False
 
-    if os.path.isdir(dir_):
-        src = '"{}"'.format(os.path.normcase(nuke.scriptName()))
-        dst = '"{}\\"'.format(dir_.strip('"').rstrip('/\\'))
-        cmd = ' '.join(['XCOPY', '/Y', '/D', '/I', '/V', src, dst])
-        print(repr(cmd))
-        _proc = Popen(cmd, stdout=PIPE, stderr=STDOUT)
-        print(_proc.communicate()[0])
-    else:
-        return False
+def copy(src, dst):
+    """Copy src to dst."""
+    message = u'{} -> {}'.format(src, dst)
+    print(message)
+    nuke.tprint(message)
+    if not os.path.exists(src):
+        return
+    dst_dir = os.path.dirname(dst)
+    if not os.path.exists(dst_dir):
+        os.makedirs(dst_dir)
+    shutil.copy2(src, dst)
 
 
 def main():

@@ -6,11 +6,12 @@ cgteamwork integration with nuke.
 import locale
 import os
 import re
-import shutil
+
 import sys
 
 import nuke
 
+from .asset import copy
 try:
     import cgtw
 except ImportError:
@@ -26,19 +27,6 @@ VERSION = '0.2.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
-
-
-def copy(src, dst):
-    """Copy src to dst."""
-    if not os.path.exists(src):
-        return
-    dst_dir = os.path.dirname(dst)
-    if not os.path.exists(dst_dir):
-        os.makedirs(dst_dir)
-    shutil.copy2(src, dst)
-    message = u'{} -> {}'.format(src, dst)
-    print(message)
-    nuke.tprint(message)
 
 
 def check_login(func):
