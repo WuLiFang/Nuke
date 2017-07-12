@@ -26,7 +26,7 @@ def menu():
             nuke.thisNode()).start(), nodeClass='Read')
         nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
-    # add_dropdata_callback()
+    add_dropdata_callback()
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
     nuke.addOnUserCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
@@ -69,6 +69,8 @@ def _cgtwn():
     @abort_modified
     @ignore_exc
     def _image():
+        task = nuke.ProgressTask('CGTW')
+        task.setMessage('上传单帧')
         cgtwn.Shot().upload_image()
 
     @abort_modified
@@ -79,11 +81,14 @@ def _cgtwn():
     def _on_close():
         task = nuke.ProgressTask('CGTW')
         task.setMessage('上传单帧')
-        _image()
+        cgtwn.Shot().upload_image()
+        task.setProgress(50)
         task.setMessage('上传nk文件')
         _nk_file()
-    nuke.addOnScriptClose(_on_close)
-    nuke.addOnScriptSave(_nk_file)
+
+    if cgtwn.CGTeamWork().is_login():
+        nuke.addOnScriptClose(_on_close)
+        nuke.addOnScriptSave(_nk_file)
 
 
 @abort_modified
