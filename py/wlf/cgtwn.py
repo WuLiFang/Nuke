@@ -10,11 +10,16 @@ import shutil
 import sys
 
 import nuke
+
 try:
     import cgtw
 except ImportError:
-    sys.path.append(r"C:\cgteamwork\bin\base")
-    import cgtw
+    CGTW_PATH = r"C:\cgteamwork\bin\base"
+    if os.path.isdir(CGTW_PATH):
+        sys.path.append(CGTW_PATH)
+        import cgtw
+    else:
+        raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
 VERSION = '0.2.2'

@@ -3,11 +3,12 @@
 
 import locale
 import os
+import traceback
 
 import nuke
 import nukescripts
 
-from . import asset, cgtwn, csheet, edit, ui
+from . import asset, csheet, edit, ui
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -54,25 +55,29 @@ def abort_modified(func):
 
 
 def _cgtwn():
-    cgtwn.CGTeamWork.update_status()
+    try:
+        from . import cgtwn
+        cgtwn.CGTeamWork.update_status()
 
-    @abort_modified
-    @cgtwn.check_login
-    def _nk_file():
-        cgtwn.Shot().upload_nk_file()
+        @abort_modified
+        @cgtwn.check_login
+        def _nk_file():
+            cgtwn.Shot().upload_nk_file()
 
-    @abort_modified
-    @cgtwn.check_login
-    def _on_close():
-        task = nuke.ProgressTask('CGTW')
-        task.setMessage('上传单帧')
-        cgtwn.Shot().upload_image()
-        task.setProgress(50)
-        task.setMessage('上传nk文件')
-        _nk_file()
+        @abort_modified
+        @cgtwn.check_login
+        def _on_close():
+            task = nuke.ProgressTask('CGTW')
+            task.setMessage('上传单帧')
+            cgtwn.Shot().upload_image()
+            task.setProgress(50)
+            task.setMessage('上传nk文件')
+            _nk_file()
 
-    nuke.addOnScriptClose(_on_close)
-    nuke.addOnScriptSave(_nk_file)
+        nuke.addOnScriptClose(_on_close)
+        nuke.addOnScriptSave(_nk_file)
+    except ImportError:
+        traceback.print_exc()
 
 
 @abort_modified
