@@ -26,7 +26,7 @@ def menu():
             nuke.thisNode()).start(), nodeClass='Read')
         nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
-    add_dropdata_callback()
+    # add_dropdata_callback()
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
     nuke.addOnUserCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
@@ -76,7 +76,13 @@ def _cgtwn():
     def _nk_file():
         cgtwn.Shot().upload_nk_file()
 
-    nuke.addOnScriptClose(_image)
+    def _on_close():
+        task = nuke.ProgressTask('CGTW')
+        task.setMessage('上传单帧')
+        _image()
+        task.setMessage('上传nk文件')
+        _nk_file()
+    nuke.addOnScriptClose(_on_close)
     nuke.addOnScriptSave(_nk_file)
 
 
@@ -94,7 +100,9 @@ def _check_project():
     # avoid ValueError of script_directory() when no root.name.
     elif project_directory == '[python {nuke.script_directory()}]':
         nuke.knob('root.project_directory',
-                  r"[python {os.path.abspath(os.path.join('D:/temp', nuke.value('root.name', ''), '../')).replace('\\', '/')}]")
+                  r"[python {os.path.abspath(os.path.join("
+                  r"'D:/temp', nuke.value('root.name', ''), '../'"
+                  r")).replace('\\', '/')}]")
 
 
 def _check_fps():
@@ -111,7 +119,7 @@ def _lock_connections():
 
 
 def _jump_frame():
-    if nuke.numvalue('preferences.wlf_lock_connection', 0.0) and nuke.exists('_Write.knob.frame'):
+    if nuke.numvalue('preferences.wlf_jump_frame', 0.0) and nuke.exists('_Write.knob.frame'):
         nuke.frame(nuke.numvalue('_Write.knob.frame'))
         nuke.Root().setModified(False)
 
