@@ -207,7 +207,7 @@ class FootageError(Exception):
 
 
 def main():
-    """Use for run as script."""
+    """Run this module as script."""
 
     reload(sys)
     sys.setdefaultencoding('UTF-8')
