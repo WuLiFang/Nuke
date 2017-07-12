@@ -3,7 +3,6 @@
 
 import locale
 import os
-import traceback
 
 import nuke
 import nukescripts
@@ -44,19 +43,8 @@ def menu():
     _cgtwn()
 
 
-def ignore_exc(func):
-    """Decorate for ignore cgtwn exceptions."""
-
-    def _func():
-        try:
-            func()
-        except (cgtwn.IDError, cgtwn.LoginError, cgtwn.FolderError):
-            traceback.print_exc()
-    return _func
-
-
 def abort_modified(func):
-    """Decorate for abort modified project."""
+    """(Decorator)Abort function when project has been modified."""
 
     def _func():
         if nuke.modified():
@@ -66,18 +54,15 @@ def abort_modified(func):
 
 
 def _cgtwn():
-    @abort_modified
-    @ignore_exc
-    def _image():
-        task = nuke.ProgressTask('CGTW')
-        task.setMessage('上传单帧')
-        cgtwn.Shot().upload_image()
+    cgtwn.CGTeamWork.update_status()
 
     @abort_modified
-    @ignore_exc
+    @cgtwn.check_login
     def _nk_file():
         cgtwn.Shot().upload_nk_file()
 
+    @abort_modified
+    @cgtwn.check_login
     def _on_close():
         task = nuke.ProgressTask('CGTW')
         task.setMessage('上传单帧')
@@ -86,9 +71,8 @@ def _cgtwn():
         task.setMessage('上传nk文件')
         _nk_file()
 
-    if cgtwn.CGTeamWork().is_login():
-        nuke.addOnScriptClose(_on_close)
-        nuke.addOnScriptSave(_nk_file)
+    nuke.addOnScriptClose(_on_close)
+    nuke.addOnScriptSave(_nk_file)
 
 
 @abort_modified
