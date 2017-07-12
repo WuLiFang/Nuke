@@ -40,7 +40,7 @@ def menu():
     nuke.addOnScriptClose(_create_csheet)
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addAutolabel(ui.custom_autolabel)
-    # _dropframe()
+    _dropframe()
     _cgtwn()
 
 

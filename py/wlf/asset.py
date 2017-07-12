@@ -9,7 +9,6 @@ import time
 import shutil
 
 import nuke
-import nukescripts
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -17,45 +16,50 @@ SYS_CODEC = locale.getdefaultlocale()[1]
 class DropFrameCheck(threading.Thread):
     """Check drop frames and record on the node."""
 
-    knob_name = 'dropframes'
     # lock = threading.Lock()
     showed_files = []
+    knob_name = 'dropframes'
 
     def __init__(self, n, prefix=('_',)):
         threading.Thread.__init__(self)
         self.daemon = True
         self._node = n
         self._prefix = prefix
-        self._knob_tcl_name = '{}.{}'.format(self._node.name(), self.knob_name)
+
+    @property
+    def knob_tcl_name(self):
+        """Custom knob name."""
+        if self._node:
+            return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
         if self._node['disable'].value():
             return
         # self.lock.acquire()
         while self._node:
-            self.record()
             time.sleep(5)
+            self.record()
         # self.lock.release()
 
     def dropframe_ranges(self):
         """Return nuke framerange instance of dropframes."""
 
-        _ret = nuke.FrameRanges()
-        if self._node.name().startswith(self._prefix):
-            return _ret
-
         _filename = nuke.filename(self._node)
-        if expand_frame(_filename, 1) == _filename:
-            return _ret
+        ret = nuke.FrameRanges()
+        if not self._node \
+                or not _filename \
+                or self._node.name().startswith(self._prefix)\
+                or expand_frame(_filename, 1) == _filename:
+            return ret
 
         _read_framerange = xrange(
             self._node.firstFrame(), self._node.lastFrame() + 1)
         for f in _read_framerange:
             _file = expand_frame(_filename, f)
-            if not os.path.isfile(_file.decode('UTF-8').encode(SYS_CODEC)):
-                _ret.add([f])
-        _ret.compact()
-        return _ret
+            if not os.path.isfile(unicode(_file, 'UTF-8').encode(SYS_CODEC)):
+                ret.add([f])
+        ret.compact()
+        return ret
 
     def setup_node(self):
         """Add knob if needed."""
@@ -65,7 +69,7 @@ class DropFrameCheck(threading.Thread):
             k.setEnabled(False)
             self._node.addKnob(k)
 
-        if not nuke.exists(self._knob_tcl_name):
+        if not nuke.exists(self.knob_tcl_name):
             nuke.executeInMainThreadWithResult(_add_knob)
 
     def record(self):
@@ -78,7 +82,7 @@ class DropFrameCheck(threading.Thread):
             if _dropframes:
                 nuke.warning('{}: [dropframnes]{}'.format(
                     self._node.name(), _dropframes))
-        if _dropframes != nuke.value(self._knob_tcl_name, ''):
+        if _dropframes != nuke.value(self.knob_tcl_name, ''):
             self.setup_node()
             nuke.executeInMainThreadWithResult(_set_knob)
 
@@ -113,11 +117,15 @@ def expand_frame(filename, frame):
     '''
     Return a frame mark expaned version of filename, with given frame
     '''
-    pat = re.compile(r'%0?\d*d')
-
-    def _formated_frame(matchobj):
+    def _format_repl(matchobj):
         return matchobj.group(0) % frame
-    return re.sub(pat, _formated_frame, nukescripts.frame.replaceHashes(filename))
+
+    def _hash_repl(matchobj):
+        return '%0{}d'.format(len(matchobj.group(0)))
+    ret = filename
+    ret = re.sub(r'(\#+)', _hash_repl, ret)
+    ret = re.sub(r'(%0?\d*d)', _format_repl, ret)
+    return ret
 
 
 def sent_to_dir(dir_):
