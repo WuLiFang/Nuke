@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = 1.01
+__version__ = '1.0.2'
 
 
 def all_knobs_name(node):
@@ -164,7 +164,10 @@ def channels_rename(prefix='PuzzleMatte'):
         n['to' + str(count)].setValue(value_to)
         # Delete empty copy node
         if count == 3:
-            if not any([n['to0'].value(), n['to1'].value(), n['to2'].value(), n['to3'].value()]):
+            if not list(i for i in
+                        [n['to0'].value(), n['to1'].value(),
+                         n['to2'].value(), n['to3'].value()]
+                        if i != 'none'):
                 n.input(0).selectOnly()
                 nuke.delete(n)
 
