@@ -654,14 +654,13 @@ class CompDialog(nukescripts.PythonPanel):
     def progress(self):
         """Start process all shots with a processbar."""
 
-        _task = nuke.ProgressTask('批量合成')
+        task = nuke.ProgressTask('批量合成')
         errors = ''
 
         for i, shot in enumerate(self._shot_list):
-            if _task.isCancelled():
+            if task.isCancelled():
                 break
-            _task.setMessage(shot)
-            _task.setProgress(i * 100 // len(self._shot_list))
+            task.setMessage(shot)
 
             self.config['shot'] = os.path.basename(shot)
             self.config['save_path'] = os.path.join(
@@ -675,15 +674,16 @@ class CompDialog(nukescripts.PythonPanel):
                 config=json.dumps(self.config).replace(
                     u'"', r'\"').replace(u'^', r'^^')
             ).encode(SYS_CODEC)
-            _proc = Popen(_cmd, shell=True, stderr=PIPE)
-            _stdout, _stderr = _proc.communicate()
-            if _stderr:
-                print(_stderr)
+            proc = Popen(_cmd, shell=True, stderr=PIPE)
+            stderr = proc.communicate()[1]
+            if stderr:
+                print(stderr)
                 errors += u'<tr><td>{}</td><td>{}</td></tr>\n'.format(
-                    self.config['shot'], _stderr.strip().split('\n')[-1])
-            if _proc.returncode:
+                    self.config['shot'], stderr.strip().split('\n')[-1])
+            if proc.returncode:
                 errors += u'<tr><td>{}</td><td>非正常退出码:{}</td></tr>\n'.format(
-                    self.config['shot'], _proc.returncode)
+                    self.config['shot'], proc.returncode)
+            task.setProgress((i + 1) // len(self._shot_list) * 100)
 
         if errors:
             errors = u'<style>td{{padding:8px;}}</style>'\
