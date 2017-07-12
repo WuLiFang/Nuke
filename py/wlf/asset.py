@@ -44,8 +44,7 @@ class DropFrameCheck(threading.Thread):
         if self._node.name().startswith(self._prefix):
             return _ret
 
-        _filename = os.path.join(nuke.value(
-            'root.project_directory', ''), nuke.filename(self._node))
+        _filename = nuke.filename(self._node)
         if expand_frame(_filename, 1) == _filename:
             return _ret
 
