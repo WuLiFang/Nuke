@@ -23,7 +23,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.2.2'
+__version__ = '0.3.0'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -161,13 +161,36 @@ class Shot(CGTeamWork):
             raise FolderError(ret)
         return ret
 
+    @property
+    def video_dest(self):
+        """The .mov file upload destination."""
+
+        infos = self._task_module.get(
+            ['shot.shot', 'eps.project_code', 'eps.eps_name'])[0]
+        ret = os.path.join(
+            self.server,
+            infos['eps.project_code'],
+            'shot/avi',
+            self.pipeline_name,
+            infos['eps.eps_name'],
+            'check',
+            infos['shot.shot'] + '.mov'
+        )
+        if not os.path.isdir(os.path.dirname(ret)):
+            raise FolderError(ret)
+        return ret
+
     @check_login
     def submit(self, files, folders=None, note=u'自nuke提交'):
         """Submit this shot to cgtw."""
 
         if not folders:
             folders = []
-        self._task_module.submit(files, note, folders)
+        print(u'提交: {}'.format(files + folders))
+        ret = self._task_module.submit(files, note, folders)
+        if not ret:
+            print('提交失败')
+        return ret
 
     @check_login
     def upload_nk_file(self):
@@ -193,14 +216,35 @@ class Shot(CGTeamWork):
                     os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06)):
                 copy(src, dst)
             return dst
-        else:
-            return False
 
     @check_login
-    def sumbit_all(self):
+    def upload_video(self):
+        """Uploade .mov file to server."""
+
+        n = nuke.toNode('_Write') or nuke.toNode(
+            'wlf_Write1') or nuke.allNodes('wlf_Write')
+        if isinstance(n, list):
+            n = n[0]
+        if n:
+            src = os.path.join(nuke.value(
+                'root.project_directory', ''), nuke.filename(n.node('Write_MOV_1')))
+            dst = self.video_dest
+            if not (os.path.exists(dst) and (
+                    os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06)):
+                copy(src, dst)
+            return dst
+
+    @check_login
+    def submit_image(self):
         """Upload .jpg to server then sumbit these files."""
 
         return self.upload_image() and self.submit([self.image_dest])
+
+    @check_login
+    def submit_video(self):
+        """Upload .mov to server then sumbit these files."""
+
+        return self.upload_video() and self.submit([self.video_dest])
 
     def add_note(self, note):
         """Add note for this shot on cgtw."""
