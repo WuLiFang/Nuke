@@ -8,7 +8,8 @@ def arnold():
     """This function is copyed from cgspread."""
 
     # set a ordered list of input layer
-    layerlist = ['indirect_diffuse', 'direct_diffuse', 'indirect_specular', 'direct_specular', 'reflection',
+    layerlist = ['indirect_diffuse', 'direct_diffuse',
+                 'indirect_specular', 'direct_specular', 'reflection',
                  'refraction',
                  'AO', 'depth', 'MV', 'alpha']
     # gradelayers = ['indirect_diffuse',
@@ -22,18 +23,18 @@ def arnold():
 
     orderedmerge = []
 
-    Read = nuke.selectedNode()
-    layers = nuke.layers(Read)
+    read_node = nuke.selectedNode()
+    layers = nuke.layers(read_node)
 
     for i in layerlist:
         for n in layers:
             if i == n:
                 orderedmerge.append(i)
 
-    for o in orderedmerge:
-        for l in layers:
-            if l == o:
-                layers.remove(l)
+    for merge in orderedmerge:
+        for layer in layers:
+            if layer == merge:
+                layers.remove(layer)
 
     layers.remove(u'rgba')
     layers.remove(u'rgb')
@@ -41,22 +42,22 @@ def arnold():
 
     ################Create Shuffle########################################
 
-    x = Read['xpos'].getValue()
-    y = Read['ypos'].getValue()
+    xpos = read_node['xpos'].getValue()
+    ypos = read_node['ypos'].getValue()
 
     shufflegroup = []
     gradegroup = []
-    dotYgroup = []
+    dot_ygroup = []
     mergegroup = []
     for k in orderedmerge:
         shuffle = nuke.nodes.Shuffle(
             name=k, postage_stamp=1, note_font_size=25)
-        shuffle.setInput(0, Read)
+        shuffle.setInput(0, read_node)
         shuffle.Knob('in').setValue(k)
         num = int(orderedmerge.index(k))
-        shuffle.setXYpos(int(x + 150 * num), int(y + 250))
-        shuffleX = shuffle['xpos'].getValue()
-        shuffleY = shuffle['ypos'].getValue()
+        shuffle.setXYpos(int(xpos + 150 * num), int(ypos + 250))
+        shuffle_x = shuffle['xpos'].getValue()
+        shuffle_y = shuffle['ypos'].getValue()
         shufflegroup.append(shuffle)
 
         ###Create Grade###
@@ -72,61 +73,80 @@ def arnold():
         if num >= 1 and num < 7:
             dot = nuke.nodes.Dot(name=k, label=k, note_font_size=25)
             dot.setInput(0, gradenode)
-            dot.setXYpos(int(shuffleX + 34), int(shuffleY + 180 * num))
+            dot.setXYpos(int(shuffle_x + 34), int(shuffle_y + 180 * num))
             # dotX = dot['xpos'].getValue()
-            dotY = dot['ypos'].getValue()
-            dotYgroup.append(dotY)
+            dot_y = dot['ypos'].getValue()
+            dot_ygroup.append(dot_y)
 
         elif num > 6:
             dot = nuke.nodes.Dot(name=k, label=k, note_font_size=25)
             dot.setInput(0, shuffle)
-            dot.setXYpos(int(shuffleX + 34), int(shuffleY + 180 * num))
+            dot.setXYpos(int(shuffle_x + 34), int(shuffle_y + 180 * num))
             # dotX = dot['xpos'].getValue()
-            dotY = dot['ypos'].getValue()
-            dotYgroup.append(dotY)
+            dot_y = dot['ypos'].getValue()
+            dot_ygroup.append(dot_y)
 
         ###Create Merge####
 
         if num < 1:
             pass
         elif num > 0 and num < 2:
-            merge = nuke.nodes.Merge(name=k, operation='plus', mix=1, inputs=[
-                gradegroup[0], dot], note_font_size=15)
-            merge.setXYpos(int(x), int(dotY - 6))
+            merge = nuke.nodes.Merge(name=k,
+                                     operation='plus',
+                                     mix=1,
+                                     inputs=[gradegroup[0], dot],
+                                     note_font_size=15)
+            merge.setXYpos(int(xpos), int(dot_y - 6))
             mergegroup.append(merge)
         elif num > 1 and num < 6:
-            merge = nuke.nodes.Merge(name=k, operation='plus', mix=1, inputs=[mergegroup[num - 2], dot],
+            merge = nuke.nodes.Merge(name=k,
+                                     inputs=[mergegroup[num - 2], dot],
+                                     operation='plus', mix=1,
                                      note_font_size=15)
             mergegroup.append(merge)
-            merge.setXYpos(int(x), int(dotY - 6))
+            merge.setXYpos(int(xpos), int(dot_y - 6))
         elif num > 5 and num < 7:
-            merge = nuke.nodes.Merge(name=k, operation='multiply', mix=0.15, inputs=[mergegroup[num - 2], dot],
+            merge = nuke.nodes.Merge(name=k,
+                                     inputs=[mergegroup[num - 2], dot],
+                                     operation='multiply',
+                                     mix=0.15,
                                      note_font_size=15)
             mergegroup.append(merge)
-            merge.setXYpos(int(x), int(dotY - 6))
+            merge.setXYpos(int(xpos), int(dot_y - 6))
         elif num > 6 and num < 8:
-            copy = nuke.nodes.Copy(name=k, from0='rgba.red', to0='depth.Z', inputs=[mergegroup[num - 2], dot],
+            copy = nuke.nodes.Copy(name=k,
+                                   inputs=[mergegroup[num - 2], dot],
+                                   from0='rgba.red',
+                                   to0='depth.Z',
                                    note_font_size=15)
             mergegroup.append(copy)
-            copy.setXYpos(int(x), int(dotY - 14))
+            copy.setXYpos(int(xpos), int(dot_y - 14))
         elif num > 7 and num < 9:
-            copy = nuke.nodes.Copy(name=k, from0='rgba.red', to0='MV.red', from1='rgba.green', to1='MV.green',
-                                   inputs=[mergegroup[num - 2], dot], note_font_size=15)
-            mergegroup.append(copy)
-            copy.setXYpos(int(x), int(dotY - 26))
-        elif num > 8 and num < 10:
-            copy = nuke.nodes.Copy(name=k, from0='rgba.red', to0='rgba.alpha', inputs=[mergegroup[num - 2], dot],
+            copy = nuke.nodes.Copy(name=k,
+                                   inputs=[mergegroup[num - 2], dot],
+                                   from0='rgba.red',
+                                   to0='MV.red',
+                                   from1='rgba.green',
+                                   to1='MV.green',
                                    note_font_size=15)
             mergegroup.append(copy)
-            copy.setXYpos(int(x), int(dotY - 14))
+            copy.setXYpos(int(xpos), int(dot_y - 26))
+        elif num > 8 and num < 10:
+            copy = nuke.nodes.Copy(name=k,
+                                   inputs=[mergegroup[num - 2], dot],
+                                   from0='rgba.red',
+                                   to0='rgba.alpha',
+                                   note_font_size=15)
+            mergegroup.append(copy)
+            copy.setXYpos(int(xpos), int(dot_y - 14))
             ###Create show Layers####
 
     for element in orderedshow:
         num += 1
         shuffle = nuke.nodes.Shuffle(
             name=element, postage_stamp=1, note_font_size=25)
-        shuffle.setInput(0, Read)
+        shuffle.setInput(0, read_node)
         shuffle.Knob('in').setValue(element)
-        shuffle.setXYpos(int(x + 150 * num), int(y + 250))
+        shuffle.setXYpos(int(xpos + 150 * num), int(ypos + 250))
 
     nuke.connectViewer(0, mergegroup[-1])
