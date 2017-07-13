@@ -47,7 +47,8 @@ def add_menu():
                      icon='autocomp.png')
         m.addCommand('arnold预合成', "wlf.precomp.arnold()",
                      icon='autocomp.png')
-        _path = os.path.abspath(os.path.join(__file__, '../scenetools.exe'))
+        _path = os.path.abspath(os.path.join(
+            __file__, '../scenetools/scenetools.exe'))
         if os.path.isfile(_path):
             _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
         else:

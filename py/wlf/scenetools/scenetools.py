@@ -12,9 +12,9 @@ from subprocess import call, Popen, PIPE
 from PySide import QtCore, QtGui
 from PySide.QtGui import QDialog, QApplication, QFileDialog
 
-from .ui_scenetools_dialog import Ui_Dialog
+from ui_scenetools_dialog import Ui_Dialog
 
-__version__ = 0.6
+__version__ = '0.6.0'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -233,7 +233,7 @@ def is_pid_exists(pid):
             stdout=PIPE
         )
         _stdout = _proc.communicate()[0]
-        return '"{}"'.format(pid) in _stdout
+        return '"python.exe"' in _stdout or '"scenetools.exe"' in _stdout and '"{}"'.format(pid) in _stdout
 
 
 class Sync(object):
