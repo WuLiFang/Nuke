@@ -67,7 +67,7 @@ def add_menu():
         m.addCommand(
             "批量下载",
             'nukescripts.start("file://SERVER/scripts/NukePlugins/CGTeamWork工具/CGTW批量下载.bat")')
-        m.addCommand('重新登录', "wlf.cgtwn.CGTeamWork.update_status()")
+        # m.addCommand('重新登录', "wlf.cgtwn.CGTeamWork.update_status()")
 
     def _create_node_menu():
         _plugin_path = '../../../plugins'

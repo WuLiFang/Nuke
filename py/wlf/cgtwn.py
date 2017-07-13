@@ -35,6 +35,8 @@ def check_login(func):
     def _func(*args, **kwargs):
         if CGTeamWork.is_logged_in:
             func(*args, **kwargs)
+        else:
+            print(func.__name__, 'not login, abort.')
 
     return _func
 
@@ -47,13 +49,14 @@ class CGTeamWork(object):
 
     def __init__(self):
         self._tw = cgtw.tw()
+        self.update_status()
 
-    @classmethod
-    def update_status(cls):
+    @staticmethod
+    def update_status():
         """Return and set if cls.is_logged_in."""
 
         ret = cgtw.tw().sys().get_socket_status()
-        cls.is_logged_in = ret
+        CGTeamWork.is_logged_in = ret
         print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
         return ret
 
@@ -83,14 +86,13 @@ class Shot(CGTeamWork):
     image_folder = u'Image'
     server = u'Z:\\CGteamwork_Test'
 
-    @check_login
     def __init__(self):
         super(Shot, self).__init__()
+        if self.is_logged_in:
+            self._task_module = self._tw.task_module(
+                self.database, self.module)
 
-        self._task_module = self._tw.task_module(
-            self.database, self.module)
-
-        self._task_module.init_with_id(self.shot_id)
+            self._task_module.init_with_id(self.shot_id)
 
     @property
     def name(self):
@@ -183,7 +185,6 @@ class Shot(CGTeamWork):
     @check_login
     def submit(self, files, folders=None, note=u'自nuke提交'):
         """Submit this shot to cgtw."""
-
         if not folders:
             folders = []
         print(u'提交: {}'.format(files + folders))
@@ -234,17 +235,16 @@ class Shot(CGTeamWork):
                 copy(src, dst)
             return dst
 
-    @check_login
     def submit_image(self):
         """Upload .jpg to server then sumbit these files."""
+        self.upload_image()
+        self.submit([self.image_dest])
 
-        return self.upload_image() and self.submit([self.image_dest])
-
-    @check_login
     def submit_video(self):
         """Upload .mov to server then sumbit these files."""
 
-        return self.upload_video() and self.submit([self.video_dest])
+        self.upload_video()
+        self.submit([self.video_dest])
 
     def add_note(self, note):
         """Add note for this shot on cgtw."""
