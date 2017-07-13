@@ -62,18 +62,23 @@ def _cgtwn():
         @abort_modified
         @cgtwn.check_login
         def _nk_file():
-            cgtwn.Shot().upload_nk_file()
+            try:
+                cgtwn.Shot().upload_nk_file()
+            except cgtwn.IDError:
+                print('CGTW上未找到对应镜头')
 
         @abort_modified
         @cgtwn.check_login
         def _on_close():
-            task = nuke.ProgressTask('CGTW')
-            task.setMessage('上传单帧')
-            cgtwn.Shot().upload_image()
-            task.setProgress(50)
-            task.setMessage('上传nk文件')
-            _nk_file()
-
+            try:
+                task = nuke.ProgressTask('CGTW')
+                task.setMessage('上传单帧')
+                cgtwn.Shot().upload_image()
+                task.setProgress(50)
+                task.setMessage('上传nk文件')
+                _nk_file()
+            except cgtwn.IDError:
+                print('CGTW上未找到对应镜头')
         nuke.addOnScriptClose(_on_close)
         nuke.addOnScriptSave(_nk_file)
     except ImportError:
