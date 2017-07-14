@@ -25,7 +25,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -277,6 +277,7 @@ class Shot(CGTeamWork):
 
 @abort_modified
 def on_save_callback():
+    """Try upload nk file to server."""
     try:
         Shot().upload_nk_file()
     except IDError:
@@ -285,6 +286,7 @@ def on_save_callback():
 
 @abort_modified
 def on_close_callback():
+    """Try upload image and nk file to server."""
     try:
         task = nuke.ProgressTask('CGTW')
         task.setMessage('上传单帧')
