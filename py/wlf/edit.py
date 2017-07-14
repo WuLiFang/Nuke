@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 
 
 def rename_all_nodes():
@@ -143,15 +143,9 @@ def channels_rename(prefix='PuzzleMatte'):
     n = node
 
     viewer.recover()
-    repl = (' ', '_'), ('.', '_')
-    new_names_dict = {
-        channel_name:
-        reduce(
-            lambda text, repl: '{0[0]}{0[1]}{1}'.format(
-                text.partition('.')[:-1], text.partition('.')[-1].replace(*repl)),
-            repl,
-            panel.value(_stylize(channel_name)))
-        for channel_name in channel_names}
+
+    new_names_dict = {channel_name: panel.value(_stylize(channel_name))
+                      for channel_name in channel_names}
     for key in new_names_dict.keys():
         if not new_names_dict[key]:
             del new_names_dict[key]
@@ -159,8 +153,19 @@ def channels_rename(prefix='PuzzleMatte'):
     replace_node(node, n)
 
 
+def format_channel_name(text):
+    """Return formatted text with nuke standard.  """
+
+    ret = text
+    ret = ret.replace(' ', '_')
+    ret = '{0[0]}{0[1]}{1}'.format(
+        ret.partition('.')[:-1], ret.partition('.')[-1].replace('.', '_'))
+    return ret
+
+
 def crate_copy_from_dict(dict_, input_node):
-    """Create multiple copy from dict_.  """
+    """Create multiple copy from @dict_.  """
+
     def _rgba_order(channel):
         ret = channel
         repl = (('.red', '.0_'), ('.green', '.1_'),
@@ -172,7 +177,7 @@ def crate_copy_from_dict(dict_, input_node):
     n = input_node
     new_names_dict = {
         k:
-        v if '.' in v else 'mask_extra.{}'.format(v)
+        format_channel_name(v) if '.' in v else 'mask_extra.{}'.format(v)
         for k, v in dict_.items()}
     old_names = new_names_dict.keys()
     old_names.sort(key=_rgba_order)
