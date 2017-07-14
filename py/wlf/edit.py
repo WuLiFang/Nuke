@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.4'
+__version__ = '1.1.5'
 
 
 def rename_all_nodes():
@@ -137,17 +137,17 @@ def channels_rename(prefix='PuzzleMatte'):
     panel = nuke.Panel('MaskShuffle')
     for channel_name in channel_names:
         panel.addSingleLineInput(_stylize(channel_name), '')
-    panel.show()
+    confirm = panel.show()
 
     nuke.delete(layercontactsheet)
     n = node
-
     viewer.recover()
 
-    new_names_dict = {channel_name: panel.value(_stylize(channel_name))
-                      for channel_name in channel_names}
-    n = crate_copy_from_dict(new_names_dict, n)
-    replace_node(node, n)
+    if confirm:
+        new_names_dict = {channel_name: panel.value(_stylize(channel_name))
+                          for channel_name in channel_names}
+        n = crate_copy_from_dict(new_names_dict, n)
+        replace_node(node, n)
 
 
 def format_channel_name(text):
@@ -175,14 +175,12 @@ def crate_copy_from_dict(dict_, input_node):
     new_names_dict = {
         k:
         format_channel_name(v) if '.' in v else 'mask_extra.{}'.format(v)
-        for k, v in dict_.items()}
+        for k, v in dict_.items() if v}
     old_names = new_names_dict.keys()
     old_names.sort(key=_rgba_order)
 
     for old_name in old_names:
         new_name = new_names_dict[old_name]
-        if not new_name:
-            continue
         index = count % 4
         if not index:
             n = nuke.nodes.Copy(inputs=[n, n])
