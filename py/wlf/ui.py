@@ -99,8 +99,7 @@ def create_menu_by_dir(parent, dir_):
     def _order(name):
         return ('_0_' if os.path.isdir(os.path.join(_dir, name)) else '_1_') + name
 
-    _listdir = os.listdir(_dir)
-    _listdir.sort(key=_order)
+    _listdir = sorted(os.listdir(_dir), key=_order)
     for i in _listdir:
         if i in ['icons', 'Obsolete']:
             continue
@@ -169,11 +168,9 @@ def panel_show(keyword):
 
     def _node_name(node):
         return node.name()
-    list_ = []
-    for n in nuke.allNodes():
-        name = n.name()
-        if keyword in name and nuke.numvalue('{}.disable'.format(name), 0):
-            list_.append(n)
-    list_.sort(key=_node_name, reverse=True)
-    for n in list_:
+    nodes = sorted((n for n in nuke.allNodes()
+                    if keyword in n.name() and not nuke.numvalue('{}.disable'.format(n.name()), 0)),
+                   key=lambda n: n.name(),
+                   reverse=True)
+    for n in nodes:
         n.showControlPanel()

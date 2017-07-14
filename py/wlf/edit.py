@@ -125,9 +125,8 @@ def channels_rename(prefix='PuzzleMatte'):
 
     n = nuke.selectedNode()
     node = n
-    channel_names = list(
-        [channel for channel in n.channels() if channel.startswith(prefix)])
-    channel_names.sort(key=_pannel_order)
+    channel_names = sorted(
+        (channel for channel in n.channels() if channel.startswith(prefix)), key=_pannel_order)
 
     n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
     layercontactsheet = n
@@ -176,8 +175,7 @@ def crate_copy_from_dict(dict_, input_node):
         k:
         format_channel_name(v) if '.' in v else 'mask_extra.{}'.format(v)
         for k, v in dict_.items() if v}
-    old_names = new_names_dict.keys()
-    old_names.sort(key=_rgba_order)
+    old_names = sorted(new_names_dict.keys(), key=_rgba_order)
 
     for old_name in old_names:
         new_name = new_names_dict[old_name]
