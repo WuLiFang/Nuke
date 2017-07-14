@@ -14,7 +14,7 @@ from PySide.QtGui import QDialog, QApplication, QFileDialog
 
 from ui_scenetools_dialog import Ui_Dialog
 
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -492,6 +492,7 @@ class Dialog(QDialog, Ui_Dialog):
     def _start_update(self):
         """Start a thread for update."""
 
+        self.update()
         _timer = QtCore.QTimer(self)
         _timer.timeout.connect(self.update)
         _timer.start(1000)
