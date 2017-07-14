@@ -14,7 +14,7 @@ from PySide.QtGui import QDialog, QApplication, QFileDialog
 
 from ui_scenetools_dialog import Ui_Dialog
 
-__version__ = '0.6.1'
+__version__ = '0.7.0'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -481,13 +481,20 @@ class Dialog(QDialog, Ui_Dialog):
         }
         self._config = Config()
         self._sync = Sync()
-        self.update()
+        self._start_update()
         self.version_label.setText('v{}'.format(__version__))
 
         _icon()
         _backdrop()
         _actions()
         _edits()
+
+    def _start_update(self):
+        """Start a thread for update."""
+
+        _timer = QtCore.QTimer(self)
+        _timer.timeout.connect(self.update)
+        _timer.start(1000)
 
     def update(self):
         """Update dialog UI content.  """
@@ -524,10 +531,9 @@ class Dialog(QDialog, Ui_Dialog):
         def _list_widget():
             _list = self.listWidget
             _page_index = self.toolBox.currentIndex()
-            print('_page_index', _page_index)
             _list.clear()
             if _page_index == 0:
-                pass
+                map(_list.addItem, self._sync.image_list())
             elif _page_index == 1:
                 _not_ignore = []
                 _ignore = []
@@ -571,7 +577,6 @@ class Dialog(QDialog, Ui_Dialog):
         _edits()
         _button_enabled()
         _list_widget()
-        print('upadeted')
 
     def ask_dir(self):
         """Show a dialog ask user self._config['DIR'].  """
@@ -582,7 +587,6 @@ class Dialog(QDialog, Ui_Dialog):
         )
         if _dir:
             self._config['DIR'] = _dir
-            self.update()
 
     def ask_nuke(self):
         """Show a dialog ask user self._config['NUKE'].  """
@@ -594,7 +598,6 @@ class Dialog(QDialog, Ui_Dialog):
         )[0]
         if file_names:
             self._config['NUKE'] = file_names
-            self.update()
 
     def ask_server(self):
         """Show a dialog ask user config['SERVER'].  """
@@ -605,7 +608,6 @@ class Dialog(QDialog, Ui_Dialog):
         )
         if dir_:
             self._config['SERVER'] = dir_
-            self.update()
 
     def sync(self):
         """Sync files follow the config.   """
@@ -617,7 +619,6 @@ class Dialog(QDialog, Ui_Dialog):
             self._sync.upload_images()
         if cfg['isVideoUp']:
             self._sync.upload_videos()
-        self.update()
 
     def open_dir(self):
         """Open config['DIR'] in explorer.  """
@@ -633,15 +634,9 @@ class Dialog(QDialog, Ui_Dialog):
         """Create contact sheet use nuke with images.  """
 
         self.hide()
-        active_pid(self._config['PID'])
         cfg = self._config
-        if __name__ == '__main__':
-            script = os.path.join(
-                unicode(sys.argv[0], SYS_CODEC),
-                '../csheet.py'
-            )
-        else:
-            script = os.path.join(__file__, '../csheet.py')
+
+        script = os.path.join(__file__, '../../py/wlf/csheet.py')
         _json = os.path.join(cfg['DIR'], Config.psetting_bname)
         _cmd = u'"{NUKE}" -t "{script}" "{json}"'.format(
             NUKE=cfg['NUKE'],
@@ -654,6 +649,7 @@ class Dialog(QDialog, Ui_Dialog):
             self.open_sheet()
         if self._config['isCSheetUp']:
             self._sync.upload_sheet()
+
         self.show()
 
     def open_sheet(self):
@@ -696,13 +692,13 @@ def active_pid(pid):
 
 def url_open(url):
     """Open url in explorer. """
-
     _cmd = "rundll32.exe url.dll,FileProtocolHandler {}".format(url)
     Popen(_cmd)
 
 
 if __name__ == '__main__':
     try:
+        __file__ = os.path.abspath(sys.argv[0])
         main()
     except SingleInstanceException as ex:
         active_pid(Config()['PID'])

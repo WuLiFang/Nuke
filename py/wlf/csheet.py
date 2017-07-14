@@ -3,7 +3,6 @@
 
 import os
 import sys
-import locale
 import json
 import threading
 
@@ -11,7 +10,9 @@ from subprocess import call
 import nuke
 
 
-SYS_CODEC = locale.getdefaultlocale()[1]
+__version__ = '1.1.1'
+reload(sys)
+sys.setdefaultencoding('UTF-8')
 
 
 class ContactSheet(object):
@@ -97,7 +98,7 @@ class ContactSheet(object):
         _contactsheet_node = n
 
         print(u'使用背板:\t\t{}'.format(self._config['backdrop']))
-        if os.path.isfile(self._config['backdrop'].encode(SYS_CODEC)):
+        if os.path.isfile(self._config['backdrop']):
             n = nuke.nodes.Read()
             n['file'].fromUserText(self._config['backdrop'].encode('UTF-8'))
             if n.hasError():
@@ -145,14 +146,12 @@ class ContactSheet(object):
         """Return all image in csheet_footagedir."""
 
         _dir = self._config['csheet_footagedir']
-        _images = list(os.path.join(_dir, i.decode(SYS_CODEC))
-                       for i in os.listdir(_dir))
+        _images = sorted((os.path.join(_dir, i)
+                          for i in os.listdir(_dir)), key=os.path.getmtime, reverse=True)
 
         if not _images:
             raise FootageError
 
-        _images.sort(key=lambda file: os.stat(
-            file.encode(SYS_CODEC)).st_mtime, reverse=True)
         _shots = []
         _ret = []
         for image in _images:
@@ -193,7 +192,7 @@ class ContactSheetThread(threading.Thread, ContactSheet):
         )
         if self._new_process:
             _cmd = ''.join([u'START "生成色板" ', _cmd])
-        call(_cmd.encode(SYS_CODEC), shell=self._new_process)
+        call(_cmd, shell=self._new_process)
         _task.setProgress(100)
         self.lock.release()
 
@@ -208,9 +207,6 @@ class FootageError(Exception):
 
 def main():
     """Run this module as script."""
-
-    reload(sys)
-    sys.setdefaultencoding('UTF-8')
 
     ContactSheet()
 
