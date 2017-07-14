@@ -12,6 +12,8 @@ import sys
 import nuke
 
 from .asset import copy
+
+
 try:
     import cgtw
 except ImportError:
@@ -27,6 +29,16 @@ __version__ = '0.3.0'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
+
+
+def abort_modified(func):
+    """(Decorator)Abort function when project has been modified."""
+
+    def _func():
+        if nuke.modified():
+            return False
+        func()
+    return _func
 
 
 def check_login(func):
@@ -261,6 +273,27 @@ class Shot(CGTeamWork):
         )
         if note:
             self.add_note(note)
+
+
+@abort_modified
+def on_save_callback():
+    try:
+        Shot().upload_nk_file()
+    except IDError:
+        print('CGTW上未找到对应镜头')
+
+
+@abort_modified
+def on_close_callback():
+    try:
+        task = nuke.ProgressTask('CGTW')
+        task.setMessage('上传单帧')
+        Shot().upload_image()
+        task.setProgress(50)
+        task.setMessage('上传nk文件')
+        Shot().upload_nk_file()
+    except IDError:
+        print('CGTW上未找到对应镜头')
 
 
 class IDError(Exception):

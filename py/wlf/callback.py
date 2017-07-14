@@ -3,12 +3,11 @@
 
 import locale
 import os
-import traceback
 
 import nuke
 import nukescripts
 
-from . import asset, csheet, edit, ui
+from . import asset, csheet, edit, ui, cgtwn
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -41,7 +40,8 @@ def menu():
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addAutolabel(ui.custom_autolabel)
     _dropframe()
-    _cgtwn()
+    nuke.addOnScriptClose(cgtwn.on_close_callback)
+    nuke.addOnScriptSave(cgtwn.on_save_callback)
 
 
 def abort_modified(func):
@@ -52,37 +52,6 @@ def abort_modified(func):
             return False
         func()
     return _func
-
-
-def _cgtwn():
-    try:
-        from . import cgtwn
-        cgtwn.CGTeamWork.update_status()
-
-        @abort_modified
-        @cgtwn.check_login
-        def _nk_file():
-            try:
-                cgtwn.Shot().upload_nk_file()
-            except cgtwn.IDError:
-                print('CGTW上未找到对应镜头')
-
-        @abort_modified
-        @cgtwn.check_login
-        def _on_close():
-            try:
-                task = nuke.ProgressTask('CGTW')
-                task.setMessage('上传单帧')
-                cgtwn.Shot().upload_image()
-                task.setProgress(50)
-                task.setMessage('上传nk文件')
-                _nk_file()
-            except cgtwn.IDError:
-                print('CGTW上未找到对应镜头')
-        nuke.addOnScriptClose(_on_close)
-        nuke.addOnScriptSave(_nk_file)
-    except ImportError:
-        traceback.print_exc()
 
 
 @abort_modified

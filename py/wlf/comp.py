@@ -40,13 +40,13 @@ class Comp(object):
     }
     default_tag = '_OTHER',
     tag_knob_name = u'wlf_tag'
-    with open(os.path.join(__file__, '../comp.tags.json')) as f:
-        tags = json.load(f)
-        regular_tags = tags['regular_tags']
-        tag_convert_dict = tags['tag_convert_dict']
-        del tags
 
     def __init__(self, config=None, multiple=False):
+        with open(os.path.join(__file__, '../comp.tags.json')) as f:
+            tags = json.load(f)
+            self._regular_tags = tags['regular_tags']
+            self._tag_convert_dict = tags['tag_convert_dict']
+            del tags
         if not config:
             config = {}
         self._config = dict(self.default_config)
@@ -328,14 +328,14 @@ class Comp(object):
     def _get_tag(self, filename):
         _ret = self._get_tag_from_pattern(os.path.basename(filename))
 
-        if _ret not in self.regular_tags:
+        if _ret not in self._regular_tags:
             _dir_result = self._get_tag_from_pattern(
                 os.path.basename(os.path.dirname(filename)))
             if _dir_result != self.default_tag:
                 _ret = _dir_result
 
-        if _ret in self.tag_convert_dict:
-            _ret = self.tag_convert_dict[_ret]
+        if _ret in self._tag_convert_dict:
+            _ret = self._tag_convert_dict[_ret]
 
         return _ret
 
@@ -465,7 +465,7 @@ class Comp(object):
 
         merge_node = nuke.nodes.Merge2(
             inputs=nodes[:2] + [None] + nodes[2:],
-            tile_color=2184871423L,
+            tile_color='2184871423L',
             operation='min',
             Achannels='depth', Bchannels='depth', output='depth',
             label='Depth',
@@ -787,11 +787,11 @@ def get_max(n, channel='rgb'):
     try:
         nuke.execute(mincolor_node, middle_frame, middle_frame)
         max_value = mincolor_node['pixeldelta'].value() + 1
-    except RuntimeError, ex:
+    except RuntimeError as ex:
         if 'Read error:' in str(ex):
             max_value = -1
         else:
-            raise RuntimeError, ex
+            raise RuntimeError(ex)
 
     # Avoid dark frame
     if max_value < 0.7:
