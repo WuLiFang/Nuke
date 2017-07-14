@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.0'
+__version__ = '1.1.1'
 
 
 def rename_all_nodes():
@@ -127,9 +127,7 @@ def channels_rename(prefix='PuzzleMatte'):
     node = n
     channel_names = list(
         [channel for channel in n.channels() if channel.startswith(prefix)])
-    print(channel_names)
     channel_names.sort(key=_pannel_order)
-    print(channel_names)
 
     n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
     layercontactsheet = n
