@@ -5,14 +5,16 @@ import os
 import sys
 import json
 import threading
+import locale
 
-from subprocess import call
+from subprocess import Popen
 import nuke
 
 
-__version__ = '1.1.1'
+__version__ = '1.1.2'
 reload(sys)
 sys.setdefaultencoding('UTF-8')
+OS_ENCODING = locale.getdefaultlocale()[1]
 
 
 class ContactSheet(object):
@@ -169,32 +171,39 @@ class ContactSheet(object):
         return _ret
 
 
-class ContactSheetThread(threading.Thread, ContactSheet):
+class ContactSheetThread(threading.Thread):
     """Thread that create contact sheet."""
     lock = threading.Lock()
 
     def __init__(self, new_process=False):
-        ContactSheet.__init__(self)
         threading.Thread.__init__(self)
         self._new_process = new_process
 
     def run(self):
-        _json = self.json_path()
-        if not os.path.isfile(_json):
+        config_json = ContactSheet.json_path()
+        if not os.path.isfile(config_json):
             return
         self.lock.acquire()
-        _task = nuke.ProgressTask('生成色板')
-        _task.setProgress(50)
-        _cmd = u'"{NUKE}" -t "{script}" "{json}"'.format(
+        task = nuke.ProgressTask('生成色板')
+        task.setProgress(50)
+        cmd = u'"{NUKE}" -t "{script}" "{json}"'.format(
             NUKE=nuke.EXE_PATH,
             script=__file__.rstrip('cd'),
-            json=_json
+            json=config_json
         )
         if self._new_process:
-            _cmd = ''.join([u'START "生成色板" ', _cmd])
-        call(_cmd, shell=self._new_process)
-        _task.setProgress(100)
+            cmd = u'START "生成色板" {}'.format(cmd)
+        unicode_popen(cmd, shell=self._new_process)
+        task.setProgress(100)
         self.lock.release()
+
+
+def unicode_popen(args, **kwargs):
+    """Return Popen object use encoded args.  """
+
+    if isinstance(args, unicode):
+        args = args.encode(OS_ENCODING)
+    return Popen(args, **kwargs)
 
 
 class FootageError(Exception):

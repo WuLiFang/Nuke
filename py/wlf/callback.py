@@ -9,7 +9,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -59,7 +59,7 @@ def abort_modified(func):
 def _create_csheet():
     if nuke.numvalue('preferences.wlf_create_csheet', 0.0):
         if nuke.value('root.name'):
-            csheet.ContactSheetThread(new_process=True).run()
+            csheet.ContactSheetThread().run()
 
 
 def _check_project():
