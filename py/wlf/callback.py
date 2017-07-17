@@ -10,9 +10,8 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
-n
 
 
 def init():
