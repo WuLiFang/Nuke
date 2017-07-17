@@ -3,14 +3,16 @@
 
 import locale
 import os
+import re
 
 import nuke
 import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
+n
 
 
 def init():
@@ -189,10 +191,11 @@ def add_dropdata_callback():
             return True
 
     def _cgtwn(type_, data):
-        if type_ == 'text/plain' and data.startswith('file:///Y:'):
-            data = data[8:]
-            nuke.createNode('Read', 'file "{}"'.format(data))
-            return True
+        if type_ == 'text/plain':
+            match = re.match(r'file:///([^/].*)', data)
+            if match:
+                nuke.createNode('Read', 'file "{}"'.format(match.group(1)))
+                return True
 
     def _dir(type_, data):
         def _file(type_, data):
