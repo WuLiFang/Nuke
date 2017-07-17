@@ -214,7 +214,7 @@ class Comp(object):
         self._add_depthfog_control(n)
         print(u'{:-^30s}'.format(u'添加深度雾控制'))
         n = _merge_mp(
-            n, mp_file=self._config['mp'], lut=self._config['mp_lut'])
+            n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
         print(u'{:-^30s}'.format(u'MP节点创建'))
 
         n = nuke.nodes.wlf_Write(inputs=[n])
