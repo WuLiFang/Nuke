@@ -3,10 +3,10 @@ version 10.0 v4
 Gizmo {
  tile_color 0xcc804eff
  note_font 微软雅黑
- addUserKnob {20 Aberration l Aberration_v0.1.2}
+ addUserKnob {20 Aberration l Aberration_v0.1.3}
  addUserKnob {6 blur_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  addUserKnob {18 distortion1 R 0 0.01}
- distortion1 {0 0 0}
+ distortion1 {0 0 0.0028}
  addUserKnob {6 distortion1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  distortion1_panelDropped true
  addUserKnob {18 distortion2 R 0 0.01}
@@ -53,25 +53,24 @@ Gizmo {
   name Radial1
   gl_color 0x32ff8e00
   note_font 微软雅黑
-  selected true
-  xpos 78
-  ypos -96
+  xpos -150
+  ypos -107
  }
-set N8e0d8800 [stack 0]
+set Nd6372c00 [stack 0]
  Input {
   inputs 0
   name Input
   gl_color 0xff3f3200
   xpos -590
-  ypos -58
+  ypos -106
  }
-set Nde534400 [stack 0]
+set Nd6372800 [stack 0]
  Dot {
   name Dot3
   gl_color 0xff32c300
   note_font 微软雅黑
-  xpos -6
-  ypos -54
+  xpos 104
+  ypos -102
   hide_input true
  }
  LensDistortion {
@@ -86,8 +85,8 @@ set Nde534400 [stack 0]
   c -0.005434063263
   name LensDistortion_BLUE
   gl_color 0xddff3200
-  xpos -40
-  ypos -36
+  xpos 70
+  ypos -84
  }
  Transform {
   translate {{parent.translate.x*parent.scale.b} {parent.translate.y*parent.scale.b}}
@@ -105,8 +104,8 @@ set Nde534400 [stack 0]
   name Transform3
   gl_color 0xf632ff00
   note_font 微软雅黑
-  xpos -40
-  ypos -10
+  xpos 70
+  ypos -58
  }
  Blur {
   inputs 1+1
@@ -114,17 +113,17 @@ set Nde534400 [stack 0]
   name Blur3
   gl_color 0xff32f400
   note_font 微软雅黑
-  xpos -40
-  ypos 18
+  xpos 70
+  ypos -30
  }
-push $N8e0d8800
-push $Nde534400
+push $Nd6372c00
+push $Nd6372800
  Dot {
   name Dot2
   gl_color 0x326cff00
   note_font 微软雅黑
-  xpos -116
-  ypos -54
+  xpos -6
+  ypos -102
   hide_input true
  }
  LensDistortion {
@@ -139,8 +138,8 @@ push $Nde534400
   c -0.005434063263
   name LensDistortion_GREEN
   gl_color 0xe5ff3200
-  xpos -150
-  ypos -36
+  xpos -40
+  ypos -84
  }
  Transform {
   translate {{parent.translate.x*parent.scale.g} {parent.translate.y*parent.scale.g}}
@@ -158,8 +157,8 @@ push $Nde534400
   name Transform2
   gl_color 0xf632ff00
   note_font 微软雅黑
-  xpos -150
-  ypos -10
+  xpos -40
+  ypos -58
  }
  Blur {
   inputs 1+1
@@ -167,17 +166,17 @@ push $Nde534400
   name Blur2
   gl_color 0xff32f400
   note_font 微软雅黑
-  xpos -150
-  ypos 18
+  xpos -40
+  ypos -30
  }
-push $N8e0d8800
-push $Nde534400
+push $Nd6372c00
+push $Nd6372800
  Dot {
   name Dot4
   gl_color 0x32ffc100
   note_font 微软雅黑
   xpos -226
-  ypos -54
+  ypos -102
   hide_input true
  }
  LensDistortion {
@@ -194,7 +193,7 @@ push $Nde534400
   name LensDistortion_RED
   gl_color 0x32ffdf00
   xpos -260
-  ypos -36
+  ypos -84
  }
  Transform {
   translate {{parent.translate.x*parent.scale.r} {parent.translate.y*parent.scale.r}}
@@ -213,7 +212,7 @@ push $Nde534400
   gl_color 0xf632ff00
   note_font 微软雅黑
   xpos -260
-  ypos -10
+  ypos -58
  }
  Blur {
   inputs 1+1
@@ -221,8 +220,8 @@ push $Nde534400
   name Blur1
   gl_color 0xff32f400
   note_font 微软雅黑
-  xpos -254
-  ypos 54
+  xpos -150
+  ypos 14
  }
  Copy {
   inputs 2
@@ -231,8 +230,8 @@ push $Nde534400
   name Copy1
   gl_color 0xffcc3200
   note_font 微软雅黑
-  xpos -150
-  ypos 62
+  xpos -40
+  ypos 14
  }
  Copy {
   inputs 2
@@ -241,16 +240,16 @@ push $Nde534400
   name Copy2
   gl_color 0xffcc3200
   note_font 微软雅黑
-  xpos -40
-  ypos 62
+  xpos 70
+  ypos 14
  }
-push $Nde534400
+push $Nd6372800
  Dot {
   name Dot1
   gl_color 0xff328700
   note_font 微软雅黑
   xpos -336
-  ypos 110
+  ypos 62
   hide_input true
  }
  Merge2 {
@@ -258,55 +257,56 @@ push $Nde534400
   operation minus
   name Merge6
   gl_color 0xff324700
-  xpos -40
-  ypos 106
+  xpos 70
+  ypos 58
  }
- Expression {
-  expr3 "(r + g + b) / 3"
-  name Expression1
-  gl_color 0x5d32ff00
+ Keyer {
+  operation "luminance key"
+  name Keyer1
+  gl_color 0x323cff00
   note_font 微软雅黑
-  xpos -40
-  ypos 132
+  xpos 70
+  ypos 84
  }
  ColorCorrect {
   name ColorCorrect1
   gl_color 0x324bff00
   note_font 微软雅黑
-  xpos -40
-  ypos 160
+  xpos 70
+  ypos 144
  }
  LensDistortion {
   serializeKnob ""
   serialiseKnob "22 serialization::archive 9 0 0 0 0 0 0 0 0 0 0 0 0"
   name LensDistortion1
   gl_color 0xff443200
-  xpos -40
-  ypos 188
+  xpos 70
+  ypos 172
  }
-push $Nde534400
+push $Nd6372800
  Dot {
   name Dot5
   gl_color 0xff9a3200
   note_font 微软雅黑
   xpos -446
-  ypos 218
+  ypos 202
   hide_input true
  }
  Merge2 {
   inputs 2
   operation plus
   Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  output rgb
   name Merge7
   gl_color 0xff923200
-  xpos -40
-  ypos 214
+  xpos 70
+  ypos 198
  }
  Output {
   name Output1
   gl_color 0x8cff3200
-  xpos -40
-  ypos 240
+  xpos 70
+  ypos 224
  }
  Group {
   inputs 0
@@ -314,8 +314,8 @@ push $Nde534400
   tile_color 0xe89900ff
   gl_color 0xf832ff00
   note_font 微软雅黑
-  xpos 118
-  ypos 26
+  xpos 180
+  ypos -107
   addUserKnob {20 aberration l "Chromatic Aberration"}
   addUserKnob {7 colorBalance l "Aberration Multiplier" R -1 1}
   colorBalance 0.2
@@ -369,8 +369,8 @@ push $Nde534400
    xpos 643
    ypos -278
   }
-set Ne4ebc800 [stack 0]
-push $Ne4ebc800
+set Ndc946000 [stack 0]
+push $Ndc946000
   Input {
    inputs 0
    name Mask
@@ -423,8 +423,8 @@ push $Ne4ebc800
    ypos 324
    disable {{invrt==0}}
   }
-push $Ne4ebc800
-push $Ne4ebc800
+push $Ndc946000
+push $Ndc946000
   Radial {
    cliptype none
    replace true
@@ -442,14 +442,14 @@ push $Ne4ebc800
    xpos -540
    ypos -252
   }
-set Nbec62000 [stack 0]
+set Nca0bac00 [stack 0]
   Dot {
    name Dot2
    gl_color 0x32ff7400
    xpos -506
    ypos 402
   }
-push $Ne4ebc800
+push $Ndc946000
   Radial {
    cliptype none
    replace true
@@ -490,8 +490,8 @@ push $Ne4ebc800
    xpos 102
    ypos -76
   }
-set N8e17f000 [stack 0]
-push $Ne4ebc800
+set Ne6d4b400 [stack 0]
+push $Ndc946000
   Shuffle {
    alpha white
    name Shuffle1
@@ -500,7 +500,7 @@ push $Ne4ebc800
    xpos 276
    ypos -105
   }
-set Ndc573400 [stack 0]
+set Ne6d4b000 [stack 0]
   Shuffle {
    green red
    blue red
@@ -518,7 +518,7 @@ set Ndc573400 [stack 0]
    xpos 102
    ypos 73
   }
-push $Nbec62000
+push $Nca0bac00
   Transform {
    translate {{curve R 0 1} {curve R 0 1}}
    rotate {{curve R 0 1}}
@@ -530,9 +530,9 @@ push $Nbec62000
    xpos -477
    ypos 188
   }
-set Nd94be000 [stack 0]
-push $Nbec62000
-push $Ne4ebc800
+set Ne6d4a400 [stack 0]
+push $Nca0bac00
+push $Ndc946000
   Grade {
    multiply {{1/parent.channelSelectOffst.multiply}}
    black_clamp false
@@ -549,7 +549,7 @@ push $Ne4ebc800
    xpos -202
    ypos -190
   }
-set Nde2bec00 [stack 0]
+set Nee5f5c00 [stack 0]
   Shuffle {
    green red
    blue red
@@ -638,8 +638,8 @@ set Nde2bec00 [stack 0]
    xpos -318
    ypos 335
   }
-push $N8e17f000
-push $Ndc573400
+push $Ne6d4b400
+push $Ne6d4b000
   Shuffle {
    red green
    blue green
@@ -658,9 +658,9 @@ push $Ndc573400
    xpos 203
    ypos 133
   }
-push $Nd94be000
-push $Nbec62000
-push $Nde2bec00
+push $Ne6d4a400
+push $Nca0bac00
+push $Nee5f5c00
   Shuffle {
    red green
    blue green
@@ -754,8 +754,8 @@ push $Nde2bec00
    xpos -202
    ypos 331
   }
-push $N8e17f000
-push $Ndc573400
+push $Ne6d4b400
+push $Ne6d4b000
   Shuffle {
    red blue
    green blue
@@ -774,9 +774,9 @@ push $Ndc573400
    xpos 356
    ypos 126
   }
-push $Nd94be000
-push $Nbec62000
-push $Nde2bec00
+push $Ne6d4a400
+push $Nca0bac00
+push $Nee5f5c00
   Shuffle {
    red blue
    green blue
@@ -891,7 +891,7 @@ push $Nde2bec00
    xpos 404
    ypos 392
   }
-push $Ne4ebc800
+push $Ndc946000
   Dissolve {
    inputs 2
    channels rgba
@@ -916,8 +916,8 @@ push $Ne4ebc800
    xpos 612
    ypos 392
   }
-set Ne42ebc00 [stack 0]
-push $N8e17f000
+set N19ca8400 [stack 0]
+push $Ne6d4b400
   Multiply {
    channels rgba
    value {1 0.375005722 0 1}
@@ -926,7 +926,7 @@ push $N8e17f000
    xpos 707
    ypos 161
   }
-push $Ne4ebc800
+push $Ndc946000
   Merge2 {
    inputs 2
    name Merge5
@@ -934,7 +934,7 @@ push $Ne4ebc800
    xpos 707
    ypos 199
   }
-push $Ne42ebc00
+push $N19ca8400
   Switch {
    inputs 2
    which {{showMask}}
