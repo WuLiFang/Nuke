@@ -17,7 +17,7 @@ import nukescripts
 
 FPS = 25
 FORMAT = 'HD_1080'
-__version__ = 1.1
+__version__ = '1.1.1'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -240,7 +240,7 @@ class Comp(object):
         """Return nodes that match given tags."""
 
         ret = []
-        if isinstance(tags, str):
+        if isinstance(tags, str) or isinstance(tags, unicode):
             tags = [tags]
         tags = tuple(unicode(i).upper() for i in tags)
 
