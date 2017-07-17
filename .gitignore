@@ -55,6 +55,7 @@ Temporary Items
 # Build file
 build/
 *.spec
+!scenetools.exe
 
 # vscode
 .vscode
