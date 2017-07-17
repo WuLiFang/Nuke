@@ -48,12 +48,13 @@ def add_menu():
         m.addCommand('arnold预合成', "wlf.precomp.arnold()",
                      icon='autocomp.png')
         _path = os.path.abspath(os.path.join(
-            __file__, '../scenetools/scenetools.exe'))
+            __file__, '../../../scenetools/scenetools.exe'))
         if os.path.isfile(_path):
             _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
         else:
+            nuke.pluginAddPath(os.path.abspath(os.path.join(_path, '../')))
             nuke.tprint('wlf.scenetools: use uncomplied version')
-            _cmd = 'import wlf.scenetools;wlf.scenetools.call_from_nuke()'
+            _cmd = 'import scenetools;scenetools.call_from_nuke()'
         m.addCommand('色板\\/成果上传', _cmd)
 
     def _cgtw(menu):
@@ -81,11 +82,11 @@ def add_menu():
         m.addCommand(
             "吾立方网站", "nukescripts.start('http://www.wlf-studio.com/')")
 
-    _menubar = nuke.menu("Nuke")
+    menubar = nuke.menu("Nuke")
 
-    _edit(_menubar)
-    _comp(_menubar)
-    _cgtw(_menubar)
+    _edit(menubar)
+    _comp(menubar)
+    _cgtw(menubar)
     _create_node_menu()
 
 

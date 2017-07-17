@@ -9,6 +9,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
+__version__ = '0.1.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -35,13 +36,13 @@ def menu():
     nuke.addOnScriptSave(_check_fps)
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
-    nuke.addOnScriptClose(_render_jpg)
-    nuke.addOnScriptClose(_create_csheet)
+    nuke.addOnScriptSave(cgtwn.on_save_callback)
     nuke.addOnScriptClose(_send_to_render_dir)
+    nuke.addOnScriptClose(_render_jpg)
+    nuke.addOnScriptClose(cgtwn.on_close_callback)
+    nuke.addOnScriptClose(_create_csheet)
     nuke.addAutolabel(ui.custom_autolabel)
     _dropframe()
-    nuke.addOnScriptClose(cgtwn.on_close_callback)
-    nuke.addOnScriptSave(cgtwn.on_save_callback)
 
 
 def abort_modified(func):
@@ -62,7 +63,7 @@ def _create_csheet():
 
 
 def _check_project():
-    project_directory = nuke.Root()['project_directory'].value()
+    project_directory = nuke.value('root.project_directory')
     if not project_directory:
         nuke.message('工程目录未设置')
     # avoid ValueError of script_directory() when no root.name.
