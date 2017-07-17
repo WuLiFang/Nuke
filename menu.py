@@ -3,7 +3,7 @@ import nuke
 
 import wlf
 
-nuke.pluginAddPath('plugins\icons')
+nuke.pluginAddPath('plugins/icons')
 
 wlf.ui.add_menu()
 wlf.callback.menu()

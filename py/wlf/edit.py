@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.5'
+__version__ = '1.1.6'
 
 
 def rename_all_nodes():
@@ -297,7 +297,7 @@ def get_min_max(src_node, channel='depth.Z'):
 def set_random_glcolor(n):
     """Set node glcolor a random hue color."""
 
-    if nuke.exists('{}.gl_color'.format(n.name()))\
+    if 'gl_color' in n.knobs()\
             and not n['gl_color'].value()\
             and not n.name().startswith('_'):
 

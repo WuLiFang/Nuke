@@ -465,7 +465,7 @@ class Comp(object):
 
         merge_node = nuke.nodes.Merge2(
             inputs=nodes[:2] + [None] + nodes[2:],
-            tile_color='2184871423L',
+            tile_color=2184871423L,
             operation='min',
             Achannels='depth', Bchannels='depth', output='depth',
             label='Depth',
