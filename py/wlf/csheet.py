@@ -6,12 +6,13 @@ import sys
 import json
 import threading
 import locale
+import re
 
 from subprocess import Popen
 import nuke
 
 
-__version__ = '1.1.2'
+__version__ = '1.1.3'
 reload(sys)
 sys.setdefaultencoding('UTF-8')
 OS_ENCODING = locale.getdefaultlocale()[1]
@@ -78,9 +79,11 @@ class ContactSheet(object):
             )
             n = nuke.nodes.Text2(
                 inputs=[n],
-                message='[lrange [split [basename [metadata input/filename]] ._] 3 3]',
-                box='0 0 0 80',
-                color='0.145 0.15 0.14 1'
+                message=get_shot(i),
+                box='5 0 1000 75',
+                color='0.145 0.15 0.14 1',
+                global_font_scale=0.8,
+                # font='{{Microsoft YaHei : Regular : msyh.ttf : 0}}'
             )
             _nodes.append(n)
 
@@ -154,21 +157,32 @@ class ContactSheet(object):
         if not _images:
             raise FootageError
 
-        _shots = []
-        _ret = []
+        shots = []
+        ret = []
         for image in _images:
-            _shot = image.split('.')[0].rstrip('_proxy').lower()
-            if _shot in _shots:
+            shot = split_version(image.split(
+                '.')[0].rstrip('_proxy').lower())[0]
+            if shot in shots:
                 print(u'排除:\t\t\t{} (较旧)'.format(image))
             else:
                 print(u'包含:\t\t\t{}'.format(image))
-                _shots.append(_shot)
-                _ret.append(image)
-        _ret.sort()
+                shots.append(shot)
+                ret.append(image)
+        ret.sort()
+
         print(u'总计图像数量:\t\t{}'.format(len(_images)))
-        print(u'总计有效图像:\t\t{}'.format(len(_ret)))
-        print(u'总计镜头数量:\t\t{}'.format(len(_shots)))
-        return _ret
+        print(u'总计有效图像:\t\t{}'.format(len(ret)))
+        print(u'总计镜头数量:\t\t{}'.format(len(shots)))
+        return ret
+
+
+def get_shot(filename):
+    """Get shot name from filename.  """
+    match = re.match(r'.*(sc_?\d+[^\.]*)_?.*\..+', filename, flags=re.I)
+    if match:
+        return match.group(1)
+
+    return filename
 
 
 class ContactSheetThread(threading.Thread):
@@ -196,6 +210,18 @@ class ContactSheetThread(threading.Thread):
         unicode_popen(cmd, shell=self._new_process)
         task.setProgress(100)
         self.lock.release()
+
+
+def split_version(f):
+    """Return nuke style _v# (shot, version number) pair.  """
+
+    match = re.match(r'(.+)_v(\d+)', f)
+    if not match:
+        return (f, -1)
+    shot, version = match.groups()
+    if version < 0:
+        raise ValueError('Negative version number not supported.')
+    return (shot, version)
 
 
 def unicode_popen(args, **kwargs):
