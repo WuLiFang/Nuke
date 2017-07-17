@@ -10,7 +10,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -155,12 +155,12 @@ def create_out_dirs():
 def add_dropdata_callback():
     """Add callback for datadrop enhance."""
 
-    def _db(type_, data):
-        if type_ == 'text/plain' and os.path.basename(data).lower() == 'thumbs.db':
+    def _db(mime_type, data):
+        if mime_type == 'text/plain' and os.path.basename(data).lower() == 'thumbs.db':
             return True
 
-    def _fbx(type_, data):
-        if type_ == 'text/plain' and data.endswith('.fbx'):
+    def _fbx(mime_type, data):
+        if mime_type == 'text/plain' and data.endswith('.fbx'):
             n = nuke.createNode(
                 'Camera2',
                 'read_from_file True '
@@ -175,8 +175,8 @@ def add_dropdata_callback():
                 n['read_from_file'].setValue(False)
             return True
 
-    def _vf(type_, data):
-        if type_ == 'text/plain' and data.endswith('.vf'):
+    def _vf(mime_type, data):
+        if mime_type == 'text/plain' and data.endswith('.vf'):
             nuke.createNode(
                 'Vectorfield',
                 'vfield_file "{data}" '
@@ -184,37 +184,41 @@ def add_dropdata_callback():
                 'label {{[value this.vfield_file]}}'.format(data=data))
             return True
 
-    def _else(type_, data):
-        if type_ == 'text/plain':
+    def _else(mime_type, data):
+        if mime_type == 'text/plain':
             nuke.createNode('Read', 'file "{}"'.format(data))
             return True
 
-    def _cgtwn(type_, data):
-        if type_ == 'text/plain':
+    def _cgtwn(mime_type, data):
+        if mime_type == 'text/plain':
             match = re.match(r'file:///([^/].*)', data)
             if match:
-                nuke.createNode('Read', 'file "{}"'.format(match.group(1)))
+                data = match.group(1)
+                if data.endswith('.nk'):
+                    nuke.scriptReadFile(data)
+                else:
+                    nuke.createNode('Read', 'file "{}"'.format(data))
                 return True
 
-    def _dir(type_, data):
-        def _file(type_, data):
-            _db(type_, data)
-            _fbx(type_, data)
-            _vf(type_, data)
-            _else(type_, data)
+    def _dir(mime_type, data):
+        def _file(mime_type, data):
+            _db(mime_type, data)
+            _fbx(mime_type, data)
+            _vf(mime_type, data)
+            _else(mime_type, data)
 
-        def _path(type_, data):
+        def _path(mime_type, data):
             if os.path.isdir(data):
-                _dir(type_, data)
+                _dir(mime_type, data)
             else:
-                _file(type_, data)
+                _file(mime_type, data)
 
             return True
 
-        if type_ == 'text/plain' and os.path.isdir(data):
+        if mime_type == 'text/plain' and os.path.isdir(data):
             _dirname = data.replace('\\', '/')
             for i in nuke.getFileNameList(_dirname):
-                _path(type_, '/'.join([_dirname, i]))
+                _path(mime_type, '/'.join([_dirname, i]))
             return True
 
     nukescripts.addDropDataCallback(_fbx)
@@ -223,8 +227,8 @@ def add_dropdata_callback():
     nukescripts.addDropDataCallback(_cgtwn)
     nukescripts.addDropDataCallback(_dir)
 
-    def _catch_all(type_, data):
-        print(type_)
+    def _catch_all(mime_type, data):
+        print(mime_type)
         print(data)
         return None
 
