@@ -10,7 +10,7 @@ import shutil
 
 import nuke
 
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -148,14 +148,41 @@ def copy(src, dst):
     shutil.copy2(src, dst)
 
 
-def main():
-    """For test script effect."""
+def dropdata_handler(mime_type, data):
+    """Handling dropdata."""
 
-    n = nuke.toNode('Read3')
-    result = DropFrameCheck(n).dropframe_ranges()
-    print(result)
+    if mime_type != 'text/plain':
+        return
+    match = re.match(r'file:///([^/].*)', data)
 
-
-if __name__ == '__main__':
-    # For test in script editor.
-    main()
+    if os.path.isdir(data):
+        _dirname = data.replace('\\', '/')
+        for i in nuke.getFileNameList(_dirname):
+            dropdata_handler(mime_type, '{}/{}'.format(_dirname, i))
+    elif os.path.basename(data).lower() == 'thumbs.db':
+        pass
+    elif match:
+        data = match.group(1)
+        return dropdata_handler(mime_type, data)
+    elif data.endswith('.fbx'):
+        n = nuke.createNode(
+            'Camera2',
+            'read_from_file True '
+            'frame_rate 25 '
+            'suppress_dialog True '
+            'label {'
+            '导入的摄像机：\n'
+            '[basename [value file]]\n}')
+        n.setName('Camera_3DEnv_1')
+        n['file'].fromUserText(data)
+        if nuke.expression('{}.animated'.format(n.name())):
+            n['read_from_file'].setValue(False)
+    elif data.endswith('.vf'):
+        nuke.createNode(
+            'Vectorfield',
+            'vfield_file "{data}" '
+            'file_type vf '
+            'label {{[value this.vfield_file]}}'.format(data=data))
+    else:
+        nuke.createNode('Read', 'file "{}"'.format(data))
+    return True
