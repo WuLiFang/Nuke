@@ -17,12 +17,10 @@ import nukescripts
 
 FPS = 25
 FORMAT = 'HD_1080'
-__version__ = '1.1.1'
+__version__ = '1.2.0'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
-reload(sys)
-sys.setdefaultencoding('UTF-8')
 
 
 class Comp(object):
@@ -38,7 +36,7 @@ class Comp(object):
         'autograde': True,
         'exclude_existed': True,
     }
-    default_tag = '_OTHER',
+    default_tag = '_OTHER'
     tag_knob_name = u'wlf_tag'
 
     def __init__(self, config=None, multiple=False):
@@ -82,7 +80,6 @@ class Comp(object):
 
     def comp_shot(self, config=None):
         """Comp footages, import them if needed."""
-
         pprint.pprint(config)
         if config:
             print(u'\n# {}'.format(config['shot']))
@@ -199,7 +196,8 @@ class Comp(object):
                 inputs=[n], conversion='logarithmic compress')
             n = nuke.nodes.Defocus(inputs=[n], disable=True)
             n = nuke.nodes.Crop(inputs=[n], box='0 0 root.width root.height')
-            n = nuke.nodes.Merge(inputs=[n, input_node], label='MP')
+            n = nuke.nodes.Merge(
+                inputs=[input_node, n], operation='under', bbox='B', label='MP')
 
             return n
 
@@ -211,11 +209,17 @@ class Comp(object):
         print(u'{:-^30s}'.format(u'整体深度节点创建'))
         self._add_zdefocus_control(n)
         print(u'{:-^30s}'.format(u'添加虚焦控制'))
-        self._add_depthfog_control(n)
-        print(u'{:-^30s}'.format(u'添加深度雾控制'))
+        # self._add_depthfog_control(n)
+        # print(u'{:-^30s}'.format(u'添加深度雾控制'))
         n = _merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
         print(u'{:-^30s}'.format(u'MP节点创建'))
+
+        n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
+        n = nuke.nodes.Merge2(
+            inputs=[n.input(0), n], operation='soft-light', mix='0.2')
+
+        n = nuke.nodes.Aberration(inputs=[n], distortion1='0 0 0.003')
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
@@ -229,18 +233,24 @@ class Comp(object):
         _read_jpg.setName('Read_Write_JPG')
         print(u'{:-^30s}'.format(u'读取输出节点创建'))
 
-        map(nuke.delete, nuke.allNodes(u'Viewer'))
+        map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
         print(u'{:-^30s}'.format(u'设置查看器'))
 
         autoplace_all()
+
+    @staticmethod
+    def _colorcorrect_with_positionkeyer(input_node, cc_label=None, **pk_kwargs):
+        n = nuke.nodes.PositionKeyer(inputs=[input_node], **pk_kwargs)
+        n = nuke.nodes.ColorCorrect(inputs=[input_node, n], label=cc_label)
+        return n
 
     @classmethod
     def get_nodes_by_tags(cls, tags):
         """Return nodes that match given tags."""
 
         ret = []
-        if isinstance(tags, str) or isinstance(tags, unicode):
+        if isinstance(tags, (str, unicode)):
             tags = [tags]
         tags = tuple(unicode(i).upper() for i in tags)
 
@@ -300,15 +310,11 @@ class Comp(object):
                 k.setValue(n[_knob_name].value())
                 n.removeKnob(n[_knob_name])
             n.addKnob(k)
-        _tag = nuke.value(u'{}.{}'.format(n.name(), self.tag_knob_name), '')
+        _tag = nuke.value(u'{}.{}'.format(
+            n.name(), self.tag_knob_name), '') or self._get_tag(nuke.filename(n))
 
-        if not _tag:
-            _tag = self._get_tag(nuke.filename(n))
-            if not 'rgba.alpha' in n.channels():
-                _tag = '_OTHER'
-
-        k = nuke.Tab_Knob('吾立方')
-        _add_knob(k)
+        if not 'rgba.alpha' in n.channels():
+            _tag = '_OTHER'
 
         k = nuke.String_Knob(self.tag_knob_name, '素材标签')
         _add_knob(k)
@@ -340,123 +346,132 @@ class Comp(object):
         return _ret
 
     def _bg_ch_nodes(self):
-        bg_ch_nodes = self.get_nodes_by_tags(['BG', 'CH'])
+        nodes = self.get_nodes_by_tags(['BG', 'CH'])
 
-        if not bg_ch_nodes:
+        if not nodes:
             raise FootageError(u'BG', u'CH')
 
-        for i, _read_node in enumerate(bg_ch_nodes):
-            n = _read_node
-            if 'SSS.alpha' in _read_node.channels():
-                n = nuke.nodes.Keyer(
-                    inputs=[n],
-                    input='SSS',
-                    output='SSS.alpha',
-                    operation='luminance key',
-                    range='0 0.007297795507 1 1'
-                )
-            n = nuke.nodes.Reformat(inputs=[n], resize='fit')
-            if 'depth.Z' not in _read_node.channels():
-                _constant = nuke.nodes.Constant(
-                    channels='depth',
-                    color=1,
-                    label='**用渲染出的depth层替换这个**\n或者手动指定数值'
-                )
-                n = nuke.nodes.Merge2(
-                    inputs=[n, _constant],
-                    also_merge='all',
-                    label='add_depth'
-                )
+        for i, n in enumerate(nodes):
+            read_node = n
+            n = self._bg_ch_node(n)
 
             if i == 0:
                 n = self._merge_occ(n)
                 n = self._merge_shadow(n)
                 n = self._merge_screen(n)
-            n = nuke.nodes.DepthFix(inputs=[n])
-            if get_max(_read_node, 'depth.Z') > 1.1:
-                n['farpoint'].setValue(10000)
-
-            n = nuke.nodes.Grade(
-                inputs=[n],
-                unpremult='rgba.alpha',
-                label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
-            )
-            if self._config['autograde']:
-                print(u'{:-^30s}'.format(u'开始 自动亮度'))
-                _max = self._autograde_get_max(_read_node)
-                if _max < 0.5:
-                    _mix = 0.3
-                else:
-                    _mix = 0.6
-                n['whitepoint'].setValue(_max)
-                n['mix'].setValue(_mix)
-                print(u'{:-^30s}'.format(u'结束 自动亮度'))
-            n = nuke.nodes.Unpremult(inputs=[n])
-            n = nuke.nodes.ColorCorrect(inputs=[n], label='亮度调整')
-            n = nuke.nodes.ColorCorrect(
-                inputs=[n], mix_luminance=1, label='颜色调整')
-            if 'SSS.alpha' in _read_node.channels():
-                n = nuke.nodes.ColorCorrect(
-                    inputs=[n],
-                    maskChannelInput='SSS.alpha',
-                    label='SSS调整'
-                )
-            n = nuke.nodes.HueCorrect(inputs=[n])
-            n = nuke.nodes.Premult(inputs=[n])
-
-            n = self._depthfog(n)
-
-            n = nuke.nodes.SoftClip(
-                inputs=[n], conversion='logarithmic compress')
-            n = nuke.nodes.ZDefocus2(
-                inputs=[n],
-                math='depth',
-                center='{{[value _ZDefocus.center curve]}}',
-                focal_point='1.#INF 1.#INF',
-                dof='{{[value _ZDefocus.dof curve]}}',
-                blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
-                size='{{[value _ZDefocus.size curve]}}',
-                max_size='{{[value _ZDefocus.max_size curve]}}',
-                label='[\nset trg parent._ZDefocus\n'
-                'knob this.math [value $trg.math depth]\n'
-                'knob this.z_channel [value $trg.z_channel depth.Z]\n'
-                'if {[exists _ZDefocus]} '
-                '{return \"由_ZDefocus控制\"} '
-                'else '
-                '{return \"需要_ZDefocus节点\"}\n]',
-                disable='{{![exists _ZDefocus] '
-                '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
-                '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
-            )
-            n = nuke.nodes.Crop(
-                inputs=[n],
-                box='0 0 root.width root.height'
-            )
-
             if i > 0:
                 n = nuke.nodes.Merge2(
-                    inputs=[bg_ch_nodes[i - 1], n],
-                    label=_read_node[self.tag_knob_name].value()
+                    inputs=[nodes[i - 1], n],
+                    label=read_node[self.tag_knob_name].value()
                 )
-            bg_ch_nodes[i] = n
+            nodes[i] = n
+        return n
+
+    def _bg_ch_node(self, input_node):
+        n = input_node
+        if 'MotionVectors' in nuke.layers(input_node):
+            _kwargs = {'in': 'MotionVectors'}
+            n = nuke.nodes.Shuffle(
+                inputs=[n], out='motion', blue='red', alpha='green', **_kwargs)
+        if 'SSS.alpha' in input_node.channels():
+            n = nuke.nodes.Keyer(
+                inputs=[n],
+                input='SSS',
+                output='SSS.alpha',
+                operation='luminance key',
+                range='0 0.007297795507 1 1'
+            )
+        n = nuke.nodes.Reformat(inputs=[n], resize='fit')
+        if 'depth.Z' not in input_node.channels():
+            _constant = nuke.nodes.Constant(
+                channels='depth',
+                color=1,
+                label='**用渲染出的depth层替换这个**\n或者手动指定数值'
+            )
+            n = nuke.nodes.Merge2(
+                inputs=[n, _constant],
+                also_merge='all',
+                label='add_depth'
+            )
+
+        n = nuke.nodes.DepthFix(inputs=[n])
+        print('before')
+        if get_max(input_node, 'depth.Z') > 1.1:
+            n['farpoint'].setValue(10000)
+        print('after')
+
+        n = nuke.nodes.Grade(
+            inputs=[n],
+            unpremult='rgba.alpha',
+            label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
+        )
+        if self._config['autograde']:
+            print(u'{:-^30s}'.format(u'开始 自动亮度'))
+            _max = self._autograde_get_max(input_node)
+            n['whitepoint'].setValue(_max)
+            n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
+            print(u'{:-^30s}'.format(u'结束 自动亮度'))
+        n = nuke.nodes.Unpremult(inputs=[n])
+        n = nuke.nodes.ColorCorrect(inputs=[n], label='亮度调整')
+        n = nuke.nodes.ColorCorrect(
+            inputs=[n], mix_luminance=1, label='颜色调整')
+        if 'SSS.alpha' in input_node.channels():
+            n = nuke.nodes.ColorCorrect(
+                inputs=[n],
+                maskChannelInput='SSS.alpha',
+                label='SSS调整'
+            )
+        n = nuke.nodes.HueCorrect(inputs=[n])
+        n = nuke.nodes.Premult(inputs=[n])
+
+        # n = self._depthfog(n)
+        _kwargs = {'in': 'depth'}
+        n = self._colorcorrect_with_positionkeyer(n, '远处', **_kwargs)
+        n = self._colorcorrect_with_positionkeyer(n, '近处', **_kwargs)
+
+        n = nuke.nodes.SoftClip(
+            inputs=[n], conversion='logarithmic compress')
+        n = nuke.nodes.ZDefocus2(
+            inputs=[n],
+            math='depth',
+            center='{{[value _ZDefocus.center curve]}}',
+            focal_point='1.#INF 1.#INF',
+            dof='{{[value _ZDefocus.dof curve]}}',
+            blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
+            size='{{[value _ZDefocus.size curve]}}',
+            max_size='{{[value _ZDefocus.max_size curve]}}',
+            label='[\nset trg parent._ZDefocus\n'
+            'knob this.math [value $trg.math depth]\n'
+            'knob this.z_channel [value $trg.z_channel depth.Z]\n'
+            'if {[exists _ZDefocus]} '
+            '{return \"由_ZDefocus控制\"} '
+            'else '
+            '{return \"需要_ZDefocus节点\"}\n]',
+            disable='{{![exists _ZDefocus] '
+            '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
+            '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
+        )
+        if 'motion' in nuke.layers(n):
+            n = nuke.nodes.VectorBlur(inputs=[n], disable=True)
+        n = nuke.nodes.Crop(
+            inputs=[n],
+            box='0 0 root.width root.height')
         return n
 
     @staticmethod
     def _autograde_get_max(n):
-        rgb_max = get_max(n, 'rgb')
-        erode_size = 0
-        erode_node = nuke.nodes.Dilate(inputs=[n], size=erode_size)
         # Exclude small highlight
-        while rgb_max > 1 and erode_size > n.height() / -100.0:
-            erode_node['size'].setValue(erode_size)
-            rgb_max = get_max(erode_node, 'rgb')
-            if rgb_max < 1:
-                break
-            erode_size -= 1
-            print(u'收边 {}'.format(erode_size))
-        nuke.delete(erode_node)
+        ret = get_max(n, 'rgb')
+        erode = 0
+        n = nuke.nodes.Dilate(inputs=[n])
+        while ret > 1 and erode > n.height() / -100.0:
+            n['size'].setValue(erode)
+            print(u'收边 {}'.format(erode))
+            ret = get_max(n, 'rgb')
+            erode -= 1
+        nuke.delete(n)
 
-        return rgb_max
+        return ret
 
     @staticmethod
     def _merge_depth(input_node, nodes):
@@ -768,49 +783,40 @@ def insert_node(node, input_node):
     node.setInput(0, input_node)
 
 
-def get_max(n, channel='rgb'):
+def get_max(node, channel='rgb'):
     '''
     Return themax values of a given node's image at middle frame
 
     @parm n: node
     @parm channel: channel for sample
     '''
-    # Get middle_frame
-    middle_frame = (n.frameRange().first() + n.frameRange().last()) // 2
+    first = node.firstFrame()
+    last = node.lastFrame()
+    middle = (first + last) // 2
 
-    # Create nodes
-    invert_node = nuke.nodes.Invert(channels=channel, inputs=[n])
-    mincolor_node = nuke.nodes.MinColor(
-        channels=channel, target=0, inputs=[invert_node])
+    n = nuke.nodes.Invert(channels=channel, inputs=[node])
+    n = nuke.nodes.MinColor(
+        channels=channel, target=0, inputs=[n])
 
-    # Execute
-    try:
-        nuke.execute(mincolor_node, middle_frame, middle_frame)
-        max_value = mincolor_node['pixeldelta'].value() + 1
-    except RuntimeError as ex:
-        if 'Read error:' in str(ex):
-            max_value = -1
-        else:
-            raise RuntimeError(ex)
+    if n.hasError():
+        ret = -1
+    else:
+        nuke.execute(n, middle, middle)
+        ret = n['pixeldelta'].value() + 1
 
-    # Avoid dark frame
-    if max_value < 0.7:
-        nuke.execute(mincolor_node, n.frameRange().last(),
-                     n.frameRange().last())
-        max_value = max(max_value, mincolor_node['pixeldelta'].value() + 1)
-    if max_value < 0.7:
-        nuke.execute(mincolor_node, n.frameRange().first(),
-                     n.frameRange().first())
-        max_value = max(max_value, mincolor_node['pixeldelta'].value() + 1)
+    if ret < 0.7:
+        nuke.execute(n, last, last)
+        ret = max(ret, n['pixeldelta'].value() + 1)
+    if ret < 0.7:
+        nuke.execute(n, first, first)
+        ret = max(ret, n['pixeldelta'].value() + 1)
 
-    # Delete created nodes
-    for i in (mincolor_node, invert_node):
-        nuke.delete(i)
+    print(u'getMax({1}, {0}) -> {2}'.format(channel, node.name(), ret))
 
-    # Output
-    print(u'getMax({1}, {0}) -> {2}'.format(channel, n.name(), max_value))
+    nuke.delete(n.input(0))
+    nuke.delete(n)
 
-    return max_value
+    return ret
 
 
 def autoplace_all():
@@ -844,4 +850,6 @@ def pause():
 
 
 if __name__ == '__main__':
+    reload(sys)
+    sys.setdefaultencoding('UTF-8')
     main()

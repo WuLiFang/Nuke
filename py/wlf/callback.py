@@ -29,7 +29,7 @@ def menu():
 
     add_dropdata_callback()
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
-    nuke.addOnUserCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
+    nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
     nuke.addUpdateUI(_autoplace)
     nuke.addOnScriptSave(edit.enable_rsmb, kwargs={'prefix': '_'})
