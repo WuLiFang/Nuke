@@ -63,7 +63,13 @@ def _create_csheet():
 def _check_project():
     project_directory = nuke.value('root.project_directory')
     if not project_directory:
-        nuke.message('工程目录未设置')
+        _name = nuke.value('root.name', '')
+        if _name:
+            _dir = os.path.dirname(_name)
+            nuke.knob('root.project_directory', _dir)
+            nuke.message('工程目录未设置, 已自动设为: {}'.format(_dir))
+        else:
+            nuke.message('工程目录未设置')
     # avoid ValueError of script_directory() when no root.name.
     elif project_directory == r"[python {os.path.abspath(os.path.join("\
         r"'D:/temp', nuke.value('root.name', ''), '../'"\

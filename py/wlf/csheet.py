@@ -12,9 +12,8 @@ from subprocess import Popen
 import nuke
 
 
-__version__ = '1.1.3'
-reload(sys)
-sys.setdefaultencoding('UTF-8')
+__version__ = '1.1.4'
+
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -247,4 +246,6 @@ def main():
 
 
 if __name__ == '__main__':
+    reload(sys)
+    sys.setdefaultencoding('UTF-8')
     main()
