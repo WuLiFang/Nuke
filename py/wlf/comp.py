@@ -17,7 +17,7 @@ import nukescripts
 
 FPS = 25
 FORMAT = 'HD_1080'
-__version__ = '1.2.0'
+__version__ = '1.2.2'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -32,7 +32,7 @@ class Comp(object):
         'tag_pat': r'sc.+?_([^.]+)',
         'output_dir': 'E:/precomp',
         'input_dir': 'Z:/SNJYW/Render/EP',
-        'mp': r"\\192.168.1.4\f\QQFC_2015\Render\mp\Brooklyn-Bridge-Panorama.tga",
+        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v1.jpg",
         'autograde': True,
         'exclude_existed': True,
     }
@@ -64,7 +64,6 @@ class Comp(object):
         """Comp multipe shots from footage folder that stored in config json file."""
 
         _shot_list = self.get_shot_list(self._config)
-
         for i, shot in enumerate(_shot_list):
             _savepath = '{}.nk'.format(os.path.join(
                 self._config['output_dir'], shot))
@@ -81,10 +80,16 @@ class Comp(object):
     def comp_shot(self, config=None):
         """Comp footages, import them if needed."""
         pprint.pprint(config)
+
         if config:
             print(u'\n# {}'.format(config['shot']))
             nuke.scriptClear()
             self.import_resource()
+        if not nuke.value('root.project_directory'):
+            nuke.knob("root.project_directory",
+                      r"[python {os.path.join("
+                      r"nuke.value('root.name', ''), '../'"
+                      r").replace('\\', '/')}]")
         self.setup_nodes()
         self.create_nodes()
         if config:
@@ -101,16 +106,10 @@ class Comp(object):
 
         _ret = os.listdir(_dir)
         if isinstance(_ret[0], str):
-            # _ret = map(lambda x: unicode(x, SYS_CODEC), _ret)
             _ret = (unicode(i, SYS_CODEC) for i in _ret)
         if config['exclude_existed']:
-            # _ret = filter(lambda path: not os.path.exists(os.path.join(
-            #     config[u'output_dir'], u'{}.nk'.format(path))), _ret)
             _ret = (i for i in _ret if os.path.exists(os.path.join(
                 config[u'output_dir'], u'{}.nk'.format(i))))
-        # _ret = filter(lambda path: re.match(config['dir_pat'], path), _ret)
-        # _ret = filter(lambda dirname: os.path.isdir(
-        #     os.path.join(_dir, dirname)), _ret)
         _ret = (i for i in _ret if (
             re.match(config['dir_pat'], i) and os.path.isdir(os.path.join(_dir, i))))
 
@@ -119,7 +118,7 @@ class Comp(object):
             _dirname = os.path.basename(_dir)
             if re.match(config['dir_pat'], _dir):
                 _ret = [_dir]
-        return _ret
+        return sorted(_ret)
 
     @staticmethod
     def show_dialog():
@@ -225,7 +224,7 @@ class Comp(object):
         n['file'].fromUserText(mp_file)
         n.setName(u'MP')
 
-        n = nuke.nodes.Reformat(inputs=[n], resize='fit')
+        n = nuke.nodes.Reformat(inputs=[n], resize='fill')
         n = nuke.nodes.Transform(inputs=[n])
         n = _add_lut(n)
         n = nuke.nodes.ColorCorrect(inputs=[n])
@@ -302,7 +301,7 @@ class Comp(object):
                     except RuntimeError:
                         self._errors.append(
                             u'{}:\t渲染出错'.format(os.path.basename(_path)))
-                        raise RenderError('Write_JPG_1')
+                        raise RenderError(u'渲染出错: Write_JPG_1')
         print(u'{:-^30s}'.format(u'结束 输出'))
 
     def _setup_node(self, n):
@@ -397,10 +396,8 @@ class Comp(object):
             )
 
         n = nuke.nodes.DepthFix(inputs=[n])
-        print('before')
         if get_max(input_node, 'depth.Z') > 1.1:
             n['farpoint'].setValue(10000)
-        print('after')
 
         n = nuke.nodes.Grade(
             inputs=[n],
@@ -463,7 +460,7 @@ class Comp(object):
     @staticmethod
     def _autograde_get_max(n):
         # Exclude small highlight
-        ret = get_max(n, 'rgb')
+        ret = 100
         erode = 0
         n = nuke.nodes.Dilate(inputs=[n])
         while ret > 1 and erode > n.height() / -100.0:
@@ -478,7 +475,7 @@ class Comp(object):
     @staticmethod
     def _merge_depth(input_node, nodes):
         if len(nodes) < 2:
-            return
+            return input_node
 
         merge_node = nuke.nodes.Merge2(
             inputs=nodes[:2] + [None] + nodes[2:],
@@ -674,11 +671,11 @@ class CompDialog(nukescripts.PythonPanel):
         task = nuke.ProgressTask('批量合成')
         errors = ''
 
-        for i, shot in enumerate(self._shot_list):
+        for i, shot in enumerate(self._shot_list,):
             if task.isCancelled():
                 break
             task.setMessage(shot)
-
+            task.setProgress(i * 100 // len(self._shot_list))
             self.config['shot'] = os.path.basename(shot)
             self.config['save_path'] = os.path.join(
                 self.config['output_dir'], '{}.nk'.format(self.config['shot']))
@@ -696,11 +693,13 @@ class CompDialog(nukescripts.PythonPanel):
             if stderr:
                 print(stderr)
                 errors += u'<tr><td>{}</td><td>{}</td></tr>\n'.format(
-                    self.config['shot'], stderr.strip().split('\n')[-1])
-            if proc.returncode:
+                    self.config['shot'], stderr.strip())
+            elif proc.returncode:
                 errors += u'<tr><td>{}</td><td>非正常退出码:{}</td></tr>\n'.format(
                     self.config['shot'], proc.returncode)
-            task.setProgress((i + 1) // len(self._shot_list) * 100)
+            else:
+                errors += u'<tr><td>{}</td><td>正常退出</td></tr>\n'.format(
+                    self.config['shot'])
 
         if errors:
             errors = u'<style>td{{padding:8px;}}</style>'\
