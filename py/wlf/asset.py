@@ -10,7 +10,7 @@ import shutil
 
 import nuke
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -148,7 +148,7 @@ def copy(src, dst):
     shutil.copy2(src, dst)
 
 
-def dropdata_handler(mime_type, data):
+def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
     # print(mime_type, data)
     if mime_type != 'text/plain':
@@ -158,7 +158,8 @@ def dropdata_handler(mime_type, data):
     if os.path.isdir(data):
         _dirname = data.replace('\\', '/')
         for i in nuke.getFileNameList(_dirname):
-            dropdata_handler(mime_type, '{}/{}'.format(_dirname, i))
+            dropdata_handler(
+                mime_type, '{}/{}'.format(_dirname, i), from_dir=True)
     elif os.path.basename(data).lower() == 'thumbs.db':
         pass
     elif match:
@@ -185,7 +186,7 @@ def dropdata_handler(mime_type, data):
             'label {{[value this.vfield_file]}}'.format(data=data))
     elif data.endswith('.nk'):
         nuke.scriptReadFile(data)
-    elif os.path.exists(data):
+    elif from_dir:
         n = nuke.createNode('Read', 'file "{}"'.format(data))
     else:
         return
