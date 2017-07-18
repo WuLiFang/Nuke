@@ -169,37 +169,6 @@ class Comp(object):
 
     def create_nodes(self):
         """Create nodes that a comp need."""
-        def _merge_mp(input_node, mp_file='', lut=''):
-            def _add_lut(input_node):
-                if not lut:
-                    return input_node
-
-                n = nuke.nodes.Vectorfield(
-                    inputs=[input_node],
-                    file_type='vf',
-                    label='[basename [value this.knob.vfield_file]]')
-                n['vfield_file'].fromUserText(lut)
-                return n
-
-            n = nuke.nodes.Read(file=mp_file)
-            n['file'].fromUserText(mp_file)
-            n.setName(u'MP')
-
-            n = nuke.nodes.Reformat(inputs=[n], resize='fit')
-            n = nuke.nodes.Transform(inputs=[n])
-            n = _add_lut(n)
-            n = nuke.nodes.ColorCorrect(inputs=[n])
-            n = nuke.nodes.Grade(
-                inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')])
-            n = nuke.nodes.ProjectionMP(inputs=[n])
-            n = nuke.nodes.SoftClip(
-                inputs=[n], conversion='logarithmic compress')
-            n = nuke.nodes.Defocus(inputs=[n], disable=True)
-            n = nuke.nodes.Crop(inputs=[n], box='0 0 root.width root.height')
-            n = nuke.nodes.Merge(
-                inputs=[input_node, n], operation='under', bbox='B', label='MP')
-
-            return n
 
         n = self._bg_ch_nodes()
         print(u'{:-^30s}'.format('BG CH 节点创建'))
@@ -211,7 +180,7 @@ class Comp(object):
         print(u'{:-^30s}'.format(u'添加虚焦控制'))
         # self._add_depthfog_control(n)
         # print(u'{:-^30s}'.format(u'添加深度雾控制'))
-        n = _merge_mp(
+        n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
         print(u'{:-^30s}'.format(u'MP节点创建'))
 
@@ -238,6 +207,39 @@ class Comp(object):
         print(u'{:-^30s}'.format(u'设置查看器'))
 
         autoplace_all()
+
+    @staticmethod
+    def _merge_mp(input_node, mp_file='', lut=''):
+        def _add_lut(input_node):
+            if not lut:
+                return input_node
+
+            n = nuke.nodes.Vectorfield(
+                inputs=[input_node],
+                file_type='vf',
+                label='[basename [value this.knob.vfield_file]]')
+            n['vfield_file'].fromUserText(lut)
+            return n
+
+        n = nuke.nodes.Read(file=mp_file)
+        n['file'].fromUserText(mp_file)
+        n.setName(u'MP')
+
+        n = nuke.nodes.Reformat(inputs=[n], resize='fit')
+        n = nuke.nodes.Transform(inputs=[n])
+        n = _add_lut(n)
+        n = nuke.nodes.ColorCorrect(inputs=[n])
+        n = nuke.nodes.Grade(
+            inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')])
+        n = nuke.nodes.ProjectionMP(inputs=[n])
+        n = nuke.nodes.SoftClip(
+            inputs=[n], conversion='logarithmic compress')
+        n = nuke.nodes.Defocus(inputs=[n], disable=True)
+        n = nuke.nodes.Crop(inputs=[n], box='0 0 root.width root.height')
+        n = nuke.nodes.Merge(
+            inputs=[input_node, n], operation='under', bbox='B', label='MP')
+
+        return n
 
     @staticmethod
     def _colorcorrect_with_positionkeyer(input_node, cc_label=None, **pk_kwargs):

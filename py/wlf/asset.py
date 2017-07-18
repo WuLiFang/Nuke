@@ -10,7 +10,7 @@ import shutil
 
 import nuke
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -150,7 +150,7 @@ def copy(src, dst):
 
 def dropdata_handler(mime_type, data):
     """Handling dropdata."""
-
+    # print(mime_type, data)
     if mime_type != 'text/plain':
         return
     match = re.match(r'file:///([^/].*)', data)
@@ -183,6 +183,10 @@ def dropdata_handler(mime_type, data):
             'vfield_file "{data}" '
             'file_type vf '
             'label {{[value this.vfield_file]}}'.format(data=data))
+    elif data.endswith('.nk'):
+        nuke.scriptReadFile(data)
+    elif os.path.exists(data):
+        n = nuke.createNode('Read', 'file "{}"'.format(data))
     else:
-        nuke.createNode('Read', 'file "{}"'.format(data))
+        return
     return True
