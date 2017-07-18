@@ -68,16 +68,19 @@ def add_menu():
     def _cgtw(menu):
 
         m = menu.addMenu('CGTeamWork', icon='cgteamwork.png')
-        # m.addCommand('设置工程', "wlf.cgtwn.CGTeamWork.ask_database()")
-        m.addCommand('添加note', "wlf.cgtwn.Shot().ask_add_note()")
-        # m.addCommand('上传nk文件', "wlf.cgtwn.Shot().upload_nk_file()")
-        # m.addCommand('上传单帧', "wlf.cgtwn.Shot().upload_image()")
-        m.addCommand('提交单帧', "wlf.cgtwn.Shot().submit_image()")
-        m.addCommand('提交视频', "wlf.cgtwn.Shot().submit_video()")
+        # m.addCommand('设置工程', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.ask_database()")
+        m.addCommand(
+            '添加note', "import wlf.cgtwn; wlf.cgtwn.Shot().ask_add_note()")
+        # m.addCommand('上传nk文件', "import wlf.cgtwn; wlf.cgtwn.Shot().upload_nk_file()")
+        # m.addCommand('上传单帧', "import wlf.cgtwn; wlf.cgtwn.Shot().upload_image()")
+        m.addCommand(
+            '提交单帧', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_image()")
+        m.addCommand(
+            '提交视频', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_video()")
         m.addCommand(
             "批量下载",
             'nukescripts.start("file://SERVER/scripts/NukePlugins/CGTeamWork工具/CGTW批量下载.bat")')
-        # m.addCommand('重新登录', "wlf.cgtwn.CGTeamWork.update_status()")
+        # m.addCommand('重新登录', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.update_status()")
 
     def _create_node_menu():
         _plugin_path = '../../../plugins'

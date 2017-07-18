@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 import nuke
 
-import wlf
+from wlf import ui, callback, pref
 
 nuke.pluginAddPath('plugins/icons')
 
-wlf.ui.add_menu()
-wlf.callback.menu()
-wlf.pref.add_preferences()
+ui.add_menu()
+callback.menu()
+pref.add_preferences()
