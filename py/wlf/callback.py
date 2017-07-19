@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 
 def init():
@@ -144,7 +144,7 @@ def _gizmo_to_group_update_ui():
 
 def _autoplace():
     if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.modified():
-        nuke.autoplace(nuke.thisNode())
+        map(nuke.autoplace, nuke.allNodes())
 
 
 def _print_name():
