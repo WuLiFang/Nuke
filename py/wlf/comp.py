@@ -16,7 +16,7 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-__version__ = '1.3.2'
+__version__ = '1.3.3'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -834,7 +834,10 @@ def get_max(node, channel='rgb'):
         channels=channel, target=0, inputs=[n])
 
     for frame in (middle, first, last):
-        nuke.execute(n, frame, frame)
+        try:
+            nuke.execute(n, frame, frame)
+        except RuntimeError:
+            continue
         ret = max(ret, n['pixeldelta'].value() + 1)
         if ret > 0.7:
             break
