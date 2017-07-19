@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.7'
+__version__ = '1.1.8'
 
 
 def rename_all_nodes():
@@ -342,9 +342,9 @@ def delete_unused_nodes(message=False):
         if n.name().startswith('_')\
                 or n.Class() in ['BackdropNode', 'Read', 'Write', 'Viewer', 'GenerateLUT']:
             return True
-        nodes_dependent_this = list(n for n in n.dependent()
-                                    if n.Class() not in [''] or n.name().startswith('_'))
-        return bool(nodes_dependent_this)
+        nodes_dependent_this = (n for n in n.dependent()
+                                if n.Class() not in [''] or n.name().startswith('_'))
+        return any(nodes_dependent_this)
 
     count = 0
     while True:
