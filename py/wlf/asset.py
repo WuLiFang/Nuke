@@ -10,7 +10,7 @@ import shutil
 
 import nuke
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -48,7 +48,7 @@ class DropFrameCheck(threading.Thread):
         ret = nuke.FrameRanges()
         if not self._node\
                 or self._node.name().startswith(self._prefix):
-            return
+            return ret
         _filename = nuke.filename(self._node)
         if not _filename \
                 or expand_frame(_filename, 1) == _filename:
