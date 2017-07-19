@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 """Add callback for wlf plugins."""
 
-import locale
 import os
 
 import nuke
@@ -9,8 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.1'
-SYS_CODEC = locale.getdefaultlocale()[1]
+__version__ = '0.3.2'
 
 
 def init():
@@ -145,7 +143,7 @@ def _gizmo_to_group_update_ui():
 
 
 def _autoplace():
-    if nuke.numvalue('preferences.wlf_autoplace', 0.0):
+    if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.modified():
         nuke.autoplace(nuke.thisNode())
 
 
