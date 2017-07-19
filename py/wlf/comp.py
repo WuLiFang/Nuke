@@ -16,7 +16,7 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-__version__ = '1.3.0'
+__version__ = '1.3.1'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -85,7 +85,7 @@ class Comp(object):
         'output_dir': 'E:/precomp',
         'input_dir': 'Z:/SNJYW/Render/EP',
         'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v1.jpg",
-        'autograde': True,
+        'autograde': False,
         'exclude_existed': True,
     }
     default_tag = '_OTHER'
@@ -423,8 +423,9 @@ class Comp(object):
             )
 
         n = nuke.nodes.DepthFix(inputs=[n])
-        if get_max(input_node, 'depth.Z') > 1.1:
-            n['farpoint'].setValue(10000)
+        if self._config['autograde']:
+            if get_max(input_node, 'depth.Z') > 1.1:
+                n['farpoint'].setValue(10000)
 
         n = nuke.nodes.Grade(
             inputs=[n],
