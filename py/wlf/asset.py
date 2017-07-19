@@ -10,14 +10,14 @@ import shutil
 
 import nuke
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
 class DropFrameCheck(threading.Thread):
     """Check drop frames and record on the node."""
 
-    # lock = threading.Lock()
+    lock = threading.Lock()
     showed_files = []
     knob_name = 'dropframes'
 
@@ -36,12 +36,12 @@ class DropFrameCheck(threading.Thread):
     def run(self):
         if self._node['disable'].value():
             return
-        # self.lock.acquire()
         time.sleep(5)
         while self._node:
+            self.lock.acquire()
             self.record()
+            self.lock.release()
             time.sleep(5)
-        # self.lock.release()
 
     def dropframe_ranges(self):
         """Return nuke framerange instance of dropframes."""
