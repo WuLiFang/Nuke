@@ -9,7 +9,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -23,12 +23,18 @@ def menu():
     """Add callback for nuke menu phase."""
 
     nukescripts.addDropDataCallback(asset.dropdata_handler)
+
+    nuke.addAutolabel(ui.custom_autolabel)
+
+    nuke.addUpdateUI(_gizmo_to_group_update_ui)
+
+    nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
+
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
+    nuke.addOnUserCreate(_autoplace)
     nuke.addOnUserCreate(lambda: asset.DropFrameCheck(
         nuke.thisNode()).start(), nodeClass='Read')
-    nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
-    nuke.addUpdateUI(_gizmo_to_group_update_ui)
-    nuke.addUpdateUI(_autoplace)
+
     nuke.addOnScriptSave(edit.enable_rsmb, kwargs={'prefix': '_'})
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_check_fps)
@@ -36,11 +42,11 @@ def menu():
     nuke.addOnScriptSave(_jump_frame)
     nuke.addOnScriptSave(cgtwn.on_save_callback)
     nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
+
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(cgtwn.on_close_callback)
     nuke.addOnScriptClose(_create_csheet)
-    nuke.addAutolabel(ui.custom_autolabel)
 
 
 def abort_modified(func):
