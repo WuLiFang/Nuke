@@ -10,7 +10,7 @@ import shutil
 
 import nuke
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -164,7 +164,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
         pass
     elif match:
         data = match.group(1)
-        return dropdata_handler(mime_type, data)
+        return dropdata_handler(mime_type, data, from_dir=True)
     elif data.endswith('.fbx'):
         n = nuke.createNode(
             'Camera2',
@@ -178,6 +178,10 @@ def dropdata_handler(mime_type, data, from_dir=False):
         n['file'].fromUserText(data)
         if nuke.expression('{}.animated'.format(n.name())):
             n['read_from_file'].setValue(False)
+
+        n = nuke.createNode('ReadGeo2')
+        n['file'].fromUserText(data)
+        n['all_objects'].setValue(True)
     elif data.endswith('.vf'):
         nuke.createNode(
             'Vectorfield',
