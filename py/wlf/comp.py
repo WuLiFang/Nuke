@@ -16,7 +16,7 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-__version__ = '1.3.1'
+__version__ = '1.3.2'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -170,7 +170,7 @@ class Comp(object):
             if _footages:
                 for f in _footages:
                     print(u'\t' * 3 + f)
-                    if os.path.isdir(f):
+                    if os.path.isdir(os.path.join(dir_, f)):
                         continue
                     elif re.match(self._config['footage_pat'], f, flags=re.I):
                         nuke.createNode(
