@@ -68,11 +68,11 @@ def add_preferences():
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
-    k = nuke.Boolean_Knob('wlf_autoplace', '自动摆放节点')
-    k.setFlag(nuke.STARTLINE)
+    k = nuke.Text_Knob('wlf_on_script_save', '保存时')
     _add_knob(k)
 
-    k = nuke.Text_Knob('wlf_on_script_save', '保存时')
+    k = nuke.Boolean_Knob('wlf_autoplace', '自动摆放节点')
+    k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
     k = nuke.Boolean_Knob('wlf_lock_connections', '锁定节点连接')

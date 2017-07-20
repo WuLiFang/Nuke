@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 
 def init():
@@ -29,10 +29,10 @@ def menu():
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
 
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
-    nuke.addOnUserCreate(_autoplace)
     nuke.addOnUserCreate(lambda: asset.DropFrameCheck(
         nuke.thisNode()).start(), nodeClass='Read')
 
+    nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(edit.enable_rsmb, kwargs={'prefix': '_'})
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_check_fps)
