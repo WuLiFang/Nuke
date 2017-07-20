@@ -31,7 +31,7 @@ class Config(dict):
         'tag_pat': r'sc.+?_([^.]+)',
         'output_dir': 'E:/precomp',
         'input_dir': 'Z:/SNJYW/Render/EP',
-        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v1.jpg",
+        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v2.jpg",
         'autograde': True,
         'exclude_existed': True,
     }
