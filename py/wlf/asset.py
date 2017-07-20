@@ -38,9 +38,8 @@ class DropFrameCheck(threading.Thread):
             return
         time.sleep(5)
         while self._node:
-            self.lock.acquire()
-            self.record()
-            self.lock.release()
+            with self.lock:
+                self.record()
             time.sleep(5)
 
     def dropframe_ranges(self):
