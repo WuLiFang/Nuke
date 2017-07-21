@@ -85,7 +85,7 @@ class DropFrameCheck(threading.Thread):
                     self._node.name(), _dropframes))
         if _dropframes != nuke.value(self.knob_tcl_name, ''):
             self.setup_node()
-            nuke.executeInMainThreadWithResult(_set_knob)
+            nuke.executeInMainThread(_set_knob)
 
     @classmethod
     def show_dialog(cls, show_all=False):
