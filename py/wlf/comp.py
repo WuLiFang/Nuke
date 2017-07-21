@@ -16,7 +16,7 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-__version__ = '1.3.4'
+__version__ = '1.3.5'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -732,7 +732,7 @@ class CompDialog(nukescripts.PythonPanel):
                 u'<td><img src="images/{0}.jpg" height="200" alt="<无图像>"></img></td>\n'\
                 u'<td>{0}</td>\n<td>{1}</td></tr>\n'.format(
                     shot, shot_info[shot])
-        infos = u'<style>td{{padding:8px;}}</style>\n'\
+        infos = u'<head>\n<meta charset="UTF-8">\n<style>td{{padding:8px;}}</style>\n</head>\n'\
             u'<table><tr><th>图像</th><th>镜头</th><th>信息</th></tr>\n'\
             u'{}</table>'.format(infos)
         log_path = os.path.join(self.config['output_dir'], u'批量合成日志.html')
