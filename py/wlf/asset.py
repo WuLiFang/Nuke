@@ -10,7 +10,7 @@ import shutil
 
 import nuke
 
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
