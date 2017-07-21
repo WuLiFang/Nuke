@@ -9,7 +9,7 @@ def set_knob_default():
 
     def _vectorblur2():
         nuke.knobDefault("VectorBlur2.uv", "motion")
-        nuke.knobDefault("VectorBlur2.blur_uv", "uniform")
+        # nuke.knobDefault("VectorBlur2.blur_uv", "uniform")
         nuke.knobDefault("VectorBlur2.uv_offset", "0")
         nuke.knobDefault("VectorBlur2.scale", "1")
         nuke.knobDefault("VectorBlur2.soft_lines", "True")
