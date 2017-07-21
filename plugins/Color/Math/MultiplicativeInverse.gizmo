@@ -1,9 +1,12 @@
 #! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
+add_layer {MotionVectors MotionVectors.red MotionVectors.green MotionVectors.blue MotionVectors.alpha}
 Gizmo {
  note_font 微软雅黑
- addUserKnob {20 MultiplicativeInverse l "MultiplicativeInverse v0.1.1"}
+ addUserKnob {20 MultiplicativeInverse l "MultiplicativeInverse v0.2.0"}
  addUserKnob {41 channel T Shuffle1.in}
+ addUserKnob {7 divide}
+ divide 1
  addUserKnob {41 multiply T Multiply1.value}
 }
  Input {
@@ -13,8 +16,9 @@ Gizmo {
   xpos -40
   ypos -346
  }
-set N46a09400 [stack 0]
+set N2f714000 [stack 0]
  Shuffle {
+  in MotionVectors
   name Shuffle1
   gl_color 0x3237ff00
   note_font 微软雅黑
@@ -22,11 +26,13 @@ set N46a09400 [stack 0]
   ypos -320
  }
  Expression {
-  expr0 "(r != 0) ? 1 / r  : 0"
-  expr1 "(g != 0) ? 1 / g  : 0"
+  temp_name0 div
+  temp_expr0 parent.knob.divide
+  expr0 "(r != 0) ? div / r  : 0"
+  expr1 "(g != 0) ? div / g  : 0"
   channel2 {-rgba.red -rgba.green rgba.blue none}
-  expr2 "(b != 0) ? 1 / b  : 0"
-  expr3 "(a != 0) ? 1 / a  : 0"
+  expr2 "(b != 0) ? div / b  : 0"
+  expr3 "(a != 0) ? div / a  : 0"
   name Expression1
   gl_color 0xff833200
   note_font 微软雅黑
@@ -35,14 +41,13 @@ set N46a09400 [stack 0]
  }
  Multiply {
   channels rgba
-  value {1}
   name Multiply1
   gl_color 0x32ffc000
   note_font 微软雅黑
   xpos -40
   ypos -264
  }
-push $N46a09400
+push $N2f714000
  ShuffleCopy {
   inputs 2
   red red
