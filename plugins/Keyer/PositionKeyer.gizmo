@@ -3,17 +3,18 @@ version 10.0 v4
 add_layer {P P.red P.green P.blue}
 Gizmo {
  tile_color 0xff00ff
- label "输入通道: \[value in]\n\[\npython -exec \{\nif not nuke.Root().modified() and nuke.thisNode()\['p0'].visible():\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\nif not nuke.thisNode()\['__initiated'].value():\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n    nuke.thisNode()\['bt_sampler_switch'].execute()\n    nuke.thisNode()\['__initiated'].setValue(True)\n\}\n]"
+ label "\[\npython -exec \{\nif not nuke.thisNode()\['__initiated'].value():\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n    nuke.thisNode()\['bt_sampler_switch'].execute()\n    nuke.thisNode()\['__initiated'].setValue(True)\n    nuke.thisNode()\['label'].setValue('输入通道: \[value in]')\n\}\n]"
  note_font 微软雅黑
- addUserKnob {20 tab_positionkeyer l PositionKeyer_v1.0}
+ addUserKnob {20 tab_positionkeyer l PositionKeyer_v1.0.2}
+ addUserKnob {26 __label l INVISIBLE +INVISIBLE T "\[\npython -exec \{\nif not nuke.thisNode()\['__initiated'].value():\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n    nuke.thisNode()\['bt_sampler_switch'].execute()\n    nuke.thisNode()\['__initiated'].setValue(True)\n    nuke.thisNode()\['label'].setValue('输入通道: \[value in]')\n\}\n]"}
  addUserKnob {41 in l "Position Layer" T Shuffle2.in}
  addUserKnob {26 div_sampler l <b>取样器</b>}
- addUserKnob {22 bt_sampler_switch l Disable(禁用) t "禁用控制器, 防止设置被意外改动。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
+ addUserKnob {22 bt_sampler_switch l Enable(启用) t "启用控制器, 快速设置白点和黑点。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\ntry:\n    __positionkeyer_disable\nexcept NameError:\n    def __positionkeyer_disable(n):\n        if not n:\n            return\n        n\['bt_reset_sampler_switch'].execute()\n        nuke.callbacks.removeOnScriptSave(__positionkeyer_disable, args=n)\n        \nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n    nuke.callbacks.addOnScriptSave(__positionkeyer_disable, args=nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n    nuke.callbacks.removeOnScriptSave(__positionkeyer_disable, args=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
  addUserKnob {22 bt_reset_sampler_switch l INVISIBLE +INVISIBLE T "nuke.thisNode()\['bt_sampler_switch'].setLabel('Enable(启用)')\nnuke.thisNode()\['bt_sampler_switch'].setTooltip('启用控制器, 快速设置白点和黑点。')\nnuke.thisNode()\['p0'].setVisible(False)\nnuke.thisNode()\['p1'].setVisible(False)" +STARTLINE}
- addUserKnob {12 p0}
- p0 {766 794}
- addUserKnob {12 p1}
- p1 {1666 62}
+ addUserKnob {12 p0 +HIDDEN}
+ p0 {100 300}
+ addUserKnob {12 p1 +HIDDEN}
+ p1 {300 100}
  addUserKnob {26 div_settings l <b>设置</b>}
  addUserKnob {41 blackpoint l blackpoint(黑点) t 低于此值将为黑色 T Sampler.p0}
  addUserKnob {41 whitepoint l whitepoint(白点) t 高于此值将为白色 T Sampler.p1}
@@ -25,7 +26,6 @@ Gizmo {
  addUserKnob {6 y +STARTLINE}
  addUserKnob {6 invert_y l invert(反转) -STARTLINE}
  addUserKnob {20 g_presets l presets(预设) n 1}
- g_presets 0
  addUserKnob {22 bt_rotation_0 l 0 -STARTLINE T "nuke.thisNode()\['x'].setValue(True)\nnuke.thisNode()\['y'].setValue(False)\nnuke.thisNode()\['rotation'].setValue(0)"}
  addUserKnob {22 bt_rotation_90 l 90 -STARTLINE T "nuke.thisNode()\['x'].setValue(True)\nnuke.thisNode()\['y'].setValue(False)\nnuke.thisNode()\['rotation'].setValue(90)"}
  addUserKnob {22 bt_y l Y -STARTLINE T "nuke.thisNode()\['x'].setValue(False)\nnuke.thisNode()\['y'].setValue(True)"}
@@ -56,10 +56,10 @@ Gizmo {
   ypos -1170
   addUserKnob {20 Result}
   addUserKnob {18 p0 l "point 0"}
-  p0 {-831.5 95.25 365.5}
+  p0 {0 0 0}
   addUserKnob {6 p0_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
   addUserKnob {18 p1 l "point 1"}
-  p1 {-1207 26.90625 72.75}
+  p1 {0 0 0}
   addUserKnob {6 p1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  }
  BlinkScript {
