@@ -14,7 +14,7 @@ from PySide.QtGui import QDialog, QApplication, QFileDialog
 
 from ui_scenetools_dialog import Ui_Dialog
 
-__version__ = '0.7.1'
+__version__ = '0.7.2'
 
 SYS_CODEC = locale.getdefaultlocale()[1]
 
@@ -270,7 +270,7 @@ class Sync(object):
         self.image_ignore = []
         _dir = self._config['IMAGE_FNAME']
         if not os.path.isdir(_dir):
-            raise ValueError
+            return None
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.jpg'))
 
         if os.path.isdir(self._config['image_dest']):
@@ -291,7 +291,7 @@ class Sync(object):
         self.video_ignore = []
         _dir = self._config['VIDEO_FNAME']
         if not os.path.isdir(_dir):
-            raise ValueError
+            return None
         _ret = list(i for i in os.listdir(_dir) if i.endswith('.mov'))
 
         if os.path.isdir(self._config['video_dest']):
