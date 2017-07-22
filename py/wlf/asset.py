@@ -45,12 +45,14 @@ class DropFrameCheck(threading.Thread):
     def dropframe_ranges(self):
         """Return nuke framerange instance of dropframes."""
         ret = nuke.FrameRanges()
-        if not self._node\
-                or self._node.name().startswith(self._prefix):
+        if not self._node:
             return ret
         _filename = nuke.filename(self._node)
-        if not _filename \
-                or expand_frame(_filename, 1) == _filename:
+        if not _filename:
+            return ret
+        if expand_frame(_filename, 1) == _filename:
+            if not os.path.isfile(_filename):
+                ret = n.frameRange()
             return ret
 
         _read_framerange = xrange(
