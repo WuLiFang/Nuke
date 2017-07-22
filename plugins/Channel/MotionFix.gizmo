@@ -1,0 +1,123 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+add_layer {MotionVectors MotionVectors.red MotionVectors.green MotionVectors.blue MotionVectors.alpha}
+Gizmo {
+ tile_color 0xff3300ff
+ label "修复正负inf和正负nan的速度层\n(\[value this.channel])"
+ note_font 微软雅黑
+ addUserKnob {20 MotionFix l "MotionFix v0.1.0"}
+ addUserKnob {41 channel T Shuffle3.in}
+ addUserKnob {7 range R 1 10}
+ range 1
+ addUserKnob {7 strength t 强度 R 1 10}
+ strength 1
+}
+ Input {
+  inputs 0
+  name Input
+  gl_color 0xc032ff00
+  xpos -70
+  ypos -466
+ }
+ Shuffle {
+  in MotionVectors
+  blue red
+  alpha green
+  out motion
+  name Shuffle3
+  gl_color 0xff7a3200
+  note_font 微软雅黑
+  xpos -65
+  ypos -430
+ }
+set N3e9fb400 [stack 0]
+ Expression {
+  channel0 rgba
+  expr3 "(abs(u) == inf || abs(v) == inf ) ? 1 : 0"
+  name Expression2
+  gl_color 0x4cff3200
+  label 正负inf的alpha
+  note_font 微软雅黑
+  xpos -70
+  ypos -382
+ }
+set N3e9fb000 [stack 0]
+ Expression {
+  channel0 rgba
+  expr3 "(abs(u) == nan || abs(v) == nan) ? 1 : 0"
+  name Expression1
+  gl_color 0x4cff3200
+  label 正负nan的alpha
+  note_font 微软雅黑
+  xpos -70
+  ypos -330
+ }
+push $N3e9fb000
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge1
+  gl_color 0x3285ff00
+  note_font 微软雅黑
+  xpos 40
+  ypos -338
+ }
+set N43ec0000 [stack 0]
+ FilterErode {
+  size {{"-50 * parent.range"}}
+  filter gaussian
+  name FilterErode1
+  gl_color 0xff327800
+  note_font 微软雅黑
+  xpos 40
+  ypos -278
+ }
+push $N43ec0000
+ Dilate {
+  channels alpha
+  size 3
+  name Dilate3
+  gl_color 0x3271ff00
+  note_font 微软雅黑
+  xpos 139
+  ypos -296
+ }
+push $N43ec0000
+push $N3e9fb400
+ Multiply {
+  inputs 1+1
+  channels motion
+  value 0
+  name Multiply1
+  gl_color 0x5bff3200
+  note_font 微软雅黑
+  xpos 40
+  ypos -234
+ }
+ Dilate {
+  inputs 1+1
+  channels motion
+  size {{"20 * parent.range"}}
+  name Dilate1
+  gl_color 0xff329800
+  note_font 微软雅黑
+  xpos 150
+  ypos -236
+ }
+ Multiply {
+  inputs 1+1
+  channels motion
+  value {{"0.005 / parent.strength"}}
+  name Multiply3
+  gl_color 0x3b32ff00
+  note_font 微软雅黑
+  selected true
+  xpos 150
+  ypos -190
+ }
+ Output {
+  name Output1
+  gl_color 0x7b32ff00
+  xpos 150
+  ypos -90
+ }
+end_group
