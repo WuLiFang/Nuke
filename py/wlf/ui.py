@@ -6,7 +6,9 @@ import os
 import nuke
 from autolabel import autolabel
 
-__version__ = '0.1.1'
+from . import asset
+
+__version__ = '0.1.2'
 
 
 def add_menu():
@@ -144,7 +146,8 @@ def custom_autolabel(enable_text_style=True):
     if _class == 'Keyer':
         label = '输入通道 : ' + nuke.value('this.input')
     elif _class == 'Read':
-        dropframes = nuke.value('this.dropframes', '')
+        dropframes = str(asset.DropFrameCheck.dropframes_dict.get(
+            nuke.thisNode(), ''))
         if dropframes:
             if enable_text_style:
                 dropframes = '\n<span style=\"color:red\">缺帧:{}</span>'.format(
@@ -157,7 +160,6 @@ def custom_autolabel(enable_text_style=True):
                 '<span style=\"color:red\">{} - {}</span>{}'
             label = label.format(nuke.value('this.first'),
                                  nuke.value('this.last'), dropframes)
-
         else:
             label = '帧范围 :' + nuke.value('this.first') + \
                 ' - ' + nuke.value('this.last')
