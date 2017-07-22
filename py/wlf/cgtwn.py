@@ -25,7 +25,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -289,10 +289,9 @@ def on_close_callback():
     """Try upload image and nk file to server."""
     try:
         task = nuke.ProgressTask('CGTW')
-        task.setMessage('上传单帧')
+        task.setMessage('连接CGTeamWork')
         Shot().upload_image()
         task.setProgress(50)
-        task.setMessage('上传nk文件')
         Shot().upload_nk_file()
     except IDError:
         print('CGTW上未找到对应镜头')
