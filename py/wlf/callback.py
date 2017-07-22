@@ -29,8 +29,6 @@ def menu():
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
 
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
-    nuke.addOnUserCreate(lambda: asset.DropFrameCheck(
-        nuke.thisNode()).start(), nodeClass='Read')
 
     nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(edit.enable_rsmb, kwargs={'prefix': '_'})
