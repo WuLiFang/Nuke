@@ -22,7 +22,7 @@ try:
 except ImportError:
     raise
 
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -539,7 +539,8 @@ class Dialog(QDialog, Ui_Dialog):
             _page_index = self.toolBox.currentIndex()
             _list.clear()
             if _page_index == 0:
-                map(_list.addItem, self._sync.image_list())
+                map(_list.addItem, self._sync.image_list() +
+                    self._sync.image_ignore)
             elif _page_index == 1:
                 _not_ignore = []
                 _ignore = []
