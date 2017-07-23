@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Non-nuke files operation. """
+"""Non-nuke-invoked files operation. """
 
 import os
 import re
@@ -7,6 +7,7 @@ import shutil
 import locale
 from subprocess import call, Popen
 
+__version__ = '0.1.1'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -52,7 +53,7 @@ def version_filter(iterable):
             key=lambda shot:
             os.path.getmtime(shot) if os.path.exists(shot) else None,
             reverse=True)[0]
-    return shots.values()
+    return sorted(shots.values())
 
 
 def expand_frame(filename, frame):
