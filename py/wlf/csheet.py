@@ -11,9 +11,9 @@ import re
 from subprocess import Popen
 import nuke
 
-from wlf.files import split_version
+from wlf.files import version_filter
 
-__version__ = '1.1.5'
+__version__ = '1.1.6'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -148,36 +148,20 @@ class ContactSheet(object):
         nuke.render(self._write_node, 1, 1)
 
     def image_list(self):
-        """Return all image in csheet_footagedir."""
+        """Return images to create contactsheet."""
 
-        _dir = self._config['csheet_footagedir']
-        _images = sorted((os.path.join(_dir, i)
-                          for i in os.listdir(_dir)), key=os.path.getmtime, reverse=True)
+        footage_dir = self._config['csheet_footagedir']
 
-        if not _images:
+        ret = version_filter(os.path.join(footage_dir, i)
+                             for i in os.listdir(footage_dir))
+        if not ret:
             raise FootageError
-
-        shots = []
-        ret = []
-        for image in _images:
-            shot = split_version(image.split(
-                '.')[0].rstrip('_proxy').lower())[0]
-            if shot in shots:
-                print(u'排除:\t\t\t{} (较旧)'.format(image))
-            else:
-                print(u'包含:\t\t\t{}'.format(image))
-                shots.append(shot)
-                ret.append(image)
-        ret.sort()
-
-        print(u'总计图像数量:\t\t{}'.format(len(_images)))
-        print(u'总计有效图像:\t\t{}'.format(len(ret)))
-        print(u'总计镜头数量:\t\t{}'.format(len(shots)))
         return ret
 
 
 def get_shot(filename):
     """Get shot name from filename.  """
+
     match = re.match(r'.*(sc_?\d+[^\.]*)_?.*\..+', filename, flags=re.I)
     if match:
         return match.group(1)
@@ -187,6 +171,7 @@ def get_shot(filename):
 
 class ContactSheetThread(threading.Thread):
     """Thread that create contact sheet."""
+
     lock = threading.Lock()
 
     def __init__(self, new_process=False):
