@@ -24,7 +24,7 @@ try:
 except ImportError:
     raise
 
-__version__ = '0.8.8'
+__version__ = '0.8.9'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -345,6 +345,15 @@ class Sync(object):
         for i in self.image_list():
             src = os.path.join(self._config['IMAGE_FNAME'], i)
             dst = os.path.join(dest, remove_version(i))
+            if os.path.exists(dst):
+                _src_mtime = os.path.getmtime(src)
+                _dst_mtime = os.path.getmtime(dst)
+                if _src_mtime < _dst_mtime:
+                    print(u'{} -> {}'.format(src, dst))
+                    print(u'服务器上的文件较新, 跳过')
+                if _src_mtime == _dst_mtime:
+                    print(u'{} -> {}'.format(src, dst))
+                    print(u'服务器上的文件相同, 跳过')
             copy(src, dst)
 
     def download_images(self):
