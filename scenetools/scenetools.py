@@ -17,12 +17,14 @@ from ui_scenetools_dialog import Ui_Dialog
 if __name__ == '__main__':
     __file__ = os.path.abspath(sys.argv[0])
 try:
-    sys.path.append(os.path.abspath('{}/../../py'.format(__file__)))
+    LIB_PATH = os.path.join(
+        getattr(sys, '_MEIPASS', os.path.abspath('{}/../../'.format(__file__))), 'py')
+    sys.path.append(LIB_PATH)
     from wlf.files import version_filter, copy, remove_version
 except ImportError:
     raise
 
-__version__ = '0.8.4'
+__version__ = '0.8.7'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -373,20 +375,16 @@ class Dialog(QDialog, Ui_Dialog):
 
     def __init__(self, parent=None):
         def _backdrop():
-            self._config['BACKDROP_DIR'] = unicode(
-                os.path.join(
-                    os.path.dirname(unicode(sys.argv[0], OS_ENCODING)),
-                    u'Backdrops'
-                )
-            )
+            self._config['BACKDROP_DIR'] = os.path.abspath(os.path.join(
+                __file__, u'../Backdrops'))
             dir_ = self._config['BACKDROP_DIR']
             box = self.backDropBox
             if not os.path.exists(dir_):
                 os.mkdir(dir_)
             bd_list = os.listdir(dir_)
+            box.addItem(self._config['backdrop_name'])
             for item in bd_list:
                 box.addItem(item)
-            self._config['backdrop_name'] = box.currentText()
             box.addItem(u'纯黑')
 
         def _icon():
