@@ -11,7 +11,7 @@ import re
 from subprocess import Popen
 import nuke
 
-from wlf.asset import split_version
+from wlf.files import split_version
 
 __version__ = '1.1.5'
 
