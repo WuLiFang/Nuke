@@ -5,7 +5,7 @@ import os
 import re
 import shutil
 import locale
-from subprocess import call
+from subprocess import call, Popen
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -105,3 +105,17 @@ def remove_version(path):
     shot = split_version(path)[0]
     ext = os.path.splitext(path)[1]
     return '{}{}'.format(shot, ext)
+
+
+def url_open(url):
+    """Open url in explorer. """
+    _cmd = u"rundll32.exe url.dll,FileProtocolHandler {}".format(url)
+    unicode_popen(_cmd)
+
+
+def unicode_popen(args, **kwargs):
+    """Return Popen object use encoded args.  """
+
+    if isinstance(args, unicode):
+        args = args.encode(OS_ENCODING)
+    return Popen(args, **kwargs)

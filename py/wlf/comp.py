@@ -16,7 +16,9 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-__version__ = '1.3.6'
+from .files import url_open
+
+__version__ = '0.13.7'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -871,20 +873,6 @@ def main():
     except FootageError as ex:
         print(u'** FootageError: {}\n\n'.format(ex).encode(OS_ENCODING))
         traceback.print_exc()
-
-
-def url_open(url):
-    """Open url in explorer. """
-    _cmd = u"rundll32.exe url.dll,FileProtocolHandler {}".format(url)
-    unicode_popen(_cmd)
-
-
-def unicode_popen(args, **kwargs):
-    """Return Popen object use encoded args.  """
-
-    if isinstance(args, unicode):
-        args = args.encode(OS_ENCODING)
-    return Popen(args, **kwargs)
 
 
 def pause():

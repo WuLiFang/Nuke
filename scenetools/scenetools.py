@@ -14,12 +14,15 @@ from PySide.QtGui import QDialog, QApplication, QFileDialog
 
 from ui_scenetools_dialog import Ui_Dialog
 
+if __name__ == '__main__':
+    __file__ = os.path.abspath(sys.argv[0])
 try:
     sys.path.append(os.path.abspath('{}/../../py'.format(__file__)))
     from wlf.files import version_filter, copy, remove_version
 except ImportError:
     raise
-__version__ = '0.8.2'
+
+__version__ = '0.8.3'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -701,7 +704,6 @@ def url_open(url):
 
 if __name__ == '__main__':
     try:
-        __file__ = os.path.abspath(sys.argv[0])
         main()
     except SingleInstanceException as ex:
         active_pid(Config()['PID'])
