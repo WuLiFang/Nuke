@@ -13,7 +13,7 @@ import nuke
 
 from wlf.files import version_filter
 
-__version__ = '1.1.6'
+__version__ = '1.1.8'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -152,8 +152,15 @@ class ContactSheet(object):
 
         footage_dir = self._config['csheet_footagedir']
 
-        ret = version_filter(os.path.join(footage_dir, i)
-                             for i in os.listdir(footage_dir))
+        images = list(os.path.join(footage_dir, i)
+                      for i in os.listdir(footage_dir))
+        ret = version_filter(images)
+        for image in images:
+            if image not in ret:
+                print(u'排除:\t\t{} (较旧)'.format(image))
+            else:
+                print(u'包含:\t\t{}\n'.format(image))
+        print(u'共{}个文件 总计{}个镜头'.format(len(images), len(ret)))
         if not ret:
             raise FootageError
         return ret

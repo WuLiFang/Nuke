@@ -24,7 +24,7 @@ try:
 except ImportError:
     raise
 
-__version__ = '0.8.7'
+__version__ = '0.8.8'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -641,7 +641,7 @@ class Dialog(QDialog, Ui_Dialog):
         self.hide()
         cfg = self._config
 
-        script = os.path.join(__file__, '../../py/wlf/csheet.py')
+        script = os.path.join(LIB_PATH, 'wlf/csheet.py')
         _json = os.path.join(cfg['DIR'], Config.psetting_bname)
         _cmd = u'"{NUKE}" -t "{script}" "{json}"'.format(
             NUKE=cfg['NUKE'],
