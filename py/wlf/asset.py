@@ -1,15 +1,16 @@
 # -*- coding: UTF-8 -*-
-"""Deal with assets and files."""
+"""Deal with assets and files in nuke."""
 
 import locale
 import os
 import re
 import threading
-import shutil
 
 import nuke
 
-__version__ = '0.2.9'
+from .files import expand_frame, copy
+
+__version__ = '0.2.10'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -20,6 +21,7 @@ class DropFrameCheck(threading.Thread):
     showed_files = []
     knob_name = 'dropframes'
     dropframes_dict = {}
+    runnning = False
 
     def __init__(self, prefix=('_',)):
         threading.Thread.__init__(self)
@@ -34,12 +36,16 @@ class DropFrameCheck(threading.Thread):
             return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
+        if self.runnning:
+            return
+
+        self.runnning = True
         for n in nuke.allNodes('Read'):
             if n.name().startswith(self._prefix) and n['disable'].value():
                 continue
             self._node = n
             self.record()
-        DropFrameCheck().start()
+        self.runnning = False
 
     def dropframe_ranges(self):
         """Return nuke framerange instance of dropframes."""
@@ -103,37 +109,9 @@ class DropFrameCheck(threading.Thread):
             nuke.message(_message)
 
 
-def expand_frame(filename, frame):
-    '''
-    Return a frame mark expaned version of filename, with given frame
-    '''
-    def _format_repl(matchobj):
-        return matchobj.group(0) % frame
-
-    def _hash_repl(matchobj):
-        return '%0{}d'.format(len(matchobj.group(0)))
-    ret = filename
-    ret = re.sub(r'(\#+)', _hash_repl, ret)
-    ret = re.sub(r'(%0?\d*d)', _format_repl, ret)
-    return ret
-
-
 def sent_to_dir(dir_):
     """Send current working file to dir."""
     copy(nuke.value('root.name'), dir_)
-
-
-def copy(src, dst):
-    """Copy src to dst."""
-    message = u'{} -> {}'.format(src, dst)
-    print(message)
-    nuke.tprint(message)
-    if not os.path.exists(src):
-        return
-    dst_dir = os.path.dirname(dst)
-    if not os.path.exists(dst_dir):
-        os.makedirs(dst_dir)
-    shutil.copy2(src, dst)
 
 
 def dropdata_handler(mime_type, data, from_dir=False):

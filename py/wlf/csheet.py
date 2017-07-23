@@ -11,8 +11,9 @@ import re
 from subprocess import Popen
 import nuke
 
+from wlf.asset import split_version
 
-__version__ = '1.1.4'
+__version__ = '1.1.5'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -209,18 +210,6 @@ class ContactSheetThread(threading.Thread):
         unicode_popen(cmd, shell=self._new_process)
         task.setProgress(100)
         self.lock.release()
-
-
-def split_version(f):
-    """Return nuke style _v# (shot, version number) pair.  """
-
-    match = re.match(r'(.+)_v(\d+)', f)
-    if not match:
-        return (f, -1)
-    shot, version = match.groups()
-    if version < 0:
-        raise ValueError('Negative version number not supported.')
-    return (shot, version)
 
 
 def unicode_popen(args, **kwargs):
