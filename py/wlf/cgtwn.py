@@ -25,7 +25,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -281,7 +281,7 @@ def on_save_callback():
     try:
         Shot().upload_nk_file()
     except IDError:
-        print('CGTW上未找到对应镜头')
+        print(u'CGTW上未找到对应镜头')
 
 
 @abort_modified
@@ -294,7 +294,7 @@ def on_close_callback():
         task.setProgress(50)
         Shot().upload_nk_file()
     except IDError:
-        print('CGTW上未找到对应镜头')
+        print(u'CGTW上未找到对应镜头')
 
 
 class IDError(Exception):

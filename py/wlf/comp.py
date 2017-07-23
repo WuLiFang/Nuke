@@ -16,7 +16,7 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-__version__ = '1.3.5'
+__version__ = '1.3.6'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -70,7 +70,13 @@ class Config(dict):
 
 
 def escape_batch(text):
-    """Return escaped text for windows shell.  """
+    """Return escaped text for windows shell.
+
+    >>> escape_batch('test_text "^%~1"')
+    u'test_text \\\\"^^%~1\\\\"'
+    >>> escape_batch(u'中文 \"^%1\"')
+    u'\\xe4\\xb8\\xad\\xe6\\x96\\x87 \\\\"^^%1\\\\"'
+    """
 
     return text.replace(u'"', r'\"').replace(u'^', r'^^')
 
@@ -398,9 +404,8 @@ class Comp(object):
     def _bg_ch_node(self, input_node):
         n = input_node
         if 'MotionVectors' in nuke.layers(input_node):
-            _kwargs = {'in': 'MotionVectors'}
-            n = nuke.nodes.Shuffle(
-                inputs=[n], out='motion', blue='red', alpha='green', **_kwargs)
+            n = nuke.nodes.MotionFix(
+                inputs=[n], channel='MotionVectors', output='motion')
         if 'SSS.alpha' in input_node.channels():
             n = nuke.nodes.Keyer(
                 inputs=[n],
@@ -714,8 +719,7 @@ class CompDialog(nukescripts.PythonPanel):
             _cmd = u'"{nuke}" -t {script} "{config}"'.format(
                 nuke=nuke.EXE_PATH,
                 script=os.path.normcase(__file__).rstrip(u'c'),
-                config=json.dumps(self.config).replace(
-                    u'"', r'\"').replace(u'^', r'^^')
+                config=escape_batch(json.dumps(self.config))
             ).encode(OS_ENCODING)
             proc = Popen(_cmd, shell=True, stderr=PIPE)
             stderr = proc.communicate()[1]
