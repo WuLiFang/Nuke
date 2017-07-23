@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Comp footages to a .nk file."""
+"""Comp footages to a .nk file, can be run as script.  """
 
 import json
 import locale
@@ -16,9 +16,9 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-from .files import url_open
+from wlf.files import url_open
 
-__version__ = '0.13.7'
+__version__ = '0.13.8'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
