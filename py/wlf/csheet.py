@@ -11,9 +11,9 @@ import re
 from subprocess import Popen
 import nuke
 
-from wlf.files import version_filter
+from wlf.files import version_filter, split_version
 
-__version__ = '1.1.8'
+__version__ = '1.1.9'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -79,7 +79,7 @@ class ContactSheet(object):
             )
             n = nuke.nodes.Text2(
                 inputs=[n],
-                message=get_shot(i),
+                message=split_version(get_shot(i))[0],
                 box='5 0 1000 75',
                 color='0.145 0.15 0.14 1',
                 global_font_scale=0.8,
