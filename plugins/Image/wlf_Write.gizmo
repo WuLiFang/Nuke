@@ -4,7 +4,7 @@ Gizmo {
  tile_color 0xbfbf00ff
  label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]\n\[knob this.Text2_Write_3.message \[value root.wlf_artist \"\"]]"
  note_font 微软雅黑
- addUserKnob {20 Write l Write_v1.48.0}
+ addUserKnob {20 Write l Write_v1.48.1}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  use_custom_frame true
  addUserKnob {3 custom_frame l "" -STARTLINE}
@@ -152,7 +152,6 @@ Gizmo {
   font_width_toolbar 100
   font_height_toolbar 100
   opacity 0.34
-  message 周玄
   old_message {{21608 29572}
     }
   box {1098 1000.5 1900 1055.5}
