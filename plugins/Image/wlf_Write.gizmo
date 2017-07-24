@@ -2,12 +2,13 @@
 version 10.0 v4
 Gizmo {
  tile_color 0xbfbf00ff
- label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]"
+ label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]\n\[knob this.Text2_Write_3.message \[value root.wlf_artist \"\"]]"
  note_font 微软雅黑
- addUserKnob {20 Write l Write_v1.47.1}
+ addUserKnob {20 Write l Write_v1.48.0}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
+ use_custom_frame true
  addUserKnob {3 custom_frame l "" -STARTLINE}
- custom_frame {1}
+ custom_frame 1
  addUserKnob {3 frame l INVISIBLE +INVISIBLE}
  frame {{"\[python -execlocal first,\\ last\\ =\\ nuke.numvalue('root.first_frame'),\\ nuke.numvalue('root.last_frame')\\nmiddle\\ =\\ (first\\ +\\ last)//2\\nthisNode\\ =\\ nuke.thisNode()\\nif\\ thisNode\\\['use_custom_frame'\\].value()\\ :\\n\\ \\ \\ \\ ret\\ =\\ thisNode\\\['custom_frame'\\].value()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ middle]"}}
  addUserKnob {32 bt_first l 首帧 -STARTLINE T "set first_frame \[value root.first_frame] \nknob use_custom_frame 1\nknob custom_frame \$first_frame\nframe \$first_frame"}
@@ -24,9 +25,33 @@ Gizmo {
   name Input
   gl_color 0x4dff3200
   xpos 180
-  ypos -418
+  ypos -562
  }
-set N3979bc00 [stack 0]
+ Write {
+  file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+  proxy "images/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+  file_type jpeg
+  _jpeg_quality 1
+  render_order 2
+  first {{parent.knob.frame}}
+  last {{first}}
+  use_limit true
+  checkHashOnRead false
+  version 72
+  in_colorspace linear
+  out_colorspace linear
+  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);\n    \n# Force full mode render;\nglobal last_render_mode;\nproxy = nuke.Root()\['proxy'];\nlast_render_mode = proxy.value();\nproxy.setValue(False);\n\n# Turn off blur effect nodes;\nglobal nodes_with_blur_effect;\nnodes_with_blur_effect = \[];\nfor i in nuke.allNodes(group=nuke.Root()):\n    if any(key for key in \['rsmb', 'CameraShake', 'VectorBlur', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1', 'MotionBlur'] if key in i.Class()):\n        if not i\['disable'].value():\n            nodes_with_blur_effect.append(i);\n            i\['disable'].setValue(1);\n"
+  afterRender "proxy.setValue(last_render_mode);\n\nfor i in nodes_with_blur_effect:\n    if any(key for key in \['rsmb', 'CameraShake', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'] if key in i.Class()):\n        i\['disable'].setValue(0);\nnodes_with_blur_effect = \[];\nnuke.thisNode()\['disable'].setValue(1);"
+  name Write_JPG_1
+  gl_color 0xbf32ff00
+  label "单帧\n会在退出脚本时自动输出"
+  xpos 180
+  ypos -536
+  disable true
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ }
  Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   proxy "mov/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -49,26 +74,21 @@ set N3979bc00 [stack 0]
   beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
   name Write_MOV_1
   gl_color 0xbc32ff00
-  xpos 400
-  ypos -392
+  xpos 180
+  ypos -458
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
- Output {
-  name Output1
-  gl_color 0x56ff3200
-  xpos 400
-  ypos -340
- }
-push $N3979bc00
  Text2 {
   font_size_toolbar 100
   font_width_toolbar 100
   font_height_toolbar 100
   opacity 0.3
   message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  old_expression_markers {{0 -1}
+  old_message {{115 99 95 48 52 55 95 118 48 56}
+    }
+  old_expression_markers {{0 9}
     }
   box {20 20 1000 75}
   transforms {{0 2}
@@ -91,7 +111,7 @@ push $N3979bc00
   gl_color 0x3235ff00
   label "镜头名称\n\[knob this.message \{\[lindex \[split \[basename \[value root.name]] .] 0]\}]"
   xpos 180
-  ypos -392
+  ypos -406
  }
  Text2 {
   font_size_toolbar 100
@@ -99,7 +119,7 @@ push $N3979bc00
   font_height_toolbar 100
   opacity 0.34
   message "\[x]"
-  old_message {{49}
+  old_message {{54}
     }
   old_expression_markers {{0 0}
     }
@@ -107,7 +127,7 @@ push $N3979bc00
   xjustify right
   transforms {{0 2}
     }
-  cursor_position 1
+  cursor_position 3
   font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
   global_font_scale 0.65
   scale {1 1}
@@ -125,7 +145,38 @@ push $N3979bc00
   gl_color 0x5bff3200
   label "帧编号\n\[knob this.message \{\[x]\}]"
   xpos 180
-  ypos -354
+  ypos -368
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.34
+  message 周玄
+  old_message {{21608 29572}
+    }
+  box {1098 1000.5 1900 1055.5}
+  xjustify right
+  transforms {{0 2}
+    }
+  cursor_position 3
+  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
+  global_font_scale 0.8
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1778.5 128.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0.3
+  background_border_x 20
+  name Text2_Write_3
+  label "制作人\n\[knob this.message \[value root.wlf_artist]]"
+  xpos 180
+  ypos -330
  }
  Write {
   file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -152,33 +203,15 @@ push $N3979bc00
   gl_color 0x32ff4100
   label 带帧编号的MOV
   xpos 180
-  ypos -316
+  ypos -292
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-push $N3979bc00
- Write {
-  file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
-  proxy "images/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
-  file_type jpeg
-  _jpeg_quality 1
-  render_order 2
-  first {{parent.knob.frame}}
-  last {{first}}
-  use_limit true
-  checkHashOnRead false
-  version 72
-  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);\n    \n# Force full mode render;\nglobal last_render_mode;\nproxy = nuke.Root()\['proxy'];\nlast_render_mode = proxy.value();\nproxy.setValue(False);\n\n# Turn off blur effect nodes;\nglobal nodes_with_blur_effect;\nnodes_with_blur_effect = \[];\nfor i in nuke.allNodes(group=nuke.Root()):\n    if any(key for key in \['rsmb', 'CameraShake', 'VectorBlur', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1', 'MotionBlur'] if key in i.Class()):\n        if not i\['disable'].value():\n            nodes_with_blur_effect.append(i);\n            i\['disable'].setValue(1);\n"
-  afterRender "proxy.setValue(last_render_mode);\n\nfor i in nodes_with_blur_effect:\n    if any(key for key in \['rsmb', 'CameraShake', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'] if key in i.Class()):\n        i\['disable'].setValue(0);\nnodes_with_blur_effect = \[];\nnuke.thisNode()\['disable'].setValue(1);"
-  name Write_JPG_1
-  gl_color 0xbf32ff00
-  label "单帧\n会在退出脚本时自动输出"
-  xpos 290
-  ypos -392
-  disable true
-  addUserKnob {20 caravr l CaraVR}
-  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
-  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ Output {
+  name Output1
+  gl_color 0x56ff3200
+  xpos 180
+  ypos -228
  }
 end_group

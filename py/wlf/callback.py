@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.5'
+__version__ = '0.3.6'
 
 
 def init():
@@ -32,8 +32,10 @@ def menu():
 
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
+    nuke.addOnScriptLoad(_add_root_info)
+
     nuke.addOnScriptSave(_autoplace)
-    nuke.addOnScriptSave(edit.enable_rsmb, kwargs={'prefix': '_'})
+    nuke.addOnScriptSave(_enable_node)
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_check_fps)
     nuke.addOnScriptSave(_lock_connections)
@@ -55,6 +57,19 @@ def abort_modified(func):
             return False
         func()
     return _func
+
+
+def _enable_node():
+    if nuke.numvalue('preferences.wlf_enable_node', 0.0):
+        enable_node('_enable_')
+
+
+def enable_node(prefix='_'):
+    """Enable all rsmb node with given prefix."""
+
+    for i in nuke.allNodes():
+        if i.name().startswith(prefix):
+            i['disable'].setValue(False)
 
 
 @abort_modified
@@ -151,6 +166,22 @@ def _autoplace():
 
 def _print_name():
     print(nuke.thisNode().name())
+
+
+def _add_root_info():
+    """add info to root.  """
+    if not nuke.value('preferences.wlf_artist', ''):
+        return
+    if not nuke.exists('root.wlf'):
+        n = nuke.Root()
+        k = nuke.Tab_Knob('wlf', '吾立方')
+        k.setFlag(nuke.STARTLINE)
+        n.addKnob(k)
+
+        k = nuke.String_Knob('wlf_artist', '制作人')
+        k.setFlag(nuke.STARTLINE)
+        k.setValue(nuke.value('preferences.wlf_artist', ''))
+        n.addKnob(k)
 
 
 def create_out_dirs():

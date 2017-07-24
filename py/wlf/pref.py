@@ -64,6 +64,10 @@ def add_preferences():
         k.setFlag(nuke.ALWAYS_SAVE)
         pref.addKnob(k)
 
+    k = nuke.String_Knob('wlf_artist', '制作人信息')
+    k.setFlag(nuke.STARTLINE)
+    _add_knob(k)
+
     k = nuke.Boolean_Knob('wlf_gizmo_to_group', '创建Gizmo时尝试转换为Group')
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
@@ -79,11 +83,17 @@ def add_preferences():
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
+    k = nuke.Boolean_Knob('wlf_enable_node', '启用名称以 _enable_ 开头的节点')
+    k.setFlag(nuke.STARTLINE)
+    _add_knob(k)
+
     k = nuke.Boolean_Knob('wlf_jump_frame', '跳至_Write节点指定的帧')
+    k.setValue(True)
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
     k = nuke.Boolean_Knob('wlf_render_jpg', '渲染_Write节点单帧')
+    k.setValue(True)
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
