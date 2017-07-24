@@ -25,7 +25,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -233,7 +233,7 @@ class Shot(CGTeamWork):
     def upload_nk_file(self):
         """Upload .nk file to server."""
 
-        src = os.path.normcase(nuke.scriptName())
+        src = nuke.scriptName()
         dst = self.workfile_dest
         copy(src, dst)
 
