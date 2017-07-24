@@ -2,9 +2,9 @@
 version 10.0 v4
 Gizmo {
  tile_color 0xbfbf00ff
- label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]\n\[knob this.Text2_Write_3.message \[value root.wlf_artist \"\"]]"
+ label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]"
  note_font 微软雅黑
- addUserKnob {20 Write l Write_v1.48.1}
+ addUserKnob {20 Write l "Write v1.48.2"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  use_custom_frame true
  addUserKnob {3 custom_frame l "" -STARTLINE}
@@ -24,33 +24,8 @@ Gizmo {
   inputs 0
   name Input
   gl_color 0x4dff3200
-  xpos 180
-  ypos -562
- }
- Write {
-  file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
-  proxy "images/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
-  file_type jpeg
-  _jpeg_quality 1
-  render_order 2
-  first {{parent.knob.frame}}
-  last {{first}}
-  use_limit true
-  checkHashOnRead false
-  version 72
-  in_colorspace linear
-  out_colorspace linear
-  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);\n    \n# Force full mode render;\nglobal last_render_mode;\nproxy = nuke.Root()\['proxy'];\nlast_render_mode = proxy.value();\nproxy.setValue(False);\n\n# Turn off blur effect nodes;\nglobal nodes_with_blur_effect;\nnodes_with_blur_effect = \[];\nfor i in nuke.allNodes(group=nuke.Root()):\n    if any(key for key in \['rsmb', 'CameraShake', 'VectorBlur', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1', 'MotionBlur'] if key in i.Class()):\n        if not i\['disable'].value():\n            nodes_with_blur_effect.append(i);\n            i\['disable'].setValue(1);\n"
-  afterRender "proxy.setValue(last_render_mode);\n\nfor i in nodes_with_blur_effect:\n    if any(key for key in \['rsmb', 'CameraShake', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'] if key in i.Class()):\n        i\['disable'].setValue(0);\nnodes_with_blur_effect = \[];\nnuke.thisNode()\['disable'].setValue(1);"
-  name Write_JPG_1
-  gl_color 0xbf32ff00
-  label "单帧\n会在退出脚本时自动输出"
-  xpos 180
-  ypos -536
-  disable true
-  addUserKnob {20 caravr l CaraVR}
-  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
-  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+  xpos 181
+  ypos -636
  }
  Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -74,8 +49,33 @@ Gizmo {
   beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
   name Write_MOV_1
   gl_color 0xbc32ff00
-  xpos 180
-  ypos -458
+  xpos 174
+  ypos -597
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ }
+ Write {
+  file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+  proxy "images/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+  file_type jpeg
+  _jpeg_quality 1
+  render_order 2
+  first {{parent.knob.frame}}
+  last {{first}}
+  use_limit true
+  checkHashOnRead false
+  version 72
+  in_colorspace linear
+  out_colorspace linear
+  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);\n    \n# Force full mode render;\nglobal last_render_mode;\nproxy = nuke.Root()\['proxy'];\nlast_render_mode = proxy.value();\nproxy.setValue(False);\n\n# Turn off blur effect nodes;\nglobal nodes_with_blur_effect;\nnodes_with_blur_effect = \[];\nfor i in nuke.allNodes(group=nuke.Root()):\n    if any(key for key in \['rsmb', 'CameraShake', 'VectorBlur', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1', 'MotionBlur'] if key in i.Class()):\n        if not i\['disable'].value():\n            nodes_with_blur_effect.append(i);\n            i\['disable'].setValue(1);\n"
+  afterRender "proxy.setValue(last_render_mode);\n\nfor i in nodes_with_blur_effect:\n    if any(key for key in \['rsmb', 'CameraShake', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'] if key in i.Class()):\n        i\['disable'].setValue(0);\nnodes_with_blur_effect = \[];\nnuke.thisNode()\['disable'].setValue(1);"
+  name Write_JPG_1
+  gl_color 0xbf32ff00
+  label "单帧\n会在退出脚本时自动输出"
+  xpos 152
+  ypos -509
+  disable true
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
@@ -86,9 +86,9 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.3
   message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  old_message {{115 99 95 48 52 55 95 118 48 56}
+  old_message {{83 78 74 89 87 95 69 80 49 52 95 48 49 95 115 99 48 48 50}
     }
-  old_expression_markers {{0 9}
+  old_expression_markers {{0 18}
     }
   box {20 20 1000 75}
   transforms {{0 2}
@@ -119,7 +119,7 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.34
   message "\[x]"
-  old_message {{54}
+  old_message {{49}
     }
   old_expression_markers {{0 0}
     }
@@ -152,13 +152,10 @@ Gizmo {
   font_width_toolbar 100
   font_height_toolbar 100
   opacity 0.34
-  old_message {{21608 29572}
-    }
   box {1098 1000.5 1900 1055.5}
   xjustify right
   transforms {{0 2}
     }
-  cursor_position 3
   font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
   global_font_scale 0.8
   scale {1 1}
@@ -173,9 +170,11 @@ Gizmo {
   background_opacity 0.3
   background_border_x 20
   name Text2_Write_3
-  label "制作人\n\[knob this.message \[value root.wlf_artist]]"
-  xpos 180
-  ypos -330
+  gl_color 0xff32f700
+  label 制作人
+  xpos 176
+  ypos -329
+  disable {{"\[knob this.message \[value root.wlf_artist \"\"]] 0"}}
  }
  Write {
   file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -201,16 +200,28 @@ Gizmo {
   name Write_MOV_2
   gl_color 0x32ff4100
   label 带帧编号的MOV
-  xpos 180
-  ypos -292
+  xpos 171
+  ypos -294
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
+set Nb7459400 [stack 0]
  Output {
   name Output1
   gl_color 0x56ff3200
   xpos 180
   ypos -228
+ }
+push $Nb7459400
+ Viewer {
+  frame_range 1-136
+  fps 25
+  input_process false
+  name Viewer1
+  gl_color 0xff4a3200
+  note_font 微软雅黑
+  xpos 290
+  ypos -292
  }
 end_group
