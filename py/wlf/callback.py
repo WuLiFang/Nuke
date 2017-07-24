@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 
 
 def init():
@@ -170,7 +170,9 @@ def _print_name():
 
 def _add_root_info():
     """add info to root.  """
-    if not nuke.value('preferences.wlf_artist', ''):
+
+    artist = nuke.value('preferences.wlf_artist', '')
+    if not artist:
         return
     if not nuke.exists('root.wlf'):
         n = nuke.Root()
@@ -180,8 +182,11 @@ def _add_root_info():
 
         k = nuke.String_Knob('wlf_artist', '制作人')
         k.setFlag(nuke.STARTLINE)
-        k.setValue(nuke.value('preferences.wlf_artist', ''))
+        k.setValue(artist)
         n.addKnob(k)
+    else:
+        if nuke.exists('root.wlf_artist') and not nuke.value('root.wlf_artist', ''):
+            nuke.knob('root.wlf_artist', artist)
 
 
 def create_out_dirs():
