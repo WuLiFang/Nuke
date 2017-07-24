@@ -224,14 +224,14 @@ Gizmo {
   ypos -376
  }
  Assert {
-  expression {{"\[python \{nuke.numvalue('root.name')\}]"}}
+  expression {{"\[python bool(nuke.value('root.name'))]"}}
   message 工程未命名
   name Assert1
   gl_color 0x32ff5400
   note_font 微软雅黑
+  selected true
   xpos 180
   ypos -348
-  disable true
  }
  Output {
   name Output1
