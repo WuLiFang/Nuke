@@ -4,11 +4,10 @@ Gizmo {
  tile_color 0xbfbf00ff
  label "\[value this.Write_MOV_1.file]\n\[value this.Write_JPG_1.file]"
  note_font 微软雅黑
- addUserKnob {20 Write l "Write v1.48.3"}
+ addUserKnob {20 Write l "Write v1.48.4"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
- use_custom_frame true
  addUserKnob {3 custom_frame l "" -STARTLINE}
- custom_frame 89
+ custom_frame 1
  addUserKnob {3 frame l INVISIBLE +INVISIBLE}
  frame {{"\[python -execlocal first,\\ last\\ =\\ nuke.numvalue('root.first_frame'),\\ nuke.numvalue('root.last_frame')\\nmiddle\\ =\\ (first\\ +\\ last)//2\\nthisNode\\ =\\ nuke.thisNode()\\nif\\ thisNode\\\['use_custom_frame'\\].value()\\ :\\n\\ \\ \\ \\ ret\\ =\\ thisNode\\\['custom_frame'\\].value()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ middle]"}}
  addUserKnob {32 bt_first l 首帧 -STARTLINE T "set first_frame \[value root.first_frame] \nknob use_custom_frame 1\nknob custom_frame \$first_frame\nframe \$first_frame"}
@@ -87,7 +86,9 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.3
   message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  old_expression_markers {{0 -1}
+  old_message {{83 78 74 89 87 95 69 80 49 52 95 48 49 95 115 99 48 49 51}
+    }
+  old_expression_markers {{0 18}
     }
   box {20 20 1000 75}
   transforms {{0 2}
@@ -118,9 +119,9 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.34
   message "\[x]"
-  old_message {{56 57}
+  old_message {{49}
     }
-  old_expression_markers {{0 1}
+  old_expression_markers {{0 0}
     }
   box {1700 20 1900 75}
   xjustify right
@@ -230,6 +231,7 @@ Gizmo {
   note_font 微软雅黑
   xpos 180
   ypos -348
+  disable true
  }
  Output {
   name Output1
