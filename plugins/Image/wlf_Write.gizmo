@@ -2,18 +2,19 @@
 version 10.0 v4
 Gizmo {
  tile_color 0xbfbf00ff
- label "\[\nif \{\[file exists \[value root.project_directory]]\} \{\nreturn \[value this.Write_MOV_1.file]\\n\[value this.Write_JPG_1.file]\} else \{return 工程目录不存在\}\n]"
+ label "\[value this.Write_MOV_1.file]\n\[value this.Write_JPG_1.file]"
  note_font 微软雅黑
- addUserKnob {20 Write l "Write v1.48.2"}
+ addUserKnob {20 Write l "Write v1.48.3"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  use_custom_frame true
  addUserKnob {3 custom_frame l "" -STARTLINE}
- custom_frame 1
+ custom_frame 89
  addUserKnob {3 frame l INVISIBLE +INVISIBLE}
  frame {{"\[python -execlocal first,\\ last\\ =\\ nuke.numvalue('root.first_frame'),\\ nuke.numvalue('root.last_frame')\\nmiddle\\ =\\ (first\\ +\\ last)//2\\nthisNode\\ =\\ nuke.thisNode()\\nif\\ thisNode\\\['use_custom_frame'\\].value()\\ :\\n\\ \\ \\ \\ ret\\ =\\ thisNode\\\['custom_frame'\\].value()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ middle]"}}
  addUserKnob {32 bt_first l 首帧 -STARTLINE T "set first_frame \[value root.first_frame] \nknob use_custom_frame 1\nknob custom_frame \$first_frame\nframe \$first_frame"}
  addUserKnob {32 bt_middle l 中间帧(默认) -STARTLINE T "knob this.use_custom_frame 0\nframe \[value this.knob.frame]"}
  addUserKnob {32 bt_last l 末帧 -STARTLINE T "set last_frame \[value root.last_frame] \nknob use_custom_frame 1\nknob custom_frame \$last_frame\nframe \$last_frame"}
+ addUserKnob {32 bt_this l 当前帧 -STARTLINE T "knob use_custom_frame 1\nknob custom_frame \[x]"}
  addUserKnob {26 ""}
  addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]" +STARTLINE}
  addUserKnob {22 bt_jpg_dir l 单帧输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
@@ -24,8 +25,8 @@ Gizmo {
   inputs 0
   name Input
   gl_color 0x4dff3200
-  xpos 181
-  ypos -636
+  xpos 180
+  ypos -754
  }
  Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -49,8 +50,8 @@ Gizmo {
   beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
   name Write_MOV_1
   gl_color 0xbc32ff00
-  xpos 174
-  ypos -597
+  xpos 180
+  ypos -728
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
@@ -73,8 +74,8 @@ Gizmo {
   name Write_JPG_1
   gl_color 0xbf32ff00
   label "单帧\n会在退出脚本时自动输出"
-  xpos 152
-  ypos -509
+  xpos 180
+  ypos -676
   disable true
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
@@ -86,9 +87,7 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.3
   message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  old_message {{83 78 74 89 87 95 69 80 49 52 95 48 49 95 115 99 48 48 50}
-    }
-  old_expression_markers {{0 18}
+  old_expression_markers {{0 -1}
     }
   box {20 20 1000 75}
   transforms {{0 2}
@@ -111,7 +110,7 @@ Gizmo {
   gl_color 0x3235ff00
   label "镜头名称\n\[knob this.message \{\[lindex \[split \[basename \[value root.name]] .] 0]\}]"
   xpos 180
-  ypos -406
+  ypos -598
  }
  Text2 {
   font_size_toolbar 100
@@ -119,9 +118,9 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.34
   message "\[x]"
-  old_message {{49}
+  old_message {{56 57}
     }
-  old_expression_markers {{0 0}
+  old_expression_markers {{0 1}
     }
   box {1700 20 1900 75}
   xjustify right
@@ -145,7 +144,7 @@ Gizmo {
   gl_color 0x5bff3200
   label "帧编号\n\[knob this.message \{\[x]\}]"
   xpos 180
-  ypos -368
+  ypos -560
  }
  Text2 {
   font_size_toolbar 100
@@ -172,9 +171,17 @@ Gizmo {
   name Text2_Write_3
   gl_color 0xff32f700
   label 制作人
-  xpos 176
-  ypos -329
-  disable {{"\[knob this.message \[value root.wlf_artist \"\"]] 0"}}
+  xpos 180
+  ypos -522
+ }
+ Assert {
+  expression {{"\[string equal \[knob Text2_Write_3.message \[value root.wlf_artist \"\"]] \"\"]"}}
+  name Assert2
+  gl_color 0xf3ff3200
+  label 实时设置Text2_Write_3的信息
+  note_font 微软雅黑
+  xpos 180
+  ypos -484
  }
  Write {
   file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -200,28 +207,34 @@ Gizmo {
   name Write_MOV_2
   gl_color 0x32ff4100
   label 带帧编号的MOV
-  xpos 171
-  ypos -294
+  xpos 180
+  ypos -440
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
-set Nb7459400 [stack 0]
+ Assert {
+  expression {{"\[file exists \[value root.project_directory]]"}}
+  message "工程目录不存在: \"\[value root.project_directory]\""
+  name Assert3
+  gl_color 0x32ff5400
+  note_font 微软雅黑
+  xpos 180
+  ypos -376
+ }
+ Assert {
+  expression {{"\[python \{nuke.numvalue('root.name')\}]"}}
+  message 工程未命名
+  name Assert1
+  gl_color 0x32ff5400
+  note_font 微软雅黑
+  xpos 180
+  ypos -348
+ }
  Output {
   name Output1
   gl_color 0x56ff3200
   xpos 180
-  ypos -228
- }
-push $Nb7459400
- Viewer {
-  frame_range 1-136
-  fps 25
-  input_process false
-  name Viewer1
-  gl_color 0xff4a3200
-  note_font 微软雅黑
-  xpos 290
-  ypos -292
+  ypos -320
  }
 end_group
