@@ -24,7 +24,7 @@ try:
 except ImportError:
     raise
 
-__version__ = '0.8.9'
+__version__ = '0.8.10'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -170,10 +170,12 @@ class Config(dict):
                     self['EP'],
                     self['SCENE']
                 )
-            else:
+            elif self.get('USE_TIME'):
                 _csheet_name += '_{}.jpg'.format(
                     time.strftime('%y%m%d_%H%M')
                 )
+            else:
+                _csheet_name += '_{}.jpg'.format(os.path.basename(self['DIR']))
             dict.__setitem__(self, 'csheet_name', _csheet_name)
 
             _value = os.path.join(
