@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 
 
 def init():
@@ -27,6 +27,8 @@ def menu():
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
 
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
+    # nuke.addOnCreate(lambda: asset.DropFrameCheck(
+    #     nuke.thisNode()).start(), nodeClass='Read')
 
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
@@ -36,10 +38,10 @@ def menu():
     nuke.addOnScriptSave(_check_fps)
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
+    nuke.addOnScriptSave(_send_to_render_dir)
     nuke.addOnScriptSave(cgtwn.on_save_callback)
     nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
-    nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(cgtwn.on_close_callback)
     nuke.addOnScriptClose(_create_csheet)
@@ -84,6 +86,8 @@ def _check_project():
 
 def _check_fps():
     default_fps = 30
+    if os.path.basename(nuke.value('root.name')).startswith('SNJYW'):
+        default_fps = 25
     fps = nuke.numvalue('root.fps')
     if fps != default_fps:
         nuke.message('当前fps: {}, 默认值: {}'.format(fps, default_fps))
