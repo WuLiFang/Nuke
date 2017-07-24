@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 def add_menu():
@@ -33,8 +33,8 @@ def add_menu():
         m.addSeparator()
         m.addCommand(
             "所有读取节点:修正错误", "import wlf.edit; wlf.edit.fix_error_read()", 'F6')
-        m.addCommand("所有读取节点:显示所有缺帧",
-                     "import wlf.asset; wlf.asset.DropFrameCheck.show_dialog(True)")
+        # m.addCommand("所有读取节点:显示所有缺帧",
+        #              "import wlf.asset; wlf.asset.DropFrameCheck.show_dialog(True)")
         m.addCommand("所有读取节点:序列替单帧",
                      "import wlf.edit; wlf.edit.replace_sequence()")
         m.addSeparator()
