@@ -25,7 +25,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -71,12 +71,16 @@ def proj_info():
 class CGTeamWork(object):
     """Base class for cgtw action."""
 
-    database = proj_info()['database']
     is_logged_in = False
 
     def __init__(self):
         self._tw = cgtw.tw()
-        self.update_status()
+        # self.update_status()
+
+    @property
+    def database(self):
+        """database on cgtw.  """
+        return proj_info()['database']
 
     @staticmethod
     def update_status():
@@ -109,7 +113,7 @@ class Shot(CGTeamWork):
     pipeline_name = u'comp'
     module = u'shot_task'
     work_folder = u'work'
-    shot_task_folder = proj_info()['shot_task_folder']
+
     image_folder = u'Image'
     server = u'Z:\\CGteamwork_Test'
 
@@ -120,6 +124,11 @@ class Shot(CGTeamWork):
                 self.database, self.module)
 
             self._task_module.init_with_id(self.shot_id)
+
+    @property
+    def shot_task_folder(self):
+        """shot_task_folder on server.  """
+        return proj_info()['shot_task_folder']
 
     @property
     def name(self):
@@ -294,6 +303,7 @@ class Shot(CGTeamWork):
 def on_save_callback():
     """Try upload nk file to server."""
     try:
+        CGTeamWork.update_status()
         Shot().upload_nk_file()
     except IDError:
         print(u'CGTW上未找到对应镜头')
