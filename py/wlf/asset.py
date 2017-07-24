@@ -17,17 +17,17 @@ SYS_CODEC = locale.getdefaultlocale()[1]
 class DropFrameCheck(threading.Thread):
     """Check drop frames and record on the node."""
 
-    lock = threading.Lock()
+    lock = threading.Semaphore(10)
     showed_files = []
     knob_name = 'dropframes'
     dropframes_dict = {}
-    runnning = False
 
-    def __init__(self, prefix=('_',)):
+    def __init__(self, node, prefix=('_',)):
         threading.Thread.__init__(self)
         self.daemon = True
-        self._node = None
+        self._node = node
         self._prefix = prefix
+        self._name = self._node.name()
 
     @property
     def knob_tcl_name(self):
@@ -36,16 +36,12 @@ class DropFrameCheck(threading.Thread):
             return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
-        if self.runnning:
-            return
-
-        self.runnning = True
-        for n in nuke.allNodes('Read'):
-            if n.name().startswith(self._prefix) and n['disable'].value():
-                continue
-            self._node = n
+        # while nuke.exists(self._name):
+        with self.lock:
+            if self._name.startswith(self._prefix) \
+                    or self._node['disable'].value():
+                return
             self.record()
-        self.runnning = False
 
     def dropframe_ranges(self):
         """Return nuke framerange instance of dropframes."""
@@ -63,8 +59,8 @@ class DropFrameCheck(threading.Thread):
         _read_framerange = xrange(
             self._node.firstFrame(), self._node.lastFrame() + 1)
         for f in _read_framerange:
-            _file = expand_frame(_filename, f)
-            if not os.path.isfile(unicode(_file, 'UTF-8').encode(SYS_CODEC)):
+            _file = unicode(expand_frame(_filename, f)).encode(SYS_CODEC)
+            if not FileExistsCheck(_file).ret():
                 ret.add([f])
         ret.compact()
         return ret
@@ -85,9 +81,9 @@ class DropFrameCheck(threading.Thread):
     @classmethod
     def show_dialog(cls, show_all=False):
         """Show all dropframes to user."""
-
+        return
         _message = ''
-        for n in nuke.allNodes('Read'):
+        for n, v in DropFrameCheck.dropframes_dict.items():
             _filename = nuke.filename(n)
             if not show_all:
                 if _filename in cls.showed_files:
@@ -107,6 +103,27 @@ class DropFrameCheck(threading.Thread):
                 + _message + \
                 '</table>'
             nuke.message(_message)
+
+
+class FileExistsCheck(threading.Thread):
+    """os.path.exists() with timeout.  """
+    lock = threading.Semaphore(10)
+
+    def __init__(self, path):
+        super(FileExistsCheck, self).__init__()
+        self._path = path
+        self._ret = False
+
+    def run(self):
+        self._ret = os.path.exists(self._path)
+
+    def ret(self, timeout=0.1):
+        """Return result with @timeout.  """
+
+        with self.lock:
+            self.start()
+            self.join(timeout)
+        return self._ret
 
 
 def sent_to_dir(dir_):
