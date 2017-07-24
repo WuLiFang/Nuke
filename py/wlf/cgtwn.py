@@ -25,7 +25,7 @@ except ImportError:
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
 
 
-__version__ = '0.3.3'
+__version__ = '0.4.0'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -53,10 +53,25 @@ def check_login(func):
     return _func
 
 
+def proj_info():
+    """Return current project info by script name.  """
+
+    qqfc2017 = {'database': u'proj_qqfc_2017',
+                'shot_task_folder': u'shot_work'}
+    snjyw = {'database': u'proj_big',
+             'shot_task_folder': u'shot_work'}
+
+    ret = qqfc2017
+    name = os.path.basename(nuke.value('root.name'))
+    if name.startswith('SNJYW'):
+        ret = snjyw
+    return ret
+
+
 class CGTeamWork(object):
     """Base class for cgtw action."""
 
-    database = u'proj_qqfc_2017'
+    database = proj_info()['database']
     is_logged_in = False
 
     def __init__(self):
@@ -94,7 +109,7 @@ class Shot(CGTeamWork):
     pipeline_name = u'comp'
     module = u'shot_task'
     work_folder = u'work'
-    shot_task_folder = u'shot_work'
+    shot_task_folder = proj_info()['shot_task_folder']
     image_folder = u'Image'
     server = u'Z:\\CGteamwork_Test'
 
@@ -286,13 +301,9 @@ def on_save_callback():
 
 @abort_modified
 def on_close_callback():
-    """Try upload image and nk file to server."""
+    """Try upload image to server."""
     try:
-        task = nuke.ProgressTask('CGTW')
-        task.setMessage('连接CGTeamWork')
         Shot().upload_image()
-        task.setProgress(50)
-        Shot().upload_nk_file()
     except IDError:
         print(u'CGTW上未找到对应镜头')
 
