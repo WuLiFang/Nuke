@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.8'
+__version__ = '0.13.9'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -212,7 +212,9 @@ class Comp(object):
         n = self._bg_ch_nodes()
         print(u'{:-^30s}'.format('BG CH 节点创建'))
 
-        n = self._merge_depth(n, self.get_nodes_by_tags(['BG', 'CH']))
+        nodes = nuke.allNodes(
+            'DepthFix') or self.get_nodes_by_tags(['BG', 'CH'])
+        n = self._merge_depth(n, nodes)
 
         print(u'{:-^30s}'.format(u'整体深度节点创建'))
         self._add_zdefocus_control(n)
