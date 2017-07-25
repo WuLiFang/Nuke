@@ -4,7 +4,7 @@ Gizmo {
  tile_color 0xbfbf00ff
  label "\[value this.Write_MOV_1.file]\n\[value this.Write_JPG_1.file]"
  note_font 微软雅黑
- addUserKnob {20 Write l "Write v1.48.5"}
+ addUserKnob {20 Write l "Write v1.48.6"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -36,7 +36,9 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.3
   message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  old_expression_markers {{0 -1}
+  old_message {{49 55 95 109 111 116 105 111 110}
+    }
+  old_expression_markers {{0 8}
     }
   box {20 20 1000 75}
   transforms {{0 2}
@@ -67,9 +69,9 @@ Gizmo {
   font_height_toolbar 100
   opacity 0.34
   message "\[x]"
-  old_message {{53 48}
+  old_message {{54}
     }
-  old_expression_markers {{0 1}
+  old_expression_markers {{0 0}
     }
   box {1700 20 1900 75}
   xjustify right
@@ -92,8 +94,8 @@ Gizmo {
   name Text2_Write_1
   gl_color 0x5bff3200
   label "帧编号\n\[knob this.message \{\[x]\}]"
-  xpos 290
-  ypos -713
+  xpos 302
+  ypos -690
  }
  Text2 {
   font_size_toolbar 100
@@ -193,16 +195,15 @@ Gizmo {
   last {{first}}
   use_limit true
   checkHashOnRead false
-  version 72
-  in_colorspace linear
-  out_colorspace linear
-  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);\n    \n# Force full mode render;\nglobal last_render_mode;\nproxy = nuke.Root()\['proxy'];\nlast_render_mode = proxy.value();\nproxy.setValue(False);\n\n# Turn off blur effect nodes;\nglobal nodes_with_blur_effect;\nnodes_with_blur_effect = \[];\nfor i in nuke.allNodes(group=nuke.Root()):\n    if any(key for key in \['rsmb', 'CameraShake', 'VectorBlur', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1', 'MotionBlur'] if key in i.Class()):\n        if not i\['disable'].value():\n            nodes_with_blur_effect.append(i);\n            i\['disable'].setValue(1);\n"
-  afterRender "proxy.setValue(last_render_mode);\n\nfor i in nodes_with_blur_effect:\n    if any(key for key in \['rsmb', 'CameraShake', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'] if key in i.Class()):\n        i\['disable'].setValue(0);\nnodes_with_blur_effect = \[];\nnuke.thisNode()\['disable'].setValue(1);"
+  version 82
+  beforeRender "# Data storage;\nclass _wlf_Write(object):\n    blur_node_classes = ('OFXcom.revisionfx.rsmb_v3', 'CameraShake', 'VectorBlur', 'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1', 'MotionBlur');\n    last_render_mode = False;\n    blur_nodes = \[];\n    \n    def __init__(self):\n        _wlf_Write.last_render_mode = nuke.Root()\['proxy'].value();\n        _wlf_Write.blur_nodes = \[n for n in nuke.allNodes(group=nuke.Root()) \\\n            if n.Class() in self.blur_node_classes and not n\['disable'].value()];\n\n_wlf_Write();\n\n# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\nif not os.path.exists(_dir):\n    os.makedirs(_dir);\n\nnuke.knob('root.proxy', 'False');\nmap(lambda n: n\['disable'].setValue(True), _wlf_Write.blur_nodes);\n"
+  afterRender "nuke.knob('root.proxy', str(_wlf_Write.last_render_mode));\nmap(lambda n: n\['disable'].setValue(False), _wlf_Write.blur_nodes);\nnuke.knob('this.disable', 'True');"
   name Write_JPG_1
   gl_color 0xbf32ff00
   label "单帧\n会在退出脚本时自动输出"
+  selected true
   xpos 180
-  ypos -590
+  ypos -595
   disable true
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
