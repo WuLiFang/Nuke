@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.9'
+__version__ = '0.3.11'
 
 
 def init():
@@ -139,6 +139,8 @@ def _render_jpg():
 
 
 def wlf_write_node():
+    """Return founded wlf_write node.  """
+
     n = nuke.toNode('_Write')\
         or nuke.toNode('wlf_Write1')\
         or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
