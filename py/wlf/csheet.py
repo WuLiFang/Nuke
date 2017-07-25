@@ -13,7 +13,7 @@ import nuke
 
 from wlf.files import version_filter, split_version
 
-__version__ = '1.1.9'
+__version__ = '1.1.10'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -201,6 +201,7 @@ class ContactSheetThread(threading.Thread):
             cmd = u'START "生成色板" {}'.format(cmd)
         unicode_popen(cmd, shell=self._new_process)
         task.setProgress(100)
+        del task
         self.lock.release()
 
 
