@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.10'
+__version__ = '0.13.11'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -488,7 +488,8 @@ class Comp(object):
             '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
         )
         if 'motion' in nuke.layers(n):
-            n = nuke.nodes.VectorBlur2(inputs=[n], disable=True)
+            n = nuke.nodes.VectorBlur2(
+                inputs=[n], uv='motion', scale=1, disable=True)
         n = nuke.nodes.Crop(
             inputs=[n],
             box='0 0 root.width root.height')
