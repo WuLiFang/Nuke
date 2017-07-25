@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.11'
+__version__ = '0.13.12'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -87,7 +87,7 @@ class Comp(object):
     """Create .nk file from footage that taged in filename."""
 
     default_config = {
-        'footage_pat': r'^.+_sc.+_.+\.exr[0-9\- ]*$',
+        'footage_pat': r'^.*_?sc.+_.+\.exr[0-9\- ]*$',
         'dir_pat': r'^.{8,}$',
         'tag_pat': r'sc.+?_([^.]+)',
         'output_dir': 'E:/precomp',
