@@ -1,4 +1,3 @@
-#! usr/bin/env python
 # -*- coding=UTF-8 -*-
 """
 cgteamwork integration with nuke.
@@ -6,26 +5,27 @@ cgteamwork integration with nuke.
 import locale
 import os
 import re
-
 import sys
+from subprocess import Popen, PIPE
 
 import nuke
 
 from .asset import copy
 
 
+CGTW_PATH = r"C:\cgteamwork\bin\base"
+MODULE_ENABLE = True
 try:
+    sys.path.append(CGTW_PATH)
     import cgtw
 except ImportError:
-    CGTW_PATH = r"C:\cgteamwork\bin\base"
-    if os.path.isdir(CGTW_PATH):
-        sys.path.append(CGTW_PATH)
-        import cgtw
-    else:
+    if not os.path.isdir(CGTW_PATH):
         raise ImportError('not a dir: {}'.format(CGTW_PATH))
+    else:
+        MODULE_ENABLE = False
 
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -37,6 +37,16 @@ def abort_modified(func):
     def _func():
         if nuke.modified():
             return False
+        func()
+    return _func
+
+
+def abort_when_module_not_enable(func):
+    """(Decorator)Abort function if MODULE_ENABLE is not true."""
+
+    def _func():
+        if not MODULE_ENABLE:
+            return
         func()
     return _func
 
@@ -75,7 +85,6 @@ class CGTeamWork(object):
 
     def __init__(self):
         self._tw = cgtw.tw()
-        # self.update_status()
 
     @property
     def database(self):
@@ -86,9 +95,14 @@ class CGTeamWork(object):
     def update_status():
         """Return and set if cls.is_logged_in."""
 
-        ret = cgtw.tw().sys().get_socket_status()
+        task = nuke.ProgressTask('尝试连接CGTeamWork')
+        task.setProgress(50)
+        if not CGTeamWork.is_running():
+            ret = False
+        else:
+            ret = cgtw.tw().sys().get_socket_status()
+            print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
         CGTeamWork.is_logged_in = ret
-        print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
         return ret
 
     @classmethod
@@ -105,6 +119,21 @@ class CGTeamWork(object):
         if database:
             cls.set_database(database)
 
+    @staticmethod
+    def is_running():
+        """Return is CgTeamWork.exe is running.  """
+
+        ret = True
+        if sys.platform == 'win32':
+            tasklist = Popen('TASKLIST', stdout=PIPE).communicate()[0]
+            if '\nCGTeamWork.exe ' in tasklist:
+                ret = False
+                nuke.warning(u'未运行 CGTeamWork.exe 。')
+        return ret
+
+
+CGTeamWork.update_status()
+
 
 class Shot(CGTeamWork):
     """Methods for shot action."""
@@ -119,11 +148,10 @@ class Shot(CGTeamWork):
 
     def __init__(self):
         super(Shot, self).__init__()
-        if self.is_logged_in:
-            self._task_module = self._tw.task_module(
-                self.database, self.module)
+        self._task_module = self._tw.task_module(
+            self.database, self.module)
 
-            self._task_module.init_with_id(self.shot_id)
+        self._task_module.init_with_id(self.shot_id)
 
     @property
     def shot_task_folder(self):
@@ -301,9 +329,11 @@ class Shot(CGTeamWork):
             self.add_note(note)
 
 
+@abort_when_module_not_enable
 @abort_modified
 def on_save_callback():
     """Try upload nk file to server."""
+
     try:
         CGTeamWork.update_status()
         Shot().upload_nk_file()
@@ -311,6 +341,7 @@ def on_save_callback():
         print(u'CGTW上未找到对应镜头')
 
 
+@abort_when_module_not_enable
 @abort_modified
 def on_close_callback():
     """Try upload image to server."""
