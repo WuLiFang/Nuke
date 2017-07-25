@@ -115,9 +115,11 @@ def _lock_connections():
 
 
 def _jump_frame():
-    if nuke.numvalue('preferences.wlf_jump_frame', 0.0) and nuke.exists('_Write.knob.frame'):
-        nuke.frame(nuke.numvalue('_Write.knob.frame'))
-        nuke.Root().setModified(False)
+    if nuke.numvalue('preferences.wlf_jump_frame', 0.0):
+        n = wlf_write_node()
+        if n:
+            nuke.frame(n['frame'].value())
+            nuke.Root().setModified(False)
 
 
 @abort_modified
@@ -130,11 +132,18 @@ def _send_to_render_dir():
 @abort_modified
 def _render_jpg():
     if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-        n = nuke.toNode('_Write')\
-            or nuke.toNode('wlf_Write1')\
-            or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
+        n = wlf_write_node()
         if n:
+            print('render_jpg: {}'.format(n.name()))
             n['bt_render_JPG'].execute()
+
+
+def wlf_write_node():
+    n = nuke.toNode('_Write')\
+        or nuke.toNode('wlf_Write1')\
+        or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
+
+    return n
 
 
 def _gizmo_to_group_on_create():
