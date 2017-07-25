@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.12'
+__version__ = '0.13.13'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -277,7 +277,7 @@ class Comp(object):
             inputs=[n], conversion='logarithmic compress')
         n = nuke.nodes.Defocus(inputs=[n], disable=True)
         n = nuke.nodes.Crop(inputs=[n], box='0 0 root.width root.height')
-        n = nuke.nodes.Merge(
+        n = nuke.nodes.Merge2(
             inputs=[input_node, n], operation='under', bbox='B', label='MP')
 
         return n
