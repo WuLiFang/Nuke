@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.9'
+__version__ = '0.13.10'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -418,7 +418,6 @@ class Comp(object):
                 operation='luminance key',
                 range='0 0.007297795507 1 1'
             )
-        n = nuke.nodes.Reformat(inputs=[n], resize='fit')
         if 'depth.Z' not in input_node.channels():
             _constant = nuke.nodes.Constant(
                 channels='depth',
@@ -430,6 +429,7 @@ class Comp(object):
                 also_merge='all',
                 label='add_depth'
             )
+        n = nuke.nodes.Reformat(inputs=[n], resize='fit')
 
         n = nuke.nodes.DepthFix(inputs=[n])
         if self._config['autograde']:
