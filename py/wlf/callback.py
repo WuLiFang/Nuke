@@ -130,8 +130,8 @@ def _send_to_render_dir():
 @abort_modified
 def _render_jpg():
     if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-        n = nuke.toNode('_Write')
-            or nuke.toNode('wlf_Write1')
+        n = nuke.toNode('_Write')\
+            or nuke.toNode('wlf_Write1')\
             or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
         if n:
             n['bt_render_JPG'].execute()
