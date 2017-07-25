@@ -4,7 +4,7 @@ Gizmo {
  tile_color 0xbfbf00ff
  label "\[value this.Write_MOV_1.file]\n\[value this.Write_JPG_1.file]"
  note_font 微软雅黑
- addUserKnob {20 Write l "Write v1.48.4"}
+ addUserKnob {20 Write l "Write v1.48.5"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -20,12 +20,140 @@ Gizmo {
  addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
  addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
 }
+ Constant {
+  inputs 0
+  channels rgb
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  name Constant1
+  gl_color 0xffdd3200
+  note_font 微软雅黑
+  xpos 290
+  ypos -827
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.3
+  message "\[lindex \[split \[basename \[value root.name]] .] 0]"
+  old_expression_markers {{0 -1}
+    }
+  box {20 20 1000 75}
+  transforms {{0 2}
+    }
+  cursor_position 50
+  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
+  global_font_scale 0.65
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{24 122.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0.3
+  background_border_x 20
+  name Text2_Write_2
+  gl_color 0x3235ff00
+  label "镜头名称\n\[knob this.message \{\[lindex \[split \[basename \[value root.name]] .] 0]\}]"
+  xpos 290
+  ypos -751
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.34
+  message "\[x]"
+  old_message {{53 48}
+    }
+  old_expression_markers {{0 1}
+    }
+  box {1700 20 1900 75}
+  xjustify right
+  transforms {{0 2}
+    }
+  cursor_position 3
+  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
+  global_font_scale 0.65
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1778.5 128.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0.3
+  background_border_x 20
+  name Text2_Write_1
+  gl_color 0x5bff3200
+  label "帧编号\n\[knob this.message \{\[x]\}]"
+  xpos 290
+  ypos -713
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.34
+  box {1098 1000.5 1900 1055.5}
+  xjustify right
+  transforms {{0 2}
+    }
+  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
+  global_font_scale 0.5
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1778.5 128.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0.3
+  background_border_x 20
+  name Text2_Write_3
+  gl_color 0xff32f700
+  label 制作人
+  xpos 290
+  ypos -675
+ }
+ Assert {
+  expression {{"\[string equal \[knob Text2_Write_3.message \[value root.wlf_artist \"\"]] \"\"]"}}
+  name Assert2
+  gl_color 0xf3ff3200
+  label 实时设置Text2_Write_3的信息
+  note_font 微软雅黑
+  xpos 290
+  ypos -637
+ }
+ Reformat {
+  resize fit
+  name Reformat1
+  gl_color 0x32ffc400
+  note_font 微软雅黑
+  xpos 290
+  ypos -593
+ }
  Input {
   inputs 0
   name Input
   gl_color 0x4dff3200
   xpos 180
-  ypos -754
+  ypos -802
+ }
+ Reformat {
+  resize fit
+  name Reformat2
+  gl_color 0x32ffc400
+  note_font 微软雅黑
+  xpos 180
+  ypos -776
  }
  Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -50,7 +178,7 @@ Gizmo {
   name Write_MOV_1
   gl_color 0xbc32ff00
   xpos 180
-  ypos -728
+  ypos -748
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
@@ -74,115 +202,20 @@ Gizmo {
   gl_color 0xbf32ff00
   label "单帧\n会在退出脚本时自动输出"
   xpos 180
-  ypos -676
+  ypos -590
   disable true
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
- Text2 {
-  font_size_toolbar 100
-  font_width_toolbar 100
-  font_height_toolbar 100
-  opacity 0.3
-  message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  old_message {{83 78 74 89 87 95 69 80 49 52 95 48 49 95 115 99 48 49 51}
-    }
-  old_expression_markers {{0 18}
-    }
-  box {20 20 1000 75}
-  transforms {{0 2}
-    }
-  cursor_position 50
-  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
-  global_font_scale 0.65
-  scale {1 1}
-  cursor_initialised true
-  autofit_bbox false
-  initial_cursor_position {{24 122.5}
-    }
-  group_animations {{0} imported: 0 selected: items: "root transform"}
-  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
-    }
-  enable_background {{!root.proxy}}
-  background_opacity 0.3
-  background_border_x 20
-  name Text2_Write_2
-  gl_color 0x3235ff00
-  label "镜头名称\n\[knob this.message \{\[lindex \[split \[basename \[value root.name]] .] 0]\}]"
-  xpos 180
-  ypos -598
- }
- Text2 {
-  font_size_toolbar 100
-  font_width_toolbar 100
-  font_height_toolbar 100
-  opacity 0.34
-  message "\[x]"
-  old_message {{49}
-    }
-  old_expression_markers {{0 0}
-    }
-  box {1700 20 1900 75}
-  xjustify right
-  transforms {{0 2}
-    }
-  cursor_position 3
-  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
-  global_font_scale 0.65
-  scale {1 1}
-  cursor_initialised true
-  autofit_bbox false
-  initial_cursor_position {{1778.5 128.5}
-    }
-  group_animations {{0} imported: 0 selected: items: "root transform/"}
-  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
-    }
-  enable_background {{!root.proxy}}
-  background_opacity 0.3
-  background_border_x 20
-  name Text2_Write_1
-  gl_color 0x5bff3200
-  label "帧编号\n\[knob this.message \{\[x]\}]"
-  xpos 180
-  ypos -560
- }
- Text2 {
-  font_size_toolbar 100
-  font_width_toolbar 100
-  font_height_toolbar 100
-  opacity 0.34
-  box {1098 1000.5 1900 1055.5}
-  xjustify right
-  transforms {{0 2}
-    }
-  font {{ Microsoft YaHei : Regular : msyh.ttf : 0 }}
-  global_font_scale 0.8
-  scale {1 1}
-  cursor_initialised true
-  autofit_bbox false
-  initial_cursor_position {{1778.5 128.5}
-    }
-  group_animations {{0} imported: 0 selected: items: "root transform/"}
-  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
-    }
-  enable_background {{!root.proxy}}
-  background_opacity 0.3
-  background_border_x 20
-  name Text2_Write_3
-  gl_color 0xff32f700
-  label 制作人
-  xpos 180
-  ypos -522
- }
- Assert {
-  expression {{"\[string equal \[knob Text2_Write_3.message \[value root.wlf_artist \"\"]] \"\"]"}}
-  name Assert2
-  gl_color 0xf3ff3200
-  label 实时设置Text2_Write_3的信息
+ Merge2 {
+  inputs 2
+  name Merge1
+  gl_color 0x324dff00
+  label burn-in
   note_font 微软雅黑
-  xpos 180
-  ypos -484
+  xpos 290
+  ypos -565
  }
  Write {
   file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -208,8 +241,8 @@ Gizmo {
   name Write_MOV_2
   gl_color 0x32ff4100
   label 带帧编号的MOV
-  xpos 180
-  ypos -440
+  xpos 290
+  ypos -537
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
@@ -220,8 +253,8 @@ Gizmo {
   name Assert3
   gl_color 0x32ff5400
   note_font 微软雅黑
-  xpos 180
-  ypos -376
+  xpos 290
+  ypos -473
  }
  Assert {
   expression {{"\[python bool(nuke.value('root.name'))]"}}
@@ -229,14 +262,13 @@ Gizmo {
   name Assert1
   gl_color 0x32ff5400
   note_font 微软雅黑
-  selected true
-  xpos 180
-  ypos -348
+  xpos 290
+  ypos -445
  }
  Output {
   name Output1
   gl_color 0x56ff3200
-  xpos 180
-  ypos -320
+  xpos 290
+  ypos -417
  }
 end_group
