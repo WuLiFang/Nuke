@@ -8,7 +8,7 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.7'
+__version__ = '0.3.9'
 
 
 def init():
@@ -129,8 +129,12 @@ def _send_to_render_dir():
 
 @abort_modified
 def _render_jpg():
-    if nuke.numvalue('preferences.wlf_send_to_dir', 0.0) and nuke.exists('_Write.bt_render_JPG'):
-        nuke.toNode('_Write')['bt_render_JPG'].execute()
+    if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
+        n = nuke.toNode('_Write')
+            or nuke.toNode('wlf_Write1')
+            or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
+        if n:
+            n['bt_render_JPG'].execute()
 
 
 def _gizmo_to_group_on_create():
