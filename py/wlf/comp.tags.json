@@ -40,6 +40,7 @@
         "CH_OCC": "OCC_CH", 
         "CH_RGB": "ID_CH", 
         "CH_SD": "SH_CH", 
-        "CH_SH": "SH_CH"
+        "CH_SH": "SH_CH",
+        "CH_SHD": "SH_CH"
     }
 }
