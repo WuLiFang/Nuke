@@ -7,8 +7,9 @@ import colorsys
 import random
 
 import nuke
+import nukescripts
 
-__version__ = '1.1.10'
+__version__ = '1.1.11'
 
 
 def rename_all_nodes():
@@ -319,15 +320,15 @@ def fix_error_read():
     """Try fix all read nodes tha has error."""
 
     filename_dict = dict(
-        {os.path.basename(nuke.filename(n)): nuke.filename(n)
+        {nukescripts.replaceHashes(os.path.basename(nuke.filename(n))): nuke.filename(n)
          for n in nuke.allNodes('Read') if not n.hasError()})
     for n in nuke.allNodes('Read'):
         if n.hasError():
             name = os.path.basename(nuke.filename(n))
-            new_path = filename_dict.get(name)
+            new_path = filename_dict.get(nukescripts.replaceHashes(name))
             if new_path:
-                filename_knob = n['file'] if nuke.value('root.proxy') == 'false'\
-                    or not n['proxy'].value() else n['proxy']
+                filename_knob = n['file'] if not n['proxy'].value() \
+                    or nuke.value('root.proxy') == 'false' else n['proxy']
                 filename_knob.setValue(new_path)
 
     while True:
