@@ -7,7 +7,7 @@ import shutil
 import locale
 from subprocess import call, Popen
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -88,13 +88,19 @@ def split_version(f):
     ('hello world', None)
     >>> split_version('sc_001_v-1.nk')
     ('sc_001_v-1', None)
+    >>> split_version('sc001V1.jpg')
+    ('sc001', 1)
+    >>> split_version('sc001V1_no_bg.jpg')
+    ('sc001', 1)
+    >>> split_version('suv2005_v2_m.jpg')
+    ('suv2005', 2)
     """
 
-    match = re.match(r'(.+)_v(\d+)', f)
+    match = re.match(r'(.+)v(\d+)', f, flags=re.I)
     if not match:
         return (os.path.splitext(f)[0], None)
     shot, version = match.groups()
-    return (shot, int(version))
+    return (shot.strip('_'), int(version))
 
 
 def remove_version(path):
