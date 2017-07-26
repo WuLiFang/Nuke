@@ -7,8 +7,6 @@ Group {
  tile_color 0xff00ff
  note_font 微软雅黑
  selected true
- xpos 319
- ypos -1707
  addUserKnob {20 tab1 l ColorKeyer_v0.2}
  addUserKnob {41 input T Shuffle2.in}
  addUserKnob {22 bt_setViewe2Input l "view input" -STARTLINE T "try: \n    viewer_node = nuke.activeViewer().node()\n    input_channel =  ' '.join(nuke.Layer(nuke.value('this.input')).channels()\[:3] + \['rgba.alpha'])\n    viewer_node.setInput(0, nuke.thisNode())\n    viewer_node\['channels'].setValue(input_channel)\n    nuke.activeViewer().activateInput(0)\nexcept AttributeError:\n    nuke.message('请先创建Viewer')"}
