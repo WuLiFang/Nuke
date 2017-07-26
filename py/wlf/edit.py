@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.9'
+__version__ = '1.1.10'
 
 
 def rename_all_nodes():
@@ -326,8 +326,8 @@ def fix_error_read():
             name = os.path.basename(nuke.filename(n))
             new_path = filename_dict.get(name)
             if new_path:
-                filename_knob = n['file'] if not n['proxy'].value() \
-                    and nuke.value('root.proxy') == 'true' else n['proxy']
+                filename_knob = n['file'] if nuke.value('root.proxy') == 'false'\
+                    or not n['proxy'].value() else n['proxy']
                 filename_knob.setValue(new_path)
 
     while True:
