@@ -24,7 +24,7 @@ try:
 except ImportError:
     raise
 
-__version__ = '0.8.10'
+__version__ = '0.8.11'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
