@@ -25,7 +25,7 @@ except ImportError:
         MODULE_ENABLE = False
 
 
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 SYS_CODEC = locale.getdefaultlocale()[1]
 reload(sys)
 sys.setdefaultencoding('UTF-8')
@@ -130,9 +130,6 @@ class CGTeamWork(object):
                 ret = False
                 nuke.warning(u'未运行 CGTeamWork.exe 。')
         return ret
-
-
-CGTeamWork.update_status()
 
 
 class Shot(CGTeamWork):
