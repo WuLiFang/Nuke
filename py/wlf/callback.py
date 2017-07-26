@@ -80,7 +80,8 @@ def _create_csheet():
 
 def _eval_proj_dir():
     if nuke.numvalue('preferences.wlf_eval_proj_dir', 0.0):
-        eval_attr('root.project_directory')
+        attr = 'root.project_directory'
+        nuke.knob(attr, os.path.abspath(nuke.value(attr).replace('\\', '/')))
 
 
 def _check_project():
@@ -101,11 +102,6 @@ def _check_project():
                   r"[python {os.path.join("
                   r"nuke.value('root.name', ''), '../'"
                   r").replace('\\', '/')}]")
-
-
-def eval_attr(attr):
-    """Eval knob expression to constant value.  """
-    nuke.knob(attr, nuke.value(attr))
 
 
 def _check_fps():
