@@ -8,8 +8,6 @@ import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
 
-__version__ = '0.3.11'
-
 
 def init():
     """Add callback for nuke init phase."""
@@ -33,6 +31,7 @@ def menu():
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
     nuke.addOnScriptLoad(_add_root_info)
+    nuke.addOnScriptLoad(_eval_proj_dir)
 
     nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(_enable_node)
@@ -79,6 +78,11 @@ def _create_csheet():
             csheet.ContactSheetThread().run()
 
 
+def _eval_proj_dir():
+    if nuke.numvalue('preferences.wlf_eval_proj_dir', 0.0):
+        eval_attr('root.project_directory')
+
+
 def _check_project():
     project_directory = nuke.value('root.project_directory')
     if not project_directory:
@@ -97,6 +101,11 @@ def _check_project():
                   r"[python {os.path.join("
                   r"nuke.value('root.name', ''), '../'"
                   r").replace('\\', '/')}]")
+
+
+def eval_attr(attr):
+    """Eval knob expression to constant value.  """
+    nuke.knob(attr, nuke.value(attr))
 
 
 def _check_fps():

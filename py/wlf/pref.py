@@ -72,6 +72,11 @@ def add_preferences():
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
+    k = nuke.Boolean_Knob('wlf_eval_proj_dir', '读取时工程目录自动转换为绝对路径')
+    k.setValue(True)
+    k.setFlag(nuke.STARTLINE)
+    _add_knob(k)
+
     k = nuke.Text_Knob('wlf_on_script_save', '保存时')
     _add_knob(k)
 
