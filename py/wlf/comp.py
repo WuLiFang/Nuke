@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.13'
+__version__ = '0.13.14'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -467,6 +467,9 @@ class Comp(object):
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
+        if 'motion' in nuke.layers(n):
+            n = nuke.nodes.VectorBlur2(
+                inputs=[n], uv='motion', scale=1, disable=True)
         n = nuke.nodes.ZDefocus2(
             inputs=[n],
             math='depth',
@@ -487,9 +490,6 @@ class Comp(object):
             '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
             '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
         )
-        if 'motion' in nuke.layers(n):
-            n = nuke.nodes.VectorBlur2(
-                inputs=[n], uv='motion', scale=1, disable=True)
         n = nuke.nodes.Crop(
             inputs=[n],
             box='0 0 root.width root.height')
