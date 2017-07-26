@@ -81,7 +81,7 @@ def _create_csheet():
 def _eval_proj_dir():
     if nuke.numvalue('preferences.wlf_eval_proj_dir', 0.0):
         attr = 'root.project_directory'
-        nuke.knob(attr, os.path.abspath(nuke.value(attr).replace('\\', '/')))
+        nuke.knob(attr, os.path.abspath(nuke.value(attr)).replace('\\', '/'))
 
 
 def _check_project():
