@@ -136,7 +136,7 @@ def _send_to_render_dir():
 
 @abort_modified
 def _render_jpg():
-    if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
+    if nuke.numvalue('preferences.wlf_render_jpg', 0.0):
         n = wlf_write_node()
         if n:
             print('render_jpg: {}'.format(n.name()))
