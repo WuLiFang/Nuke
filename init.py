@@ -14,3 +14,6 @@ except ImportError as ex:
 nuke.pluginAddPath('plugins')
 callback.init()
 pref.set_knob_default()
+
+reload(sys)
+sys.setdefaultencoding('UTF-8')

@@ -25,10 +25,8 @@ except ImportError:
         MODULE_ENABLE = False
 
 
-__version__ = '0.4.7'
+__version__ = '0.4.8'
 SYS_CODEC = locale.getdefaultlocale()[1]
-reload(sys)
-sys.setdefaultencoding('UTF-8')
 
 
 def abort_modified(func):
@@ -126,7 +124,7 @@ class CGTeamWork(object):
         ret = True
         if sys.platform == 'win32':
             tasklist = Popen('TASKLIST', stdout=PIPE).communicate()[0]
-            if '\nCGTeamWork.exe ' not in tasklist:
+            if '\nCgTeamWork.exe ' not in tasklist:
                 ret = False
                 print(u'未运行 CGTeamWork.exe 。')
         return ret
@@ -328,6 +326,7 @@ class Shot(CGTeamWork):
 
 @abort_when_module_not_enable
 @abort_modified
+@check_login
 def on_save_callback():
     """Try upload nk file to server."""
 
@@ -340,6 +339,7 @@ def on_save_callback():
 
 @abort_when_module_not_enable
 @abort_modified
+@check_login
 def on_close_callback():
     """Try upload image to server."""
     try:
