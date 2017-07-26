@@ -8,7 +8,7 @@ import random
 
 import nuke
 
-__version__ = '1.1.8'
+__version__ = '1.1.9'
 
 
 def rename_all_nodes():
@@ -317,6 +317,18 @@ def enable_rsmb(prefix='_'):
 
 def fix_error_read():
     """Try fix all read nodes tha has error."""
+
+    filename_dict = dict(
+        {os.path.basename(nuke.filename(n)): nuke.filename(n)
+         for n in nuke.allNodes('Read') if not n.hasError()})
+    for n in nuke.allNodes('Read'):
+        if n.hasError():
+            name = os.path.basename(nuke.filename(n))
+            new_path = filename_dict.get(name)
+            if new_path:
+                filename_knob = n['file'] if not n['proxy'].value() \
+                    and nuke.value('root.proxy') == 'true' else n['proxy']
+                filename_knob.setValue(new_path)
 
     while True:
         _created_node = []
