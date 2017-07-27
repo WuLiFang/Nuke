@@ -9,7 +9,7 @@ import random
 import nuke
 import nukescripts
 
-__version__ = '1.1.11'
+__version__ = '1.2.0'
 
 
 def rename_all_nodes():
@@ -542,5 +542,24 @@ def all_gizmo_to_group():
         gizmo_to_group(n)
 
 
-if __name__ == '__main__':
-    gizmo_to_group(nuke.selectedNode())
+def mark_enable():
+    """Mark selected node enable on script save.  """
+    n = nuke.selectedNode()
+    old_name = n.name()
+    if not old_name.startswith('_enable_'):
+        n.setName('_enable_{}'.format(old_name))
+    try:
+        n['disable'].setValue(True)
+    except AttributeError:
+        pass
+
+
+def disable_nodes(prefix):
+    """Disable multiple nodes.  """
+
+    for n in nuke.allNodes():
+        if n.name().startswith(prefix):
+            try:
+                n['disable'].setValue(True)
+            except AttributeError:
+                pass

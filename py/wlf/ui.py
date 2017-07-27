@@ -34,7 +34,7 @@ def add_menu():
         m.addCommand("选中节点:添加Dots变成90度",
                      "import wlf.edit; wlf.edit.nodes_add_dots(nuke.selectedNodes())")
         m.addCommand("选中节点:标记为_enable_",
-                     "import wlf.edit; wlf.edit.mark_enable", 'F8')
+                     "import wlf.edit; wlf.edit.mark_enable()", 'F8')
         m.addSeparator()
         m.addCommand(
             "所有读取节点:修正错误", "import wlf.edit; wlf.edit.fix_error_read()", 'F6')
