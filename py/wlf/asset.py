@@ -11,8 +11,8 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.2.12'
-SYS_CODEC = locale.getdefaultlocale()[1]
+__version__ = '0.2.13'
+OS_ENCODING = locale.getdefaultlocale()[1]
 
 
 class DropFrameCheck(threading.Thread):
@@ -53,7 +53,7 @@ class DropFrameCheck(threading.Thread):
         if not _filename:
             return ret
         if expand_frame(_filename, 1) == _filename:
-            if not os.path.isfile(_filename):
+            if not os.path.isfile(unicode(_filename).encode(OS_ENCODING)):
                 ret = self._node.frameRange()
             return ret
 
@@ -61,9 +61,10 @@ class DropFrameCheck(threading.Thread):
             self._node.firstFrame(), self._node.lastFrame() + 1)
         folder = os.path.dirname(_filename)
         _listdir = os.listdir(folder)
+        map(lambda x: unicode(x, OS_ENCODING), _listdir)
         for f in _read_framerange:
-            _file = os.path.basename(expand_frame(_filename, f))
-            if _file not in _listdir:
+            filename = unicode(os.path.basename(expand_frame(_filename, f)))
+            if filename not in _listdir:
                 ret.add([f])
         ret.compact()
         return ret
