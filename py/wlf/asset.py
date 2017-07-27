@@ -5,12 +5,13 @@ import locale
 import os
 import re
 import threading
+import time
 
 import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.2.11'
+__version__ = '0.2.12'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -36,6 +37,7 @@ class DropFrameCheck(threading.Thread):
             return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
+        time.sleep(5)
         with self.lock:
             if self._name.startswith(self._prefix) \
                     or self._node['disable'].value():
