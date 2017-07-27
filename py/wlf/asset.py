@@ -10,7 +10,7 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.2.10'
+__version__ = '0.2.11'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -36,7 +36,6 @@ class DropFrameCheck(threading.Thread):
             return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
-        # while nuke.exists(self._name):
         with self.lock:
             if self._name.startswith(self._prefix) \
                     or self._node['disable'].value():
@@ -58,9 +57,11 @@ class DropFrameCheck(threading.Thread):
 
         _read_framerange = xrange(
             self._node.firstFrame(), self._node.lastFrame() + 1)
+        folder = os.path.dirname(_filename)
+        _listdir = os.listdir(folder)
         for f in _read_framerange:
-            _file = unicode(expand_frame(_filename, f)).encode(SYS_CODEC)
-            if not FileExistsCheck(_file).ret():
+            _file = os.path.basename(expand_frame(_filename, f))
+            if _file not in _listdir:
                 ret.add([f])
         ret.compact()
         return ret
@@ -81,49 +82,25 @@ class DropFrameCheck(threading.Thread):
     @classmethod
     def show_dialog(cls, show_all=False):
         """Show all dropframes to user."""
-        return
-        _message = ''
-        for n, v in DropFrameCheck.dropframes_dict.items():
-            _filename = nuke.filename(n)
-            if not show_all:
-                if _filename in cls.showed_files:
-                    continue
-            _dropframes = nuke.value(
-                '{}.{}'.format(n.name(), cls.knob_name), '')
-            if _dropframes:
-                _message += '<tr><td>{}</td><td>'\
+        message = ''
+        for n, dropframes in cls.dropframes_dict.items():
+            filename = nuke.filename(n)
+            if not show_all\
+                    and filename in cls.showed_files:
+                continue
+            if dropframes:
+                message += '<tr><td>{}</td><td>'\
                     '<span style=\"color:red\">{}</span></td></tr>'.format(
-                        _filename, _dropframes)
-                cls.showed_files.append(_filename)
+                        filename, dropframes)
+                cls.showed_files.append(filename)
 
-        if _message:
-            _message = '<style>td{padding:8px;}</style>'\
+        if message:
+            message = '<style>td{padding:8px;}</style>'\
                 '<table>'\
                 '<tr><th>素材</th><th>缺帧</th></tr>'\
-                + _message + \
+                + message + \
                 '</table>'
-            nuke.message(_message)
-
-
-class FileExistsCheck(threading.Thread):
-    """os.path.exists() with timeout.  """
-    lock = threading.Semaphore(10)
-
-    def __init__(self, path):
-        super(FileExistsCheck, self).__init__()
-        self._path = path
-        self._ret = False
-
-    def run(self):
-        self._ret = os.path.exists(self._path)
-
-    def ret(self, timeout=0.1):
-        """Return result with @timeout.  """
-
-        with self.lock:
-            self.start()
-            self.join(timeout)
-        return self._ret
+            nuke.message(message)
 
 
 def sent_to_dir(dir_):
