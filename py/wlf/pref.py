@@ -36,6 +36,7 @@ def set_knob_default():
     nuke.knobDefault("Switch.which", "1")
     nuke.knobDefault("Viewer.input_process", "False")
     nuke.knobDefault("SoftClip.conversion", "3")
+    nuke.knobDefault("PositionToPoints.P_channel", "P")
 
     k = nuke.toNode('preferences')['UIFontSize']
     if k.value() == 11:
@@ -89,6 +90,7 @@ def add_preferences():
     _add_knob(k)
 
     k = nuke.Boolean_Knob('wlf_enable_node', '启用名称以 _enable_ 开头的节点')
+    k.setValue(True)
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
