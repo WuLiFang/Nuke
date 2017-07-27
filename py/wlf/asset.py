@@ -11,7 +11,7 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.2.13'
+__version__ = '0.2.14'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -60,8 +60,7 @@ class DropFrameCheck(threading.Thread):
         _read_framerange = xrange(
             self._node.firstFrame(), self._node.lastFrame() + 1)
         folder = os.path.dirname(_filename)
-        _listdir = os.listdir(folder)
-        map(lambda x: unicode(x, OS_ENCODING), _listdir)
+        _listdir = list(unicode(i, OS_ENCODING) for i in os.listdir(folder))
         for f in _read_framerange:
             filename = unicode(os.path.basename(expand_frame(_filename, f)))
             if filename not in _listdir:
@@ -87,7 +86,10 @@ class DropFrameCheck(threading.Thread):
         """Show all dropframes to user."""
         message = ''
         for n, dropframes in cls.dropframes_dict.items():
-            filename = nuke.filename(n)
+            try:
+                filename = nuke.filename(n)
+            except ValueError:
+                continue
             if not show_all\
                     and filename in cls.showed_files:
                 continue
