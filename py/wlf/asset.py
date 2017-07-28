@@ -10,7 +10,7 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -33,18 +33,25 @@ class DropFrameCheck(threading.Thread):
 
     def run(self):
         task = nuke.ProgressTask('检查缺帧')
-        footages = dict({nuke.filename(n): n.frameRange()
-                         for n in nuke.allNodes('Read') if not n['disable'].value()})
+        read_files = tuple((nuke.filename(n), n.frameRange())
+                           for n in nuke.allNodes('Read') if not n['disable'].value())
+        footages = {}
+        for filename, framerange in read_files:
+            footages.setdefault(filename, nuke.FrameRanges())
+            footages[filename].add(framerange)
         dropframe_dict = {}
         all_num = len(footages)
         count = 0
         for filename, framerange in footages.items():
-            print('check: {}'.format(filename))
+            if task.isCancelled():
+                return
+            framerange.compact()
+
             task.setMessage(filename)
             task.setProgress(count * 100 // all_num)
-            dropframes = self.dropframe_ranges(filename, framerange)
+            dropframes = self.dropframe_ranges(
+                filename, framerange.toFrameList())
             if str(dropframes):
-                print('dropframes: {}'.format(dropframes))
                 dropframe_dict[filename] = dropframes
                 nuke.executeInMainThread(DropFrameCheck.show_dialog)
 
@@ -54,7 +61,8 @@ class DropFrameCheck(threading.Thread):
     @staticmethod
     def dropframe_ranges(filename, framerange):
         """Return nuke framerange instance of dropframes."""
-        assert isinstance(framerange, nuke.FrameRange)
+        assert isinstance(framerange, (list, nuke.FrameRange))
+        task = nuke.ProgressTask(u'验证文件')
         ret = nuke.FrameRanges()
         if expand_frame(filename, 1) == filename:
             if not os.path.isfile(unicode(filename).encode(OS_ENCODING)):
@@ -66,10 +74,15 @@ class DropFrameCheck(threading.Thread):
             ret = framerange
             return ret
         _listdir = list(unicode(i, OS_ENCODING) for i in os.listdir(folder))
+        all_num = len(framerange)
+        count = 0
         for f in framerange:
-            filename = unicode(os.path.basename(expand_frame(filename, f)))
-            if filename not in _listdir:
+            task.setProgress(count * 100 // all_num)
+            frame_file = unicode(os.path.basename(expand_frame(filename, f)))
+            task.setMessage(frame_file)
+            if frame_file not in _listdir:
                 ret.add([f])
+            count += 1
         ret.compact()
         return ret
 
