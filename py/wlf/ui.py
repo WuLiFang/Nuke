@@ -138,7 +138,8 @@ def custom_autolabel(enable_text_style=True):
     '''
     add addition information on Node in Gui
     '''
-    _class = nuke.thisNode().Class()
+    this = nuke.thisNode()
+    _class = this.Class()
 
     def _add_to_autolabel(label):
         if not isinstance(label, str):
@@ -152,8 +153,9 @@ def custom_autolabel(enable_text_style=True):
         label = '输入通道 : ' + nuke.value('this.input')
     elif _class == 'Read':
         dropframes = str(asset.DropFrameCheck.dropframes_dict.get(
-            nuke.thisNode(), ''))
+            nuke.filename(this), ''))
         if dropframes:
+            nuke.warning('{}:[dropframes]{}'.format(this.name(), dropframes))
             if enable_text_style:
                 dropframes = '\n<span style=\"color:red\">缺帧:{}</span>'.format(
                     dropframes)
