@@ -5,13 +5,12 @@ import locale
 import os
 import re
 import threading
-import time
 
 import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.2.14'
+__version__ = '0.3.0'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -23,12 +22,10 @@ class DropFrameCheck(threading.Thread):
     knob_name = 'dropframes'
     dropframes_dict = {}
 
-    def __init__(self, node, prefix=('_',)):
+    def __init__(self, prefix=('_',)):
         threading.Thread.__init__(self)
         self.daemon = True
-        self._node = node
         self._prefix = prefix
-        self._name = self._node.name()
 
     @property
     def knob_tcl_name(self):
@@ -37,59 +34,52 @@ class DropFrameCheck(threading.Thread):
             return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
-        time.sleep(5)
-        with self.lock:
-            if self._name.startswith(self._prefix) \
-                    or self._node['disable'].value():
-                return
-            self.record()
+        task = nuke.ProgressTask('检查缺帧')
+        footages = dict({nuke.filename(n): n.frameRange()
+                         for n in nuke.allNodes('Read')})
+        dropframe_dict = {}
+        all_num = len(footages)
+        count = 0
+        for filename, framerange in footages.items():
+            print('check: {}'.format(filename))
+            task.setMessage(filename)
+            task.setProgress(count * 100 // all_num)
+            dropframes = self.dropframe_ranges(filename, framerange)
+            if str(dropframes):
+                print('dropframes: {}'.format(dropframes))
+                dropframe_dict[filename] = dropframes
+                nuke.executeInMainThread(DropFrameCheck.show_dialog)
 
-    def dropframe_ranges(self):
+            count += 1
+        DropFrameCheck.dropframes_dict = dropframe_dict
+
+    @staticmethod
+    def dropframe_ranges(filename, framerange):
         """Return nuke framerange instance of dropframes."""
+        assert isinstance(framerange, nuke.FrameRange)
         ret = nuke.FrameRanges()
-        if not self._node:
-            return ret
-        _filename = nuke.filename(self._node)
-        if not _filename:
-            return ret
-        if expand_frame(_filename, 1) == _filename:
-            if not os.path.isfile(unicode(_filename).encode(OS_ENCODING)):
-                ret = self._node.frameRange()
+        if expand_frame(filename, 1) == filename:
+            if not os.path.isfile(unicode(filename).encode(OS_ENCODING)):
+                ret = framerange
             return ret
 
-        _read_framerange = xrange(
-            self._node.firstFrame(), self._node.lastFrame() + 1)
-        folder = os.path.dirname(_filename)
+        folder = os.path.dirname(filename)
+        if not os.path.exists(folder):
+            ret = framerange
+            return ret
         _listdir = list(unicode(i, OS_ENCODING) for i in os.listdir(folder))
-        for f in _read_framerange:
-            filename = unicode(os.path.basename(expand_frame(_filename, f)))
+        for f in framerange:
+            filename = unicode(os.path.basename(expand_frame(filename, f)))
             if filename not in _listdir:
                 ret.add([f])
         ret.compact()
         return ret
 
-    def record(self):
-        """Record dropframes on knob for futher use."""
-
-        _dropframes = self.dropframe_ranges()
-
-        def _warning():
-            if str(_dropframes):
-                nuke.warning('{}: [dropframes]{}'.format(
-                    self._node.name(), _dropframes))
-        if str(_dropframes) != str(self.dropframes_dict.get(self._node, nuke.FrameRanges())):
-            self.dropframes_dict[self._node] = _dropframes
-            nuke.executeInMainThread(_warning)
-
     @classmethod
     def show_dialog(cls, show_all=False):
         """Show all dropframes to user."""
         message = ''
-        for n, dropframes in cls.dropframes_dict.items():
-            try:
-                filename = nuke.filename(n)
-            except ValueError:
-                continue
+        for filename, dropframes in cls.dropframes_dict.items():
             if not show_all\
                     and filename in cls.showed_files:
                 continue

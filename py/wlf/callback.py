@@ -25,11 +25,10 @@ def menu():
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
 
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
-    # nuke.addOnCreate(lambda: asset.DropFrameCheck(
-    #     nuke.thisNode()).start(), nodeClass='Read')
 
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
+    nuke.addOnScriptSave(lambda: asset.DropFrameCheck().start())
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
 
