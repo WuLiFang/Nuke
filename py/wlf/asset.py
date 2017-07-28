@@ -10,7 +10,7 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -34,7 +34,7 @@ class DropFrameCheck(threading.Thread):
     def run(self):
         task = nuke.ProgressTask('检查缺帧')
         footages = dict({nuke.filename(n): n.frameRange()
-                         for n in nuke.allNodes('Read')})
+                         for n in nuke.allNodes('Read') if not n['disable'].value()})
         dropframe_dict = {}
         all_num = len(footages)
         count = 0
