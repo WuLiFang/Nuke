@@ -5,7 +5,7 @@ Gizmo {
  tile_color 0xff00ff
  label "输入通道: \[value in]"
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.1.1"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.1.2"}
  addUserKnob {41 in l "Position Layer" T Shuffle2.in}
  addUserKnob {26 div_sampler l <b>取样器</b>}
  addUserKnob {22 bt_sampler_switch l Disable(禁用) t "禁用控制器, 防止设置被意外改动。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\ntry:\n    __positionkeyer_disable\nexcept NameError:\n    def __positionkeyer_disable():\n        for n in __positionkeyer_disable_set:\n            try:\n                n\['bt_reset_sampler_switch'].execute()\n            except ValueError:\n                pass\n        __positionkeyer_disable_set.clear()\n\n    nuke.callbacks.addOnScriptSave(__positionkeyer_disable)\n    __positionkeyer_disable_set = set()\n        \nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n    __positionkeyer_disable_set.add(nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
@@ -32,7 +32,7 @@ Gizmo {
  addUserKnob {22 bt_y l Y -STARTLINE T "nuke.thisNode()\['x'].setValue(False)\nnuke.thisNode()\['y'].setValue(True)"}
  addUserKnob {20 endGroup n -1}
  addUserKnob {6 __initiated l INVISIBLE +INVISIBLE +STARTLINE}
- __initiated true
+ __initiated false
 }
  Keyer {
   inputs 0
