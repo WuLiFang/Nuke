@@ -3,7 +3,6 @@ version 10.0 v4
 add_layer {P P.red P.green P.blue}
 Gizmo {
  tile_color 0xff00ff
- gl_color 0x3287ff00
  label "输入通道: \[value in]"
  note_font 微软雅黑
  addUserKnob {20 positionkeyer l "PositionKeyer v1.1.1"}
@@ -33,7 +32,7 @@ Gizmo {
  addUserKnob {22 bt_y l Y -STARTLINE T "nuke.thisNode()\['x'].setValue(False)\nnuke.thisNode()\['y'].setValue(True)"}
  addUserKnob {20 endGroup n -1}
  addUserKnob {6 __initiated l INVISIBLE +INVISIBLE +STARTLINE}
- __initiated false
+ __initiated true
 }
  Keyer {
   inputs 0
@@ -52,16 +51,17 @@ Gizmo {
   ypos -1378
  }
  Assert {
-  expression {{"\[python -execlocal n\\ =\\ nuke.thisParent()\\nif\\ not\\ n\\\['__initiated'\\].value():\\n\\ \\ \\ \\ n\\\['bt_reset_sampler_switch'\\].execute()\\n\\ \\ \\ \\ n\\\['bt_sampler_switch'\\].execute()\\n\\ \\ \\ \\ n\\\['__initiated'\\].setValue(True)\\nret\\ =\\ 1]"}}
+  expression {{"\[python -execlocal ret\\ =\\ 1\\nif\\ not\\ nuke.executing():\\n\\ \\ \\ \\ n\\ =\\ nuke.thisParent()\\n\\ \\ \\ \\ if\\ not\\ n\\\['__initiated'\\].value():\\n\\ \\ \\ \\ \\ \\ \\ \\ n\\\['bt_reset_sampler_switch'\\].execute()\\n\\ \\ \\ \\ \\ \\ \\ \\ n\\\['bt_sampler_switch'\\].execute()\\n\\ \\ \\ \\ \\ \\ \\ \\ n\\\['__initiated'\\].setValue(True)]"}}
   message "\[knob expression] is not true"
   name Assert1
   gl_color 0x32ff9e00
   label __init__
   note_font 微软雅黑
+  selected true
   xpos 180
   ypos -1352
  }
-set N3965b000 [stack 0]
+set N384e7800 [stack 0]
  Shuffle {
   in P
   name Shuffle2
@@ -107,7 +107,7 @@ set N3965b000 [stack 0]
   xpos 180
   ypos -1218
  }
-set N39633400 [stack 0]
+set N384e6c00 [stack 0]
  Dot {
   name Dot2
   gl_color 0x7bff3200
@@ -116,8 +116,8 @@ set N39633400 [stack 0]
   ypos -1374
   hide_input true
  }
-push $N3965b000
-push $N3965b000
+push $N384e7800
+push $N384e7800
  Copy {
   inputs 2
   from0 {{{parent.Keyer1.output}}}
@@ -128,7 +128,7 @@ push $N3965b000
   xpos 290
   ypos -1308
  }
-set N38561c00 [stack 0]
+set N384e6400 [stack 0]
  ChannelMerge {
   inputs 2
   name ChannelMerge2
@@ -137,7 +137,7 @@ set N38561c00 [stack 0]
   xpos 510
   ypos -1329
  }
-push $N39633400
+push $N384e6c00
  Dot {
   name Dot1
   gl_color 0xd332ff00
@@ -146,7 +146,7 @@ push $N39633400
   ypos -1374
   hide_input true
  }
-push $N38561c00
+push $N384e6400
  ChannelMerge {
   inputs 2
   operation in
@@ -156,7 +156,7 @@ push $N38561c00
   xpos 400
   ypos -1226
  }
-push $N39633400
+push $N384e6c00
  Switch {
   inputs 3
   which {{parent.combine}}
@@ -166,8 +166,8 @@ push $N39633400
   xpos 510
   ypos -1210
  }
-set N3f73f80 [stack 0]
-push $N3f73f80
+set N3da4480 [stack 0]
+push $N3da4480
  Copy {
   inputs 2
   from0 rgba.alpha
@@ -185,7 +185,7 @@ push $N3f73f80
   xpos 510
   ypos -1138
  }
-push $N3965b000
+push $N384e7800
  Viewer {
   frame_range 1-100
   fps 25
