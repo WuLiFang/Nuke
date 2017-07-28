@@ -10,16 +10,14 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
 class DropFrameCheck(threading.Thread):
     """Check drop frames and record on the node."""
 
-    lock = threading.Semaphore(10)
     showed_files = []
-    knob_name = 'dropframes'
     dropframes_dict = {}
 
     def __init__(self, prefix=('_',)):
@@ -64,7 +62,7 @@ class DropFrameCheck(threading.Thread):
             return ret
 
         folder = os.path.dirname(filename)
-        if not os.path.exists(folder):
+        if not os.path.isdir(folder):
             ret = framerange
             return ret
         _listdir = list(unicode(i, OS_ENCODING) for i in os.listdir(folder))
