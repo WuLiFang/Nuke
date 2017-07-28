@@ -19,8 +19,11 @@ def add_menu():
 
         m.addCommand('创建背板', 'import wlf.backdrop; wlf.backdrop.create_backdrop()',
                      'ctrl+alt+b', icon="backdrops.png")
+        m.addSeparator()
         m.addCommand("禁用所有_enable_节点",
                      "import wlf.edit; wlf.edit.disable_nodes(prefix='_enable_')")
+        m.addCommand("标记选中节点为_enable_",
+                     "import wlf.edit; wlf.edit.mark_enable(nuke.selectedNodes())", 'SHIFT+D')
         m.addSeparator()
         m.addCommand('选中节点:使用相对路径',
                      'import wlf.edit; wlf.edit.nodes_to_relpath(nuke.selectedNodes())',
@@ -33,8 +36,6 @@ def add_menu():
                      "import wlf.edit; wlf.edit.channels_rename(prefix='PuzzleMatte')", "F4")
         m.addCommand("选中节点:添加Dots变成90度",
                      "import wlf.edit; wlf.edit.nodes_add_dots(nuke.selectedNodes())")
-        m.addCommand("选中节点:标记为_enable_",
-                     "import wlf.edit; wlf.edit.mark_enable()", 'SHIFT+D')
         m.addSeparator()
         m.addCommand(
             "所有读取节点:修正错误", "import wlf.edit; wlf.edit.fix_error_read()", 'F6')
