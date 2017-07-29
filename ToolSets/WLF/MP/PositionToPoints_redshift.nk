@@ -1,0 +1,40 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+add_layer {P P.red P.green P.blue}
+Expression {
+ channel0 {P.red -P.green -P.blue}
+ expr0 "(a == 1)? P.red: 0"
+ channel1 {-P.red P.green -P.blue}
+ expr1 "(a == 1)? P.green: 0"
+ channel2 {-P.red -P.green P.blue}
+ expr2 "(a == 1)? P.blue: 0"
+ name Expression3
+ gl_color 0xae32ff00
+ label 清理P层
+ note_font 微软雅黑
+ selected true
+ xpos -697
+ ypos -3483
+}
+Grade {
+ channels P
+ multiply {1 1 -1 1}
+ name Grade7
+ gl_color 0x32fbff00
+ note_font 微软雅黑
+ selected true
+ xpos -697
+ ypos -3439
+}
+PositionToPoints2 {
+ display textured
+ render_mode textured
+ P_channel P
+ name PositionToPoints1
+ gl_color 0xff32eb00
+ note_font 微软雅黑
+ selected true
+ xpos -697
+ ypos -3395
+}
