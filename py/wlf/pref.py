@@ -37,6 +37,8 @@ def set_knob_default():
     nuke.knobDefault("Viewer.input_process", "False")
     nuke.knobDefault("SoftClip.conversion", "3")
     nuke.knobDefault("PositionToPoints.P_channel", "P")
+    nuke.knobDefault('Roto.cliptype', 'no clip')
+    nuke.knobDefault('RotoPaint.cliptype', 'no clip')
 
     k = nuke.toNode('preferences')['UIFontSize']
     if k.value() == 11:
