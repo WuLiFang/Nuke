@@ -1,106 +1,161 @@
-set cut_paste_input [stack 0]
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
-push $cut_paste_input
 add_layer {DiffuseFilter DiffuseFilter.red DiffuseFilter.green DiffuseFilter.blue DiffuseFilter.alpha}
-Group {
- name ColorKeyer1
+Gizmo {
  tile_color 0xff00ff
+ label "\n"
  note_font 微软雅黑
- selected true
- addUserKnob {20 tab1 l ColorKeyer_v0.2}
+ addUserKnob {20 ColorKeyer l "ColorKeyer v1.0.1"}
  addUserKnob {41 input T Shuffle2.in}
- addUserKnob {22 bt_setViewe2Input l "view input" -STARTLINE T "try: \n    viewer_node = nuke.activeViewer().node()\n    input_channel =  ' '.join(nuke.Layer(nuke.value('this.input')).channels()\[:3] + \['rgba.alpha'])\n    viewer_node.setInput(0, nuke.thisNode())\n    viewer_node\['channels'].setValue(input_channel)\n    nuke.activeViewer().activateInput(0)\nexcept AttributeError:\n    nuke.message('请先创建Viewer')"}
- addUserKnob {22 bt_setViewer2rgba l "view rgba" -STARTLINE T "try: \n    viewer_node = nuke.activeViewer().node()\n    viewer_node.setInput(0, nuke.thisNode())\n    viewer_node\['channels'].setValue('rgba')\n    nuke.activeViewer().activateInput(0)\nexcept AttributeError:\n    nuke.message('请先创建Viewer')"}
  addUserKnob {41 color T Constant1.color}
  addUserKnob {7 threshold}
- threshold 0.07
- addUserKnob {41 output T Copy3.to0}
+ threshold 0.015
  addUserKnob {6 invert -STARTLINE}
+ addUserKnob {41 output T Keyer1.output}
+ addUserKnob {41 combine l "" -STARTLINE T Keyer1.combine}
 }
  Constant {
   inputs 0
   channels rgb
-  color {0.960611999 0.1345621794 0.2650146484 1}
+  color {0.1935017854 0.08294677734 0 0.999997437}
   name Constant1
+  gl_color 0xffa43200
   note_font 微软雅黑
-  xpos 511
-  ypos -453
+  xpos 400
+  ypos -731
  }
  Input {
   inputs 0
-  name Input1
-  xpos 291
-  ypos -560
+  name Input
+  gl_color 0x5332ff00
+  xpos 290
+  ypos -706
  }
  Dot {
   name Dot8
+  gl_color 0x5bff3200
   note_font 微软雅黑
-  xpos 325
-  ypos -520
+  xpos 324
+  ypos -680
  }
-set N36fa6c00 [stack 0]
- Dot {
-  name Dot9
-  note_font 微软雅黑
-  xpos 435
-  ypos -520
- }
+set Ndd370000 [stack 0]
  Shuffle {
   in DiffuseFilter
   name Shuffle2
+  gl_color 0xff32aa00
   note_font 微软雅黑
-  xpos 401
-  ypos -497
+  xpos 290
+  ypos -646
  }
  Difference {
   inputs 2
   name Difference1
+  gl_color 0xff32d700
   note_font 微软雅黑
-  xpos 401
-  ypos -433
+  xpos 400
+  ypos -646
  }
  Invert {
   channels alpha
   name Invert1
+  gl_color 0x32aaff00
   note_font 微软雅黑
-  xpos 401
-  ypos -389
+  xpos 400
+  ypos -602
  }
  Grade {
   channels alpha
   blackpoint {{"1 - parent.threshold"}}
   name Grade1
+  gl_color 0xff9b3200
   note_font 微软雅黑
-  xpos 401
-  ypos -341
+  xpos 400
+  ypos -558
  }
  Invert {
   channels alpha
   name Invert2
+  gl_color 0xdd32ff00
   note_font 微软雅黑
-  xpos 401
-  ypos -297
+  xpos 400
+  ypos -514
   disable {{"! parent.invert"}}
  }
  Dot {
   name Dot10
+  gl_color 0xffd63200
   note_font 微软雅黑
-  xpos 435
-  ypos -256
+  xpos 434
+  ypos -413
  }
-push $N36fa6c00
+set N9a2fb400 [stack 0]
+push $Ndd370000
+push $Ndd370000
+ Copy {
+  inputs 2
+  from0 {{{parent.Keyer1.output}}}
+  to0 rgba.alpha
+  name Copy2
+  gl_color 0x32ff6c00
+  note_font 微软雅黑
+  xpos 510
+  ypos -662
+ }
+set Nb4dbd800 [stack 0]
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge2
+  gl_color 0xe6ff3200
+  note_font 微软雅黑
+  xpos 620
+  ypos -478
+ }
+push $N9a2fb400
+push $Nb4dbd800
+ ChannelMerge {
+  inputs 2
+  operation in
+  name ChannelMerge1
+  gl_color 0xe6ff3200
+  note_font 微软雅黑
+  xpos 510
+  ypos -434
+ }
+push $N9a2fb400
+ Switch {
+  inputs 3
+  which {{parent.combine}}
+  name Switch1
+  gl_color 0x324cff00
+  note_font 微软雅黑
+  xpos 620
+  ypos -418
+ }
+set N3cfb3b00 [stack 0]
+push $N3cfb3b00
  Copy {
   inputs 2
   from0 rgba.alpha
-  to0 rgba.alpha
-  name Copy3
+  to0 {{{parent.Keyer1.output}}}
+  name Copy1
+  gl_color 0xff523200
   note_font 微软雅黑
-  xpos 291
-  ypos -269
+  xpos 620
+  ypos -390
  }
  Output {
   name Output1
-  xpos 291
-  ypos -169
+  gl_color 0x7aff3200
+  xpos 620
+  ypos -346
+ }
+ Keyer {
+  inputs 0
+  operation "luminance key"
+  name Keyer1
+  gl_color 0x32d2ff00
+  note_font 微软雅黑
+  xpos 730
+  ypos -723
  }
 end_group
