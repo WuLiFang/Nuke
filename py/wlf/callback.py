@@ -63,11 +63,16 @@ def _enable_node():
 
 
 def enable_node(prefix='_'):
-    """Enable all rsmb node with given prefix."""
-
-    for i in nuke.allNodes():
-        if i.name().startswith(prefix):
-            i['disable'].setValue(False)
+    """Enable all nodes with given prefix."""
+    task = nuke.ProgressTask('启用节点')
+    nodes = tuple(n for n in nuke.allNodes() if n.name().startswith(prefix))
+    all_num = len(nodes)
+    count = 0
+    for n in nodes:
+        task.setMessage(n.name())
+        task.setProgress(count * 100 // all_num)
+        n['disable'].setValue(False)
+        count += 1
 
 
 @abort_modified
