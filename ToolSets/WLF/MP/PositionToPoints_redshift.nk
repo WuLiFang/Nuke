@@ -14,18 +14,19 @@ Expression {
  label 清理P层
  note_font 微软雅黑
  selected true
- xpos -697
- ypos -3483
+ xpos 373
+ ypos -270
 }
 Grade {
  channels P
  multiply {1 1 -1 1}
+ black_clamp false
  name Grade7
  gl_color 0x32fbff00
  note_font 微软雅黑
  selected true
- xpos -697
- ypos -3439
+ xpos 373
+ ypos -226
 }
 PositionToPoints2 {
  display textured
@@ -35,6 +36,6 @@ PositionToPoints2 {
  gl_color 0xff32eb00
  note_font 微软雅黑
  selected true
- xpos -697
- ypos -3395
+ xpos 373
+ ypos -182
 }
