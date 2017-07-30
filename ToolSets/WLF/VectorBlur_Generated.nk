@@ -1,0 +1,24 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+VectorGenerator {
+ motionEstimation Regularized
+ matteChannel "Source Alpha"
+ name VectorGenerator2
+ gl_color 0xff32a800
+ note_font 微软雅黑
+ selected true
+ xpos 1612
+ ypos -2307
+}
+VectorBlur2 {
+ uv motion
+ scale 1
+ soft_lines true
+ name VectorBlur2_2
+ gl_color 0xd232ff00
+ note_font 微软雅黑
+ selected true
+ xpos 1612
+ ypos -2263
+}

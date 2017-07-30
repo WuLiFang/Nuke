@@ -10,7 +10,7 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -19,6 +19,7 @@ class DropFrameCheck(threading.Thread):
 
     showed_files = []
     dropframes_dict = {}
+    running = False
 
     def __init__(self, prefix=('_',)):
         threading.Thread.__init__(self)
@@ -32,6 +33,11 @@ class DropFrameCheck(threading.Thread):
             return '{}.{}'.format(self._node.name(), self.knob_name)
 
     def run(self):
+        if DropFrameCheck.running:
+            return
+
+        DropFrameCheck.running = True
+
         task = nuke.ProgressTask('检查缺帧')
         read_files = tuple((nuke.filename(n), n.frameRange())
                            for n in nuke.allNodes('Read') if not n['disable'].value())
@@ -57,6 +63,8 @@ class DropFrameCheck(threading.Thread):
 
             count += 1
         DropFrameCheck.dropframes_dict = dropframe_dict
+
+        DropFrameCheck.running = False
 
     @staticmethod
     def dropframe_ranges(filename, framerange):

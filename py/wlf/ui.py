@@ -17,43 +17,42 @@ def add_menu():
     def _edit(menu):
         m = menu.addMenu("编辑")
 
-        m.addCommand('创建背板', 'import wlf.backdrop; wlf.backdrop.create_backdrop()',
-                     'ctrl+alt+b', icon="backdrops.png")
-        m.addSeparator()
-        m.addCommand("禁用所有_enable_节点",
-                     "import wlf.edit; wlf.edit.disable_nodes(prefix='_enable_')")
-        m.addCommand("标记选中节点为_enable_",
-                     "import wlf.edit; wlf.edit.mark_enable(nuke.selectedNodes())", 'SHIFT+D')
-        m.addSeparator()
-        m.addCommand('选中节点:使用相对路径',
-                     'import wlf.edit; wlf.edit.nodes_to_relpath(nuke.selectedNodes())',
-                     'F2', icon="utilitiesfolder.png")
         m.addCommand(
-            "选中节点:分离rgba", "import wlf.edit; wlf.edit.shuffle_rgba(nuke.selectedNode())")
-        m.addCommand('选中节点:分离所有通道', 'import wlf.edit; wlf.edit.split_layers(nuke.selectedNode())',
+            "分离rgba", "import wlf.edit; wlf.edit.shuffle_rgba(nuke.selectedNode())")
+        m.addCommand('分离所有通道', 'import wlf.edit; wlf.edit.split_layers(nuke.selectedNode())',
                      'F3', icon="SplitLayers.png")
-        m.addCommand("选中节点:重命名PuzzleMatte",
+        m.addCommand("重命名PuzzleMatte",
                      "import wlf.edit; wlf.edit.channels_rename(prefix='PuzzleMatte')", "F4")
-        m.addCommand("选中节点:添加Dots变成90度",
-                     "import wlf.edit; wlf.edit.nodes_add_dots(nuke.selectedNodes())")
+        m.addSeparator()
+        m.addCommand("节点标记为_enable_",
+                     "import wlf.edit; wlf.edit.mark_enable(nuke.selectedNodes())", 'SHIFT+D')
+        m.addCommand("禁用所有_enable_节点",
+                     "import wlf.edit; wlf.edit.disable_nodes(prefix='_enable_')", "CTRL+SHIFT+D")
         m.addSeparator()
         m.addCommand(
-            "所有读取节点:修正错误", "import wlf.edit; wlf.edit.fix_error_read()", 'F6')
-        m.addCommand("所有读取节点:显示所有缺帧",
+            "修正错误读取节点", "import wlf.edit; wlf.edit.fix_error_read()", 'F6')
+        m.addCommand("显示所有缺帧",
                      "import wlf.asset; wlf.asset.DropFrameCheck.show_dialog(True)")
-        m.addCommand("所有读取节点:序列替单帧",
+        m.addCommand("单帧转序列",
                      "import wlf.edit; wlf.edit.replace_sequence()")
-        m.addSeparator()
-        m.addCommand("所有节点:删除未使用的节点",
+        m.addCommand("清理无用节点",
                      "import wlf.edit; wlf.edit.delete_unused_nodes(message=True)")
-        m.addCommand("所有节点:根据背板重命名",
-                     "import wlf.edit; wlf.edit.rename_all_nodes()")
-        m.addCommand("所有节点:根据背板分割文件",
-                     "import wlf.edit; wlf.edit.splitByBackdrop()")
-        m.addCommand("所有节点:添加Dots变成90度",
-                     "import wlf.edit; wlf.edit.nodes_add_dots(nuke.allNodes())")
-        m.addCommand("所有节点:Gizmo转Group",
+        m.addCommand('节点转为相对路径',
+                     'import wlf.edit; wlf.edit.nodes_to_relpath(nuke.selectedNodes())',
+                     icon="utilitiesfolder.png")
+        m.addCommand("所有Gizmo转Group",
                      "import wlf.edit; wlf.edit.all_gizmo_to_group()")
+        n = m.addMenu('整理文件')
+        n.addCommand('创建背板', 'import wlf.backdrop; wlf.backdrop.create_backdrop()',
+                     'ctrl+alt+b', icon="backdrops.png")
+        n.addCommand("根据背板重命名所有节点",
+                     "import wlf.edit; wlf.edit.rename_all_nodes()")
+        n.addCommand("根据背板分割为多个文件文件",
+                     "import wlf.edit; wlf.edit.splitByBackdrop()")
+        n.addCommand("节点添加Dots变成90度",
+                     "import wlf.edit; wlf.edit.nodes_add_dots(nuke.selectedNodes())")
+        n.addCommand("所有节点添加Dots变成90度",
+                     "import wlf.edit; wlf.edit.nodes_add_dots(nuke.allNodes())")
 
     def _comp(menu):
         m = menu.addMenu('合成')
