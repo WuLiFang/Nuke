@@ -21,7 +21,7 @@ try:
     else:
         raise ImportError(u'not a dir: {}'.format(CGTW_PATH))
 except ImportError:
-    print(u'导入cgtw模块失败, CGTeamWork相关功能失效。')
+    print(u'**错误**导入cgtw模块失败, CGTeamWork相关功能失效。')
     MODULE_ENABLE = False
 
 
