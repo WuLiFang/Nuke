@@ -12,20 +12,20 @@ import nuke
 
 from .asset import copy
 
-
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 MODULE_ENABLE = True
 try:
-    sys.path.append(CGTW_PATH)
-    import cgtw
-except ImportError:
-    if not os.path.isdir(CGTW_PATH):
-        raise ImportError('not a dir: {}'.format(CGTW_PATH))
+    if os.path.isdir(CGTW_PATH):
+        sys.path.append(CGTW_PATH)
+        import cgtw
     else:
-        MODULE_ENABLE = False
+        raise ImportError(u'not a dir: {}'.format(CGTW_PATH))
+except ImportError:
+    print(u'导入cgtw模块失败, CGTeamWork相关功能失效。')
+    MODULE_ENABLE = False
 
 
-__version__ = '0.4.9'
+__version__ = '0.4.10'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
