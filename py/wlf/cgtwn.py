@@ -25,7 +25,7 @@ except ImportError:
         MODULE_ENABLE = False
 
 
-__version__ = '0.4.8'
+__version__ = '0.4.9'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -99,8 +99,8 @@ class CGTeamWork(object):
             ret = False
         else:
             ret = cgtw.tw().sys().get_socket_status()
-            print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
         CGTeamWork.is_logged_in = ret
+        print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
         return ret
 
     @classmethod
