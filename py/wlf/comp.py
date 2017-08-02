@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.14.0'
+__version__ = '0.14.2'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -201,13 +201,18 @@ class Comp(object):
             raise FootageError(u'没有读取节点')
 
         n = None
+        root_format = None
         for n in _nodes:
             self._setup_node(n)
+            if n.format().name() == 'HD_1080':
+                root_format = 'HD_1080'
         if n:
+            if not root_format:
+                root_format = n.format()
             nuke.Root()['first_frame'].setValue(n['first'].value())
             nuke.Root()['last_frame'].setValue(n['last'].value())
             nuke.Root()['lock_range'].setValue(True)
-            nuke.Root()['format'].setValue(n.format().name())
+            nuke.Root()['format'].setValue(root_format)
 
     def create_nodes(self):
         """Create nodes that a comp need."""
@@ -326,22 +331,16 @@ class Comp(object):
         nuke.scriptSave(_path)
 
         # Render png
-        for read_node in nuke.allNodes('Read'):
-            name = read_node.name()
-            print(u'渲染: {}'.format(name))
+        for n in nuke.allNodes('Read'):
+            name = n.name()
             if name in ('MP', 'Read_Write_JPG'):
                 continue
-            n = nuke.nodes.Write(
-                inputs=[read_node], channels='rgba')
-            n['file'].fromUserText(os.path.join(_dir, os.path.splitext(
-                os.path.basename(_path))[0], '{}.png'.format(name)))
             for frame in (n.firstFrame(), n.lastFrame(), int(nuke.numvalue(u'_Write.knob.frame'))):
                 try:
-                    nuke.execute(n, frame, frame)
+                    render_png(n, frame)
                     break
                 except RuntimeError:
                     continue
-            nuke.delete(n)
 
         # Render Single Frame
         n = nuke.toNode(u'_Write')
@@ -664,9 +663,12 @@ if not nuke.GUI:
     nukescripts.PythonPanel = object
 
 
-def render_png(nodes, frame=None):
+def render_png(nodes, frame=None, show=False):
     """create png for given @nodes."""
+    assert isinstance(nodes, (nuke.Node, list, tuple))
     assert nuke.value('root.project_directory'), u'未设置工程目录'
+    if isinstance(nodes, nuke.Node):
+        nodes = (nodes,)
     script_name = os.path.join(os.path.splitext(
         os.path.basename(nuke.value('root.name')))[0])
     for read_node in nodes:
@@ -681,7 +683,7 @@ def render_png(nodes, frame=None):
         nuke.execute(n, frame, frame)
 
         nuke.delete(n)
-    if nuke.GUI:
+    if show:
         url_open(
             'file://{}/{}'.format(nuke.value('root.project_directory'), script_name))
 

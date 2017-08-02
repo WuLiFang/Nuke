@@ -61,7 +61,8 @@ def add_menu():
         m.addCommand('吾立方批量合成', "import wlf.comp; wlf.comp.Comp.show_dialog()",
                      icon='autocomp.png')
         m.addCommand('选中节点当前帧输出png',
-                     "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes())", 'SHIFT+F7')
+                     "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes(), show=True)",
+                     'SHIFT+F7')
         m.addCommand('arnold预合成', "import wlf.precomp; wlf.precomp.arnold()",
                      icon='autocomp.png')
         _path = os.path.abspath(os.path.join(
