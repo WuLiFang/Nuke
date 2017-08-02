@@ -3,25 +3,26 @@ version 10.0 v4
 add_layer {MotionVectors MotionVectors.red MotionVectors.green MotionVectors.blue MotionVectors.alpha}
 Gizmo {
  tile_color 0xff3300ff
- gl_color 0xb3ff3200
  label "修复正负inf和正负nan的速度层\n(\[value this.channel])"
  note_font 微软雅黑
- addUserKnob {20 MotionFix l "MotionFix v0.1.1"}
+ addUserKnob {20 MotionFix l "MotionFix v0.2.0"}
+ addUserKnob {6 display_range l 显示错误范围 +STARTLINE}
  addUserKnob {41 channel T Shuffle3.in}
  addUserKnob {7 range R 1 10}
  range 1
  addUserKnob {7 strength t 强度 R 1 10}
  strength 1
  addUserKnob {41 output T Merge1.output}
+ addUserKnob {6 clamp l 限制值范围 t 超过画布长宽的的数值直接用画布长宽代替 +STARTLINE}
 }
  Input {
   inputs 0
   name Input
   gl_color 0xc032ff00
-  xpos -40
-  ypos -151
+  xpos -119
+  ypos -169
  }
-set N57484000 [stack 0]
+set Ncbd71400 [stack 0]
  Shuffle {
   in MotionVectors
   blue red
@@ -30,10 +31,10 @@ set N57484000 [stack 0]
   name Shuffle3
   gl_color 0xff7a3200
   note_font 微软雅黑
-  xpos -40
-  ypos -440
+  xpos -119
+  ypos -458
  }
-set N66a2bc00 [stack 0]
+set Ncbd71800 [stack 0]
  Expression {
   channel0 rgba
   expr3 "(abs(u) == inf || abs(v) == inf ) ? 1 : 0"
@@ -41,10 +42,10 @@ set N66a2bc00 [stack 0]
   gl_color 0x4cff3200
   label 正负inf的alpha
   note_font 微软雅黑
-  xpos -40
-  ypos -396
+  xpos -119
+  ypos -414
  }
-set N66a2b800 [stack 0]
+set Ncbd71c00 [stack 0]
  Expression {
   channel0 rgba
   expr3 "(abs(u) == nan || abs(v) == nan) ? 1 : 0"
@@ -52,40 +53,54 @@ set N66a2b800 [stack 0]
   gl_color 0x4cff3200
   label 正负nan的alpha
   note_font 微软雅黑
-  xpos -40
-  ypos -344
+  xpos -119
+  ypos -362
  }
-push $N66a2b800
+push $Ncbd71c00
  ChannelMerge {
   inputs 2
   name ChannelMerge1
   gl_color 0x3285ff00
   note_font 微软雅黑
-  xpos 70
-  ypos -352
+  xpos -9
+  ypos -370
  }
-set N66a2a800 [stack 0]
+set N76474000 [stack 0]
+push $N76474000
+ ChannelMerge {
+  inputs 2
+  A rgba.red
+  output rgba.red
+  mix 0.5
+  name ChannelMerge2
+  gl_color 0x328aff00
+  note_font 微软雅黑
+  selected true
+  xpos 333
+  ypos -366
+ }
+push $N76474000
  FilterErode {
   size {{"-50 * parent.range"}}
   filter gaussian
   name FilterErode1
   gl_color 0xff327800
   note_font 微软雅黑
-  xpos 70
-  ypos -292
+  xpos -9
+  ypos -310
  }
-push $N66a2a800
+push $N76474000
  Dilate {
   channels alpha
   size 3
   name Dilate3
   gl_color 0x3271ff00
   note_font 微软雅黑
-  xpos 180
-  ypos -292
+  xpos 101
+  ypos -310
  }
-push $N66a2a800
-push $N66a2bc00
+push $N76474000
+push $Ncbd71800
  Multiply {
   inputs 1+1
   channels motion
@@ -93,8 +108,8 @@ push $N66a2bc00
   name Multiply1
   gl_color 0x5bff3200
   note_font 微软雅黑
-  xpos 70
-  ypos -248
+  xpos -9
+  ypos -266
  }
  Dilate {
   inputs 1+1
@@ -103,8 +118,8 @@ push $N66a2bc00
   name Dilate1
   gl_color 0xff329800
   note_font 微软雅黑
-  xpos 180
-  ypos -248
+  xpos 101
+  ypos -266
  }
  Multiply {
   inputs 1+1
@@ -113,10 +128,21 @@ push $N66a2bc00
   name Multiply3
   gl_color 0x3b32ff00
   note_font 微软雅黑
-  xpos 180
-  ypos -204
+  xpos 101
+  ypos -222
  }
-push $N57484000
+ Clamp {
+  channels motion
+  minimum {{-maximum} {-maximum} {-maximum} {-maximum}}
+  maximum {{width} {height} {maximum.r} {maximum.g}}
+  name Clamp1
+  gl_color 0xc5ff3200
+  note_font 微软雅黑
+  xpos 101
+  ypos -178
+  disable {{"! parent.clamp"}}
+ }
+push $Ncbd71400
  Merge2 {
   inputs 2
   operation copy
@@ -126,14 +152,22 @@ push $N57484000
   name Merge1
   gl_color 0x323dff00
   note_font 微软雅黑
-  selected true
-  xpos 180
-  ypos -160
+  xpos 145
+  ypos -151
+ }
+ Switch {
+  inputs 2
+  which {{parent.display_range}}
+  name Switch1
+  gl_color 0xff6d3200
+  note_font 微软雅黑
+  xpos 373
+  ypos -153
  }
  Output {
   name Output1
   gl_color 0x7b32ff00
-  xpos 180
-  ypos -116
+  xpos 338
+  ypos -54
  }
 end_group
