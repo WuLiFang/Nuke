@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.14.2'
+__version__ = '0.14.3'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -672,6 +672,8 @@ def render_png(nodes, frame=None, show=False):
     script_name = os.path.join(os.path.splitext(
         os.path.basename(nuke.value('root.name')))[0])
     for read_node in nodes:
+        if read_node.hasError() or read_node['disable'].value():
+            continue
         name = read_node.name()
         print(u'渲染: {}'.format(name))
         n = nuke.nodes.Write(
