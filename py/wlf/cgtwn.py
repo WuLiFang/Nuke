@@ -2,6 +2,7 @@
 """
 cgteamwork integration with nuke.
 """
+# TODO: check account
 import locale
 import os
 import re
@@ -25,7 +26,7 @@ except ImportError:
     MODULE_ENABLE = False
 
 
-__version__ = '0.4.10'
+__version__ = '0.4.11'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -33,7 +34,7 @@ def abort_modified(func):
     """(Decorator)Abort function when project has been modified."""
 
     def _func():
-        if nuke.modified():
+        if nuke.Root().modified():
             return False
         func()
     return _func

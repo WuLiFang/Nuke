@@ -51,7 +51,7 @@ def abort_modified(func):
     """(Decorator)Abort function when project has been modified."""
 
     def _func():
-        if nuke.modified():
+        if nuke.Root().modified():
             return False
         func()
     return _func
@@ -184,7 +184,7 @@ def _gizmo_to_group_update_ui():
 
 
 def _autoplace():
-    if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.modified():
+    if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.Root().modified():
         map(nuke.autoplace, nuke.allNodes())
 
 

@@ -102,6 +102,7 @@ class CurrentViewer(object):
 
 def channels_rename(prefix='PuzzleMatte'):
     """Shuffle channel to given name channel in mask_extra layer."""
+    # TODO: non-modal pannel.
 
     def _pannel_order(name):
         ret = name.replace(prefix + '.', '!.')

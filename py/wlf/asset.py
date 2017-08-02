@@ -10,7 +10,7 @@ import nuke
 
 from .files import expand_frame, copy
 
-__version__ = '0.3.5'
+__version__ = '0.3.7'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -51,6 +51,8 @@ class DropFrameCheck(threading.Thread):
         for filename, framerange in footages.items():
             if task.isCancelled():
                 return
+            if not filename:
+                continue
             framerange.compact()
 
             task.setMessage(filename)
