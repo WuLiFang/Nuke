@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Comp footages to a .nk file, can be run as script.  """
+"""Comp footages adn create output, can be run as script.  """
 
 import json
 import locale
@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.13.16'
+__version__ = '0.14.0'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -100,6 +100,7 @@ class Comp(object):
     tag_knob_name = u'wlf_tag'
 
     def __init__(self, config=None):
+        print(u'\n吾立方批量合成 {}\n'.format(__version__))
         with open(os.path.join(__file__, '../comp.tags.json')) as f:
             tags = json.load(f)
             self._regular_tags = tags['regular_tags']
@@ -170,21 +171,22 @@ class Comp(object):
             # Get footage in subdir
             print(u'文件夹 {}:'.format(dir_))
             if not re.match(self._config['dir_pat'], os.path.basename(dir_.rstrip('\\/'))):
-                print(u'\t\t\t不匹配文件夹正则, 跳过\n')
+                print(u'\t不匹配文件夹正则, 跳过\n')
                 continue
 
             _footages = [i for i in nuke.getFileNameList(dir_) if
                          not i.endswith(('副本', '.lock'))]
             if _footages:
                 for f in _footages:
-                    print(u'\t' * 3 + f)
                     if os.path.isdir(os.path.join(dir_, f)):
+                        print(u'\t文件夹: {}'.format(f))
                         continue
-                    elif re.match(self._config['footage_pat'], f, flags=re.I):
+                    print(u'\t素材: {}'.format(f))
+                    if re.match(self._config['footage_pat'], f, flags=re.I):
                         nuke.createNode(
                             u'Read', 'file {{{}/{}}}'.format(dir_, f))
                     else:
-                        print(u'\t\t\t不匹配素材正则, 跳过\n')
+                        print(u'\t\t不匹配素材正则, 跳过\n')
             print('')
         print(u'{:-^30s}'.format(u'结束 导入素材'))
 
@@ -205,6 +207,7 @@ class Comp(object):
             nuke.Root()['first_frame'].setValue(n['first'].value())
             nuke.Root()['last_frame'].setValue(n['last'].value())
             nuke.Root()['lock_range'].setValue(True)
+            nuke.Root()['format'].setValue(n.format().name())
 
     def create_nodes(self):
         """Create nodes that a comp need."""
@@ -312,7 +315,7 @@ class Comp(object):
         """Save .nk file and render .jpg file."""
 
         print(u'{:-^30s}'.format(u'开始 输出'))
-        _path = self._config['save_path'].replace('\\', '/')
+        _path = self._config['save_path'].replace('\\', '/').lower()
         _dir = os.path.dirname(_path)
         if not os.path.exists(_dir):
             os.makedirs(_dir)
@@ -321,6 +324,24 @@ class Comp(object):
         print(u'保存为:\n\t\t\t{}\n'.format(_path))
         nuke.Root()['name'].setValue(_path)
         nuke.scriptSave(_path)
+
+        # Render png
+        for read_node in nuke.allNodes('Read'):
+            name = read_node.name()
+            print(u'渲染: {}'.format(name))
+            if name in ('MP', 'Read_Write_JPG'):
+                continue
+            n = nuke.nodes.Write(
+                inputs=[read_node], channels='rgba')
+            n['file'].fromUserText(os.path.join(_dir, os.path.splitext(
+                os.path.basename(_path))[0], '{}.png'.format(name)))
+            for frame in (n.firstFrame(), n.lastFrame(), int(nuke.numvalue(u'_Write.knob.frame'))):
+                try:
+                    nuke.execute(n, frame, frame)
+                    break
+                except RuntimeError:
+                    continue
+            nuke.delete(n)
 
         # Render Single Frame
         n = nuke.toNode(u'_Write')
@@ -641,6 +662,28 @@ class Comp(object):
 
 if not nuke.GUI:
     nukescripts.PythonPanel = object
+
+
+def render_png(nodes, frame=None):
+    """create png for given @nodes."""
+    assert nuke.value('root.project_directory'), u'未设置工程目录'
+    script_name = os.path.join(os.path.splitext(
+        os.path.basename(nuke.value('root.name')))[0])
+    for read_node in nodes:
+        name = read_node.name()
+        print(u'渲染: {}'.format(name))
+        n = nuke.nodes.Write(
+            inputs=[read_node], channels='rgba')
+        n['file'].fromUserText(os.path.join(
+            script_name, '{}.png'.format(name)))
+        if not frame:
+            frame = nuke.frame()
+        nuke.execute(n, frame, frame)
+
+        nuke.delete(n)
+    if nuke.GUI:
+        url_open(
+            'file://{}/{}'.format(nuke.value('root.project_directory'), script_name))
 
 
 class CompDialog(nukescripts.PythonPanel):
