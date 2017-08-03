@@ -798,6 +798,10 @@ class CompDialog(nukescripts.PythonPanel):
 <head>
     <meta charset="UTF-8">
     <style>
+        table {
+            margin: auto
+        }
+
         td {
             padding: 8px
         }
@@ -813,7 +817,6 @@ class CompDialog(nukescripts.PythonPanel):
 
         .info {
             white-space: pre;
-            width: 100%
         }
     </style>
     <script language="javascript">
