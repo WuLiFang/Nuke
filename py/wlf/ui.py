@@ -63,7 +63,7 @@ def add_menu():
         m.addCommand('当前帧输出png',
                      "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes(), show=True)",
                      'SHIFT+F7')
-        m.addCommand('redshift预合成', "import wlf.precomp; wlf.precomp.redshift()",
+        m.addCommand('redshift预合成', "import wlf.precomp; wlf.precomp.redshift(nuke.selectedNodes())",
                      icon='autocomp.png')
         m.addCommand('arnold预合成', "import wlf.precomp; wlf.precomp.arnold()",
                      icon='autocomp.png')
