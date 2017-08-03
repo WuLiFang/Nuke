@@ -101,12 +101,12 @@ def add_preferences():
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
+    k = nuke.Text_Knob('wlf_on_script_close', '保存并退出时')
+    _add_knob(k)
+
     k = nuke.Boolean_Knob('wlf_render_jpg', '渲染_Write节点单帧')
     k.setValue(True)
     k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Text_Knob('wlf_on_script_close', '保存并退出时')
     _add_knob(k)
 
     k = nuke.Boolean_Knob('wlf_send_to_dir', '发送至渲染文件夹(Nuke渲染不支持中文路径)')
