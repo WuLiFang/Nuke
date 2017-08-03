@@ -126,6 +126,7 @@ def sent_to_dir(dir_):
 
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
+    # TODO: progressTask
     # print(mime_type, data)
     if mime_type != 'text/plain':
         return

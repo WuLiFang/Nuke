@@ -1,5 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Create contact sheet from all shot images."""
+# TODO: html implementation.
 
 import os
 import sys
