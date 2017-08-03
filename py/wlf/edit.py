@@ -9,7 +9,7 @@ import random
 import nuke
 import nukescripts
 
-__version__ = '1.2.2'
+__version__ = '1.2.3'
 
 
 def rename_all_nodes():
@@ -354,7 +354,7 @@ def delete_unused_nodes(message=False):
 
     def _is_used(n):
         if n.name().startswith('_')\
-                or n.Class() in ['BackdropNode', 'Read', 'Write', 'Viewer', 'GenerateLUT']\
+                or n.Class() in ['BackdropNode', 'Read', 'Write', 'Viewer', 'GenerateLUT', 'wlf_Write']\
                 or n.name() == 'VIEWER_INPUT':
             return True
         nodes_dependent_this = (n for n in n.dependent()
