@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.14.3'
+__version__ = '0.14.4'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -786,16 +786,63 @@ class CompDialog(nukescripts.PythonPanel):
 
         infos = ''
         for shot in sorted(shot_info.keys()):
-            infos += u'<tr>'\
-                u'<td><img src="images/{0}.jpg" height="200" alt="<无图像>"></img></td>\n'\
-                u'<td>{0}</td>\n<td>{1}</td></tr>\n'.format(
-                    shot, shot_info[shot])
-        infos = u'<head>\n<meta charset="UTF-8">\n<style>td{{padding:8px;}}</style>\n</head>\n'\
-            u'<table><tr><th>图像</th><th>镜头</th><th>信息</th></tr>\n'\
-            u'{}</table>'.format(infos)
+            infos += u'''\
+    <tr>
+        <td class="shot"><img src="images/{0}.jpg" class="preview"></img><br>{0}</td>
+        <td class="info">{1}</td>
+    </tr>
+'''.format(shot, shot_info[shot])
+        html_page = r"""
+<!DOCTYPE HTML>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        td {
+            padding: 8px
+        }
+
+        img.preview {
+            height: 200px
+        }
+
+        .shot {
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif
+        }
+
+        .info {
+            white-space: pre;
+            width: 100%
+        }
+    </style>
+    <script language="javascript">
+        window.onload = function showtable() {
+            var tablename = document.getElementById("mytable");
+            var li = tablename.getElementsByTagName("tr");
+            for (var i = 0; i <= li.length; i++) {
+                if (i % 2 == 0) {
+                    li[i].style.backgroundColor = "#EEE";
+                } else li[i].style.backgroundColor = "#FFF";
+            }
+        }
+    </script>
+</head>
+"""
+        html_page += u'''
+<body>
+    <table id="mytable">
+    <tr>
+        <th>镜头</th>
+        <th>信息</th>
+    </tr>
+    {}
+    </table>
+</body>
+'''.format(infos)
         log_path = os.path.join(self.config['output_dir'], u'批量合成日志.html')
         with open(log_path, 'w') as f:
-            f.write(infos.encode('UTF-8'))
+            f.write(html_page.encode('UTF-8'))
         # nuke.executeInMainThread(nuke.message, args=(errors,))
         url_open(u'file://{}'.format(log_path))
         url_open(
