@@ -18,7 +18,7 @@ import nukescripts
 
 from wlf.files import url_open
 
-__version__ = '0.14.4'
+__version__ = '0.14.5'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -792,8 +792,7 @@ class CompDialog(nukescripts.PythonPanel):
         <td class="info">{1}</td>
     </tr>
 '''.format(shot, shot_info[shot])
-        html_page = r"""
-<!DOCTYPE HTML>
+        html_page = r"""<!DOCTYPE HTML>
 
 <head>
     <meta charset="UTF-8">
@@ -806,13 +805,17 @@ class CompDialog(nukescripts.PythonPanel):
             padding: 8px
         }
 
+        th {
+            font-family: "Microsoft YaHei", SimHei, sans-serif
+        }
+
         img.preview {
             height: 200px
         }
 
         .shot {
             text-align: center;
-            font-family: Verdana, Geneva, Tahoma, sans-serif
+            font-family: "Microsoft YaHei", Verdana, Geneva, Tahoma, sans-serif
         }
 
         .info {
