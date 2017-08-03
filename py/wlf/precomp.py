@@ -1,7 +1,62 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
+import os
+import re
 
 import nuke
+
+__version__ = '0.1.0'
+
+
+def redshift(nodes):
+    """Precomp reshift spereated footage."""
+    layers = ('DiffuseLighting', 'DiffuseFilter', 'SSS', 'Reflections',
+              'Refractions', 'GI', 'Emission', 'Caustics',
+              'SpecularLighting', 'TransTint', 'Z', 'MotionVectors',
+              'BumpNormals', 'P', 'PuzzleMatte')
+    source = {get_layer(node, layers): node for node in nodes}
+    assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
+    n = source.get('DiffuseLighting')
+
+    def _layer_order(name):
+        try:
+            return '{:05d}_{}'.format(layers.index(name), name)
+        except ValueError:
+            return '~{}'.format(name)
+    layers = sorted(source.keys(), key=_layer_order)
+    for layer in layers:
+        node = source.get(layer)
+        if not (layer and node):
+            continue
+
+        # plus layer
+        if layer in ('SSS', 'Reflections', 'Refractions', 'SpecularLighting',
+                     'GI', 'Emission', 'Caustics'):
+            n = nuke.nodes.Merge2(
+                inputs=[n, node], operation='plus', label=layer)
+        # depth layer
+        if layer in ('Z'):
+            n = nuke.nodes.Copy(
+                inputs=[n, node], from0='depth.Z', to0='depth.Z', label='depth')
+        # copy layer
+        if layer in ('MotionVectors', 'BumpNormals', 'P', 'DiffuseFilter', 'TransTint'):
+            nuke.Layer('{0} {0}.red {0}.green {0}.blue'.format(layer))
+            n = nuke.nodes.Merge2(
+                inputs=[n, node], operation='copy',
+                Achannels=layer, Bchannels='none', output=layer, label=layer)
+        if layer.startswith('PuzzleMatte'):
+            n = nuke.nodes.Merge2(
+                inputs=[n, node], operation='copy',
+                Achannels=layer, Bchannels='none', output=layer, label=layer)
+
+
+def get_layer(node, layers):
+    """Return node layer name.  """
+    basename = os.path.basename(nuke.filename(node))
+    for layer in layers:
+        match = re.search(r'\b({}\d*)\b'.format(layer), basename)
+        if match:
+            return match.group(1)
 
 
 def arnold():
