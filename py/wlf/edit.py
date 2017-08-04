@@ -9,7 +9,7 @@ import random
 import nuke
 import nukescripts
 
-__version__ = '1.2.3'
+__version__ = '1.3.0'
 
 
 def rename_all_nodes():
@@ -198,6 +198,17 @@ def add_channel(name):
     nuke.Layer(layer, [name])
 
 
+def add_layer(layername):
+    """Add layer to nuke from @layername.  """
+
+    if layername == 'depth':
+        channels = ['depth.z']
+    else:
+        channels = list('{}.{}'.format(layername, channel)
+                        for channel in ('red', 'green', 'blue', 'alpha'))
+    nuke.Layer(layername, channels)
+
+
 def replace_node(node, repl_node):
     """Replace all nodes except @repl_node input to @node with @repl_node."""
 
@@ -354,7 +365,8 @@ def delete_unused_nodes(message=False):
 
     def _is_used(n):
         if n.name().startswith('_')\
-                or n.Class() in ['BackdropNode', 'Read', 'Write', 'Viewer', 'GenerateLUT', 'wlf_Write']\
+                or n.Class() in \
+                ['BackdropNode', 'Read', 'Write', 'Viewer', 'GenerateLUT', 'wlf_Write']\
                 or n.name() == 'VIEWER_INPUT':
             return True
         nodes_dependent_this = (n for n in n.dependent()
@@ -567,3 +579,54 @@ def disable_nodes(prefix):
                 n['disable'].setValue(True)
             except AttributeError:
                 pass
+
+
+def autoplace_all():
+    """Place all nodes position so them won't overlap."""
+
+    for n in nuke.allNodes():
+        nuke.autoplace(n)
+
+
+def insert_node(node, input_node):
+    """Insert @node after @input_node."""
+
+    for n in nuke.allNodes():
+        for i in range(n.inputs()):
+            if n.input(i) == input_node:
+                n.setInput(i, node)
+
+    node.setInput(0, input_node)
+
+
+def get_max(node, channel='rgb'):
+    '''
+    Return themax values of a given node's image at middle frame
+
+    @parm n: node
+    @parm channel: channel for sample
+    '''
+    first = node.firstFrame()
+    last = node.lastFrame()
+    middle = (first + last) // 2
+    ret = 0
+
+    n = nuke.nodes.Invert(channels=channel, inputs=[node])
+    n = nuke.nodes.MinColor(
+        channels=channel, target=0, inputs=[n])
+
+    for frame in (middle, first, last):
+        try:
+            nuke.execute(n, frame, frame)
+        except RuntimeError:
+            continue
+        ret = max(ret, n['pixeldelta'].value() + 1)
+        if ret > 0.7:
+            break
+
+    print(u'getMax({1}, {0}) -> {2}'.format(channel, node.name(), ret))
+
+    nuke.delete(n.input(0))
+    nuke.delete(n)
+
+    return ret

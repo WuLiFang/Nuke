@@ -5,10 +5,18 @@ import os
 import re
 import shutil
 import locale
+import string
 from subprocess import call, Popen
 
-__version__ = '0.2.0'
+from wlf.config import Config
+
+__version__ = '0.3.0'
 OS_ENCODING = locale.getdefaultlocale()[1]
+
+REDSHIFT_LAYERS = ('DiffuseLighting', 'DiffuseFilter', 'SSS', 'Reflections',
+                   'Refractions', 'GI', 'Emission', 'Caustics',
+                   'SpecularLighting', 'TransTint', 'Z', 'MotionVectors',
+                   'BumpNormals', 'P', 'PuzzleMatte')
 
 
 def copy(src, dst):
@@ -134,3 +142,76 @@ def unicode_popen(args, **kwargs):
     if isinstance(args, unicode):
         args = args.encode(OS_ENCODING)
     return Popen(args, **kwargs)
+
+
+def get_unicode(input_str, codecs=('UTF-8', OS_ENCODING)):
+    """Return unicode by try decode @string with @codecs.  """
+
+    if isinstance(input_str, unicode):
+        return input_str
+
+    for i in codecs:
+        try:
+            return unicode(input_str, i)
+        except UnicodeDecodeError:
+            continue
+
+
+def get_layer(filename):
+    """Return layer name from @filename.
+
+    >>> get_layer('Z:/MT/Render/image/MT_BG_co/MT_BG_co_PuzzleMatte1/PuzzleMatte1.001.exr')
+    'PuzzleMatte1'
+    """
+
+    basename = os.path.basename(filename)
+    for layer in REDSHIFT_LAYERS:
+        match = re.search(r'\b({}\d*)\b'.format(layer), basename)
+        if match:
+            return match.group(1)
+
+
+def get_tag(filename, pat=None, default=Config.default_tag):
+    """Return tag of @filename from @pat.
+
+    >>> get_tag('Z:/MT/Render/image/MT_BG_co/MT_BG_co_Z/Z.001.exr', r'MT_(.+)_')
+    u'BG'
+    >>> get_tag('MT_BG_co_Z', r'MT_(.+)_')
+    u'BG'
+    >>> get_tag('Z.001.exr', r'MT_(.+)_')
+    u'Z'
+    >>> # cases below will use default pattern.
+    >>> default_pat = Config.default['tag_pat']
+    >>> get_tag(r'Z:\\QQFC2017\\Render\\SC_065\\QQFC_sc065_CH2', default_pat)
+    u'CH2'
+    >>> get_tag(r'Z:\\EP13_09_sc151_CH_B\\EP13_09_sc151_CH_B.0015.exr', default_pat)
+    u'CH_B'
+    >>> # result of below case has been auto converted by a dictionary(BG_CO -> BG).
+    >>> get_tag('Z:/MT/Render/image/MT_BG_co/MT_BG_co_Z/Z.001.exr', default_pat)
+    u'BG'
+    >>> get_tag('Z:/QQFC2017/Render/SC_031a/sc_031a_CH_B_ID/sc_031a_CH_B_ID.####.exr', default_pat)
+    u'CH_B'
+    """
+
+    pat = pat or Config().get('tag_pat')
+    ret = None
+    for testing_pat in set((pat, Config.default['tag_pat'])):
+        tag_pat = re.compile(testing_pat, flags=re.I)
+        for test_string in\
+                (os.path.basename(os.path.dirname(filename)), os.path.basename(filename)):
+            ret = re.match(tag_pat, test_string)
+            if ret and ret.group(1):
+                ret = ret.group(1).strip('_').upper()
+                break
+            else:
+                ret = None
+        if ret:
+            break
+    else:
+        ret = default
+
+    ret = Config.tag_convert_dict.get(ret, ret)
+
+    if ret.startswith(tuple(string.digits)):
+        ret = '_{}'.format(ret)
+    return get_unicode(ret)

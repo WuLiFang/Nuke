@@ -1,62 +1,50 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
-import os
-import re
-
 import nuke
-
-__version__ = '0.1.0'
+from wlf.files import get_layer, REDSHIFT_LAYERS
+from wlf.edit import add_layer
+__version__ = '0.1.1'
 
 
 def redshift(nodes):
     """Precomp reshift spereated footage."""
-    layers = ('DiffuseLighting', 'DiffuseFilter', 'SSS', 'Reflections',
-              'Refractions', 'GI', 'Emission', 'Caustics',
-              'SpecularLighting', 'TransTint', 'Z', 'MotionVectors',
-              'BumpNormals', 'P', 'PuzzleMatte')
-    source = {get_layer(node, layers): node for node in nodes}
+    source = {get_layer(nuke.filename(input1)): input1 for input1 in nodes}
     assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
     n = source.get('DiffuseLighting')
 
     def _layer_order(name):
         try:
-            return '{:05d}_{}'.format(layers.index(name), name)
+            return '{:05d}_{}'.format(REDSHIFT_LAYERS.index(name), name)
         except ValueError:
             return '~{}'.format(name)
     layers = sorted(source.keys(), key=_layer_order)
     for layer in layers:
-        node = source.get(layer)
-        if not (layer and node):
+        input1 = source.get(layer)
+        if not (layer and input1):
             continue
 
         # plus layer
         if layer in ('SSS', 'Reflections', 'Refractions', 'SpecularLighting',
                      'GI', 'Emission', 'Caustics'):
             n = nuke.nodes.Merge2(
-                inputs=[n, node], operation='plus', label=layer)
+                inputs=[n, input1], operation='plus', label=layer)
         # depth layer
         if layer in ('Z'):
+            add_layer('depth')
             n = nuke.nodes.Copy(
-                inputs=[n, node], from0='depth.Z', to0='depth.Z', label='depth')
+                inputs=[n, input1], from0='depth.Z', to0='depth.Z', label='depth')
         # copy layer
         if layer in ('MotionVectors', 'BumpNormals', 'P', 'DiffuseFilter', 'TransTint'):
-            nuke.Layer('{0} {0}.red {0}.green {0}.blue'.format(layer))
+            add_layer(layer)
             n = nuke.nodes.Merge2(
-                inputs=[n, node], operation='copy',
+                inputs=[n, input1], operation='copy',
                 Achannels=layer, Bchannels='none', output=layer, label=layer)
         if layer.startswith('PuzzleMatte'):
+            add_layer(layer)
             n = nuke.nodes.Merge2(
-                inputs=[n, node], operation='copy',
+                inputs=[n, input1], operation='copy',
                 Achannels=layer, Bchannels='none', output=layer, label=layer)
-
-
-def get_layer(node, layers):
-    """Return node layer name.  """
-    basename = os.path.basename(nuke.filename(node))
-    for layer in layers:
-        match = re.search(r'\b({}\d*)\b'.format(layer), basename)
-        if match:
-            return match.group(1)
+    return n
 
 
 def arnold():

@@ -8,67 +8,23 @@ import pprint
 import re
 import sys
 import threading
-import time
 import traceback
-import string
 from subprocess import PIPE, Popen
 
 import nuke
 import nukescripts
 
 from wlf.files import url_open
+from wlf.edit import autoplace_all, get_max
+from wlf.config import Config
+from wlf.node import ReadNode
 
-__version__ = '0.14.6'
+import wlf.precomp
+
+__version__ = '0.15.0'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
-
-
-class Config(dict):
-    """Comp config.  """
-
-    default = {
-        'footage_pat': r'^.+_sc.+_.+\..+$',
-        'dir_pat': r'^.{8,}$',
-        'tag_pat': r'sc.+?_([^.]+)',
-        'output_dir': 'E:/precomp',
-        'input_dir': 'Z:/SNJYW/Render/EP',
-        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v2.jpg",
-        'autograde': True,
-        'exclude_existed': True,
-    }
-    path = os.path.expanduser(u'~/.nuke/wlf.comp.config.json')
-    instance = None
-
-    def __new__(cls):
-        if not cls.instance:
-            cls.instance = super(Config, cls).__new__(cls)
-        return cls.instance
-
-    def __init__(self):
-        super(Config, self).__init__()
-        self.update(dict(self.default))
-        self.read()
-
-    def __str__(self):
-        return json.dumps(self)
-
-    def __setitem__(self, key, value):
-        dict.__setitem__(self, key, value)
-        self.write()
-
-    def write(self):
-        """Write config to disk.  """
-
-        with open(self.path, 'w') as f:
-            json.dump(self, f, indent=4, sort_keys=True)
-
-    def read(self):
-        """Read config from disk.  """
-
-        if os.path.isfile(self.path):
-            with open(self.path) as f:
-                self.update(dict(json.load(f)))
 
 
 def escape_batch(text):
@@ -86,28 +42,10 @@ def escape_batch(text):
 class Comp(object):
     """Create .nk file from footage that taged in filename."""
 
-    default_config = {
-        'footage_pat': r'^.*_?sc.+_.+\.exr[0-9\- ]*$',
-        'dir_pat': r'^.{8,}$',
-        'tag_pat': r'sc.+?_([^.]+)',
-        'output_dir': 'E:/precomp',
-        'input_dir': 'Z:/SNJYW/Render/EP',
-        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v1.jpg",
-        'autograde': False,
-        'exclude_existed': True,
-    }
-    default_tag = '_OTHER'
-    tag_knob_name = u'wlf_tag'
-
     def __init__(self, config=None):
         print(u'\n吾立方批量合成 {}\n'.format(__version__))
-        with open(os.path.join(__file__, '../comp.tags.json')) as f:
-            tags = json.load(f)
-            self._regular_tags = tags['regular_tags']
-            self._tag_convert_dict = tags['tag_convert_dict']
-            del tags
-        self._config = config or self.default_config
-        self._config = dict(self._config)
+
+        self._config = dict(config or Config())
         self._errors = []
 
         for key, value in self._config.iteritems():
@@ -125,7 +63,7 @@ class Comp(object):
                       r"[python {os.path.join("
                       r"nuke.value('root.name', ''), '../'"
                       r").replace('\\', '/')}]")
-        self.setup_nodes()
+        self.setup()
         self.create_nodes()
         if config:
             self.output()
@@ -193,7 +131,8 @@ class Comp(object):
         if not nuke.allNodes(u'Read'):
             raise FootageError(self._config['footage_dir'], u'没有素材')
 
-    def setup_nodes(self):
+    @staticmethod
+    def setup():
         """Add tag knob to read nodes, then set project framerange."""
 
         _nodes = nuke.allNodes(u'Read')
@@ -203,7 +142,7 @@ class Comp(object):
         n = None
         root_format = None
         for n in _nodes:
-            self._setup_node(n)
+            wlf.node.ReadNode(n)
             if n.format().name() == 'HD_1080':
                 root_format = 'HD_1080'
         if n:
@@ -306,13 +245,13 @@ class Comp(object):
         tags = tuple(unicode(i).upper() for i in tags)
 
         for n in nuke.allNodes(u'Read'):
-            knob_name = u'{}.{}'.format(n.name(), cls.tag_knob_name)
+            knob_name = u'{}.{}'.format(n.name(), ReadNode.tag_knob_name)
             if nuke.value(knob_name.encode(SCRIPT_CODEC), '').startswith(tags):
                 ret.append(n)
 
         def _nodes_order(n):
-            return (
-                u'_' + n[cls.tag_knob_name].value()).replace(u'_BG', '1_').replace(u'_CH', '0_')
+            tag = nuke.value('{}.{}'.format(n.name(), ReadNode.tag_knob_name))
+            return (u'_' + tag.replace(u'_BG', '1_').replace(u'_CH', '0_'))
         ret.sort(key=_nodes_order, reverse=True)
         return ret
 
@@ -359,58 +298,14 @@ class Comp(object):
                 raise RenderError(u'渲染出错: Write_JPG_1')
             print(u'{:-^30s}'.format(u'结束 输出'))
 
-    def _setup_node(self, n):
-        def _add_knob(k):
-            _knob_name = k.name()
-            if nuke.exists('{}.{}'.format(n.name(), k.name())):
-                k.setValue(n[_knob_name].value())
-                n.removeKnob(n[_knob_name])
-            n.addKnob(k)
-        _tag = nuke.value(u'{}.{}'.format(
-            n.name(), self.tag_knob_name), '') or self._get_tag(nuke.filename(n))
-
-        if not 'rgba.alpha' in n.channels():
-            _tag = '_OTHER'
-
-        k = nuke.String_Knob(self.tag_knob_name, '素材标签')
-        _add_knob(k)
-        k.setValue(_tag)
-
-        if _tag.startswith(tuple(string.digits)):
-            _tag = '_{}'.format(_tag)
-        n.setName(_tag, updateExpressions=True)
-
-    def _get_tag_from_pattern(self, str_):
-        _tag_pat = re.compile(self.default_config['tag_pat'], flags=re.I)
-        _ret = re.search(_tag_pat, str_)
-        if _ret:
-            _ret = _ret.group(1).upper()
-        else:
-            _ret = self.default_tag
-        return _ret
-
-    def _get_tag(self, filename):
-        _ret = self._get_tag_from_pattern(os.path.basename(filename))
-
-        if _ret not in self._regular_tags:
-            _dir_result = self._get_tag_from_pattern(
-                os.path.basename(os.path.dirname(filename)))
-            if _dir_result != self.default_tag:
-                _ret = _dir_result
-
-        if _ret in self._tag_convert_dict:
-            _ret = self._tag_convert_dict[_ret]
-
-        return _ret
-
     def _bg_ch_nodes(self):
-        nodes = self.get_nodes_by_tags(['BG', 'CH'])
+
+        nodes = self._precomp()
 
         if not nodes:
             raise FootageError(u'BG', u'CH')
 
         for i, n in enumerate(nodes):
-            read_node = n
             n = self._bg_ch_node(n)
 
             if i == 0:
@@ -419,11 +314,27 @@ class Comp(object):
                 n = self._merge_screen(n)
             if i > 0:
                 n = nuke.nodes.Merge2(
-                    inputs=[nodes[i - 1], n],
-                    label=read_node[self.tag_knob_name].value()
+                    inputs=[nodes[i - 1], n]
                 )
             nodes[i] = n
         return n
+
+    def _precomp(self):
+        tag_nodes_dict = {}
+        ret = []
+        for n in self.get_nodes_by_tags(['BG', 'CH']):
+            tag = n[ReadNode.tag_knob_name].value()
+            tag_nodes_dict.setdefault(tag, [])
+            tag_nodes_dict[tag].append(n)
+
+        for tag, nodes in tag_nodes_dict.items():
+            try:
+                n = wlf.precomp.redshift(nodes)
+                ret.append(n)
+            except AssertionError:
+                ret.extend(nodes)
+
+        return ret
 
     def _bg_ch_node(self, input_node):
         n = input_node
@@ -619,7 +530,7 @@ class Comp(object):
                 inputs=[n, _reformat_node],
                 operation='screen',
                 maskChannelInput='rgba.alpha',
-                label=_read_node[Comp.tag_knob_name].value(),
+                label=_read_node[ReadNode.tag_knob_name].value(),
             )
         return n
 
@@ -708,18 +619,17 @@ class CompDialog(nukescripts.PythonPanel):
         (nuke.EndTabGroup_Knob, 'end_tab', ''),
         (nuke.Multiline_Eval_String_Knob, 'info', ''),
     ]
-    config_file = os.path.expanduser(u'~/.nuke/wlf.comp.config.json')
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(self, '吾立方批量合成', 'com.wlf.multicomp')
-        self.config = Comp.default_config
+        self._config = dict(Config())
         self._shot_list = None
         self.read_config()
 
         for i in self.knob_list:
             k = i[0](i[1], i[2])
             try:
-                k.setValue(self.config.get(i[1]))
+                k.setValue(self._config.get(i[1]))
             except TypeError:
                 pass
             self.addKnob(k)
@@ -731,7 +641,7 @@ class CompDialog(nukescripts.PythonPanel):
 
         if os.path.isfile(self.config_file):
             with open(self.config_file, 'r') as f:
-                self.config.update(json.load(f))
+                self._config.update(json.load(f))
         else:
             self.write_config()
 
@@ -739,7 +649,7 @@ class CompDialog(nukescripts.PythonPanel):
         """Write config to disk."""
 
         with open(self.config_file, 'w') as f:
-            json.dump(self.config, f, indent=4)
+            json.dump(self._config, f, indent=4)
 
     def knobChanged(self, knob):
         """Overrride for buttons."""
@@ -749,7 +659,7 @@ class CompDialog(nukescripts.PythonPanel):
         elif knob is self.knobs()['info']:
             self.update()
         else:
-            self.config[knob.name()] = knob.value()
+            self._config[knob.name()] = knob.value()
             self.update()
 
     def progress(self):
@@ -757,23 +667,23 @@ class CompDialog(nukescripts.PythonPanel):
 
         task = nuke.ProgressTask('批量合成')
         shot_info = dict.fromkeys(Comp.get_shot_list(
-            self.config, include_existed=True), '本次未处理')
+            self._config, include_existed=True), '本次未处理')
 
         for i, shot in enumerate(self._shot_list):
             if task.isCancelled():
                 break
             task.setMessage(shot)
             task.setProgress(i * 100 // len(self._shot_list))
-            self.config['shot'] = os.path.basename(shot)
-            self.config['save_path'] = os.path.join(
-                self.config['output_dir'], '{}.nk'.format(self.config['shot']))
-            self.config['footage_dir'] = shot if os.path.isdir(
-                shot) else os.path.join(self.config['input_dir'], self.config['shot'])
+            self._config['shot'] = os.path.basename(shot)
+            self._config['save_path'] = os.path.join(
+                self._config['output_dir'], '{}.nk'.format(self._config['shot']))
+            self._config['footage_dir'] = shot if os.path.isdir(
+                shot) else os.path.join(self._config['input_dir'], self._config['shot'])
             self.write_config()
             _cmd = u'"{nuke}" -t {script} "{config}"'.format(
                 nuke=nuke.EXE_PATH,
                 script=os.path.normcase(__file__).rstrip(u'c'),
-                config=escape_batch(json.dumps(self.config))
+                config=escape_batch(json.dumps(self._config))
             ).encode(OS_ENCODING)
             proc = Popen(_cmd, shell=True, stderr=PIPE)
             stderr = proc.communicate()[1]
@@ -792,57 +702,9 @@ class CompDialog(nukescripts.PythonPanel):
         <td class="info">{1}</td>
     </tr>
 '''.format(shot, shot_info[shot])
-        html_page = r"""<!DOCTYPE HTML>
-
-<head>
-    <meta charset="UTF-8">
-    <style>
-        table {
-            margin: auto
-        }
-
-        td {
-            padding: 8px
-        }
-
-        tr {
-            background: #FFF
-        }
-
-        tr:hover {
-            background: #EEE
-        }
-
-        th {
-            font-family: "Microsoft YaHei", SimHei, sans-serif
-        }
-
-        img.preview {
-            height: 200px
-        }
-
-        .shot {
-            text-align: center;
-            font-family: "Microsoft YaHei", Verdana, Geneva, Tahoma, sans-serif
-        }
-
-        .info {
-            white-space: pre;
-        }
-    </style>
-    <script language="javascript">
-        window.onload = function showtable() {
-            var tablename = document.getElementById("mytable");
-            var li = tablename.getElementsByTagName("tr");
-            for (var i = 0; i <= li.length; i++) {
-                if (i % 2 == 0) {
-                    li[i].style.backgroundColor = "#EEE";
-                } else li[i].style.backgroundColor = "#FFF";
-            }
-        }
-    </script>
-</head>
-"""
+        with open(os.path.join(__file__, '../comp.head.html')) as f:
+            head = f.read()
+        html_page = head
         html_page += u'''
 <body>
     <table id="mytable">
@@ -854,20 +716,20 @@ class CompDialog(nukescripts.PythonPanel):
     </table>
 </body>
 '''.format(infos)
-        log_path = os.path.join(self.config['output_dir'], u'批量合成日志.html')
+        log_path = os.path.join(self._config['output_dir'], u'批量合成日志.html')
         with open(log_path, 'w') as f:
             f.write(html_page.encode('UTF-8'))
         # nuke.executeInMainThread(nuke.message, args=(errors,))
         url_open(u'file://{}'.format(log_path))
         url_open(
-            u'file://{}'.format(self.config['output_dir'].encode(SCRIPT_CODEC)))
+            u'file://{}'.format(self._config['output_dir'].encode(SCRIPT_CODEC)))
 
     def update(self):
         """Update ui info and button enabled."""
 
         def _info():
             _info = u'测试'
-            self._shot_list = list(Comp.get_shot_list(self.config))
+            self._shot_list = list(Comp.get_shot_list(self._config))
             if self._shot_list:
                 _info = u'# 共{}个镜头\n'.format(len(self._shot_list))
                 _info += u'\n'.join(self._shot_list)
@@ -885,7 +747,7 @@ class CompDialog(nukescripts.PythonPanel):
                 'OK',
             ]
 
-            _isdir = os.path.isdir(self.config['input_dir'])
+            _isdir = os.path.isdir(self._config['input_dir'])
             if _isdir:
                 for k in ['exclude_existed', 'info']:
                     self.knobs()[k].setEnabled(True)
@@ -925,57 +787,6 @@ class RenderError(Exception):
         return u' # '.join(self.tags)
 
 
-def insert_node(node, input_node):
-    """Insert @node after @input_node."""
-
-    for n in nuke.allNodes():
-        for i in range(n.inputs()):
-            if n.input(i) == input_node:
-                n.setInput(i, node)
-
-    node.setInput(0, input_node)
-
-
-def get_max(node, channel='rgb'):
-    '''
-    Return themax values of a given node's image at middle frame
-
-    @parm n: node
-    @parm channel: channel for sample
-    '''
-    first = node.firstFrame()
-    last = node.lastFrame()
-    middle = (first + last) // 2
-    ret = 0
-
-    n = nuke.nodes.Invert(channels=channel, inputs=[node])
-    n = nuke.nodes.MinColor(
-        channels=channel, target=0, inputs=[n])
-
-    for frame in (middle, first, last):
-        try:
-            nuke.execute(n, frame, frame)
-        except RuntimeError:
-            continue
-        ret = max(ret, n['pixeldelta'].value() + 1)
-        if ret > 0.7:
-            break
-
-    print(u'getMax({1}, {0}) -> {2}'.format(channel, node.name(), ret))
-
-    nuke.delete(n.input(0))
-    nuke.delete(n)
-
-    return ret
-
-
-def autoplace_all():
-    """Place all nodes position so them won't overlap."""
-
-    for n in nuke.allNodes():
-        nuke.autoplace(n)
-
-
 def main():
     """Run this moudule as a script."""
 
@@ -986,17 +797,6 @@ def main():
     except FootageError as ex:
         print(u'** FootageError: {}\n\n'.format(ex).encode(OS_ENCODING))
         traceback.print_exc()
-
-
-def pause():
-    """Pause prompt with a countdown."""
-
-    print(u'')
-    for i in range(5)[::-1]:
-        sys.stdout.write(u'\r{:2d}'.format(i + 1))
-        time.sleep(1)
-    sys.stdout.write(u'\r          ')
-    print(u'')
 
 
 if __name__ == '__main__':

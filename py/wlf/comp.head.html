@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table {
+            margin: auto
+        }
+
+        td {
+            padding: 8px
+        }
+
+        tr {
+            background: #FFF
+        }
+
+        tr:hover {
+            background: #EEE
+        }
+
+        th {
+            font-family: "Microsoft YaHei", SimHei, sans-serif
+        }
+
+        img.preview {
+            height: 200px
+        }
+
+        .shot {
+            text-align: center;
+            font-family: "Microsoft YaHei", Verdana, Geneva, Tahoma, sans-serif
+        }
+
+        .info {
+            white-space: pre;
+        }
+    </style>
+    <script language="javascript">
+        window.onload = function showtable() {
+            var tablename = document.getElementById("mytable");
+            var li = tablename.getElementsByTagName("tr");
+            for (var i = 0; i <= li.length; i++) {
+                if (i % 2 == 0) {
+                    li[i].style.backgroundColor = "#EEE";
+                } else li[i].style.backgroundColor = "#FFF";
+            }
+        }
+    </script>
+</head>
