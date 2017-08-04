@@ -21,7 +21,7 @@ from wlf.node import ReadNode
 
 import wlf.precomp
 
-__version__ = '0.15.0'
+__version__ = '0.15.1'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 SCRIPT_CODEC = 'UTF-8'
@@ -624,7 +624,6 @@ class CompDialog(nukescripts.PythonPanel):
         nukescripts.PythonPanel.__init__(self, '吾立方批量合成', 'com.wlf.multicomp')
         self._config = dict(Config())
         self._shot_list = None
-        self.read_config()
 
         for i in self.knob_list:
             k = i[0](i[1], i[2])
@@ -636,26 +635,12 @@ class CompDialog(nukescripts.PythonPanel):
         self.knobs()['exclude_existed'].setFlag(nuke.STARTLINE)
         # self.update()
 
-    def read_config(self):
-        """Read config from disk."""
-
-        if os.path.isfile(self.config_file):
-            with open(self.config_file, 'r') as f:
-                self._config.update(json.load(f))
-        else:
-            self.write_config()
-
-    def write_config(self):
-        """Write config to disk."""
-
-        with open(self.config_file, 'w') as f:
-            json.dump(self._config, f, indent=4)
-
     def knobChanged(self, knob):
         """Overrride for buttons."""
 
         if knob is self.knobs()['OK']:
             threading.Thread(target=self.progress).start()
+            Config().update(self._config)
         elif knob is self.knobs()['info']:
             self.update()
         else:
@@ -679,7 +664,6 @@ class CompDialog(nukescripts.PythonPanel):
                 self._config['output_dir'], '{}.nk'.format(self._config['shot']))
             self._config['footage_dir'] = shot if os.path.isdir(
                 shot) else os.path.join(self._config['input_dir'], self._config['shot'])
-            self.write_config()
             _cmd = u'"{nuke}" -t {script} "{config}"'.format(
                 nuke=nuke.EXE_PATH,
                 script=os.path.normcase(__file__).rstrip(u'c'),
