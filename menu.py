@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+"""Nuke menu file."""
 import nuke
 
 from wlf import ui, callback, pref, cgtwn
