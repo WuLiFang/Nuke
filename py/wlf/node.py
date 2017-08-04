@@ -6,6 +6,8 @@ import nuke
 
 import wlf.files
 
+__version__ = '0.1.1'
+
 
 def append_knob(node, knob):
     """Add @knob as @node's last knob.  """
@@ -25,9 +27,9 @@ class ReadNode(object):
     def __init__(self, node):
         if not isinstance(node, nuke.Node):
             raise TypeError
-        self._node = node
-        print(node.name())
         n = node
+        self._node = n
+        self._filename = nuke.filename(n)
         tag = nuke.value(u'{}.{}'.format(n.name(), self.tag_knob_name), '')\
             or self.tag()
 
@@ -45,11 +47,10 @@ class ReadNode(object):
 
     def tag(self):
         """Return Read node tag.  """
-        filename = nuke.filename(self._node)
-        ret = wlf.files.get_tag(filename)
+        ret = wlf.files.get_tag(self._filename)
 
         return ret
 
     def layer(self):
         """Return Read node layer.  """
-        return wlf.files.get_layer(nuke.filename(self._node))
+        return wlf.files.get_layer(self._filename)
