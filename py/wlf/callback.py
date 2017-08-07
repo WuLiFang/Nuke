@@ -79,7 +79,8 @@ def enable_node(prefix='_'):
 def _create_csheet():
     if nuke.numvalue('preferences.wlf_create_csheet', 0.0):
         if nuke.value('root.name'):
-            csheet.ContactSheet(html=True)
+            csheet.create_html(os.path.join(
+                nuke.value('root.project_directory'), 'images'))
 
 
 def _eval_proj_dir():
