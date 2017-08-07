@@ -9,7 +9,9 @@ import random
 import nuke
 import nukescripts
 
-__version__ = '1.3.0'
+from .files import get_encoded
+
+__version__ = '1.3.1'
 
 
 def rename_all_nodes():
@@ -349,7 +351,7 @@ def fix_error_read():
             _filename = nuke.filename(i)
             if os.path.basename(_filename).lower() == 'thumbs.db':
                 nuke.delete(i)
-            if os.path.isdir(_filename):
+            if os.path.isdir(get_encoded(_filename)):
                 _filename_list = nuke.getFileNameList(_filename)
                 for f in _filename_list:
                     _read = nuke.createNode(
