@@ -10,7 +10,7 @@ import nuke
 
 from .files import expand_frame, copy, get_encoded
 
-__version__ = '0.3.9'
+__version__ = '0.3.10'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 
@@ -141,21 +141,22 @@ def get_unicode(string, codecs=('UTF-8', OS_ENCODING)):
 
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
-    # TODO: progressTask
     # print(mime_type, data)
     if mime_type != 'text/plain':
         return
-    print(data)
     task = nuke.ProgressTask(data)
     data = get_unicode(data)
     match = re.match(r'file:///([^/].*)', data)
 
     if os.path.isdir(get_encoded(data)):
-        task.setProgress(50)
         _dirname = data.replace('\\', '/')
-        for i in nuke.getFileNameList(get_encoded(_dirname, 'UTF-8')):
+        filenames = nuke.getFileNameList(get_encoded(_dirname, 'UTF-8'))
+        all_num = len(filenames)
+        for index, filename in enumerate(filenames):
+            task.setMessage(filename)
+            task.setProgress(index * 100 // all_num)
             dropdata_handler(
-                mime_type, '{}/{}'.format(_dirname, i), from_dir=True)
+                mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
     elif os.path.basename(get_encoded(data)).lower() == 'thumbs.db':
         pass
     elif match:
