@@ -3,7 +3,7 @@
 import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def redshift(nodes):
@@ -38,12 +38,12 @@ def redshift(nodes):
             add_layer(layer)
             n = nuke.nodes.Merge2(
                 inputs=[n, input1], operation='copy',
-                Achannels=layer, Bchannels='none', output=layer, label=layer)
+                Achannels='rgba', Bchannels='none', output=layer, label=layer)
         if layer.startswith('PuzzleMatte'):
             add_layer(layer)
             n = nuke.nodes.Merge2(
                 inputs=[n, input1], operation='copy',
-                Achannels=layer, Bchannels='none', output=layer, label=layer)
+                Achannels='rgba', Bchannels='none', output=layer, label=layer)
     return n
 
 
