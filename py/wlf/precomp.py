@@ -3,7 +3,8 @@
 import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
-__version__ = '0.1.3'
+
+__version__ = '0.1.5'
 
 
 def redshift(nodes):
@@ -30,22 +31,29 @@ def redshift(nodes):
         # plus layer
         if layer in ('SSS', 'Reflections', 'Refractions', 'SpecularLighting',
                      'GI', 'Emission', 'Caustics'):
+            add_layer(layer)
+            input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
             n = nuke.nodes.Merge2(
-                inputs=[n, input1], operation='plus', label=layer)
+                inputs=[n, input1], operation='plus',
+                also_merge=layer if layer not in nuke.layers(n) else 'none',
+                label=layer)
         # depth layer
         if layer in ('Z'):
             add_layer('depth')
             n = nuke.nodes.Copy(
+                tile_color=0x9e3c63ff,
                 inputs=[n, input1], from0='depth.Z', to0='depth.Z', label='depth')
         # copy layer
         if layer in ('MotionVectors', 'BumpNormals', 'P', 'DiffuseFilter', 'TransTint'):
             add_layer(layer)
             n = nuke.nodes.Merge2(
+                tile_color=0x9e3c63ff,
                 inputs=[n, input1], operation='copy',
                 Achannels='rgba', Bchannels='none', output=layer, label=layer)
         if layer.startswith('PuzzleMatte'):
             add_layer(layer)
             n = nuke.nodes.Merge2(
+                tile_color=0x9e3c63ff,
                 inputs=[n, input1], operation='copy',
                 Achannels='rgba', Bchannels='none', output=layer, label=layer)
     return n
