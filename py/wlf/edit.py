@@ -9,9 +9,9 @@ import random
 import nuke
 import nukescripts
 
-from .files import get_encoded
+from .asset import dropdata_handler
 
-__version__ = '1.3.1'
+__version__ = '1.3.2'
 
 
 def rename_all_nodes():
@@ -346,19 +346,17 @@ def fix_error_read():
                 filename_knob.setValue(new_path)
 
     while True:
-        _created_node = []
+        done = True
         for i in (i for i in nuke.allNodes('Read') if i.hasError()):
-            _filename = nuke.filename(i)
-            if os.path.basename(_filename).lower() == 'thumbs.db':
+            filename = nuke.filename(i)
+            if os.path.basename(filename).lower() == 'thumbs.db':
+                fixed = True
+            else:
+                fixed = dropdata_handler('text/plain', filename)
+            if fixed:
                 nuke.delete(i)
-            if os.path.isdir(get_encoded(_filename)):
-                _filename_list = nuke.getFileNameList(_filename)
-                for f in _filename_list:
-                    _read = nuke.createNode(
-                        'Read', 'file "{}"'.format('/'.join([_filename, f])))
-                    _created_node.append(_read)
-                nuke.delete(i)
-        if not _created_node:
+                done = False
+        if done:
             break
 
 
