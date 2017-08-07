@@ -18,7 +18,8 @@
             background: #050505;
         }
         
-        .shots:hover .image:not(:hover):not(:target) {
+        .shots:hover .image:not(:hover):not(:target),
+        .shots:hover .image:not(:hover):not(:target) figcaption {
             opacity: 0.4;
         }
         
@@ -29,6 +30,7 @@
             margin: auto;
             text-align: center;
             margin-bottom: 2em;
+            font-family: "Microsoft YaHei", SimHei, sans-serif
         }
         
         .lightbox .thumb {
@@ -36,27 +38,19 @@
             border: 1px solid grey;
         }
         
-        .image {
+        .lightbox .image {
             transition: opacity 0.4s ease-in-out;
             -webkit-transition: opacity 0.4s ease-in-out;
         }
         
-        figure.lightbox a:link {
-            text-decoration: none;
-            color: grey
-        }
-        
-        figure.lightbox a:visited {
-            color: burlywood;
-        }
-        
-        figure.lightbox figcaption {
+        .lightbox figcaption {
             word-break: keep-all;
             text-overflow: ellipsis;
             width: 10em;
             overflow: hidden;
             margin: auto;
-            font-family: "Microsoft YaHei", SimHei, sans-serif
+            transition: opacity 0.4s ease-in-out;
+            -webkit-transition: opacity 0.4s ease-in-out;
         }
         
         .lightbox .full {
@@ -88,8 +82,8 @@
             box-shadow: 0 0 20px black;
         }
         
-        a.prev,
-        a.next {
+        .lightbox a.prev,
+        .lightbox a.next {
             z-index: 3;
             position: fixed;
             text-decoration: none;
@@ -102,20 +96,20 @@
             transform: translate(0%, -50%);
         }
         
-        a.prev {
+        .lightbox a.prev {
             left: 1%;
         }
         
-        a.next {
+        .lightbox a.next {
             right: 1%;
         }
         
-        a.prev:hover,
-        a.next:hover {
+        .lightbox a.prev:hover,
+        .lightbox a.next:hover {
             background: rgba(255, 255, 255, 0.2);
         }
         
-        a.close {
+        .lightbox a.close {
             z-index: 1;
             position: fixed;
             width: 100%;
@@ -125,15 +119,24 @@
             visibility: hidden;
         }
         
-        a:target~.full a.close,
-        a:target~.full a.prev,
-        a:target~.full a.next {
+        .lightbox a:target~.full a.close,
+        .lightbox a:target~.full a.prev,
+        .lightbox a:target~.full a.next {
             visibility: visible;
         }
         
-        a:target~.full {
+        .lightbox a:target~.full {
             opacity: 1;
             pointer-events: auto;
+        }
+
+        .lightbox a:link {
+            text-decoration: none;
+            color: grey
+        }
+        
+        .lightbox a:visited {
+            color: burlywood;
         }
     </style>
 </head>
