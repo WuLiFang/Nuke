@@ -11,7 +11,7 @@ from subprocess import call, Popen
 
 from wlf.config import Config
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 
 REDSHIFT_LAYERS = ('DiffuseLighting', 'DiffuseFilter', 'SSS', 'Reflections',
@@ -131,8 +131,10 @@ def map_drivers():
     call(cmd, shell=True)
 
 
-def url_open(url):
+def url_open(url, isfile=False):
     """Open url in explorer. """
+    if isfile:
+        url = 'file://{}'.format(url)
     _cmd = u"rundll32.exe url.dll,FileProtocolHandler {}".format(url)
     unicode_popen(_cmd)
 
@@ -167,6 +169,22 @@ def get_encoded(input_str, encoding=None):
         encoding = locale.getdefaultlocale()[1]
 
     return get_unicode(input_str).encode(encoding)
+
+
+def is_ascii(text):
+    """Return true if @text can be convert to ascii.
+
+    >>> is_ascii('a')
+    True
+    >>> is_ascii('测试')
+    False
+
+    """
+    try:
+        get_unicode(text).encode('ASCII')
+        return True
+    except UnicodeEncodeError:
+        return False
 
 
 def get_layer(filename):
