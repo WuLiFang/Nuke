@@ -603,6 +603,7 @@ def render_png(nodes, frame=None, show=False):
 
 class CompDialog(nukescripts.PythonPanel):
     """Dialog UI of class Comp."""
+    # TODO: reset button.
 
     knob_list = [
         (nuke.Tab_Knob, 'general_setting', '常用设置'),
