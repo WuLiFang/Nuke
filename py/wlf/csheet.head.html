@@ -18,8 +18,7 @@
             background: #050505;
         }
         
-        .shots:hover .image:not(:hover):not(:target),
-        .shots:hover .image:not(:hover):not(:target) figcaption {
+        .shots:hover .image:not(:hover):not(:target){
             opacity: 0.4;
         }
         
@@ -49,8 +48,7 @@
             width: 10em;
             overflow: hidden;
             margin: auto;
-            transition: opacity 0.4s ease-in-out;
-            -webkit-transition: opacity 0.4s ease-in-out;
+            opacity: inherit;
         }
         
         .lightbox .full {
