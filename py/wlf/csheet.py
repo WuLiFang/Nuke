@@ -11,9 +11,9 @@ import re
 from subprocess import Popen
 import nuke
 
-from wlf.files import version_filter, split_version
+from wlf.files import version_filter, split_version, get_unicode
 
-__version__ = '1.2.0'
+__version__ = '1.2.8'
 
 OS_ENCODING = locale.getdefaultlocale()[1]
 
@@ -24,21 +24,18 @@ class ContactSheet(object):
     shot_width, shot_height = 1920, 1080
     contactsheet_shot_width, contactsheet_shot_height = 1920, 1160
 
-    def __init__(self, html=False):
+    def __init__(self):
         try:
             self.read_config()
         except IOError:
             print('没有.projectsettings.json, 不会生成色板')
         else:
-            if html:
-                self.create_html()
-            else:
-                nuke.scriptClear()
-                nuke.Root()['project_directory'].setValue(
-                    os.getcwd().replace('\\', '/'))
-                nuke.knob('root.format', '1920 1080')
-                self.create_nodes()
-                self.output()
+            nuke.scriptClear()
+            nuke.Root()['project_directory'].setValue(
+                os.getcwd().replace('\\', '/'))
+            nuke.knob('root.format', '1920 1080')
+            self.create_nodes()
+            self.output()
 
     def read_config(self):
         """Set instance config from disk."""
@@ -171,28 +168,6 @@ class ContactSheet(object):
             print(u'共{}个文件 总计{}个镜头'.format(len(images), len(ret)))
         return ret
 
-    def create_html(self):
-        """Create a html page.  """
-        body = ''
-        images = tuple(i for i in self.image_list() if os.path.isfile(i))
-        column_num = int(len(images) ** 0.5)
-        column_num = 5 if column_num > 5 else column_num
-        for index, image in enumerate(images, 1):
-            if index % column_num == 1:
-                body += '<tr>\n'
-            body += '''<td class='shot'><a href="{0}" target="_blank"><img src="{0}" alt="{0}"></img></a><br>{1}</td>\n'''.format(
-                image, split_version(get_shot(image))[0])
-            if index % column_num == 0:
-                body += '</tr>\n'
-
-        body = '<table>\n    {}\n</table>'.format(body)
-        body = '<body>\n    {}\n</body>'.format(body)
-        with open(os.path.join(__file__, '../csheet.head.html')) as f:
-            head = f.read()
-        html_page = head + body
-        with open(os.path.join(self.json_path(), '../色板.html').encode(OS_ENCODING), 'w') as f:
-            f.write(html_page)
-
 
 def get_shot(filename):
     """Get shot name from filename.  """
@@ -231,6 +206,54 @@ class ContactSheetThread(threading.Thread):
         task.setProgress(100)
         del task
         self.lock.release()
+
+
+def create_html(image_folder):
+    """Create a html page for a @image_folder.  """
+    if not os.path.isdir(image_folder):
+        return
+    body = ''
+    images = version_filter(get_unicode(i) for i in os.listdir(image_folder)
+                            if os.path.isfile(os.path.join(image_folder, i))
+                            and i.lower().endswith(('.jpg', '.png', '.gif')))
+    column_num = int(len(images) ** 0.5)
+    column_num = 5 if column_num > 5 else column_num
+    for index, image in enumerate(images, 1):
+        # if index % column_num == 1:
+        #     body += '<tr>\n'
+        body += u'''<figure class='lightbox'>
+    <a id="image{index}" href="#image{index}" class="image">
+        <img src="./{folder}/{image}" alt="{image}" class="thumb" />
+        <figcaption>{name}</figcaption>
+    </a>
+    <span class="full">
+        <a href="./{folder}/{image}" target="_blank">
+            <img src="./{folder}/{image}">{name}</img>
+        </a>
+        <a class="close" href="#void"></a>
+        <a class="prev" href="#image{prev_index}">&lt;</a>
+        <a class="next" href="#image{next_index}">&gt;</a>
+    </span>
+</figure>
+'''.format(image=image,
+           name=split_version(get_shot(image))[0],
+           folder=os.path.basename(image_folder),
+           index=index,
+           prev_index=str(index - 1),
+           next_index=str(index + 1))
+        # if index % column_num == 0:
+        #     body += '</tr>\n'
+
+    body = '<div class="shots">\n    {}\n</div>'.format(body)
+    body = '<body>\n    {}\n</body>'.format(body)
+    with open(os.path.join(__file__, '../csheet.head.html')) as f:
+        head = f.read()
+    html_page = head + body
+    save_path = os.path.abspath(os.path.join(image_folder, u'../色板.html'))
+    with open(save_path.encode(OS_ENCODING), 'w') as f:
+        f.write(html_page.encode('UTF-8'))
+    print(u'生成: {}'.format(save_path))
+    return save_path
 
 
 def unicode_popen(args, **kwargs):
