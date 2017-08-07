@@ -3,11 +3,13 @@
 import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 def redshift(nodes):
     """Precomp reshift spereated footage."""
+    task = nuke.ProgressTask('Redshift???')
+
     source = {get_layer(nuke.filename(input1)): input1 for input1 in nodes}
     assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
     n = source.get('DiffuseLighting')
@@ -17,8 +19,10 @@ def redshift(nodes):
             return '{:05d}_{}'.format(REDSHIFT_LAYERS.index(name), name)
         except ValueError:
             return '~{}'.format(name)
-    layers = sorted(source.keys(), key=_layer_order)
-    for layer in layers:
+    layers = sorted((i for i in source.keys() if i), key=_layer_order)
+    for index, layer in enumerate(layers):
+        task.setMessage(layer)
+        task.setProgress(index * 100 // len(layers))
         input1 = source.get(layer)
         if not (layer and input1):
             continue
