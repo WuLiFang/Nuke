@@ -8,7 +8,7 @@ __version__ = '0.1.3'
 
 def redshift(nodes):
     """Precomp reshift spereated footage."""
-    task = nuke.ProgressTask('Redshift???')
+    task = nuke.ProgressTask('Redshift预合成')
 
     source = {get_layer(nuke.filename(input1)): input1 for input1 in nodes}
     assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
