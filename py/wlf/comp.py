@@ -20,7 +20,7 @@ from wlf.node import ReadNode
 
 import wlf.precomp
 
-__version__ = '0.15.2'
+__version__ = '0.15.3'
 
 
 def escape_batch(text):
@@ -49,7 +49,7 @@ class Comp(object):
                 self._config[key] = value.replace(u'\\', '/')
 
         pprint.pprint(config)
-
+        task = nuke.ProgressTask(u'自动合成')
         if config:
             print(u'\n# {}'.format(config['shot']))
             nuke.scriptClear()
@@ -59,11 +59,14 @@ class Comp(object):
                       r"[python {os.path.join("
                       r"nuke.value('root.name', ''), '../'"
                       r").replace('\\', '/')}]")
+        task.setMessage(u'分析读取节点')
         self.setup()
+        task.setProgress(30)
+        task.setMessage(u'创建节点树')
         self.create_nodes()
         if config:
             self.output()
-        print(u'{:-^50s}\n'.format(u'全部结束'))
+        print(u'\n\n')
 
     @staticmethod
     def get_shot_list(config, include_existed=False):
@@ -151,22 +154,28 @@ class Comp(object):
 
     def create_nodes(self):
         """Create nodes that a comp need."""
+        task = nuke.ProgressTask(u'创建节点树')
 
+        def _task_message(message, progress=None):
+            task.setMessage(message)
+            print(u'{:-^30s}'.format(message))
+            if progress:
+                task.setProgress(progress)
+
+        _task_message(u'BG CH 节点创建')
         n = self._bg_ch_nodes()
-        print(u'{:-^30s}'.format('BG CH 节点创建'))
 
         nodes = nuke.allNodes(
             'DepthFix') or self.get_nodes_by_tags(['BG', 'CH'])
+        _task_message(u'整体深度节点创建', 65)
         n = self._merge_depth(n, nodes)
 
-        print(u'{:-^30s}'.format(u'整体深度节点创建'))
+        _task_message(u'添加虚焦控制', 70)
         self._add_zdefocus_control(n)
-        print(u'{:-^30s}'.format(u'添加虚焦控制'))
-        # self._add_depthfog_control(n)
-        # print(u'{:-^30s}'.format(u'添加深度雾控制'))
+
+        _task_message(u'MP节点创建', 75)
         n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
-        print(u'{:-^30s}'.format(u'MP节点创建'))
 
         n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
         n = nuke.nodes.Merge2(
@@ -176,7 +185,7 @@ class Comp(object):
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
-        print(u'{:-^30s}'.format(u'输出节点创建'))
+        _task_message(u'输出节点创建', 85)
         _read_jpg = nuke.nodes.Read(
             file='[value _Write.Write_JPG_1.file]',
             label='输出的单帧',
@@ -184,11 +193,10 @@ class Comp(object):
             tile_color=0xbfbf00ff,
         )
         _read_jpg.setName('Read_Write_JPG')
-        print(u'{:-^30s}'.format(u'读取输出节点创建'))
 
+        _task_message(u'设置查看器', 90)
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
-        print(u'{:-^30s}'.format(u'设置查看器'))
 
         autoplace_all()
 
@@ -205,7 +213,7 @@ class Comp(object):
             n['vfield_file'].fromUserText(lut)
             return n
 
-        n = nuke.nodes.Read(file=mp_file)
+        n = nuke.nodes.Read(file=mp_file.replace('\\', '/'))
         n['file'].fromUserText(mp_file)
         n.setName(u'MP')
 
@@ -295,6 +303,7 @@ class Comp(object):
             print(u'{:-^30s}'.format(u'结束 输出'))
 
     def _bg_ch_nodes(self):
+        task = nuke.ProgressTask(u'BG CH 节点创建')
 
         nodes = self._precomp()
 
@@ -302,6 +311,8 @@ class Comp(object):
             raise FootageError(u'BG', u'CH')
 
         for i, n in enumerate(nodes):
+            task.setMessage(n.name())
+            task.setProgress(i * 100 // len(nodes))
             n = self._bg_ch_node(n)
 
             if i == 0:
@@ -599,7 +610,7 @@ def render_png(nodes, frame=None, show=False):
 
 class CompDialog(nukescripts.PythonPanel):
     """Dialog UI of class Comp."""
-    # TODO: reset button.
+    # TODO: 'reset' button.
 
     knob_list = [
         (nuke.Tab_Knob, 'general_setting', '常用设置'),
