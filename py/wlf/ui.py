@@ -94,7 +94,7 @@ def add_menu():
             '提交视频', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_video()")
         m.addCommand(
             "批量下载",
-            'nukescripts.start("file://SERVER/scripts/NukePlugins/CGTeamWork工具/CGTW批量下载.bat")')
+            r'import subprocess; subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\downloader.bat")')
         # m.addCommand('重新登录', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.update_status()")
 
     def _create_node_menu():
