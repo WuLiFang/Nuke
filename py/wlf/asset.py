@@ -7,9 +7,9 @@ import threading
 
 import nuke
 
-from .files import expand_frame, copy, get_encoded, get_unicode
+from .files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
-__version__ = '0.3.11'
+__version__ = '0.3.12'
 
 
 class DropFrameCheck(threading.Thread):
@@ -132,12 +132,15 @@ def dropdata_handler(mime_type, data, from_dir=False):
     task = nuke.ProgressTask(data)
     data = get_unicode(data)
     match = re.match(r'file:///([^/].*)', data)
+    n = None
 
     if os.path.isdir(get_encoded(data)):
         _dirname = data.replace('\\', '/')
         filenames = nuke.getFileNameList(get_encoded(_dirname, 'UTF-8'))
         all_num = len(filenames)
         for index, filename in enumerate(filenames):
+            if task.isCancelled():
+                return True
             task.setMessage(filename)
             task.setProgress(index * 100 // all_num)
             dropdata_handler(
@@ -172,8 +175,18 @@ def dropdata_handler(mime_type, data, from_dir=False):
             'label {{[value this.vfield_file]}}'.format(data=data))
     elif data.endswith('.nk'):
         nuke.scriptReadFile(data)
+    elif data.endswith(('.mov', '.mp4', '.avi')):
+        # Avoid mov reader bug.
+        if not is_ascii(data):
+            n = nuke.createNode(
+                'Read', 'disable true label "{0}\n**不支持非英文路径**"'.format(data))
+        else:
+            n = nuke.createNode('Read', 'file "{}"'.format(data))
+
     elif from_dir:
         n = nuke.createNode('Read', 'file "{}"'.format(data))
     else:
         return
+    if n and n.hasError():
+        n['disable'].setValue(True)
     return True
