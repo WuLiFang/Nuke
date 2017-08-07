@@ -5,17 +5,14 @@ import os
 import sys
 import json
 import threading
-import locale
 import re
 
 from subprocess import Popen
 import nuke
 
-from wlf.files import version_filter, split_version, get_unicode
+from wlf.files import version_filter, split_version, get_unicode, get_encoded
 
-__version__ = '1.2.8'
-
-OS_ENCODING = locale.getdefaultlocale()[1]
+__version__ = '1.2.9'
 
 
 class ContactSheet(object):
@@ -202,7 +199,7 @@ class ContactSheetThread(threading.Thread):
         )
         if self._new_process:
             cmd = u'START "生成色板" {}'.format(cmd)
-        unicode_popen(cmd, shell=self._new_process)
+        Popen(get_encoded(cmd), shell=self._new_process)
         task.setProgress(100)
         del task
         self.lock.release()
@@ -250,18 +247,10 @@ def create_html(image_folder):
         head = f.read()
     html_page = head + body
     save_path = os.path.abspath(os.path.join(image_folder, u'../色板.html'))
-    with open(save_path.encode(OS_ENCODING), 'w') as f:
+    with open(get_encoded(save_path), 'w') as f:
         f.write(html_page.encode('UTF-8'))
     print(u'生成: {}'.format(save_path))
     return save_path
-
-
-def unicode_popen(args, **kwargs):
-    """Return Popen object use encoded args.  """
-
-    if isinstance(args, unicode):
-        args = args.encode(OS_ENCODING)
-    return Popen(args, **kwargs)
 
 
 class FootageError(Exception):
