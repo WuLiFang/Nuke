@@ -12,7 +12,7 @@ import nuke
 
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.2.11'
+__version__ = '1.2.12'
 
 
 class ContactSheet(object):
@@ -224,7 +224,7 @@ def create_html(image_folder):
     </a>
     <span class="full">
         <a href="./{folder}/{image}" target="_blank">
-            <img src="./{folder}/{image}">{name}</img>
+            <img src="./{folder}/{image}"><figcaption>{name}</figcaption></img>
         </a>
         <a class="close" href="#void"></a>
         <a class="prev" href="#image{prev_index}">&lt;</a>

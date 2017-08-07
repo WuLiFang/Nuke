@@ -6,22 +6,22 @@
         body {
             background: black;
         }
-        
+
         .shots {
             width: 90%;
             margin: auto;
             display: block;
             text-align: center;
         }
-        
+
         .shots:hover {
             background: #050505;
         }
-        
-        .shots:hover .image:not(:hover):not(:target){
+
+        .shots:hover .image:not(:hover):not(:target) {
             opacity: 0.4;
         }
-        
+
         .lightbox {
             display: inline-block;
             height: 200px !important;
@@ -31,17 +31,17 @@
             margin-bottom: 2em;
             font-family: "Microsoft YaHei", SimHei, sans-serif
         }
-        
+
         .lightbox .thumb {
             height: 100%;
             border: 1px solid grey;
         }
-        
+
         .lightbox .image {
             transition: opacity 0.4s ease-in-out;
             -webkit-transition: opacity 0.4s ease-in-out;
         }
-        
+
         .lightbox figcaption {
             word-break: keep-all;
             text-overflow: ellipsis;
@@ -50,63 +50,77 @@
             margin: auto;
             opacity: inherit;
         }
-        
+
         .lightbox .full {
+            visibility: hidden;
             position: fixed;
             height: 100%;
             width: 100%;
             background-color: rgba(0, 0, 0, 0.8);
-            top: 0;
+            top: 0%;
             left: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            -webkit-transition: opacity 0.5s ease-in-out;
-            pointer-events: none;
+            opacity: 1;
+            pointer-events: auto;
             z-index: 1;
         }
-        
+
         .lightbox .full img {
             position: fixed;
             z-index: 2;
             background-color: white;
             margin: 0;
             padding: 0;
-            max-height: 90%;
+            opacity: 0;
+            max-height: 70%;
             max-width: 90%;
             top: 50%;
             left: 50%;
             margin-right: -50%;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 20px black;
+            transition: 0.5s ease-in-out;
+            -webkit-transition: 0.5s ease-in-out;
         }
-        
-        .lightbox a.prev,
-        .lightbox a.next {
+
+        .lightbox .full figcaption {
+            position: fixed;
+            z-index: 3;
+            top: 110%;
+            left: 50%;
+            font-size: 1.5em;
+            transform: translate(-50%, -100%);
+            transition: 0.5s ease-in-out;
+            -webkit-transition: 0.5s ease-in-out;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .lightbox .full a.prev,
+        .lightbox .full a.next {
             z-index: 3;
             position: fixed;
             text-decoration: none;
-            visibility: hidden;
-            color: white;
             font-size: 3em;
             background: rgba(255, 255, 255, 0.1);
             padding: 5% 2%;
+            opacity: 0;
             top: 50%;
             transform: translate(0%, -50%);
+            transition: 0.4s ease-in-out;
         }
-        
+
         .lightbox a.prev {
-            left: 1%;
+            left: -10%;
         }
-        
+
         .lightbox a.next {
-            right: 1%;
+            right: -10%;
         }
-        
+
         .lightbox a.prev:hover,
         .lightbox a.next:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-        
+
         .lightbox a.close {
             z-index: 1;
             position: fixed;
@@ -114,27 +128,42 @@
             height: 100%;
             top: 0px;
             left: 0px;
-            visibility: hidden;
         }
-        
-        .lightbox a:target~.full a.close,
-        .lightbox a:target~.full a.prev,
-        .lightbox a:target~.full a.next {
-            visibility: visible;
-        }
-        
+
         .lightbox a:target~.full {
-            opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
         }
 
         .lightbox a:link {
             text-decoration: none;
             color: grey
         }
-        
+
         .lightbox a:visited {
             color: burlywood;
+        }
+        /* full view final style */
+
+        .lightbox a:target~.full a.prev,
+        .lightbox a:target~.full a.next {
+            opacity: 1;
+        }
+
+        .lightbox a:target~.full a.prev {
+            left: 1%;
+        }
+
+        .lightbox a:target~.full a.next {
+            right: 1%;
+        }
+
+        .lightbox a:target~.full img {
+            opacity: 1;
+            max-height: 90%;
+        }
+
+        .lightbox a:target~.full figcaption {
+            top: 99%;
         }
     </style>
 </head>
