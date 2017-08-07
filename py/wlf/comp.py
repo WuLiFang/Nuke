@@ -2,7 +2,6 @@
 """Comp footages adn create output, can be run as script.  """
 
 import json
-import locale
 import os
 import pprint
 import re
@@ -14,17 +13,14 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-from wlf.files import url_open
+from wlf.files import url_open, get_encoded, get_unicode
 from wlf.edit import autoplace_all, get_max
 from wlf.config import Config
 from wlf.node import ReadNode
 
 import wlf.precomp
 
-__version__ = '0.15.1'
-
-OS_ENCODING = locale.getdefaultlocale()[1]
-SCRIPT_CODEC = 'UTF-8'
+__version__ = '0.15.2'
 
 
 def escape_batch(text):
@@ -79,7 +75,7 @@ class Comp(object):
 
         _ret = os.listdir(_dir)
         if isinstance(_ret[0], str):
-            _ret = (unicode(i, OS_ENCODING) for i in _ret)
+            _ret = (get_unicode(i) for i in _ret)
         if config['exclude_existed'] and not include_existed:
             _ret = (i for i in _ret if not os.path.exists(os.path.join(
                 config[u'output_dir'], u'{}.nk'.format(i))))
@@ -246,7 +242,7 @@ class Comp(object):
 
         for n in nuke.allNodes(u'Read'):
             knob_name = u'{}.{}'.format(n.name(), ReadNode.tag_knob_name)
-            if nuke.value(knob_name.encode(SCRIPT_CODEC), '').startswith(tags):
+            if nuke.value(knob_name, '').startswith(tags):
                 ret.append(n)
 
         def _nodes_order(n):
@@ -668,8 +664,8 @@ class CompDialog(nukescripts.PythonPanel):
             _cmd = u'"{nuke}" -t {script} "{config}"'.format(
                 nuke=nuke.EXE_PATH,
                 script=os.path.normcase(__file__).rstrip(u'c'),
-                config=escape_batch(json.dumps(self._config))
-            ).encode(OS_ENCODING)
+                config=get_encoded(escape_batch(json.dumps(self._config)))
+            )
             proc = Popen(_cmd, shell=True, stderr=PIPE)
             stderr = proc.communicate()[1]
             if stderr:
@@ -706,8 +702,7 @@ class CompDialog(nukescripts.PythonPanel):
             f.write(html_page.encode('UTF-8'))
         # nuke.executeInMainThread(nuke.message, args=(errors,))
         url_open(u'file://{}'.format(log_path))
-        url_open(
-            u'file://{}'.format(self._config['output_dir'].encode(SCRIPT_CODEC)))
+        url_open(u'file://{}'.format(self._config['output_dir']))
 
     def update(self):
         """Update ui info and button enabled."""
@@ -720,7 +715,7 @@ class CompDialog(nukescripts.PythonPanel):
                 _info += u'\n'.join(self._shot_list)
             else:
                 _info = u'找不到镜头'
-            self.knobs()['info'].setValue(_info.encode(SCRIPT_CODEC))
+            self.knobs()['info'].setValue(_info)
 
         def _button_enabled():
             _knobs = [
@@ -780,7 +775,7 @@ def main():
     try:
         Comp(json.loads(sys.argv[1]))
     except FootageError as ex:
-        print(u'** FootageError: {}\n\n'.format(ex).encode(OS_ENCODING))
+        print(u'** FootageError: {}\n\n'.format(ex))
         traceback.print_exc()
 
 
