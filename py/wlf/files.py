@@ -11,13 +11,14 @@ from subprocess import call, Popen
 
 from wlf.config import Config
 
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 
-REDSHIFT_LAYERS = ('DiffuseLighting', 'DiffuseFilter', 'SSS', 'Reflections',
+REDSHIFT_LAYERS = ('DiffuseLighting', 'SSS', 'Reflections',
                    'Refractions', 'GI', 'Emission', 'Caustics',
-                   'SpecularLighting', 'TransTint', 'Z', 'MotionVectors',
-                   'BumpNormals', 'P', 'PuzzleMatte')
+                   'SpecularLighting', 'Z', 'P', 'BumpNormals',
+                   'DiffuseFilter', 'MotionVectors', 'TransTint',
+                   'PuzzleMatte')
 
 
 def copy(src, dst):
