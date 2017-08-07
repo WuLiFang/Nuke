@@ -1,17 +1,15 @@
 # -*- coding: UTF-8 -*-
 """Deal with assets and files in nuke."""
 
-import locale
 import os
 import re
 import threading
 
 import nuke
 
-from .files import expand_frame, copy, get_encoded
+from .files import expand_frame, copy, get_encoded, get_unicode
 
-__version__ = '0.3.10'
-OS_ENCODING = locale.getdefaultlocale()[1]
+__version__ = '0.3.11'
 
 
 class DropFrameCheck(threading.Thread):
@@ -76,16 +74,16 @@ class DropFrameCheck(threading.Thread):
         task = nuke.ProgressTask(u'验证文件')
         ret = nuke.FrameRanges()
         if expand_frame(filename, 1) == filename:
-            if not os.path.isfile(get_unicode(filename).encode(OS_ENCODING)):
+            if not os.path.isfile(get_encoded(filename)):
                 ret.add(framerange)
             return ret
 
-        folder = get_unicode(os.path.dirname(filename.encode(OS_ENCODING)))
-        if not os.path.isdir(folder.encode(OS_ENCODING)):
+        folder = os.path.dirname(filename)
+        if not os.path.isdir(get_encoded(folder)):
             ret.add(framerange)
             return ret
         _listdir = list(get_unicode(i)
-                        for i in os.listdir(folder.encode(OS_ENCODING)))
+                        for i in os.listdir(get_encoded(folder)))
         all_num = len(framerange)
         count = 0
         for f in framerange:
@@ -124,19 +122,6 @@ class DropFrameCheck(threading.Thread):
 def sent_to_dir(dir_):
     """Send current working file to dir."""
     copy(nuke.value('root.name'), dir_)
-
-
-def get_unicode(string, codecs=('UTF-8', OS_ENCODING)):
-    """Return unicode by try decode @string with @codecs.  """
-
-    if isinstance(string, unicode):
-        return string
-
-    for i in codecs:
-        try:
-            return unicode(string, i)
-        except UnicodeDecodeError:
-            continue
 
 
 def dropdata_handler(mime_type, data, from_dir=False):
