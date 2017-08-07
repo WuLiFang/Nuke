@@ -10,7 +10,7 @@ from subprocess import call, Popen
 
 from wlf.config import Config
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 OS_ENCODING = locale.getdefaultlocale()[1]
 
 REDSHIFT_LAYERS = ('DiffuseLighting', 'DiffuseFilter', 'SSS', 'Reflections',
@@ -155,6 +155,12 @@ def get_unicode(input_str, codecs=('UTF-8', OS_ENCODING)):
             return unicode(input_str, i)
         except UnicodeDecodeError:
             continue
+
+
+def get_encoded(input_str, encoding=OS_ENCODING):
+    """Return unicode by try decode @string with @encodeing.  """
+
+    return get_unicode(input_str).encode(encoding)
 
 
 def get_layer(filename):
