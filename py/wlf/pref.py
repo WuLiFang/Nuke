@@ -117,7 +117,8 @@ def add_preferences():
     k.clearFlag(nuke.STARTLINE)
     _add_knob(k)
 
-    k = nuke.Boolean_Knob('wlf_create_csheet', '生成色板(如果目录下有配置文件)')
+    k = nuke.Boolean_Knob('wlf_create_csheet', '为images文件夹生成色板')
+    k.setValue(True)
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 

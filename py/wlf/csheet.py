@@ -10,9 +10,9 @@ import re
 from subprocess import Popen
 import nuke
 
-from wlf.files import version_filter, split_version, get_unicode, get_encoded
+from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.2.10'
+__version__ = '1.2.11'
 
 
 class ContactSheet(object):
@@ -207,6 +207,7 @@ class ContactSheetThread(threading.Thread):
 
 def create_html(image_folder):
     """Create a html page for a @image_folder.  """
+    image_folder = os.path.normpath(image_folder)
     if not os.path.isdir(get_encoded(image_folder)):
         return
     body = ''
@@ -247,6 +248,18 @@ def create_html(image_folder):
         f.write(html_page.encode('UTF-8'))
     print(u'生成: {}'.format(save_path))
     return save_path
+
+
+def dialog_create_html():
+    """A dialog for create_html.  """
+    folder_input_name = '文件夹'
+    panel = nuke.Panel('创建HTML色板')
+    panel.addFilenameSearch(folder_input_name, '')
+    confirm = panel.show()
+    if confirm:
+        csheet = create_html(panel.value(folder_input_name))
+        if csheet:
+            url_open(csheet, isfile=True)
 
 
 class FootageError(Exception):

@@ -70,6 +70,8 @@ def add_menu():
                      icon='autocomp.png')
         _path = os.path.abspath(os.path.join(
             __file__, '../../../scenetools/scenetools.exe'))
+        m.addCommand(
+            '创建文件夹色板', 'import wlf.csheet; wlf.csheet.dialog_create_html()')
         if os.path.isfile(_path):
             _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
         else:
