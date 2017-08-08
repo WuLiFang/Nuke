@@ -13,7 +13,7 @@ from subprocess import Popen
 import nuke
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.3.0'
+__version__ = '1.3.1'
 
 
 class ContactSheet(object):
@@ -225,6 +225,7 @@ def create_html(images, save_path, title=None):
     """Crete html contactsheet with @images list, save to @save_path.  """
 
     body = ''
+    images = list(images)
     for index, image in enumerate(images, 1):
         image = image.replace('\\', '/')
         if not os.path.isabs(image):
@@ -232,7 +233,7 @@ def create_html(images, save_path, title=None):
 
         body += u'''<figure class='lightbox'>
     <a id="image{index}" href="#image{index}" class="image">
-        <img src="{image}" alt="{image}" class="thumb" />
+        <img src="{image}" alt="no image" class="thumb" />
         <figcaption>{name}</figcaption>
     </a>
     <span class="full">
