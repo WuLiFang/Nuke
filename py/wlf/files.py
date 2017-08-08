@@ -11,7 +11,12 @@ from subprocess import call, Popen
 
 from wlf.config import Config
 
-__version__ = '0.3.4'
+try:
+    import nuke
+    HAS_NUKE = True
+except ImportError:
+    HAS_NUKE = False
+__version__ = '0.3.5'
 
 
 REDSHIFT_LAYERS = ('DiffuseLighting', 'SSS', 'Reflections',
@@ -200,6 +205,21 @@ def get_layer(filename):
         match = re.search(r'\b({}\d*)\b'.format(layer), basename)
         if match:
             return match.group(1)
+
+
+def checked_exists(checking_list):
+    """Return file existed item in @checking_list.  """
+    if HAS_NUKE:
+        task = nuke.ProgressTask('验证文件')
+        checking_list = list(checking_list)
+        all_num = len(checking_list)
+
+    def _check(index, i):
+        if HAS_NUKE:
+            task.setProgress(index * 100 // all_num)
+            task.setMessage(i)
+        return os.path.exists(get_encoded(i))
+    return (i for index, i in enumerate(checking_list) if _check(index, i))
 
 
 def get_tag(filename, pat=None, default=Config.default_tag):
