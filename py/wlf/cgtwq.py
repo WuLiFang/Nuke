@@ -9,9 +9,13 @@ import sys
 
 from subprocess import Popen, PIPE
 
-from wlf.files import get_encoded
+try:
+    import nuke
+    HAS_NUKE = True
+except ImportError:
+    HAS_NUKE = False
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 MODULE_ENABLE = True
@@ -102,12 +106,14 @@ class Shots(CGTeamWork):
     def __init__(self, database, module=None, pipeline=None):
         super(Shots, self).__init__()
         self.database = database
-        self.module = module or proj_info(database=database).get('module')
-        self.pipeline = pipeline
+        self._info = proj_info(database=database)
+        self.module = module or self._info.get('module')
+        self.pipeline = pipeline or self._info.get('pipeline')
         self._task_module = self._tw.task_module(self.database, self.module)
 
     def get_all_image(self, prefix=None):
         """Get all image dest for shots, can match shot with @prefix.  """
+
         filters = []
         if self.pipeline:
             filters.append(['shot_task.pipeline', '=', self.pipeline])
@@ -115,19 +121,28 @@ class Shots(CGTeamWork):
         if not initiated:
             return False
 
+        shots_info = self._task_module.get(['shot.shot'])
         shots = sorted(set(i['shot.shot']
-                           for i in self._task_module.get(['shot.shot'])
-                           if not prefix or i['shot.shot'].startswith(prefix)))
+                           for i in shots_info
+                           if i['shot.shot'] and (not prefix or i['shot.shot'].startswith(prefix))))
+
+        all_num = len(shots)
         images = []
-        for shot in shots:
-            print(shot)
+        if HAS_NUKE:
+            task = nuke.ProgressTask('查询数据库')
+
+        def _progress(num, msg):
+            if HAS_NUKE:
+                task.setProgress(num)
+                task.setMessage(msg)
+        for index, shot in enumerate(shots):
+            _progress(index * 100 // all_num, shot)
             try:
                 image = Shot(shot, database=self.database).image_dest
-            except (IDError, FolderError):
+            except IDError:
                 continue
 
-            if os.path.isfile(get_encoded(image)):
-                images.append(image)
+            images.append(image)
 
         return images
 
@@ -195,8 +210,6 @@ class Shot(CGTeamWork):
     def image_dest(self):
         """The .jpg file upload destination."""
         ret = self._info['image_dest_pat'].format(self._info)
-        if not os.path.isdir(get_encoded(os.path.dirname(ret))):
-            raise FolderError(ret)
         return ret
 
 
