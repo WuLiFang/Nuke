@@ -12,7 +12,7 @@ import nuke
 
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.2.14'
+__version__ = '1.2.15'
 
 
 class ContactSheet(object):
@@ -210,12 +210,12 @@ def create_html(image_folder):
     image_folder = os.path.normpath(image_folder)
     if not os.path.isdir(get_encoded(image_folder)):
         return
-    body = ''
     images = version_filter(get_unicode(i) for i in os.listdir(get_encoded(image_folder))
                             if os.path.isfile(get_encoded(os.path.join(image_folder, i)))
                             and i.lower().endswith(('.jpg', '.png', '.gif')))
     column_num = int(len(images) ** 0.5)
     column_num = 5 if column_num > 5 else column_num
+    body = ''
     for index, image in enumerate(images, 1):
         body += u'''<figure class='lightbox'>
     <a id="image{index}" href="#image{index}" class="image">
@@ -238,8 +238,13 @@ def create_html(image_folder):
            prev_index=str(index - 1),
            next_index=str(index + 1))
 
-    body = '<div class="shots">\n    {}\n</div>'.format(body)
-    body = '<body>\n    {}\n</body>'.format(body)
+    body = '''<body>
+    <header>{}</header>
+    <div class="shots">
+    {}
+    </div>
+</body>'''.format(len(images), body)
+
     with open(os.path.join(__file__, '../csheet.head.html')) as f:
         head = f.read().replace('<title></title>', '<title>{}</title>'.format(image_folder))
     html_page = head + body

@@ -60,7 +60,7 @@ def add_menu():
                      icon='autocomp.png')
         m.addCommand('批量自动合成', "import wlf.comp; wlf.comp.Comp.show_dialog()",
                      icon='autocomp.png')
-        m.addCommand('当前帧输出png',
+        m.addCommand('输出当前帧png',
                      "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes(), show=True)",
                      'SHIFT+F7')
         m.addCommand('redshift预合成',
@@ -71,14 +71,14 @@ def add_menu():
         _path = os.path.abspath(os.path.join(
             __file__, '../../../scenetools/scenetools.exe'))
         m.addCommand(
-            '创建文件夹色板', 'import wlf.csheet; wlf.csheet.dialog_create_html()')
+            '创建色板', 'import wlf.csheet; wlf.csheet.dialog_create_html()')
         if os.path.isfile(_path):
             _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
         else:
             nuke.pluginAddPath(os.path.abspath(os.path.join(_path, '../')))
             nuke.tprint('wlf.scenetools: use uncomplied version')
             _cmd = 'import scenetools;scenetools.call_from_nuke()'
-        m.addCommand('色板\\/成果上传', _cmd)
+        m.addCommand('上传工具', _cmd)
 
     def _cgtw(menu):
 
