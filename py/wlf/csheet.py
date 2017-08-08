@@ -12,7 +12,7 @@ import nuke
 
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.2.13'
+__version__ = '1.2.14'
 
 
 class ContactSheet(object):
@@ -241,7 +241,7 @@ def create_html(image_folder):
     body = '<div class="shots">\n    {}\n</div>'.format(body)
     body = '<body>\n    {}\n</body>'.format(body)
     with open(os.path.join(__file__, '../csheet.head.html')) as f:
-        head = f.read()
+        head = f.read().replace('<title></title>', '<title>{}</title>'.format(image_folder))
     html_page = head + body
     save_path = os.path.abspath(os.path.join(image_folder, u'../色板.html'))
     with open(get_encoded(save_path), 'w') as f:
