@@ -94,7 +94,10 @@ def add_menu():
             '提交视频', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_video()")
         m.addCommand(
             "批量下载",
-            r'import subprocess; subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\run.bat")')
+            r'import subprocess;'
+            r'subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\run.bat")')
+        m.addCommand(
+            '为项目创建色板', 'import wlf.cgtwn; wlf.cgtwn.dialog_create_csheet()')
         # m.addCommand('重新登录', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.update_status()")
 
     def _create_node_menu():
