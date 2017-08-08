@@ -1,5 +1,7 @@
 # -*- coding=UTF-8 -*-
-"""Create contact sheet from all shot images."""
+"""Create contact sheet from all shot images.
+
+"""
 
 import os
 import sys
@@ -9,10 +11,9 @@ import re
 
 from subprocess import Popen
 import nuke
-
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.2.15'
+__version__ = '1.3.0'
 
 
 class ContactSheet(object):
@@ -205,26 +206,38 @@ class ContactSheetThread(threading.Thread):
         self.lock.release()
 
 
-def create_html(image_folder):
+def create_html_from_dir(image_folder):
     """Create a html page for a @image_folder.  """
     image_folder = os.path.normpath(image_folder)
     if not os.path.isdir(get_encoded(image_folder)):
         return
-    images = version_filter(get_unicode(i) for i in os.listdir(get_encoded(image_folder))
+    folder_name = os.path.basename(image_folder)
+    images = version_filter(os.path.join(get_unicode(folder_name), get_unicode(i))
+                            for i in os.listdir(get_encoded(image_folder))
                             if os.path.isfile(get_encoded(os.path.join(image_folder, i)))
                             and i.lower().endswith(('.jpg', '.png', '.gif')))
-    column_num = int(len(images) ** 0.5)
-    column_num = 5 if column_num > 5 else column_num
+    save_path = os.path.abspath(os.path.join(image_folder, u'../色板.html'))
+
+    return create_html(images, save_path, title=image_folder)
+
+
+def create_html(images, save_path, title=None):
+    """Crete html contactsheet with @images list, save to @save_path.  """
+
     body = ''
     for index, image in enumerate(images, 1):
+        image = image.replace('\\', '/')
+        if not os.path.isabs(image):
+            image = './{}'.format(image)
+
         body += u'''<figure class='lightbox'>
     <a id="image{index}" href="#image{index}" class="image">
-        <img src="./{folder}/{image}" alt="{image}" class="thumb" />
+        <img src="{image}" alt="{image}" class="thumb" />
         <figcaption>{name}</figcaption>
     </a>
     <span class="full">
-        <a href="./{folder}/{image}" target="_blank" class="viewer">
-            <img src="./{folder}/{image}"><figcaption>{name}</figcaption></img>
+        <a href="{image}" target="_blank" class="viewer">
+            <img src="{image}"><figcaption>{name}</figcaption></img>
         </a>
         <a class="close" href="#void"></a>
         <a class="prev" href="#image{prev_index}">&lt;</a>
@@ -233,7 +246,6 @@ def create_html(image_folder):
 </figure>
 '''.format(image=image,
            name=split_version(get_shot(image))[0],
-           folder=os.path.basename(image_folder),
            index=index,
            prev_index=str(index - 1),
            next_index=str(index + 1))
@@ -245,13 +257,15 @@ def create_html(image_folder):
     </div>
 </body>'''.format(len(images), body)
 
+    title = title or u'色板'
     with open(os.path.join(__file__, '../csheet.head.html')) as f:
-        head = f.read().replace('<title></title>', '<title>{}</title>'.format(image_folder))
+        head = f.read().replace('<title></title>', '<title>{}</title>'.format(title))
     html_page = head + body
-    save_path = os.path.abspath(os.path.join(image_folder, u'../色板.html'))
+
     with open(get_encoded(save_path), 'w') as f:
         f.write(html_page.encode('UTF-8'))
     print(u'生成: {}'.format(save_path))
+
     return save_path
 
 
@@ -262,7 +276,7 @@ def dialog_create_html():
     panel.addFilenameSearch(folder_input_name, '')
     confirm = panel.show()
     if confirm:
-        csheet = create_html(panel.value(folder_input_name))
+        csheet = create_html_from_dir(panel.value(folder_input_name))
         if csheet:
             url_open(csheet, isfile=True)
 
