@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwn
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 
 def add_menu():
@@ -94,7 +94,7 @@ def add_menu():
             '提交视频', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_video()")
         m.addCommand(
             "批量下载",
-            r'import subprocess; subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\downloader.bat")')
+            r'import subprocess; subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\run.bat")')
         # m.addCommand('重新登录', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.update_status()")
 
     def _create_node_menu():
