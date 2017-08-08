@@ -3,16 +3,15 @@
 
 import os
 import re
-import threading
 
 import nuke
 
 from .files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
-__version__ = '0.3.12'
+__version__ = '0.3.13'
 
 
-class DropFrameCheck(threading.Thread):
+class DropFrameCheck(object):
     """Check drop frames and record on the node."""
 
     showed_files = []
@@ -20,17 +19,10 @@ class DropFrameCheck(threading.Thread):
     running = False
 
     def __init__(self, prefix=('_',)):
-        threading.Thread.__init__(self)
-        self.daemon = True
         self._prefix = prefix
 
-    @property
-    def knob_tcl_name(self):
-        """Custom knob name."""
-        if self._node:
-            return '{}.{}'.format(self._node.name(), self.knob_name)
-
-    def run(self):
+    def start(self):
+        """start one check."""
         if DropFrameCheck.running:
             return
 
