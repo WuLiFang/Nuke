@@ -6,9 +6,9 @@ import os
 import nuke
 from autolabel import autolabel
 
-from . import asset
+from . import asset, cgtwn
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 
 def add_menu():
@@ -112,7 +112,8 @@ def add_menu():
 
     _edit(menubar)
     _comp(menubar)
-    _cgtw(menubar)
+    if cgtwn.MODULE_ENABLE:
+        _cgtw(menubar)
     _create_node_menu()
 
 
