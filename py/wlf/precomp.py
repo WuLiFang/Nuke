@@ -4,14 +4,24 @@ import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 
-__version__ = '0.1.5'
+__version__ = '0.1.6'
 
 
 def redshift(nodes):
-    """Precomp reshift spereated footage."""
+    """Precomp reshift footage from layer."""
     task = nuke.ProgressTask('Redshift预合成')
 
-    source = {get_layer(nuke.filename(input1)): input1 for input1 in nodes}
+    if isinstance(nodes, nuke.Node) or len(nodes) == 1:
+        n = nodes if isinstance(nodes, nuke.Node) else nodes[0]
+        layers = nuke.layers(n)
+
+        def _shuffle(layer):
+            print(layer)
+            knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
+            return nuke.nodes.Shuffle(inputs=[n], label=layer, **knob_in)
+        source = {layer: _shuffle(layer) for layer in layers}
+    else:
+        source = {get_layer(nuke.filename(n)): n for n in nodes}
     assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
     n = source.get('DiffuseLighting')
 
@@ -32,7 +42,8 @@ def redshift(nodes):
         if layer in ('SSS', 'Reflections', 'Refractions', 'SpecularLighting',
                      'GI', 'Emission', 'Caustics'):
             add_layer(layer)
-            input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
+            if layer not in nuke.layers(n):
+                input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
             n = nuke.nodes.Merge2(
                 inputs=[n, input1], operation='plus',
                 also_merge=layer if layer not in nuke.layers(n) else 'none',
@@ -45,17 +56,19 @@ def redshift(nodes):
                 inputs=[n, input1], from0='depth.Z', to0='depth.Z', label='depth')
         # copy layer
         if layer in ('MotionVectors', 'BumpNormals', 'P', 'DiffuseFilter', 'TransTint'):
-            add_layer(layer)
-            n = nuke.nodes.Merge2(
-                tile_color=0x9e3c63ff,
-                inputs=[n, input1], operation='copy',
-                Achannels='rgba', Bchannels='none', output=layer, label=layer)
+            if layer not in nuke.layers(n):
+                add_layer(layer)
+                n = nuke.nodes.Merge2(
+                    tile_color=0x9e3c63ff,
+                    inputs=[n, input1], operation='copy',
+                    Achannels='rgba', Bchannels='none', output=layer, label=layer)
         if layer.startswith('PuzzleMatte'):
-            add_layer(layer)
-            n = nuke.nodes.Merge2(
-                tile_color=0x9e3c63ff,
-                inputs=[n, input1], operation='copy',
-                Achannels='rgba', Bchannels='none', output=layer, label=layer)
+            if layer not in nuke.layers(n):
+                add_layer(layer)
+                n = nuke.nodes.Merge2(
+                    tile_color=0x9e3c63ff,
+                    inputs=[n, input1], operation='copy',
+                    Achannels='rgba', Bchannels='none', output=layer, label=layer)
     return n
 
 
