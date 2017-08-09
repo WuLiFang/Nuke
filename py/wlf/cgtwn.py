@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.1'
+__version__ = '0.7.2'
 
 
 def abort_modified(func):
@@ -47,7 +47,6 @@ def check_login(update=False):
             else:
                 if nuke.GUI:
                     nuke.message('未登录CGTeamWork')
-
         return _func
     return _deco
 
@@ -177,7 +176,11 @@ def dialog_create_csheet():
     checked = panel.value(check_input_name)
 
     task.setProgress(10)
-    images = cgtwq.Shots(database).get_all_image(prefix)
+    try:
+        images = cgtwq.Shots(database).get_all_image(prefix)
+    except cgtwq.IDError as ex:
+        nuke.message('找不到对应条目\n{}'.format(ex))
+        return
     task.setProgress(20)
     if checked:
         images = files.checked_exists(images)
