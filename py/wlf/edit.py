@@ -11,7 +11,7 @@ import nukescripts
 
 from .asset import dropdata_handler
 
-__version__ = '1.3.2'
+__version__ = '1.3.3'
 
 
 def rename_all_nodes():
@@ -630,3 +630,9 @@ def get_max(node, channel='rgb'):
     nuke.delete(n)
 
     return ret
+
+
+def reload_all_read_node():
+    """Reload all read node by reload button.  """
+    for n in nuke.allNodes('Read'):
+        n['reload'].execute()
