@@ -15,7 +15,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 MODULE_ENABLE = True
@@ -36,6 +36,7 @@ def proj_info(shot_name=None, database=None):
     """Return current project info by @shot_name or by @database.  """
 
     default = {'database': u'proj_qqfc_2017',
+               'name': u'QQ飞车2017(默认)',
                'module': u'shot_task',
                'pipeline': u'合成',
                'pipeline_name': u'comp',
@@ -51,8 +52,10 @@ def proj_info(shot_name=None, database=None):
                    '{0[image_folder_name]}',
                    '{0[shot.shot]}.jpg'
                ])}
-    snjyw = {'database': u'proj_big'}
-    mt = {'database': u'proj_mt'}
+    snjyw = {'database': u'proj_big',
+             'name': u'少年锦衣卫'}
+    mt = {'database': u'proj_mt',
+          'name': u'梦塔'}
     prefixs = {'SNJYW': snjyw, 'MT': mt}
     all_info = (default, snjyw, mt)
 
