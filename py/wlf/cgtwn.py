@@ -28,7 +28,7 @@ except ImportError:
     MODULE_ENABLE = False
 
 
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -274,8 +274,7 @@ class Shot(CGTeamWork):
         if n:
             src = os.path.join(nuke.value(
                 'root.project_directory', ''), nuke.filename(n.node('Write_JPG_1')))
-            if not os.path.exists(src):
-                return
+
             dst = self.image_dest
             if not (os.path.exists(dst) and (
                     os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06)):
@@ -360,7 +359,6 @@ def on_save_callback():
     try:
         shot = Shot()
         dst = shot.upload_nk_file()
-        print(dst)
         if dst:
             traytip('更新文件', dst)
     except IDError:
