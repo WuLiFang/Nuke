@@ -14,13 +14,14 @@ import nuke
 import nukescripts
 
 from wlf.files import url_open, get_encoded, get_unicode, escape_batch
-from wlf.edit import autoplace_all, get_max
+from wlf.edit import get_max, delete_unused_nodes
 from wlf.config import Config
-from wlf.node import ReadNode
+from wlf.node import ReadNode, get_upstream_nodes
+from wlf.orgnize import create_backdrop
 
 import wlf.precomp
 
-__version__ = '0.15.4'
+__version__ = '0.16.0'
 
 
 class Comp(object):
@@ -186,7 +187,8 @@ class Comp(object):
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
 
-        autoplace_all()
+        # autoplace_all()
+        delete_unused_nodes()
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
@@ -421,6 +423,7 @@ class Comp(object):
         n = nuke.nodes.Crop(
             inputs=[n],
             box='0 0 root.width root.height')
+        create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
         return n
 
     @staticmethod
