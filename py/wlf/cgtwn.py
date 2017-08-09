@@ -28,7 +28,7 @@ except ImportError:
     MODULE_ENABLE = False
 
 
-__version__ = '0.6.0'
+__version__ = '0.6.1'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -348,7 +348,7 @@ class CurrentShot(dict):
 def on_load_callback():
     """Show cgtwn status"""
     CurrentShot.update_info()
-    traytip('当前CGTeamWork项目', CurrentShot.info().get('name'))
+    traytip('当前CGTeamWork项目', '{}:合成'.format(CurrentShot.info().get('name')))
 
 
 @abort_when_module_not_enable
