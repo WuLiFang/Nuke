@@ -13,7 +13,7 @@ import nuke
 
 from . import cgtwq, csheet, files
 from .asset import copy
-from .files import url_open
+from .files import url_open, traytip
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 MODULE_ENABLE = True
@@ -28,7 +28,7 @@ except ImportError:
     MODULE_ENABLE = False
 
 
-__version__ = '0.5.1'
+__version__ = '0.6.0'
 SYS_CODEC = locale.getdefaultlocale()[1]
 
 
@@ -57,7 +57,7 @@ def check_login(func):
 
     def _func(*args, **kwargs):
         if CGTeamWork.is_logged_in:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         else:
             print(func.__name__, 'not login, abort.')
 
@@ -261,7 +261,7 @@ class Shot(CGTeamWork):
 
         src = nuke.scriptName()
         dst = self.workfile_dest
-        copy(src, dst)
+        return copy(src, dst)
 
     @check_login
     def upload_image(self):
@@ -279,8 +279,7 @@ class Shot(CGTeamWork):
             dst = self.image_dest
             if not (os.path.exists(dst) and (
                     os.path.getmtime(src) - os.path.getmtime(dst) < 1e-06)):
-                copy(src, dst)
-            return dst
+                return copy(src, dst)
 
     @check_login
     def upload_video(self):
@@ -327,28 +326,57 @@ class Shot(CGTeamWork):
             self.add_note(note)
 
 
+class CurrentShot(dict):
+    """The shot of current script.  """
+    _info = None
+
+    @classmethod
+    def update_info(cls):
+        """Update info from script name.  """
+        name = os.path.basename(nuke.scriptName())
+        cls._info = cgtwq.proj_info(name)
+
+    @classmethod
+    def info(cls):
+        """The Shot info as a dictionary.  """
+        if not cls._info:
+            cls.update_info()
+        return cls._info
+
+
+@abort_when_module_not_enable
+def on_load_callback():
+    """Show cgtwn status"""
+    CurrentShot.update_info()
+    traytip('当前CGTeamWork项目', CurrentShot.info().get('name'))
+
+
 @abort_when_module_not_enable
 @abort_modified
-@check_login
 def on_save_callback():
     """Try upload nk file to server."""
 
+    CGTeamWork.update_status()
     try:
-        CGTeamWork.update_status()
-        Shot().upload_nk_file()
+        shot = Shot()
+        dst = shot.upload_nk_file()
+        print(dst)
+        if dst:
+            traytip('更新文件', dst)
     except IDError:
-        print(u'CGTW上未找到对应镜头')
+        traytip('更新文件', u'CGTW上未找到对应镜头')
 
 
 @abort_when_module_not_enable
 @abort_modified
-@check_login
 def on_close_callback():
     """Try upload image to server."""
     try:
-        Shot().upload_image()
+        dst = Shot().upload_image()
+        if dst:
+            traytip('更新单帧', dst)
     except IDError:
-        print(u'CGTW上未找到对应镜头')
+        traytip('更新单帧', u'CGTW上未找到对应镜头')
 
 
 def dialog_create_csheet():

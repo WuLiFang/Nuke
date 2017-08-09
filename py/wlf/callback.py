@@ -31,6 +31,7 @@ def menu():
     nuke.addOnScriptSave(lambda: asset.DropFrameCheck().start())
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
+    nuke.addOnScriptLoad(cgtwn.on_load_callback)
 
     nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(_enable_node)
@@ -79,7 +80,7 @@ def enable_node(prefix='_'):
 def _create_csheet():
     if nuke.numvalue('preferences.wlf_create_csheet', 0.0):
         if nuke.value('root.name'):
-            csheet.create_html(os.path.join(
+            csheet.create_html_from_dir(os.path.join(
                 nuke.value('root.project_directory'), 'images'))
 
 
