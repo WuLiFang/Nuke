@@ -17,7 +17,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 
 REDSHIFT_LAYERS = ('DiffuseLighting', 'SSS', 'Reflections',
@@ -148,7 +148,7 @@ def url_open(url, isfile=False):
     if isfile:
         url = 'file://{}'.format(url)
     _cmd = u"rundll32.exe url.dll,FileProtocolHandler {}".format(url)
-    unicode_popen(_cmd)
+    Popen(get_encoded(_cmd))
 
 
 def unicode_popen(args, **kwargs):
