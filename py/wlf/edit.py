@@ -11,7 +11,7 @@ import nukescripts
 
 from .asset import dropdata_handler
 
-__version__ = '1.3.3'
+__version__ = '1.3.4'
 
 
 def rename_all_nodes():
@@ -360,7 +360,7 @@ def fix_error_read():
             break
 
 
-def delete_unused_nodes(message=False):
+def delete_unused_nodes(nodes=None, message=False):
     """Delete all unused nodes."""
 
     def _is_used(n):
@@ -373,11 +373,18 @@ def delete_unused_nodes(message=False):
                                 if n.Class() not in [''] or n.name().startswith('_'))
         return any(nodes_dependent_this)
 
+    task = nuke.ProgressTask('清除无用节点')
+    if nodes is None:
+        nodes = nuke.allNodes()
     count = 0
     while True:
-        for i in nuke.allNodes():
-            if not _is_used(i):
-                nuke.delete(i)
+        all_num = len(nodes)
+        for index, n in enumerate(nodes):
+            task.setMessage(n.name())
+            task.setProgress(index * 100 / all_num)
+            if not _is_used(n):
+                nuke.delete(n)
+                nodes.remove(n)
                 count += 1
                 break
         else:
