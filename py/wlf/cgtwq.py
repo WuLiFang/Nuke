@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -177,7 +177,7 @@ class Shots(CGTeamWork):
             filters.append(['shot_task.pipeline', '=', self.pipeline])
         initiated = self._task_module.init_with_filter(filters)
         if not initiated:
-            return False
+            raise IDError(self.database, filters)
 
         shots_info = self._task_module.get(['shot.shot'])
         shots = sorted(set(i['shot.shot']
