@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 
 def abort_modified(func):
@@ -36,16 +36,20 @@ def abort_when_module_not_enable(func):
     return _func
 
 
-def check_login(func):
+def check_login(update=False):
     """(Decorator)Abort funciton if not logged in."""
+    def _deco(func):
+        def _func(*args, **kwargs):
+            if update:
+                cgtwq.CGTeamWork.update_status()
+            if cgtwq.CGTeamWork.is_logged_in:
+                return func(*args, **kwargs)
+            else:
+                if nuke.GUI:
+                    nuke.message('未登录CGTeamWork')
 
-    def _func(*args, **kwargs):
-        if cgtwq.CGTeamWork.is_logged_in:
-            return func(*args, **kwargs)
-        else:
-            print(func.__name__, 'not login, abort.')
-
-    return _func
+        return _func
+    return _deco
 
 
 def proj_info():
@@ -148,8 +152,10 @@ def on_close_callback():
         traytip('更新单帧', dst)
 
 
+@check_login(True)
 def dialog_create_csheet():
     """A dialog for create html from cgtwq.  """
+
     folder_input_name = '输出文件夹'
     database_input_name = '数据库'
     prefix_input_name = '镜头名前缀限制'
