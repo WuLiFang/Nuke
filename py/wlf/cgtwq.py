@@ -9,15 +9,17 @@ import sys
 
 from subprocess import Popen, PIPE
 
+
 try:
     import nuke
     HAS_NUKE = True
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
+CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
 MODULE_ENABLE = True
 try:
     if os.path.isdir(CGTW_PATH):
@@ -123,8 +125,9 @@ class CGTeamWork(object):
 
         task = nuke.ProgressTask('尝试连接CGTeamWork')
         task.setProgress(50)
-        if not CGTeamWork.is_running():
+        if not CGTeamWork.is_running() and os.path.exists(CGTW_EXECUTABLE):
             ret = False
+            Popen(CGTW_EXECUTABLE, cwd=os.path.dirname(CGTW_EXECUTABLE))
         else:
             ret = cgtw.tw().sys().get_socket_status()
         CGTeamWork.is_logged_in = ret
