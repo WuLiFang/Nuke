@@ -6,7 +6,7 @@ import nuke
 
 import wlf.files
 
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 
 def append_knob(node, knob):
@@ -64,3 +64,18 @@ def wlf_write_node():
         or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
 
     return n
+
+
+def get_upstream_nodes(n):
+    """ Return all nodes in the tree of the node. """
+    allDeps = set()
+    depsList = [n]
+    evaluateAll = True
+    while depsList:
+        deps = nuke.dependencies(depsList, nuke.INPUTS | nuke.HIDDEN_INPUTS)
+        deps += nuke.dependentNodes(nuke.INPUTS |
+                                    nuke.HIDDEN_INPUTS, depsList, evaluateAll)
+        evaluateAll = False
+        depsList = [i for i in deps if i not in allDeps and not allDeps.add(i)]
+
+    return allDeps
