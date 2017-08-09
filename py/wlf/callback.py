@@ -7,6 +7,7 @@ import nuke
 import nukescripts
 
 from . import asset, csheet, edit, ui, cgtwn
+from .node import wlf_write_node
 
 
 def init():
@@ -147,16 +148,6 @@ def _render_jpg():
         if n:
             print('render_jpg: {}'.format(n.name()))
             n['bt_render_JPG'].execute()
-
-
-def wlf_write_node():
-    """Return founded wlf_write node.  """
-
-    n = nuke.toNode('_Write')\
-        or nuke.toNode('wlf_Write1')\
-        or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
-
-    return n
 
 
 def _gizmo_to_group_on_create():

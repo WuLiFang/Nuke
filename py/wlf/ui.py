@@ -6,7 +6,7 @@ import os
 import nuke
 from autolabel import autolabel
 
-from . import asset, cgtwn
+from . import asset, cgtwq
 
 __version__ = '0.2.4'
 
@@ -87,13 +87,13 @@ def add_menu():
         m = menu.addMenu('CGTeamWork', icon='cgteamwork.png')
         # m.addCommand('设置工程', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.ask_database()")
         m.addCommand(
-            '添加note', "import wlf.cgtwn; wlf.cgtwn.Shot().ask_add_note()")
+            '添加note', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().ask_add_note()")
         # m.addCommand('上传nk文件', "import wlf.cgtwn; wlf.cgtwn.Shot().upload_nk_file()")
         # m.addCommand('上传单帧', "import wlf.cgtwn; wlf.cgtwn.Shot().upload_image()")
         m.addCommand(
-            '提交单帧', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_image()")
+            '提交单帧', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().submit_image()")
         m.addCommand(
-            '提交视频', "import wlf.cgtwn; wlf.cgtwn.Shot().submit_video()")
+            '提交视频', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().submit_video()")
         m.addCommand(
             "批量下载",
             r'import subprocess;'
@@ -117,7 +117,7 @@ def add_menu():
 
     _edit(menubar)
     _comp(menubar)
-    if cgtwn.MODULE_ENABLE:
+    if cgtwq.MODULE_ENABLE:
         _cgtw(menubar)
     _create_node_menu()
 

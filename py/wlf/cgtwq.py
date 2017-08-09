@@ -15,7 +15,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 MODULE_ENABLE = True
@@ -42,6 +42,7 @@ def proj_info(shot_name=None, database=None):
                'pipeline_name': u'comp',
                'shot_task_folder_name': u'shot_work',
                'image_folder_name': u'Image',
+               'work_folder': u'work',
                'image_dest_pat': '\\'.join([
                    SERVER_PATH,
                    '{0[eps.project_code]}',
@@ -51,6 +52,24 @@ def proj_info(shot_name=None, database=None):
                    '{0[shot.shot]}',
                    '{0[image_folder_name]}',
                    '{0[shot.shot]}.jpg'
+               ]),
+               'video_dest_pat': '\\'.join([
+                   SERVER_PATH,
+                   '{0[eps.project_code]}',
+                   'shot/avi',
+                   '{0[pipeline_name]}',
+                   '{0[eps.eps_name]}',
+                   'check',
+                   '{0[shot.shot]}.mov'
+               ]),
+               'workfile_dest_pat':   '\\'.join([
+                   SERVER_PATH,
+                   '{0[eps.project_code]}',
+                   '{0[shot_task_folder_name]}',
+                   '{0[pipeline_name]}',
+                   '{0[eps.eps_name]}',
+                   '{0[shot.shot]}',
+                   '{0[work_folder]}\\'
                ])}
     snjyw = {'database': u'proj_big',
              'name': u'少年锦衣卫'}
@@ -78,12 +97,13 @@ class CGTeamWork(object):
 
     initiated_class = None
     is_logged_in = False
+    _tw = None
+    _task_module = None
 
     def __init__(self):
         super(CGTeamWork, self).__init__()
-        if not CGTeamWork.initiated_class:
-            CGTeamWork.initiated_class = cgtw.tw()
-        self._tw = CGTeamWork.initiated_class
+        if not CGTeamWork._tw:
+            CGTeamWork._tw = cgtw.tw()
 
     @staticmethod
     def is_running():
@@ -97,10 +117,42 @@ class CGTeamWork(object):
                 print(u'未运行 CGTeamWork.exe 。')
         return ret
 
+    @staticmethod
+    def update_status():
+        """Return and set if cls.is_logged_in."""
+
+        task = nuke.ProgressTask('尝试连接CGTeamWork')
+        task.setProgress(50)
+        if not CGTeamWork.is_running():
+            ret = False
+        else:
+            ret = cgtw.tw().sys().get_socket_status()
+        CGTeamWork.is_logged_in = ret
+        print(u'CGTeamWork连接正常' if ret else u'CGTeamWork未连接')
+        return ret
+
     def current_account(self):
         """Return current account.  """
-        # TODO
-        pass
+        return self._tw.sys().get_account()
+
+    def current_account_id(self):
+        """Return current account id.  """
+        return self._tw.sys().get_account_id()
+
+    def submit(self, file_list, folders=None, note=u'自nuke提交'):
+        """Submit current initiated item to cgtw."""
+        if not folders:
+            folders = []
+        print(u'提交: {}'.format(file_list + folders))
+        ret = self._task_module.submit(file_list, note, folders)
+        if not ret:
+            print('提交失败')
+        return ret
+
+    def add_note(self, note):
+        """Add note for current initiated item on cgtw."""
+
+        self._task_module.create_note(note)
 
 
 class Shots(CGTeamWork):
@@ -160,7 +212,7 @@ class Shot(CGTeamWork):
         if database:
             self._info = proj_info(database=database)
         else:
-            self._info = name
+            self._info = proj_info(name)
 
         self._task_module = self._tw.task_module(self.database, self.module)
 
@@ -175,9 +227,20 @@ class Shot(CGTeamWork):
 
         self._task_module.init_with_id(self.shot_id)
 
+        self.update_info()
+
+    def update_info(self):
+        """Update info from database"""
+
         infos = self._task_module.get(
-            ['shot.shot', 'eps.project_code', 'eps.eps_name'])[0]
+            ['shot.shot', 'eps.project_code',
+             'eps.eps_name', 'shot_task.artist', 'shot_task.account_id'])[0]
         self._info.update(infos)
+
+    @property
+    def info(self):
+        """The Shot info as a dictionary.  """
+        return self._info
 
     @property
     def database(self):
@@ -210,10 +273,36 @@ class Shot(CGTeamWork):
         return self._id
 
     @property
+    def artist(self):
+        """The aritist field on cgtw.  """
+        return self._info.get('shot_task.artist')
+
+    @property
+    def artist_id(self):
+        """The aritist_id field on cgtw.  """
+        return self._info.get('shot_task.account_id')
+
+    @property
     def image_dest(self):
         """The .jpg file upload destination."""
         ret = self._info['image_dest_pat'].format(self._info)
         return ret
+
+    @property
+    def video_dest(self):
+        """The .mov file upload destination."""
+        ret = self._info['video_dest_pat'].format(self._info)
+        return ret
+
+    @property
+    def workfile_dest(self):
+        """The .mov file upload destination."""
+        ret = self._info['workfile_dest_pat'].format(self._info)
+        return ret
+
+    def is_my_task(self):
+        """Return if shot assined to current account.  """
+        return bool(self.current_account_id() == self.artist_id)
 
 
 class IDError(Exception):

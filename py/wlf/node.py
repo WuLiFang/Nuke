@@ -6,7 +6,7 @@ import nuke
 
 import wlf.files
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def append_knob(node, knob):
@@ -54,3 +54,13 @@ class ReadNode(object):
     def layer(self):
         """Return Read node layer.  """
         return wlf.files.get_layer(self._filename)
+
+
+def wlf_write_node():
+    """Return founded wlf_write node.  """
+
+    n = nuke.toNode('_Write')\
+        or nuke.toNode('wlf_Write1')\
+        or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
+
+    return n
