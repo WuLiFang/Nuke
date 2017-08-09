@@ -16,7 +16,8 @@ try:
     HAS_NUKE = True
 except ImportError:
     HAS_NUKE = False
-__version__ = '0.3.5'
+
+__version__ = '0.4.0'
 
 
 REDSHIFT_LAYERS = ('DiffuseLighting', 'SSS', 'Reflections',
@@ -40,6 +41,11 @@ def copy(src, dst):
         shutil.copy2(src, dst)
     except WindowsError:
         call(get_encoded(u'XCOPY /V /Y "{}" "{}"'.format(src, dst)))
+    if os.path.isdir(get_encoded(dst)):
+        ret = os.path.join(dst, os.path.basename(src))
+    else:
+        ret = dst
+    return ret
 
 
 def version_filter(iterable):
@@ -266,3 +272,27 @@ def get_tag(filename, pat=None, default=Config.default_tag):
     if ret.startswith(tuple(string.digits)):
         ret = '_{}'.format(ret)
     return get_unicode(ret)
+
+
+def escape_batch(text):
+    """Return escaped text for windows shell.
+
+    >>> escape_batch('test_text "^%~1"')
+    u'test_text \\\\"^^%~1\\\\"'
+    >>> escape_batch(u'中文 \"^%1\"')
+    u'\\xe4\\xb8\\xad\\xe6\\x96\\x87 \\\\"^^%1\\\\"'
+    """
+
+    return text.replace(u'\\', u'\\\\').replace(u'^', r'^^').replace(u'"', r'\"')
+
+
+def traytip(title, text, seconds=3, options=1):
+    """Show a traytip(windows only).  """
+
+    executable = os.path.abspath(
+        os.path.join(__file__, '../../../traytip.exe'))
+    if not os.path.exists(get_encoded(executable)):
+        raise IOError('traytip.exe missing')
+    cmd = '"{}" "{}" "{}" "{}" "{}"'.format(
+        executable, escape_batch(title), escape_batch(text), seconds, options)
+    Popen(get_encoded(cmd))

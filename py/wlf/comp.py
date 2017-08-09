@@ -13,26 +13,14 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-from wlf.files import url_open, get_encoded, get_unicode
+from wlf.files import url_open, get_encoded, get_unicode, escape_batch
 from wlf.edit import autoplace_all, get_max
 from wlf.config import Config
 from wlf.node import ReadNode
 
 import wlf.precomp
 
-__version__ = '0.15.3'
-
-
-def escape_batch(text):
-    """Return escaped text for windows shell.
-
-    >>> escape_batch('test_text "^%~1"')
-    u'test_text \\\\"^^%~1\\\\"'
-    >>> escape_batch(u'中文 \"^%1\"')
-    u'\\xe4\\xb8\\xad\\xe6\\x96\\x87 \\\\"^^%1\\\\"'
-    """
-
-    return text.replace(u'"', r'\"').replace(u'^', r'^^')
+__version__ = '0.15.4'
 
 
 class Comp(object):
