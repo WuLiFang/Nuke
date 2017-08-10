@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -230,7 +230,8 @@ class Shot(CGTeamWork):
             raise IDError(self.database, self.module,
                           self.pipeline, self.name)
         elif len(id_list) != 1:
-            print(id_list)
+            if ''.join(i['id'] for i in id_list) == u'please login!!!':
+                raise LoginError
             raise IDError(u'Multiple match', id_list)
         self._id = id_list[0]['id']
 
@@ -334,3 +335,14 @@ class FolderError(Exception):
 
     def __str__(self):
         return u'No such folder on server:{}'.format(self.message)
+
+
+class LoginError(Exception):
+    """Indicate can't found destination folder."""
+
+    def __init__(self, *args):
+        Exception.__init__(self)
+        self.message = args
+
+    def __str__(self):
+        return u'Not loged in.  \n{}'.format(self.message)

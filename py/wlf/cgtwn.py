@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.4'
+__version__ = '0.7.5'
 
 
 def abort_modified(func):
@@ -123,6 +123,9 @@ def on_load_callback():
     try:
         traytip('当前CGTeamWork项目', '{}:合成'.format(
             CurrentShot().info.get('name')))
+    except cgtwq.LoginError:
+        traytip('Nuke无法访问数据库', '请登录CGTeamWork')
+        dialog_login()
     except cgtwq.IDError as ex:
         traytip('CGteamwork找不到对应条目', str(ex))
 
@@ -145,6 +148,10 @@ def on_save_callback():
 @abort_modified
 def on_close_callback():
     """Try upload image to server."""
+    try:
+        nuke.scriptName()
+    except RuntimeError:
+        return
     try:
         shot = CurrentShot()
     except cgtwq.IDError:
@@ -208,6 +215,8 @@ def dialog_login():
         if confirm:
             success = cgtwq.CGTeamWork().login(panel.value(account), panel.value(password))
             if not success:
-                nuke.message('登录失败')
+                traytip('CGTeamWork', '登录失败')
             else:
-                nuke.message('登录成功')
+                traytip('CGTeamWork', '登录成功')
+        else:
+            break
