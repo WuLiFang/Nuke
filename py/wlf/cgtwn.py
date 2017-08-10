@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.6'
+__version__ = '0.8.0'
 
 
 def abort_modified(func):
@@ -46,7 +46,7 @@ def check_login(update=False):
                 return func(*args, **kwargs)
             else:
                 if nuke.GUI:
-                    nuke.message('未登录CGTeamWork')
+                    traytip('警告', 'CGTeamWork未登录', options=2)
         return _func
     return _deco
 
@@ -105,7 +105,7 @@ class CurrentShot(cgtwq.Shot):
         copy(self.video, self.video_dest)
         self.submit([self.video_dest])
 
-    @check_login
+    @check_login(False)
     def ask_add_note(self):
         """Show a dialog for self.add_note function."""
 
@@ -118,6 +118,7 @@ class CurrentShot(cgtwq.Shot):
 
 
 @abort_when_module_not_enable
+@check_login(False)
 def on_load_callback():
     """Show cgtwn status"""
     try:
@@ -131,34 +132,45 @@ def on_load_callback():
 
 @abort_when_module_not_enable
 @abort_modified
+@check_login(True)
 def on_save_callback():
     """Try upload nk file to server."""
-
     try:
         shot = CurrentShot()
+        shot.check_account()
+        dst = copy(shot.workfile, shot.workfile_dest)
+        if dst:
+            traytip('更新文件', dst)
     except cgtwq.IDError:
         traytip('更新文件', u'CGTW上未找到对应镜头')
-    dst = copy(shot.workfile, shot.workfile_dest)
-    if dst:
-        traytip('更新文件', dst)
+    except cgtwq.AccountError as ex:
+        traytip('未更新文件',
+                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+        return
 
 
 @abort_when_module_not_enable
 @abort_modified
+@check_login(False)
 def on_close_callback():
     """Try upload image to server."""
     try:
         nuke.scriptName()
     except RuntimeError:
         return
+
     try:
         shot = CurrentShot()
+        shot.check_account()
+        dst = copy(shot.image, shot.image_dest)
+        if dst:
+            traytip('更新单帧', dst)
     except cgtwq.IDError:
         traytip('更新单帧', u'CGTW上未找到对应镜头')
-
-    dst = copy(shot.image, shot.image_dest)
-    if dst:
-        traytip('更新单帧', dst)
+    except cgtwq.AccountError as ex:
+        traytip('未更新单帧',
+                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+        return
 
 
 @check_login(True)
