@@ -2,7 +2,6 @@
 """
 cgteamwork integration with nuke.
 """
-# TODO: check account
 import os
 
 import nuke
