@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.5'
+__version__ = '0.7.6'
 
 
 def abort_modified(func):
@@ -125,7 +125,6 @@ def on_load_callback():
             CurrentShot().info.get('name')))
     except cgtwq.LoginError:
         traytip('Nuke无法访问数据库', '请登录CGTeamWork')
-        dialog_login()
     except cgtwq.IDError as ex:
         traytip('CGteamwork找不到对应条目', str(ex))
 
