@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.2'
+__version__ = '0.7.3'
 
 
 def abort_modified(func):
@@ -188,3 +188,22 @@ def dialog_create_csheet():
                                       title=u'色板 {}'.format(database))
     if created_file:
         url_open(created_file, isfile=True)
+
+
+def dialog_login():
+    """Login teamwork.  """
+    account = '帐号'
+    password = '密码'
+    panel = nuke.Panel('登录CGTeamWork')
+    panel.addSingleLineInput('帐号', '')
+    panel.addPasswordInput('密码', '')
+
+    success = False
+    while not success:
+        confirm = panel.show()
+        if confirm:
+            success = cgtwq.CGTeamWork().login(panel.value(account), panel.value(password))
+            if not success:
+                nuke.message('登录失败')
+            else:
+                nuke.message('登录成功')

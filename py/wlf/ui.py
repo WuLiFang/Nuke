@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwq
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 
 def add_menu():
@@ -84,6 +84,8 @@ def add_menu():
 
         m = menu.addMenu('CGTeamWork', icon='cgteamwork.png')
         # m.addCommand('设置工程', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.ask_database()")
+        m.addCommand(
+            '帐号登录', "import wlf.cgtwn; wlf.cgtwn.dialog_login()")
         m.addCommand(
             '添加note', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().ask_add_note()")
         # m.addCommand('上传nk文件', "import wlf.cgtwn; wlf.cgtwn.Shot().upload_nk_file()")

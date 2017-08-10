@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -157,6 +157,11 @@ class CGTeamWork(object):
 
         self._task_module.create_note(note)
 
+    def login(self, account, password):
+        ret = self._tw.sys().login(account, password)
+        print ret
+        return ret
+
 
 class Shots(CGTeamWork):
     """Deal multple shot at once.  """
@@ -225,7 +230,8 @@ class Shot(CGTeamWork):
             raise IDError(self.database, self.module,
                           self.pipeline, self.name)
         elif len(id_list) != 1:
-            raise IDError(u'多个符合的条目'.encode('UTF-8'), id_list)
+            print(id_list)
+            raise IDError(u'Multiple match', id_list)
         self._id = id_list[0]['id']
 
         self._task_module.init_with_id(self.shot_id)
@@ -316,7 +322,7 @@ class IDError(Exception):
         self.message = args
 
     def __str__(self):
-        return u'Item not found:{}'.format(self.message)
+        return u'Can not found item id:{}'.format(self.message)
 
 
 class FolderError(Exception):
