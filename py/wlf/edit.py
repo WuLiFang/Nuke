@@ -649,7 +649,7 @@ def no_cc():
     for n in nuke.allNodes():
         node_class = n.Class()
         node_name = n.name()
-        if node_class in ('ColorCorrect', 'VectorBlur2', 'Grade', 'HueCorrect', 'Aberration')\
+        if node_class in ('ColorCorrect', 'VectorBlur2', 'Grade', 'HueCorrect', 'Aberration', 'OFXcom.revisionfx.rsmb_v3')\
                 or nuke.value('{}.tile_color'.format(node_name), '') in ('0xff7524ff', '0x7aa9ffff')\
                 and node_class not in ('ZDefocus2'):
             n['disable'].setValue(True)
