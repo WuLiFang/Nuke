@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -310,9 +310,11 @@ class Shot(CGTeamWork):
         ret = self._info['workfile_dest_pat'].format(self._info)
         return ret
 
-    def is_my_task(self):
+    def check_account(self):
         """Return if shot assined to current account.  """
-        return bool(self.current_account_id() == self.artist_id)
+        if not bool(self.current_account_id() == self.artist_id):
+            raise AccountError(owner=self.artist,
+                               current=self.current_account())
 
 
 class IDError(Exception):
@@ -346,3 +348,15 @@ class LoginError(Exception):
 
     def __str__(self):
         return u'Not loged in.  \n{}'.format(self.message)
+
+
+class AccountError(Exception):
+    """Indicate can't found destination folder."""
+
+    def __init__(self, owner='', current=''):
+        Exception.__init__(self)
+        self.owner = owner
+        self.current = current
+
+    def __str__(self):
+        return u'Account not match.  \n{} ==> {}'.format(self.current, self.owner)
