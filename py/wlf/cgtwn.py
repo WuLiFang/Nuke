@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.7.3'
+__version__ = '0.7.4'
 
 
 def abort_modified(func):
@@ -120,7 +120,11 @@ class CurrentShot(cgtwq.Shot):
 @abort_when_module_not_enable
 def on_load_callback():
     """Show cgtwn status"""
-    traytip('当前CGTeamWork项目', '{}:合成'.format(CurrentShot().info.get('name')))
+    try:
+        traytip('当前CGTeamWork项目', '{}:合成'.format(
+            CurrentShot().info.get('name')))
+    except cgtwq.IDError as ex:
+        traytip('CGteamwork找不到对应条目', str(ex))
 
 
 @abort_when_module_not_enable
