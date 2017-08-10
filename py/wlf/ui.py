@@ -18,6 +18,8 @@ def add_menu():
         m = menu.addMenu("编辑")
 
         m.addCommand(
+            "禁用所有调色和滤镜除了虚焦", "import wlf.edit; wlf.edit.no_cc()")
+        m.addCommand(
             "分离rgba", "import wlf.edit; wlf.edit.shuffle_rgba(nuke.selectedNode())")
         m.addCommand('分离所有通道', 'import wlf.edit; wlf.edit.split_layers(nuke.selectedNode())',
                      'F3', icon="SplitLayers.png")

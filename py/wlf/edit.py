@@ -643,3 +643,17 @@ def reload_all_read_node():
     """Reload all read node by reload button.  """
     for n in nuke.allNodes('Read'):
         n['reload'].execute()
+
+
+def no_cc():
+    for n in nuke.allNodes():
+        node_class = n.Class()
+        node_name = n.name()
+        if node_class in ('ColorCorrect', 'VectorBlur2', 'Grade', 'HueCorrect', 'Aberration')\
+                or nuke.value('{}.tile_color'.format(node_name), '') in ('0xff7524ff', '0x7aa9ffff')\
+                and node_class not in ('ZDefocus2'):
+            n['disable'].setValue(True)
+    name = os.path.splitext(nuke.scriptName())[0]
+    if not name.endswith('_no_cc'):
+        name += '_no_cc.nk'
+        nuke.scriptSaveAs(name)
