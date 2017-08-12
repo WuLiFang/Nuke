@@ -47,6 +47,9 @@ def add_menu():
         m.addCommand("所有Gizmo转Group",
                      "import wlf.edit; wlf.edit.all_gizmo_to_group()")
         n = m.addMenu('整理文件')
+        n.addCommand("竖式自动摆放节点",
+                     "import wlf.orgnize; wlf.orgnize.autoplace()")
+
         n.addCommand("根据背板重命名所有节点",
                      "import wlf.edit; wlf.edit.rename_all_nodes()")
         n.addCommand("根据背板分割为多个文件文件",

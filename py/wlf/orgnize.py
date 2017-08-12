@@ -24,7 +24,6 @@ def autoplace(nodes=None):
     for i in branches:
         i.autoplace()
         if last:
-            print(last.nodes.right)
             i.nodes.xpos = last.nodes.right + 20
         i.nodes.ypos = 0
         last = i
