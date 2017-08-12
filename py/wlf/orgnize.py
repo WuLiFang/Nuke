@@ -1,12 +1,10 @@
 # -*- coding=UTF-8 -*-
 """Orgnize nodes layout.  """
 import random
-import collections
 
 import nuke
 
-from .node import parent_backdrop, get_upstream_nodes
-__version__ = '0.1.0'
+__version__ = '0.1.2'
 
 
 def autoplace(nodes=None):
@@ -18,18 +16,15 @@ def autoplace(nodes=None):
                           if not any(n for n in n.dependent(nuke.INPUTS)
                                      if n.Class() not in ('Viewer', 'BackdropNode'))
                           and n.Class() not in ('BackdropNode',))
+    branches = list(Branches(n)for n in nodes)
+    branches.sort(key=len, reverse=True)
     xpos = 0
     ypos = 0
-    for n in nodes:
-        branches = Branches(n)
-        print(0, str(branches))
-
-        branches.autoplace()
-        branches.nodes.xpos = xpos
-        branches.nodes.ypos = ypos
-        xpos += branches.nodes.width + 20
-
-    # Place backdrop.
+    for i in branches:
+        i.autoplace()
+        i.nodes.xpos = xpos
+        i.nodes.ypos = ypos
+        xpos = i.nodes.right + 20
     for backdrop, nodes in backdrops_dict.items():
         if not nodes:
             continue
@@ -207,6 +202,8 @@ class Branch(Nodes):
 
     def __init__(self, node=None):
         self._origin = None
+        self._origin_branch = None
+        self._origin_nodes = []
         if isinstance(node, nuke.Node):
             node = [node]
         elif node is None:
@@ -231,7 +228,9 @@ class Branch(Nodes):
             else:
                 branch = Branch()
                 branch.origin = end
-                branch.depth = self.depth + 1 + index * 0.1
+                branch._origin_nodes = list(self)
+                branch._origin_branch = self
+                branch.depth = self.depth + len(self)
             branch.append(input_node)
             ret.append(branch)
         return ret
@@ -270,6 +269,16 @@ class Branch(Nodes):
         else:
             raise TypeError('Expected nuke.Node type.')
 
+    @property
+    def origin_nodes(self):
+        """The nodes branch expand from."""
+        return self._origin_nodes
+
+    @property
+    def origin_branch(self):
+        """The branch this branch expand from."""
+        return self._origin_branch
+
     def __str__(self):
         return 'Branch< {} >'.format(' -> '.join(n.name() for n in self))
 
@@ -288,6 +297,7 @@ class Branches(list):
         list.__init__(self, branches)
         if self:
             self.expand()
+
             # for i in self:
 
     def expand(self):
@@ -324,16 +334,19 @@ class Branches(list):
     def autoplace(self):
         """Auto place branches.  """
 
-        xpos = self.nodes.xpos
+        xpos = 0
         ypos = 0
-        for branch in self[::-1]:
+        self.sort(key=lambda x: x.depth, reverse=False)
+        for branch in self:
             branch.autoplace()
             branch.set_position(xpos=xpos, ypos=ypos)
             if branch.origin:
                 branch.bottom = branch.origin.ypos() - branch.y_gap
-            xpos -= branch.width + branch.x_gap
-
-        self.sort(key=lambda x: x.xpos)
+                nodes = Nodes(set(branch.origin_branch).difference(
+                    set(branch.origin_nodes)))
+                # if nodes:
+                #     nodes.ypos -= branch.height
+            xpos += branch.width + branch.x_gap * 2
 
     def __str__(self):
         return 'Branches[ {} ]'.format(', '.join(str(i) for i in self))
@@ -345,6 +358,12 @@ class Branches(list):
             return any(Branch.__contains__(i, operand) for i in self)
         else:
             raise TypeError
+
+    def find(self, node):
+        """Return first @node contained branch. """
+        for branch in self:
+            if node in branch:
+                return branch
 
     @property
     def nodes(self):
