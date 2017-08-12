@@ -4,7 +4,7 @@ import random
 
 import nuke
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 
 def autoplace(nodes=None):
@@ -12,19 +12,22 @@ def autoplace(nodes=None):
 
     backdrops_dict = {n: Nodes(n.getNodes())
                       for n in nuke.allNodes('BackdropNode')}
+
     nodes = nodes or list(n for n in nuke.allNodes()
                           if not any(n for n in n.dependent(nuke.INPUTS)
                                      if n.Class() not in ('Viewer', 'BackdropNode'))
                           and n.Class() not in ('BackdropNode',))
     branches = list(Branches(n)for n in nodes)
     branches.sort(key=len, reverse=True)
-    xpos = 0
-    ypos = 0
+
+    last = None
     for i in branches:
         i.autoplace()
-        i.nodes.xpos = xpos
-        i.nodes.ypos = ypos
-        xpos = i.nodes.right + 20
+        if last:
+            print(last.nodes.right)
+            i.nodes.xpos = last.nodes.right + 20
+        i.nodes.ypos = 0
+        last = i
     for backdrop, nodes in backdrops_dict.items():
         if not nodes:
             continue
@@ -170,11 +173,22 @@ class Nodes(list):
         for n in self.outputs():
             branches = Branches(n, nodes=self)
             branches.autoplace()
+        self.auto_margin()
 
     def outputs(self):
         """Return Nodes that has no contained downstream founded in given nodes.  """
         ret = (n for n in self if all(n not in self for n in n.dependent()))
         return ret
+
+    def auto_margin(self):
+        left_nodes = Nodes(n for n in nuke.allNodes()
+                           if n not in self and n.xpos < self.xpos)
+        if left_nodes:
+            self.xpos = left_nodes.right + self.x_gap
+        top_nodes = Nodes(n for n in nuke.allNodes()
+                          if n not in self and n.ypos < self.ypos)
+        if top_nodes:
+            self.xpos = top_nodes.bottom + self.y_gap
 
 
 def autoplace_backdrop(backdrop):
@@ -256,6 +270,7 @@ class Branch(Nodes):
         for n in self:
             xpos = n.xpos() + (width - n.screenWidth()) / 2
             n.setXpos(xpos)
+        self.auto_margin()
 
     @property
     def origin(self):
@@ -320,11 +335,19 @@ class Branches(list):
                 expanded = branch.expand(nodes=self._nodes)
                 if expanded:
                     not_done = True
-                    for bran in expanded:
+                    self.insert(index, expanded[0])
+                    for bran in expanded[1:]:
+
                         self.append(bran)
                 else:
                     self.append(branch)
             self._remove_duplicated()
+        tested = set()
+        for branch in self:
+            for i in tested:
+                if i in branch:
+                    branch.remove(i)
+                tested.add(i)
 
     def _remove_duplicated(self):
         for branch in list(self):
@@ -334,19 +357,22 @@ class Branches(list):
     def autoplace(self):
         """Auto place branches.  """
 
-        xpos = 0
-        ypos = 0
         self.sort(key=lambda x: x.depth, reverse=False)
+        last = None
         for branch in self:
             branch.autoplace()
-            branch.set_position(xpos=xpos, ypos=ypos)
+            branch.xpos = 0
+            if last:
+                branch.xpos = last.right + branch.x_gap
+            branch.ypos = 0
+
             if branch.origin:
                 branch.bottom = branch.origin.ypos() - branch.y_gap
-                nodes = Nodes(set(branch.origin_branch).difference(
-                    set(branch.origin_nodes)))
+                # nodes = Nodes(set(branch.origin_branch).difference(
+                #     set(branch.origin_nodes)))
                 # if nodes:
                 #     nodes.ypos -= branch.height
-            xpos += branch.width + branch.x_gap * 2
+            last = branch
 
     def __str__(self):
         return 'Branches[ {} ]'.format(', '.join(str(i) for i in self))
