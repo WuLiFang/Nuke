@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -158,6 +158,7 @@ class CGTeamWork(object):
         self._task_module.create_note(note)
 
     def login(self, account, password):
+        """Log in cgtw with nuke.  """
         ret = self._tw.sys().login(account, password)
         print ret
         return ret
@@ -244,7 +245,7 @@ class Shot(CGTeamWork):
 
         infos = self._task_module.get(
             ['shot.shot', 'eps.project_code',
-             'eps.eps_name', 'shot_task.artist', 'shot_task.account_id'])[0]
+             'eps.eps_name', 'shot_task.artist', 'shot_task.account_id', 'shot_task.image'])[0]
         self._info.update(infos)
 
     @property
@@ -291,6 +292,16 @@ class Shot(CGTeamWork):
     def artist_id(self):
         """The aritist_id field on cgtw.  """
         return self._info.get('shot_task.account_id')
+
+    @property
+    def shot_image(self):
+        """The shot_task.image field on cgtw.  """
+        return self._info.get('shot_task.image')
+
+    @shot_image.setter
+    def shot_image(self, value):
+        self._task_module.set_image('shot_task.image', value)
+        self.update_info()
 
     @property
     def image_dest(self):

@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 
 
 def abort_modified(func):
@@ -93,9 +93,16 @@ class CurrentShot(cgtwq.Shot):
         return os.path.join(nuke.value(
             'root.project_directory', ''), nuke.filename(wlf_write_node().node('Write_MOV_1')))
 
+    def upload_image(self):
+        """Upload imge to server and record it to cgtw database.  """
+        ret = copy(self.image, self.image_dest)
+        if ret:
+            self.shot_image = ret
+        return ret
+
     def submit_image(self):
         """Upload .jpg to server then sumbit these files."""
-        copy(self.image, self.image_dest)
+        self.upload_image()
         self.submit([self.image_dest])
 
     def submit_video(self):
@@ -137,7 +144,7 @@ def on_save_callback():
     try:
         shot = CurrentShot()
         shot.check_account()
-        dst = copy(shot.workfile, shot.workfile_dest)
+        dst = shot.upload_image()
         if dst:
             traytip('更新文件', dst)
     except cgtwq.IDError:
