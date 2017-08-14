@@ -108,6 +108,7 @@ class Comp(object):
                         print(u'\t文件夹: {}'.format(f))
                         continue
                     print(u'\t素材: {}'.format(f))
+                    print(self._config['footage_pat'])
                     if re.match(self._config['footage_pat'], f, flags=re.I):
                         nuke.createNode(
                             u'Read', 'file {{{}/{}}}'.format(dir_, f))
@@ -643,6 +644,7 @@ class CompDialog(nukescripts.PythonPanel):
         elif knob is self.knobs()['info']:
             self.update()
         else:
+            Config()[knob.name()] = knob.value()
             self._config[knob.name()] = knob.value()
             self.update()
 
@@ -668,6 +670,7 @@ class CompDialog(nukescripts.PythonPanel):
                 script=os.path.normcase(__file__).rstrip(u'c'),
                 config=get_encoded(escape_batch(json.dumps(self._config)))
             )
+            print(_cmd)
             proc = Popen(_cmd, shell=True, stderr=PIPE)
             stderr = proc.communicate()[1]
             if stderr:
