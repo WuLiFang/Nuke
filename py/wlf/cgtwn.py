@@ -10,9 +10,10 @@ from . import cgtwq, csheet, files
 from .asset import copy
 from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
+from .config import Config
 
 
-__version__ = '0.8.4'
+__version__ = '0.8.5'
 
 
 def abort_modified(func):
@@ -180,26 +181,32 @@ def on_close_callback():
 @check_login(True)
 def dialog_create_csheet():
     """A dialog for create html from cgtwq.  """
+    config = Config()
 
     folder_input_name = '输出文件夹'
     database_input_name = '数据库'
     prefix_input_name = '镜头名前缀限制'
     check_input_name = '忽略不存在的图像'
     panel = nuke.Panel('为项目创建HTML色板')
-    panel.addSingleLineInput(database_input_name, 'proj_qqfc_2017')
-    panel.addSingleLineInput(prefix_input_name, '')
-    panel.addFilenameSearch(folder_input_name, 'E:/')
-    panel.addBooleanCheckBox(check_input_name, True)
+    panel.addSingleLineInput(
+        database_input_name, config.get('csheet_database'))
+    panel.addSingleLineInput(prefix_input_name, config.get('csheet_prefix'))
+    panel.addFilenameSearch(folder_input_name, config.get('csheet_outdir'))
+    panel.addBooleanCheckBox(check_input_name, config.get('csheet_checked'))
     confirm = panel.show()
     if not confirm:
         return
 
     task = nuke.ProgressTask('创建色板')
     database = panel.value(database_input_name)
-    save_path = os.path.join(panel.value(
-        folder_input_name), u'{}色板.html'.format(database))
+    config['csheet_database'] = database
+    out_dir = panel.value(folder_input_name)
+    config['csheet_outdir'] = out_dir
+    save_path = os.path.join(out_dir, u'{}色板.html'.format(database))
     prefix = panel.value(prefix_input_name)
+    config['csheet_prefix'] = prefix
     checked = panel.value(check_input_name)
+    config['csheet_checked'] = checked
 
     task.setProgress(10)
     try:
