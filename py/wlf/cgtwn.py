@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.8.1'
+__version__ = '0.8.2'
 
 
 def abort_modified(func):
@@ -205,7 +205,7 @@ def dialog_create_csheet():
 
     task.setProgress(10)
     try:
-        images = cgtwq.Shots(database).get_all_image(prefix)
+        images = cgtwq.Shots(database, prefix=prefix).get_all_image()
     except cgtwq.IDError as ex:
         nuke.message('找不到对应条目\n{}'.format(ex))
         return
@@ -237,3 +237,37 @@ def dialog_login():
                 traytip('CGTeamWork', '登录成功')
         else:
             break
+
+
+@check_login(True)
+def dialog_create_dirs():
+    """A dialog for create dirs from cgtwq.  """
+
+    folder_input_name = '输出文件夹'
+    database_input_name = '数据库'
+    prefix_input_name = '镜头名前缀限制'
+    panel = nuke.Panel('为项目创建文件夹')
+    panel.addSingleLineInput(database_input_name, 'proj_qqfc_2017')
+    panel.addSingleLineInput(prefix_input_name, '')
+    panel.addFilenameSearch(folder_input_name, 'E:/temp')
+    confirm = panel.show()
+    if not confirm:
+        return
+
+    task = nuke.ProgressTask('创建文件夹')
+    database = panel.value(database_input_name)
+    save_path = panel.value(folder_input_name)
+    prefix = panel.value(prefix_input_name)
+
+    task.setProgress(10)
+    try:
+        names = cgtwq.Shots(database, prefix=prefix).names
+    except cgtwq.IDError as ex:
+        nuke.message('找不到对应条目\n{}'.format(ex))
+        return
+    task.setProgress(20)
+
+    for name in names:
+        _path = os.path.join(save_path, name)
+        os.makedirs(_path)
+    url_open(save_path, isfile=True)
