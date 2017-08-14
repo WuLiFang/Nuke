@@ -6,7 +6,7 @@ import nuke
 
 import wlf.files
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 
 def append_knob(node, knob):
@@ -68,14 +68,22 @@ def wlf_write_node():
 
 def get_upstream_nodes(n):
     """ Return all nodes in the tree of the node. """
-    allDeps = set()
-    depsList = [n]
-    evaluateAll = True
-    while depsList:
-        deps = nuke.dependencies(depsList, nuke.INPUTS | nuke.HIDDEN_INPUTS)
-        deps += nuke.dependentNodes(nuke.INPUTS |
-                                    nuke.HIDDEN_INPUTS, depsList, evaluateAll)
-        evaluateAll = False
-        depsList = [i for i in deps if i not in allDeps and not allDeps.add(i)]
+    ret = []
+    nodes = [n]
+    while nodes:
+        deps = nuke.dependencies(nodes, nuke.INPUTS | nuke.HIDDEN_INPUTS)
+        nodes = [n for n in deps if n not in ret]
+        ret += deps
 
-    return allDeps
+    return ret
+
+
+def parent_backdrop(node):
+    """ Return direct parent backdrop for @node.  """
+    backdrops = nuke.allNodes('BackdropNode')
+    nodes = set()
+    list(nodes.union(n.getNodes()) for n in backdrops)
+    backdrops = set(backdrops) - nodes
+    for n in backdrops:
+        if node in n.getNodes():
+            return n
