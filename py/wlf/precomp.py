@@ -4,7 +4,7 @@ import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 
 def redshift(nodes):
@@ -22,7 +22,14 @@ def redshift(nodes):
         source = {layer: _shuffle(layer) for layer in layers}
     else:
         source = {get_layer(nuke.filename(n)): n for n in nodes}
-    assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
+
+    if not source.get('DiffuseLighting'):
+        if source.get('DiffuseLightingRaw') and source.get('DiffuseFilter'):
+            n = nuke.nodes.Merge2(inputs=[source.get('DiffuseLightingRaw'), source.get(
+                'DiffuseFilter')], operation='multiply')
+            source['DiffuseLighting'] = n
+        else:
+            assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
     n = source.get('DiffuseLighting')
 
     def _layer_order(name):
