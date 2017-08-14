@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.8.2'
+__version__ = '0.8.3'
 
 
 def abort_modified(func):
@@ -269,5 +269,6 @@ def dialog_create_dirs():
 
     for name in names:
         _path = os.path.join(save_path, name)
-        os.makedirs(_path)
+        if not os.path.exists(_path):
+            os.makedirs(_path)
     url_open(save_path, isfile=True)
