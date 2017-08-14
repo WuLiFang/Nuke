@@ -4,7 +4,7 @@ import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 
 def redshift(nodes):
@@ -26,7 +26,7 @@ def redshift(nodes):
     def _merge_multiply(layer, input0, input1):
         if not source.get(layer) and input0 and input1:
             n = nuke.nodes.Merge2(
-                inputs=[input0, input1], operation='multiply', label=layer)
+                inputs=[input0, input1], operation='multiply', output='rgb', label=layer)
             add_layer(layer)
             n = nuke.nodes.Merge2(
                 tile_color=0x9e3c63ff,
@@ -61,7 +61,7 @@ def redshift(nodes):
             if layer not in nuke.layers(n):
                 input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
             n = nuke.nodes.Merge2(
-                inputs=[n, input1], operation='plus',
+                inputs=[n, input1], operation='plus', output='rgb',
                 also_merge=layer if layer not in nuke.layers(n) else 'none',
                 label=layer)
         # depth layer
