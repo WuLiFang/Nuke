@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 
 
-__version__ = '0.8.3'
+__version__ = '0.8.4'
 
 
 def abort_modified(func):
@@ -144,7 +144,7 @@ def on_save_callback():
     try:
         shot = CurrentShot()
         shot.check_account()
-        dst = shot.upload_image()
+        dst = copy(shot.workfile, shot.workfile_dest)
         if dst:
             traytip('更新文件', dst)
     except cgtwq.IDError:
@@ -152,7 +152,6 @@ def on_save_callback():
     except cgtwq.AccountError as ex:
         traytip('未更新文件',
                 '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
-        return
 
 
 @abort_when_module_not_enable
@@ -168,7 +167,7 @@ def on_close_callback():
     try:
         shot = CurrentShot()
         shot.check_account()
-        dst = copy(shot.image, shot.image_dest)
+        dst = shot.upload_image()
         if dst:
             traytip('更新单帧', dst)
     except cgtwq.IDError:
@@ -176,7 +175,6 @@ def on_close_callback():
     except cgtwq.AccountError as ex:
         traytip('未更新单帧',
                 '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
-        return
 
 
 @check_login(True)
