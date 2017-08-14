@@ -17,7 +17,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 
 REDSHIFT_LAYERS = ('DiffuseFilter', 'DiffuseLighting', 'DiffuseLightingRaw', 'SSS',
@@ -282,7 +282,7 @@ def escape_batch(text):
     u'\\xe4\\xb8\\xad\\xe6\\x96\\x87 \\\\"^^%1\\\\"'
     """
 
-    return text.replace(u'\\', u'\\\\').replace(u'^', r'^^').replace(u'"', r'\"')
+    return text.replace(u'^', u'^^').replace(u'"', u'\\"').replace(u'|', u'^|')
 
 
 def traytip(title, text, seconds=3, options=1):
