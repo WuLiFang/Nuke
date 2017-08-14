@@ -21,7 +21,7 @@ from wlf.orgnize import create_backdrop
 
 import wlf.precomp
 
-__version__ = '0.16.1'
+__version__ = '0.16.2'
 
 
 class Comp(object):
@@ -187,7 +187,7 @@ class Comp(object):
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
 
-        # autoplace_all()
+        map(nuke.autoplace, nodes)
         delete_unused_nodes()
 
     @staticmethod
@@ -423,7 +423,7 @@ class Comp(object):
         n = nuke.nodes.Crop(
             inputs=[n],
             box='0 0 root.width root.height')
-        create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
+        # create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
         return n
 
     @staticmethod
