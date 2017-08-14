@@ -21,7 +21,7 @@ from wlf.orgnize import create_backdrop
 
 import wlf.precomp
 
-__version__ = '0.16.0'
+__version__ = '0.16.1'
 
 
 class Comp(object):
@@ -253,7 +253,7 @@ class Comp(object):
         """Save .nk file and render .jpg file."""
 
         print(u'{:-^30s}'.format(u'开始 输出'))
-        _path = self._config['save_path'].replace('\\', '/').lower()
+        _path = self._config['save_path'].replace('\\', '/')
         _dir = os.path.dirname(_path)
         if not os.path.exists(_dir):
             os.makedirs(_dir)
