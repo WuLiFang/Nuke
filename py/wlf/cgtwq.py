@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.2.6'
+__version__ = '0.3.0'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -167,29 +167,29 @@ class CGTeamWork(object):
 class Shots(CGTeamWork):
     """Deal multple shot at once.  """
 
-    def __init__(self, database, module=None, pipeline=None):
+    def __init__(self, database, module=None, pipeline=None, prefix=None):
         super(Shots, self).__init__()
         self.database = database
         self._info = proj_info(database=database)
         self.module = module or self._info.get('module')
         self.pipeline = pipeline or self._info.get('pipeline')
         self._task_module = self._tw.task_module(self.database, self.module)
-
-    def get_all_image(self, prefix=None):
-        """Get all image dest for shots, can match shot with @prefix.  """
-
         filters = []
         if self.pipeline:
             filters.append(['shot_task.pipeline', '=', self.pipeline])
         initiated = self._task_module.init_with_filter(filters)
         if not initiated:
             raise IDError(self.database, filters)
-
         shots_info = self._task_module.get(['shot.shot'])
-        shots = sorted(set(i['shot.shot']
-                           for i in shots_info
-                           if i['shot.shot'] and (not prefix or i['shot.shot'].startswith(prefix))))
+        self._shots = sorted(set(i['shot.shot']
+                                 for i in shots_info
+                                 if i['shot.shot']
+                                 and (not prefix or i['shot.shot'].startswith(prefix))))
 
+    def get_all_image(self):
+        """Get all image dest for shots, can match shot with @prefix.  """
+
+        shots = self._shots
         all_num = len(shots)
         images = []
         if HAS_NUKE:
@@ -209,6 +209,11 @@ class Shots(CGTeamWork):
             images.append(image)
 
         return images
+
+    @property
+    def names(self):
+        """Return shots names.   """
+        return self._shots
 
 
 class Shot(CGTeamWork):
