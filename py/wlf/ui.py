@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwq
 
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 
 
 def add_menu():
@@ -105,6 +105,8 @@ def add_menu():
             r'subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\run.bat")')
         m.addCommand(
             '为项目创建色板', 'import wlf.cgtwn; wlf.cgtwn.dialog_create_csheet()')
+        m.addCommand(
+            '为项目创建文件夹', 'import wlf.cgtwn; wlf.cgtwn.dialog_create_dirs()')
         # m.addCommand('重新登录', "import wlf.cgtwn; wlf.cgtwn.CGTeamWork.update_status()")
 
     def _create_node_menu():
