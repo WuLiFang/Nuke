@@ -670,7 +670,6 @@ class CompDialog(nukescripts.PythonPanel):
                 script=os.path.normcase(__file__).rstrip(u'c'),
                 config=get_encoded(escape_batch(json.dumps(self._config)))
             )
-            print(_cmd)
             proc = Popen(_cmd, shell=True, stderr=PIPE)
             stderr = proc.communicate()[1]
             if stderr:
