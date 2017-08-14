@@ -4,7 +4,7 @@
 import os
 import json
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 class Config(dict):
@@ -18,6 +18,10 @@ class Config(dict):
         'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v2.jpg",
         'autograde': False,
         'exclude_existed': True,
+        'csheet_database': 'proj_big',
+        'csheet_prefix': 'SNJYW_EP14_',
+        'csheet_outdir': 'E:/',
+        'csheet_checked': True,
     }
     path = os.path.expanduser(u'~/.nuke/wlf.config.json')
     instance = None
