@@ -4,14 +4,14 @@
 import os
 import json
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class Config(dict):
     """Comp config.  """
     default = {
-        'footage_pat': r'^.*_?sc.+_.+\.exr[0-9\- ]*$',
-        'dir_pat': r'^.{3,}$',
+        'footage_pat': r'^.+\.exr[0-9\- ]*$',
+        'dir_pat': r'^.{4,}$',
         'tag_pat': r'(?i)(?:[^_]+_)?(?:ep\d+_)?(?:\d+[a-zA-Z]*_)?(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
         'output_dir': 'E:/precomp',
         'input_dir': 'Z:/SNJYW/Render/EP',
