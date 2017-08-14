@@ -17,11 +17,11 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 
-REDSHIFT_LAYERS = ('DiffuseLighting', 'SSS', 'Reflections',
-                   'Refractions', 'GI', 'Emission', 'Caustics',
+REDSHIFT_LAYERS = ('DiffuseLighting', 'DiffuseLightingRaw', 'SSS',
+                   'Reflections', 'Refractions', 'GI', 'Emission', 'Caustics',
                    'SpecularLighting', 'Z', 'P', 'BumpNormals',
                    'DiffuseFilter', 'MotionVectors', 'TransTint',
                    'PuzzleMatte')
