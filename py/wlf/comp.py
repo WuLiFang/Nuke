@@ -21,7 +21,7 @@ from wlf.orgnize import create_backdrop
 
 import wlf.precomp
 
-__version__ = '0.16.2'
+__version__ = '0.16.3'
 
 
 class Comp(object):
@@ -325,7 +325,11 @@ class Comp(object):
             tag_nodes_dict.setdefault(tag, [])
             tag_nodes_dict[tag].append(n)
 
-        for tag, nodes in tag_nodes_dict.items():
+        def _tag_order(tag):
+            return (u'_' + tag.replace(u'_BG', '1_').replace(u'_CH', '0_'))
+        tags = sorted(tag_nodes_dict.keys(), key=_tag_order)
+        for tag in tags:
+            nodes = tag_nodes_dict[tag]
             try:
                 n = wlf.precomp.redshift(nodes)
                 ret.append(n)
