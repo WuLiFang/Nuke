@@ -21,7 +21,7 @@ from wlf.orgnize import create_backdrop
 
 import wlf.precomp
 
-__version__ = '0.16.3'
+__version__ = '0.16.4'
 
 
 class Comp(object):
@@ -108,7 +108,6 @@ class Comp(object):
                         print(u'\t文件夹: {}'.format(f))
                         continue
                     print(u'\t素材: {}'.format(f))
-                    print(self._config['footage_pat'])
                     if re.match(self._config['footage_pat'], f, flags=re.I):
                         nuke.createNode(
                             u'Read', 'file {{{}/{}}}'.format(dir_, f))
@@ -265,16 +264,17 @@ class Comp(object):
         nuke.scriptSave(_path)
 
         # Render png
-        for n in nuke.allNodes('Read'):
-            name = n.name()
-            if name in ('MP', 'Read_Write_JPG'):
-                continue
-            for frame in (n.firstFrame(), n.lastFrame(), int(nuke.numvalue(u'_Write.knob.frame'))):
-                try:
-                    render_png(n, frame)
-                    break
-                except RuntimeError:
+        if self._config.get('RENDER_JPG'):
+            for n in nuke.allNodes('Read'):
+                name = n.name()
+                if name in ('MP', 'Read_Write_JPG'):
                     continue
+                for frame in (n.firstFrame(), n.lastFrame(), int(nuke.numvalue(u'_Write.knob.frame'))):
+                    try:
+                        render_png(n, frame)
+                        break
+                    except RuntimeError:
+                        continue
 
         # Render Single Frame
         n = nuke.toNode(u'_Write')
