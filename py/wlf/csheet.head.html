@@ -77,7 +77,7 @@
         .lightbox figcaption {
             word-break: keep-all;
             text-overflow: ellipsis;
-            width: 10em;
+            width: 100%;
             overflow: hidden;
             margin: auto;
             transition: opacity 0.4s ease-in-out;
@@ -133,6 +133,7 @@
             pointer-events: auto;
         }
 
+
         .lightbox .full a.prev,
         .lightbox .full a.next {
             z-index: 3;
@@ -176,6 +177,10 @@
         .lightbox a:link {
             text-decoration: none;
             color: grey
+        }
+
+        .lightbox .highlight {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .lightbox a:visited {
