@@ -11,7 +11,7 @@ import nukescripts
 
 from .asset import dropdata_handler
 
-__version__ = '1.3.4'
+__version__ = '1.3.5'
 
 
 def rename_all_nodes():
@@ -413,7 +413,7 @@ def replace_sequence():
 
     confirm = panel.show()
     if confirm:
-        render_path = panel.value(render_path_text)
+        render_path = os.path.normcase(panel.value(render_path_text))
 
         first = int(panel.value(first_text))
         last = int(panel.value(last_text))
@@ -423,9 +423,9 @@ def replace_sequence():
         nuke.Root()['first_frame'].setValue(first)
         nuke.Root()['last_frame'].setValue(last)
 
-        for i in nuke.allNodes('Read'):
-            file_path = nuke.filename(i)
-            if file_path.startswith(render_path):
+        for n in nuke.allNodes('Read'):
+            file_path = nuke.filename(n)
+            if os.path.normcase(file_path).startswith(render_path):
                 search_result = re.search(r'\.([\d]+)\.', file_path)
                 if search_result:
                     flag_frame = search_result.group(1)
@@ -433,12 +433,12 @@ def replace_sequence():
                     r'\.([\d#]+)\.',
                     lambda matchobj: r'.%0{}d.'.format(len(matchobj.group(1))),
                     file_path)
-                i['file'].setValue(file_path)
-                i['format'].setValue('HD_1080')
-                i['first'].setValue(first)
-                i['origfirst'].setValue(first)
-                i['last'].setValue(last)
-                i['origlast'].setValue(last)
+                n['file'].setValue(file_path)
+                n['format'].setValue('HD_1080')
+                n['first'].setValue(first)
+                n['origfirst'].setValue(first)
+                n['last'].setValue(last)
+                n['origlast'].setValue(last)
 
         n = nuke.toNode('_Write')
         if n:
