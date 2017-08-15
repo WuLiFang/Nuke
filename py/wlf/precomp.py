@@ -4,7 +4,7 @@ import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 
-__version__ = '0.1.9'
+__version__ = '0.1.10'
 
 
 def redshift(nodes):
@@ -18,7 +18,7 @@ def redshift(nodes):
         def _shuffle(layer):
             print(layer)
             knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
-            return nuke.nodes.Shuffle(inputs=[n], label=layer, **knob_in)
+            return nuke.nodes.Shuffle(inputs=[n], label=layer, postage_stamp=True, **knob_in)
         source = {layer: _shuffle(layer) for layer in layers}
     else:
         source = {get_layer(nuke.filename(n)): n for n in nodes}
