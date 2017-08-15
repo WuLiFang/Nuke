@@ -8,7 +8,7 @@ import nuke
 
 from .files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
-__version__ = '0.3.13'
+__version__ = '0.3.14'
 
 
 class DropFrameCheck(object):
@@ -97,16 +97,15 @@ class DropFrameCheck(object):
                     and filename in cls.showed_files:
                 continue
             if dropframes:
-                message += '<tr><td>{}</td><td>'\
-                    '<span style=\"color:red\">{}</span></td></tr>'.format(
-                        filename, dropframes)
+                message += '<tr><td><span style=\"color:red\">{}</span>'\
+                    '</td><td>{}</td></tr>'.format(dropframes, filename)
                 cls.showed_files.append(filename)
 
         if message:
             message = '<style>td{padding:8px;}</style>'\
                 '<table>'\
-                '<tr><th>素材</th><th>缺帧</th></tr>'\
-                + message + \
+                '<tr><th>缺帧</th><th>素材</th></tr>'\
+                + message +\
                 '</table>'
             nuke.message(message)
 
