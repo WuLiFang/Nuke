@@ -1,0 +1,70 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Ramp {
+ p0 {1332 1092}
+ p1 {1446 566}
+ name Ramp2
+ gl_color 0xd032ff00
+ selected true
+ xpos 5460
+ ypos 38
+}
+Read {
+ inputs 0
+ file z:/snjyw/mp/ep09/sky_01_v4.jpg
+ name MP1
+ gl_color 0x32ff6000
+ selected true
+ xpos 5350
+ ypos -4
+}
+Reformat {
+ resize fill
+ name Reformat5
+ gl_color 0xff683200
+ selected true
+ xpos 5350
+ ypos 106
+}
+Transform {
+ translate {-276 170}
+ scale 2.595000029
+ center {844.5 524.5}
+ name Transform2
+ gl_color 0xfaff3200
+ label **在此调整MP位置**
+ selected true
+ xpos 5350
+ ypos 132
+}
+Vectorfield {
+ vfield_file Z:/SNJYW/Render/EP14/lut/01_sc022_mp.vf
+ version 1
+ file_type vf
+ name Vectorfield2
+ gl_color 0xe832ff00
+ label "\[value this.vfield_file]"
+ note_font 微软雅黑
+ selected true
+ xpos 5350
+ ypos 170
+}
+ColorCorrect {
+ name ColorCorrect17
+ gl_color 0x4cff3200
+ selected true
+ xpos 5350
+ ypos 214
+}
+Grade {
+ inputs 1+1
+ white {1.205315 1.13585 0.958835 1}
+ white_panelDropped true
+ name Grade5
+ gl_color 0x32ffd600
+ label 底部光
+ selected true
+ xpos 5460
+ ypos 208
+}
