@@ -5,14 +5,14 @@ Gizmo {
  tile_color 0xff00ff
  label "输入通道: \[value in]"
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.1.2"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.1.3"}
  addUserKnob {41 in l "Position Layer" T Shuffle2.in}
  addUserKnob {26 div_sampler l <b>取样器</b>}
- addUserKnob {22 bt_sampler_switch l Disable(禁用) t "禁用控制器, 防止设置被意外改动。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\ntry:\n    __positionkeyer_disable\nexcept NameError:\n    def __positionkeyer_disable():\n        for n in __positionkeyer_disable_set:\n            try:\n                n\['bt_reset_sampler_switch'].execute()\n            except ValueError:\n                pass\n        __positionkeyer_disable_set.clear()\n\n    nuke.callbacks.addOnScriptSave(__positionkeyer_disable)\n    __positionkeyer_disable_set = set()\n        \nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n    __positionkeyer_disable_set.add(nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
+ addUserKnob {22 bt_sampler_switch l Enable(启用) t "启用控制器, 快速设置白点和黑点。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\ntry:\n    __positionkeyer_disable\nexcept NameError:\n    def __positionkeyer_disable():\n        for n in __positionkeyer_disable_set:\n            try:\n                n\['bt_reset_sampler_switch'].execute()\n            except ValueError:\n                pass\n            nuke.Root().setModified(True)\n        __positionkeyer_disable_set.clear()\n\n    nuke.callbacks.addOnScriptSave(__positionkeyer_disable)\n    __positionkeyer_disable_set = set()\n        \nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n    __positionkeyer_disable_set.add(nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
  addUserKnob {22 bt_reset_sampler_switch l INVISIBLE +INVISIBLE T "nuke.thisNode()\['bt_sampler_switch'].setLabel('Enable(启用)')\nnuke.thisNode()\['bt_sampler_switch'].setTooltip('启用控制器, 快速设置白点和黑点。')\nnuke.thisNode()\['p0'].setVisible(False)\nnuke.thisNode()\['p1'].setVisible(False)" +STARTLINE}
- addUserKnob {12 p0}
+ addUserKnob {12 p0 +HIDDEN}
  p0 {100 300}
- addUserKnob {12 p1}
+ addUserKnob {12 p1 +HIDDEN}
  p1 {300 100}
  addUserKnob {26 div_settings l <b>设置</b>}
  addUserKnob {41 blackpoint l blackpoint(黑点) t 低于此值将为黑色 T Sampler.p0}
@@ -61,7 +61,7 @@ Gizmo {
   xpos 180
   ypos -1352
  }
-set N384e7800 [stack 0]
+set N31533800 [stack 0]
  Shuffle {
   in P
   name Shuffle2
@@ -107,7 +107,7 @@ set N384e7800 [stack 0]
   xpos 180
   ypos -1218
  }
-set N384e6c00 [stack 0]
+set N31532c00 [stack 0]
  Dot {
   name Dot2
   gl_color 0x7bff3200
@@ -116,8 +116,8 @@ set N384e6c00 [stack 0]
   ypos -1374
   hide_input true
  }
-push $N384e7800
-push $N384e7800
+push $N31533800
+push $N31533800
  Copy {
   inputs 2
   from0 {{{parent.Keyer1.output}}}
@@ -128,7 +128,7 @@ push $N384e7800
   xpos 290
   ypos -1308
  }
-set N384e6400 [stack 0]
+set N31532400 [stack 0]
  ChannelMerge {
   inputs 2
   name ChannelMerge2
@@ -137,7 +137,7 @@ set N384e6400 [stack 0]
   xpos 510
   ypos -1329
  }
-push $N384e6c00
+push $N31532c00
  Dot {
   name Dot1
   gl_color 0xd332ff00
@@ -146,7 +146,7 @@ push $N384e6c00
   ypos -1374
   hide_input true
  }
-push $N384e6400
+push $N31532400
  ChannelMerge {
   inputs 2
   operation in
@@ -156,7 +156,7 @@ push $N384e6400
   xpos 400
   ypos -1226
  }
-push $N384e6c00
+push $N31532c00
  Switch {
   inputs 3
   which {{parent.combine}}
@@ -166,8 +166,8 @@ push $N384e6c00
   xpos 510
   ypos -1210
  }
-set N3da4480 [stack 0]
-push $N3da4480
+set N314fc480 [stack 0]
+push $N314fc480
  Copy {
   inputs 2
   from0 rgba.alpha
@@ -185,7 +185,7 @@ push $N3da4480
   xpos 510
   ypos -1138
  }
-push $N384e7800
+push $N31533800
  Viewer {
   frame_range 1-100
   fps 25
