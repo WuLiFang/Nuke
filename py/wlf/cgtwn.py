@@ -13,7 +13,7 @@ from .node import wlf_write_node
 from .config import Config
 
 
-__version__ = '0.8.5'
+__version__ = '0.8.6'
 
 
 def abort_modified(func):
@@ -138,7 +138,6 @@ def on_load_callback():
 
 
 @abort_when_module_not_enable
-@abort_modified
 @check_login(True)
 def on_save_callback():
     """Try upload nk file to server."""
