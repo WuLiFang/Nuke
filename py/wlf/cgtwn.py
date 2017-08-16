@@ -13,7 +13,7 @@ from .node import wlf_write_node
 from .config import Config
 
 
-__version__ = '0.8.6'
+__version__ = '0.8.7'
 
 
 def abort_modified(func):
@@ -147,6 +147,8 @@ def on_save_callback():
         dst = copy(shot.workfile, shot.workfile_dest)
         if dst:
             traytip('更新文件', dst)
+    except cgtwq.LoginError:
+        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
     except cgtwq.IDError:
         traytip('更新文件', u'CGTW上未找到对应镜头')
     except cgtwq.AccountError as ex:
@@ -170,6 +172,8 @@ def on_close_callback():
         dst = shot.upload_image()
         if dst:
             traytip('更新单帧', dst)
+    except cgtwq.LoginError:
+        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
     except cgtwq.IDError:
         traytip('更新单帧', u'CGTW上未找到对应镜头')
     except cgtwq.AccountError as ex:
@@ -197,27 +201,26 @@ def dialog_create_csheet():
         return
 
     task = nuke.ProgressTask('创建色板')
-    database = panel.value(database_input_name)
-    config['csheet_database'] = database
-    out_dir = panel.value(folder_input_name)
-    config['csheet_outdir'] = out_dir
-    save_path = os.path.join(out_dir, u'{}色板.html'.format(database))
-    prefix = panel.value(prefix_input_name)
-    config['csheet_prefix'] = prefix
-    checked = panel.value(check_input_name)
-    config['csheet_checked'] = checked
+    config['csheet_database'] = panel.value(database_input_name)
+    config['csheet_outdir'] = panel.value(folder_input_name)
+    config['csheet_prefix'] = panel.value(prefix_input_name)
+    config['csheet_checked'] = panel.value(check_input_name)
+
+    save_path = os.path.join(config['csheet_outdir'],
+                             u'{}色板.html'.format(config['csheet_database']))
 
     task.setProgress(10)
     try:
-        images = cgtwq.Shots(database, prefix=prefix).get_all_image()
+        images = cgtwq.Shots(
+            config['csheet_database'], prefix=config['csheet_prefix']).get_all_image()
     except cgtwq.IDError as ex:
         nuke.message('找不到对应条目\n{}'.format(ex))
         return
     task.setProgress(20)
-    if checked:
+    if config['csheet_checked']:
         images = files.checked_exists(images)
     created_file = csheet.create_html(images, save_path,
-                                      title=u'色板 {}'.format(database))
+                                      title=u'色板 {}'.format(config['csheet_database']))
     if created_file:
         url_open(created_file, isfile=True)
 
