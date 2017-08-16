@@ -4,7 +4,7 @@ import random
 
 import nuke
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 _PLACED_NODES = set()
 
@@ -42,44 +42,33 @@ def autoplace(nodes=None):
                 new_nodes.xpos = last_nodes.right + 20
         i.nodes.ypos = 0
         last = i
-    for backdrop, nodes in backdrops_dict.items():
-        if not nodes:
+    for backdrop, nodes_in_backdrop in backdrops_dict.items():
+        if not nodes_in_backdrop:
             continue
-        nodes.autoplace()
+        backdrop_nodes = Nodes(nodes_in_backdrop)
+        backdrop_nodes.append(backdrop)
+        # nodes_in_backdrop.autoplace()
         left, top, right, bottom = (-10, -80, 10, 10)
-        xpos = nodes.xpos + left
-        ypos = nodes.ypos + top
-        width = nodes.width + (right - left)
-        height = nodes.height + (bottom - top)
-        backdrop.setXYpos(xpos, ypos)
-        backdrop['bdwidth'].setValue(width)
-        backdrop['bdheight'].setValue(height)
+        backdrop.setXYpos(nodes_in_backdrop.xpos + left,
+                          nodes_in_backdrop.ypos + top)
+        backdrop['bdwidth'].setValue(
+            nodes_in_backdrop.width + (right - left))
+        backdrop['bdheight'].setValue(
+            nodes_in_backdrop.height + (bottom - top))
         # Move other nodes out.
-        other_nodes = (n for n in nuke.allNodes()
-                       if n not in nodes and n is not backdrop)
-        for n in other_nodes:
-            xpos = n.xpos()
-            ypos = n.ypos()
-            if nodes.xpos <= xpos <= nodes.right:
-                ypos = ypos + bottom if ypos > nodes.ypos else ypos + top
-            n.setXYpos(xpos, ypos)
+
+        other_nodes = Nodes(n for n in nuke.allNodes()
+                            if n not in nodes_in_backdrop and n is not backdrop)
+        up_nodes = Nodes(n for n in other_nodes if n.ypos()
+                         < backdrop_nodes.bottom)
+        down_nodes = Nodes(n for n in other_nodes if n.ypos()
+                           >= backdrop_nodes.bottom)
+        if up_nodes:
+            up_nodes.bottom = backdrop_nodes.ypos - backdrop_nodes.y_gap
+        if down_nodes:
+            down_nodes.ypos = backdrop_nodes.bottom + backdrop_nodes.y_gap
 
     nuke.Root().setModified(True)
-
-
-def orgnize_nodes(nodes):
-    """orgnize node posion and add backdrops.  """
-    # TODO
-    meta_input_dict = {}
-    for n in nodes:
-        meta_input = n.metadata('input/filename')
-        if meta_input:
-            meta_input_dict.setdefault(meta_input, [])
-            meta_input_dict[meta_input].append(n)
-
-    for meta_input, nodes in meta_input_dict.items():
-        map(nuke.autoplace, nodes)
-        n = create_backdrop(nodes)
 
 
 def is_node_inside(node, backdrop):
@@ -208,16 +197,6 @@ class Nodes(list):
         ret = (n for n in self if all(n not in self for n in n.dependent()))
         return ret
 
-    def auto_margin(self):
-        left_nodes = Nodes(n for n in nuke.allNodes()
-                           if n not in self and n.xpos < self.xpos)
-        if left_nodes:
-            self.xpos = left_nodes.right + self.x_gap
-        top_nodes = Nodes(n for n in nuke.allNodes()
-                          if n not in self and n.ypos < self.ypos)
-        if top_nodes:
-            self.xpos = top_nodes.bottom + self.y_gap
-
 
 def autoplace_backdrop(backdrop):
     """autoplace nodes by @backdrop.  """
@@ -246,6 +225,7 @@ class Branch(Nodes):
         self._origin = None
         self._origin_branch = None
         self._origin_nodes = Nodes()
+        self._new_nodes = self
         if isinstance(node, nuke.Node):
             node = [node]
         elif node is None:
@@ -506,45 +486,45 @@ def create_backdrop(nodes, autoplace_nodes=False):
     '''
     if autoplace_nodes:
         map(nuke.autoplace, nodes)
-        # autoplace(nodes)
-        pass
     if not nodes:
         return nuke.nodes.BackdropNode()
 
     # Calculate bounds for the backdrop node.
-    bdX = min([node.xpos() for node in nodes])
-    bdY = min([node.ypos() for node in nodes])
-    bdW = max([node.xpos() + node.screenWidth() for node in nodes]) - bdX
-    bdH = max([node.ypos() + node.screenHeight() for node in nodes]) - bdY
+    xpos = min([node.xpos() for node in nodes])
+    ypos = min([node.ypos() for node in nodes])
+    width = max([node.xpos() + node.screenWidth() for node in nodes]) - xpos
+    height = max([node.ypos() + node.screenHeight() for node in nodes]) - ypos
 
-    zOrder = 0
-    selectedBackdropNodes = nuke.selectedNodes("BackdropNode")
+    z_index = 0
+    selected_backdropnodes = nuke.selectedNodes("BackdropNode")
     # if there are backdropNodes selected put the new one immediately behind the farthest one
-    if len(selectedBackdropNodes):
-        zOrder = min([node.knob("z_order").value()
-                      for node in selectedBackdropNodes]) - 1
+    if selected_backdropnodes:
+        z_index = min([node.knob("z_order").value()
+                       for node in selected_backdropnodes]) - 1
     else:
-        # otherwise (no backdrop in selection) find the nearest backdrop if exists and set the new one in front of it
-        nonSelectedBackdropNodes = nuke.allNodes("BackdropNode")
-    for nonBackdrop in nodes:
-        for backdrop in nonSelectedBackdropNodes:
-            if is_node_inside(nonBackdrop, backdrop):
-                zOrder = max(zOrder, backdrop.knob("z_order").value() + 1)
+        # otherwise (no backdrop in selection) find the nearest backdrop
+        # if exists and set the new one in front of it
+        non_selected_backdropnodes = nuke.allNodes("BackdropNode")
+    for non_backdrop in nodes:
+        for backdrop in non_selected_backdropnodes:
+            if is_node_inside(non_backdrop, backdrop):
+                z_index = max(z_index, backdrop.knob("z_order").value() + 1)
 
-    # Expand the bounds to leave a little border. Elements are offsets for left, top, right and bottom edges respectively
+    # Expand the bounds to leave a little border. Elements are offsets for left,
+    # top, right and bottom edges respectively
     left, top, right, bottom = (-10, -80, 10, 10)
-    bdX += left
-    bdY += top
-    bdW += (right - left)
-    bdH += (bottom - top)
+    xpos += left
+    ypos += top
+    width += (right - left)
+    height += (bottom - top)
 
-    n = nuke.nodes.BackdropNode(xpos=bdX,
-                                bdwidth=bdW,
-                                ypos=bdY,
-                                bdheight=bdH,
+    n = nuke.nodes.BackdropNode(xpos=xpos,
+                                bdwidth=width,
+                                ypos=ypos,
+                                bdheight=height,
                                 tile_color=int(
                                     (random.random() * (16 - 10))) + 10,
                                 note_font_size=42,
-                                z_order=zOrder)
+                                z_order=z_index)
 
     return n
