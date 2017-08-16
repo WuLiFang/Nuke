@@ -4,7 +4,7 @@ import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 
-__version__ = '0.1.11'
+__version__ = '0.1.12'
 
 
 def redshift(nodes):
@@ -43,7 +43,9 @@ def redshift(nodes):
                     source.get('DiffuseFilter'), source.get('DiffuseLightingRaw'))
     _merge_multiply('GI', source.get('DiffuseFilter'), source.get('GIRaw'))
 
-    assert source.get('DiffuseLighting'), '没有DiffuseLighting层'
+    if not source.get('DiffuseLighting'):
+        del task
+        raise ValueError('没有DiffuseLighting层')
     n = source.get('DiffuseLighting')
 
     def _layer_order(name):
