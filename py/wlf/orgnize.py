@@ -4,7 +4,9 @@ import random
 
 import nuke
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
+
+_PLACED_NODES = set()
 
 
 def autoplace(nodes=None):
@@ -26,6 +28,7 @@ def autoplace(nodes=None):
     #     availeble_nodes.difference_update(this_branches.nodes)
     #     print(availeble_nodes)
     branches.sort(key=len, reverse=True)
+    _PLACED_NODES.clear()
 
     last = None
     for i in branches:
@@ -60,6 +63,8 @@ def autoplace(nodes=None):
             if nodes.xpos <= xpos <= nodes.right:
                 ypos = ypos + bottom if ypos > nodes.ypos else ypos + top
             n.setXYpos(xpos, ypos)
+
+    nuke.Root().setModified(True)
 
 
 def orgnize_nodes(nodes):
@@ -236,7 +241,6 @@ def autoplace_backdrop(backdrop):
 class Branch(Nodes):
     """A branch is a list of connected nodes. (e.g. [node1, node2, ... node_n]).  """
     depth = 0
-    placed_nodes = set()
 
     def __init__(self, node=None):
         self._origin = None
@@ -292,14 +296,14 @@ class Branch(Nodes):
         # if self.origin_branch:
         #     self.origin_branch.autoplace_x()
         self.autoplace_x()
-        Branch.placed_nodes.update(set(self))
+        _PLACED_NODES.update(set(self))
 
     def autoplace_x(self):
         """Autoplace on x axis.  """
 
         xpos = 0 if not self.origin else self.origin_nodes.right + self.x_gap
 
-        left_nodes = Nodes(n for n in Branch.placed_nodes
+        left_nodes = Nodes(n for n in Branches.placed_nodes
                            if n.ypos() >= self._new_nodes.ypos
                            and Nodes(n).bottom <= self._new_nodes.bottom
                            and n not in self._new_nodes)
@@ -309,7 +313,7 @@ class Branch(Nodes):
         if left_nodes:
             xpos = max([left_nodes.right + self.x_gap, xpos])
         for n in self._new_nodes:
-            if n in Branch.placed_nodes:
+            if n in Branches.placed_nodes:
                 continue
             # print('x', n.name(),  xpos +
             #       (new_nodes.max_width - n.screenWidth()) / 2, xpos)
@@ -319,7 +323,7 @@ class Branch(Nodes):
         """Autoplace on y axis.  """
         ypos = 0
         nodes = Nodes(
-            n for n in self._new_nodes if n not in Branch.placed_nodes)
+            n for n in self._new_nodes if n not in Branches.placed_nodes)
         if not nodes:
             return
         for n in nodes:
@@ -332,7 +336,7 @@ class Branch(Nodes):
         if self.origin:
             nodes.bottom = self.origin.ypos() - self.y_gap
 
-        up_nodes = Nodes(n for n in Branch.placed_nodes
+        up_nodes = Nodes(n for n in Branches.placed_nodes
                          if Nodes(n).bottom <= nodes.bottom)
         print('up_nodes', up_nodes)
         if up_nodes:
@@ -388,6 +392,7 @@ class Branch(Nodes):
 
 class Branches(list):
     """A branches is a list of branch. (e.g. [branch1, branch2, ... branch_n]).  """
+    placed_nodes = set()
 
     def __init__(self, branches=None, nodes=None):
         if isinstance(branches, nuke.Node):
@@ -445,10 +450,11 @@ class Branches(list):
         # self.sort(key=lambda x: x.depth, reverse=False)
         # last = None
 
-        Branch.placed_nodes = set()
+        Branches.placed_nodes.clear()
         for branch in self:
             print('branches', str(branch))
             branch.autoplace()
+            Branches.placed_nodes.update(branch)
             # branch.xpos = 0
             # if last:
             #     print(1)
