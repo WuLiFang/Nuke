@@ -6,7 +6,7 @@ import os
 import nuke
 import nukescripts
 
-from . import asset, csheet, edit, ui, cgtwn, orgnize
+from . import asset, csheet, edit, ui, cgtwn
 from .node import wlf_write_node
 
 
