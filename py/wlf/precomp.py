@@ -11,7 +11,7 @@ def redshift(nodes):
     """Precomp reshift footage from layer."""
     if isinstance(nodes, nuke.Node):
         nodes = [nodes]
-    nodes = list(n for n in nodes if n.Class == 'Read')
+    nodes = list(n for n in nodes if n.Class() == 'Read')
     if not nodes:
         raise ValueError('预合成没有读取节点')
 
