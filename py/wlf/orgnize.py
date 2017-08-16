@@ -5,7 +5,8 @@ import random
 import nuke
 
 from .node import get_upstream_nodes
-__version__ = '0.3.0'
+
+__version__ = '0.4.0'
 
 
 def autoplace(nodes=None):
@@ -196,6 +197,7 @@ class Branch(Nodes):
     _parent_branch = None
     _parent_nodes = None
     _expanded = None
+    big_branch_thershold = 10
 
     def __init__(self, node=None):
         if isinstance(node, nuke.Node):
@@ -239,6 +241,28 @@ class Branch(Nodes):
         """Return nodes that need to be autoplaced in this branch.  """
         return Nodes(n for n in self if n not in Branches.placed_nodes)
 
+    def base_node(self, length_filter=None):
+        """Return the base node this branch splitted from.  """
+        if length_filter is None:
+            length_filter = self.big_branch_thershold
+        ret = self[0]
+        parent = self.parent_branch
+        while parent:
+            ret = parent[0]
+            if len(parent) >= length_filter:
+                break
+            parent = parent.parent_branch
+        return ret
+
+    def prev_nodes(self):
+        """Return previous autoplaced nodes.  """
+        ret = Nodes()
+        if self.parent_nodes:
+            ret = Nodes(n for n in get_upstream_nodes(self.base_node())
+                        if n not in self.new_nodes()
+                        and n in Branches.placed_nodes)
+        return ret
+
     def autoplace(self):
         """Autoplace nodes in this branch.  """
         nodes = self.new_nodes()
@@ -250,14 +274,12 @@ class Branch(Nodes):
         for n in nodes:
             ypos -= n.screenHeight() + self.y_gap
             n.setYpos(ypos)
-        if len(nodes) < 10:
-            input_nodes = Nodes(self[-1].dependencies(nuke.INPUTS))
-            if input_nodes:
-                self.ypos = input_nodes.bottom + self.y_gap
+        if len(nodes) < self.big_branch_thershold:
+            # Place nodes accroding parent.
             if self.parent_nodes:
                 nodes.bottom = self.parent_nodes.ypos - self.y_gap
-
-            up_nodes = Nodes(n for n in Branches.placed_nodes
+            # Move other nodes up.
+            up_nodes = Nodes(n for n in self.prev_nodes()
                              if Nodes(n).bottom <= nodes.bottom)
             if up_nodes:
                 up_nodes.bottom = nodes.ypos - nodes.y_gap
@@ -265,17 +287,20 @@ class Branch(Nodes):
             nodes.bottom = self.parent_nodes.ypos - self.y_gap
 
         # X-axis.
-        left_nodes = Nodes(n for n in Branches.placed_nodes
-                           if n.ypos() >= nodes.ypos
-                           and Nodes(n).bottom <= nodes.bottom)
-        if left_nodes:
-            xpos = left_nodes.right + self.x_gap
-        elif self.parent_nodes:
-            xpos = Nodes(self.parent_nodes[-1]).right + self.x_gap
+        if len(nodes) >= self.big_branch_thershold and Branches.placed_nodes:
+            xpos = Nodes(Branches.placed_nodes).right + self.x_gap * 50
         else:
             xpos = 0
-        if len(nodes) >= 10 and Branches.placed_nodes:
-            xpos = Nodes(Branches.placed_nodes).right + self.x_gap
+
+        if self.parent_nodes:
+            left_nodes = Nodes(n for n in self.prev_nodes()
+                               if n.ypos() >= nodes.ypos
+                               and Nodes(n).bottom <= nodes.bottom)
+            if left_nodes:
+                xpos = max([left_nodes.right + self.x_gap, xpos])
+
+        if self.parent_nodes:
+            xpos = max([Nodes(self.parent_nodes[-1]).right + self.x_gap, xpos])
         for n in nodes:
             n.setXpos(xpos + (nodes.max_width - n.screenWidth()) / 2)
 
