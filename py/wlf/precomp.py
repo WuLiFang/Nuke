@@ -4,14 +4,19 @@ import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 
-__version__ = '0.1.10'
+__version__ = '0.1.11'
 
 
 def redshift(nodes):
     """Precomp reshift footage from layer."""
-    task = nuke.ProgressTask('Redshift预合成')
+    if isinstance(nodes, nuke.Node):
+        nodes = [nodes]
+    nodes = list(n for n in nodes if n.Class == 'Read')
+    if not nodes:
+        raise ValueError('预合成没有读取节点')
 
-    if isinstance(nodes, nuke.Node) or len(nodes) == 1:
+    task = nuke.ProgressTask('Redshift预合成')
+    if len(nodes) == 1:
         n = nodes if isinstance(nodes, nuke.Node) else nodes[0]
         layers = nuke.layers(n)
 
