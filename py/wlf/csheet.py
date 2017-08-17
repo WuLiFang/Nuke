@@ -13,7 +13,7 @@ from subprocess import Popen
 import nuke
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.3.2'
+__version__ = '1.3.3'
 
 
 class ContactSheet(object):
@@ -215,7 +215,7 @@ def create_html_from_dir(image_folder):
     images = version_filter(os.path.join(get_unicode(folder_name), get_unicode(i))
                             for i in os.listdir(get_encoded(image_folder))
                             if os.path.isfile(get_encoded(os.path.join(image_folder, i)))
-                            and i.lower().endswith(('.jpg', '.png', '.gif')))
+                            and i.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')))
     save_path = os.path.abspath(os.path.join(image_folder, u'../色板.html'))
 
     return create_html(images, save_path, title=image_folder)
