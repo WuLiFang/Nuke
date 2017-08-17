@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwq
 
-__version__ = '0.2.7'
+__version__ = '0.2.8'
 
 
 def add_menu():
@@ -48,7 +48,12 @@ def add_menu():
                      "import wlf.edit; wlf.edit.all_gizmo_to_group()")
         n = m.addMenu('整理文件')
         n.addCommand("竖式自动摆放节点",
-                     "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())")
+                     "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())", 'L')
+        try:
+            nuke.menu("Nuke").findItem('Edit').findItem(
+                'Node').findItem('Autoplace').setShortcut('Ctrl+L')
+        except AttributeError as ex:
+            print(ex)
 
         n.addCommand("根据背板重命名所有节点",
                      "import wlf.edit; wlf.edit.rename_all_nodes()")
