@@ -17,11 +17,11 @@ from wlf.files import url_open, get_encoded, get_unicode, escape_batch
 from wlf.edit import get_max, delete_unused_nodes
 from wlf.config import Config
 from wlf.node import ReadNode, get_upstream_nodes
-from wlf.orgnize import create_backdrop
+from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.5'
+__version__ = '0.16.6'
 
 
 class Comp(object):
@@ -188,6 +188,8 @@ class Comp(object):
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
 
         map(nuke.autoplace, nodes)
+        if nuke.GUI:
+            autoplace()
         delete_unused_nodes()
 
     @staticmethod
@@ -429,7 +431,8 @@ class Comp(object):
         n = nuke.nodes.Crop(
             inputs=[n],
             box='0 0 root.width root.height')
-        # create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
+        n = nuke.nodes.DiskCache(inputs=[n], postage_stamp=True)
+        create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
         return n
 
     @staticmethod
