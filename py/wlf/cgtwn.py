@@ -13,7 +13,7 @@ from .node import wlf_write_node
 from .config import Config
 
 
-__version__ = '0.8.7'
+__version__ = '0.8.8'
 
 
 def abort_modified(func):
@@ -161,6 +161,9 @@ def on_save_callback():
 @check_login(False)
 def on_close_callback():
     """Try upload image to server."""
+    while nuke.executing():
+        pass
+
     try:
         nuke.scriptName()
     except RuntimeError:
