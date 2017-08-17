@@ -21,7 +21,7 @@ from wlf.orgnize import create_backdrop
 
 import wlf.precomp
 
-__version__ = '0.16.4'
+__version__ = '0.16.5'
 
 
 class Comp(object):
@@ -269,7 +269,8 @@ class Comp(object):
                 name = n.name()
                 if name in ('MP', 'Read_Write_JPG'):
                     continue
-                for frame in (n.firstFrame(), n.lastFrame(), int(nuke.numvalue(u'_Write.knob.frame'))):
+                for frame in (n.firstFrame(), n.lastFrame(),
+                              int(nuke.numvalue(u'_Write.knob.frame'))):
                     try:
                         render_png(n, frame)
                         break
