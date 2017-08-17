@@ -6,7 +6,7 @@ import nuke
 
 from .node import get_upstream_nodes
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 
 def autoplace(nodes=None):
@@ -124,13 +124,13 @@ class Nodes(list):
     def autoplace(self):
         """Auto place nodes."""
         backdrops_dict = {n: Nodes(n.getNodes())
-                          for n in nuke.allNodes('BackdropNode')}
+                          for n in self if n.Class() == 'BackdropNode'}
 
         Nodes.placed_nodes.clear()
 
         for n in self.endnodes():
             branches = Branches(
-                n, nodes=list(n for n in nuke.allNodes() if n not in Nodes.placed_nodes))
+                n, nodes=list(n for n in self if n not in Nodes.placed_nodes))
 
             branches.autoplace()
             if Nodes.placed_nodes and branches.nodes:
