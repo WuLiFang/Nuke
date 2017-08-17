@@ -6,7 +6,7 @@ import nuke
 
 from .node import get_upstream_nodes
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 
 def autoplace(nodes=None):
@@ -166,9 +166,13 @@ class Nodes(list):
 
     def endnodes(self):
         """Return Nodes that has no contained downstream founded in given nodes.  """
-        ret = Nodes(n for n in self
-                    if all(n not in self for n in n.dependent(nuke.INPUTS)))
-        ret.sort(key=get_upstream_nodes, reverse=True)
+        available_nodes = Nodes(
+            n for n in self if n.Class() not in ('Viewer',))
+        ret = Nodes(n for n in available_nodes
+                    if all(n not in available_nodes for n in n.dependent(nuke.INPUTS)))
+        ret.sort(key=lambda x: len(get_upstream_nodes(x)), reverse=True)
+        ret.extend(n for n in self if n not in available_nodes)
+        print(ret)
         return ret
 
 
@@ -246,12 +250,15 @@ class Branch(Nodes):
         if length_filter is None:
             length_filter = self.big_branch_thershold
         ret = self[0]
-        parent = self.parent_branch
-        while parent:
-            ret = parent[0]
-            if len(parent) >= length_filter:
+        branch = self
+        while branch:
+            if branch.parent_nodes:
+                ret = branch.parent_nodes[-1]
+            else:
                 break
-            parent = parent.parent_branch
+            branch = branch.parent_branch
+            if len(branch) >= length_filter:
+                break
         return ret
 
     def prev_nodes(self):
@@ -268,6 +275,10 @@ class Branch(Nodes):
         nodes = self.new_nodes()
         if not nodes:
             return
+
+        # nuke.zoomToFitSelected()
+        # if not nuke.ask(str(self.base_node().name())):
+        #     raise RuntimeError
 
         # Y-axis.
         ypos = 0
