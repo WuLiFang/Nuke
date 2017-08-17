@@ -3,6 +3,7 @@
 cgteamwork integration with nuke.
 """
 import os
+import time
 
 import nuke
 
@@ -12,8 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-
-__version__ = '0.8.8'
+__version__ = '0.8.9'
 
 
 def abort_modified(func):
@@ -161,14 +161,11 @@ def on_save_callback():
 @check_login(False)
 def on_close_callback():
     """Try upload image to server."""
-    while nuke.executing():
-        pass
-
     try:
         nuke.scriptName()
     except RuntimeError:
         return
-
+    time.sleep(1)
     try:
         shot = CurrentShot()
         shot.check_account()

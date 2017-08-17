@@ -29,7 +29,6 @@ def menu():
 
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
-    nuke.addOnScriptSave(lambda: asset.DropFrameCheck().start())
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
     nuke.addOnScriptLoad(cgtwn.on_load_callback)
@@ -43,6 +42,7 @@ def menu():
     nuke.addOnScriptSave(cgtwn.on_save_callback)
     nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
+    nuke.addOnScriptClose(lambda: asset.DropFrameCheck().start())
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(cgtwn.on_close_callback)
