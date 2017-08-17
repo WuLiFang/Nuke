@@ -87,6 +87,10 @@ def add_preferences():
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
 
+    k = nuke.Enumeration_Knob('wlf_autoplace_type', '风格', ['竖式', '横式(Nuke)'])
+    k.clearFlag(nuke.STARTLINE)
+    _add_knob(k)
+
     k = nuke.Boolean_Knob('wlf_lock_connections', '锁定节点连接')
     k.setFlag(nuke.STARTLINE)
     _add_knob(k)
