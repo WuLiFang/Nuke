@@ -40,9 +40,9 @@ def menu():
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
     nuke.addOnScriptSave(cgtwn.on_save_callback)
-    nuke.addOnScriptSave(asset.DropFrameCheck.show_dialog)
 
     nuke.addOnScriptClose(lambda: asset.DropFrameCheck().start())
+    nuke.addOnScriptClose(asset.DropFrameCheck.show_dialog)
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(cgtwn.on_close_callback)
