@@ -21,7 +21,7 @@ from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.6'
+__version__ = '0.16.7'
 
 
 class Comp(object):
@@ -610,7 +610,6 @@ def render_png(nodes, frame=None, show=False):
 
 class CompDialog(nukescripts.PythonPanel):
     """Dialog UI of class Comp."""
-    # TODO: 'reset' button.
 
     knob_list = [
         (nuke.Tab_Knob, 'general_setting', '常用设置'),
@@ -624,6 +623,7 @@ class CompDialog(nukescripts.PythonPanel):
         (nuke.String_Knob, 'footage_pat', '素材名'),
         (nuke.String_Knob, 'dir_pat', '路径'),
         (nuke.String_Knob, 'tag_pat', '标签'),
+        (nuke.Script_Knob, 'reset', '重置'),
         (nuke.EndTabGroup_Knob, 'end_tab', ''),
         (nuke.Multiline_Eval_String_Knob, 'info', ''),
     ]
@@ -641,7 +641,7 @@ class CompDialog(nukescripts.PythonPanel):
                 pass
             self.addKnob(k)
         self.knobs()['exclude_existed'].setFlag(nuke.STARTLINE)
-        # self.update()
+        self.knobs()['reset'].setFlag(nuke.STARTLINE)
 
     def knobChanged(self, knob):
         """Overrride for buttons."""
@@ -651,10 +651,19 @@ class CompDialog(nukescripts.PythonPanel):
             Config().update(self._config)
         elif knob is self.knobs()['info']:
             self.update()
+        elif knob is self.knobs()['reset']:
+            self.reset()
         else:
             Config()[knob.name()] = knob.value()
             self._config[knob.name()] = knob.value()
             self.update()
+
+    def reset(self):
+        """Reset re pattern.  """
+        for i in ('footage_pat', 'dir_pat', 'tag_pat'):
+            knob = self.knobs()[i]
+            knob.setValue(Config.default.get(i))
+            self.knobChanged(knob)
 
     def progress(self):
         """Start process all shots with a processbar."""
