@@ -8,7 +8,7 @@ import nuke
 
 from .files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
-__version__ = '0.3.14'
+__version__ = '0.3.15'
 
 
 class DropFrameCheck(object):
@@ -120,64 +120,86 @@ def dropdata_handler(mime_type, data, from_dir=False):
     # print(mime_type, data)
     if mime_type != 'text/plain':
         return
-    task = nuke.ProgressTask(data)
     data = get_unicode(data)
-    match = re.match(r'file:///([^/].*)', data)
-    n = None
 
-    if os.path.isdir(get_encoded(data)):
-        _dirname = data.replace('\\', '/')
-        filenames = nuke.getFileNameList(get_encoded(_dirname, 'UTF-8'))
-        all_num = len(filenames)
-        for index, filename in enumerate(filenames):
-            if task.isCancelled():
-                return True
-            task.setMessage(filename)
-            task.setProgress(index * 100 // all_num)
-            dropdata_handler(
-                mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
-    elif os.path.basename(get_encoded(data)).lower() == 'thumbs.db':
-        pass
-    elif match:
-        data = match.group(1)
-        return dropdata_handler(mime_type, data, from_dir=True)
-    elif data.endswith('.fbx'):
-        n = nuke.createNode(
-            'Camera2',
-            'read_from_file True '
-            'frame_rate 25 '
-            'suppress_dialog True '
-            'label {'
-            '导入的摄像机：\n'
-            '[basename [value file]]\n}')
-        n.setName('Camera_3DEnv_1')
-        n['file'].fromUserText(data)
-        if nuke.expression('{}.animated'.format(n.name())):
-            n['read_from_file'].setValue(False)
+    def _isdir():
+        if os.path.isdir(get_encoded(data)):
+            task = nuke.ProgressTask(data)
+            _dirname = data.replace('\\', '/')
+            filenames = nuke.getFileNameList(get_encoded(_dirname, 'UTF-8'))
+            all_num = len(filenames)
+            for index, filename in enumerate(filenames):
+                if task.isCancelled():
+                    return True
+                task.setMessage(filename)
+                task.setProgress(index * 100 // all_num)
+                dropdata_handler(
+                    mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
+            return True
 
-        n = nuke.createNode('ReadGeo2')
-        n['file'].fromUserText(data)
-        n['all_objects'].setValue(True)
-    elif data.endswith('.vf'):
-        nuke.createNode(
-            'Vectorfield',
-            'vfield_file "{data}" '
-            'file_type vf '
-            'label {{[value this.vfield_file]}}'.format(data=data))
-    elif data.endswith('.nk'):
-        nuke.scriptReadFile(data)
-    elif data.endswith(('.mov', '.mp4', '.avi')):
-        # Avoid mov reader bug.
-        if not is_ascii(data):
+    def _thumbs():
+        if os.path.basename(get_encoded(data)).lower() == 'thumbs.db':
+            return True
+
+    def _file_protocol():
+        match = re.match(r'file:///([^/].*)', data)
+        if match:
+            _data = match.group(1)
+            return dropdata_handler(mime_type, _data, from_dir=True)
+
+    def _fbx():
+        if data.endswith('.fbx'):
             n = nuke.createNode(
-                'Read', 'disable true label "{0}\n**不支持非英文路径**"'.format(data))
-        else:
-            n = nuke.createNode('Read', 'file "{}"'.format(data))
+                'Camera2',
+                'read_from_file True '
+                'frame_rate 25 '
+                'suppress_dialog True '
+                'label {'
+                '导入的摄像机：\n'
+                '[basename [value file]]\n}')
+            n.setName('Camera_3DEnv_1')
+            n['file'].fromUserText(data)
+            if nuke.expression('{}.animated'.format(n.name())):
+                n['read_from_file'].setValue(False)
 
-    elif from_dir:
-        n = nuke.createNode('Read', 'file "{}"'.format(data))
-    else:
-        return
-    if n and n.hasError():
-        n['disable'].setValue(True)
-    return True
+            n = nuke.createNode('ReadGeo2')
+            n['file'].fromUserText(data)
+            n['all_objects'].setValue(True)
+            return True
+
+    def _vf():
+        if data.endswith('.vf'):
+            nuke.createNode(
+                'Vectorfield',
+                'vfield_file "{data}" '
+                'file_type vf '
+                'label {{[value this.vfield_file]}}'.format(data=data))
+            return True
+
+    def _nk():
+        if data.endswith('.nk'):
+            nuke.scriptReadFile(data)
+            return True
+
+    def _video():
+        if data.endswith(('.mov', '.mp4', '.avi')):
+            # Avoid mov reader bug.
+            if not is_ascii(data):
+                n = nuke.createNode(
+                    'Read', 'disable true label "{0}\n**不支持非英文路径**"'.format(data))
+            else:
+                n = nuke.createNode('Read', 'file "{}"'.format(data))
+            if n.hasError():
+                n['disable'].setValue(True)
+            return True
+
+    def _from_dir():
+        if from_dir:
+            n = nuke.createNode('Read', 'file "{}"'.format(data))
+            if n.hasError():
+                n['disable'].setValue(True)
+            return True
+
+    for func in (_isdir, _from_dir, _thumbs, _file_protocol, _video, _vf, _nk):
+        if func():
+            return True
