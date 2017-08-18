@@ -373,6 +373,7 @@ class Sync(object):
 class Dialog(QDialog, Ui_Dialog):
     """Mian GUI dialog.  """
     # TODO:read projectsetting on dir changed.
+    # TODO:ProgressBar.
 
     def __init__(self, parent=None):
         def _backdrop():
