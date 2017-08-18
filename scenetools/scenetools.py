@@ -3,7 +3,6 @@
 
 import os
 import sys
-import locale
 import re
 import time
 import json
@@ -16,28 +15,16 @@ from ui_scenetools_dialog import Ui_Dialog
 
 if __name__ == '__main__':
     __file__ = os.path.abspath(sys.argv[0])
+
 try:
     LIB_PATH = os.path.join(
         getattr(sys, '_MEIPASS', os.path.abspath('{}/../../'.format(__file__))), 'py')
     sys.path.append(LIB_PATH)
-    from wlf.files import version_filter, copy, remove_version
+    from wlf.files import version_filter, copy, remove_version, get_encoded
 except ImportError:
     raise
 
-__version__ = '0.8.12'
-
-OS_ENCODING = locale.getdefaultlocale()[1]
-
-
-def pause():
-    """Pause prompt with a countdown."""
-
-    print(u'')
-    for i in range(5)[::-1]:
-        sys.stdout.write(u'\r{:2d}'.format(i + 1))
-        time.sleep(1)
-    sys.stdout.write(u'\r          ')
-    print(u'')
+__version__ = '0.8.13'
 
 
 class Config(dict):
@@ -385,6 +372,7 @@ class Sync(object):
 
 class Dialog(QDialog, Ui_Dialog):
     """Mian GUI dialog.  """
+    # TODO:read projectsetting on dir changed.
 
     def __init__(self, parent=None):
         def _backdrop():
@@ -549,10 +537,10 @@ class Dialog(QDialog, Ui_Dialog):
             _list = self.listWidget
             _page_index = self.toolBox.currentIndex()
             _list.clear()
-            if _page_index == 0:
+            if _page_index == 1:
                 map(_list.addItem, self._sync.image_list() +
                     self._sync.image_ignore)
-            elif _page_index == 1:
+            elif _page_index == 0:
                 _not_ignore = []
                 _ignore = []
                 if self._config['isImageUp']:
@@ -662,7 +650,7 @@ class Dialog(QDialog, Ui_Dialog):
             json=_json
         )
         print(_cmd)
-        call(_cmd.encode(OS_ENCODING))
+        call(get_encoded(_cmd.encode))
         if self._config['isCSheetOpen']:
             self.open_sheet()
         if self._config['isCSheetUp']:
