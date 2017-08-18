@@ -5,7 +5,7 @@ Gizmo {
  tile_color 0xff00ff
  label "输入通道: \[value in]"
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.2.3"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.2.4"}
  addUserKnob {41 in l "Position Layer" T Shuffle2.in}
  addUserKnob {26 div_sampler l <b>取样器</b>}
  addUserKnob {22 bt_sampler_switch l Enable(启用) t "启用控制器, 快速设置白点和黑点。" T "try:\n    __positionkeyer_sample\nexcept NameError:\n    def __positionkeyer_sample():\n        if not nuke.thisNode().input(0):\n            return\n        p0 = nuke.thisNode()\['p0'].value()\n        p1 = nuke.thisNode()\['p1'].value()\n\n        sampler = nuke.thisNode().node('Sampler')\n\n        blackpoint = (sampler.sample('rgba.red', p0\[0],  p0\[1]), sampler.sample('rgba.green', p0\[0],  p0\[1]), sampler.sample('rgba.blue', p0\[0],  p0\[1]))\n        whitepoint = (sampler.sample('rgba.red', p1\[0],  p1\[1]), sampler.sample('rgba.green', p1\[0],  p1\[1]), sampler.sample('rgba.blue', p1\[0],  p1\[1]))\n\n        sampler\['p0'].setValue(blackpoint)\n        sampler\['p1'].setValue(whitepoint)\n\ntry:\n    __positionkeyer_disable\nexcept NameError:\n    def __positionkeyer_disable():\n        for n in __positionkeyer_disable_set:\n            try:\n                n\['bt_reset_sampler_switch'].execute()\n            except ValueError:\n                pass\n            nuke.Root().setModified(True)\n        __positionkeyer_disable_set.clear()\n\n    nuke.callbacks.addOnScriptSave(__positionkeyer_disable)\n    __positionkeyer_disable_set = set()\n        \nif nuke.thisKnob().label() == 'Enable(启用)':\n    nuke.callbacks.addKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n    __positionkeyer_disable_set.add(nuke.thisNode())\n\n    nuke.thisKnob().setLabel('Disable(禁用)')\n    nuke.thisKnob().setTooltip('禁用控制器, 防止设置被意外改动。')\n    nuke.thisNode()\['p0'].setVisible(True)\n    nuke.thisNode()\['p1'].setVisible(True)\nelse:\n    nuke.callbacks.removeKnobChanged(__positionkeyer_sample, node=nuke.thisNode())\n\n    nuke.thisNode()\['bt_reset_sampler_switch'].execute()\n" +STARTLINE}
@@ -19,6 +19,7 @@ Gizmo {
  addUserKnob {41 whitepoint l whitepoint(白点) t 高于此值将为白色 T Sampler.p1}
  addUserKnob {7 rotation_x l "rotation x(旋转x轴)" R 0 180}
  addUserKnob {7 rotation l "rotation y(旋转y轴)" R 0 180}
+ rotation 90
  addUserKnob {7 rotation_z l "rotation z(旋转z轴)" R 0 180}
  addUserKnob {26 t_alpha_output l output}
  addUserKnob {6 x +STARTLINE}
@@ -53,7 +54,7 @@ Gizmo {
   xpos 180
   ypos -1352
  }
-set Ne8297800 [stack 0]
+set Nb6044800 [stack 0]
  Shuffle {
   in P
   name Shuffle2
@@ -77,10 +78,10 @@ set Ne8297800 [stack 0]
   addUserKnob {6 p1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  }
  BlinkScript {
-  recompileCount 46
+  recompileCount 49
   ProgramGroup 1
-  KernelDescription "2 \"PositionKeyer\" iterate pixelWise 25429a239983af95e27f073595ae98d55b6468937f61738ee7c2a2f502d9c295 2 \"position\" Read Point \"dst\" Write Point 7 \"invert_x\" Bool 1 AA== \"invert_y\" Bool 1 AA== \"enable_x\" Bool 1 AA== \"enable_y\" Bool 1 AA== \"rotate\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"p0_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"p1_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== 7 \"invert_x\" 1 1 \"invert_y\" 1 1 \"enable_x\" 1 1 \"enable_y\" 1 1 \"rotate\" 3 1 \"p0_color\" 4 1 \"p1_color\" 4 1 2 \"p0\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"p1\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
-  kernelSource "// PositionKeyerKernel\n// VERSION: 0.4.1\nkernel PositionKeyer : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> position;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  bool invert_x;\n  bool invert_y;\n  bool enable_x;\n  bool enable_y;\n  float3 rotate;\n  float4 p0_color;\n  float4 p1_color;\n\nlocal:\n  float4 p0;\n  float4 p1;\n\n  float4 rotate3(float4 point, float3 rotate)\n  \{\n    float sx = sin(rotate.x);\n    float cx = cos(rotate.x);\n    float sy = sin(rotate.y);\n    float cy = cos(rotate.y);\n    float sz = sin(rotate.z);\n    float cz = cos(rotate.z);\n    float xy, xz, yx, yz, zx, zy;\n    xy = sx * point.z - cx * point.y;\n    xz = sx * point.y + cx * point.z;\n    yz = sy * point.x - cy * xz;\n    yx = sy * xz + cy * point.x;\n    zx = sz * xy - cz * yx;\n    zy = sz * yx + cz * xy;\n    point.x = zx;\n    point.y = zy;\n    point.z = yz;\n    return point;\n  \}\n\n  float linear(float x, float p0, float p1)\n  \{\n    return (x - p0) / (p1 - p0);\n  \}\n\n  void init()\n  \{\n    p0 = rotate3(p0_color, rotate);\n    p1 = rotate3(p1_color, rotate);\n  \}\n\n  void process()\n  \{\n    float4 pos = rotate3(position(), rotate);\n\n    float4 result;\n    result\[0] = linear(pos\[0], p0\[0], p1\[0]);\n    result\[1] = linear(pos\[1], p0\[1], p1\[1]);\n    result\[2] = linear(pos\[2], p0\[2], p1\[2]);\n    result = clamp(result, float4(0.0f), float4(1.0f));\n\n    result\[0] = invert_x ? (1 - result\[0]) : result\[0];\n    result\[1] = invert_y ? (1 - result\[1]) : result\[1];\n    result\[3] = (enable_x ? result\[0] : 1) * (enable_y ? result\[1] : 1);\n\n    dst() = result;\n  \}\n\};"
+  KernelDescription "2 \"PositionKeyer\" iterate pixelWise 4af6a713d32fc6af25190de8f366a875475227e91938ddfa9965b741de48120a 2 \"position\" Read Point \"dst\" Write Point 7 \"invert_x\" Bool 1 AA== \"invert_y\" Bool 1 AA== \"enable_x\" Bool 1 AA== \"enable_y\" Bool 1 AA== \"rotate\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"p0_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"p1_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== 7 \"invert_x\" 1 1 \"invert_y\" 1 1 \"enable_x\" 1 1 \"enable_y\" 1 1 \"rotate\" 3 1 \"p0_color\" 4 1 \"p1_color\" 4 1 2 \"p0\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"p1\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "// PositionKeyerKernel\n// VERSION: 0.4.2\nkernel PositionKeyer : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> position;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  bool invert_x;\n  bool invert_y;\n  bool enable_x;\n  bool enable_y;\n  float3 rotate;\n  float4 p0_color;\n  float4 p1_color;\n\nlocal:\n  float4 p0;\n  float4 p1;\n\n  float4 rotate3(float4 point, float3 rotate)\n  \{\n    float sx = sin(rotate.x);\n    float cx = cos(rotate.x);\n    float sy = sin(rotate.y);\n    float cy = cos(rotate.y);\n    float sz = sin(rotate.z);\n    float cz = cos(rotate.z);\n    float xy, xz, yx, yz, zx, zy;\n    xy = cx * point.y - sx * point.z;\n    xz = sx * point.y + cx * point.z;\n    yx = cy * point.x - sy * xz;\n    yz = sy * point.x + cy * xz;\n    zx = cz * yx - sz * xy;\n    zy = sz * yx + cz * xy;\n    point.x = zx;\n    point.y = zy;\n    point.z = yz;\n    return point;\n  \}\n\n  float linear(float x, float p0, float p1)\n  \{\n    return (x - p0) / (p1 - p0);\n  \}\n\n  void init()\n  \{\n    p0 = rotate3(p0_color, rotate);\n    p1 = rotate3(p1_color, rotate);\n  \}\n\n  void process()\n  \{\n    float4 pos = rotate3(position(), rotate);\n\n    float4 result;\n    result\[0] = linear(pos\[0], p0\[0], p1\[0]);\n    result\[1] = linear(pos\[1], p0\[1], p1\[1]);\n    result\[2] = linear(pos\[2], p0\[2], p1\[2]);\n    result = clamp(result, float4(0.0f), float4(1.0f));\n\n    result\[0] = invert_x ? (1 - result\[0]) : result\[0];\n    result\[1] = invert_y ? (1 - result\[1]) : result\[1];\n    result\[3] = (enable_x ? result\[0] : 1) * (enable_y ? result\[1] : 1);\n\n    dst() = result;\n  \}\n\};"
   useGPUIfAvailable false
   vectorize false
   rebuild ""
@@ -96,10 +97,11 @@ set Ne8297800 [stack 0]
   name BlinkScript1
   gl_color 0x3332ff00
   note_font 微软雅黑
+  selected true
   xpos 180
   ypos -1218
  }
-set Ne8297c00 [stack 0]
+set Nb7283c00 [stack 0]
  Dot {
   name Dot2
   gl_color 0x7bff3200
@@ -108,8 +110,8 @@ set Ne8297c00 [stack 0]
   ypos -1374
   hide_input true
  }
-push $Ne8297800
-push $Ne8297800
+push $Nb6044800
+push $Nb6044800
  Copy {
   inputs 2
   from0 {{{parent.Keyer1.output}}}
@@ -120,7 +122,7 @@ push $Ne8297800
   xpos 290
   ypos -1308
  }
-set Nee531c00 [stack 0]
+set Nb7283400 [stack 0]
  ChannelMerge {
   inputs 2
   name ChannelMerge2
@@ -129,7 +131,7 @@ set Nee531c00 [stack 0]
   xpos 510
   ypos -1329
  }
-push $Ne8297c00
+push $Nb7283c00
  Dot {
   name Dot1
   gl_color 0xd332ff00
@@ -138,7 +140,7 @@ push $Ne8297c00
   ypos -1374
   hide_input true
  }
-push $Nee531c00
+push $Nb7283400
  ChannelMerge {
   inputs 2
   operation in
@@ -148,7 +150,7 @@ push $Nee531c00
   xpos 400
   ypos -1226
  }
-push $Ne8297c00
+push $Nb7283c00
  Switch {
   inputs 3
   which {{parent.combine}}
@@ -158,8 +160,8 @@ push $Ne8297c00
   xpos 510
   ypos -1210
  }
-set N3d69f80 [stack 0]
-push $N3d69f80
+set N47ea3f80 [stack 0]
+push $N47ea3f80
  Copy {
   inputs 2
   from0 rgba.alpha
@@ -177,7 +179,7 @@ push $N3d69f80
   xpos 510
   ypos -1138
  }
-push $Ne8297800
+push $Nb6044800
  Viewer {
   frame_range 1-100
   fps 25

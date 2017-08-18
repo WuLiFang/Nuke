@@ -1,5 +1,5 @@
 // PositionKeyerKernel
-// VERSION: 0.4.1
+// VERSION: 0.4.2
 kernel PositionKeyer : ImageComputationKernel<ePixelWise>
 {
   Image<eRead, eAccessPoint, eEdgeClamped> position;
@@ -29,8 +29,8 @@ local:
     float xy, xz, yx, yz, zx, zy;
     xy = cx * point.y - sx * point.z;
     xz = sx * point.y + cx * point.z;
-    yz = sy * point.x - cy * xz;
-    yx = cy * point.x + sy * xz;
+    yx = cy * point.x - sy * xz;
+    yz = sy * point.x + cy * xz;
     zx = cz * yx - sz * xy;
     zy = sz * yx + cz * xy;
     point.x = zx;
