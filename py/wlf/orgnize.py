@@ -6,7 +6,7 @@ import nuke
 
 from .node import get_upstream_nodes
 
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 
 
 def autoplace(nodes=None):
@@ -149,7 +149,7 @@ class Nodes(list):
                              if n.ypos() < nodes_in_backdrop.bottom
                              and n not in nodes_in_backdrop)
             if up_nodes:
-                up_nodes.bottom = nodes_in_backdrop.ypos + top
+                up_nodes.bottom = nodes_in_backdrop.ypos + top - self.y_gap
             up_nodes.extend(nodes_in_backdrop)
             up_nodes.ypos -= bottom
 
