@@ -47,7 +47,6 @@ def set_knob_default():
 
 def add_preferences():
     """Add a prefrences panel."""
-
     pref = nuke.toNode('preferences')
     k = nuke.Tab_Knob('wlf_tab', '吾立方')
     pref.addKnob(k)
@@ -67,63 +66,30 @@ def add_preferences():
         k.setFlag(nuke.ALWAYS_SAVE)
         pref.addKnob(k)
 
-    k = nuke.String_Knob('wlf_artist', '制作人信息')
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
+    knob_list = [
+        (nuke.String_Knob, ('wlf_artist', '制作人信息')),
+        (nuke.Boolean_Knob, ('wlf_gizmo_to_group', '创建Gizmo时尝试转换为Group')),
+        (nuke.Boolean_Knob, ('wlf_eval_proj_dir', '读取时工程目录自动转换为绝对路径', True)),
+        (nuke.Text_Knob, ('wlf_on_script_save', '保存时')),
+        (nuke.Boolean_Knob, ('wlf_autoplace', '自动摆放节点')),
+        (nuke.Enumeration_Knob,
+         ('wlf_autoplace_type', '风格', ['竖式', '横式(Nuke)'])),
+        (nuke.Boolean_Knob, ('wlf_lock_connections', '锁定节点连接')),
+        (nuke.Boolean_Knob, ('wlf_enable_node', '启用名称以 _enable_ 开头的节点', True)),
+        (nuke.Boolean_Knob, ('wlf_jump_frame', '跳至_Write节点指定的帧', True)),
+        (nuke.Text_Knob, ('wlf_on_script_close', '保存并退出时')),
+        (nuke.Boolean_Knob, ('wlf_render_jpg', '渲染_Write节点单帧', True)),
+        (nuke.Boolean_Knob, ('wlf_send_to_dir', '发送至渲染文件夹(Nuke渲染不支持中文路径)')),
+        (nuke.File_Knob, ('wlf_render_dir', '')),
+        (nuke.Boolean_Knob, ('wlf_create_csheet', '为images文件夹生成色板', True)),
+    ]
 
-    k = nuke.Boolean_Knob('wlf_gizmo_to_group', '创建Gizmo时尝试转换为Group')
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_eval_proj_dir', '读取时工程目录自动转换为绝对路径')
-    k.setValue(True)
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Text_Knob('wlf_on_script_save', '保存时')
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_autoplace', '自动摆放节点')
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Enumeration_Knob('wlf_autoplace_type', '风格', ['竖式', '横式(Nuke)'])
-    k.clearFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_lock_connections', '锁定节点连接')
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_enable_node', '启用名称以 _enable_ 开头的节点')
-    k.setValue(True)
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_jump_frame', '跳至_Write节点指定的帧')
-    k.setValue(True)
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Text_Knob('wlf_on_script_close', '保存并退出时')
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_render_jpg', '渲染_Write节点单帧')
-    k.setValue(True)
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_send_to_dir', '发送至渲染文件夹(Nuke渲染不支持中文路径)')
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.File_Knob('wlf_render_dir', '')
-    k.clearFlag(nuke.STARTLINE)
-    _add_knob(k)
-
-    k = nuke.Boolean_Knob('wlf_create_csheet', '为images文件夹生成色板')
-    k.setValue(True)
-    k.setFlag(nuke.STARTLINE)
-    _add_knob(k)
+    for i in knob_list:
+        k = i[0](*i[1])
+        if i[1][0] in ('wlf_render_dir', 'wlf_autoplace_type'):
+            k.clearFlag(nuke.STARTLINE)
+        else:
+            k.setFlag(nuke.STARTLINE)
+        _add_knob(k)
 
     _remove_old()
