@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwq
 
-__version__ = '0.2.8'
+__version__ = '0.2.9'
 
 
 def add_menu():
@@ -48,12 +48,7 @@ def add_menu():
                      "import wlf.edit; wlf.edit.all_gizmo_to_group()")
         n = m.addMenu('整理文件')
         n.addCommand("竖式自动摆放节点",
-                     "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())", 'L')
-        try:
-            nuke.menu("Nuke").findItem('Edit').findItem(
-                'Node').findItem('Autoplace').setShortcut('Ctrl+L')
-        except AttributeError as ex:
-            print(ex)
+                     "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())")
 
         n.addCommand("根据背板重命名所有节点",
                      "import wlf.edit; wlf.edit.rename_all_nodes()")
@@ -63,6 +58,15 @@ def add_menu():
                      "import wlf.edit; wlf.edit.nodes_add_dots(nuke.selectedNodes())")
         n.addCommand("所有节点添加Dots变成90度",
                      "import wlf.edit; wlf.edit.nodes_add_dots(nuke.allNodes())")
+
+        try:
+            m = nuke.menu("Nuke").findItem('Edit').findItem(
+                'Node')
+            m.findItem('Autoplace').setScript(
+                "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())")
+            m.addCommand("Autoplace(nuke)", "_autoplace()", "Ctrl+L")
+        except AttributeError as ex:
+            print(ex)
 
     def _comp(menu):
         m = menu.addMenu('合成')
