@@ -1,6 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Comp footages adn create output, can be run as script.  """
 # TODO:auto set fps.
+# TODO:MP lightwarp.
 
 import json
 import os
