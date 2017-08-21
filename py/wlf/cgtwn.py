@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-__version__ = '0.8.9'
+__version__ = '0.9.0'
 
 
 def abort_modified(func):
@@ -190,12 +190,15 @@ def dialog_create_csheet():
     database_input_name = '数据库'
     prefix_input_name = '镜头名前缀限制'
     check_input_name = '忽略不存在的图像'
+    save_images_name = '服务器图像复制到本地'
     panel = nuke.Panel('为项目创建HTML色板')
     panel.addSingleLineInput(
         database_input_name, config.get('csheet_database'))
     panel.addSingleLineInput(prefix_input_name, config.get('csheet_prefix'))
     panel.addFilenameSearch(folder_input_name, config.get('csheet_outdir'))
     panel.addBooleanCheckBox(check_input_name, config.get('csheet_checked'))
+    panel.addBooleanCheckBox(
+        save_images_name, config.get('csheet_save_images'))
     confirm = panel.show()
     if not confirm:
         return
@@ -205,6 +208,7 @@ def dialog_create_csheet():
     config['csheet_outdir'] = panel.value(folder_input_name)
     config['csheet_prefix'] = panel.value(prefix_input_name)
     config['csheet_checked'] = panel.value(check_input_name)
+    config['csheet_save_images'] = panel.value(save_images_name)
 
     save_path = os.path.join(config['csheet_outdir'],
                              u'{}色板.html'.format(config['csheet_database']))
@@ -219,8 +223,15 @@ def dialog_create_csheet():
     task.setProgress(20)
     if config['csheet_checked']:
         images = files.checked_exists(images)
-    created_file = csheet.create_html(images, save_path,
-                                      title=u'色板 {}'.format(config['csheet_database']))
+    if config['csheet_save_images']:
+        for f in images:
+            image_dir = os.path.join(config['csheet_outdir'],
+                                     '{}_images/'.format(config['csheet_database']))
+            copy(f, image_dir)
+        created_file = csheet.create_html_from_dir(image_dir)
+    else:
+        created_file = csheet.create_html(images, save_path,
+                                          title=u'色板 {}'.format(config['csheet_database']))
     if created_file:
         url_open(created_file, isfile=True)
 
