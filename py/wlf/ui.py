@@ -43,6 +43,8 @@ def add_menu():
                      "import wlf.asset; wlf.asset.DropFrameCheck.show_dialog(True)")
         m.addCommand("单帧转序列",
                      "import wlf.edit; wlf.edit.replace_sequence()")
+        m.addCommand("设置所选节点帧范围",
+                     "import wlf.edit; wlf.edit.dialog_set_framerange()")
         m.addCommand("清理无用节点",
                      "import wlf.edit; wlf.edit.delete_unused_nodes(message=True)")
         m.addCommand('节点转为相对路径',

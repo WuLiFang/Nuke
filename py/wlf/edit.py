@@ -11,7 +11,7 @@ import nukescripts
 
 from .asset import dropdata_handler
 
-__version__ = '1.3.5'
+__version__ = '1.4.0'
 
 
 def rename_all_nodes():
@@ -657,3 +657,27 @@ def no_cc():
     if not name.endswith('_no_cc'):
         name += '_no_cc.nk'
         nuke.scriptSaveAs(name)
+
+
+def set_framerange(first, last, nodes=None):
+    """Set read nodes framerange.  """
+    if nodes is None:
+        nodes = nuke.selectedNodes()
+    first, last = int(first), int(last)
+    for n in nodes:
+        if n.Class() == 'Read':
+            n['first'].setValue(first)
+            n['origfirst'].setValue(first)
+            n['last'].setValue(last)
+            n['origlast'].setValue(last)
+
+
+def dialog_set_framerange():
+    """Dialog for set_framerange.  """
+    panel = nuke.Panel('设置帧范围')
+    panel.addExpressionInput('first', nuke.numvalue('root.first_frame'))
+    panel.addExpressionInput('last', nuke.numvalue('root.last_frame'))
+    confirm = panel.show()
+
+    if confirm:
+        set_framerange(panel.value('first'), panel.value('last'))
