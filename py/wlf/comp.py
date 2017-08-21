@@ -1,5 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Comp footages adn create output, can be run as script.  """
+# TODO:auto set fps.
 
 import json
 import os
