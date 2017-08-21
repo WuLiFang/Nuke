@@ -13,7 +13,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-__version__ = '0.9.0'
+__version__ = '0.9.1'
 
 
 def abort_modified(func):
@@ -190,7 +190,7 @@ def dialog_create_csheet():
     database_input_name = '数据库'
     prefix_input_name = '镜头名前缀限制'
     check_input_name = '忽略不存在的图像'
-    save_images_name = '服务器图像复制到本地'
+    save_images_name = '打包到本地'
     panel = nuke.Panel('为项目创建HTML色板')
     panel.addSingleLineInput(
         database_input_name, config.get('csheet_database'))
