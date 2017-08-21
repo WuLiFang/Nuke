@@ -16,7 +16,7 @@ try:
 except ImportError:
     raise
 
-if re.match(r'(?i)wlf\d+', os.getenv('ComputerName')):
+if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
     print(u'映射网络驱动器')
     files.map_drivers()
 print(u'添加插件节点')
