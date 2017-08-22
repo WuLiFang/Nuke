@@ -23,7 +23,7 @@ from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.8'
+__version__ = '0.16.9'
 
 
 class Comp(object):
@@ -64,6 +64,7 @@ class Comp(object):
         """Return shot_list generator from a config dict."""
 
         _dir = config['input_dir']
+        _out_dir = config[u'output_dir']
         if not os.path.isdir(_dir):
             return
 
@@ -71,8 +72,9 @@ class Comp(object):
         if isinstance(_ret[0], str):
             _ret = (get_unicode(i) for i in _ret)
         if config['exclude_existed'] and not include_existed:
-            _ret = (i for i in _ret if not os.path.exists(os.path.join(
-                config[u'output_dir'], u'{}.nk'.format(i))))
+            _ret = (i for i in _ret
+                    if not os.path.exists(os.path.join(_out_dir, u'{}_v0.nk'.format(i)))
+                    and not os.path.exists(os.path.join(_out_dir, u'{}.nk'.format(i))))
         _ret = (i for i in _ret if (
             re.match(config['dir_pat'], i) and os.path.isdir(os.path.join(_dir, i))))
 
