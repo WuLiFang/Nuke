@@ -6,18 +6,23 @@ import nuke
 
 from .node import get_upstream_nodes
 
-__version__ = '0.4.6'
+__version__ = '0.5.0'
 
 
-def autoplace(nodes=None):
+def autoplace(nodes=None, recursive=False):
     """Auto place nodes."""
     if not nodes:
         nodes = nuke.allNodes()
+    elif isinstance(nodes, nuke.Node):
+        nodes = [nodes]
+    if recursive:
+        nodes = get_upstream_nodes(nodes).union(nodes)
     nodes = Nodes(nodes)
-    xpos, ypos = nodes.xpos, nodes.ypos
+
+    xpos, bottom = nodes.xpos, nodes.bottom
     nodes.autoplace()
     if nodes != nuke.allNodes():
-        nodes.xpos, nodes.ypos = xpos, ypos
+        nodes.xpos, nodes.bottom = xpos, bottom
 
 
 def is_node_inside(node, backdrop):
