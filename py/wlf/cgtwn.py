@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-__version__ = '0.9.2'
+__version__ = '0.9.3'
 
 
 def abort_modified(func):
@@ -194,7 +194,7 @@ def dialog_create_csheet():
         database_input_name, config.get('csheet_database'))
     panel.addSingleLineInput(prefix_input_name, config.get('csheet_prefix'))
     panel.addFilenameSearch(folder_input_name, config.get('csheet_outdir'))
-    panel.addBooleanCheckBox(check_input_name, config.get('csheet_checked'))
+    panel.addBooleanCheckBox(check_input_name, False)
     panel.addBooleanCheckBox(
         save_images_name, config.get('csheet_save_images'))
     confirm = panel.show()
@@ -205,7 +205,7 @@ def dialog_create_csheet():
     config['csheet_database'] = panel.value(database_input_name)
     config['csheet_outdir'] = panel.value(folder_input_name)
     config['csheet_prefix'] = panel.value(prefix_input_name)
-    config['csheet_checked'] = panel.value(check_input_name)
+    # config['csheet_checked'] = panel.value(check_input_name)
     config['csheet_save_images'] = panel.value(save_images_name)
 
     save_path = os.path.join(config['csheet_outdir'],
