@@ -4,7 +4,7 @@
 import os
 import json
 
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 
 class Config(dict):
@@ -23,7 +23,7 @@ class Config(dict):
         'csheet_database': 'proj_big',
         'csheet_prefix': 'SNJYW_EP14_',
         'csheet_outdir': 'E:/',
-        'csheet_checked': True,
+        'csheet_checked': False,
     }
     path = os.path.expanduser(u'~/.nuke/wlf.config.json')
     instance = None
