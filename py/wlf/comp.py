@@ -23,7 +23,7 @@ from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.10'
+__version__ = '0.16.11'
 
 
 class Comp(object):
@@ -391,12 +391,12 @@ class Comp(object):
         n = nuke.nodes.ColorCorrect(inputs=[n], label='亮度调整')
         n = nuke.nodes.ColorCorrect(
             inputs=[n], mix_luminance=1, label='颜色调整')
-        if 'SSS.alpha' in input_node.channels():
-            n = nuke.nodes.ColorCorrect(
-                inputs=[n],
-                maskChannelInput='SSS.alpha',
-                label='SSS调整'
-            )
+        # if 'SSS.alpha' in input_node.channels():
+        #     n = nuke.nodes.ColorCorrect(
+        #         inputs=[n],
+        #         maskChannelInput='SSS.alpha',
+        #         label='SSS调整'
+        #     )
         n = nuke.nodes.HueCorrect(inputs=[n])
 
         # n = self._depthfog(n)

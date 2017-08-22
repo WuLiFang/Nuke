@@ -5,7 +5,7 @@ from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.1.15'
+__version__ = '0.1.16'
 
 
 def redshift(nodes):
@@ -70,6 +70,7 @@ def redshift(nodes):
             add_layer(layer)
             if layer not in nuke.layers(n):
                 input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
+            n = nuke.nodes.ColorCorrect(inputs=[n])
             n = nuke.nodes.Merge2(
                 inputs=[n, input1], operation='plus', output='rgb',
                 also_merge=layer if layer not in nuke.layers(n) else 'none',
