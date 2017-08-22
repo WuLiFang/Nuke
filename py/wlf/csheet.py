@@ -13,7 +13,7 @@ from subprocess import Popen
 import nuke
 from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.3.3'
+__version__ = '1.4.0'
 
 
 class ContactSheet(object):
@@ -236,7 +236,7 @@ def create_html(images, save_path, title=None):
 
         body += u'''<figure class='lightbox'>
     <a id="image{index}" href="#image{index}" class="image">
-        <img src="{image}" alt="no image" class="thumb" />
+        <img src="{image}" alt="no image" onerror="hide(this.parentNode.parentNode)" class="thumb" />
         <figcaption>{name}</figcaption>
     </a>
     <span class="full">

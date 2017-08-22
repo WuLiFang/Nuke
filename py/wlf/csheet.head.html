@@ -216,8 +216,9 @@
             opacity: 1;
             height: 90%;
         }
+
         .lightbox a:target~.full img {
-            top:50%;
+            top: 50%;
             max-height: 90%;
         }
 
@@ -225,4 +226,15 @@
             top: 99%;
         }
     </style>
+    <script>
+        var count= 0;
+        function hide(obj) {
+            obj.style.display = 'none';
+            var header = document.getElementsByTagName("header")[0];
+            var lightboxes = document.getElementsByClassName('lightbox');
+            var total = lightboxes.length;
+            count += 1;
+            header.innerText = `${total-count}/${total}`;
+        }
+    </script>
 </head>
