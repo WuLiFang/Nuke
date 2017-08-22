@@ -1,5 +1,5 @@
 // PositionKeyerKernel
-// VERSION: 0.4.2
+// VERSION: 0.4.3
 kernel PositionKeyer : ImageComputationKernel<ePixelWise>
 {
   Image<eRead, eAccessPoint, eEdgeClamped> position;
@@ -41,6 +41,9 @@ local:
 
   float linear(float x, float p0, float p1)
   {
+    if (p1 == p0){
+      return p0;
+    }
     return (x - p0) / (p1 - p0);
   }
 
