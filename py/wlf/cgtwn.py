@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-__version__ = '0.9.3'
+__version__ = '0.9.4'
 
 
 def abort_modified(func):
@@ -218,7 +218,11 @@ def dialog_create_csheet():
     except cgtwq.IDError as ex:
         nuke.message('找不到对应条目\n{}'.format(ex))
         return
+    except RuntimeError:
+        return
     task.setProgress(20)
+    if task.isCancelled():
+        return
     if config['csheet_checked']:
         images = files.checked_exists(images)
     if config['csheet_save_images']:

@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -197,6 +197,8 @@ class Shots(CGTeamWork):
 
         def _progress(num, msg):
             if HAS_NUKE:
+                if task.isCancelled():
+                    raise RuntimeError('Cancelled.')
                 task.setProgress(num)
                 task.setMessage(msg)
         for index, shot in enumerate(shots):
