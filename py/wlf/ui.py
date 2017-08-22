@@ -6,9 +6,9 @@ import os
 import nuke
 from autolabel import autolabel
 
-from . import asset, cgtwq
+from . import asset, cgtwq, precomp, edit
 
-__version__ = '0.2.11'
+__version__ = '0.3.0'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -22,36 +22,36 @@ def add_menu():
         m = menu.addMenu("编辑")
 
         m.addCommand(
-            "禁用所有调色和滤镜除了虚焦", "import wlf.edit; wlf.edit.no_cc()")
-        m.addCommand(
-            "分离rgba", "import wlf.edit; wlf.edit.shuffle_rgba(nuke.selectedNode())")
-        m.addCommand('分离所有通道', 'import wlf.edit; wlf.edit.split_layers(nuke.selectedNode())',
+            "禁用所有调色和滤镜除了虚焦", edit.no_cc)
+        m.addCommand("分离rgba",
+                     lambda: edit.shuffle_rgba(nuke.selectedNode()))
+        m.addCommand('分离所有通道', lambda: edit.split_layers(nuke.selectedNode()),
                      'F3', icon="SplitLayers.png")
         m.addCommand("重命名PuzzleMatte",
-                     "import wlf.edit; wlf.edit.channels_rename(prefix='PuzzleMatte')", "F4")
+                     lambda: edit.channels_rename(prefix='PuzzleMatte'), 'F4')
         m.addSeparator()
         m.addCommand("节点标记为_enable_",
-                     "import wlf.edit; wlf.edit.mark_enable(nuke.selectedNodes())", 'SHIFT+D')
+                     lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D')
         m.addCommand("禁用所有_enable_节点",
-                     "import wlf.edit; wlf.edit.disable_nodes(prefix='_enable_')", "CTRL+SHIFT+D")
+                     lambda: edit.disable_nodes(prefix='_enable_'), 'CTRL+SHIFT+D')
         m.addSeparator()
         m.addCommand(
-            "修正错误读取节点", "import wlf.edit; wlf.edit.fix_error_read()", 'F6')
+            "修正错误读取节点", edit.fix_error_read, 'F6')
         m.addCommand(
-            "Reload所有读取节点", "import wlf.edit; wlf.edit.reload_all_read_node()")
+            "Reload所有读取节点", edit.reload_all_read_node)
         m.addCommand("显示所有缺帧",
                      "import wlf.asset; wlf.asset.DropFrameCheck.show_dialog(True)")
         m.addCommand("单帧转序列",
-                     "import wlf.edit; wlf.edit.replace_sequence()")
+                     edit.replace_sequence)
         m.addCommand("设置所选节点帧范围",
-                     "import wlf.edit; wlf.edit.dialog_set_framerange()")
+                     edit.dialog_set_framerange)
         m.addCommand("清理无用节点",
-                     "import wlf.edit; wlf.edit.delete_unused_nodes(message=True)")
+                     lambda: edit.delete_unused_nodes(message=True))
         m.addCommand('节点转为相对路径',
-                     'import wlf.edit; wlf.edit.nodes_to_relpath(nuke.selectedNodes())',
+                     lambda: edit.nodes_to_relpath(nuke.selectedNodes()),
                      icon="utilitiesfolder.png")
         m.addCommand("所有Gizmo转Group",
-                     "import wlf.edit; wlf.edit.all_gizmo_to_group()")
+                     edit.all_gizmo_to_group)
         n = m.addMenu('整理文件')
         n.addCommand("竖式自动摆放节点",
                      "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())",
@@ -62,13 +62,13 @@ def add_menu():
         except AttributeError as ex:
             print(ex)
         n.addCommand("根据背板重命名所有节点",
-                     "import wlf.edit; wlf.edit.rename_all_nodes()")
+                     edit.rename_all_nodes)
         n.addCommand("根据背板分割为多个文件文件",
-                     "import wlf.edit; wlf.edit.splitByBackdrop()")
+                     edit.split_by_backdrop)
         n.addCommand("节点添加Dots变成90度",
-                     "import wlf.edit; wlf.edit.nodes_add_dots(nuke.selectedNodes())")
+                     lambda: edit.nodes_add_dots(nuke.selectedNodes()))
         n.addCommand("所有节点添加Dots变成90度",
-                     "import wlf.edit; wlf.edit.nodes_add_dots(nuke.allNodes())")
+                     lambda: edit.nodes_add_dots(nuke.allNodes()))
 
     def _comp(menu):
         m = menu.addMenu('合成')
@@ -80,7 +80,7 @@ def add_menu():
                      "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes(), show=True)",
                      'SHIFT+F7')
         m.addCommand('redshift预合成',
-                     "import wlf.precomp; wlf.precomp.redshift(nuke.selectedNodes())",
+                     lambda: precomp.redshift(nuke.selectedNodes()),
                      icon='autocomp.png')
         # m.addCommand('arnold预合成', "import wlf.precomp; wlf.precomp.arnold()",
         #              icon='autocomp.png')
