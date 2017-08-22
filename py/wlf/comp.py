@@ -23,7 +23,7 @@ from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.9'
+__version__ = '0.16.10'
 
 
 class Comp(object):
@@ -179,17 +179,17 @@ class Comp(object):
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
         _task_message(u'输出节点创建', 85)
-        _read_jpg = nuke.nodes.Read(
-            file='[value _Write.Write_JPG_1.file]',
-            label='输出的单帧',
-            disable='{{! [file exist [value this.file]]}}',
-            tile_color=0xbfbf00ff,
-        )
-        _read_jpg.setName('Read_Write_JPG')
+        # _read_jpg = nuke.nodes.Read(
+        #     file='[value _Write.Write_JPG_1.file]',
+        #     label='输出的单帧',
+        #     disable='{{! [file exist [value this.file]]}}',
+        #     tile_color=0xbfbf00ff,
+        # )
+        # _read_jpg.setName('Read_Write_JPG')
 
         _task_message(u'设置查看器', 90)
         map(nuke.delete, nuke.allNodes('Viewer'))
-        nuke.nodes.Viewer(inputs=[n, n.input(0), n, _read_jpg])
+        nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
         map(nuke.autoplace, nodes)
         if nuke.GUI:
