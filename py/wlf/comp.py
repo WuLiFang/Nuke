@@ -16,14 +16,14 @@ import nuke
 import nukescripts
 
 from wlf.files import url_open, get_encoded, get_unicode, escape_batch
-from wlf.edit import get_max, delete_unused_nodes
+from wlf.edit import get_max
 from wlf.config import Config
 from wlf.node import ReadNode, get_upstream_nodes
 from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.11'
+__version__ = '0.16.12'
 
 
 class Comp(object):
@@ -194,7 +194,7 @@ class Comp(object):
         map(nuke.autoplace, nodes)
         if nuke.GUI:
             autoplace()
-        delete_unused_nodes()
+        # delete_unused_nodes()
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
