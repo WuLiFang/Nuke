@@ -41,12 +41,21 @@ def menu():
     nuke.addOnScriptSave(_jump_frame)
     nuke.addOnScriptSave(cgtwn.on_save_callback)
 
-    nuke.addOnScriptClose(lambda: asset.DropFrameCheck().start())
-    nuke.addOnScriptClose(asset.DropFrameCheck.show_dialog)
-    nuke.addOnScriptClose(_send_to_render_dir)
-    nuke.addOnScriptClose(_render_jpg)
-    nuke.addOnScriptClose(cgtwn.on_close_callback)
-    nuke.addOnScriptClose(_create_csheet)
+    def _on_close_callback():
+        task = nuke.ProgressTask('文件关闭前')
+        task.setMessage('发送至渲染文件夹')
+        _send_to_render_dir()
+        task.setMessage('检查缺帧')
+        asset.DropFrameCheck().start()
+        asset.DropFrameCheck.show_dialog()
+        task.setMessage('渲染单帧')
+        _render_jpg()
+        task.setMessage('同步CGTeamWork')
+        cgtwn.on_close_callback()
+        task.setMessage('创建色板')
+        _create_csheet()
+
+    nuke.addOnScriptClose(_on_close_callback)
 
 
 def abort_modified(func):
