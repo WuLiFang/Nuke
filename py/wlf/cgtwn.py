@@ -3,7 +3,6 @@
 cgteamwork integration with nuke.
 """
 import os
-import time
 
 import nuke
 
@@ -13,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 
 
 def abort_modified(func):
@@ -165,7 +164,6 @@ def on_close_callback():
         nuke.scriptName()
     except RuntimeError:
         return
-    time.sleep(1)
     try:
         shot = CurrentShot()
         shot.check_account()
