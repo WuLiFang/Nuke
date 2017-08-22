@@ -4,7 +4,7 @@ Gizmo {
  tile_color 0xbfbf00ff
  label "\[value this.Write_MOV_1.file]\n\[value this.Write_JPG_1.file]"
  note_font 微软雅黑
- addUserKnob {20 Write l "Write v1.50.0"}
+ addUserKnob {20 Write l "Write v1.50.1"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -17,7 +17,7 @@ Gizmo {
  addUserKnob {6 no_motionblur l 单帧渲染时不带运动模糊 +STARTLINE}
  no_motionblur true
  addUserKnob {26 ""}
- addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]" +STARTLINE}
+ addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.reading none\nknob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]\nknob this.Read_JPG_1.version \[expr \[value this.Read_JPG_1.version]+1]\nknob this.reading jpg" +STARTLINE}
  addUserKnob {22 bt_jpg_dir l 单帧输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
  addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
  addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
@@ -31,7 +31,7 @@ Gizmo {
   proxy "\[value Write_JPG_1.proxy]"
   origset true
   on_error checkerboard
-  name Read2
+  name Read_JPG_1
   gl_color 0xe1ff3200
   note_font 微软雅黑
   selected true
@@ -45,7 +45,7 @@ Gizmo {
   proxy "\[value Write_MOV_2.proxy]"
   origset true
   on_error checkerboard
-  name Read1
+  name Read_MOV_2
   gl_color 0xe1ff3200
   note_font 微软雅黑
   xpos 90
@@ -227,7 +227,6 @@ Gizmo {
   last {{first}}
   use_limit true
   checkHashOnRead false
-  version 101
   in_colorspace linear
   out_colorspace linear
   beforeRender "# Data storage;\nclass __wlf_Write(object):\n    blur_node_classes = (\n        'VectorBlur',\n        'VectorBlur2',\n        'CameraShake',\n        'MotionBlur',\n        'OFXcom.revisionfx.rsmb_v3',\n        'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1' \n    )\n    last_render_mode = False\n    blur_nodes = \[]\n\n    def __init__(self):\n        cls = globals()\['__wlf_Write']\n        cls.last_render_mode = nuke.Root()\['proxy'].value()\n        cls.blur_nodes = \[n for n in nuke.allNodes(group=nuke.Root()) \\\n            if n.Class() in self.blur_node_classes and not n\['disable'].value()]\n\n__wlf_Write()\n\n# Create output folder\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())))\nif not os.path.exists(_dir):\n    os.makedirs(_dir)\n\nnuke.knob('root.proxy', 'False')\nif nuke.numvalue('parent.no_motionblur'):\n    map(lambda n: n\['disable'].setValue(True), __wlf_Write.blur_nodes)\n"
@@ -266,11 +265,10 @@ Gizmo {
   mov64_bitrate_tolerance 40000000
   mov64_quality_min 2
   mov64_quality_max 31
-  mov64_gop_size 12
+  mov64_gop_size 12 
   mov64_b_frames 0
   render_order 2
   checkHashOnRead false
-  version 17
   in_colorspace linear
   out_colorspace linear
   beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
