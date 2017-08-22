@@ -3,8 +3,9 @@
 import nuke
 from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
+from wlf.orgnize import autoplace
 
-__version__ = '0.1.13'
+__version__ = '0.1.15'
 
 
 def redshift(nodes):
@@ -94,6 +95,7 @@ def redshift(nodes):
                     tile_color=0x9e3c63ff,
                     inputs=[n, input1], operation='copy',
                     Achannels='rgba', Bchannels='none', output=layer, label=layer)
+    autoplace(n, recursive=True)
     return n
 
 
