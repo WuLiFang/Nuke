@@ -23,7 +23,7 @@ from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.7'
+__version__ = '0.16.8'
 
 
 class Comp(object):
@@ -681,7 +681,7 @@ class CompDialog(nukescripts.PythonPanel):
             task.setProgress(i * 100 // len(self._shot_list))
             self._config['shot'] = os.path.basename(shot)
             self._config['save_path'] = os.path.join(
-                self._config['output_dir'], '{}.nk'.format(self._config['shot']))
+                self._config['output_dir'], '{}_v0.nk'.format(self._config['shot']))
             self._config['footage_dir'] = shot if os.path.isdir(
                 shot) else os.path.join(self._config['input_dir'], self._config['shot'])
             _cmd = u'"{nuke}" -t {script} "{config}"'.format(
