@@ -5,7 +5,7 @@ from wlf.files import get_layer, REDSHIFT_LAYERS
 from wlf.edit import add_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.1.16'
+__version__ = '0.1.17'
 
 
 def redshift(nodes):
@@ -24,7 +24,8 @@ def redshift(nodes):
             def _shuffle(layer):
                 knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
                 return nuke.nodes.Shuffle(inputs=[n], label=layer, postage_stamp=True, **knob_in)
-            source = {layer: _shuffle(layer) for layer in layers}
+            source = {layer: _shuffle(layer)
+                      for layer in layers if layer in REDSHIFT_LAYERS}
         else:
             source = {get_layer(nuke.filename(n)): n for n in nodes}
         return source
@@ -34,10 +35,6 @@ def redshift(nodes):
             n = nuke.nodes.Merge2(
                 inputs=[input0, input1], operation='multiply', output='rgb', label=layer)
             add_layer(layer)
-            n = nuke.nodes.Merge2(
-                tile_color=0x9e3c63ff,
-                inputs=[n, input1], operation='copy',
-                Achannels='rgba', Bchannels='none', output=layer, label=layer)
             source[layer] = n
 
     source = _get_source()
@@ -68,9 +65,9 @@ def redshift(nodes):
         if layer in ('SSS', 'Reflections', 'Refractions', 'SpecularLighting',
                      'GI', 'Emission', 'Caustics'):
             add_layer(layer)
+            input1 = nuke.nodes.ColorCorrect(inputs=[input1])
             if layer not in nuke.layers(n):
                 input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
-            n = nuke.nodes.ColorCorrect(inputs=[n])
             n = nuke.nodes.Merge2(
                 inputs=[n, input1], operation='plus', output='rgb',
                 also_merge=layer if layer not in nuke.layers(n) else 'none',
