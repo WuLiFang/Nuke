@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwq, precomp, edit
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -80,7 +80,8 @@ def add_menu():
                      "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes(), show=True)",
                      'SHIFT+F7')
         m.addCommand('redshift预合成',
-                     lambda: precomp.redshift(nuke.selectedNodes()),
+                     lambda: precomp.Precomp(
+                         nuke.selectedNodes(), renderer='redshift'),
                      icon='autocomp.png')
         # m.addCommand('arnold预合成', "import wlf.precomp; wlf.precomp.arnold()",
         #              icon='autocomp.png')

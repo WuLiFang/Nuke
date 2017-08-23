@@ -1,239 +1,124 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
+import os
+import json
+import re
+
 import nuke
-from wlf.files import get_layer, REDSHIFT_LAYERS
-from wlf.edit import add_layer
+
+from wlf.files import get_layer
+from wlf.edit import add_layer, copy_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.1.17'
+__version__ = '0.3.0'
 
 
 def redshift(nodes):
-    """Precomp reshift footage from layer."""
-    if isinstance(nodes, nuke.Node):
-        nodes = [nodes]
-    nodes = list(n for n in nodes if n.Class() == 'Read')
-    if not nodes:
-        raise ValueError('预合成没有读取节点')
+    """Precomp reshift footages.  """
 
-    def _get_source():
+    return Precomp(nodes, renderer='redshift')
+
+
+class Precomp(object):
+    """A sequence of merge or copy.  """
+    last_node = None
+
+    def __init__(self, nodes, renderer='redshift'):
+        config_file = os.path.join(
+            __file__, '../precomp.{}.json'.format(renderer))
+        with open(config_file) as f:
+            self._config = json.load(f)
+
         if len(nodes) == 1:
             n = nodes if isinstance(nodes, nuke.Node) else nodes[0]
             layers = nuke.layers(n)
-
-            def _shuffle(layer):
-                knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
-                return nuke.nodes.Shuffle(inputs=[n], label=layer, postage_stamp=True, **knob_in)
-            source = {layer: _shuffle(layer)
-                      for layer in layers if layer in REDSHIFT_LAYERS}
+            self._source = {layer: None
+                            for layer in layers if layer in self._config['layers']}
+            self.last_node = n
         else:
-            source = {get_layer(nuke.filename(n)): n for n in nodes}
-        return source
+            self._source = {}
+            for n in nodes:
+                layer = get_layer(nuke.filename(n))
+                if layer:
+                    self._source[layer] = n
 
-    def _merge_multiply(layer, input0, input1):
-        if not source.get(layer) and input0 and input1:
-            n = nuke.nodes.Merge2(
-                inputs=[input0, input1], operation='multiply', output='rgb', label=layer)
-            add_layer(layer)
-            source[layer] = n
+        base_layer = self._config['layers'][0]
+        self.last_node = self.node(base_layer)
+        if not self.last_node:
+            raise ValueError('缺少{}'.format(base_layer))
 
-    source = _get_source()
-    _merge_multiply('DiffuseLighting',
-                    source.get('DiffuseFilter'), source.get('DiffuseLightingRaw'))
-    _merge_multiply('GI', source.get('DiffuseFilter'), source.get('GIRaw'))
+        if base_layer not in self.layers():
+            self.last_node = nuke.nodes.Shuffle(
+                inputs=[self.last_node], out=base_layer)
 
-    n = source.get('DiffuseLighting')
-    if not n:
-        raise ValueError('没有DiffuseLighting层')
+        for layer in self._config.get('copy'):
+            for i in self.source.keys():
+                if re.match('(?i)^{}\\d*$'.format(layer), i):
+                    self.copy(i)
+        for layer, output in dict(self._config.get('rename')).items():
+            self.copy(layer, output)
+        for layer in self._config.get('plus'):
+            self.plus(layer)
 
-    def _layer_order(name):
-        try:
-            return '{:05d}_{}'.format(REDSHIFT_LAYERS.index(name), name)
-        except ValueError:
-            return '~{}'.format(name)
+        autoplace(self.last_node, recursive=True)
 
-    task = nuke.ProgressTask('Redshift预合成')
-    layers = sorted((i for i in source.keys() if i), key=_layer_order)
-    for index, layer in enumerate(layers):
-        task.setMessage(layer)
-        task.setProgress(index * 100 // len(layers))
-        input1 = source.get(layer)
-        if not (layer and input1):
-            continue
+    @property
+    def source(self):
+        """A layer-node dictionary.  """
+        return self._source
 
-        # plus layer
-        if layer in ('SSS', 'Reflections', 'Refractions', 'SpecularLighting',
-                     'GI', 'Emission', 'Caustics'):
-            add_layer(layer)
-            input1 = nuke.nodes.ColorCorrect(inputs=[input1])
-            if layer not in nuke.layers(n):
-                input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
-            n = nuke.nodes.Merge2(
-                inputs=[n, input1], operation='plus', output='rgb',
-                also_merge=layer if layer not in nuke.layers(n) else 'none',
-                label=layer)
-        # depth layer
-        if layer in ('Z'):
-            add_layer('depth')
-            n = nuke.nodes.Copy(
-                tile_color=0x9e3c63ff,
-                inputs=[n, input1], from0='depth.Z', to0='depth.Z', label='depth')
-        # copy layer
-        if layer in ('MotionVectors', 'BumpNormals', 'P', 'DiffuseFilter', 'TransTint'):
-            if layer not in nuke.layers(n):
-                add_layer(layer)
+    @property
+    def _combine_dict(self):
+        return dict(self._config.get('combine'))
+
+    def check(self):
+        """Check if has all necessary layer.  """
+        pass
+
+    def layers(self):
+        """Return layers in self.last_node. """
+        if not self.last_node:
+            return []
+        return nuke.layers(self.last_node)
+
+    def node(self, layer):
+        """Return a node that should be treat as @layer.  """
+        add_layer(layer)
+        ret = self.source.get(layer)
+        if layer in self.layers():
+            ret = self.last_node
+        elif layer in self._combine_dict.keys():
+            pair = self._combine_dict[layer]
+            if self.source.get(pair[0])\
+                    and self.source.get(pair[1]):
+                input0, input1 = self.node(pair[0]), self.node(pair[1])
                 n = nuke.nodes.Merge2(
-                    tile_color=0x9e3c63ff,
-                    inputs=[n, input1], operation='copy',
-                    Achannels='rgba', Bchannels='none', output=layer, label=layer)
-        if layer.startswith('PuzzleMatte'):
-            if layer not in nuke.layers(n):
-                add_layer(layer)
-                n = nuke.nodes.Merge2(
-                    tile_color=0x9e3c63ff,
-                    inputs=[n, input1], operation='copy',
-                    Achannels='rgba', Bchannels='none', output=layer, label=layer)
-    autoplace(n, recursive=True)
-    return n
+                    inputs=[input0, input1],
+                    Achannels=pair[1] if pair[1] in nuke.layers(
+                        input1) else 'rgb',
+                    operation='multiply', output='rgb', label=layer)
+                self.source[layer] = n
+                ret = n
+        return ret
 
+    def plus(self, layer):
+        """Plus a layer to last.  """
+        input1 = self.node(layer)
+        input1 = nuke.nodes.ColorCorrect(inputs=[input1])
+        input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
+        self.last_node = nuke.nodes.Merge2(
+            inputs=[self.last_node, input1], operation='plus',
+            Achannels=layer if layer in nuke.layers(input1) else 'rgb',
+            output='rgb',
+            also_merge=layer if layer not in self.layers() else 'none',
+            label=layer)
 
-# def arnold():
-#     """This function is copyed from cgspread."""
-#     # gradelayers = ['indirect_diffuse',
-#     #  'direct_diffuse',
-#     #  'indirect_specular',
-#     #  'direct_specular',
-#     #  'reflection',
-#     #                'refraction',
-#     #                'AO']
-#     # Get The Layers Of Selected Read Node
+    def multiply(self, layer):
+        """Plus a layer to last.  """
+        pass
 
-#     orderedmerge = []
-
-#     read_node = nuke.selectedNode()
-#     layers = nuke.layers(read_node)
-
-#     for i in ARNOLD_LAYERS:
-#         for n in layers:
-#             if i == n:
-#                 orderedmerge.append(i)
-
-#     for merge in orderedmerge:
-#         for layer in layers:
-#             if layer == merge:
-#                 layers.remove(layer)
-
-#     layers.remove(u'rgba')
-#     layers.remove(u'rgb')
-#     orderedshow = layers
-
-#     ################Create Shuffle########################################
-
-#     xpos = read_node['xpos'].getValue()
-#     ypos = read_node['ypos'].getValue()
-
-#     shufflegroup = []
-#     gradegroup = []
-#     dot_ygroup = []
-#     mergegroup = []
-#     for k in orderedmerge:
-#         shuffle = nuke.nodes.Shuffle(
-#             name=k, postage_stamp=1, note_font_size=25)
-#         shuffle.setInput(0, read_node)
-#         shuffle.Knob('in').setValue(k)
-#         num = int(orderedmerge.index(k))
-#         shuffle.setXYpos(int(xpos + 150 * num), int(ypos + 250))
-#         shuffle_x = shuffle['xpos'].getValue()
-#         shuffle_y = shuffle['ypos'].getValue()
-#         shufflegroup.append(shuffle)
-
-#         ###Create Grade###
-#         if num < 7:
-#             gradenode = nuke.nodes.Grade(name=k, note_font_size=15)
-#             gradenode.setInput(0, shuffle)
-#             gradegroup.append(gradenode)
-#         else:
-#             pass
-
-#         ###Create Dot#####
-
-#         if num >= 1 and num < 7:
-#             dot = nuke.nodes.Dot(name=k, label=k, note_font_size=25)
-#             dot.setInput(0, gradenode)
-#             dot.setXYpos(int(shuffle_x + 34), int(shuffle_y + 180 * num))
-#             # dotX = dot['xpos'].getValue()
-#             dot_y = dot['ypos'].getValue()
-#             dot_ygroup.append(dot_y)
-
-#         elif num > 6:
-#             dot = nuke.nodes.Dot(name=k, label=k, note_font_size=25)
-#             dot.setInput(0, shuffle)
-#             dot.setXYpos(int(shuffle_x + 34), int(shuffle_y + 180 * num))
-#             # dotX = dot['xpos'].getValue()
-#             dot_y = dot['ypos'].getValue()
-#             dot_ygroup.append(dot_y)
-
-#         ###Create Merge####
-
-#         if num < 1:
-#             pass
-#         elif num > 0 and num < 2:
-#             merge = nuke.nodes.Merge(name=k,
-#                                      operation='plus',
-#                                      mix=1,
-#                                      inputs=[gradegroup[0], dot],
-#                                      note_font_size=15)
-#             merge.setXYpos(int(xpos), int(dot_y - 6))
-#             mergegroup.append(merge)
-#         elif num > 1 and num < 6:
-#             merge = nuke.nodes.Merge(name=k,
-#                                      inputs=[mergegroup[num - 2], dot],
-#                                      operation='plus', mix=1,
-#                                      note_font_size=15)
-#             mergegroup.append(merge)
-#             merge.setXYpos(int(xpos), int(dot_y - 6))
-#         elif num > 5 and num < 7:
-#             merge = nuke.nodes.Merge(name=k,
-#                                      inputs=[mergegroup[num - 2], dot],
-#                                      operation='multiply',
-#                                      mix=0.15,
-#                                      note_font_size=15)
-#             mergegroup.append(merge)
-#             merge.setXYpos(int(xpos), int(dot_y - 6))
-#         elif num > 6 and num < 8:
-#             copy = nuke.nodes.Copy(name=k,
-#                                    inputs=[mergegroup[num - 2], dot],
-#                                    from0='rgba.red',
-#                                    to0='depth.Z',
-#                                    note_font_size=15)
-#             mergegroup.append(copy)
-#             copy.setXYpos(int(xpos), int(dot_y - 14))
-#         elif num > 7 and num < 9:
-#             copy = nuke.nodes.Copy(name=k,
-#                                    inputs=[mergegroup[num - 2], dot],
-#                                    from0='rgba.red',
-#                                    to0='MV.red',
-#                                    from1='rgba.green',
-#                                    to1='MV.green',
-#                                    note_font_size=15)
-#             mergegroup.append(copy)
-#             copy.setXYpos(int(xpos), int(dot_y - 26))
-#         elif num > 8 and num < 10:
-#             copy = nuke.nodes.Copy(name=k,
-#                                    inputs=[mergegroup[num - 2], dot],
-#                                    from0='rgba.red',
-#                                    to0='rgba.alpha',
-#                                    note_font_size=15)
-#             mergegroup.append(copy)
-#             copy.setXYpos(int(xpos), int(dot_y - 14))
-#             ###Create show Layers####
-
-#     for element in orderedshow:
-#         num += 1
-#         shuffle = nuke.nodes.Shuffle(
-#             name=element, postage_stamp=1, note_font_size=25)
-#         shuffle.setInput(0, read_node)
-#         shuffle.Knob('in').setValue(element)
-#         shuffle.setXYpos(int(xpos + 150 * num), int(ypos + 250))
-
-#     nuke.connectViewer(0, mergegroup[-1])
+    def copy(self, layer, output=None):
+        """Copy a layer to last.  """
+        if layer not in self.layers() and self.source.get(layer):
+            self.last_node = copy_layer(
+                self.last_node, self.node(layer), layer=layer, output=output)

@@ -1,0 +1,69 @@
+{
+    "layers": [
+        "DiffuseLighting",
+        "DiffuseFilter",
+        "DiffuseLightingRaw",
+        "VolumeFogTint",
+        "Z",
+        "P",
+        "BumpNormals",
+        "MotionVectors",
+        "TransTint",
+        "PuzzleMatte",
+        "SSS",
+        "Reflections",
+        "Refractions",
+        "GI",
+        "GIRaw",
+        "Emission",
+        "Caustics",
+        "SpecularLighting",
+        "TransGIRaw",
+        "TransGI",
+        "TransLighting",
+        "TransLightingRaw",
+        "VolumeLighting"
+    ],
+    "combine": {
+        "DiffuseLighting": [
+            "DiffuseLightingRaw",
+            "DiffuseFilter"
+        ],
+        "GI": [
+            "GIRaw",
+            "DiffuseFilter"
+        ],
+        "TransLighting": [
+            "TransLightingRaw",
+            "TransTint"
+        ],
+        "TransGI": [
+            "TransGIRaw",
+            "TransTint"
+        ]
+    },
+    "plus": [
+        "SSS",
+        "Reflections",
+        "Refractions",
+        "SpecularLighting",
+        "GI",
+        "Emission",
+        "Caustics",
+        "TransLighting",
+        "TransGI",
+        "VolumeLighting"
+    ],
+    "copy": [
+        "DiffuseFilter",
+        "MotionVectors",
+        "BumpNormals",
+        "P",
+        "TransTint",
+        "VolumeFogTint",
+        "PuzzleMatte"
+    ],
+    "rename": {
+        "Z": "depth"
+    }
+}
