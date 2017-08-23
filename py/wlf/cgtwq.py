@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -176,7 +176,6 @@ class CGTeamWork(object):
 
 class Shots(CGTeamWork):
     """Deal multple shot at once.  """
-    project_code = None
     _epsodes = []
 
     def __init__(self, database, module=None, pipeline=None, prefix=None):
@@ -191,20 +190,19 @@ class Shots(CGTeamWork):
         initiated = self.task_module.init_with_filter(filters)
         if not initiated:
             raise IDError(self.database, filters)
-        shots_info = self.task_module.get(['shot.shot'])
-        self.project_code = self.task_module.get(['eps.project_code'])[
-            0]['eps.project_code']
-        shots_info_dict = dict((i['shot.shot'], i) for i in shots_info
-                               if i['shot.shot']
-                               and (not prefix or i['shot.shot'].startswith(prefix)))
-        self._shots = sorted(shots_info_dict.keys())
+        shots_info = self.task_module.get(
+            ['shot.shot', 'eps.eps_name', 'eps.project_code'])
+        self._shots_info_dict = dict((i['shot.shot'], i) for i in shots_info
+                                     if i['shot.shot']
+                                     and (not prefix or i['shot.shot'].startswith(prefix)))
+        self._shots = sorted(self._shots_info_dict.keys())
         self.task_module.init_with_id(
-            list(shots_info_dict[i]['id'] for i in shots_info_dict.keys()))
+            list(self._shots_info_dict[i]['id'] for i in self._shots_info_dict.keys()))
 
     def get_all_image(self):
         """Get all image dest for shots, can match shot with @prefix.  """
 
-        shots = self._shots
+        shots = self.shots
         all_num = len(shots)
         images = []
         if HAS_NUKE:
@@ -218,13 +216,10 @@ class Shots(CGTeamWork):
                 task.setMessage(msg)
 
         info = proj_info(database=self.database)
-        info['eps.project_code'] = self.project_code
         for index, shot in enumerate(shots):
             _progress(index * 100 // all_num, shot)
             try:
-                info['shot.shot'] = shot
-                info['eps.eps_name'] = self.episode\
-                    or Shot(shot, database=self.database).episode
+                info.update(self._shots_info_dict[shot])
                 image = info['image_dest_pat'].format(info)
             except IDError:
                 continue
@@ -234,7 +229,7 @@ class Shots(CGTeamWork):
         return images
 
     @property
-    def names(self):
+    def shots(self):
         """Return shots names.   """
         return self._shots
 
