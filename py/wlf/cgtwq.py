@@ -9,14 +9,9 @@ import sys
 
 from subprocess import Popen, PIPE
 
+from .progress import Progress
 
-try:
-    import nuke
-    HAS_NUKE = True
-except ImportError:
-    HAS_NUKE = False
-
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -133,8 +128,8 @@ class CGTeamWork(object):
     def update_status():
         """Return and set if cls.is_logged_in."""
 
-        task = nuke.ProgressTask('尝试连接CGTeamWork')
-        task.setProgress(50)
+        task = Progress('尝试连接CGTeamWork')
+        task.set(50)
         if not CGTeamWork.is_running() and os.path.exists(CGTW_EXECUTABLE):
             ret = False
             Popen(CGTW_EXECUTABLE, cwd=os.path.dirname(CGTW_EXECUTABLE))
@@ -205,18 +200,10 @@ class Shots(CGTeamWork):
         all_num = len(self.shots)
         images = []
 
-        if HAS_NUKE:
-            task = nuke.ProgressTask('查询数据库')
-
-        def _progress(num, msg):
-            if HAS_NUKE:
-                if task.isCancelled():
-                    raise RuntimeError('Cancelled.')
-                task.setProgress(num)
-                task.setMessage(msg)
+        task = Progress('查询数据库')
 
         for index, shot in enumerate(self.shots):
-            _progress(index * 100 // all_num, shot)
+            task.set(index * 100 // all_num, shot)
             try:
                 info.update(self._shots_info_dict[shot])
                 image = info['image_dest_pat'].format(info)
