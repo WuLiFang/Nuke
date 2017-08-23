@@ -17,12 +17,13 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.5'
+__version__ = '0.4.6'
 
 
 REDSHIFT_LAYERS = ('DiffuseFilter', 'DiffuseLighting', 'DiffuseLightingRaw', 'SSS',
                    'Reflections', 'Refractions', 'GI', 'GIRaw', 'Emission', 'Caustics',
-                   'SpecularLighting', 'Z', 'P', 'BumpNormals',
+                   'SpecularLighting', 'TransGIRaw', 'TransLightingRaw',
+                   'VolumeLighting', 'VolumeFogTint', 'Z', 'P', 'BumpNormals',
                    'MotionVectors', 'TransTint', 'PuzzleMatte')
 ARNOLD_LAYERS = ('indirect_diffuse', 'direct_diffuse',
                  'indirect_specular', 'direct_specular', 'reflection',
