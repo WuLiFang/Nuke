@@ -8,12 +8,18 @@ import sys
 import json
 import threading
 import re
-
 from subprocess import Popen
-import nuke
-from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
 
-__version__ = '1.4.0'
+from wlf.files import version_filter, split_version, get_unicode, get_encoded, url_open
+from wlf.progress import Progress
+
+try:
+    import nuke
+    HAS_NUKE = True
+except ImportError:
+    HAS_NUKE = False
+
+__version__ = '1.4.1'
 
 
 class ContactSheet(object):
@@ -226,7 +232,10 @@ def create_html(images, save_path, title=None):
 
     body = ''
     images = list(images)
+    task = Progress('生成页面')
+    all_num = len(images)
     for index, image in enumerate(images, 1):
+        task.set(index * 100 // all_num, image)
         shot = split_version(get_shot(image))[0]
         name = os.path.splitext(os.path.basename(image))[0].replace(
             shot, '<span class="highlight">{}</span>'.format(shot))
