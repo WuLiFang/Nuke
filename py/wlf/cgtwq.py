@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -250,7 +250,6 @@ class Shots(CGTeamWork):
     @property
     def episode(self):
         """Single episode if shots only contain it, else return None.  """
-        print(self.episodes)
         if len(self.episodes) == 1:
             return self.episodes.copy().pop()
 
