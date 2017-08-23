@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.3.1'
+__version__ = '0.4.0'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -101,11 +101,21 @@ class CGTeamWork(object):
     is_logged_in = False
     _tw = None
     _task_module = None
+    database = None
+    module = None
 
     def __init__(self):
         super(CGTeamWork, self).__init__()
         if not CGTeamWork._tw:
             CGTeamWork._tw = cgtw.tw()
+
+    @property
+    def task_module(self):
+        """CGTeamWork task module for further use. """
+        if not self._task_module:
+            self._task_module = self._tw.task_module(
+                self.database, self.module)
+        return self._task_module
 
     @staticmethod
     def is_running():
@@ -166,6 +176,8 @@ class CGTeamWork(object):
 
 class Shots(CGTeamWork):
     """Deal multple shot at once.  """
+    project_code = None
+    _epsodes = []
 
     def __init__(self, database, module=None, pipeline=None, prefix=None):
         super(Shots, self).__init__()
@@ -173,18 +185,21 @@ class Shots(CGTeamWork):
         self._info = proj_info(database=database)
         self.module = module or self._info.get('module')
         self.pipeline = pipeline or self._info.get('pipeline')
-        self._task_module = self._tw.task_module(self.database, self.module)
         filters = []
         if self.pipeline:
             filters.append(['shot_task.pipeline', '=', self.pipeline])
-        initiated = self._task_module.init_with_filter(filters)
+        initiated = self.task_module.init_with_filter(filters)
         if not initiated:
             raise IDError(self.database, filters)
-        shots_info = self._task_module.get(['shot.shot'])
-        self._shots = sorted(set(i['shot.shot']
-                                 for i in shots_info
-                                 if i['shot.shot']
-                                 and (not prefix or i['shot.shot'].startswith(prefix))))
+        shots_info = self.task_module.get(['shot.shot'])
+        self.project_code = self.task_module.get(['eps.project_code'])[
+            0]['eps.project_code']
+        shots_info_dict = dict((i['shot.shot'], i) for i in shots_info
+                               if i['shot.shot']
+                               and (not prefix or i['shot.shot'].startswith(prefix)))
+        self._shots = sorted(shots_info_dict.keys())
+        self.task_module.init_with_id(
+            list(shots_info_dict[i]['id'] for i in shots_info_dict.keys()))
 
     def get_all_image(self):
         """Get all image dest for shots, can match shot with @prefix.  """
@@ -201,10 +216,16 @@ class Shots(CGTeamWork):
                     raise RuntimeError('Cancelled.')
                 task.setProgress(num)
                 task.setMessage(msg)
+
+        info = proj_info(database=self.database)
+        info['eps.project_code'] = self.project_code
         for index, shot in enumerate(shots):
             _progress(index * 100 // all_num, shot)
             try:
-                image = Shot(shot, database=self.database).image_dest
+                info['shot.shot'] = shot
+                info['eps.eps_name'] = self.episode\
+                    or Shot(shot, database=self.database).episode
+                image = info['image_dest_pat'].format(info)
             except IDError:
                 continue
 
@@ -216,6 +237,24 @@ class Shots(CGTeamWork):
     def names(self):
         """Return shots names.   """
         return self._shots
+
+    @property
+    def episodes(self):
+        """Episode shots contained.  """
+        if not self._epsodes:
+            infos = self.task_module.get(['eps.eps_name'])
+            if infos:
+                self._epsodes = set(i['eps.eps_name'] for i in infos)
+        return self._epsodes
+
+    @property
+    def episode(self):
+        """Single episode if shots only contain it, else return None.  """
+        print(self.episodes)
+        if len(self.episodes) == 1:
+            return self.episodes.copy().pop()
+
+        return None
 
 
 class Shot(CGTeamWork):
@@ -230,9 +269,7 @@ class Shot(CGTeamWork):
         else:
             self._info = proj_info(name)
 
-        self._task_module = self._tw.task_module(self.database, self.module)
-
-        id_list = self._task_module.get_with_filter(
+        id_list = self.task_module.get_with_filter(
             [], [['shot.shot', '=', self.name], ['shot_task.pipeline', '=', self.pipeline]])
         if not id_list:
             raise IDError(self.database, self.module,
@@ -243,14 +280,14 @@ class Shot(CGTeamWork):
             raise IDError(u'Multiple match', id_list)
         self._id = id_list[0]['id']
 
-        self._task_module.init_with_id(self.shot_id)
+        self.task_module.init_with_id(self.shot_id)
 
         self.update_info()
 
     def update_info(self):
         """Update info from database"""
 
-        infos = self._task_module.get(
+        infos = self.task_module.get(
             ['shot.shot', 'eps.project_code',
              'eps.eps_name', 'shot_task.artist', 'shot_task.account_id', 'shot_task.image'])[0]
         self._info.update(infos)
@@ -281,6 +318,11 @@ class Shot(CGTeamWork):
         return self._name
 
     @property
+    def episode(self):
+        """The episode name of current shot(e.g. 'EP14').  """
+        return self._info.get('eps.eps_name')
+
+    @property
     def shot_task_folder(self):
         """shot_task_folder on server.  """
         return self._info.get('shot_task_folder')
@@ -307,7 +349,7 @@ class Shot(CGTeamWork):
 
     @shot_image.setter
     def shot_image(self, value):
-        self._task_module.set_image('shot_task.image', value)
+        self.task_module.set_image('shot_task.image', value)
         self.update_info()
 
     @property
