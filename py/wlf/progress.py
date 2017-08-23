@@ -6,7 +6,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class Progress(object):
@@ -19,12 +19,29 @@ class Progress(object):
 
     def set(self, progress=None, message=None):
         """Set progress number and message"""
+
+        if self.is_cancelled():
+            raise CancelledError
+
         if HAS_NUKE:
-            if self._task.isCancelled():
-                raise RuntimeError('Cancelled.')
             if progress:
                 self._task.setProgress(progress)
             if message:
                 self._task.setMessage(message)
         else:
             print('{}% {}'.format(progress, message if message else ''))
+
+    def is_cancelled(self):
+        """Return if cancel button been pressed.  """
+
+        if HAS_NUKE:
+            return self._task.isCancelled()
+
+        return False
+
+
+class CancelledError(Exception):
+    """Indicate user pressed CancelButton.  """
+
+    def __str__(self):
+        return 'Cancelled. '
