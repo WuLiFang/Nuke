@@ -16,7 +16,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 CGTW_PATH = r"C:\cgteamwork\bin\base"
 CGTW_EXECUTABLE = r"C:\cgteamwork\bin\cgtw\CgTeamWork.exe"
@@ -201,10 +201,10 @@ class Shots(CGTeamWork):
 
     def get_all_image(self):
         """Get all image dest for shots, can match shot with @prefix.  """
-
-        shots = self.shots
-        all_num = len(shots)
+        info = proj_info(database=self.database)
+        all_num = len(self.shots)
         images = []
+
         if HAS_NUKE:
             task = nuke.ProgressTask('查询数据库')
 
@@ -215,8 +215,7 @@ class Shots(CGTeamWork):
                 task.setProgress(num)
                 task.setMessage(msg)
 
-        info = proj_info(database=self.database)
-        for index, shot in enumerate(shots):
+        for index, shot in enumerate(self.shots):
             _progress(index * 100 // all_num, shot)
             try:
                 info.update(self._shots_info_dict[shot])
