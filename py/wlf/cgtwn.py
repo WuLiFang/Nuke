@@ -12,7 +12,7 @@ from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
 
-__version__ = '0.9.5'
+__version__ = '0.9.6'
 
 
 def abort_modified(func):
@@ -281,7 +281,7 @@ def dialog_create_dirs():
 
     task.setProgress(10)
     try:
-        names = cgtwq.Shots(database, prefix=prefix).names
+        names = cgtwq.Shots(database, prefix=prefix).shots
     except cgtwq.IDError as ex:
         nuke.message('找不到对应条目\n{}'.format(ex))
         return
