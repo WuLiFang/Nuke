@@ -4,7 +4,7 @@ Gizmo {
  inputs 2
  tile_color 0xcc804eff
  note_font 微软雅黑
- addUserKnob {20 HeatDistort l "HeatDistort v1.0.2"}
+ addUserKnob {20 HeatDistort l "HeatDistort v1.0.5"}
  addUserKnob {41 uv_scale l scale(强度) T IDistort1.uv_scale}
  addUserKnob {14 smooth l smooth(平滑) R 0 100}
  smooth 47.5
@@ -23,8 +23,8 @@ Gizmo {
   name Constant1
   gl_color 0x32f5ff00
   note_font 微软雅黑
-  xpos 400
-  ypos -643
+  xpos 417
+  ypos -674
  }
  Input {
   inputs 0
@@ -44,6 +44,19 @@ Gizmo {
   xpos 290
   ypos -563
  }
+set N3d211680 [stack 0]
+push $N3d211680
+ Clamp {
+  inputs 1+1
+  channels alpha
+  minimum 0.001
+  maskChannelMask none
+  name Clamp2
+  gl_color 0xff32db00
+  note_font 微软雅黑
+  xpos 290
+  ypos -535
+ }
  Input {
   inputs 0
   name Input
@@ -51,7 +64,7 @@ Gizmo {
   xpos 70
   ypos -754
  }
-set Nee3c6000 [stack 0]
+set N55b25c00 [stack 0]
  Dot {
   name Dot1
   gl_color 0x32fffe00
@@ -147,18 +160,7 @@ set Nee3c6000 [stack 0]
   xpos 180
   ypos -208
  }
-set Nd06abc00 [stack 0]
- Expression {
-  expr3 "(mask.a < 1e-3 ) ? 0 :1 "
-  name Expression1
-  gl_color 0xff32c600
-  note_font 微软雅黑
-  xpos 290
-  ypos -179
- }
-push $Nd06abc00
  ZDefocus2 {
-  inputs 2
   z_channel mask.a
   math direct
   blur_dof false
@@ -169,12 +171,10 @@ push $Nd06abc00
   name ZDefocus1
   gl_color 0x32afff00
   note_font 微软雅黑
-  selected true
   xpos 180
   ypos -139
   disable {{"this.size == 0"}}
  }
-set Nd06ab800 [stack 0]
  IDistort {
   uv backward
   uv_scale 50
@@ -193,7 +193,7 @@ set Nd06ab800 [stack 0]
   xpos 180
   ypos -43
  }
-push $Nee3c6000
+push $N55b25c00
  Merge2 {
   inputs 2
   operation copy
@@ -208,16 +208,5 @@ push $Nee3c6000
   gl_color 0xffb63200
   xpos 70
   ypos -10
- }
-push $Nd06ab800
- Viewer {
-  frame_range 1-49
-  fps 25
-  input_process false
-  name Viewer1
-  gl_color 0xa632ff00
-  note_font 微软雅黑
-  xpos 290
-  ypos -95
  }
 end_group
