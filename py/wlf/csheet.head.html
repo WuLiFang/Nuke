@@ -227,14 +227,32 @@
         }
     </style>
     <script>
-        var count= 0;
-        function hide(obj) {
-            obj.style.display = 'none';
+        var count = 0;
+        function hide(lightbox) {
+            lightbox.style.display = 'none';
+            try {
+                var prev = lightbox.previousElementSibling;
+                while (prev.style.display == 'none') {
+                    prev = prev.previousElementSibling;
+                }
+                var next = lightbox.nextElementSibling;
+                while (next.style.display == 'none') {
+                    next = next.nextElementSibling;
+                }
+
+                var prev_a = prev.children[1].children[3];
+                var next_a = next.children[1].children[2]
+                prev_a.href = next.children[0].href;
+                next_a.href = prev.children[0].href;
+            } catch (TypeError) {
+            }
+            
+            // deal count
             var header = document.getElementsByTagName("header")[0];
             var lightboxes = document.getElementsByClassName('lightbox');
             var total = lightboxes.length;
             count += 1;
-            header.innerText = `${total-count}/${total}`;
+            header.innerText = `${total - count}/${total}`;
         }
     </script>
 </head>
