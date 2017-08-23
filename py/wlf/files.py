@@ -7,6 +7,7 @@ import shutil
 import locale
 import string
 import warnings
+import json
 from subprocess import call, Popen
 
 from wlf.config import Config
@@ -17,14 +18,9 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.6'
+__version__ = '0.4.8'
 
 
-REDSHIFT_LAYERS = ('DiffuseFilter', 'DiffuseLighting', 'DiffuseLightingRaw', 'SSS',
-                   'Reflections', 'Refractions', 'GI', 'GIRaw', 'Emission', 'Caustics',
-                   'SpecularLighting', 'TransGIRaw', 'TransLightingRaw',
-                   'VolumeLighting', 'VolumeFogTint', 'Z', 'P', 'BumpNormals',
-                   'MotionVectors', 'TransTint', 'PuzzleMatte')
 ARNOLD_LAYERS = ('indirect_diffuse', 'direct_diffuse',
                  'indirect_specular', 'direct_specular', 'reflection',
                  'refraction',
@@ -210,8 +206,14 @@ def get_layer(filename):
     'PuzzleMatte1'
     """
 
+    if not filename:
+        return
+    redshift_json = os.path.join(__file__, '../precomp.redshift.json')
+    with open(redshift_json) as f:
+        layers = json.load(f).get('layers')
+
     basename = os.path.basename(filename)
-    for layer in REDSHIFT_LAYERS:
+    for layer in layers:
         match = re.search(r'\b({}\d*)\b'.format(layer), basename)
         if match:
             return match.group(1)
