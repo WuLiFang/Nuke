@@ -11,8 +11,9 @@ from .asset import copy
 from .files import url_open, traytip, remove_version
 from .node import wlf_write_node
 from .config import Config
+from .progress import Progress, CancelledError
 
-__version__ = '0.9.6'
+__version__ = '0.9.7'
 
 
 def abort_modified(func):
@@ -201,41 +202,47 @@ def dialog_create_csheet():
     if not confirm:
         return
 
-    task = nuke.ProgressTask('创建色板')
-    config['csheet_database'] = panel.value(database_input_name)
-    config['csheet_outdir'] = panel.value(folder_input_name)
-    config['csheet_prefix'] = panel.value(prefix_input_name)
-    config['csheet_checked'] = panel.value(check_input_name)
-    config['csheet_save_images'] = panel.value(save_images_name)
-
-    save_path = os.path.join(config['csheet_outdir'],
-                             u'{}色板.html'.format(config['csheet_database']))
-
-    task.setProgress(10)
     try:
-        images = cgtwq.Shots(
-            config['csheet_database'], prefix=config['csheet_prefix']).get_all_image()
-    except cgtwq.IDError as ex:
-        nuke.message('找不到对应条目\n{}'.format(ex))
-        return
-    except RuntimeError:
-        return
-    task.setProgress(20)
-    if task.isCancelled():
-        return
-    if config['csheet_checked']:
-        images = files.checked_exists(images)
-    if config['csheet_save_images']:
-        for f in images:
-            image_dir = os.path.join(config['csheet_outdir'],
-                                     '{}_images/'.format(config['csheet_database']))
-            copy(f, image_dir)
-        created_file = csheet.create_html_from_dir(image_dir)
-    else:
-        created_file = csheet.create_html(images, save_path,
-                                          title=u'色板 {}'.format(config['csheet_database']))
-    if created_file:
-        url_open(created_file, isfile=True)
+        task = Progress('创建色板')
+        config['csheet_database'] = panel.value(database_input_name)
+        config['csheet_outdir'] = panel.value(folder_input_name)
+        config['csheet_prefix'] = panel.value(prefix_input_name)
+        config['csheet_checked'] = panel.value(check_input_name)
+        config['csheet_save_images'] = panel.value(save_images_name)
+
+        save_path = os.path.join(config['csheet_outdir'],
+                                 u'{}色板.html'.format(config['csheet_database']))
+
+        task.set(message='访问数据库文件')
+        try:
+            images = cgtwq.Shots(
+                config['csheet_database'], prefix=config['csheet_prefix']).get_all_image()
+        except cgtwq.IDError as ex:
+            nuke.message('找不到对应条目\n{}'.format(ex))
+            return
+        except RuntimeError:
+            return
+
+        if config['csheet_checked']:
+            images = files.checked_exists(images)
+
+        task.set(50, '生成文件')
+        if config['csheet_save_images']:
+            task = Progress('下载图像到本地')
+            all_num = len(images)
+            for index, f in enumerate(images):
+                task.set(index * 100 // all_num, f)
+                image_dir = os.path.join(config['csheet_outdir'],
+                                         '{}_images/'.format(config['csheet_database']))
+                copy(f, image_dir)
+            created_file = csheet.create_html_from_dir(image_dir)
+        else:
+            created_file = csheet.create_html(images, save_path,
+                                              title=u'色板 {}'.format(config['csheet_database']))
+        if created_file:
+            url_open(created_file, isfile=True)
+    except CancelledError:
+        print('用户取消创建色板')
 
 
 def dialog_login():
@@ -274,21 +281,24 @@ def dialog_create_dirs():
     if not confirm:
         return
 
-    task = nuke.ProgressTask('创建文件夹')
-    database = panel.value(database_input_name)
-    save_path = panel.value(folder_input_name)
-    prefix = panel.value(prefix_input_name)
-
-    task.setProgress(10)
     try:
-        names = cgtwq.Shots(database, prefix=prefix).shots
-    except cgtwq.IDError as ex:
-        nuke.message('找不到对应条目\n{}'.format(ex))
-        return
-    task.setProgress(20)
+        task = Progress('创建文件夹')
+        database = panel.value(database_input_name)
+        save_path = panel.value(folder_input_name)
+        prefix = panel.value(prefix_input_name)
 
-    for name in names:
-        _path = os.path.join(save_path, name)
-        if not os.path.exists(_path):
-            os.makedirs(_path)
-    url_open(save_path, isfile=True)
+        task.set(10)
+        try:
+            names = cgtwq.Shots(database, prefix=prefix).shots
+        except cgtwq.IDError as ex:
+            nuke.message('找不到对应条目\n{}'.format(ex))
+            return
+        task.set(20)
+
+        for name in names:
+            _path = os.path.join(save_path, name)
+            if not os.path.exists(_path):
+                os.makedirs(_path)
+        url_open(save_path, isfile=True)
+    except CancelledError:
+        print('用户取消创建文件夹')
