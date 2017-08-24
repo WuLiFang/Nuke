@@ -4,7 +4,7 @@ Gizmo {
  tile_color 0xbfbf00ff
  label "\[value this.Write_MOV_1.file]\n\[value this.Write_JPG_1.file]"
  note_font 微软雅黑
- addUserKnob {20 Write l "Write v1.50.2"}
+ addUserKnob {20 Write l "Write v1.50.3"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -43,7 +43,7 @@ Gizmo {
   file "\[value Write_MOV_2.file]"
   proxy "\[value Write_MOV_2.proxy]"
   last {{"root.last_frame - root.first_frame + 1"}}
-  frame "frame + root.first_frame  - 1"
+  frame "frame - root.first_frame + 1"
   origset true
   on_error checkerboard
   name Read_MOV_2
