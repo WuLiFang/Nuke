@@ -8,7 +8,7 @@ from autolabel import autolabel
 
 from . import asset, cgtwq, precomp, edit
 
-__version__ = '0.3.1'
+__version__ = '0.3.3'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -21,8 +21,6 @@ def add_menu():
     def _edit(menu):
         m = menu.addMenu("编辑")
 
-        m.addCommand(
-            "禁用所有调色和滤镜除了虚焦", edit.no_cc)
         m.addCommand("分离rgba",
                      lambda: edit.shuffle_rgba(nuke.selectedNode()))
         m.addCommand('分离所有通道', lambda: edit.split_layers(nuke.selectedNode()),
@@ -83,8 +81,6 @@ def add_menu():
                      lambda: precomp.Precomp(
                          nuke.selectedNodes(), renderer='redshift'),
                      icon='autocomp.png')
-        # m.addCommand('arnold预合成', "import wlf.precomp; wlf.precomp.arnold()",
-        #              icon='autocomp.png')
         _path = os.path.abspath(os.path.join(
             __file__, '../../../scenetools/scenetools.exe'))
         m.addCommand(
