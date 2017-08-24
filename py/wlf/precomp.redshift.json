@@ -56,15 +56,15 @@
     },
     "plus": [
         "DiffuseLighting",
-        "SSS",
+        "SpecularLighting",
+        "TransLighting",
+        "VolumeLighting",
+        "GI",
+        "TransGI",
         "Reflections",
         "Refractions",
-        "SpecularLighting",
-        "GI",
         "Emission",
         "Caustics",
-        "TransLighting",
-        "TransGI",
-        "VolumeLighting"
+        "SSS"
     ]
 }

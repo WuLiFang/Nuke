@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from wlf.edit import add_layer, copy_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 
 
 def redshift(nodes):
@@ -97,7 +97,8 @@ class Precomp(object):
                     inputs=[input0, input1],
                     Achannels=pair[1] if pair[1] in nuke.layers(
                         input1) else 'rgb',
-                    operation='multiply', output='rgb', label=layer)
+                    operation='multiply', output='rgb', label=layer,
+                    postage_stamp=True)
                 self.source[layer] = n
                 ret = n
         return ret
