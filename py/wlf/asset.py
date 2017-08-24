@@ -8,7 +8,7 @@ import nuke
 
 from .files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
-__version__ = '0.3.15'
+__version__ = '0.3.16'
 
 
 class DropFrameCheck(object):
@@ -137,9 +137,12 @@ def dropdata_handler(mime_type, data, from_dir=False):
                     mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
             return True
 
-    def _thumbs():
-        if os.path.basename(get_encoded(data)).lower() == 'thumbs.db':
-            return True
+    def _ignore():
+        ignore_pat = (r'thumbs\.db$', r'.*\.lock$', r'.* - 副本\b')
+        filename = os.path.basename(data)
+        for pat in ignore_pat:
+            if re.match(get_unicode(pat), get_unicode(filename), flags=re.I | re.U):
+                return True
 
     def _file_protocol():
         match = re.match(r'file:///([^/].*)', data)
@@ -200,6 +203,6 @@ def dropdata_handler(mime_type, data, from_dir=False):
                 n['disable'].setValue(True)
             return True
 
-    for func in (_isdir, _from_dir, _thumbs, _file_protocol, _video, _vf, _nk):
+    for func in (_isdir, _ignore, _from_dir, _file_protocol, _video, _vf, _nk):
         if func():
             return True
