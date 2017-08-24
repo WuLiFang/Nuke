@@ -1,7 +1,8 @@
 # -*- coding=UTF-8 -*-
 """Comp footages adn create output, can be run as script.  """
-# TODO:auto set fps.
-# TODO:MP lightwarp.
+# TODO: auto set fps.
+# TODO: MP lightwarp.
+# TODO: soft-lig attenuation.
 
 import json
 import os
@@ -23,7 +24,7 @@ from wlf.orgnize import create_backdrop, autoplace
 
 import wlf.precomp
 
-__version__ = '0.16.12'
+__version__ = '0.16.13'
 
 
 class Comp(object):
@@ -179,13 +180,6 @@ class Comp(object):
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
         _task_message(u'输出节点创建', 85)
-        # _read_jpg = nuke.nodes.Read(
-        #     file='[value _Write.Write_JPG_1.file]',
-        #     label='输出的单帧',
-        #     disable='{{! [file exist [value this.file]]}}',
-        #     tile_color=0xbfbf00ff,
-        # )
-        # _read_jpg.setName('Read_Write_JPG')
 
         _task_message(u'设置查看器', 90)
         map(nuke.delete, nuke.allNodes('Viewer'))
@@ -376,39 +370,32 @@ class Comp(object):
             if get_max(input_node, 'depth.Z') > 1.1:
                 n['farpoint'].setValue(10000)
 
-        n = nuke.nodes.Grade(
-            inputs=[n],
-            unpremult='rgba.alpha',
-            label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
-        )
+        n = nuke.nodes.Unpremult(inputs=[n], label='调色开始')
+
         if self._config['autograde']:
+            n = nuke.nodes.Grade(
+                inputs=[n],
+                unpremult='rgba.alpha',
+                label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
+            )
             print(u'{:-^30s}'.format(u'开始 自动亮度'))
             _max = self._autograde_get_max(input_node)
             n['whitepoint'].setValue(_max)
             n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
             print(u'{:-^30s}'.format(u'结束 自动亮度'))
-        n = nuke.nodes.Unpremult(inputs=[n])
-        n = nuke.nodes.ColorCorrect(inputs=[n], label='亮度调整')
-        n = nuke.nodes.ColorCorrect(
-            inputs=[n], mix_luminance=1, label='颜色调整')
-        # if 'SSS.alpha' in input_node.channels():
-        #     n = nuke.nodes.ColorCorrect(
-        #         inputs=[n],
-        #         maskChannelInput='SSS.alpha',
-        #         label='SSS调整'
-        #     )
-        n = nuke.nodes.HueCorrect(inputs=[n])
-
-        # n = self._depthfog(n)
+        n = nuke.nodes.ColorCorrect(inputs=[n])
         _kwargs = {'in': 'depth'}
         n = self._colorcorrect_with_positionkeyer(n, '远处', **_kwargs)
         n = self._colorcorrect_with_positionkeyer(n, '近处', **_kwargs)
-        n = nuke.nodes.Premult(inputs=[n])
+
+        n = nuke.nodes.Premult(inputs=[n], label='调色结束')
+
+        n = nuke.nodes.Crop(
+            inputs=[n], box='0 0 {} {}'.format(n.width(), n.height()), crop=False,
+            label='滤镜开始')
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
-        n = nuke.nodes.Crop(
-            inputs=[n], box='0 0 {} {}'.format(n.width(), n.height()), crop=False)
         n = nuke.nodes.ZDefocus2(
             inputs=[n],
             math='depth',
@@ -432,9 +419,12 @@ class Comp(object):
         if 'motion' in nuke.layers(n):
             n = nuke.nodes.VectorBlur2(
                 inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=True, disable=True)
+
         n = nuke.nodes.Crop(
             inputs=[n],
-            box='0 0 root.width root.height')
+            box='0 0 root.width root.height',
+            label='滤镜结束')
+
         n = nuke.nodes.DiskCache(inputs=[n], postage_stamp=True)
         create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
         return n
