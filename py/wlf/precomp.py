@@ -10,13 +10,13 @@ from wlf.files import get_layer
 from wlf.edit import add_layer, copy_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 
 def redshift(nodes):
     """Precomp reshift footages.  """
 
-    return Precomp(nodes, renderer='redshift')
+    return Precomp(nodes, renderer='redshift').last_node
 
 
 class Precomp(object):
