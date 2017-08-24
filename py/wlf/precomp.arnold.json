@@ -1,0 +1,14 @@
+{
+    "layers": [
+        "indirect_diffuse",
+        "direct_diffuse",
+        "indirect_specular",
+        "direct_specular",
+        "reflection",
+        "refraction",
+        "AO",
+        "depth",
+        "MV",
+        "alpha"
+    ]
+}

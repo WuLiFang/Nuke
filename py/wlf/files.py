@@ -18,13 +18,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.8'
-
-
-ARNOLD_LAYERS = ('indirect_diffuse', 'direct_diffuse',
-                 'indirect_specular', 'direct_specular', 'reflection',
-                 'refraction',
-                 'AO', 'depth', 'MV', 'alpha')
+__version__ = '0.4.10'
 
 
 def copy(src, dst):
@@ -199,7 +193,7 @@ def is_ascii(text):
         return False
 
 
-def get_layer(filename):
+def get_layer(filename, layers=None):
     """Return layer name from @filename.
 
     >>> get_layer('Z:/MT/Render/image/MT_BG_co/MT_BG_co_PuzzleMatte1/PuzzleMatte1.001.exr')
@@ -208,9 +202,10 @@ def get_layer(filename):
 
     if not filename:
         return
-    redshift_json = os.path.join(__file__, '../precomp.redshift.json')
-    with open(redshift_json) as f:
-        layers = json.load(f).get('layers')
+    if layers is None:
+        redshift_json = os.path.join(__file__, '../precomp.redshift.json')
+        with open(redshift_json) as f:
+            layers = json.load(f).get('layers')
 
     basename = os.path.basename(filename)
     for layer in layers:
