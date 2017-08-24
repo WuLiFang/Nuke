@@ -11,7 +11,7 @@ import nukescripts
 
 from .asset import dropdata_handler
 
-__version__ = '1.5.0'
+__version__ = '1.5.1'
 
 
 def rename_all_nodes():
@@ -649,8 +649,10 @@ def no_cc():
     for n in nuke.allNodes():
         node_class = n.Class()
         node_name = n.name()
-        if node_class in ('ColorCorrect', 'VectorBlur2', 'Grade', 'HueCorrect', 'Aberration', 'OFXcom.revisionfx.rsmb_v3')\
-                or nuke.value('{}.tile_color'.format(node_name), '') in ('0xff7524ff', '0x7aa9ffff')\
+        if node_class in ('ColorCorrect', 'VectorBlur2', 'Grade',
+                          'HueCorrect', 'Aberration', 'OFXcom.revisionfx.rsmb_v3')\
+                or nuke.value(
+                    '{}.tile_color'.format(node_name), '') in ('0xff7524ff', '0x7aa9ffff')\
                 and node_class not in ('ZDefocus2'):
             n['disable'].setValue(True)
     name = os.path.splitext(nuke.scriptName())[0]
@@ -685,18 +687,25 @@ def dialog_set_framerange():
 
 def copy_layer(input0, input1=None, layer='rgba', output=None):
     """Copy @input1 / (@layer or rgba) to @input0 / @layer.  """
+
     output = output or layer
     input1 = input1 or input0
-    add_layer(output)
     if input0 is input1 and layer == output and layer in nuke.layers(input0):
-        ret = input0
-    elif input0 is input1:
-        _d = {"in": layer if layer in nuke.layers(input0) else 'rgba'}
+        return input0
+
+    def _input1_layer(layer):
+        if layer in nuke.layers(input1):
+            return layer
+
+    add_layer(output)
+    input_channel = _input1_layer(layer) or _input1_layer(output) or 'rgba'
+    if input0 is input1:
+        _d = {"in": input_channel}
         ret = nuke.nodes.Shuffle(inputs=[input1], out=output, **_d)
     else:
         ret = nuke.nodes.Merge2(
             tile_color=0x9e3c63ff,
             inputs=[input0, input1], operation='copy',
-            Achannels=layer if layer in nuke.layers(input1) else 'rgba',
+            Achannels=_input1_layer(layer) or _input1_layer(output) or 'rgba',
             Bchannels='none', output=output, label=layer)
     return ret
