@@ -42,18 +42,6 @@
             "TransTint"
         ]
     },
-    "plus": [
-        "SSS",
-        "Reflections",
-        "Refractions",
-        "SpecularLighting",
-        "GI",
-        "Emission",
-        "Caustics",
-        "TransLighting",
-        "TransGI",
-        "VolumeLighting"
-    ],
     "copy": [
         "DiffuseFilter",
         "MotionVectors",
@@ -65,5 +53,18 @@
     ],
     "rename": {
         "Z": "depth"
-    }
+    },
+    "plus": [
+        "DiffuseLighting",
+        "SSS",
+        "Reflections",
+        "Refractions",
+        "SpecularLighting",
+        "GI",
+        "Emission",
+        "Caustics",
+        "TransLighting",
+        "TransGI",
+        "VolumeLighting"
+    ]
 }

@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from wlf.edit import add_layer, copy_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 
 def redshift(nodes):
@@ -38,25 +38,22 @@ class Precomp(object):
         else:
             self._source = {}
             for n in nodes:
-                layer = get_layer(nuke.filename(n))
+                layer = get_layer(
+                    nuke.filename(n), layers=self._config['layers'])
                 if layer:
                     self._source[layer] = n
+                else:
+                    self._source['beauty'] = n
 
-        base_layer = self._config['layers'][0]
-        self.last_node = self.node(base_layer)
-        if not self.last_node:
-            raise ValueError('缺少{}'.format(base_layer))
-
-        if base_layer not in self.layers():
-            self.last_node = nuke.nodes.Shuffle(
-                inputs=[self.last_node], out=base_layer)
-
+        self.last_node = self.node('beauty')
         for layer in self._config.get('copy'):
             for i in self.source.keys():
                 if re.match('(?i)^{}\\d*$'.format(layer), i):
                     self.copy(i)
         for layer, output in dict(self._config.get('rename')).items():
             self.copy(layer, output)
+        self.last_node = nuke.nodes.Remove(
+            inputs=[self.last_node], channels='rgb')
         for layer in self._config.get('plus'):
             self.plus(layer)
 
@@ -102,8 +99,13 @@ class Precomp(object):
         return ret
 
     def plus(self, layer):
-        """Plus a layer to last.  """
+        """Plus a layer to last rgba.  """
+
         input1 = self.node(layer)
+        if not input1:
+            return
+        if not self.last_node:
+            self.last_node = nuke.nodes.Constant()
         input1 = nuke.nodes.ColorCorrect(inputs=[input1])
         input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
         self.last_node = nuke.nodes.Merge2(
@@ -113,12 +115,16 @@ class Precomp(object):
             also_merge=layer if layer not in self.layers() else 'none',
             label=layer)
 
+    def copy(self, layer, output=None):
+        """Copy a layer to last.  """
+
+        if not self.last_node:
+            self.last_node = self.node(layer)
+            print(1)
+        elif layer not in self.layers() and self.source.get(layer):
+            self.last_node = copy_layer(
+                self.last_node, self.node(layer), layer=layer, output=output)
+
     def multiply(self, layer):
         """Plus a layer to last.  """
         pass
-
-    def copy(self, layer, output=None):
-        """Copy a layer to last.  """
-        if layer not in self.layers() and self.source.get(layer):
-            self.last_node = copy_layer(
-                self.last_node, self.node(layer), layer=layer, output=output)
