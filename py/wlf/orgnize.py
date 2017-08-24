@@ -5,8 +5,9 @@ import random
 import nuke
 
 from .node import get_upstream_nodes
+from .progress import Progress, CancelledError
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 
 def autoplace(nodes=None, recursive=False):
@@ -20,7 +21,12 @@ def autoplace(nodes=None, recursive=False):
     nodes = Nodes(nodes)
 
     xpos, bottom = nodes.xpos, nodes.bottom
-    nodes.autoplace()
+    try:
+        nodes.autoplace()
+    except CancelledError:
+        nuke.Undo.cancel()
+        print('用户取消自动摆放')
+        return
     if nodes != nuke.allNodes():
         nodes.xpos, nodes.bottom = xpos, bottom
 
@@ -357,12 +363,10 @@ class Branches(list):
     def expand(self):
         """Expand all branches to the end.  """
         not_done = True
-        task = nuke.ProgressTask('分析结构')
+        task = Progress('分析结构')
         count = 0
         while not_done:
-            task.setMessage('向上{}层节点'.format(count))
-            if task.isCancelled():
-                raise RuntimeError('Cancelled')
+            task.set(message='向上{}层节点'.format(count))
             count += 1
             not_done = False
             itering = list(self)
@@ -370,7 +374,7 @@ class Branches(list):
             all_num = len(itering)
             for index, branch in enumerate(itering):
                 if count >= 50:
-                    task.setProgress(index * 100 // all_num)
+                    task.set(index * 100 // all_num)
                 expanded = branch.expand(nodes=self._nodes)
                 if expanded:
                     not_done = True
