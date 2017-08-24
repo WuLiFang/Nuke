@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from wlf.edit import add_layer, copy_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.3.3'
+__version__ = '0.3.4'
 
 
 def redshift(nodes):
@@ -28,14 +28,18 @@ class Precomp(object):
             __file__, '../precomp.{}.json'.format(renderer))
         with open(config_file) as f:
             self._config = json.load(f)
+        if isinstance(nodes, nuke.Node):
+            nodes = [nodes]
+        nodes = list(n for n in nodes if n.Class() == 'Read')
+
         if len(nodes) == 1:
-            n = nodes if isinstance(nodes, nuke.Node) else nodes[0]
+            n = nodes[0]
             layers = nuke.layers(n)
             self._source = {layer: None
                             for layer in layers if layer in self._config['layers']}
+            self.source['beauty'] = n
             self.last_node = n
         else:
-            nodes = list(n for n in nodes if n.Class() == 'Read')
             self._source = {}
             for n in nodes:
                 layer = get_layer(
@@ -106,6 +110,10 @@ class Precomp(object):
             return
         if not self.last_node:
             self.last_node = nuke.nodes.Constant()
+        if layer in nuke.layers(input1):
+            _kwargs = {'in': layer}
+            input1 = nuke.nodes.Shuffle(
+                inputs=[input1], label=layer, postage_stamp=input1.Class() != 'Read', **_kwargs)
         input1 = nuke.nodes.ColorCorrect(inputs=[input1])
         input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
         self.last_node = nuke.nodes.Merge2(
@@ -120,7 +128,6 @@ class Precomp(object):
 
         if not self.last_node:
             self.last_node = self.node(layer)
-            print(1)
         elif layer not in self.layers() and self.source.get(layer):
             self.last_node = copy_layer(
                 self.last_node, self.node(layer), layer=layer, output=output)
