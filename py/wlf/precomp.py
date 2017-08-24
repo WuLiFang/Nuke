@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from wlf.edit import add_layer, copy_layer
 from wlf.orgnize import autoplace
 
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 
 
 def redshift(nodes):
@@ -28,7 +28,6 @@ class Precomp(object):
             __file__, '../precomp.{}.json'.format(renderer))
         with open(config_file) as f:
             self._config = json.load(f)
-
         if len(nodes) == 1:
             n = nodes if isinstance(nodes, nuke.Node) else nodes[0]
             layers = nuke.layers(n)
@@ -36,6 +35,7 @@ class Precomp(object):
                             for layer in layers if layer in self._config['layers']}
             self.last_node = n
         else:
+            nodes = list(n for n in nodes if n.Class() == 'Read')
             self._source = {}
             for n in nodes:
                 layer = get_layer(
