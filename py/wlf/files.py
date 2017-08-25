@@ -18,7 +18,7 @@ try:
 except ImportError:
     HAS_NUKE = False
 
-__version__ = '0.4.10'
+__version__ = '0.4.11'
 
 
 def copy(src, dst):
@@ -140,7 +140,7 @@ def map_drivers():
 def url_open(url, isfile=False):
     """Open url in explorer. """
     if isfile:
-        url = 'file://{}'.format(url)
+        url = u'file://{}'.format(url)
     _cmd = u"rundll32.exe url.dll,FileProtocolHandler {}".format(url)
     Popen(get_encoded(_cmd))
 
