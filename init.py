@@ -11,7 +11,7 @@ sys.setdefaultencoding('UTF-8')
 
 print(u'吾立方插件初始化')
 try:
-    sys.path.append(os.path.join(__file__, '../py'))
+    sys.path.append(os.path.join(__file__, '../lib'))
     from wlf import callback, files
 except ImportError:
     raise
