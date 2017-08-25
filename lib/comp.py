@@ -16,13 +16,13 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-from wlf.files import url_open, get_encoded, get_unicode, escape_batch
-from wlf.edit import get_max
-from wlf.config import Config
-from wlf.node import ReadNode, get_upstream_nodes
-from wlf.orgnize import create_backdrop, autoplace
+from wlf.files import escape_batch, get_encoded, get_unicode, url_open
 
-import wlf.precomp
+import precomp
+from config import Config
+from edit import get_max
+from node import ReadNode, get_upstream_nodes
+from orgnize import autoplace, create_backdrop
 
 __version__ = '0.16.13'
 
@@ -135,7 +135,7 @@ class Comp(object):
         n = None
         root_format = None
         for n in _nodes:
-            wlf.node.ReadNode(n)
+            ReadNode(n)
             if n.format().name() == 'HD_1080':
                 root_format = 'HD_1080'
         if n:
@@ -332,7 +332,7 @@ class Comp(object):
         for tag in tags:
             nodes = tag_nodes_dict[tag]
             try:
-                n = wlf.precomp.redshift(nodes)
+                n = precomp.redshift(nodes)
                 ret.append(n)
             except AssertionError:
                 ret.extend(nodes)

@@ -7,8 +7,8 @@ import re
 import nuke
 
 from wlf.files import get_layer
-from wlf.edit import add_layer, copy_layer
-from wlf.orgnize import autoplace
+from edit import add_layer, copy_layer
+from orgnize import autoplace
 
 __version__ = '0.3.5'
 

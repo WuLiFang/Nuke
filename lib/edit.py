@@ -9,7 +9,7 @@ import random
 import nuke
 import nukescripts
 
-from .asset import dropdata_handler
+from asset import dropdata_handler
 
 __version__ = '1.5.2'
 

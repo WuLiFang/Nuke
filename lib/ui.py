@@ -6,7 +6,11 @@ import os
 import nuke
 from autolabel import autolabel
 
-from . import asset, cgtwq, precomp, edit
+from wlf import cgtwq
+
+import asset
+import precomp
+import edit
 
 __version__ = '0.3.3'
 
@@ -82,7 +86,7 @@ def add_menu():
                          nuke.selectedNodes(), renderer='redshift'),
                      icon='autocomp.png')
         _path = os.path.abspath(os.path.join(
-            __file__, '../../../scenetools/scenetools.exe'))
+            __file__, '../../scenetools/scenetools.exe'))
         m.addCommand(
             '创建色板', 'import wlf.csheet; wlf.csheet.dialog_create_html()')
         if os.path.isfile(_path):
@@ -114,7 +118,7 @@ def add_menu():
             '为项目创建文件夹', 'import wlf.cgtwn; wlf.cgtwn.dialog_create_dirs()')
 
     def _create_node_menu():
-        _plugin_path = '../../../plugins'
+        _plugin_path = '../../plugins'
 
         m = nuke.menu("Nodes")
         m = m.addMenu('吾立方', icon='Modify.png')

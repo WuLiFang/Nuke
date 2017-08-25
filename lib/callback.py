@@ -6,8 +6,13 @@ import os
 import nuke
 import nukescripts
 
-from . import asset, csheet, edit, ui, cgtwn, orgnize
-from .node import wlf_write_node
+import asset
+import edit
+import ui
+import cgtwn
+import orgnize
+from wlf import csheet
+from node import wlf_write_node
 
 
 def init():

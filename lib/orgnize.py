@@ -4,8 +4,9 @@ import random
 
 import nuke
 
-from .node import get_upstream_nodes
-from .progress import Progress, CancelledError
+from wlf.progress import Progress, CancelledError
+
+from node import get_upstream_nodes
 
 __version__ = '0.5.1'
 

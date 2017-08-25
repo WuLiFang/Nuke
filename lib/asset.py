@@ -6,7 +6,7 @@ import re
 
 import nuke
 
-from .files import expand_frame, copy, get_encoded, get_unicode, is_ascii
+from wlf.files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
 __version__ = '0.3.16'
 

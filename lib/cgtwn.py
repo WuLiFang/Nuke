@@ -6,12 +6,13 @@ import os
 
 import nuke
 
-from . import cgtwq, csheet, files
-from .asset import copy
-from .files import url_open, traytip, remove_version
-from .node import wlf_write_node
-from .config import Config
-from .progress import Progress, CancelledError
+from wlf import cgtwq, csheet, files
+from wlf.files import remove_version, traytip, url_open
+from wlf.progress import CancelledError, Progress
+
+from asset import copy
+from config import Config
+from node import wlf_write_node
 
 __version__ = '0.9.7'
 
