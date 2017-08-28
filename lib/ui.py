@@ -6,13 +6,16 @@ import os
 import nuke
 from autolabel import autolabel
 
-from wlf import cgtwq
+import wlf
 
 import asset
 import precomp
 import edit
+import cgtwn
+import orgnize
+import comp
 
-__version__ = '0.3.3'
+__version__ = '0.4.0'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -42,7 +45,7 @@ def add_menu():
         m.addCommand(
             "Reload所有读取节点", edit.reload_all_read_node)
         m.addCommand("显示所有缺帧",
-                     "import wlf.asset; wlf.asset.DropFrameCheck.show_dialog(True)")
+                     lambda: asset.DropFrameCheck.show_dialog(True))
         m.addCommand("单帧转序列",
                      edit.replace_sequence)
         m.addCommand("设置所选节点帧范围",
@@ -56,7 +59,7 @@ def add_menu():
                      edit.all_gizmo_to_group)
         n = m.addMenu('整理文件')
         n.addCommand("竖式自动摆放节点",
-                     "import wlf.orgnize; wlf.orgnize.autoplace(nuke.selectedNodes())",
+                     lambda: orgnize.autoplace(nuke.selectedNodes()),
                      "L", shortcutContext=DAG_CONTEXT)
         try:
             nuke.menu("Nuke").findItem('Edit').findItem(
@@ -74,12 +77,12 @@ def add_menu():
 
     def _comp(menu):
         m = menu.addMenu('合成')
-        m.addCommand('自动合成', "import wlf.comp; wlf.comp.Comp()",
+        m.addCommand('自动合成', comp.Comp,
                      icon='autocomp.png')
-        m.addCommand('批量自动合成', "import wlf.comp; wlf.comp.Comp.show_dialog()",
+        m.addCommand('批量自动合成', comp.Comp.show_dialog,
                      icon='autocomp.png')
         m.addCommand('输出当前帧png',
-                     "import wlf.comp; wlf.comp.render_png(nuke.selectedNodes(), show=True)",
+                     lambda: comp.render_png(nuke.selectedNodes(), show=True),
                      'SHIFT+F7')
         m.addCommand('redshift预合成',
                      lambda: precomp.Precomp(
@@ -88,7 +91,7 @@ def add_menu():
         _path = os.path.abspath(os.path.join(
             __file__, '../../scenetools/scenetools.exe'))
         m.addCommand(
-            '创建色板', 'import wlf.csheet; wlf.csheet.dialog_create_html()')
+            '创建色板', wlf.csheet.dialog_create_html)
         if os.path.isfile(_path):
             _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
         else:
@@ -101,21 +104,21 @@ def add_menu():
 
         m = menu.addMenu('CGTeamWork', icon='cgteamwork.png')
         m.addCommand(
-            '帐号登录', "import wlf.cgtwn; wlf.cgtwn.dialog_login()")
+            '帐号登录', cgtwn.dialog_login)
         m.addCommand(
-            '添加note', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().ask_add_note()")
+            '添加note', lambda: cgtwn.CurrentShot().ask_add_note())
         m.addCommand(
-            '提交单帧', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().submit_image()")
+            '提交单帧', lambda: cgtwn.CurrentShot().submit_image())
         m.addCommand(
-            '提交视频', "import wlf.cgtwn; wlf.cgtwn.CurrentShot().submit_video()")
+            '提交视频', lambda: cgtwn.CurrentShot().submit_video())
         m.addCommand(
             "批量下载",
             r'import subprocess;'
             r'subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\run.bat")')
         m.addCommand(
-            '为项目创建色板', 'import wlf.cgtwn; wlf.cgtwn.dialog_create_csheet()')
+            '为项目创建色板', cgtwn.dialog_create_csheet)
         m.addCommand(
-            '为项目创建文件夹', 'import wlf.cgtwn; wlf.cgtwn.dialog_create_dirs()')
+            '为项目创建文件夹', cgtwn.dialog_create_dirs)
 
     def _create_node_menu():
         _plugin_path = '../../plugins'
@@ -132,7 +135,7 @@ def add_menu():
 
     _edit(menubar)
     _comp(menubar)
-    if cgtwq.MODULE_ENABLE:
+    if wlf.cgtwq.MODULE_ENABLE:
         _cgtw(menubar)
     _create_node_menu()
 

@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.5'
+__version__ = '0.3.6'
 
 
 def redshift(nodes):
@@ -25,7 +25,7 @@ class Precomp(object):
 
     def __init__(self, nodes, renderer='redshift'):
         config_file = os.path.join(
-            __file__, '../precomp.{}.json'.format(renderer))
+            __file__, '../wlf/precomp.{}.json'.format(renderer))
         with open(config_file) as f:
             self._config = json.load(f)
         if isinstance(nodes, nuke.Node):
