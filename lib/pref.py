@@ -44,6 +44,10 @@ def set_knob_default():
     if k.value() == 11:
         k.setValue(12)
 
+    k = nuke.toNode('preferences')['autoLocalCachePath']
+    if not k.value():
+        k.setValue('Z:/')
+
 
 def add_preferences():
     """Add a prefrences panel."""
