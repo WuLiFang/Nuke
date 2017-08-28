@@ -8,7 +8,7 @@ import nuke
 
 from wlf.files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 
-__version__ = '0.3.16'
+__version__ = '0.3.17'
 
 
 class DropFrameCheck(object):
@@ -203,6 +203,6 @@ def dropdata_handler(mime_type, data, from_dir=False):
                 n['disable'].setValue(True)
             return True
 
-    for func in (_isdir, _ignore, _from_dir, _file_protocol, _video, _vf, _nk):
+    for func in (_isdir, _ignore, _from_dir, _file_protocol, _video, _vf, _fbx, _nk):
         if func():
             return True
