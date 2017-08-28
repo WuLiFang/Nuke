@@ -14,6 +14,7 @@ import edit
 import cgtwn
 import orgnize
 import comp
+import uploader
 
 __version__ = '0.4.0'
 
@@ -92,13 +93,7 @@ def add_menu():
             __file__, '../../scenetools/scenetools.exe'))
         m.addCommand(
             '创建色板', wlf.csheet.dialog_create_html)
-        if os.path.isfile(_path):
-            _cmd = 'nukescripts.start(r"file://{}")'.format(_path)
-        else:
-            nuke.pluginAddPath(os.path.abspath(os.path.join(_path, '../')))
-            nuke.tprint('wlf.scenetools: use uncomplied version')
-            _cmd = 'import scenetools;scenetools.call_from_nuke()'
-        m.addCommand('上传工具', _cmd)
+        m.addCommand('上传工具', uploader.call_from_nuke)
 
     def _cgtw(menu):
 
