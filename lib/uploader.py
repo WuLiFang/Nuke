@@ -18,12 +18,12 @@ try:
     from ui_uploader import Ui_Dialog
     from wlf.Qt import QtCore, QtWidgets
     from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-    from wlf.files import version_filter, copy, remove_version, get_encoded
+    from wlf.files import version_filter, copy, remove_version, get_encoded, is_same
     import wlf.config
 except ImportError:
     raise
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 class Config(wlf.config.Config):
@@ -38,17 +38,6 @@ class Config(wlf.config.Config):
         'SCENE': '',
     }
     path = os.path.expanduser('~/.wlf.uploader.json')
-
-
-def is_same(src, dst):
-    """Check if src is same with dst.  """
-
-    if not os.path.isfile(dst):
-        return False
-    if os.path.getmtime(src) == os.path.getmtime(dst):
-        return True
-
-    return False
 
 
 class SingleInstanceException(Exception):
@@ -186,7 +175,7 @@ class Dialog(QDialog, Ui_Dialog):
         files = self.files()
 
         def _button_enabled():
-            if os.path.isdir(self.dest) and files:
+            if os.path.isdir(os.path.dirname(self.dest)) and files:
                 self.syncButton.setEnabled(True)
             else:
                 self.syncButton.setEnabled(False)
@@ -211,34 +200,24 @@ class Dialog(QDialog, Ui_Dialog):
         ret = version_filter(i for i in os.listdir(self.dir)
                              if i.endswith('.mov'))
 
-        if os.path.isdir(self.dest):
-            all_items = ret
-            ret = []
-            for i in all_items:
-                _src = os.path.join(self.dir, i)
-                _dst = os.path.join(
-                    self.dest, remove_version(i))
-                if not is_same(_src, _dst):
-                    ret.append(i)
-                else:
-                    self._ignore.append(i)
+        for i in list(ret):
+            src = os.path.join(self.dir, i)
+            dst = os.path.join(self.dest, remove_version(i))
+            if is_same(src, dst):
+                ret.remove(i)
+                self._ignore.append(i)
+
         return ret
 
     def upload(self):
         """Upload videos to server.  """
 
-        video_dest = unicode(self._config['video_dest'])
+        if not os.path.exists(self.dest):
+            os.mkdir(self.dest)
 
-        if os.path.exists(os.path.dirname(video_dest)):
-            if not os.path.exists(video_dest):
-                os.mkdir(video_dest)
-        else:
-            print(u'**错误** 视频上传文件夹不存在, 将不会上传。')
-            return False
-
-        for i in self.video_list():
+        for i in self.files():
             src = os.path.join(self.dir, i)
-            dst = os.path.join(video_dest, remove_version(i))
+            dst = os.path.join(self.dest, remove_version(i))
             copy(src, dst)
 
     @property
