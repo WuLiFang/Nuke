@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode, get_upstream_nodes
 from orgnize import autoplace, create_backdrop
 
-__version__ = '0.16.15'
+__version__ = '0.16.16'
 
 
 class Comp(object):
@@ -698,7 +698,7 @@ class CompDialog(nukescripts.PythonPanel):
         for shot in sorted(shot_info.keys()):
             infos += u'''\
     <tr>
-        <td class="shot"><img src="images/{0}.jpg" class="preview"></img><br>{0}</td>
+        <td class="shot"><img src="images/{0}_v0.jpg" class="preview"></img><br>{0}</td>
         <td class="info">{1}</td>
     </tr>
 '''.format(shot, shot_info[shot])
