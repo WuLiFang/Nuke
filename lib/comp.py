@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode, get_upstream_nodes
 from orgnize import autoplace, create_backdrop
 
-__version__ = '0.16.14'
+__version__ = '0.16.15'
 
 
 class Comp(object):
@@ -62,7 +62,7 @@ class Comp(object):
     @property
     def fps(self):
         """Frame per secondes.  """
-        return self._config['fps']
+        return self._config.get('fps') or nuke.numvalue('root.fps')
 
     @staticmethod
     def get_shot_list(config, include_existed=False):
@@ -148,7 +148,7 @@ class Comp(object):
             nuke.Root()['last_frame'].setValue(n['last'].value())
             nuke.Root()['lock_range'].setValue(True)
             nuke.Root()['format'].setValue(root_format)
-        nuke.Root()['fps'].setValue(self.fps)
+        # nuke.Root()['fps'].setValue(self.fps)
 
     def create_nodes(self):
         """Create nodes that a comp need."""
