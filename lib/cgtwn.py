@@ -14,7 +14,7 @@ from asset import copy
 from config import Config
 from node import wlf_write_node
 
-__version__ = '0.9.7'
+__version__ = '0.9.8'
 
 
 def abort_modified(func):
@@ -50,21 +50,6 @@ def check_login(update=False):
                     traytip('警告', 'CGTeamWork未登录', options=2)
         return _func
     return _deco
-
-
-def proj_info():
-    """Return current project info by script name.  """
-
-    qqfc2017 = {'database': u'proj_qqfc_2017',
-                'shot_task_folder': u'shot_work'}
-    snjyw = {'database': u'proj_big',
-             'shot_task_folder': u'shot_work'}
-
-    ret = qqfc2017
-    name = os.path.basename(nuke.value('root.name'))
-    if name.startswith('SNJYW'):
-        ret = snjyw
-    return ret
 
 
 class CurrentShot(cgtwq.Shot):
