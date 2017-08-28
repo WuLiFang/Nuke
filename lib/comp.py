@@ -1,6 +1,5 @@
 # -*- coding=UTF-8 -*-
 """Comp footages adn create output, can be run as script.  """
-# TODO: auto set fps.
 # TODO: MP lightwarp.
 # TODO: soft-lig attenuation.
 
@@ -24,7 +23,7 @@ from edit import get_max
 from node import ReadNode, get_upstream_nodes
 from orgnize import autoplace, create_backdrop
 
-__version__ = '0.16.13'
+__version__ = '0.16.14'
 
 
 class Comp(object):
@@ -59,6 +58,11 @@ class Comp(object):
         if config:
             self.output()
         print(u'\n\n')
+
+    @property
+    def fps(self):
+        """Frame per secondes.  """
+        return self._config['fps']
 
     @staticmethod
     def get_shot_list(config, include_existed=False):
@@ -124,8 +128,7 @@ class Comp(object):
         if not nuke.allNodes(u'Read'):
             raise FootageError(self._config['footage_dir'], u'没有素材')
 
-    @staticmethod
-    def setup():
+    def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
 
         _nodes = nuke.allNodes(u'Read')
@@ -145,6 +148,7 @@ class Comp(object):
             nuke.Root()['last_frame'].setValue(n['last'].value())
             nuke.Root()['lock_range'].setValue(True)
             nuke.Root()['format'].setValue(root_format)
+        nuke.Root()['fps'].setValue(self.fps)
 
     def create_nodes(self):
         """Create nodes that a comp need."""
