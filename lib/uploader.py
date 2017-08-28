@@ -4,8 +4,6 @@
 import os
 import sys
 import re
-import time
-import json
 from subprocess import call, Popen, PIPE
 
 
@@ -25,7 +23,7 @@ try:
 except ImportError:
     raise
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class Config(wlf.config.Config):
