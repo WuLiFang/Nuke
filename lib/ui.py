@@ -16,7 +16,7 @@ import orgnize
 import comp
 import uploader
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -107,9 +107,7 @@ def add_menu():
         m.addCommand(
             '提交视频', lambda: cgtwn.CurrentShot().submit_video())
         m.addCommand(
-            "批量下载",
-            r'import subprocess;'
-            r'subprocess.Popen(r"\\SERVER\scripts\cgteamwork\downloader\run.bat")')
+            "批量下载", r"nuke.message('已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>')")
         m.addCommand(
             '为项目创建色板', cgtwn.dialog_create_csheet)
         m.addCommand(
