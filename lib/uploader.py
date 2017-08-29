@@ -4,14 +4,15 @@
 import os
 import sys
 import re
-from subprocess import call, Popen, PIPE
+from subprocess import Popen, PIPE
 
 from wlf.Qt import QtCore, QtWidgets, QtCompat
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
 from wlf.files import version_filter, copy, remove_version, is_same
+from wlf.progress import Progress, CancelledError
 import wlf.config
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 
 class Config(wlf.config.Config):
@@ -62,7 +63,6 @@ def is_pid_exists(pid):
 
 class Dialog(QDialog):
     """Mian GUI dialog.  """
-    # TODO:ProgressBar.
 
     def __init__(self, parent=None):
         self._ignore = []
@@ -96,12 +96,12 @@ class Dialog(QDialog):
             def _set_config(k, v):
                 self._config[k] = v
 
-            for edit, key in self.edits_key.iteritems():
+            for edit, key in self.edits_key.items():
                 if isinstance(edit, QtWidgets.QLineEdit):
                     edit.editingFinished.connect(
                         lambda e=edit, k=key: _set_config(k, e.text())
                     )
-                    edit.textChanged.connect(self.update)
+                    edit.editingFinished.connect(self.update)
                 elif isinstance(edit, QtWidgets.QCheckBox):
                     edit.stateChanged.connect(
                         lambda state, k=key: _set_config(k, state)
@@ -118,7 +118,7 @@ class Dialog(QDialog):
                     print(u'待处理的控件: {} {}'.format(type(edit), edit))
 
             self.dirEdit.editingFinished.connect(self.autoset)
-            for qt_edit, k in self.edits_key.iteritems():
+            for qt_edit, k in self.edits_key.items():
                 try:
                     if isinstance(qt_edit, QtWidgets.QLineEdit):
                         qt_edit.setText(self._config[k])
@@ -131,6 +131,7 @@ class Dialog(QDialog):
                             qt_edit.findText(self._config[k]))
                 except KeyError as ex:
                     print(ex)
+            self.autoset()
         QDialog.__init__(self, parent)
         QtCompat.loadUi(os.path.join(__file__, '../uploader.ui'), self)
 
@@ -177,7 +178,7 @@ class Dialog(QDialog):
 
         _button_enabled()
         _list_widget()
-        self.destEdit.setText(self.dest)
+        self.syncButton.setText(u'上传至: {}'.format(self.dest))
 
     def files(self):
         """Return files in folder as list.  """
@@ -202,11 +203,17 @@ class Dialog(QDialog):
 
         if not os.path.exists(self.dest):
             os.mkdir(self.dest)
-
-        for i in self.files():
-            src = os.path.join(self.dir, i)
-            dst = os.path.join(self.dest, remove_version(i))
-            copy(src, dst)
+        try:
+            task = Progress()
+            files = self.files()
+            all_num = len(files)
+            for index, i in enumerate(files):
+                task.set(index * 100 // all_num, i)
+                src = os.path.join(self.dir, i)
+                dst = os.path.join(self.dest, remove_version(i))
+                copy(src, dst)
+        except CancelledError:
+            return False
 
     @property
     def dest(self):
@@ -245,6 +252,7 @@ class Dialog(QDialog):
         if _dir:
             self.dirEdit.setText(_dir)
             self._config['DIR'] = _dir
+        self.autoset()
 
     def autoset(self):
         """Auto set fields by dir.  """
@@ -262,7 +270,7 @@ class Dialog(QDialog):
             dir_=os.path.dirname(self._config['SERVER'])
         )
         if dir_:
-            self._config['SERVER'] = dir_
+            self.serverEdit.setText(dir_)
 
     def open_dir(self):
         """Open config['DIR'] in explorer.  """
