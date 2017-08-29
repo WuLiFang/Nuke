@@ -6,24 +6,12 @@ import sys
 import re
 from subprocess import call, Popen, PIPE
 
+from wlf.Qt import QtCore, QtWidgets, QtCompat
+from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
+from wlf.files import version_filter, copy, remove_version, is_same
+import wlf.config
 
-if __name__ == '__main__':
-    __file__ = os.path.abspath(sys.argv[0])
-
-try:
-    LIB_PATH = os.path.join(
-        getattr(sys, '_MEIPASS', os.path.abspath('{}/../../'.format(__file__))), 'lib')
-    sys.path.append(LIB_PATH)
-
-    from ui_uploader import Ui_Dialog
-    from wlf.Qt import QtCore, QtWidgets
-    from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-    from wlf.files import version_filter, copy, remove_version, get_encoded, is_same
-    import wlf.config
-except ImportError:
-    raise
-
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 
 class Config(wlf.config.Config):
@@ -72,7 +60,7 @@ def is_pid_exists(pid):
     return ret
 
 
-class Dialog(QDialog, Ui_Dialog):
+class Dialog(QDialog):
     """Mian GUI dialog.  """
     # TODO:ProgressBar.
 
@@ -144,7 +132,7 @@ class Dialog(QDialog, Ui_Dialog):
                 except KeyError as ex:
                     print(ex)
         QDialog.__init__(self, parent)
-        self.setupUi(self)
+        QtCompat.loadUi(os.path.join(__file__, '../uploader.ui'), self)
 
         self.edits_key = {
             self.serverEdit: 'SERVER',
@@ -294,7 +282,6 @@ class Dialog(QDialog, Ui_Dialog):
 def main():
     """Run this script standalone.  """
 
-    call(u'CHCP 936 & TITLE scenetools.console & CLS', shell=True)
     app = QApplication(sys.argv)
     frame = Dialog()
     frame.show()
@@ -329,10 +316,4 @@ def url_open(url):
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except SingleInstanceException as ex:
-        active_pid(Config()['PID'])
-        print(u'激活已经打开的实例')
-    except SystemExit as ex:
-        sys.exit(ex)
+    main()
