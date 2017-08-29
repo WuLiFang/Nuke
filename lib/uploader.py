@@ -8,11 +8,11 @@ from subprocess import Popen, PIPE
 
 from wlf.Qt import QtCore, QtWidgets, QtCompat
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-from wlf.files import version_filter, copy, remove_version, is_same
-from wlf.progress import Progress, CancelledError
+from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
+from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 
 
 class Config(wlf.config.Config):
@@ -131,7 +131,12 @@ class Dialog(QDialog):
                             qt_edit.findText(self._config[k]))
                 except KeyError as ex:
                     print(ex)
+            if HAS_NUKE:
+                from node import Last
+                if Last.mov_path:
+                    self.dir = get_unicode(Last.mov_path)
             self.autoset()
+
         QDialog.__init__(self, parent)
         QtCompat.loadUi(os.path.join(__file__, '../uploader.ui'), self)
 
@@ -232,6 +237,10 @@ class Dialog(QDialog):
         """Current working dir.  """
         return self.dirEdit.text()
 
+    @dir.setter
+    def dir(self, value):
+        self.dirEdit.setText(os.path.normpath(value))
+
     @property
     def server(self):
         """Current server path.  """
@@ -250,12 +259,14 @@ class Dialog(QDialog):
             dir=os.path.dirname(self._config['DIR'])
         )
         if _dir:
-            self.dirEdit.setText(_dir)
+            self.dir = _dir
             self._config['DIR'] = _dir
         self.autoset()
 
     def autoset(self):
         """Auto set fields by dir.  """
+
+        self.dir = self.dir
         pat = re.compile(r'.*\\(ep.*?)\\.*\\(\d+[a-z]*)\\.*', flags=re.I)
         match = pat.match(self.dir)
         if match:
@@ -281,10 +292,6 @@ class Dialog(QDialog):
         """Open config['SERVER'] in explorer.  """
 
         url_open('file://{}'.format(self._config['SERVER']))
-
-    def closeEvent(self, event):
-        """Override Qdialog closeEvent().  """
-        print(2)
 
 
 def main():
