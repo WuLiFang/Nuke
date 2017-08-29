@@ -8,11 +8,11 @@ from subprocess import Popen, PIPE
 
 from wlf.Qt import QtCore, QtWidgets, QtCompat
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
+from wlf.files import version_filter, copy, remove_version, is_same, get_unicode, get_server
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 
 class Config(wlf.config.Config):
@@ -169,7 +169,8 @@ class Dialog(QDialog):
         files = self.files()
 
         def _button_enabled():
-            if os.path.isdir(os.path.dirname(self.dest)) and files:
+            if os.path.exists(get_server(self.server))\
+                    and os.path.isdir(os.path.dirname(self.dest)) and files:
                 self.syncButton.setEnabled(True)
             else:
                 self.syncButton.setEnabled(False)
@@ -230,6 +231,7 @@ class Dialog(QDialog):
             self.epEdit.text(),
             self.scEdit.text()
         )
+        ret = os.path.normpath(ret)
         return ret
 
     @property
