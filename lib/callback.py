@@ -12,7 +12,7 @@ import ui
 import cgtwn
 import orgnize
 from wlf import csheet
-from node import wlf_write_node
+from node import wlf_write_node, Last
 
 
 def init():
@@ -37,6 +37,7 @@ def menu():
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
     nuke.addOnScriptLoad(cgtwn.on_load_callback)
+    nuke.addOnScriptLoad(Last.on_load_callback)
 
     nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(_enable_node)

@@ -1,12 +1,12 @@
 # -*- coding=UTF-8 -*-
 """Setup node.  """
-
+import os
 
 import nuke
 
 import wlf.files
 
-__version__ = '0.2.2'
+__version__ = '0.3.0'
 
 
 def append_knob(node, knob):
@@ -89,3 +89,22 @@ def parent_backdrop(node):
     for n in backdrops:
         if node in n.getNodes():
             return n
+
+
+class Last(object):
+    """For recording last script infomation"""
+    mov_path = None
+
+    @classmethod
+    def on_load_callback(cls):
+        """On close callback.  """
+        cls.record()
+
+    @classmethod
+    def record(cls):
+        """Record information.  """
+        try:
+            cls.mov_path = os.path.dirname(
+                nuke.filename(wlf_write_node().node('Write_MOV_1'))) or cls.mov_path
+        except AttributeError:
+            print('Can not record last script information')
