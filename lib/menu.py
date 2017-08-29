@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 """Nuke menu file."""
 
-import ui
+import wlfui
 import callback
 import pref
 from wlf import cgtwq
 
 print(u'添加菜单')
-ui.add_menu()
+wlfui.add_menu()
 print(u'添加GUI callback')
 callback.menu()
 print(u'设置knob默认值')
