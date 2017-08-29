@@ -16,14 +16,32 @@ import nuke
 import nukescripts
 
 from wlf.files import escape_batch, get_encoded, get_unicode, url_open
+import wlf.config
 
 import precomp
-from config import Config
 from edit import get_max
 from node import ReadNode, get_upstream_nodes
 from orgnize import autoplace, create_backdrop
 
-__version__ = '0.16.16'
+__version__ = '0.16.17'
+
+
+class Config(wlf.config.Config):
+    """Comp config.  """
+    default = {
+        'fps': 25,
+        'footage_pat': r'^.+\.exr[0-9\- ]*$',
+        'dir_pat': r'^.{4,}$',
+        'tag_pat':
+        r'(?i)(?:[^_]+_)?(?:ep\d+_)?(?:\d+[a-zA-Z]*_)?'
+        r'(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
+        'output_dir': 'E:/precomp',
+        'input_dir': 'Z:/SNJYW/Render/EP',
+        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v2.jpg",
+        'autograde': False,
+        'exclude_existed': True,
+    }
+    path = os.path.expanduser(u'~/.nuke/wlf.comp.json')
 
 
 class Comp(object):

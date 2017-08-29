@@ -9,12 +9,23 @@ import nuke
 from wlf import cgtwq, csheet, files
 from wlf.files import remove_version, traytip, url_open
 from wlf.progress import CancelledError, Progress
+import wlf.config
 
 from asset import copy
-from config import Config
 from node import wlf_write_node
 
-__version__ = '0.9.8'
+__version__ = '0.9.9'
+
+
+class Config(wlf.config.Config):
+    """Comp config.  """
+    default = {
+        'csheet_database': 'proj_big',
+        'csheet_prefix': 'SNJYW_EP14_',
+        'csheet_outdir': 'E:/',
+        'csheet_checked': False,
+    }
+    path = os.path.expanduser(u'~/.nuke/wlf.comp.json')
 
 
 def abort_modified(func):
