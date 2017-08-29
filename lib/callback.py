@@ -8,7 +8,7 @@ import nukescripts
 
 import asset
 import edit
-import wlfui
+import _ui
 import cgtwn
 import orgnize
 from wlf import csheet
@@ -26,7 +26,7 @@ def menu():
 
     nukescripts.addDropDataCallback(asset.dropdata_handler)
 
-    nuke.addAutolabel(wlfui.custom_autolabel)
+    nuke.addAutolabel(_ui.custom_autolabel)
 
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
 
