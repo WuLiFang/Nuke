@@ -6,7 +6,7 @@ import nuke
 
 import wlf.files
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 
 def append_knob(node, knob):
@@ -75,7 +75,7 @@ def get_upstream_nodes(nodes):
     nodes = list(nodes)
     while nodes:
         deps = nuke.dependencies(nodes, nuke.INPUTS | nuke.HIDDEN_INPUTS)
-        nodes = [n for n in deps if n not in ret]
+        nodes = [n for n in deps if n not in ret and n not in nodes]
         ret.update(set(deps))
     return ret
 
