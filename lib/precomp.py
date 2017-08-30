@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.7'
+__version__ = '0.3.8'
 
 
 def redshift(nodes):
@@ -84,7 +84,10 @@ class Precomp(object):
         add_layer(layer)
         ret = self.source.get(layer)
         if layer in self.layers():
-            ret = self.last_node
+            _kwargs = {'in': layer}
+            ret = nuke.nodes.Shuffle(
+                inputs=[self.last_node], label=layer,
+                postage_stamp=self.last_node.Class() != 'Read', **_kwargs)
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
             if self.source.get(pair[0])\
@@ -92,10 +95,6 @@ class Precomp(object):
                 input0, input1 = self.node(pair[0]), self.node(pair[1])
                 n = nuke.nodes.Merge2(
                     inputs=[input0, input1],
-                    Achannels=pair[1] if pair[1] in nuke.layers(
-                        input1) else 'rgb',
-                    Bchannels=pair[0] if pair[0] in nuke.layers(
-                        input1) else 'rgba',
                     operation='multiply', output='rgb', label=layer,
                     postage_stamp=True)
                 self.source[layer] = n
@@ -110,16 +109,10 @@ class Precomp(object):
             return
         if not self.last_node:
             self.last_node = nuke.nodes.Constant()
-        if layer in nuke.layers(input1):
-            _kwargs = {'in': layer}
-            input1 = nuke.nodes.Shuffle(
-                inputs=[input1], label=layer, postage_stamp=input1.Class() != 'Read', **_kwargs)
-        input1 = nuke.nodes.ColorCorrect(inputs=[input1])
-        input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
+        if layer not in self.layers():
+            input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
         self.last_node = nuke.nodes.Merge2(
             inputs=[self.last_node, input1], operation='plus',
-            Achannels=layer if layer in nuke.layers(input1) else 'rgb',
-            output='rgb',
             also_merge=layer if layer not in self.layers() else 'none',
             label=layer)
 
