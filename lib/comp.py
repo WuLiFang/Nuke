@@ -20,10 +20,10 @@ import wlf.config
 
 import precomp
 from edit import get_max
-from node import ReadNode, get_upstream_nodes
-from orgnize import autoplace, create_backdrop
+from node import ReadNode
+from orgnize import autoplace
 
-__version__ = '0.16.17'
+__version__ = '0.16.18'
 
 
 class Config(wlf.config.Config):
@@ -166,7 +166,7 @@ class Comp(object):
             nuke.Root()['last_frame'].setValue(n['last'].value())
             nuke.Root()['lock_range'].setValue(True)
             nuke.Root()['format'].setValue(root_format)
-        # nuke.Root()['fps'].setValue(self.fps)
+        nuke.Root()['fps'].setValue(self.fps)
 
     def create_nodes(self):
         """Create nodes that a comp need."""
@@ -448,7 +448,6 @@ class Comp(object):
             label='滤镜结束')
 
         n = nuke.nodes.DiskCache(inputs=[n], postage_stamp=True)
-        create_backdrop(get_upstream_nodes(n), autoplace_nodes=True)
         return n
 
     @staticmethod
