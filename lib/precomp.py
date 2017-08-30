@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 
 
 def redshift(nodes):
@@ -28,6 +28,7 @@ class Precomp(object):
             __file__, '../wlf/precomp.{}.json'.format(renderer))
         with open(config_file) as f:
             self._config = json.load(f)
+        self._combine_dict = dict(self._config.get('combine'))
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
         nodes = list(n for n in nodes if n.Class() == 'Read')
@@ -35,7 +36,7 @@ class Precomp(object):
         if len(nodes) == 1:
             n = nodes[0]
             layers = nuke.layers(n)
-            self._source = {layer: None
+            self._source = {layer: True
                             for layer in layers if layer in self._config['layers']}
             self.source['beauty'] = n
             self.last_node = n
@@ -68,10 +69,6 @@ class Precomp(object):
         """A layer-node dictionary.  """
         return self._source
 
-    @property
-    def _combine_dict(self):
-        return dict(self._config.get('combine'))
-
     def check(self):
         """Check if has all necessary layer.  """
         pass
@@ -97,6 +94,8 @@ class Precomp(object):
                     inputs=[input0, input1],
                     Achannels=pair[1] if pair[1] in nuke.layers(
                         input1) else 'rgb',
+                    Bchannels=pair[0] if pair[0] in nuke.layers(
+                        input1) else 'rgba',
                     operation='multiply', output='rgb', label=layer,
                     postage_stamp=True)
                 self.source[layer] = n
