@@ -8,7 +8,7 @@ from wlf.progress import Progress, CancelledError
 
 from node import get_upstream_nodes
 
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 
 def autoplace(nodes=None, recursive=False):
@@ -179,12 +179,16 @@ class Nodes(list):
 
     def endnodes(self):
         """Return Nodes that has no contained downstream founded in given nodes.  """
-        available_nodes = Nodes(
-            n for n in self if n.Class() not in ('Viewer',))
-        ret = Nodes(n for n in available_nodes
-                    if all(n not in available_nodes for n in n.dependent(nuke.INPUTS)))
-        ret.sort(key=lambda x: len(get_upstream_nodes(x)), reverse=True)
-        ret.extend(n for n in self if n not in available_nodes)
+        ret = set(n for n in self if n.Class() not in ('Viewer',))
+        other = list(n for n in self if n not in ret)
+
+        for n in list(ret):
+            dep = n.dependencies(nuke.INPUTS)
+            if set(self).intersection(dep):
+                ret.difference_update(dep)
+        ret = sorted(ret, key=lambda x: len(
+            get_upstream_nodes(x)), reverse=True)
+        ret.extend(other)
         return ret
 
 
