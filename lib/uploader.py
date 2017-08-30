@@ -12,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 
 class Config(wlf.config.Config):
@@ -20,7 +20,7 @@ class Config(wlf.config.Config):
 
     default = {
         'DIR': 'N:/',
-        'SERVER': r'\\192.168.1.7\z',
+        'SERVER': 'Z:\\',
         'PROJECT': 'SNJYW',
         'FOLDER': 'Comp\\mov',
         'EPISODE': '',
