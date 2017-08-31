@@ -24,7 +24,7 @@ Group {
  addUserKnob {26 ""}
  addUserKnob {41 operation l merge T Merge17.operation}
  addUserKnob {6 effect_only l "effect only" t "Enabled: Renders the glow over black.\nDisabled: Renders glow over the input image, using the operation set in \"Comp Method\"." -STARTLINE}
- effect_only true
+ effect_only false
  addUserKnob {41 mix T Merge17.mix}
 }
  Input {
