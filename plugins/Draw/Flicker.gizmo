@@ -1,6 +1,7 @@
 #! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
 Group {
+ name Flicker1
  note_font 微软雅黑
  addUserKnob {20 tab_1 l "wlf_Flicker v0.1.0"}
  addUserKnob {7 amplitude l amplitude(幅度) R 0 10}
