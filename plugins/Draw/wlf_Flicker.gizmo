@@ -1,0 +1,59 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Group {
+ note_font 微软雅黑
+ addUserKnob {20 tab_1 l "wlf_Flicker v0.1.0"}
+ addUserKnob {7 amplitude l amplitude(幅度) R 0 10}
+ amplitude 1
+ addUserKnob {7 speed l speed(速度) R 0 10}
+ speed 1
+ addUserKnob {7 center l center(中心)}
+ center 0.5
+ addUserKnob {7 _smooth1 l smooth(平滑)1 R 0.001 10}
+ _smooth1 1
+ addUserKnob {7 _smooth2 l smooth(平滑)2 R 0.001 10}
+ _smooth2 1
+ addUserKnob {7 random l INVISIBLE +INVISIBLE}
+ random {{((random(frame*speed,seed))-0.5)/(1/amplitude)}}
+ addUserKnob {7 random2 l INVISIBLE +INVISIBLE}
+ random2 {{this.random.integrate(frame-this._smooth1,frame+this._smooth1)/(2*this._smooth1)}}
+ addUserKnob {3 seed l seed(随机种子)}
+ seed 666
+ addUserKnob {22 randomSeedButton l "   Random Seed   " -STARTLINE T "import random\nnuke.thisNode().knob('seed').setValue( random.randint(1,99999) )"}
+ addUserKnob {7 output l output(输出)}
+ output {{"this.random2.integrate(frame-_smooth2,frame+_smooth2)/(2*_smooth2) + center"}}
+ addUserKnob {6 constant l "draw constant(输出纯色)" +STARTLINE}
+ constant true
+}
+ Constant {
+  inputs 0
+  color {{parent.output}}
+  name Constant1
+  gl_color 0x32e7ff00
+  note_font 微软雅黑
+  xpos 119
+  ypos 67
+ }
+ Input {
+  inputs 0
+  name Input
+  gl_color 0xa2ff3200
+  xpos 0
+ }
+ Switch {
+  inputs 2
+  which {{parent.constant}}
+  name Switch1
+  gl_color 0x32fbff00
+  note_font 微软雅黑
+  selected true
+  xpos 9
+  ypos 146
+ }
+ Output {
+  name Output1
+  gl_color 0xff7f3200
+  xpos 0
+  ypos 300
+ }
+end_group
