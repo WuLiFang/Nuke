@@ -3,6 +3,7 @@ version 10.0 v4
 Group {
  inputs 3
  name wlf_Lightwarp1
+ tile_color 0xcc804eff
  help "Modified from bm_Lightwarp\n\nbm_Lightwarp by Ben McEwan @ www.benmcewan.com"
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('disableLuma', 'showPanel'):\n    switch = n\['disableLuma'].value()\n    if switch:\n        n\['lumaThreshold'].setEnabled(False)\n    else:\n        n\['lumaThreshold'].setEnabled(True)"
  note_font 微软雅黑
