@@ -10,12 +10,11 @@ from wlf.files import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.10'
+__version__ = '0.3.11'
 
 
 def redshift(nodes):
     """Precomp reshift footages.  """
-
     return Precomp(nodes, renderer='redshift').last_node
 
 
@@ -24,6 +23,8 @@ class Precomp(object):
     last_node = None
 
     def __init__(self, nodes, renderer='redshift'):
+        assert nodes, 'Can not precomp without node.'
+
         config_file = os.path.join(
             __file__, '../wlf/precomp.{}.json'.format(renderer))
         with open(config_file) as f:
