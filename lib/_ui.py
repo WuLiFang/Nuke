@@ -17,7 +17,7 @@ import comp
 import uploader
 import splitexr
 
-__version__ = '0.4.1'
+__version__ = '0.5.0'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -36,31 +36,32 @@ def add_menu():
                      'F3', icon="SplitLayers.png")
         m.addCommand("重命名PuzzleMatte",
                      lambda: edit.channels_rename(prefix='PuzzleMatte'), 'F4')
-        m.addSeparator()
-        m.addCommand("节点标记为_enable_",
+        m.addCommand("标记为_enable_",
                      lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D')
-        m.addCommand("禁用所有_enable_节点",
-                     lambda: edit.disable_nodes(prefix='_enable_'), 'CTRL+SHIFT+D')
-        m.addSeparator()
-        m.addCommand(
-            "修正错误读取节点", edit.fix_error_read, 'F6')
-        m.addCommand(
-            "Reload所有读取节点", edit.reload_all_read_node)
-        m.addCommand("显示所有缺帧",
-                     lambda: asset.DropFrameCheck.show_dialog(True))
-        m.addCommand("单帧转序列",
-                     edit.replace_sequence)
-        m.addCommand("设置所选节点帧范围",
+        m.addCommand('输出当前帧png',
+                     lambda: comp.render_png(nuke.selectedNodes(), show=True),
+                     'SHIFT+F7')
+        m.addCommand("设置帧范围",
                      edit.dialog_set_framerange)
-        m.addCommand("清理无用节点",
-                     lambda: edit.delete_unused_nodes(message=True))
-        m.addCommand('节点转为相对路径',
+        m.addCommand('转换为相对路径',
                      lambda: edit.nodes_to_relpath(nuke.selectedNodes()),
                      icon="utilitiesfolder.png")
-        m.addCommand("所有Gizmo转Group",
-                     edit.all_gizmo_to_group)
-        n = m.addMenu('整理文件')
-        n.addCommand("竖式自动摆放节点",
+
+        m.addSeparator()
+
+        m.addCommand("禁用所有_enable_节点",
+                     lambda: edit.disable_nodes(prefix='_enable_'), 'CTRL+SHIFT+D')
+        m.addCommand(
+            "修正读取错误", edit.fix_error_read, 'F6')
+        m.addCommand(
+            "Reload所有", edit.reload_all_read_node)
+        m.addCommand("显示缺帧",
+                     lambda: asset.DropFrameCheck.show_dialog(True))
+        m.addCommand("转换单帧为序列",
+                     edit.replace_sequence)
+
+        n = m.addMenu('整理')
+        n.addCommand("整理所选节点(竖式摆放)",
                      lambda: orgnize.autoplace(nuke.selectedNodes()),
                      "L", shortcutContext=DAG_CONTEXT)
         try:
@@ -68,10 +69,12 @@ def add_menu():
                 'Node').findItem('Autoplace').setShortcut("Ctrl+L")
         except AttributeError as ex:
             print(ex)
+        n.addCommand("清理无用节点",
+                     lambda: edit.delete_unused_nodes(message=True))
+        n.addCommand("所有Gizmo转Group",
+                     edit.all_gizmo_to_group)
         n.addCommand("根据背板重命名所有节点",
                      edit.rename_all_nodes)
-        n.addCommand("根据背板分割为多个文件文件",
-                     edit.split_by_backdrop)
         n.addCommand("节点添加Dots变成90度",
                      lambda: edit.nodes_add_dots(nuke.selectedNodes()))
         n.addCommand("所有节点添加Dots变成90度",
@@ -81,27 +84,20 @@ def add_menu():
         m = menu.addMenu('合成')
         m.addCommand('自动合成', comp.Comp,
                      icon='autocomp.png')
-        m.addCommand('批量自动合成', comp.Comp.show_dialog,
-                     icon='autocomp.png')
-        m.addCommand('输出当前帧png',
-                     lambda: comp.render_png(nuke.selectedNodes(), show=True),
-                     'SHIFT+F7')
         m.addCommand('redshift预合成',
                      lambda: precomp.Precomp(
                          nuke.selectedNodes(), renderer='redshift'),
+                     'F1',
+                     shortcutContext=DAG_CONTEXT,
                      icon='autocomp.png')
         _path = os.path.abspath(os.path.join(
             __file__, '../../scenetools/scenetools.exe'))
-        m.addCommand(
-            '创建色板', wlf.csheet.dialog_create_html)
-        m.addCommand('上传工具', uploader.call_from_nuke)
-        m.addCommand('分离exr', splitexr.Dialog.show)
 
     def _cgtw(menu):
 
         m = menu.addMenu('CGTeamWork', icon='cgteamwork.png')
         m.addCommand(
-            '帐号登录', cgtwn.dialog_login)
+            '登录', cgtwn.dialog_login)
         m.addCommand(
             '添加note', lambda: cgtwn.CurrentShot().ask_add_note())
         m.addCommand(
@@ -111,9 +107,20 @@ def add_menu():
         m.addCommand(
             "批量下载", r"nuke.message('已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>')")
         m.addCommand(
-            '为项目创建色板', cgtwn.dialog_create_csheet)
+            '创建项目色板', cgtwn.dialog_create_csheet)
         m.addCommand(
-            '为项目创建文件夹', cgtwn.dialog_create_dirs)
+            '创建项目文件夹', cgtwn.dialog_create_dirs)
+
+    def _tools(menu):
+        m = menu.addMenu('工具')
+        m.addCommand('批量自动合成', comp.Comp.show_dialog,
+                     icon='autocomp.png')
+        m.addCommand(
+            '创建色板', wlf.csheet.dialog_create_html)
+        m.addCommand('上传mov', uploader.call_from_nuke)
+        m.addCommand('分离exr', splitexr.Dialog.show)
+        m.addCommand("分割当前文件(根据背板)",
+                     edit.split_by_backdrop)
 
     def _create_node_menu():
         _plugin_path = '../../plugins'
@@ -130,6 +137,7 @@ def add_menu():
 
     _edit(menubar)
     _comp(menubar)
+    _tools(menubar)
     if wlf.cgtwq.MODULE_ENABLE:
         _cgtw(menubar)
     _create_node_menu()
