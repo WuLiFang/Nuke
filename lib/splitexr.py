@@ -14,7 +14,7 @@ import nukescripts
 from wlf.progress import Progress
 from wlf.files import url_open, get_footage_name, get_encoded
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class Dialog(nukescripts.PythonPanel):
@@ -39,7 +39,7 @@ class Dialog(nukescripts.PythonPanel):
     }
 
     def __init__(self):
-        nukescripts.PythonPanel.__init__(self, '吾立方批量合成', 'com.wlf.multicomp')
+        nukescripts.PythonPanel.__init__(self, '分离exr', 'com.wlf.splitexr')
         self._files = []
 
         for i in self.knob_list:
