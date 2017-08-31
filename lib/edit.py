@@ -11,7 +11,7 @@ import nukescripts
 
 from asset import dropdata_handler
 
-__version__ = '1.5.2'
+__version__ = '1.5.3'
 
 
 def rename_all_nodes():
@@ -458,12 +458,14 @@ def set_project_root_by_name(path='E:'):
 
 def split_layers(n):
     """Create Shuffle node for all layers in node @n.  """
-
+    ret = []
     for layer in nuke.layers(n):
         if layer in ['rgb', 'rgba', 'alpha']:
             continue
         knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
-        nuke.nodes.Shuffle(inputs=[n], label=layer, **knob_in)
+        n = nuke.nodes.Shuffle(inputs=[n], label=layer, **knob_in)
+        ret.append(n)
+    return n
 
 
 def shuffle_rgba(node):
