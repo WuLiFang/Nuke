@@ -17,7 +17,7 @@ import comp
 import uploader
 import splitexr
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -82,8 +82,13 @@ def add_menu():
 
     def _comp(menu):
         m = menu.addMenu('合成')
-        m.addCommand('自动合成', comp.Comp,
-                     icon='autocomp.png')
+
+        def _autocomp():
+            try:
+                comp.Comp()
+            except comp.FootageError:
+                nuke.message('请先导入素材')
+        m.addCommand('自动合成', _autocomp, icon='autocomp.png')
         m.addCommand('redshift预合成',
                      lambda: precomp.Precomp(
                          nuke.selectedNodes(), renderer='redshift'),
