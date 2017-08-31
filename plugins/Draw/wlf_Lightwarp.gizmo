@@ -1,0 +1,462 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Gizmo {
+ inputs 3
+ help "Modified from bm_Lightwarp\n\nbm_Lightwarp by Ben McEwan @ www.benmcewan.com"
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('disableLuma', 'showPanel'):\n    switch = n\['disableLuma'].value()\n    if switch:\n        n\['lumaThreshold'].setEnabled(False)\n    else:\n        n\['lumaThreshold'].setEnabled(True)"
+ tile_color 0xcc804eff
+ gl_color 0xff573200
+ note_font 微软雅黑
+ addUserKnob {20 tab_1 l "wlf_Lightwarp v0.1.0"}
+ addUserKnob {14 bg_blur l blur(模糊) t "Blurs background image before glow treatment is applied" R 0 100}
+ addUserKnob {7 radius l radius(半径) t "Set the size of the glow." R 0 150}
+ radius 100
+ addUserKnob {7 intensity l intensity(强度) t "Set the brightness of the glow." R 0 5}
+ intensity 1
+ addUserKnob {41 gamma t "Shifts the midpoint towards the centre or outside of the glow." T ColorCorrect1.gamma}
+ addUserKnob {41 saturation t "Adjust the saturation of the glow." T ColorCorrect1.saturation}
+ addUserKnob {26 ""}
+ addUserKnob {6 bg_mask l "bg luma affect(背景亮度影响)" t "\n" +STARTLINE}
+ bg_mask true
+ addUserKnob {6 bg_preview l preview +STARTLINE}
+ addUserKnob {7 bg_blackpoint l blackpoint}
+ addUserKnob {7 bg_whitepoint l whitepoint -STARTLINE}
+ bg_whitepoint 1
+ addUserKnob {26 ""}
+ addUserKnob {41 operation l merge T Merge17.operation}
+ addUserKnob {6 effect_only l "effect only" t "Enabled: Renders the glow over black.\nDisabled: Renders glow over the input image, using the operation set in \"Comp Method\"." -STARTLINE}
+ effect_only true
+ addUserKnob {41 mix T Merge17.mix}
+}
+ Input {
+  inputs 0
+  name InputA
+  gl_color 0xff328800
+  xpos 585
+  ypos -1714
+  number 1
+ }
+ Blur {
+  channels rgba
+  size {{parent.bg_blur}}
+  name Blur10
+  gl_color 0xffba3200
+  xpos 585
+  ypos -1684
+ }
+set N70b60800 [stack 0]
+ Keyer {
+  operation "luminance key"
+  range {{parent.bg_blackpoint} {parent.bg_whitepoint} 1 1}
+  name Keyer1
+  gl_color 0x3234ff00
+  xpos 675
+  ypos -1284
+ }
+ Dot {
+  name Dot17
+  gl_color 0x3266ff00
+  label "  "
+  note_font "Arial Black"
+  note_font_size 16
+  xpos 709
+  ypos -1228
+ }
+set N70b60000 [stack 0]
+ Dot {
+  name Dot1
+  gl_color 0xff329c00
+  label "B after blur and keyer"
+  note_font 微软雅黑
+  xpos 129
+  ypos -204
+  hide_input true
+ }
+ Shuffle {
+  in alpha
+  name Shuffle3
+  gl_color 0xff32ac00
+  label "\[value in] > \[value out]"
+  xpos 95
+  ypos -182
+ }
+push $N70b60000
+ Input {
+  inputs 0
+  name Inputmask
+  gl_color 0xff32b500
+  xpos 765
+  ypos -1404
+  number 2
+ }
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  gl_color 0x32f1ff00
+  note_font 微软雅黑
+  xpos 675
+  ypos -1484
+ }
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2]"}}
+  name Switch2
+  gl_color 0x92ff3200
+  xpos 675
+  ypos -1374
+ }
+ Expression {
+  expr3 a==0?0:a
+  name Expression2
+  gl_color 0x32ff3900
+  xpos 675
+  ypos -1344
+ }
+ Input {
+  inputs 0
+  name InputB
+  gl_color 0x47ff3200
+  xpos 675
+  ypos -1654
+ }
+ AddChannels {
+  channels alpha
+  name AddChannels1
+  gl_color 0x43ff3200
+  label "Alpha error fix"
+  xpos 675
+  ypos -1624
+ }
+set N70b9cc00 [stack 0]
+push $N70b60800
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  gl_color 0x329dff00
+  xpos 585
+  ypos -1568
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  gl_color 0xff9b3200
+  xpos 585
+  ypos -1526
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge16
+  gl_color 0xff323700
+  xpos 585
+  ypos -1314
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge13
+  gl_color 0xff323c00
+  xpos 585
+  ypos -1206
+  disable {{!parent.bg_mask}}
+ }
+ Premult {
+  name Premult1
+  gl_color 0xffe83200
+  xpos 585
+  ypos -1176
+ }
+ Dot {
+  name Dot2
+  gl_color 0x32ff8200
+  label "  "
+  note_font "Arial Black"
+  note_font_size 16
+  xpos 619
+  ypos -1146
+ }
+set N70bfb800 [stack 0]
+ Dot {
+  name Dot4
+  gl_color 0xcdff3200
+  note_font 微软雅黑
+  xpos 709
+  ypos -464
+  hide_input true
+ }
+ Blur {
+  channels rgb
+  size {{"parent.radius * 3.2"}}
+  crop false
+  name Blur6
+  gl_color 0x326bff00
+  xpos 675
+  ypos -442
+ }
+ ColorCorrect {
+  name ColorCorrect1
+  gl_color 0xc332ff00
+  xpos 675
+  ypos -412
+ }
+ set C70bfb000 [stack 0]
+ Multiply {
+  value 0.2
+  name Multiply2
+  gl_color 0x52ff3200
+  note_font 微软雅黑
+  xpos 675
+  ypos -382
+ }
+push $N70bfb800
+ Dot {
+  name Dot5
+  gl_color 0xa832ff00
+  note_font 微软雅黑
+  xpos 709
+  ypos -626
+  hide_input true
+ }
+ Blur {
+  channels rgb
+  size {{"parent.radius * 1.5"}}
+  crop false
+  name Blur5
+  gl_color 0x326bff00
+  xpos 675
+  ypos -604
+ }
+clone $C70bfb000 {
+  xpos 675
+  ypos -574
+  selected false
+ }
+ Multiply {
+  value 0.4
+  name Multiply3
+  gl_color 0x52ff3200
+  note_font 微软雅黑
+  xpos 675
+  ypos -544
+ }
+push $N70bfb800
+ Dot {
+  name Dot6
+  gl_color 0xff7d3200
+  note_font 微软雅黑
+  xpos 709
+  ypos -788
+  hide_input true
+ }
+ Blur {
+  channels rgb
+  size {{"parent.radius * 0.5"}}
+  crop false
+  name Blur4
+  gl_color 0x326bff00
+  xpos 675
+  ypos -766
+ }
+clone $C70bfb000 {
+  xpos 675
+  ypos -736
+  selected false
+ }
+ Multiply {
+  value 0.6
+  name Multiply4
+  gl_color 0x52ff3200
+  note_font 微软雅黑
+  xpos 675
+  ypos -706
+ }
+push $N70bfb800
+ Dot {
+  name Dot7
+  gl_color 0x32fcff00
+  note_font 微软雅黑
+  xpos 709
+  ypos -950
+  hide_input true
+ }
+ Blur {
+  channels rgb
+  size {{"parent.radius * 0.25"}}
+  crop false
+  name Blur2
+  gl_color 0x326bff00
+  xpos 675
+  ypos -928
+ }
+clone $C70bfb000 {
+  xpos 675
+  ypos -898
+  selected false
+ }
+ Multiply {
+  value 0.8
+  name Multiply5
+  gl_color 0x52ff3200
+  note_font 微软雅黑
+  xpos 675
+  ypos -868
+ }
+push $N70bfb800
+ Dot {
+  name Dot8
+  gl_color 0xffc93200
+  note_font 微软雅黑
+  xpos 709
+  ypos -1064
+  hide_input true
+ }
+ Blur {
+  channels rgb
+  size {{"parent.radius * 0.07"}}
+  crop false
+  name Blur1
+  gl_color 0x326bff00
+  xpos 675
+  ypos -1042
+ }
+clone $C70bfb000 {
+  xpos 675
+  ypos -1012
+  selected false
+ }
+push $N70bfb800
+ Blur {
+  channels rgb
+  size {{"parent.radius * 0.01"}}
+  crop false
+  name Blur3
+  gl_color 0x326bff00
+  xpos 585
+  ypos -1124
+ }
+clone $C70bfb000 {
+  xpos 585
+  ypos -1094
+  selected false
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge1
+  gl_color 0xff9a3200
+  note_font 微软雅黑
+  xpos 585
+  ypos -982
+ }
+ set C7d2d5400 [stack 0]
+clone $C7d2d5400 {
+  inputs 2
+  xpos 585
+  ypos -820
+  selected false
+ }
+clone $C7d2d5400 {
+  inputs 2
+  xpos 585
+  ypos -658
+  selected false
+ }
+clone $C7d2d5400 {
+  inputs 2
+  xpos 585
+  ypos -496
+  selected false
+ }
+clone $C7d2d5400 {
+  inputs 2
+  xpos 585
+  ypos -334
+  selected false
+ }
+ Multiply {
+  value {{parent.intensity}}
+  name Multiply1
+  gl_color 0x326aff00
+  note_font 微软雅黑
+  xpos 585
+  ypos -302
+ }
+set N77904000 [stack 0]
+ Premult {
+  invert true
+  name Premult3
+  gl_color 0x32fffe00
+  note_font 微软雅黑
+  xpos 254
+  ypos -200
+ }
+push $N77904000
+push $N70b9cc00
+ Dot {
+  name Dot3
+  gl_color 0x3255ff00
+  label B
+  note_font 微软雅黑
+  xpos 39
+  ypos -276
+  hide_input true
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  bbox B
+  output rgb
+  name Merge17
+  gl_color 0x32ffca00
+  note_font 微软雅黑
+  xpos 5
+  ypos -254
+  disable {{parent.effect_only}}
+ }
+set N70bfa800 [stack 0]
+ Premult {
+  name Premult2
+  gl_color 0x32fffe00
+  note_font 微软雅黑
+  xpos 5
+  ypos -226
+ }
+ Switch {
+  inputs 2
+  which {{parent.effect_only}}
+  name Switch1
+  gl_color 0xc4ff3200
+  note_font 微软雅黑
+  xpos 5
+  ypos -189
+ }
+ Switch {
+  inputs 2
+  which {{parent.bg_preview}}
+  name Switch3
+  gl_color 0xff363200
+  xpos 5
+  ypos -126
+ }
+ Output {
+  name Output1
+  gl_color 0x326eff00
+  xpos 0
+  ypos -30
+ }
+push $N70bfa800
+ Viewer {
+  frame_range 1-63
+  fps 30
+  input_process false
+  name Viewer1
+  gl_color 0xa532ff00
+  note_font 微软雅黑
+  selected true
+  xpos 860
+  ypos -32
+ }
+end_group
