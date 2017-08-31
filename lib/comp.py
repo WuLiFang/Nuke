@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.19'
+__version__ = '0.16.21'
 
 
 class Config(wlf.config.Config):
@@ -170,7 +170,7 @@ class Comp(object):
 
     def create_nodes(self):
         """Create nodes that a comp need."""
-        task = nuke.Progress(u'创建节点树')
+        task = Progress(u'创建节点树')
 
         def _task_message(message, progress=None):
             task.set(message=message)
@@ -232,9 +232,10 @@ class Comp(object):
         n = nuke.nodes.Reformat(inputs=[n], resize='fill')
         n = nuke.nodes.Transform(inputs=[n])
         n = _add_lut(n)
-        n = nuke.nodes.ColorCorrect(inputs=[n])
+        n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
         n = nuke.nodes.Grade(
-            inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')])
+            inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')],
+            disable=True)
         n = nuke.nodes.ProjectionMP(inputs=[n])
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
@@ -248,7 +249,8 @@ class Comp(object):
     @staticmethod
     def _colorcorrect_with_positionkeyer(input_node, cc_label=None, **pk_kwargs):
         n = nuke.nodes.PositionKeyer(inputs=[input_node], **pk_kwargs)
-        n = nuke.nodes.ColorCorrect(inputs=[input_node, n], label=cc_label)
+        n = nuke.nodes.ColorCorrect(
+            inputs=[input_node, n], label=cc_label, disable=True)
         return n
 
     @classmethod
@@ -405,7 +407,7 @@ class Comp(object):
             n['whitepoint'].setValue(_max)
             n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
             print(u'{:-^30s}'.format(u'结束 自动亮度'))
-        n = nuke.nodes.ColorCorrect(inputs=[n])
+        n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
         _kwargs = {'in': 'depth'}
         n = self._colorcorrect_with_positionkeyer(n, '远处', **_kwargs)
         n = self._colorcorrect_with_positionkeyer(n, '近处', **_kwargs)
