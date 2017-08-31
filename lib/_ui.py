@@ -15,6 +15,7 @@ import cgtwn
 import orgnize
 import comp
 import uploader
+import splitexr
 
 __version__ = '0.4.1'
 
@@ -94,6 +95,7 @@ def add_menu():
         m.addCommand(
             '创建色板', wlf.csheet.dialog_create_html)
         m.addCommand('上传工具', uploader.call_from_nuke)
+        m.addCommand('分离exr', splitexr.Dialog.show)
 
     def _cgtw(menu):
 
