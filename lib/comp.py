@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.21'
+__version__ = '0.16.22'
 
 
 class Config(wlf.config.Config):
@@ -38,7 +38,7 @@ class Config(wlf.config.Config):
         r'(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
         'output_dir': 'E:/precomp',
         'input_dir': 'Z:/SNJYW/Render/EP',
-        'mp': r"Z:\QQFC2017\Comp\mp\Panorama202_v2.jpg",
+        'mp': r"Z:\SNJYW\MP\EP14\MP_EP14_1.nk",
         'autograde': False,
         'exclude_existed': True,
     }
@@ -225,8 +225,11 @@ class Comp(object):
             n['vfield_file'].fromUserText(lut)
             return n
 
-        n = nuke.nodes.Read(file=mp_file.replace('\\', '/'))
-        n['file'].fromUserText(mp_file)
+        if mp_file.endswith('.nk'):
+            n = nuke.nodes.Precomp(file=mp_file, postage_stamp=True)
+        else:
+            n = nuke.nodes.Read(file=mp_file.replace('\\', '/'))
+            n['file'].fromUserText(mp_file)
         n.setName(u'MP')
 
         n = nuke.nodes.Reformat(inputs=[n], resize='fill')
