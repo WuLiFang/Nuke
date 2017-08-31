@@ -2,10 +2,9 @@
 version 10.0 v4
 Group {
  inputs 3
+ name wlf_Lightwarp1
  help "Modified from bm_Lightwarp\n\nbm_Lightwarp by Ben McEwan @ www.benmcewan.com"
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('disableLuma', 'showPanel'):\n    switch = n\['disableLuma'].value()\n    if switch:\n        n\['lumaThreshold'].setEnabled(False)\n    else:\n        n\['lumaThreshold'].setEnabled(True)"
- tile_color 0xcc804eff
- gl_color 0xff573200
  note_font 微软雅黑
  addUserKnob {20 tab_1 l "wlf_Lightwarp v0.1.0"}
  addUserKnob {14 bg_blur l blur(模糊) t "Blurs background image before glow treatment is applied" R 0 100}
