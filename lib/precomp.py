@@ -10,7 +10,7 @@ from wlf.files import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.11'
+__version__ = '0.3.12'
 
 
 def redshift(nodes):
@@ -116,8 +116,7 @@ class Precomp(object):
             inputs=[self.last_node, input1], operation='plus',
             also_merge=layer if layer not in self.layers() else 'none',
             label=layer,
-            output='rgb',
-            postage_stamp=True)
+            output='rgb')
 
     def copy(self, layer, output=None):
         """Copy a layer to last.  """
