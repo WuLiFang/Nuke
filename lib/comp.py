@@ -16,6 +16,7 @@ import nuke
 import nukescripts
 
 from wlf.files import escape_batch, get_encoded, get_unicode, url_open
+from wlf.progress import Progress
 import wlf.config
 
 import precomp
@@ -23,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.18'
+__version__ = '0.16.19'
 
 
 class Config(wlf.config.Config):
@@ -58,7 +59,7 @@ class Comp(object):
                 self._config[key] = value.replace(u'\\', '/')
 
         pprint.pprint(config)
-        task = nuke.ProgressTask(u'自动合成')
+        task = Progress(u'自动合成')
         if config:
             print(u'\n# {}'.format(config['shot']))
             nuke.scriptClear()
@@ -68,10 +69,9 @@ class Comp(object):
                       r"[python {os.path.join("
                       r"nuke.value('root.name', ''), '../'"
                       r").replace('\\', '/')}]")
-        task.setMessage(u'分析读取节点')
+        task.set(message=u'分析读取节点')
         self.setup()
-        task.setProgress(30)
-        task.setMessage(u'创建节点树')
+        task.set(30, u'创建节点树')
         self.create_nodes()
         if config:
             self.output()
@@ -170,13 +170,13 @@ class Comp(object):
 
     def create_nodes(self):
         """Create nodes that a comp need."""
-        task = nuke.ProgressTask(u'创建节点树')
+        task = nuke.Progress(u'创建节点树')
 
         def _task_message(message, progress=None):
-            task.setMessage(message)
+            task.set(message=message)
             print(u'{:-^30s}'.format(message))
             if progress:
-                task.setProgress(progress)
+                task.set(progress)
 
         _task_message(u'BG CH 节点创建')
         n = self._bg_ch_nodes()
@@ -317,16 +317,16 @@ class Comp(object):
             print(u'{:-^30s}'.format(u'结束 输出'))
 
     def _bg_ch_nodes(self):
-        task = nuke.ProgressTask(u'BG CH 节点创建')
+        task = Progress(u'BG CH 节点创建')
 
         nodes = self._precomp()
 
         if not nodes:
             raise FootageError(u'BG', u'CH')
 
+        total = len(nodes)
         for i, n in enumerate(nodes):
-            task.setMessage(n.name())
-            task.setProgress(i * 100 // len(nodes))
+            task.set(i * 100 // total, n.name())
             n = self._bg_ch_node(n)
 
             if i == 0:
@@ -683,15 +683,13 @@ class CompDialog(nukescripts.PythonPanel):
     def progress(self):
         """Start process all shots with a processbar."""
 
-        task = nuke.ProgressTask('批量合成')
+        task = Progress('批量合成')
         shot_info = dict.fromkeys(Comp.get_shot_list(
             self._config, include_existed=True), '本次未处理')
 
+        total = len(self._shot_list)
         for i, shot in enumerate(self._shot_list):
-            if task.isCancelled():
-                break
-            task.setMessage(shot)
-            task.setProgress(i * 100 // len(self._shot_list))
+            task.set(i * 100 // total, shot)
             self._config['shot'] = os.path.basename(shot)
             self._config['save_path'] = os.path.join(
                 self._config['output_dir'], '{}_v0.nk'.format(self._config['shot']))
