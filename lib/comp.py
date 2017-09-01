@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.24'
+__version__ = '0.16.25'
 
 
 class Config(wlf.config.Config):
@@ -645,10 +645,9 @@ class CompDialog(nukescripts.PythonPanel):
         (nuke.String_Knob, 'dir_pat', '路径'),
         (nuke.String_Knob, 'tag_pat', '标签'),
         (nuke.Script_Knob, 'reset', '重置'),
-        (nuke.Tab_Knob, 'tab_generate_txt', '生成镜头号txt'),
-        (nuke.String_Knob, 'txt_name', '文件名称'),
-        (nuke.Script_Knob, 'generate_txt', '生成'),
         (nuke.EndTabGroup_Knob, 'end_tab', ''),
+        (nuke.String_Knob, 'txt_name', ''),
+        (nuke.Script_Knob, 'generate_txt', '生成'),
         (nuke.Multiline_Eval_String_Knob, 'info', ''),
     ]
 
@@ -666,6 +665,8 @@ class CompDialog(nukescripts.PythonPanel):
             self.addKnob(k)
         self.knobs()['exclude_existed'].setFlag(nuke.STARTLINE)
         self.knobs()['reset'].setFlag(nuke.STARTLINE)
+        self.knobs()['generate_txt'].setLabel(
+            '生成 {}.txt'.format(self.txt_name))
 
     def knobChanged(self, knob):
         """Overrride for buttons."""
@@ -679,6 +680,9 @@ class CompDialog(nukescripts.PythonPanel):
             self.reset()
         elif knob is self.knobs()['generate_txt']:
             self.generate_txt()
+        elif knob is self.knobs()['txt_name']:
+            self.knobs()['generate_txt'].setLabel(
+                '生成 {}.txt'.format(self.txt_name))
         else:
             Config()[knob.name()] = knob.value()
             self._config[knob.name()] = knob.value()
