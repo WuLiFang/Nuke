@@ -7,99 +7,69 @@ import re
 import nuke
 
 from wlf.files import expand_frame, copy, get_encoded, get_unicode, is_ascii
+from wlf.progress import Progress, CancelledError
 
-__version__ = '0.3.17'
+__version__ = '0.4.0'
 
 
-class DropFrameCheck(object):
+class DropFrames(object):
     """Check drop frames and record on the node."""
 
-    showed_files = []
-    dropframes_dict = {}
-    running = False
-
-    def __init__(self, prefix=('_',)):
-        self._prefix = prefix
-
-    def start(self):
-        """start one check."""
-        if DropFrameCheck.running:
-            return
-
-        DropFrameCheck.running = True
-
-        task = nuke.ProgressTask('检查缺帧')
-        read_files = tuple((nuke.filename(n), n.frameRange())
-                           for n in nuke.allNodes('Read') if not n['disable'].value())
-        footages = {}
-        for filename, framerange in read_files:
-            footages.setdefault(filename, nuke.FrameRanges())
-            footages[filename].add(framerange)
-        dropframe_dict = {}
-        all_num = len(footages)
-        count = 0
-        for filename, framerange in footages.items():
-            if task.isCancelled():
-                return
-            if not filename:
-                continue
-            framerange.compact()
-
-            task.setMessage(filename)
-            task.setProgress(count * 100 // all_num)
-            dropframes = self.dropframe_ranges(
-                filename, framerange.toFrameList())
-            if str(dropframes):
-                dropframe_dict[filename] = dropframes
-                nuke.executeInMainThread(DropFrameCheck.show_dialog)
-
-            count += 1
-        DropFrameCheck.dropframes_dict = dropframe_dict
-
-        DropFrameCheck.running = False
-
-    @staticmethod
-    def dropframe_ranges(filename, framerange):
-        """Return nuke framerange instance of dropframes."""
-        assert isinstance(framerange, (list, nuke.FrameRange))
-        filename = get_unicode(filename)
-        task = nuke.ProgressTask(u'验证文件')
-        ret = nuke.FrameRanges()
-        if expand_frame(filename, 1) == filename:
-            if not os.path.isfile(get_encoded(filename)):
-                ret.add(framerange)
-            return ret
-
-        folder = os.path.dirname(filename)
-        if not os.path.isdir(get_encoded(folder)):
-            ret.add(framerange)
-            return ret
-        _listdir = list(get_unicode(i)
-                        for i in os.listdir(get_encoded(folder)))
-        all_num = len(framerange)
-        count = 0
-        for f in framerange:
-            task.setProgress(count * 100 // all_num)
-            frame_file = unicode(os.path.basename(expand_frame(filename, f)))
-            task.setMessage(frame_file)
-            if frame_file not in _listdir:
-                ret.add([f])
-            count += 1
-        ret.compact()
-        return ret
+    _showed_files = set()
+    _files_dropframe = {}
 
     @classmethod
-    def show_dialog(cls, show_all=False):
+    def get(cls, filename, default=None):
+        """Get dropframes for @filename"""
+        return cls._files_dropframe.get(filename, default)
+
+    @classmethod
+    def check(cls):
+        """Check dropframe then show them if any.  """
+        try:
+            cls._files_dropframe.clear()
+            cls.update()
+        except CancelledError:
+            pass
+        finally:
+            cls.show(show_all=True)
+
+    @classmethod
+    def update(cls, nodes=None):
+        """update self."""
+        task = Progress('检查缺帧')
+        if isinstance(nodes, nuke.Node):
+            nodes = [nodes]
+        nodes = nodes or nuke.allNodes('Read')
+
+        footages = get_footages(nodes)
+        files_dropframes = {}
+        total = len(footages)
+        for index, filename in enumerate(footages):
+            task.set(index * 100 // total, filename)
+            if not filename:
+                continue
+
+            framerange = footages[filename]
+            framerange.compact()
+            dropframes = get_dropframe(filename, framerange.toFrameList())
+            if str(dropframes):
+                files_dropframes[filename] = dropframes
+
+        cls._files_dropframe.update(files_dropframes)
+
+    @classmethod
+    def show(cls, show_all=False):
         """Show all dropframes to user."""
         message = ''
-        for filename, dropframes in cls.dropframes_dict.items():
+        for filename, dropframes in cls._files_dropframe.items():
             if not show_all\
-                    and filename in cls.showed_files:
+                    and filename in cls._showed_files:
                 continue
             if dropframes:
                 message += '<tr><td><span style=\"color:red\">{}</span>'\
                     '</td><td>{}</td></tr>'.format(dropframes, filename)
-                cls.showed_files.append(filename)
+                cls._showed_files.add(filename)
 
         if message:
             message = '<style>td{padding:8px;}</style>'\
@@ -108,6 +78,46 @@ class DropFrameCheck(object):
                 + message +\
                 '</table>'
             nuke.message(message)
+
+
+def get_footages(nodes=None):
+    """Footage used for @nodes.  """
+    nodes = nodes or nuke.allNodes('Read')
+    nodes = list(n for n in nodes if 'disable' in n.knobs()
+                 and not n['disable'].value())
+
+    ret = {}
+    for n in nodes:
+        filename = nuke.filename(n)
+        ret.setdefault(filename, nuke.FrameRanges())
+        ret[filename].add(n.frameRange())
+    return ret
+
+
+def get_dropframe(filename, framerange):
+    """Return dropframes for @filename in @framerange. -> nuke.FrameRanges """
+    assert isinstance(framerange, (list, nuke.FrameRange))
+    filename = get_unicode(filename)
+    dir_path = os.path.dirname(filename)
+
+    task = Progress(u'验证文件')
+    ret = nuke.FrameRanges()
+    if not os.path.isdir(get_encoded(dir_path)) or \
+        (expand_frame(filename, 1) == filename
+         and not os.path.isfile(get_encoded(filename))):
+        ret.add(framerange)
+        return ret
+
+    files = os.listdir(get_encoded(dir_path))
+    basename = os.path.basename(filename)
+    total = len(framerange)
+    for index, f in enumerate(framerange):
+        frame_file = expand_frame(basename, f)
+        task.set(index * 100 // total, frame_file)
+        if get_encoded(frame_file) not in files:
+            ret.add([f])
+    ret.compact()
+    return ret
 
 
 def sent_to_dir(dir_):
@@ -124,17 +134,16 @@ def dropdata_handler(mime_type, data, from_dir=False):
 
     def _isdir():
         if os.path.isdir(get_encoded(data)):
-            task = nuke.ProgressTask(data)
+            task = Progress(data)
             _dirname = data.replace('\\', '/')
             filenames = nuke.getFileNameList(get_encoded(_dirname, 'UTF-8'))
-            all_num = len(filenames)
+            total = len(filenames)
             for index, filename in enumerate(filenames):
-                if task.isCancelled():
-                    return True
-                task.setMessage(filename)
-                task.setProgress(index * 100 // all_num)
-                dropdata_handler(
+                task.set(index * 100 // total, filename)
+                read_node = dropdata_handler(
                     mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
+                if isinstance(read_node, nuke.Node):
+                    DropFrames.update(read_node)
             return True
 
     def _ignore():
@@ -148,7 +157,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
         match = re.match(r'file:///([^/].*)', data)
         if match:
             _data = match.group(1)
-            return dropdata_handler(mime_type, _data, from_dir=True)
+            return dropdata_handler(mime_type, _data)
 
     def _fbx():
         if data.endswith('.fbx'):
@@ -201,8 +210,9 @@ def dropdata_handler(mime_type, data, from_dir=False):
             n = nuke.createNode('Read', 'file "{}"'.format(data))
             if n.hasError():
                 n['disable'].setValue(True)
-            return True
+            return n
 
-    for func in (_isdir, _ignore, _from_dir, _file_protocol, _video, _vf, _fbx, _nk):
-        if func():
-            return True
+    for func in (_isdir, _ignore, _file_protocol, _video, _vf, _fbx, _from_dir, _nk):
+        ret = func()
+        if ret:
+            return ret

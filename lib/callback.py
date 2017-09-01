@@ -38,6 +38,7 @@ def menu():
     nuke.addOnScriptLoad(_eval_proj_dir)
     nuke.addOnScriptLoad(cgtwn.on_load_callback)
     nuke.addOnScriptLoad(Last.on_load_callback)
+    nuke.addOnScriptLoad(asset.DropFrames.check)
 
     nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(_enable_node)
@@ -46,9 +47,8 @@ def menu():
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
     nuke.addOnScriptSave(cgtwn.on_save_callback)
+    nuke.addOnScriptSave(asset.DropFrames.show)
 
-    nuke.addOnScriptClose(lambda: asset.DropFrameCheck().start())
-    nuke.addOnScriptClose(asset.DropFrameCheck.show_dialog)
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addOnScriptClose(_render_jpg)
     nuke.addOnScriptClose(cgtwn.on_close_callback)

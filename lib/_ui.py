@@ -17,7 +17,7 @@ import comp
 import uploader
 import splitexr
 
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -55,8 +55,7 @@ def add_menu():
             "修正读取错误", edit.fix_error_read, 'F6')
         m.addCommand(
             "Reload所有", edit.reload_all_read_node)
-        m.addCommand("显示缺帧",
-                     lambda: asset.DropFrameCheck.show_dialog(True))
+        m.addCommand("检查缺帧", asset.DropFrames.check)
         m.addCommand("转换单帧为序列",
                      edit.replace_sequence)
 
@@ -192,8 +191,7 @@ def custom_autolabel(enable_text_style=True):
     if _class == 'Keyer':
         label = '输入通道 : ' + nuke.value('this.input')
     elif _class == 'Read':
-        dropframes = str(asset.DropFrameCheck.dropframes_dict.get(
-            nuke.filename(this), ''))
+        dropframes = str(asset.DropFrames.get(nuke.filename(this), ''))
         if dropframes:
             nuke.warning('{}:[dropframes]{}'.format(this.name(), dropframes))
             if enable_text_style:
