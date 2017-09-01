@@ -2,37 +2,33 @@
 version 10.0 v4
 Gizmo {
  tile_color 0x823a7dff
- gl_color 0x3294ff00
  label "\[\nknob_default \[class this].maxZ 1\nknob_default \[class this].threshold 0.95\nknob_default \[class this].farpoint 1\nset hasDepth \[value this.Switch1.which]\nif \{! \$hasDepth\} \{\n    python \{nuke.error('\{\}: Input is missing \{\}.'.format(nuke.thisNode().name(), nuke.thisNode()\['depth_channel'].value()))\}\n    return \[format \"没有%s\" \[value this.knob.depth_channel]]\n\} else \{\n    return \[format \"(%s)\\n近点: %d 远点: %d\\n修复强度: %.1f\\n输出:%.2f~%.2f\" \[value this.by] \[value this.closepoint] \[value this.farpoint] \[value this.size] \[value this.minZ] \[value this.maxZ]]\n\}\n]\n"
  note_font Verdana
- addUserKnob {20 tab1 l DepthFix_v3.6.7}
- addUserKnob {41 depth_channel l "depth channel" T Copy2.from0}
- addUserKnob {7 closepoint}
- addUserKnob {7 farpoint}
+ addUserKnob {20 tab1 l "DepthFix v3.6.8"}
+ addUserKnob {41 depth_channel l "depth(深度通道)" T Copy2.from0}
+ addUserKnob {7 closepoint l "closepoint(近点)" t 代表最近处的深度数值}
+ addUserKnob {7 farpoint l "farpoint(远点)" t 代表最远处的深度数值}
  farpoint 1
- addUserKnob {41 by l "fix by" T Copy1.from0}
- addUserKnob {7 threshold t alpha小于此值的像素的depth.z值会在处理过程中被忽略}
- threshold 1
- addUserKnob {7 size l "fix size" t 修正的收边系数 R 0 10}
+ addUserKnob {41 by l "by(以此修复)" t 用此通道修复深度通道 T Copy1.from0}
+ addUserKnob {7 threshold l "threshold(阈值)" t alpha小于此值的像素的depth.z值会在处理过程中被忽略}
+ threshold 0.95
+ addUserKnob {7 size l "size(强度)" t 用于修正的收边系数 R 0 10}
  size 1
  addUserKnob {7 minZ l min t 低于此值的深度会被设为此值}
  addUserKnob {7 maxZ l max t 高于此值的深度会被设为此值}
  maxZ 1
- addUserKnob {4 empty_area_depth l "empty area depth" M {0 1 original}}
+ addUserKnob {4 empty_area_depth l "default(默认值)" t alpha为0的区域使用的值 M {0 1 original}}
  empty_area_depth 1
- addUserKnob {3 erode_size l erode}
+ addUserKnob {3 erode_size l "erode(收边)" t 在深度上进行的收边}
 }
  Input {
   inputs 0
   name Input
-  gl_color 0xffd13200
   xpos 400
   ypos -754
  }
  Dot {
   name Dot2
-  gl_color 0x96ff3200
-  note_font 微软雅黑
   xpos 434
   ypos -702
  }
@@ -43,8 +39,6 @@ push $N3d5e400
   from0 depth.Z
   to0 depth.Z
   name Copy2
-  gl_color 0x326aff00
-  note_font 微软雅黑
   xpos 510
   ypos -715
   disable {{"! parent.Switch1.which"}}
@@ -54,21 +48,17 @@ push $N3d5e400
   blackpoint {{parent.closepoint}}
   whitepoint {{parent.farpoint}}
   name Grade1
-  gl_color 0xff513200
-  note_font 微软雅黑
   xpos 510
   ypos -667
  }
  Dot {
   name Dot3
-  gl_color 0xff329e00
   xpos 544
   ypos -606
  }
 set N3d5f800 [stack 0]
  Dot {
   name Dot1
-  gl_color 0x32ff8f00
   xpos 654
   ypos -606
  }
@@ -76,8 +66,6 @@ set N3d5f800 [stack 0]
   channels alpha
   color 1
   name AddChannels1
-  gl_color 0xff32d300
-  note_font 微软雅黑
   xpos 620
   ypos -571
  }
@@ -88,23 +76,17 @@ push $N34c47800
   from0 rgba.alpha
   to0 rgba.alpha
   name Copy1
-  gl_color 0xfff13200
-  note_font 微软雅黑
   xpos 620
   ypos -523
  }
  Dot {
   name Dot20
-  gl_color 0x36ff3200
-  note_font 微软雅黑
   xpos 654
   ypos -486
  }
 set N34c47000 [stack 0]
  Dot {
   name Dot17
-  gl_color 0x32ff6600
-  note_font 微软雅黑
   xpos 764
   ypos -486
  }
@@ -112,15 +94,11 @@ set N34c47000 [stack 0]
   channel0 alpha
   expr0 "(a < 1 && a > 0) ? 1 : 0"
   name Expression6
-  gl_color 0x32ffc900
-  note_font 微软雅黑
   xpos 730
   ypos -395
  }
  Dot {
   name Dot13
-  gl_color 0x32f9ff00
-  note_font 微软雅黑
   xpos 764
   ypos -246
  }
@@ -129,8 +107,6 @@ push $N34c47000
   channels depth
   size 2
   name Dilate2
-  gl_color 0xff8a3200
-  note_font 微软雅黑
   xpos 620
   ypos -451
  }
@@ -138,8 +114,6 @@ push $N34c47000
   channel0 depth
   expr0 "(a < parent.threshold) ? 1 : z"
   name Expression5
-  gl_color 0x32ff6300
-  note_font 微软雅黑
   xpos 620
   ypos -395
  }
@@ -147,14 +121,11 @@ push $N34c47000
   channels depth
   size {{-width*parent.size/100}}
   name Dilate1
-  gl_color 0xd032ff00
   xpos 620
   ypos -352
  }
  Dot {
   name Dot11
-  gl_color 0x32ffab00
-  note_font 微软雅黑
   xpos 654
   ypos -294
  }
@@ -167,7 +138,6 @@ push $N3d5f800
   output depth.Z
   bbox B
   name ChannelMerge1
-  gl_color 0xc7ff3200
   xpos 510
   ypos -263
  }
@@ -175,7 +145,6 @@ push $N3d5f800
   channel0 depth
   expr0 "(a == 0) ? parent.empty_area_depth : z"
   name Expression1
-  gl_color 0x32ff9e00
   xpos 510
   ypos -178
   disable {{"parent.empty_area_depth == 2"}}
@@ -185,8 +154,6 @@ push $N3d5f800
   expr0 (z<=parent.minZ)?parent.minZ:((z>parent.maxZ)?parent.maxZ:z)
   channel1 none
   name Expression4
-  gl_color 0xfff53200
-  note_font 微软雅黑
   xpos 510
   ypos -137
  }
@@ -194,7 +161,6 @@ push $N3d5f800
   channels depth
   size {{parent.erode_size}}
   name Dilate3
-  gl_color 0x7532ff00
   xpos 510
   ypos -109
  }
@@ -204,16 +170,12 @@ set N34c9f800 [stack 0]
   fps 25
   input_process false
   name Viewer1
-  gl_color 0xaeff3200
-  note_font 微软雅黑
   xpos 621
   ypos 60
  }
 push $N34c9f800
  Dot {
   name Dot4
-  gl_color 0x8432ff00
-  note_font 微软雅黑
   xpos 544
   ypos -54
  }
@@ -222,14 +184,11 @@ push $N3d5e400
   inputs 2
   which {{"\[string match *\[value parent.depth_channel]* \[channels parent.Input]]\n"}}
   name Switch1
-  gl_color 0xa6ff3200
-  note_font 微软雅黑
   xpos 400
   ypos -59
  }
  Output {
   name Output1
-  gl_color 0xffd43200
   xpos 400
   ypos 89
  }
