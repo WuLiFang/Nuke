@@ -1,7 +1,5 @@
 # -*- coding=UTF-8 -*-
 """Comp footages adn create output, can be run as script.  """
-# TODO: MP lightwarp.
-# TODO: soft-lig attenuation.
 
 import json
 import os
@@ -24,7 +22,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.25'
+__version__ = '0.17.0'
 
 
 class Config(wlf.config.Config):
@@ -196,7 +194,15 @@ class Comp(object):
 
         n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
         n = nuke.nodes.Merge2(
-            inputs=[n.input(0), n], operation='soft-light', mix='0.2')
+            inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
+        radial_node = nuke.nodes.Radial(
+            area='0 0 {} {}'.format(n.width(), n.height()))
+        n = nuke.nodes.Merge2(
+            inputs=[n, radial_node],
+            operation='soft-light',
+            mix='0.618',
+            label='衰减调整',
+            disable=True)
 
         n = nuke.nodes.Aberration(inputs=[n], distortion1='0 0 0.003')
 
@@ -208,10 +214,7 @@ class Comp(object):
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
-        map(nuke.autoplace, nodes)
-        if nuke.GUI:
-            autoplace()
-        # delete_unused_nodes()
+        autoplace()
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
@@ -244,7 +247,7 @@ class Comp(object):
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
         n = nuke.nodes.Defocus(inputs=[n], disable=True)
-        n = nuke.nodes.Crop(inputs=[n], box='0 0 root.width root.height')
+        input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n])
         n = nuke.nodes.Merge2(
             inputs=[input_node, n], operation='under', bbox='B', label='MP')
 
@@ -401,12 +404,12 @@ class Comp(object):
         n = nuke.nodes.Unpremult(inputs=[n], label='调色开始')
 
         if self._config['autograde']:
+            print(u'{:-^30s}'.format(u'开始 自动亮度'))
             n = nuke.nodes.Grade(
                 inputs=[n],
                 unpremult='rgba.alpha',
                 label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
             )
-            print(u'{:-^30s}'.format(u'开始 自动亮度'))
             _max = self._autograde_get_max(input_node)
             n['whitepoint'].setValue(_max)
             n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
@@ -419,7 +422,7 @@ class Comp(object):
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
         n = nuke.nodes.Crop(
-            inputs=[n], box='0 0 {} {}'.format(n.width(), n.height()), crop=False,
+            inputs=[n], box='0 0 input.width input.height', crop=False,
             label='滤镜开始')
 
         n = nuke.nodes.SoftClip(
@@ -450,10 +453,10 @@ class Comp(object):
 
         n = nuke.nodes.Crop(
             inputs=[n],
-            box='0 0 root.width root.height',
+            box='0 0 input.width input.height',
             label='滤镜结束')
 
-        n = nuke.nodes.DiskCache(inputs=[n], postage_stamp=True)
+        n = nuke.nodes.DiskCache(inputs=[n])
         return n
 
     @staticmethod
