@@ -11,7 +11,10 @@ import edit
 import _ui
 import cgtwn
 import orgnize
+
 from wlf import csheet
+from wlf.progress import Progress
+
 from node import wlf_write_node, Last
 
 
@@ -72,15 +75,13 @@ def _enable_node():
 
 def enable_node(prefix='_'):
     """Enable all nodes with given prefix."""
-    task = nuke.ProgressTask('启用节点')
+    task = Progress('启用节点')
     nodes = tuple(n for n in nuke.allNodes() if n.name().startswith(prefix))
-    all_num = len(nodes)
-    count = 0
-    for n in nodes:
-        task.setMessage(n.name())
-        task.setProgress(count * 100 // all_num)
+
+    total = len(nodes)
+    for index, n in enumerate(nodes):
+        task.set(index * 100 // total, n.name())
         n['disable'].setValue(False)
-        count += 1
 
 
 @abort_modified
