@@ -52,9 +52,6 @@ set N70b60800 [stack 0]
  }
  Dot {
   name Dot17
-  label "  "
-  note_font "Arial Black"
-  note_font_size 16
   xpos 709
   ypos -1228
  }
@@ -151,9 +148,6 @@ push $N70b60800
  }
  Dot {
   name Dot2
-  label "  "
-  note_font "Arial Black"
-  note_font_size 16
   xpos 619
   ypos -1146
  }
