@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.23'
+__version__ = '0.16.24'
 
 
 class Config(wlf.config.Config):
@@ -691,7 +691,7 @@ class CompDialog(nukescripts.PythonPanel):
         if os.path.exists(get_encoded(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
             return
         with open(get_encoded(path), 'w') as f:
-            f.write('\n\n'.join('{: <{width}s}    :  '.format(i, width=line_width)
+            f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
                                 for i in self.shot_list))
         url_open(path, isfile=True)
 
