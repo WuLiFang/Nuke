@@ -14,7 +14,7 @@ import wlf.config
 from asset import copy
 from node import wlf_write_node
 
-__version__ = '0.9.9'
+__version__ = '0.9.10'
 
 
 class Config(wlf.config.Config):
@@ -69,10 +69,20 @@ class CurrentShot(cgtwq.Shot):
     def __init__(self):
         cgtwq.Shot.__init__(self, self.name)
 
+    @classmethod
+    def get_info(cls):
+        """The project info.  """
+        return cgtwq.proj_info(shot_name=cls.get_name())
+
+    @classmethod
+    def get_name(cls):
+        """The current shot name.  """
+        return remove_version(os.path.splitext(os.path.basename(nuke.scriptName()))[0])
+
     @property
     def name(self):
         """The current shot name.  """
-        return remove_version(os.path.splitext(os.path.basename(nuke.scriptName()))[0])
+        return self.get_name()
 
     @property
     def workfile(self):
