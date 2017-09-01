@@ -1,5 +1,5 @@
 // PositionKeyerKernel
-// VERSION: 0.4.3
+// VERSION: 0.4.4
 kernel PositionKeyer : ImageComputationKernel<ePixelWise>
 {
   Image<eRead, eAccessPoint, eEdgeClamped> position;
@@ -8,8 +8,10 @@ kernel PositionKeyer : ImageComputationKernel<ePixelWise>
 param:
   bool invert_x;
   bool invert_y;
+  bool invert_z;
   bool enable_x;
   bool enable_y;
+  bool enable_z;
   float3 rotate;
   float4 p0_color;
   float4 p1_color;
@@ -65,7 +67,8 @@ local:
 
     result[0] = invert_x ? (1 - result[0]) : result[0];
     result[1] = invert_y ? (1 - result[1]) : result[1];
-    result[3] = (enable_x ? result[0] : 1) * (enable_y ? result[1] : 1);
+    result[2] = invert_z ? (1 - result[2]) : result[2];
+    result[3] = (enable_x ? result[0] : 1) * (enable_y ? result[1] : 1) * (enable_z ? result[2] : 1);
 
     dst() = result;
   }
