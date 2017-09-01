@@ -119,12 +119,13 @@ def _check_project():
 
 
 def _check_fps():
-    default_fps = 30
-    if os.path.basename(nuke.value('root.name')).startswith('SNJYW'):
-        default_fps = 25
+    default_fps = cgtwn.CurrentShot.get_info().get('fps', 30)
     fps = nuke.numvalue('root.fps')
+
     if fps != default_fps:
-        nuke.message('当前fps: {}, 默认值: {}'.format(fps, default_fps))
+        confirm = nuke.ask('当前fps: {}, 设为默认值: {} ?'.format(fps, default_fps))
+        if confirm:
+            nuke.knob('root.fps', str(default_fps))
 
 
 def _lock_connections():
