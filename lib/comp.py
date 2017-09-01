@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.16.22'
+__version__ = '0.16.23'
 
 
 class Config(wlf.config.Config):
@@ -38,6 +38,7 @@ class Config(wlf.config.Config):
         r'(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
         'output_dir': 'E:/precomp',
         'input_dir': 'Z:/SNJYW/Render/EP',
+        'txt_name': '镜头备注',
         'mp': r"Z:\SNJYW\MP\EP14\MP_EP14_1.nk",
         'autograde': False,
         'exclude_existed': True,
@@ -644,6 +645,9 @@ class CompDialog(nukescripts.PythonPanel):
         (nuke.String_Knob, 'dir_pat', '路径'),
         (nuke.String_Knob, 'tag_pat', '标签'),
         (nuke.Script_Knob, 'reset', '重置'),
+        (nuke.Tab_Knob, 'tab_generate_txt', '生成镜头号txt'),
+        (nuke.String_Knob, 'txt_name', '文件名称'),
+        (nuke.Script_Knob, 'generate_txt', '生成'),
         (nuke.EndTabGroup_Knob, 'end_tab', ''),
         (nuke.Multiline_Eval_String_Knob, 'info', ''),
     ]
@@ -673,10 +677,28 @@ class CompDialog(nukescripts.PythonPanel):
             self.update()
         elif knob is self.knobs()['reset']:
             self.reset()
+        elif knob is self.knobs()['generate_txt']:
+            self.generate_txt()
         else:
             Config()[knob.name()] = knob.value()
             self._config[knob.name()] = knob.value()
             self.update()
+
+    def generate_txt(self):
+        """Generate txt contain shot list.  """
+        path = os.path.join(self.output_dir, '{}.txt'.format(self.txt_name))
+        line_width = max(len(i) for i in self.shot_list)
+        if os.path.exists(get_encoded(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
+            return
+        with open(get_encoded(path), 'w') as f:
+            f.write('\n\n'.join('{: <{width}s}    :  '.format(i, width=line_width)
+                                for i in self.shot_list))
+        url_open(path, isfile=True)
+
+    @property
+    def txt_name(self):
+        """Output txt name. """
+        return self.knobs()['txt_name'].value()
 
     def reset(self):
         """Reset re pattern.  """
@@ -742,6 +764,16 @@ class CompDialog(nukescripts.PythonPanel):
         # nuke.executeInMainThread(nuke.message, args=(errors,))
         url_open(u'file://{}'.format(log_path))
         url_open(u'file://{}'.format(self._config['output_dir']))
+
+    @property
+    def shot_list(self):
+        """Shot name list. """
+        return self._shot_list
+
+    @property
+    def output_dir(self):
+        """Output directory. """
+        return self.knobs()['output_dir'].value()
 
     def update(self):
         """Update ui info and button enabled."""
