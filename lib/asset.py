@@ -9,25 +9,26 @@ import nuke
 from wlf.files import expand_frame, copy, get_encoded, get_unicode, is_ascii
 from wlf.progress import Progress, CancelledError
 
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 
 class DropFrames(object):
     """Check drop frames and record on the node."""
 
     _showed_files = set()
-    _files_dropframe = {}
+    _file_dropframe = {}
 
     @classmethod
     def get(cls, filename, default=None):
         """Get dropframes for @filename"""
-        return cls._files_dropframe.get(filename, default)
+        return cls._file_dropframe.get(filename, default)
 
     @classmethod
     def check(cls):
         """Check dropframe then show them if any.  """
+
+        cls._file_dropframe.clear()
         try:
-            cls._files_dropframe.clear()
             cls.update()
         except CancelledError:
             pass
@@ -43,7 +44,6 @@ class DropFrames(object):
         nodes = nodes or nuke.allNodes('Read')
 
         footages = get_footages(nodes)
-        files_dropframes = {}
         total = len(footages)
         for index, filename in enumerate(footages):
             task.set(index * 100 // total, filename)
@@ -54,15 +54,15 @@ class DropFrames(object):
             framerange.compact()
             dropframes = get_dropframe(filename, framerange.toFrameList())
             if str(dropframes):
-                files_dropframes[filename] = dropframes
-
-        cls._files_dropframe.update(files_dropframes)
+                cls._file_dropframe[filename] = dropframes
+            elif cls._file_dropframe.has_key(filename):
+                del cls._file_dropframe[filename]
 
     @classmethod
     def show(cls, show_all=False):
         """Show all dropframes to user."""
         message = ''
-        for filename, dropframes in cls._files_dropframe.items():
+        for filename, dropframes in cls._file_dropframe.items():
             if not show_all\
                     and filename in cls._showed_files:
                 continue
