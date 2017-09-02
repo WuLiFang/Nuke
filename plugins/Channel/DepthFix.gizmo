@@ -2,9 +2,10 @@
 version 10.0 v4
 Gizmo {
  tile_color 0x823a7dff
- label "\[\nknob_default \[class this].maxZ 1\nknob_default \[class this].threshold 0.95\nknob_default \[class this].farpoint 1\nset hasDepth \[value this.Switch1.which]\nif \{! \$hasDepth\} \{\n    python \{nuke.error('\{\}: Input is missing \{\}.'.format(nuke.thisNode().name(), nuke.thisNode()\['depth_channel'].value()))\}\n    return \[format \"没有%s\" \[value this.knob.depth_channel]]\n\} else \{\n    return \[format \"(%s)\\n近点: %d 远点: %d\\n修复强度: %.1f\\n输出:%.2f~%.2f\" \[value this.by] \[value this.closepoint] \[value this.farpoint] \[value this.size] \[value this.minZ] \[value this.maxZ]]\n\}\n]\n"
+ onCreate "if '__depthfix_autolabel' not in locals():\n    def __depthfix_autolabel():\n        depth_channel = nuke.value('this.depth_channel')\n        by_channel = nuke.value('this.by')\n        \n        ret = [nuke.value('this.name')]\n        if by_channel != 'alpha':\n            channel = '({} / {})'.format(\n                depth_channel,\n                by_channel)\n        elif depth_channel != 'depth.Z':\n            channel = '({})'.format(depth_channel)\n        else:\n            channel = None\n        \n        closepoint = nuke.value('this.closepoint')\n        farpoint = nuke.value('this.farpoint')\n        if closepoint != '0' or farpoint != '1':\n            range = '[{}~{}]'.format(closepoint, farpoint)\n        else:\n            range = None\n            \n        size = nuke.value('this.size')\n        default = nuke.value('this.empty_area_depth')\n        erode = nuke.numvalue('this.erode_size')\n        info = ['*{}'.format(size) if size != '1' else None,\n            '#{}'.format(default) if default != '1' else None,\n            '{:+1.0f}'.format(erode) if erode!=0.0 else None]\n        info = ' '.join(i for i in info if i)\n        label = nuke.thisNode()['label'].evaluate()\n        \n        ret = list(i for i in [\n            nuke.value('this.name'),\n            range,\n            info,\n            channel,\n            label] if i)\n        ret = '\\n'.join(ret)\n        return ret\n"
+ autolabel "__depthfix_autolabel()"
  note_font Verdana
- addUserKnob {20 tab1 l "DepthFix v3.6.8"}
+ addUserKnob {20 tab1 l "DepthFix v3.6.9"}
  addUserKnob {41 depth_channel l "depth(深度通道)" T Copy2.from0}
  addUserKnob {7 closepoint l "closepoint(近点)" t 代表最近处的深度数值}
  addUserKnob {7 farpoint l "farpoint(远点)" t 代表最远处的深度数值}
