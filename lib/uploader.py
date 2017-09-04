@@ -5,7 +5,6 @@ import os
 import sys
 import re
 from subprocess import Popen, PIPE
-import threading
 
 from wlf.Qt import QtCore, QtWidgets, QtCompat
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
@@ -13,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.3'
+__version__ = '0.4.2'
 
 
 class Config(wlf.config.Config):
@@ -87,8 +86,7 @@ class Dialog(QDialog):
 
         def _actions():
             self.actionDir.triggered.connect(self.ask_dir)
-            self.actionSync.triggered.connect(
-                lambda: threading.Thread(target=self.upload).start())
+            self.actionSync.triggered.connect(self.upload)
             self.actionServer.triggered.connect(self.ask_server)
             self.actionUpdateUI.triggered.connect(self.update)
             self.actionOpenDir.triggered.connect(self.open_dir)
