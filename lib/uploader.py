@@ -12,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 
 class Config(wlf.config.Config):
@@ -219,7 +219,9 @@ class Dialog(QDialog):
                 dst = os.path.join(self.dest, remove_version(i))
                 copy(src, dst)
         except CancelledError:
+            self.activateWindow()
             return False
+        self.close()
 
     @property
     def dest(self):
