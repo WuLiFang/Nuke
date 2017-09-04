@@ -12,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 
 class Config(wlf.config.Config):
@@ -309,8 +309,11 @@ def main():
 
 def call_from_nuke():
     """Run this script standaloe.  """
-
-    frame = Dialog()
+    nuke_window = QApplication.activeWindow()
+    frame = Dialog(nuke_window)
+    geo = frame.geometry()
+    geo.moveCenter(nuke_window.geometry().center())
+    frame.setGeometry(geo)
     frame.show()
 
 
