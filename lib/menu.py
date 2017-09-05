@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 """Nuke menu file."""
 
+import validation
 import _ui
 import callback
 import pref

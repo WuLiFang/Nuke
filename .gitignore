@@ -51,6 +51,7 @@ Temporary Items
 *.swp
 # *.json
 *.pyc
+!lib/validation.pyc
 
 # Build file
 build/

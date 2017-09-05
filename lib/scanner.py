@@ -94,7 +94,6 @@ class MainWindow(QtWidgets.QMainWindow):
         _icon()
         _actions()
         _edits()
-        self.updating = False
         self._shots = []
         self._start_update()
 
