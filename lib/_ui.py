@@ -16,6 +16,7 @@ import orgnize
 import comp
 import uploader
 import splitexr
+import scanner
 
 __version__ = '0.5.2'
 
@@ -122,6 +123,7 @@ def add_menu():
         m.addCommand(
             '创建色板', wlf.csheet.dialog_create_html)
         m.addCommand('上传mov', uploader.call_from_nuke)
+        m.addCommand('扫描空文件夹', scanner.call_from_nuke)
         m.addCommand('分离exr', splitexr.Dialog.show)
         m.addCommand("分割当前文件(根据背板)",
                      edit.split_by_backdrop)
