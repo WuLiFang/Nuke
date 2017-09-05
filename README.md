@@ -1,3 +1,9 @@
+# 下载
+
+  安装git客户端后使用
+
+  `git clone --recursive https://github.com/WuLiFang/Nuke.git`
+
 # 使用方法
 
 * Windows
