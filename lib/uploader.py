@@ -12,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version, is_same, get_unicode
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 
 
 class Config(wlf.config.Config):
@@ -186,11 +186,6 @@ class Dialog(QDialog):
         _list_widget()
         self.syncButton.setText(u'上传至: {}'.format(self.dest))
 
-    @property
-    def mode(self):
-        """Upload mode(0: dir, 1: cgteamwork). """
-        return self.toolBox.currentIndex()
-
     def files(self):
         """Return files in folder as list.  """
 
@@ -211,24 +206,21 @@ class Dialog(QDialog):
 
     def upload(self):
         """Upload videos to server.  """
-        if self.mode == 0:
-            if not os.path.exists(self.dest):
-                os.mkdir(self.dest)
-            try:
-                task = Progress()
-                files = self.files()
-                all_num = len(files)
-                for index, i in enumerate(files):
-                    task.set(index * 100 // all_num, i)
-                    src = os.path.join(self.dir, i)
-                    dst = os.path.join(self.dest, remove_version(i))
-                    copy(src, dst)
-            except CancelledError:
-                self.activateWindow()
-                return False
-            self.close()
-        else:
-            self.statusBar().showMessage('1')
+        if not os.path.exists(self.dest):
+            os.mkdir(self.dest)
+        try:
+            task = Progress()
+            files = self.files()
+            all_num = len(files)
+            for index, i in enumerate(files):
+                task.set(index * 100 // all_num, i)
+                src = os.path.join(self.dir, i)
+                dst = os.path.join(self.dest, remove_version(i))
+                copy(src, dst)
+        except CancelledError:
+            self.activateWindow()
+            return False
+        self.close()
 
     @property
     def dest(self):
@@ -317,7 +309,7 @@ def main():
 def call_from_nuke():
     """Run this script standaloe.  """
     nuke_window = QApplication.activeWindow()
-    frame = Dialog(nuke_window)
+    frame = Dialog()
     geo = frame.geometry()
     geo.moveCenter(nuke_window.geometry().center())
     frame.setGeometry(geo)
