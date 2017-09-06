@@ -5,6 +5,7 @@ Group {
  help "Modified from bm_Lightwarp\n\nbm_Lightwarp by Ben McEwan @ www.benmcewan.com"
  knobChanged "list(k.setEnabled(bool(nuke.numvalue('this.bg_mask'))) for k in nuke.thisNode().allKnobs() if k.name() in ('bg_preview', 'bg_blackpoint', 'bg_whitepoint'))"
  tile_color 0xcc804eff
+ name wlf_Lightwrap1
  note_font 微软雅黑
  addUserKnob {20 tab_1 l "wlf_Lightwrap v0.1.3"}
  addUserKnob {14 bg_blur l blur(模糊) t "Blurs background image before glow treatment is applied" R 0 100}
