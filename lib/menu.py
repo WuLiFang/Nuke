@@ -19,12 +19,13 @@ print(u'添加菜单')
 _ui.add_menu()
 print(u'添加面板')
 _ui.add_panel()
-print(u'添加GUI callback')
-callback.menu()
+print(u'添加首选项')
+pref.add_preferences()
 print(u'设置knob默认值')
 pref.set_knob_default()
-print(u'添加首选项面板')
-pref.add_preferences()
+
+callback.menu()
+
 if cgtwq.MODULE_ENABLE:
     print(u'更新CGTeamWork状态')
     cgtwq.CGTeamWork.update_status()

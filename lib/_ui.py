@@ -136,7 +136,6 @@ def add_menu():
 
         m = nuke.menu("Nodes")
         m = m.addMenu('吾立方', icon='Modify.png')
-        nuke.tprint(os.path.abspath(os.path.join(__file__, _plugin_path)))
         create_menu_by_dir(m, os.path.abspath(
             os.path.join(__file__, _plugin_path)))
         m.addCommand(

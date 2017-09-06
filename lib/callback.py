@@ -22,40 +22,50 @@ def init():
     """Add callback for nuke init phase."""
 
     nuke.addBeforeRender(create_out_dirs, nodeClass='Write')
+    print(u'启用渲染前自动生成文件夹')
 
 
 def menu():
     """Add callback for nuke menu phase."""
 
-    nukescripts.addDropDataCallback(asset.dropdata_handler)
-
+    print(u'增强节点标签')
     nuke.addAutolabel(_ui.custom_autolabel)
 
-    nuke.addUpdateUI(_gizmo_to_group_update_ui)
+    print(u'增强文件拖放')
+    nukescripts.addDropDataCallback(asset.dropdata_handler)
 
+    print(u'启用缺帧检查')
+    nuke.addOnScriptLoad(asset.DropFrames.check)
+    nuke.addOnScriptSave(asset.DropFrames.show)
+
+    print(u'随机节点控制器颜色')
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
 
-    nuke.addOnUserCreate(_gizmo_to_group_on_create)
-
+    print(u'启用自动工程设置')
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
-    nuke.addOnScriptLoad(cgtwn.on_load_callback)
     nuke.addOnScriptLoad(Last.on_load_callback)
-    nuke.addOnScriptLoad(asset.DropFrames.check)
-
-    nuke.addOnScriptSave(_autoplace)
-    nuke.addOnScriptSave(_enable_node)
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_check_fps)
+
+    if cgtwn.cgtwq.MODULE_ENABLE:
+        print(u'启用CGTeamWork集成')
+        nuke.addOnScriptLoad(cgtwn.on_load_callback)
+        nuke.addOnScriptSave(cgtwn.on_save_callback)
+        nuke.addOnScriptClose(cgtwn.on_close_callback)
+
+    # Preference option
+    nuke.addOnScriptSave(_autoplace)
+    nuke.addOnScriptSave(_enable_node)
     nuke.addOnScriptSave(_lock_connections)
     nuke.addOnScriptSave(_jump_frame)
-    nuke.addOnScriptSave(cgtwn.on_save_callback)
-    nuke.addOnScriptSave(asset.DropFrames.show)
 
     nuke.addOnScriptClose(_send_to_render_dir)
     nuke.addOnScriptClose(_render_jpg)
-    nuke.addOnScriptClose(cgtwn.on_close_callback)
     nuke.addOnScriptClose(_create_csheet)
+
+    nuke.addUpdateUI(_gizmo_to_group_update_ui)
+    nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
 
 def abort_modified(func):
