@@ -4,9 +4,15 @@ import os
 import sys
 import re
 
-import validation
+
 from wlf import files
 import callback
+
+try:
+    import validation
+    del validation
+except ImportError:
+    sys.exit(0)
 
 print("python sys.setdefaultencoding('UTF-8')")
 reload(sys)

@@ -1,11 +1,17 @@
 # -*- coding: UTF-8 -*-
 """Nuke menu file."""
+import sys
 
-import validation
 import _ui
 import callback
 import pref
 from wlf import cgtwq
+
+try:
+    import validation
+    del validation
+except ImportError:
+    sys.exit(0)
 
 print(u'添加菜单')
 _ui.add_menu()
