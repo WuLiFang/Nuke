@@ -8,6 +8,8 @@ import re
 from wlf import files
 import callback
 
+__version__ = '0.3.1'
+
 try:
     __import__('validation')
 except ImportError:
@@ -19,7 +21,7 @@ print("python sys.setdefaultencoding('UTF-8')")
 reload(sys)
 sys.setdefaultencoding('UTF-8')
 
-print(u'吾立方插件初始化')
+print(u'吾立方插件 {}'.format(__version__))
 
 if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
     print(u'映射网络驱动器')
