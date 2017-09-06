@@ -4,6 +4,7 @@
 import os
 
 import nuke
+import nukescripts
 from autolabel import autolabel
 
 import wlf
@@ -17,6 +18,7 @@ import comp
 import uploader
 import splitexr
 import scanner
+import panels
 
 __version__ = '0.5.2'
 
@@ -122,7 +124,8 @@ def add_menu():
                      icon='autocomp.png')
         m.addCommand(
             '创建色板', wlf.csheet.dialog_create_html)
-        m.addCommand('上传mov', uploader.call_from_nuke)
+        m.addCommand('上传mov', lambda: nukescripts.panels.restorePanel(
+            'com.wlf.uploader'))
         m.addCommand('扫描空文件夹', scanner.call_from_nuke)
         m.addCommand('分离exr', splitexr.Dialog.show)
         m.addCommand("分割当前文件(根据背板)",
@@ -147,6 +150,11 @@ def add_menu():
     if wlf.cgtwq.MODULE_ENABLE:
         _cgtw(menubar)
     _create_node_menu()
+
+
+def add_panel():
+    """Add custom pannel. """
+    panels.register(uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
 def create_menu_by_dir(parent, dir_):

@@ -4,15 +4,15 @@
 import os
 import sys
 import re
-from subprocess import Popen, PIPE
 
 from wlf.Qt import QtCore, QtWidgets, QtCompat
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-from wlf.files import version_filter, copy, remove_version, is_same, get_unicode, get_server
+from wlf.files import version_filter, copy, remove_version,\
+    is_same, get_unicode, get_server, url_open
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.4.5'
+__version__ = '0.4.6'
 
 
 class Config(wlf.config.Config):
@@ -27,38 +27,6 @@ class Config(wlf.config.Config):
         'SCENE': '',
     }
     path = os.path.expanduser('~/.wlf.uploader.json')
-
-
-class SingleInstanceException(Exception):
-    """Indicate not single instance.  """
-
-    def __str__(self):
-        return u'已经有另一个实例在运行了'
-
-
-def check_single_instance():
-    """Raise SingleInstanceException if not run in singleinstance."""
-
-    pid = Config()['PID']
-    if isinstance(pid, int) and is_pid_exists(pid):
-        raise SingleInstanceException
-    Config()['PID'] = os.getpid()
-
-
-def is_pid_exists(pid):
-    """Check if pid existed.(Windows only)"""
-
-    if sys.platform != 'win32':
-        raise RuntimeError('Only support windows platfomr.')
-    _proc = Popen(
-        'TASKLIST /FI "PID eq {}" /FO CSV /NH'.format(pid),
-        stdout=PIPE
-    )
-    _stdout = _proc.communicate()[0]
-    ret = '"python.exe"' in _stdout \
-        or '"scenetools.exe"' in _stdout \
-        and '"{}"'.format(pid) in _stdout
-    return ret
 
 
 class Dialog(QDialog):
@@ -304,36 +272,6 @@ def main():
     frame = Dialog()
     frame.show()
     sys.exit(app.exec_())
-
-
-def call_from_nuke():
-    """Run this script standaloe.  """
-    nuke_window = QApplication.activeWindow()
-    frame = Dialog()
-    geo = frame.geometry()
-    geo.moveCenter(nuke_window.geometry().center())
-    frame.setGeometry(geo)
-    frame.show()
-
-
-def active_pid(pid):
-    """Active window of given pid.  """
-
-    if __name__ == '__main__':
-        _file = sys.argv[0]
-    else:
-        _file = __file__
-    _cmd = '"{}" "{}"'.format(
-        os.path.abspath(os.path.join(_file, '../active_pid.exe')),
-        pid
-    )
-    return Popen(_cmd)
-
-
-def url_open(url):
-    """Open url in explorer. """
-    _cmd = "rundll32.exe url.dll,FileProtocolHandler {}".format(url)
-    Popen(_cmd)
 
 
 if __name__ == '__main__':

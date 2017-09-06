@@ -15,6 +15,8 @@ except ImportError:
 
 print(u'添加菜单')
 _ui.add_menu()
+print(u'添加面板')
+_ui.add_panel()
 print(u'添加GUI callback')
 callback.menu()
 print(u'设置knob默认值')
