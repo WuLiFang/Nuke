@@ -9,10 +9,11 @@ from wlf import files
 import callback
 
 try:
-    import validation
-    del validation
+    __import__('validation')
 except ImportError:
-    sys.exit(0)
+    __import__('nuke').message('Plugin\n {} crushed.'.format(
+        os.path.normpath(os.path.join(__file__, '../../'))))
+    sys.exit(1)
 
 print("python sys.setdefaultencoding('UTF-8')")
 reload(sys)

@@ -8,10 +8,12 @@ import pref
 from wlf import cgtwq
 
 try:
-    import validation
-    del validation
+    __import__('validation')
 except ImportError:
-    sys.exit(0)
+    import os
+    __import__('nuke').message('Plugin\n {} crushed.'.format(
+        os.path.normpath(os.path.join(__file__, '../../'))))
+    sys.exit(1)
 
 print(u'添加菜单')
 _ui.add_menu()
