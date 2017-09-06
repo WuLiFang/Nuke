@@ -5,14 +5,15 @@ import os
 import sys
 import re
 
+from wlf import cgtwq
 from wlf.Qt import QtCore, QtWidgets, QtCompat, QtGui
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
 from wlf.files import version_filter, copy, remove_version,\
-    is_same, get_unicode, get_server, url_open
+    is_same, get_unicode, get_server, url_open, split_version
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.5.0'
+__version__ = '0.6.0'
 
 
 class Config(wlf.config.Config):
@@ -31,6 +32,7 @@ class Config(wlf.config.Config):
 
 class Dialog(QDialog):
     """Main GUI dialog.  """
+    is_check_account = True
 
     def __init__(self, parent=None):
         self._ignore = []
@@ -59,6 +61,9 @@ class Dialog(QDialog):
             self.actionUpdateUI.triggered.connect(self.update_ui)
             self.actionOpenDir.triggered.connect(self.open_dir)
             self.actionOpenServer.triggered.connect(self.open_server)
+            self.actionSelectAll.triggered.connect(self.select_all)
+            self.actionReverseSelection.triggered.connect(
+                self.reverse_selection)
 
         def _edits():
             def _set_config(k, v):
@@ -130,6 +135,7 @@ class Dialog(QDialog):
             self.epEdit: 'EPISODE',
             self.scEdit: 'SCENE',
             self.toolBox: 'MODE',
+            self.checkBoxSubmit: 'IS_SUBMIT',
         }
         self._config = Config()
         self.version_label.setText('v{}'.format(__version__))
@@ -147,6 +153,9 @@ class Dialog(QDialog):
             self._brushes['files'] = QtGui.QBrush(QtCore.Qt.black)
             self._brushes['ignore'] = QtGui.QBrush(QtCore.Qt.gray)
 
+        self._cgtw_dests = {}
+        self._showed_error_message = []
+
     def _start_update(self):
         """Start a thread for update."""
 
@@ -160,21 +169,20 @@ class Dialog(QDialog):
         files = self.files()
         mode = self.mode()
 
-        def _button_enabled():
-            if os.path.exists(get_server(self.server))\
-                    and os.path.isdir(os.path.dirname(self.dest)) and files:
-                self.syncButton.setEnabled(True)
-            else:
-                self.syncButton.setEnabled(False)
-
         def _list_widget():
             widget = self.listWidget
             all_files = files + self._ignore
 
             for i in xrange(widget.count()):
                 item = widget.item(i)
+                if not item:
+                    continue
+
                 if item.text() not in all_files:
-                    widget.takeItem(widget.indexFromItem(item))
+                    widget.takeItem(widget.indexFromItem(item).row())
+
+                elif not self.get_dest(item.text()):
+                    item.setCheckState(QtCore.Qt.Unchecked)
 
             for i in all_files:
                 try:
@@ -182,7 +190,7 @@ class Dialog(QDialog):
                         i, QtCore.Qt.MatchExactly)[0]
                 except IndexError:
                     item = QtWidgets.QListWidgetItem(i, widget)
-                    item.setCheckState(QtCore.Qt.Checked)
+                    item.setCheckState(QtCore.Qt.Unchecked)
                 if i in files:
                     item.setFlags(QtCore.Qt.ItemIsUserCheckable |
                                   QtCore.Qt.ItemIsEnabled)
@@ -194,13 +202,16 @@ class Dialog(QDialog):
 
             widget.sortItems()
 
-        _button_enabled()
         _list_widget()
+        checked_files = self.checked_files()
         if mode == 0:
+            self.syncButton.setEnabled(bool(os.path.exists(get_server(self.server))
+                                            and os.path.isdir(os.path.dirname(self.dest))
+                                            and checked_files))
             self.syncButton.setText(u'上传至: {}'.format(self.dest))
         elif mode == 1:
             self.syncButton.setText(u'上传至CGTeamWork')
-            self.syncButton.setEnabled(False)
+            self.syncButton.setEnabled(bool(checked_files))
 
     def files(self):
         """Return files in folder as list.  """
@@ -213,7 +224,7 @@ class Dialog(QDialog):
 
         for i in list(ret):
             src = os.path.join(self.dir, i)
-            dst = os.path.join(self.dest, remove_version(i))
+            dst = self.get_dest(i)
             if is_same(src, dst):
                 ret.remove(i)
                 self._ignore.append(i)
@@ -236,9 +247,22 @@ class Dialog(QDialog):
             all_num = len(files)
             for index, i in enumerate(files):
                 task.set(index * 100 // all_num, i)
+                if self.is_check_account:
+                    try:
+                        cgtwq.Shot(split_version(i)[0]).check_account()
+                    except cgtwq.AccountError as ex:
+                        self.error(u'{}\n已被分配给:\t{}\n当前用户:\t\t{}'.format(
+                            i, ex.owner or '<未分配>', ex.current))
+                        continue
+                    except (cgtwq.IDError, cgtwq.LoginError):
+                        self.error(u'{}: 不能上传'.format(i))
                 src = os.path.join(self.dir, i)
-                dst = os.path.join(self.dest, remove_version(i))
+                dst = self.get_dest(i)
                 copy(src, dst)
+                if self.is_submit:
+                    cgtwq.Shot(split_version(i)[0]).submit(
+                        [dst], note='自MOV上传工具提交')
+
         except CancelledError:
             pass
 
@@ -256,6 +280,30 @@ class Dialog(QDialog):
         )
         ret = os.path.normpath(ret)
         return ret
+
+    def get_dest(self, filename):
+        """Get destination for @filename. """
+        mode = self.mode()
+        if mode == 0:
+            return os.path.join(self.dest, remove_version(filename))
+        elif mode == 1:
+            try:
+                ret = self._cgtw_dests.get(filename) or cgtwq.Shot(
+                    split_version(filename)[0]).video_dest
+                self._cgtw_dests[filename] = ret
+                return ret
+            except cgtwq.LoginError:
+                self.error(u'需要登录CGTeamWork')
+            except cgtwq.IDError:
+                self.error(u'\n{}: CGTW上未找到对应镜头'.format(filename))
+        else:
+            raise ValueError('No such mode. {}'.format(mode))
+
+    def error(self, message):
+        """Show error.  """
+        if message not in self._showed_error_message:
+            self.textEdit.append(message)
+            self._showed_error_message.append(message)
 
     def mode(self):
         """Upload mode. """
@@ -292,6 +340,11 @@ class Dialog(QDialog):
             self._config['DIR'] = _dir
         self.autoset()
 
+    @property
+    def is_submit(self):
+        """Submit when upload or not.  """
+        return self.checkBoxSubmit.checkState()
+
     def autoset(self):
         """Auto set fields by dir.  """
 
@@ -321,6 +374,27 @@ class Dialog(QDialog):
         """Open config['SERVER'] in explorer.  """
 
         url_open('file://{}'.format(self._config['SERVER']))
+
+    def list_items(self):
+        """Item in list widget -> list."""
+
+        widget = self.listWidget
+        return list(widget.item(i) for i in xrange(widget.count()))
+
+    def select_all(self):
+        """Select all item in list widget.  """
+        for item in self.list_items():
+            if item.text() not in self._ignore:
+                item.setCheckState(QtCore.Qt.Checked)
+
+    def reverse_selection(self):
+        """Select all item in list widget.  """
+        for item in self.list_items():
+            if item.text() not in self._ignore:
+                if item.checkState():
+                    item.setCheckState(QtCore.Qt.Unchecked)
+                else:
+                    item.setCheckState(QtCore.Qt.Checked)
 
 
 def main():
