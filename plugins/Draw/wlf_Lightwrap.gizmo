@@ -6,7 +6,7 @@ Group {
  knobChanged "list(k.setEnabled(bool(nuke.numvalue('this.bg_mask'))) for k in nuke.thisNode().allKnobs() if k.name() in ('bg_preview', 'bg_blackpoint', 'bg_whitepoint'))"
  tile_color 0xcc804eff
  note_font 微软雅黑
- addUserKnob {20 tab_1 l "wlf_Lightwrap v0.1.2"}
+ addUserKnob {20 tab_1 l "wlf_Lightwrap v0.1.3"}
  addUserKnob {14 bg_blur l blur(模糊) t "Blurs background image before glow treatment is applied" R 0 100}
  addUserKnob {7 radius l radius(半径) t "Set the size of the glow." R 0 150}
  radius 100
@@ -40,7 +40,7 @@ Group {
   xpos 580
   ypos -1622
  }
-set N9f7ec800 [stack 0]
+set N47ca1400 [stack 0]
  Keyer {
   operation "luminance key"
   range {{parent.bg_blackpoint} {parent.bg_whitepoint} 1 1}
@@ -53,7 +53,7 @@ set N9f7ec800 [stack 0]
   xpos 704
   ypos -1170
  }
-set Ne1e10400 [stack 0]
+set N47ca0c00 [stack 0]
  Dot {
   name Dot1
   label "B after blur and keyer"
@@ -80,7 +80,7 @@ set Ne1e10400 [stack 0]
   xpos 670
   ypos -1562
  }
-set N478a9000 [stack 0]
+set Nb44c7c00 [stack 0]
  Dot {
   name Dot9
   label B
@@ -88,7 +88,7 @@ set N478a9000 [stack 0]
   ypos -278
   hide_input true
  }
-push $Ne1e10400
+push $N47ca0c00
  Input {
   inputs 0
   name Inputmask
@@ -116,8 +116,8 @@ push $Ne1e10400
   xpos 670
   ypos -1286
  }
-push $N478a9000
-push $N9f7ec800
+push $Nb44c7c00
+push $N47ca1400
  Copy {
   inputs 2
   from0 rgba.alpha
@@ -147,17 +147,19 @@ push $N9f7ec800
   ypos -1148
   disable {{!parent.bg_mask}}
  }
+set Nb44fd800 [stack 0]
  Premult {
   name Premult1
+  selected true
   xpos 580
-  ypos -1118
+  ypos -1122
  }
  Dot {
   name Dot2
   xpos 614
   ypos -1088
  }
-set N1de25800 [stack 0]
+set Nb44fd000 [stack 0]
  Dot {
   name Dot4
   xpos 704
@@ -177,14 +179,14 @@ set N1de25800 [stack 0]
   xpos 670
   ypos -380
  }
- set C1de24c00 [stack 0]
+ set Cb44fc400 [stack 0]
  Multiply {
   value 0.2
   name Multiply2
   xpos 670
   ypos -350
  }
-push $N1de25800
+push $Nb44fd000
  Dot {
   name Dot5
   xpos 704
@@ -199,7 +201,7 @@ push $N1de25800
   xpos 670
   ypos -564
  }
-clone $C1de24c00 {
+clone $Cb44fc400 {
   xpos 670
   ypos -534
   selected false
@@ -210,7 +212,7 @@ clone $C1de24c00 {
   xpos 670
   ypos -504
  }
-push $N1de25800
+push $Nb44fd000
  Dot {
   name Dot6
   xpos 704
@@ -225,7 +227,7 @@ push $N1de25800
   xpos 670
   ypos -718
  }
-clone $C1de24c00 {
+clone $Cb44fc400 {
   xpos 670
   ypos -688
   selected false
@@ -236,7 +238,7 @@ clone $C1de24c00 {
   xpos 670
   ypos -658
  }
-push $N1de25800
+push $Nb44fd000
  Dot {
   name Dot7
   xpos 704
@@ -251,7 +253,7 @@ push $N1de25800
   xpos 670
   ypos -872
  }
-clone $C1de24c00 {
+clone $Cb44fc400 {
   xpos 670
   ypos -842
   selected false
@@ -262,7 +264,7 @@ clone $C1de24c00 {
   xpos 670
   ypos -812
  }
-push $N1de25800
+push $Nb44fd000
  Dot {
   name Dot8
   xpos 704
@@ -277,12 +279,12 @@ push $N1de25800
   xpos 670
   ypos -984
  }
-clone $C1de24c00 {
+clone $Cb44fc400 {
   xpos 670
   ypos -954
   selected false
  }
-push $N1de25800
+push $Nb44fd000
  Blur {
   channels rgb
   size {{"parent.radius * 0.01"}}
@@ -291,7 +293,7 @@ push $N1de25800
   xpos 580
   ypos -1066
  }
-clone $C1de24c00 {
+clone $Cb44fc400 {
   xpos 580
   ypos -1036
   selected false
@@ -303,26 +305,26 @@ clone $C1de24c00 {
   xpos 580
   ypos -924
  }
- set C1db6a000 [stack 0]
-clone $C1db6a000 {
+ set Cbb76d800 [stack 0]
+clone $Cbb76d800 {
   inputs 2
   xpos 580
   ypos -770
   selected false
  }
-clone $C1db6a000 {
+clone $Cbb76d800 {
   inputs 2
   xpos 580
   ypos -616
   selected false
  }
-clone $C1db6a000 {
+clone $Cbb76d800 {
   inputs 2
   xpos 580
   ypos -462
   selected false
  }
-clone $C1db6a000 {
+clone $Cbb76d800 {
   inputs 2
   xpos 580
   ypos -308
@@ -341,20 +343,20 @@ clone $C1db6a000 {
   xpos 580
   ypos -226
  }
-set N1d970c00 [stack 0]
+set Nbb76c000 [stack 0]
  Premult {
   invert true
   name Premult3
   xpos 580
   ypos -184
  }
-push $N1d970c00
-push $N478a9000
+push $Nbb76c000
+push $Nb44c7c00
  Dot {
   name Dot3
   label B
   xpos 34
-  ypos -236
+  ypos -232
   hide_input true
  }
  Merge2 {
@@ -366,11 +368,6 @@ push $N478a9000
   xpos 0
   ypos -214
   disable {{parent.effect_only}}
- }
- Premult {
-  name Premult2
-  xpos 0
-  ypos -184
  }
  Switch {
   inputs 2
@@ -390,5 +387,14 @@ push $N478a9000
   name Output1
   xpos 0
   ypos -30
+ }
+push $Nb44fd800
+ Viewer {
+  frame_range 1-1
+  fps 25
+  input_process false
+  name Viewer1
+  xpos 110
+  ypos -188
  }
 end_group
