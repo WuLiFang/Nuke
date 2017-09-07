@@ -28,6 +28,18 @@ def init():
 def menu():
     """Add callback for nuke menu phase."""
 
+    nuke.addOnScriptSave(_autoplace)
+    nuke.addOnScriptSave(_enable_node)
+    nuke.addOnScriptSave(_lock_connections)
+    nuke.addOnScriptSave(_jump_frame)
+
+    nuke.addOnScriptClose(_send_to_render_dir)
+    nuke.addOnScriptClose(_render_jpg)
+    nuke.addOnScriptClose(_create_csheet)
+
+    nuke.addUpdateUI(_gizmo_to_group_update_ui)
+    nuke.addOnUserCreate(_gizmo_to_group_on_create)
+
     print(u'增强节点标签')
     nuke.addAutolabel(_ui.custom_autolabel)
 
@@ -53,19 +65,6 @@ def menu():
         nuke.addOnScriptLoad(cgtwn.on_load_callback)
         nuke.addOnScriptSave(cgtwn.on_save_callback)
         nuke.addOnScriptClose(cgtwn.on_close_callback)
-
-    # Preference option
-    nuke.addOnScriptSave(_autoplace)
-    nuke.addOnScriptSave(_enable_node)
-    nuke.addOnScriptSave(_lock_connections)
-    nuke.addOnScriptSave(_jump_frame)
-
-    nuke.addOnScriptClose(_send_to_render_dir)
-    nuke.addOnScriptClose(_render_jpg)
-    nuke.addOnScriptClose(_create_csheet)
-
-    nuke.addUpdateUI(_gizmo_to_group_update_ui)
-    nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
 
 def abort_modified(func):
