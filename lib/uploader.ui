@@ -74,6 +74,13 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
+          <widget class="QLabel" name="labelCount">
+           <property name="text">
+            <string>local/total</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -381,7 +388,10 @@
             <item>
              <widget class="QTextEdit" name="textEdit">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
               </property>
              </widget>
             </item>

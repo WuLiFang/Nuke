@@ -3,6 +3,8 @@
 
 import os
 import sys
+import threading
+import time
 
 from wlf import cgtwq
 from wlf.Qt import QtCore, QtWidgets, QtCompat, QtGui
@@ -12,7 +14,7 @@ from wlf.files import version_filter, copy, remove_version,\
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.3'
+__version__ = '0.6.4'
 
 
 class Config(wlf.config.Config):
@@ -32,6 +34,7 @@ class Config(wlf.config.Config):
 class Dialog(QDialog):
     """Main GUI dialog.  """
     is_check_account = True
+    _config = Config()
 
     def __init__(self, parent=None):
         self._uploaded_files = []
@@ -127,24 +130,36 @@ class Dialog(QDialog):
             self.checkBoxSubmit: 'IS_SUBMIT',
             self.checkBoxBurnIn: 'IS_BURN_IN',
         }
-        self._config = Config()
-        self.version_label.setText('v{}'.format(__version__))
         self._file_list_widget = FileListWidget(self.listWidget)
         self._cgtw_dests = {}
+        self._lock = threading.Lock()
+        self.version_label.setText('v{}'.format(__version__))
 
         _icon()
         _actions()
         _edits()
         _recover()
 
-        self._start_update()
+        self._update_thread = self._start_update_thread()
 
-    def _start_update(self):
+    def closeEvent(self, event):
+        """override.  """
+        self._lock.acquire()
+        del self._file_list_widget
+        event.accept()
+
+    def _start_update_thread(self):
         """Start a thread for update."""
-
-        _timer = QtCore.QTimer(self)
-        _timer.timeout.connect(self.update_ui)
-        _timer.start(200)
+        def _run():
+            lock = self._lock
+            while lock.acquire(False):
+                self.update_ui()
+                time.sleep(0.1)
+                lock.release()
+        thread = threading.Thread(name='DialogUpdate', target=_run)
+        thread.daemon = True
+        thread.start()
+        return thread
 
     def update_ui(self):
         """Update dialog UI content.  """
@@ -172,6 +187,9 @@ class Dialog(QDialog):
                 task.set(index * 100 // all_num, i)
                 src = os.path.join(self.directory, i)
                 dst = self.get_dest(i)
+                if isinstance(dst, Exception):
+                    self.error(u'{}\n-> {}'.format(i, dst))
+                    continue
                 copy(src, dst)
                 if self.is_submit and self.mode() == 1:
                     cgtwq.Shot(split_version(i)[0]).submit(
@@ -214,7 +232,7 @@ class Dialog(QDialog):
                     self.error(u'{}: CGTW上未找到对应镜头'.format(filename))
                     ret = ex
                 except cgtwq.AccountError as ex:
-                    self.error(u'{}\n已被分配给: {}\n当前用户: {}\n'.format(
+                    self.error(u'{}\n已被分配给: {}\n当前用户: {}'.format(
                         filename, ex.owner or u'<未分配>', ex.current))
                     ret = ex
                 self._cgtw_dests[filename] = ret
@@ -224,7 +242,7 @@ class Dialog(QDialog):
 
     def error(self, message):
         """Show error.  """
-        self.textEdit.append(message)
+        self.textEdit.append(u'{}\n'.format(message))
 
     def mode(self):
         """Upload mode. """
@@ -308,6 +326,7 @@ class FileListWidget(object):
         self.local_files = []
         self.uploaded_files = []
         self._brushes = {}
+        self._lock = threading.Lock()
         if HAS_NUKE:
             self._brushes['local'] = QtGui.QBrush(QtGui.QColor(200, 200, 200))
             self._brushes['uploaded'] = QtGui.QBrush(
@@ -321,19 +340,31 @@ class FileListWidget(object):
         self.parent.actionReverseSelection.triggered.connect(
             self.reverse_selection)
 
-        self._start_update()
+        self._update_thread = self._start_update_thread()
+
+    def __del__(self):
+        self._lock.acquire()
 
     @property
     def directory(self):
         """Current working dir.  """
-        return self.parent.dirEdit.text()
+        return self.parent.directory
 
-    def _start_update(self):
+    def _start_update_thread(self):
         """Start a thread for update."""
-
-        _timer = QtCore.QTimer(self.widget)
-        _timer.timeout.connect(self.update)
-        _timer.start(3000)
+        def _run():
+            lock = self._lock
+            while lock.acquire(False):
+                try:
+                    self.update()
+                except RuntimeError:
+                    pass
+                time.sleep(1)
+                lock.release()
+        thread = threading.Thread(name='ListWidgetUpdate', target=_run)
+        thread.daemon = True
+        thread.start()
+        return thread
 
     def update(self):
         """Update info.  """
@@ -371,6 +402,10 @@ class FileListWidget(object):
                 item.setCheckState(QtCore.Qt.Unchecked)
 
         widget.sortItems()
+
+        # Count
+        self.parent.labelCount.setText(
+            '{}/{}'.format(len(local_files), len(all_files)))
 
     def update_files(self):
         """Update local_files and uploaded_files.  """
