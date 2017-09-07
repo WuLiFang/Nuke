@@ -87,6 +87,16 @@
           </spacer>
          </item>
          <item>
+          <widget class="QCheckBox" name="checkBoxBurnIn">
+           <property name="toolTip">
+            <string>双击时使用burn-in版本(如果有)</string>
+           </property>
+           <property name="text">
+            <string>辅助信息</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QToolButton" name="toolButtonSelectAll">
            <property name="text">
             <string>全选</string>
