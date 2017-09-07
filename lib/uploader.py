@@ -12,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version,\
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.2'
+__version__ = '0.6.3'
 
 
 class Config(wlf.config.Config):
@@ -32,7 +32,6 @@ class Config(wlf.config.Config):
 class Dialog(QDialog):
     """Main GUI dialog.  """
     is_check_account = True
-    burnin_folder = 'burn-in'
 
     def __init__(self, parent=None):
         self._uploaded_files = []
@@ -59,9 +58,6 @@ class Dialog(QDialog):
             self.actionUpdateUI.triggered.connect(self.update_ui)
             self.actionOpenDir.triggered.connect(self.open_dir)
             self.actionOpenServer.triggered.connect(self.open_server)
-            self.actionSelectAll.triggered.connect(self.select_all)
-            self.actionReverseSelection.triggered.connect(
-                self.reverse_selection)
 
         def _edits():
             def _set_config(k, v):
@@ -96,9 +92,6 @@ class Dialog(QDialog):
                 else:
                     print(u'待处理的控件: {} {}'.format(type(edit), edit))
 
-            self.dirEdit.editingFinished.connect(self.listWidget.clear)
-            self.listWidget.itemDoubleClicked.connect(self.open_file)
-
         def _recover():
             for qt_edit, k in self.edits_key.items():
                 try:
@@ -118,7 +111,7 @@ class Dialog(QDialog):
             if HAS_NUKE:
                 from node import Last
                 if Last.mov_path:
-                    self.dir = get_unicode(Last.mov_path)
+                    self.directory = get_unicode(Last.mov_path)
 
         QDialog.__init__(self, parent)
         QtCompat.loadUi(os.path.join(__file__, '../uploader.ui'), self)
@@ -136,127 +129,51 @@ class Dialog(QDialog):
         }
         self._config = Config()
         self.version_label.setText('v{}'.format(__version__))
-        self._start_update()
+        self._file_list_widget = FileListWidget(self.listWidget)
+        self._cgtw_dests = {}
 
         _icon()
         _actions()
         _edits()
         _recover()
-        self._brushes = {}
-        if HAS_NUKE:
-            self._brushes['local'] = QtGui.QBrush(QtGui.QColor(200, 200, 200))
-            self._brushes['uploaded'] = QtGui.QBrush(
-                QtGui.QColor(100, 100, 100))
-        else:
-            self._brushes['local'] = QtGui.QBrush(QtCore.Qt.black)
-            self._brushes['uploaded'] = QtGui.QBrush(QtCore.Qt.gray)
 
-        self._cgtw_dests = {}
-        self._showed_error_message = []
+        self._start_update()
 
     def _start_update(self):
         """Start a thread for update."""
 
         _timer = QtCore.QTimer(self)
         _timer.timeout.connect(self.update_ui)
-        _timer.start(0)
+        _timer.start(200)
 
     def update_ui(self):
         """Update dialog UI content.  """
-        files = self.files()
         mode = self.mode()
 
-        def _list_widget():
-            widget = self.listWidget
-            all_files = files + self._uploaded_files
-
-            for i in xrange(widget.count()):
-                item = widget.item(i)
-                if not item:
-                    continue
-
-                if item.text() not in all_files:
-                    widget.takeItem(widget.indexFromItem(item).row())
-
-                elif not self.get_dest(item.text()):
-                    item.setCheckState(QtCore.Qt.Unchecked)
-
-            for i in all_files:
-                try:
-                    item = self.listWidget.findItems(
-                        i, QtCore.Qt.MatchExactly)[0]
-                except IndexError:
-                    item = QtWidgets.QListWidgetItem(i, widget)
-                    item.setCheckState(QtCore.Qt.Unchecked)
-                if i in files:
-                    item.setFlags(QtCore.Qt.ItemIsUserCheckable |
-                                  QtCore.Qt.ItemIsEnabled)
-                    item.setForeground(self._brushes['local'])
-                else:
-                    item.setFlags(QtCore.Qt.ItemIsEnabled)
-                    item.setForeground(self._brushes['uploaded'])
-                    item.setCheckState(QtCore.Qt.Unchecked)
-
-            widget.sortItems()
-
-        _list_widget()
-        checked_files = self.checked_files()
+        checked_files = self._file_list_widget.checked_files
         if mode == 0:
             self.syncButton.setEnabled(bool(os.path.exists(get_server(self.server))
-                                            and os.path.isdir(os.path.dirname(self.dest))
+                                            and os.path.isdir(os.path.dirname(self.dest_folder))
                                             and checked_files))
-            self.syncButton.setText(u'上传至: {}'.format(self.dest))
+            self.syncButton.setText(u'上传至: {}'.format(self.dest_folder))
         elif mode == 1:
             self.syncButton.setText(u'上传至CGTeamWork')
             self.syncButton.setEnabled(bool(checked_files))
 
-    def files(self):
-        """Return files in folder as list.  """
-
-        self._uploaded_files = []
-        if not os.path.isdir(self.dir):
-            return []
-        ret = version_filter(i for i in os.listdir(self.dir)
-                             if i.endswith('.mov'))
-
-        for i in list(ret):
-            src = os.path.join(self.dir, i)
-            dst = self.get_dest(i)
-            if is_same(src, dst):
-                ret.remove(i)
-                self._uploaded_files.append(i)
-
-        return ret
-
-    def checked_files(self):
-        """Return files checked in listwidget.  """
-        widget = self.listWidget
-        return list(widget.item(i).text() for i in xrange(widget.count())
-                    if widget.item(i).checkState())
-
     def upload(self):
         """Upload videos to server.  """
-        if not os.path.exists(self.dest):
-            os.mkdir(self.dest)
+        if not os.path.exists(self.dest_folder):
+            os.mkdir(self.dest_folder)
         try:
             task = Progress()
-            files = self.checked_files()
+            files = self.checked_files
             all_num = len(files)
             for index, i in enumerate(files):
                 task.set(index * 100 // all_num, i)
-                if self.is_check_account:
-                    try:
-                        cgtwq.Shot(split_version(i)[0]).check_account()
-                    except cgtwq.AccountError as ex:
-                        self.error(u'{}\n已被分配给:\t{}\n当前用户:\t\t{}'.format(
-                            i, ex.owner or '<未分配>', ex.current))
-                        continue
-                    except (cgtwq.IDError, cgtwq.LoginError):
-                        self.error(u'{}: 不能上传'.format(i))
-                src = os.path.join(self.dir, i)
+                src = os.path.join(self.directory, i)
                 dst = self.get_dest(i)
                 copy(src, dst)
-                if self.is_submit:
+                if self.is_submit and self.mode() == 1:
                     cgtwq.Shot(split_version(i)[0]).submit(
                         [dst], note='自MOV上传工具提交')
 
@@ -265,21 +182,9 @@ class Dialog(QDialog):
 
         self.activateWindow()
 
-    @QtCore.Slot(QtWidgets.QListWidgetItem)
-    def open_file(self, item):
-        """Open mov file for preview.  """
-        filename = item.text()
-        path = os.path.join(self.dir, filename)
-        burn_in_path = os.path.join(self.dir, self.burnin_folder, filename)
-
-        url_open(burn_in_path
-                 if self.is_use_burnin and os.path.exists(burn_in_path)
-                 else path,
-                 isfile=True)
-
     @property
-    def dest(self):
-        """File upload destination.  """
+    def dest_folder(self):
+        """File upload folder destination.  """
         ret = os.path.join(
             self.server,
             self.project,
@@ -290,42 +195,51 @@ class Dialog(QDialog):
         ret = os.path.normpath(ret)
         return ret
 
-    def get_dest(self, filename):
+    def get_dest(self, filename, refresh=False):
         """Get destination for @filename. """
         mode = self.mode()
         if mode == 0:
-            return os.path.join(self.dest, remove_version(filename))
+            return os.path.join(self.dest_folder, remove_version(filename))
         elif mode == 1:
-            try:
-                ret = self._cgtw_dests.get(filename) or cgtwq.Shot(
-                    split_version(filename)[0]).video_dest
+            ret = self._cgtw_dests.get(filename)
+            if not ret or (isinstance(ret, Exception) and refresh):
+                try:
+                    shot = cgtwq.Shot(split_version(filename)[0])
+                    shot.check_account()
+                    ret = shot.video_dest
+                except cgtwq.LoginError as ex:
+                    self.error(u'需要登录CGTeamWork')
+                    ret = ex
+                except cgtwq.IDError as ex:
+                    self.error(u'{}: CGTW上未找到对应镜头'.format(filename))
+                    ret = ex
+                except cgtwq.AccountError as ex:
+                    self.error(u'{}\n已被分配给: {}\n当前用户: {}\n'.format(
+                        filename, ex.owner or u'<未分配>', ex.current))
+                    ret = ex
                 self._cgtw_dests[filename] = ret
-                return ret
-            except cgtwq.LoginError:
-                self.error(u'需要登录CGTeamWork')
-            except cgtwq.IDError:
-                self.error(u'\n{}: CGTW上未找到对应镜头'.format(filename))
+            return ret
         else:
             raise ValueError('No such mode. {}'.format(mode))
 
     def error(self, message):
         """Show error.  """
-        if message not in self._showed_error_message:
-            self.textEdit.append(message)
-            self._showed_error_message.append(message)
+        self.textEdit.append(message)
 
     def mode(self):
         """Upload mode. """
         return self.toolBox.currentIndex()
 
     @property
-    def dir(self):
+    def directory(self):
         """Current working dir.  """
         return self.dirEdit.text()
 
-    @dir.setter
-    def dir(self, value):
-        self.dirEdit.setText(os.path.normpath(value))
+    @directory.setter
+    def directory(self, value):
+        value = os.path.normpath(value)
+        if value != self.directory:
+            self.dirEdit.setText(value)
 
     @property
     def server(self):
@@ -345,7 +259,7 @@ class Dialog(QDialog):
             dir=os.path.dirname(self._config['DIR'])
         )
         if _dir:
-            self.dir = _dir
+            self.directory = _dir
             self._config['DIR'] = _dir
 
     @property
@@ -354,9 +268,9 @@ class Dialog(QDialog):
         return self.checkBoxSubmit.checkState()
 
     @property
-    def is_use_burnin(self):
-        """Use burn-in version when preview.  """
-        return self.checkBoxBurnIn.checkState()
+    def checked_files(self):
+        """Return files checked in listwidget.  """
+        return self._file_list_widget.checked_files
 
     def ask_server(self):
         """Show a dialog ask user config['SERVER'].  """
@@ -378,22 +292,144 @@ class Dialog(QDialog):
 
         url_open('file://{}'.format(self._config['SERVER']))
 
-    def list_items(self):
+
+class FileListWidget(object):
+    """Folder viewer.  """
+    widget = None
+    parent = None
+    local_files = None
+    uploaded_files = None
+    burnin_folder = 'burn-in'
+
+    def __init__(self, list_widget):
+        self.widget = list_widget
+        self.parent = self.widget.parent()
+        assert isinstance(self.parent, Dialog)
+        self.local_files = []
+        self.uploaded_files = []
+        self._brushes = {}
+        if HAS_NUKE:
+            self._brushes['local'] = QtGui.QBrush(QtGui.QColor(200, 200, 200))
+            self._brushes['uploaded'] = QtGui.QBrush(
+                QtGui.QColor(100, 100, 100))
+        else:
+            self._brushes['local'] = QtGui.QBrush(QtCore.Qt.black)
+            self._brushes['uploaded'] = QtGui.QBrush(QtCore.Qt.gray)
+
+        self.widget.itemDoubleClicked.connect(self.open_file)
+        self.parent.actionSelectAll.triggered.connect(self.select_all)
+        self.parent.actionReverseSelection.triggered.connect(
+            self.reverse_selection)
+
+        self._start_update()
+
+    @property
+    def directory(self):
+        """Current working dir.  """
+        return self.parent.dirEdit.text()
+
+    def _start_update(self):
+        """Start a thread for update."""
+
+        _timer = QtCore.QTimer(self.widget)
+        _timer.timeout.connect(self.update)
+        _timer.start(3000)
+
+    def update(self):
+        """Update info.  """
+        self.update_files()
+        widget = self.widget
+        local_files = self.local_files
+        all_files = local_files + self.uploaded_files
+
+        # Remove.
+        for item in self.items():
+            text = item.text()
+            if text not in all_files:
+                widget.takeItem(widget.indexFromItem(item).row())
+
+            elif item.checkState() \
+                    and isinstance(self.parent.get_dest(text, refresh=True), Exception):
+                item.setCheckState(QtCore.Qt.Unchecked)
+
+        for i in all_files:
+            # Add.
+            try:
+                item = self.widget.findItems(
+                    i, QtCore.Qt.MatchExactly)[0]
+            except IndexError:
+                item = QtWidgets.QListWidgetItem(i, widget)
+                item.setCheckState(QtCore.Qt.Unchecked)
+            # Set style.
+            if i in local_files:
+                item.setFlags(QtCore.Qt.ItemIsUserCheckable |
+                              QtCore.Qt.ItemIsEnabled)
+                item.setForeground(self._brushes['local'])
+            else:
+                item.setFlags(QtCore.Qt.ItemIsEnabled)
+                item.setForeground(self._brushes['uploaded'])
+                item.setCheckState(QtCore.Qt.Unchecked)
+
+        widget.sortItems()
+
+    def update_files(self):
+        """Update local_files and uploaded_files.  """
+
+        if not os.path.isdir(self.directory):
+            return
+        local_files = version_filter(i for i in os.listdir(self.directory)
+                                     if i.endswith('.mov'))
+
+        uploaded_files = []
+        for i in list(local_files):
+            src = os.path.join(self.directory, i)
+            dst = self.parent.get_dest(i)
+            if isinstance(dst, (str, unicode)) and is_same(src, dst):
+                local_files.remove(i)
+                uploaded_files.append(i)
+
+        self.uploaded_files = uploaded_files
+        self.local_files = local_files
+
+    @property
+    def checked_files(self):
+        """Return files checked in listwidget.  """
+        return [i.text() for i in self.items() if i.checkState()]
+
+    @property
+    def is_use_burnin(self):
+        """Use burn-in version when preview.  """
+        return self.parent.checkBoxBurnIn.checkState()
+
+    @QtCore.Slot(QtWidgets.QListWidgetItem)
+    def open_file(self, item):
+        """Open mov file for preview.  """
+        filename = item.text()
+        path = os.path.join(self.directory, filename)
+        burn_in_path = os.path.join(
+            self.directory, self.burnin_folder, filename)
+
+        url_open(burn_in_path
+                 if self.is_use_burnin and os.path.exists(burn_in_path)
+                 else path,
+                 isfile=True)
+
+    def items(self):
         """Item in list widget -> list."""
 
-        widget = self.listWidget
+        widget = self.widget
         return list(widget.item(i) for i in xrange(widget.count()))
 
     def select_all(self):
         """Select all item in list widget.  """
-        for item in self.list_items():
-            if item.text() not in self._uploaded_files:
+        for item in self.items():
+            if item.text() not in self.uploaded_files:
                 item.setCheckState(QtCore.Qt.Checked)
 
     def reverse_selection(self):
         """Select all item in list widget.  """
-        for item in self.list_items():
-            if item.text() not in self._uploaded_files:
+        for item in self.items():
+            if item.text() not in self.uploaded_files:
                 if item.checkState():
                     item.setCheckState(QtCore.Qt.Unchecked)
                 else:
