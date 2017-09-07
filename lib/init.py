@@ -24,8 +24,10 @@ except ImportError:
         os.path.normpath(os.path.join(__file__, '../../'))))
     sys.exit(1)
 print('')
-if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
-    print(u'映射网络驱动器')
-    files.map_drivers()
+
+if sys.platform == 'win32':
+    if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
+        print(u'映射网络驱动器')
+        files.map_drivers()
 
 callback.init()

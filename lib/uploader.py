@@ -125,7 +125,7 @@ class Dialog(QDialog):
             self.autoset()
 
         QDialog.__init__(self, parent)
-        QtCompat.loadUi(os.path.join(__file__, '../uploader.ui'), self)
+        QtCompat.loadUi(os.path.abspath(os.path.join(__file__, '../uploader.ui')), self)
 
         self.edits_key = {
             self.serverEdit: 'SERVER',
