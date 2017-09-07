@@ -12,7 +12,7 @@ from wlf.files import version_filter, copy, remove_version,\
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 
 
 class Config(wlf.config.Config):
@@ -40,9 +40,6 @@ class Dialog(QDialog):
         def _icon():
             _stdicon = self.style().standardIcon
 
-            _icon = _stdicon(QtWidgets.QStyle.SP_FileDialogListView)
-            self.syncButton.setIcon(_icon)
-
             _icon = _stdicon(QtWidgets.QStyle.SP_DirOpenIcon)
             self.toolButtonOpenDir.setIcon(_icon)
             self.toolButtonOpenServer.setIcon(_icon)
@@ -52,6 +49,7 @@ class Dialog(QDialog):
             self.serverButton.setIcon(_icon)
 
             _icon = _stdicon(QtWidgets.QStyle.SP_FileDialogToParent)
+            self.syncButton.setIcon(_icon)
             self.setWindowIcon(_icon)
 
         def _actions():
