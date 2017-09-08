@@ -182,7 +182,7 @@ class Dialog(QDialog):
             os.mkdir(self.dest_folder)
         try:
             task = Progress()
-            files = self.checked_files
+            files = list(self.checked_files)
             all_num = len(files)
             for index, i in enumerate(files):
                 task.set(index * 100 // all_num, i)
