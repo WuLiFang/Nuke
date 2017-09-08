@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
+    <width>497</width>
     <height>535</height>
    </rect>
   </property>
@@ -74,6 +74,13 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
+          <widget class="QLabel" name="labelCount">
+           <property name="text">
+            <string>local/total</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -85,6 +92,16 @@
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxBurnIn">
+           <property name="toolTip">
+            <string>双击时使用burn-in版本(如果有)</string>
+           </property>
+           <property name="text">
+            <string>辅助信息</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QToolButton" name="toolButtonSelectAll">
@@ -319,6 +336,9 @@
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="toolTip">
+               <string>上传时同时进行一次对应镜头的CGTeamWork提交</string>
+              </property>
               <property name="text">
                <string>提交</string>
               </property>
@@ -328,9 +348,50 @@
              </widget>
             </item>
             <item>
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>信息</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QToolButton" name="toolButtonClearInfo">
+                <property name="text">
+                 <string>清空</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
              <widget class="QTextEdit" name="textEdit">
               <property name="enabled">
-               <bool>false</bool>
+               <bool>true</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -379,11 +440,6 @@
     </widget>
    </item>
   </layout>
-  <action name="actionSheet">
-   <property name="text">
-    <string>sheet</string>
-   </property>
-  </action>
   <action name="actionSync">
    <property name="text">
     <string>sync</string>
@@ -402,11 +458,6 @@
   <action name="actionDir">
    <property name="text">
     <string>dir</string>
-   </property>
-  </action>
-  <action name="actionNuke">
-   <property name="text">
-    <string>nuke</string>
    </property>
   </action>
   <action name="actionUpdateUI">
@@ -434,6 +485,11 @@
     <string>reverseSelection</string>
    </property>
   </action>
+  <action name="actionClearInfo">
+   <property name="text">
+    <string>clearInfo</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -444,8 +500,8 @@
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>442</x>
-     <y>38</y>
+     <x>486</x>
+     <y>28</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -460,8 +516,8 @@
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>429</x>
-     <y>172</y>
+     <x>466</x>
+     <y>130</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -492,8 +548,8 @@
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>161</y>
+     <x>365</x>
+     <y>102</y>
     </hint>
     <hint type="destinationlabel">
      <x>-1</x>
@@ -546,6 +602,38 @@
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonClearInfo</sender>
+   <signal>clicked()</signal>
+   <receiver>actionClearInfo</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>445</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButtonClearInfo</sender>
+   <signal>clicked()</signal>
+   <receiver>textEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>442</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>270</y>
     </hint>
    </hints>
   </connection>
