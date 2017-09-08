@@ -14,7 +14,7 @@ from wlf.files import version_filter, copy, remove_version,\
 from wlf.progress import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.4'
+__version__ = '0.6.5'
 
 
 class Config(wlf.config.Config):
@@ -117,7 +117,8 @@ class Dialog(QDialog):
                     self.directory = get_unicode(Last.mov_path)
 
         QDialog.__init__(self, parent)
-        QtCompat.loadUi(os.path.abspath(os.path.join(__file__, '../uploader.ui')), self)
+        QtCompat.loadUi(os.path.abspath(
+            os.path.join(__file__, '../uploader.ui')), self)
 
         self.edits_key = {
             self.serverEdit: 'SERVER',
@@ -163,17 +164,17 @@ class Dialog(QDialog):
 
     def update_ui(self):
         """Update dialog UI content.  """
-        mode = self.mode()
 
-        checked_files = self._file_list_widget.checked_files
+        mode = self.mode()
+        sync_button_enable = any(self._file_list_widget.checked_files)
+        sync_button_text = u'上传至CGTeamWork'
         if mode == 0:
-            self.syncButton.setEnabled(bool(os.path.exists(get_server(self.server))
-                                            and os.path.isdir(os.path.dirname(self.dest_folder))
-                                            and checked_files))
-            self.syncButton.setText(u'上传至: {}'.format(self.dest_folder))
-        elif mode == 1:
-            self.syncButton.setText(u'上传至CGTeamWork')
-            self.syncButton.setEnabled(bool(checked_files))
+            sync_button_enable &= os.path.exists(get_server(self.server))\
+                and os.path.isdir(os.path.dirname(self.dest_folder))
+            sync_button_text = u'上传至: {}'.format(self.dest_folder)
+
+        self.syncButton.setText(sync_button_text)
+        self.syncButton.setEnabled(sync_button_enable)
 
     def upload(self):
         """Upload videos to server.  """
@@ -405,7 +406,7 @@ class FileListWidget(object):
 
         # Count
         self.parent.labelCount.setText(
-            '{}/{}'.format(len(local_files), len(all_files)))
+            '{}/{}/{}'.format(len(list(self.checked_files)), len(local_files), len(all_files)))
 
     def update_files(self):
         """Update local_files and uploaded_files.  """
@@ -429,7 +430,7 @@ class FileListWidget(object):
     @property
     def checked_files(self):
         """Return files checked in listwidget.  """
-        return [i.text() for i in self.items() if i.checkState()]
+        return (i.text() for i in self.items() if i.checkState())
 
     @property
     def is_use_burnin(self):
