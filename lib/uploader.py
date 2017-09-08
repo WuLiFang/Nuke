@@ -11,7 +11,7 @@ from wlf.Qt import QtCore, QtWidgets, QtCompat, QtGui
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
 from wlf.files import version_filter, copy, remove_version,\
     is_same, get_unicode, get_server, url_open, split_version
-from wlf.progress import Progress, CancelledError, HAS_NUKE
+from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
 __version__ = '0.6.5'

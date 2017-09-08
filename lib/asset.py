@@ -7,7 +7,7 @@ import re
 import nuke
 
 from wlf.files import expand_frame, copy, get_encoded, get_unicode, is_ascii
-from wlf.progress import Progress, CancelledError
+from wlf.notify import Progress, CancelledError
 
 __version__ = '0.4.1'
 

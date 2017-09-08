@@ -11,7 +11,7 @@ from subprocess import Popen
 import nuke
 import nukescripts
 
-from wlf.progress import Progress
+from wlf.notify import Progress
 from wlf.files import url_open, get_footage_name, get_encoded
 
 __version__ = '0.1.1'

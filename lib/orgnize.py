@@ -4,7 +4,7 @@ import random
 
 import nuke
 
-from wlf.progress import Progress, CancelledError
+from wlf.notify import Progress, CancelledError
 
 from node import get_upstream_nodes
 

@@ -14,7 +14,7 @@ import nuke
 import nukescripts
 
 from wlf.files import escape_batch, get_encoded, get_unicode, url_open
-from wlf.progress import Progress
+from wlf.notify import Progress
 import wlf.config
 
 import precomp

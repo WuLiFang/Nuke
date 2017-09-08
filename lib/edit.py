@@ -9,7 +9,7 @@ import random
 import nuke
 import nukescripts
 
-from wlf.progress import Progress
+from wlf.notify import Progress
 
 from asset import dropdata_handler
 
