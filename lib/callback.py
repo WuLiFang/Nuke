@@ -13,7 +13,7 @@ import cgtwn
 import orgnize
 
 from wlf import csheet
-from wlf.progress import Progress
+from wlf.notify import Progress
 
 from node import wlf_write_node, Last
 
@@ -164,7 +164,10 @@ def _render_jpg():
         n = wlf_write_node()
         if n:
             print('render_jpg: {}'.format(n.name()))
-            n['bt_render_JPG'].execute()
+            try:
+                n['bt_render_JPG'].execute()
+            except RuntimeError as ex:
+                nuke.message(str(ex))
 
 
 def _gizmo_to_group_on_create():
