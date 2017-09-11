@@ -7,8 +7,9 @@ import os
 import nuke
 
 from wlf import cgtwq, csheet, files
-from wlf.files import remove_version, traytip, url_open
-from wlf.notify import CancelledError, Progress
+from wlf.files import url_open
+from wlf.path import remove_version
+from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
 
 from asset import copy

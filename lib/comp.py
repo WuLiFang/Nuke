@@ -13,7 +13,8 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts
 
-from wlf.files import escape_batch, get_encoded, get_unicode, url_open
+from wlf.files import url_open
+from wlf.path import escape_batch, get_encoded, get_unicode
 from wlf.notify import Progress
 import wlf.config
 
