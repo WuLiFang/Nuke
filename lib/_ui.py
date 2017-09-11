@@ -20,7 +20,7 @@ import splitexr
 import scanner
 import panels
 
-__version__ = '0.5.2'
+__version__ = '0.5.3'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -188,17 +188,22 @@ def custom_autolabel(enable_text_style=True):
     '''
     this = nuke.thisNode()
     _class = this.Class()
+    ret = None
 
-    def _add_to_autolabel(label):
-        if not isinstance(label, str):
+    def _add_to_autolabel(text, center=False):
+        if not isinstance(text, (str, unicode)):
             return
-        _ret = autolabel().split('\n')
-        _ret.insert(1, label)
-        _ret = '\n'.join(_ret).rstrip('\n')
-        return _ret
+        ret = autolabel().split('\n')
+        ret.insert(1, text)
+        ret = '\n'.join(ret).rstrip('\n')
+        if center:
+            ret = '<div align="center" style="margin:0px;padding:0px">{}</div>'.format(
+                ret)
+        return ret
 
     if _class == 'Keyer':
         label = '输入通道 : ' + nuke.value('this.input')
+        ret = _add_to_autolabel(label)
     elif _class == 'Read':
         dropframes = str(asset.DropFrames.get(nuke.filename(this), ''))
         if dropframes:
@@ -210,13 +215,14 @@ def custom_autolabel(enable_text_style=True):
                 dropframes = '\n缺帧:' + dropframes
         if enable_text_style:
             label = '<span style=\"color:#548DD4;font-family:微软雅黑\">'\
-                '<b> 帧范围 :</b></span> '\
-                '<span style=\"color:red\">{} - {}</span>{}'
+                '<b> 帧范围 :</b> '\
+                '<span style=\"color:red\">{} - {}</span>{}</span>'
             label = label.format(nuke.value('this.first'),
                                  nuke.value('this.last'), dropframes)
         else:
             label = '帧范围 :' + nuke.value('this.first') + \
                 ' - ' + nuke.value('this.last')
+        ret = _add_to_autolabel(label, True)
     elif _class == 'Shuffle':
         channels = dict.fromkeys(['in', 'in2', 'out', 'out2'], '')
         for i in channels.keys():
@@ -225,10 +231,9 @@ def custom_autolabel(enable_text_style=True):
                 channels[i] = channel_value + ' '
         label = (channels['in'] + channels['in2'] + '-> ' +
                  channels['out'] + channels['out2']).rstrip(' ')
-    else:
-        return
+        ret = _add_to_autolabel(label)
 
-    return _add_to_autolabel(label)
+    return ret
 
 
 def panel_show(keyword):
