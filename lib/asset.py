@@ -11,7 +11,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 
 
 class DropFrames(object):
@@ -154,7 +154,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
         for pat in ignore_pat:
             if re.match(get_unicode(pat), get_unicode(filename), flags=re.I | re.U):
                 return True
-        if not is_ascii(data):
+        if from_dir and not is_ascii(data):
             nuke.createNode(
                 'StickyNote', 'autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
                 'label {{{}\n\n<span style="color:red;text-align:center;font-weight:bold">'
