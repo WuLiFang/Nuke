@@ -3,13 +3,15 @@
 
 import os
 import re
+import multiprocessing.dummy as multiprocessing
 
 import nuke
 
-from wlf.files import expand_frame, copy, get_encoded, get_unicode, is_ascii
+from wlf.files import copy
+from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 
 
 class DropFrames(object):
@@ -38,25 +40,26 @@ class DropFrames(object):
     @classmethod
     def update(cls, nodes=None):
         """update self."""
-        task = Progress('检查缺帧')
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
         nodes = nodes or nuke.allNodes('Read')
 
         footages = get_footages(nodes)
-        total = len(footages)
-        for index, filename in enumerate(footages):
-            task.set(index * 100 // total, filename)
-            if not filename:
-                continue
+        task = Progress('检查缺帧', total=len(footages))
 
+        def _check(filename):
             framerange = footages[filename]
+            task.step(filename)
             framerange.compact()
             dropframes = get_dropframe(filename, framerange.toFrameList())
             if str(dropframes):
                 cls._file_dropframe[filename] = dropframes
             elif cls._file_dropframe.has_key(filename):
                 del cls._file_dropframe[filename]
+        pool = multiprocessing.Pool()
+        pool.map(_check, footages)
+        pool.close()
+        pool.join()
 
     @classmethod
     def show(cls, show_all=False):
@@ -100,7 +103,7 @@ def get_dropframe(filename, framerange):
     filename = get_unicode(filename)
     dir_path = os.path.dirname(filename)
 
-    task = Progress(u'验证文件')
+    task = Progress(u'验证文件', total=len(framerange))
     ret = nuke.FrameRanges()
     if not os.path.isdir(get_encoded(dir_path)) or \
         (expand_frame(filename, 1) == filename
@@ -110,10 +113,9 @@ def get_dropframe(filename, framerange):
 
     files = os.listdir(get_encoded(dir_path))
     basename = os.path.basename(filename)
-    total = len(framerange)
-    for index, f in enumerate(framerange):
+    for f in framerange:
         frame_file = expand_frame(basename, f)
-        task.set(index * 100 // total, frame_file)
+        task.step(frame_file)
         if get_encoded(frame_file) not in files:
             ret.add([f])
     ret.compact()
