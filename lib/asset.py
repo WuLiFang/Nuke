@@ -11,7 +11,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 
 class DropFrames(object):
@@ -154,6 +154,12 @@ def dropdata_handler(mime_type, data, from_dir=False):
         for pat in ignore_pat:
             if re.match(get_unicode(pat), get_unicode(filename), flags=re.I | re.U):
                 return True
+        if not is_ascii(data):
+            nuke.createNode(
+                'StickyNote', 'autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
+                'label {{{}\n\n<span style="color:red;text-align:center;font-weight:bold">'
+                '不支持非英文路径</span>}}'.format(data))
+            return True
 
     def _file_protocol():
         match = re.match(r'file:///([^/].*)', data)
@@ -197,12 +203,8 @@ def dropdata_handler(mime_type, data, from_dir=False):
 
     def _video():
         if data.endswith(('.mov', '.mp4', '.avi')):
-            # Avoid mov reader bug.
-            if not is_ascii(data):
-                n = nuke.createNode(
-                    'Read', 'disable true label "{0}\n**不支持非英文路径**"'.format(data))
-            else:
-                n = nuke.createNode('Read', 'file "{}"'.format(data))
+
+            n = nuke.createNode('Read', 'file "{}"'.format(data))
             if n.hasError():
                 n['disable'].setValue(True)
             return True
