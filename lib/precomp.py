@@ -6,11 +6,11 @@ import re
 
 import nuke
 
-from wlf.files import get_layer
+from wlf.path import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.12'
+__version__ = '0.3.13'
 
 
 def redshift(nodes):
@@ -30,6 +30,7 @@ class Precomp(object):
         with open(config_file) as f:
             self._config = json.load(f)
         self._combine_dict = dict(self._config.get('combine'))
+        self._translate_dict = dict(self._config.get('translate'))
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
         nodes = list(n for n in nodes if n.Class() == 'Read')
@@ -46,6 +47,8 @@ class Precomp(object):
             for n in nodes:
                 layer = get_layer(
                     nuke.filename(n), layers=self._config['layers'])
+                n['label'].setValue(
+                    '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
                 if layer:
                     self._source[layer] = n
                 else:
@@ -80,6 +83,15 @@ class Precomp(object):
             return []
         return nuke.layers(self.last_node)
 
+    def l10n(self, value):
+        """Return translated value.  """
+        if not value:
+            return ''
+        for pat in self._translate_dict:
+            if re.match(pat, value):
+                return re.sub(pat, self._translate_dict[pat], value)
+        return value
+
     def node(self, layer):
         """Return a node that should be treat as @layer.  """
         add_layer(layer)
@@ -87,7 +99,8 @@ class Precomp(object):
         if layer in self.layers():
             _kwargs = {'in': layer}
             ret = nuke.nodes.Shuffle(
-                inputs=[self.last_node], label=layer,
+                inputs=[self.last_node],
+                label=self.l10n(layer),
                 postage_stamp=self.last_node.Class() != 'Read', **_kwargs)
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
@@ -96,7 +109,8 @@ class Precomp(object):
                 input0, input1 = self.node(pair[0]), self.node(pair[1])
                 n = nuke.nodes.Merge2(
                     inputs=[input0, input1],
-                    operation='multiply', output='rgb', label=layer,
+                    operation='multiply', output='rgb',
+                    label=self.l10n(layer),
                     postage_stamp=True)
                 self.source[layer] = n
                 ret = n
@@ -110,12 +124,13 @@ class Precomp(object):
             return
         if not self.last_node:
             self.last_node = nuke.nodes.Constant()
+
         if layer not in self.layers():
             input1 = nuke.nodes.Shuffle(inputs=[input1], out=layer)
         self.last_node = nuke.nodes.Merge2(
             inputs=[self.last_node, input1], operation='plus',
             also_merge=layer if layer not in self.layers() else 'none',
-            label=layer,
+            label=self.l10n(layer),
             output='rgb')
 
     def copy(self, layer, output=None):
