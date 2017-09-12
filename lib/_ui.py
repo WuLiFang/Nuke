@@ -156,6 +156,11 @@ def add_panel():
     panels.register(uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
+def add_autolabel():
+    """Add custom autolabel. """
+    nuke.addAutolabel(custom_autolabel)
+
+
 def create_menu_by_dir(parent, dir_):
     """Create menus by given folder structrue."""
 

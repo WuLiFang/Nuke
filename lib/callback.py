@@ -8,7 +8,6 @@ import nukescripts
 
 import asset
 import edit
-import _ui
 import cgtwn
 import orgnize
 
@@ -39,9 +38,6 @@ def menu():
 
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
-
-    print(u'增强节点标签')
-    nuke.addAutolabel(_ui.custom_autolabel)
 
     print(u'增强文件拖放')
     nukescripts.addDropDataCallback(asset.dropdata_handler)
