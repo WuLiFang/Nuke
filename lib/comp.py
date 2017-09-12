@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Comp footages adn create output, can be run as script.  """
-
+# TODO: Use multiprocessing
 import json
 import os
 import pprint
