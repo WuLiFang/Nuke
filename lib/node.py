@@ -4,9 +4,9 @@ import os
 
 import nuke
 
-import wlf.files
+import wlf.path
 
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 
 def append_knob(node, knob):
@@ -37,7 +37,7 @@ class ReadNode(object):
         append_knob(node, k)
         k.setValue(tag)
 
-        layer = wlf.files.get_layer(nuke.filename(n))
+        layer = wlf.path.get_layer(nuke.filename(n))
         k = nuke.String_Knob(self.layer_knob_name, '层')
         append_knob(node, k)
         k.setValue(layer)
@@ -47,13 +47,13 @@ class ReadNode(object):
 
     def tag(self):
         """Return Read node tag.  """
-        ret = wlf.files.get_tag(self._filename)
+        ret = wlf.path.get_tag(self._filename)
 
         return ret
 
     def layer(self):
         """Return Read node layer.  """
-        return wlf.files.get_layer(self._filename)
+        return wlf.path.get_layer(self._filename)
 
 
 def wlf_write_node():
