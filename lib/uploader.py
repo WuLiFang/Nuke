@@ -14,7 +14,7 @@ from wlf.path import remove_version, get_unicode, get_server, split_version
 from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.6'
+__version__ = '0.6.7'
 
 
 class Config(wlf.config.Config):
@@ -354,6 +354,7 @@ class FileListWidget(object):
 
     def _start_update_thread(self):
         """Start a thread for update."""
+
         def _run():
             lock = self._lock
             while lock.acquire(False):
@@ -364,6 +365,8 @@ class FileListWidget(object):
                     pass
                 time.sleep(1)
                 lock.release()
+
+        self.update()
         thread = threading.Thread(name='ListWidgetUpdate', target=_run)
         thread.daemon = True
         thread.start()
