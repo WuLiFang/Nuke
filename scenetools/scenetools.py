@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """A tool intend to help create contact sheet and upload/download resource for a scene."""
-
+# TODO: Refactor this
 import os
 import sys
 import re
