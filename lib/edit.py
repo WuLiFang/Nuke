@@ -13,7 +13,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.5.5'
+__version__ = '1.6.0'
 
 
 def rename_all_nodes():
@@ -102,57 +102,6 @@ class CurrentViewer(object):
         """Return node that bound to the viewer."""
 
         return self._node
-
-
-def channels_rename(prefix='PuzzleMatte'):
-    """Shuffle channel to given name channel in mask_extra layer."""
-    # TODO: non-modal pannel.
-
-    def _pannel_order(name):
-        ret = name.replace(prefix + '.', '!.')
-
-        repl = ('.red', '.0_'), ('.green', '.1_'), ('.blue', '.2_')
-        ret = reduce(lambda text, repl: text.replace(*repl), repl, ret)
-
-        if ret.endswith('.alpha'):
-            ret = '~{}'.format(ret)
-        return ret
-
-    def _stylize(text):
-        ret = text
-        repl = {'.red': '.<span style=\"color:#FF4444\">red</span>',
-                '.green':  '.<span style=\"color:#44FF44\">green</span>',
-                '.blue': '.<span style=\"color:#4444FF\">blue</span>'}
-        for k, v in repl.iteritems():
-            ret = ret.replace(k, v)
-        return ret
-
-    viewer = CurrentViewer()
-
-    n = nuke.selectedNode()
-    node = n
-    channel_names = sorted(
-        (channel for channel in n.channels() if channel.startswith(prefix)), key=_pannel_order)
-
-    n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
-    layercontactsheet = n
-    viewer.link(n)
-    viewer.node['channels'].setValue('rgba')
-
-    panel = nuke.Panel('MaskShuffle')
-    for channel_name in channel_names:
-        panel.addSingleLineInput(_stylize(channel_name), '')
-    confirm = panel.show()
-
-    nuke.delete(layercontactsheet)
-    n = node
-    viewer.recover()
-
-    if confirm:
-        new_names_dict = {channel_name: panel.value(_stylize(channel_name))
-                          for channel_name in channel_names}
-        n = crate_copy_from_dict(new_names_dict, n)
-        replace_node(node, n)
 
 
 def format_channel_name(text):

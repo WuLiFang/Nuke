@@ -12,6 +12,7 @@ import wlf
 import asset
 import precomp
 import edit
+import edit_panels
 import cgtwn
 import orgnize
 import comp
@@ -38,7 +39,7 @@ def add_menu():
         m.addCommand('分离所有通道', lambda: edit.split_layers(nuke.selectedNode()),
                      'F3', icon="SplitLayers.png")
         m.addCommand("重命名PuzzleMatte",
-                     lambda: edit.channels_rename(prefix='PuzzleMatte'), 'F4')
+                     lambda: edit_panels.ChannelsRenamePanel(prefix='PuzzleMatte').show(), 'F4')
         m.addCommand("标记为_enable_",
                      lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D')
         m.addCommand('输出当前帧png',
