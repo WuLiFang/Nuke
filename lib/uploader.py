@@ -14,7 +14,7 @@ from wlf.path import remove_version, get_unicode, get_server, split_version
 from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.7'
+__version__ = '0.6.8'
 
 
 class Config(wlf.config.Config):
@@ -141,27 +141,30 @@ class Dialog(QDialog):
         _edits()
         _recover()
 
-        self._update_thread = self._start_update_thread()
-
     def closeEvent(self, event):
         """override.  """
-        self._lock.acquire()
-        del self._file_list_widget
         event.accept()
+        self.hideEvent(event)
 
-    def _start_update_thread(self):
-        """Start a thread for update."""
+    def showEvent(self, event):
         def _run():
             lock = self._lock
             while lock.acquire(False):
-                if self.isVisible():
-                    self.update_ui()
+                self.update_ui()
                 time.sleep(0.1)
                 lock.release()
+        self.update_ui()
         thread = threading.Thread(name='DialogUpdate', target=_run)
         thread.daemon = True
         thread.start()
-        return thread
+        self._file_list_widget.showEvent(event)
+        event.accept()
+
+    def hideEvent(self, event):
+        event.accept()
+        self._lock.acquire()
+        self._lock.release()
+        self._file_list_widget.hideEvent(event)
 
     def update_ui(self):
         """Update dialog UI content.  """
@@ -342,7 +345,8 @@ class FileListWidget(object):
         self.parent.actionReverseSelection.triggered.connect(
             self.reverse_selection)
 
-        self._update_thread = self._start_update_thread()
+        self.widget.showEvent = self.showEvent
+        self.widget.hideEvent = self.hideEvent
 
     def __del__(self):
         self._lock.acquire()
@@ -352,8 +356,7 @@ class FileListWidget(object):
         """Current working dir.  """
         return self.parent.directory
 
-    def _start_update_thread(self):
-        """Start a thread for update."""
+    def showEvent(self, event):
 
         def _run():
             lock = self._lock
@@ -365,12 +368,16 @@ class FileListWidget(object):
                     pass
                 time.sleep(1)
                 lock.release()
-
         self.update()
         thread = threading.Thread(name='ListWidgetUpdate', target=_run)
         thread.daemon = True
         thread.start()
-        return thread
+        event.accept()
+
+    def hideEvent(self, event):
+        event.accept()
+        self._lock.acquire()
+        self._lock.release()
 
     def update(self):
         """Update info.  """
