@@ -13,7 +13,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.6.0'
+__version__ = '1.6.1'
 
 
 def rename_all_nodes():
@@ -56,52 +56,51 @@ def update_toolsets(toolset_name, toolset_path):
 
 class CurrentViewer(object):
     """Manipulate currunt viewer."""
+    viewer = None
+    node = None
+    inputs = None
+    knob_values = None
 
     def __init__(self):
-        self._viewer = None
-        self._node = None
-        self._input = None
-        self._knob_values = {}
+        self.knob_values = {}
         self.record()
 
     def link(self, input_node):
         """Connet input_node to viewer.input0 the activate it, create viewer if needed."""
-        if self._viewer:
-            n = self._node
+        if self.viewer:
+            n = self.node
         else:
             n = nuke.nodes.Viewer()
         n.setInput(0, input_node)
-        nuke.activeViewer().activateInput(0)
+        self.node = n
+        try:
+            nuke.activeViewer().activateInput(0)
+        except AttributeError:
+            pass
 
     def record(self):
         """Record current active viewer status."""
 
-        self._viewer = nuke.activeViewer()
-        if self._viewer:
-            self._node = self._viewer.node()
-            self._input = self._node.input(0)
-            for knob in self._node.allKnobs():
-                self._knob_values[knob] = knob.value()
+        self.viewer = nuke.activeViewer()
+        if self.viewer:
+            self.node = self.viewer.node()
+            self.inputs = self.node.input(0)
+            for knob in self.node.allKnobs():
+                self.knob_values[knob] = knob.value()
 
     def recover(self):
         """Recover viewer status to last record."""
 
-        if self._viewer:
-            self._node.setInput(
-                0, self._input)
-            for knob, value in self._knob_values.items():
+        if self.viewer:
+            self.node.setInput(
+                0, self.inputs)
+            for knob, value in self.knob_values.items():
                 try:
                     knob.setValue(value)
                 except TypeError:
                     pass
         else:
-            nuke.delete(self._node)
-
-    @property
-    def node(self):
-        """Return node that bound to the viewer."""
-
-        return self._node
+            nuke.delete(self.node)
 
 
 def format_channel_name(text):

@@ -5,7 +5,7 @@ import nuke
 import nukescripts
 from edit import crate_copy_from_dict, replace_node, CurrentViewer
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 class ChannelsRenamePanel(nukescripts.PythonPanel):
@@ -35,7 +35,6 @@ class ChannelsRenamePanel(nukescripts.PythonPanel):
             self, '重命名通道', 'com.wlf.channels_rename')
 
         viewer = CurrentViewer()
-        viewer.node['channels'].setValue('rgba')
         self._viewer = viewer
 
         self._node = node or nuke.selectedNode()
@@ -46,6 +45,7 @@ class ChannelsRenamePanel(nukescripts.PythonPanel):
         n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
         self._layercontactsheet = n
         viewer.link(n)
+        viewer.node['channels'].setValue('rgba')
 
         for channel in self._channels:
             self.addKnob(nuke.String_Knob(
