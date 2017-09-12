@@ -5,7 +5,7 @@ Gizmo {
  autolabel "nuke.tcl('return [string trim [join \"\[value this.name] \[value this.Write_MOV_1.file] \[value this.Write_JPG_1.file] \{\[python {nuke.thisNode()[\\\'label\\\'].evaluate()}]\}\" \"\\n\" ]]')"
  updateUI "try:\n    __wlf_Write_update_ui()\nexcept NameError:\n    def __wlf_Write_update_ui():\n        old = nuke.value('this.Text_Artist.message')\n        new = nuke.value('root.wlf_artist', '')\n        if new != old: nuke.knob('this.Text_Artist.message', new)\n    __wlf_Write_update_ui()"
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.50.5"}
+ addUserKnob {20 Write l "wlf_Write v1.50.6"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -13,7 +13,7 @@ Gizmo {
  frame {{"\[python -execlocal first,\\ last\\ =\\ nuke.numvalue('root.first_frame'),\\ nuke.numvalue('root.last_frame')\\nmiddle\\ =\\ (first\\ +\\ last)//2\\nthisNode\\ =\\ nuke.thisNode()\\nif\\ thisNode\\\['use_custom_frame'\\].value()\\ :\\n\\ \\ \\ \\ ret\\ =\\ thisNode\\\['custom_frame'\\].value()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ middle]"}}
  addUserKnob {32 bt_first l 首帧 -STARTLINE T "set first_frame \[value root.first_frame] \nknob use_custom_frame 1\nknob custom_frame \$first_frame\nframe \$first_frame"}
  addUserKnob {32 bt_middle l 中间帧(默认) -STARTLINE T "knob this.use_custom_frame 0\nframe \[value this.knob.frame]"}
- addUserKnob {32 bt_last l 末帧 -STARTLINE T "set last_frame \[value root.last_frame] \nknob use_custom_frame 1\nknob custrnukeom_frame \$last_frame\nframe \$last_frame"}
+ addUserKnob {32 bt_last l 末帧 -STARTLINE T "set last_frame \[value root.last_frame] \nknob use_custom_frame 1\nknob custom_frame \$last_frame\nframe \$last_frame"}
  addUserKnob {32 bt_this l 当前帧 -STARTLINE T "knob use_custom_frame 1\nknob custom_frame \[x]"}
  addUserKnob {6 no_motionblur l 单帧渲染时不带运动模糊 +STARTLINE}
  no_motionblur true
