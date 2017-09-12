@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.1'
+__version__ = '0.17.2'
 
 
 class Config(wlf.config.Config):
@@ -249,6 +249,7 @@ class Comp(object):
             inputs=[n], conversion='logarithmic compress')
         n = nuke.nodes.Defocus(inputs=[n], disable=True)
         n = nuke.nodes.BlackOutside(inputs=[n])
+        n = nuke.nodes.DiskCache(inputs=[n])
         input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n])
         n = nuke.nodes.Merge2(
             inputs=[input_node, n], operation='under', bbox='B', label='MP')
