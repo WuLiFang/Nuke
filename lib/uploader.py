@@ -14,7 +14,7 @@ from wlf.path import remove_version, get_unicode, get_server, split_version
 from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.5'
+__version__ = '0.6.6'
 
 
 class Config(wlf.config.Config):
@@ -154,7 +154,8 @@ class Dialog(QDialog):
         def _run():
             lock = self._lock
             while lock.acquire(False):
-                self.update_ui()
+                if self.isVisible():
+                    self.update_ui()
                 time.sleep(0.1)
                 lock.release()
         thread = threading.Thread(name='DialogUpdate', target=_run)
@@ -357,7 +358,8 @@ class FileListWidget(object):
             lock = self._lock
             while lock.acquire(False):
                 try:
-                    self.update()
+                    if self.widget.isVisible():
+                        self.update()
                 except RuntimeError:
                     pass
                 time.sleep(1)
