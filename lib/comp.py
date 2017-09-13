@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.5'
+__version__ = '0.17.6'
 
 
 class Config(wlf.config.Config):
@@ -186,15 +186,15 @@ class Comp(object):
         n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
 
-        nodes = nuke.allNodes('DepthFix')
         _task(u'创建整体深度', 65)
-        nodes = nuke.allNodes('MotionFix')
+        nodes = nuke.allNodes('DepthFix')
         n = self._merge_depth(n, nodes)
         _task(u'添加虚焦控制', 67)
         self._add_zdefocus_control(n)
-        if 'motion' in nuke.layers(n):
-            _task(u'创建整体速度', 70)
-            n = self._merge_motion(n, nodes)
+
+        nodes = nuke.allNodes('MotionFix')
+        _task(u'创建整体速度', 70)
+        n = self._merge_motion(n, nodes)
 
         n = nuke.nodes.Unpremult(inputs=[n], label='整体调色开始')
 
@@ -541,7 +541,7 @@ class Comp(object):
     def _merge_motion(cls, input_node, nodes):
         nodes = [n for n in nodes if 'motion' in nuke.layers(n)]
         nodes.sort(key=cls._nodes_order)
-        if len(nodes) < 2:
+        if not nodes:
             return input_node
         input0 = input_node
         for n in nodes:
