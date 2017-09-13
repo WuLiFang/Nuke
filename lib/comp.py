@@ -538,7 +538,7 @@ class Comp(object):
             return input_node
         n = nuke.nodes.Merge2(
             inputs=[input_node] + nodes,
-            tile_color=0xff32c800,
+            tile_color=0xff3300ff,
             operation='matte',
             Achannels='motion', Bchannels='motion', output='motion',
             label='整体运动',
