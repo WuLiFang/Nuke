@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.4'
+__version__ = '0.17.5'
 
 
 class Config(wlf.config.Config):
@@ -47,6 +47,7 @@ class Config(wlf.config.Config):
 
 class Comp(object):
     """Create .nk file from footage that taged in filename."""
+    tag_metadata_key = 'comp/tag'
 
     def __init__(self, config=None):
         print(u'\n吾立方批量合成 {}\n'.format(__version__))
@@ -185,9 +186,9 @@ class Comp(object):
         n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
 
-        nodes = nuke.allNodes(
-            'DepthFix') or self.get_nodes_by_tags(['BG', 'CH'])
+        nodes = nuke.allNodes('DepthFix')
         _task(u'创建整体深度', 65)
+        nodes = nuke.allNodes('MotionFix')
         n = self._merge_depth(n, nodes)
         _task(u'添加虚焦控制', 67)
         self._add_zdefocus_control(n)
@@ -285,17 +286,22 @@ class Comp(object):
 
         return n
 
-    @staticmethod
-    def _colorcorrect_with_positionkeyer(input_node, cc_label=None, **pk_kwargs):
+    @classmethod
+    def _colorcorrect_with_positionkeyer(cls, input_node, cc_label=None, **pk_kwargs):
         n = nuke.nodes.PositionKeyer(inputs=[input_node], **pk_kwargs)
         n = nuke.nodes.ColorCorrect(
             inputs=[input_node, n], label=cc_label, disable=True)
         return n
 
     @classmethod
+    def _nodes_order(cls, n):
+        tag = n.metadata(
+            cls.tag_metadata_key) or n[ReadNode.tag_knob_name].value()
+        return (u'_' + tag.replace(u'_BG', '1_').replace(u'_CH', '0_'))
+
+    @classmethod
     def get_nodes_by_tags(cls, tags):
         """Return nodes that match given tags."""
-
         ret = []
         if isinstance(tags, (str, unicode)):
             tags = [tags]
@@ -303,13 +309,11 @@ class Comp(object):
 
         for n in nuke.allNodes(u'Read'):
             knob_name = u'{}.{}'.format(n.name(), ReadNode.tag_knob_name)
-            if nuke.value(knob_name, '').startswith(tags):
+            tag = nuke.value(knob_name, '')
+            if tag.partition('_')[0] in tags:
                 ret.append(n)
 
-        def _nodes_order(n):
-            tag = nuke.value('{}.{}'.format(n.name(), ReadNode.tag_knob_name))
-            return (u'_' + tag.replace(u'_BG', '1_').replace(u'_CH', '0_'))
-        ret.sort(key=_nodes_order, reverse=True)
+        ret.sort(key=cls._nodes_order, reverse=True)
         return ret
 
     def output(self):
@@ -375,12 +379,13 @@ class Comp(object):
                 n = self._merge_shadow(n)
                 n = self._merge_screen(n)
                 n = nuke.nodes.ModifyMetaData(
-                    inputs=[n], metadata='{set comp/tag main}',
+                    inputs=[n], metadata='{{set {} main}}'.format(
+                        self.tag_metadata_key),
                     label='主干开始')
             if i > 0:
                 n = nuke.nodes.Merge2(
                     inputs=[nodes[i - 1], n],
-                    label=n.metadata('comp/tag') or ''
+                    label=n.metadata(self.tag_metadata_key) or ''
                 )
             nodes[i] = n
         return n
@@ -403,7 +408,8 @@ class Comp(object):
             try:
                 n = precomp.redshift(nodes)
                 n = nuke.nodes.ModifyMetaData(
-                    inputs=[n], metadata='{{set comp/tag {}}}'.format(tag),
+                    inputs=[n], metadata='{{set {} {}}}'.format(
+                        self.tag_metadata_key, tag),
                     label='预合成结束')
                 ret.append(n)
             except AssertionError:
@@ -531,22 +537,27 @@ class Comp(object):
             inputs=[input_node, merge_node], from0='depth.Z', to0='depth.Z')
         return copy_node
 
-    @staticmethod
-    def _merge_motion(input_node, nodes):
+    @classmethod
+    def _merge_motion(cls, input_node, nodes):
         nodes = [n for n in nodes if 'motion' in nuke.layers(n)]
+        nodes.sort(key=cls._nodes_order)
         if len(nodes) < 2:
             return input_node
-        n = nuke.nodes.Merge2(
-            inputs=[input_node] + nodes,
-            tile_color=0xff3300ff,
-            operation='matte',
-            Achannels='motion', Bchannels='motion', output='motion',
-            label='整体运动',
-            hide_input=True)
+        input0 = input_node
+        for n in nodes:
+            n = nuke.nodes.Dot(inputs=[n], hide_input=True)
+            n = nuke.nodes.Merge2(
+                inputs=[input0, n, n],
+                tile_color=0xff3300ff,
+                operation='copy',
+                Achannels='motion', Bchannels='motion', output='motion',
+                label=n.metadata(cls.tag_metadata_key) or '')
+            input0 = n
         n = nuke.nodes.Merge2(
             inputs=[input_node, n],
             operation='copy',
-            Achannels='motion', Bchannels='motion', output='motion'
+            Achannels='motion', Bchannels='motion', output='motion',
+            label='整体速度'
         )
         return n
 
