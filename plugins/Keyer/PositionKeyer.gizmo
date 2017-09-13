@@ -33,12 +33,15 @@ if not locals().get('__positionkeyer_on_create'):
 
 if not locals().get('__positionkeyer_knob_changed'):
     def __positionkeyer_knob_changed():
-        n=nuke.thisNode()
-        if nuke.thisKnob() in (n['p0'], n['p1']):
-            sampler = n.node('Sampler')
-            channels = ('rgba.red', 'rgba.green', 'rgba.blue')
-            sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
-            sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))
+        try:
+            n=nuke.thisNode()
+            if nuke.thisKnob() in (n['p0'], n['p1']):
+                sampler = n.node('Sampler')
+                channels = ('rgba.red', 'rgba.green', 'rgba.blue')
+                sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
+                sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))
+        except ValueError:
+            return
 
 __positionkeyer_on_create()
 "
@@ -46,7 +49,7 @@ __positionkeyer_on_create()
  knobChanged "__positionkeyer_knob_changed()"
  tile_color 0xff00ff
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.3.5"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.3.6"}
  addUserKnob {41 in l "sample layer" t "用来取样的图层,一般是P层。但也可以用其他图层(例如depth)" T Shuffle2.in}
  addUserKnob {20 sampler l 取样器 n 1}
  addUserKnob {12 p0}
@@ -90,6 +93,15 @@ set N366dee00 [stack 0]
  Shuffle {
   in rgba
   name Shuffle2
+  onCreate "
+if not locals().get('__positionkeyer_layer_changed'):
+    def __positionkeyer_layer_changed():
+        n=nuke.thisParent()
+        sampler = n.node('Sampler')
+        channels = ('rgba.red', 'rgba.green', 'rgba.blue')
+        sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
+        sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))"
+  knobChanged "print(1)\n__positionkeyer_layer_changed()"
   xpos 180
   ypos -1308
  }
