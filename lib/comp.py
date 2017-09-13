@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.3'
+__version__ = '0.17.4'
 
 
 class Config(wlf.config.Config):
@@ -172,30 +172,31 @@ class Comp(object):
         """Create nodes that a comp need."""
         task = Progress(u'创建节点树')
 
-        def _task_message(message, progress=None):
+        def _task(message, progress=None):
             task.set(message=message)
             print(u'{:-^30s}'.format(message))
             if progress:
                 task.set(progress)
 
-        _task_message(u'BG CH 节点创建')
+        _task(u'合并BG CH')
         n = self._bg_ch_nodes()
 
-        _task_message(u'MP节点创建', 60)
+        _task(u'创建MP', 60)
         n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
 
         nodes = nuke.allNodes(
             'DepthFix') or self.get_nodes_by_tags(['BG', 'CH'])
-        _task_message(u'整体深度节点创建', 65)
+        _task(u'创建整体深度', 65)
         n = self._merge_depth(n, nodes)
-
-        _task_message(u'添加虚焦控制', 70)
+        _task(u'添加虚焦控制', 67)
         self._add_zdefocus_control(n)
+        if 'motion' in nuke.layers(n):
+            _task(u'创建整体速度', 70)
+            n = self._merge_motion(n, nodes)
 
-        n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
-        n = nuke.nodes.Merge2(
-            inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
+        n = nuke.nodes.Unpremult(inputs=[n], label='整体调色开始')
+
         radial_node = nuke.nodes.Radial(
             area='0 0 {} {}'.format(n.width(), n.height()))
         n = nuke.nodes.Merge2(
@@ -205,13 +206,38 @@ class Comp(object):
             label='衰减调整',
             disable=True)
 
-        n = nuke.nodes.Aberration(inputs=[n], distortion1='0 0 0.003')
+        n = nuke.nodes.Premult(inputs=[n], label='整体调色结束')
+
+        n = nuke.nodes.Crop(
+            inputs=[n], box='0 0 input.width input.height', crop=False,
+            label='整体滤镜开始')
+
+        n = nuke.nodes.SoftClip(
+            inputs=[n], conversion='logarithmic compress')
+
+        n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
+        n = nuke.nodes.Merge2(
+            inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
+        try:
+            n = nuke.nodes.RSMB(inputs=[n], disable=True, label='整体运动模糊')
+        except RuntimeError:
+            print(u'RSMB插件未安装')
+        if 'motion' in nuke.layers(n):
+            n = nuke.nodes.VectorBlur2(
+                inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=False, disable=True)
+        n = nuke.nodes.Aberration(
+            inputs=[n], distortion1='0 0 0.003', label='溢色')
+
+        n = nuke.nodes.Crop(
+            inputs=[n],
+            box='0 0 input.width input.height',
+            label='整体滤镜结束')
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
-        _task_message(u'输出节点创建', 85)
+        _task(u'输出节点创建', 85)
 
-        _task_message(u'设置查看器', 90)
+        _task(u'设置查看器', 90)
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
@@ -499,41 +525,30 @@ class Comp(object):
             tile_color=2184871423L,
             operation='min',
             Achannels='depth', Bchannels='depth', output='depth',
-            label='Depth',
+            label='整体深度',
             hide_input=True)
         copy_node = nuke.nodes.Copy(
             inputs=[input_node, merge_node], from0='depth.Z', to0='depth.Z')
         return copy_node
 
     @staticmethod
-    def _depthfog(input_node):
-        _group = nuke.nodes.Group(
-            inputs=[input_node],
-            tile_color=0x2386eaff,
-            label="深度雾\n由_DepthFogControl控制",
-            disable='{{![exists _DepthFogControl] || _DepthFogControl.disable}}',
+    def _merge_motion(input_node, nodes):
+        nodes = [n for n in nodes if 'motion' in nuke.layers(n)]
+        if len(nodes) < 2:
+            return input_node
+        n = nuke.nodes.Merge2(
+            inputs=[input_node] + nodes,
+            tile_color=0xff32c800,
+            operation='matte',
+            Achannels='motion', Bchannels='motion', output='motion',
+            label='整体运动',
+            hide_input=True)
+        n = nuke.nodes.Merge2(
+            inputs=[input_node, n],
+            operation='copy',
+            Achannels='motion', Bchannels='motion', output='motion'
         )
-        _group.setName(u'DepthFog1')
-
-        _group.begin()
-        _input_node = nuke.nodes.Input(name='Input')
-        n = nuke.nodes.DepthKeyer(
-            inputs=[_input_node],
-            disable='{{![exists _DepthFogControl] || _DepthFogControl.disable}}',
-        )
-        n['range'].setExpression(
-            u'([exists _DepthFogControl.range]) ? _DepthFogControl.range : curve')
-        n = nuke.nodes.Grade(
-            inputs=[_input_node, n],
-            black='{{([exists _DepthFogControl.fog_color]) ? _DepthFogControl.fog_color : curve}}',
-            unpremult='rgba.alpha',
-            mix='{{([exists _DepthFogControl.fog_mix]) ? _DepthFogControl.fog_mix : curve}}',
-            disable='{{![exists _DepthFogControl] || _DepthFogControl.disable}}',
-        )
-        n = nuke.nodes.Output(inputs=[n])
-        _group.end()
-
-        return _group
+        return n
 
     @staticmethod
     def _merge_occ(input_node):
