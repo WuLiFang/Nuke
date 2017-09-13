@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.2'
+__version__ = '0.17.3'
 
 
 class Config(wlf.config.Config):
@@ -181,6 +181,10 @@ class Comp(object):
         _task_message(u'BG CH 节点创建')
         n = self._bg_ch_nodes()
 
+        _task_message(u'MP节点创建', 60)
+        n = self._merge_mp(
+            n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
+
         nodes = nuke.allNodes(
             'DepthFix') or self.get_nodes_by_tags(['BG', 'CH'])
         _task_message(u'整体深度节点创建', 65)
@@ -188,10 +192,6 @@ class Comp(object):
 
         _task_message(u'添加虚焦控制', 70)
         self._add_zdefocus_control(n)
-
-        _task_message(u'MP节点创建', 75)
-        n = self._merge_mp(
-            n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
 
         n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
         n = nuke.nodes.Merge2(
@@ -236,6 +236,8 @@ class Comp(object):
             n = nuke.nodes.Read(file=mp_file.replace('\\', '/'))
             n['file'].fromUserText(mp_file)
         n.setName(u'MP')
+        n = nuke.nodes.ModifyMetaData(
+            inputs=[n], metadata='{{set comp/tag {}}}'.format('MP'))
 
         n = nuke.nodes.Reformat(inputs=[n], resize='fill')
         n = nuke.nodes.Transform(inputs=[n])
@@ -250,7 +252,8 @@ class Comp(object):
         n = nuke.nodes.Defocus(inputs=[n], disable=True)
         n = nuke.nodes.BlackOutside(inputs=[n])
         n = nuke.nodes.DiskCache(inputs=[n])
-        input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n])
+        input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n],
+                                              label='MP灯光包裹')
         n = nuke.nodes.Merge2(
             inputs=[input_node, n], operation='under', bbox='B', label='MP')
 
@@ -345,9 +348,13 @@ class Comp(object):
                 n = self._merge_occ(n)
                 n = self._merge_shadow(n)
                 n = self._merge_screen(n)
+                n = nuke.nodes.ModifyMetaData(
+                    inputs=[n], metadata='{set comp/tag main}',
+                    label='主干开始')
             if i > 0:
                 n = nuke.nodes.Merge2(
-                    inputs=[nodes[i - 1], n]
+                    inputs=[nodes[i - 1], n],
+                    label=n.metadata('comp/tag') or ''
                 )
             nodes[i] = n
         return n
@@ -355,18 +362,23 @@ class Comp(object):
     def _precomp(self):
         tag_nodes_dict = {}
         ret = []
+
+        def _tag_order(tag):
+            return (u'_' + tag.replace(u'_BG', '1_').replace(u'_CH', '0_'))
+
         for n in self.get_nodes_by_tags(['BG', 'CH']):
             tag = n[ReadNode.tag_knob_name].value()
             tag_nodes_dict.setdefault(tag, [])
             tag_nodes_dict[tag].append(n)
 
-        def _tag_order(tag):
-            return (u'_' + tag.replace(u'_BG', '1_').replace(u'_CH', '0_'))
         tags = sorted(tag_nodes_dict.keys(), key=_tag_order)
         for tag in tags:
             nodes = tag_nodes_dict[tag]
             try:
                 n = precomp.redshift(nodes)
+                n = nuke.nodes.ModifyMetaData(
+                    inputs=[n], metadata='{{set comp/tag {}}}'.format(tag),
+                    label='预合成结束')
                 ret.append(n)
             except AssertionError:
                 ret.extend(nodes)
