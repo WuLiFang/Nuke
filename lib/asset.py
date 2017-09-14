@@ -11,7 +11,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 
 
 class DropFrames(object):
@@ -193,7 +193,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
                 'Vectorfield',
                 'vfield_file "{data}" '
                 'file_type vf '
-                'label {{[value this.vfield_file]}}'.format(data=data))
+                'label {{[value this.vfield_file]}}'.format(data=data.replace('\\', '/')))
             return True
 
     def _nk():
