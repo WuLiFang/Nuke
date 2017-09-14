@@ -11,7 +11,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.5'
+__version__ = '0.4.6'
 
 
 class DropFrames(object):
@@ -45,11 +45,9 @@ class DropFrames(object):
         nodes = nodes or nuke.allNodes('Read')
 
         footages = get_footages(nodes)
-        task = Progress('检查缺帧', total=len(footages))
 
         def _check(filename):
             framerange = footages[filename]
-            task.step(filename)
             framerange.compact()
             dropframes = get_dropframe(filename, framerange.toFrameList())
             if str(dropframes):
