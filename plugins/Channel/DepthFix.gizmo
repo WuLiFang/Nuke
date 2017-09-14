@@ -1,15 +1,17 @@
 #! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
+add_layer {mask_extra mask_extra.FangYuTing mask_extra.YuanXiaoTang mask_extra.HuaDaoChang mask_extra.ShiYaoShan}
 Gizmo {
  tile_color 0x823a7dff
  onCreate "if '__depthfix_autolabel' not in locals():\n    def __depthfix_autolabel():\n        depth_channel = nuke.value('this.depth_channel')\n        by_channel = nuke.value('this.by')\n        \n        ret = [nuke.value('this.name')]\n        if by_channel != 'alpha':\n            channel = '({} / {})'.format(\n                depth_channel,\n                by_channel)\n        elif depth_channel != 'depth.Z':\n            channel = '({})'.format(depth_channel)\n        else:\n            channel = None\n        \n        closepoint = nuke.value('this.closepoint')\n        farpoint = nuke.value('this.farpoint')\n        if closepoint != '0' or farpoint != '1':\n            range = '[{}~{}]'.format(closepoint, farpoint)\n        else:\n            range = None\n            \n        size = nuke.value('this.size')\n        default = nuke.value('this.empty_area_depth')\n        erode = nuke.numvalue('this.erode_size')\n        info = ['*{}'.format(size) if size != '1' else None,\n            '#{}'.format(default) if default != '1' else None,\n            '{:+1.0f}'.format(erode) if erode!=0.0 else None]\n        info = ' '.join(i for i in info if i)\n        label = nuke.thisNode()['label'].evaluate()\n        \n        ret = list(i for i in [\n            nuke.value('this.name'),\n            range,\n            info,\n            channel,\n            label] if i)\n        ret = '\\n'.join(ret)\n        return ret\n"
  autolabel "__depthfix_autolabel()"
- note_font Verdana
- addUserKnob {20 tab1 l "DepthFix v3.6.10"}
+ note_font 微软雅黑
+ addUserKnob {20 tab1 l "DepthFix v3.6.11"}
  addUserKnob {41 depth_channel l "depth(深度通道)" T Copy2.from0}
  addUserKnob {7 closepoint l "closepoint(近点)" t 代表最近处的深度数值}
  addUserKnob {7 farpoint l "farpoint(远点)" t 代表最远处的深度数值}
  farpoint 1
+ addUserKnob {26 "" +STARTLINE}
  addUserKnob {41 by l "by(以此修复)" t 用此通道修复深度通道 T Copy1.from0}
  addUserKnob {7 threshold l "threshold(阈值)" t alpha小于此值的像素的depth.z值会在处理过程中被忽略}
  threshold 0.95
@@ -17,10 +19,13 @@ Gizmo {
  pre_erode 2
  addUserKnob {7 size l "size(强度)" t 用于修正的收边系数 R 0 10}
  size 1
- addUserKnob {7 minZ l min t 低于此值的深度会被设为此值}
- addUserKnob {7 maxZ l max t 高于此值的深度会被设为此值}
- maxZ 1
+ addUserKnob {3 mask_erode l "mask erode(范围修正)" t 对修复影响范围进行修正}
+ mask_erode 0
+ addUserKnob {26 "" +STARTLINE}
  addUserKnob {4 empty_area_depth l "default(默认值)" t alpha为0的区域使用的值 M {0 1 original}}
+ addUserKnob {7 minZ l min(最小值) t 低于此值的深度会被设为此值}
+ addUserKnob {7 maxZ l max(最大值) t 高于此值的深度会被设为此值}
+ maxZ 1
  empty_area_depth 1
  addUserKnob {3 erode_size l "overall erode(整体收边)" t 在全图深度上进行的收边}
 }
@@ -35,15 +40,15 @@ Gizmo {
   xpos 434
   ypos -702
  }
-set N3d5e400 [stack 0]
-push $N3d5e400
+set N677e000 [stack 0]
+push $N677e000
  Copy {
   inputs 2
   from0 depth.Z
   to0 depth.Z
   name Copy2
   xpos 510
-  ypos -715
+  ypos -712
   disable {{"! parent.Switch1.which"}}
  }
  Grade {
@@ -52,14 +57,14 @@ push $N3d5e400
   whitepoint {{parent.farpoint}}
   name Grade1
   xpos 510
-  ypos -667
+  ypos -664
  }
  Dot {
   name Dot3
   xpos 544
   ypos -606
  }
-set N3d5f800 [stack 0]
+set N9f0b3c00 [stack 0]
  Dot {
   name Dot1
   xpos 654
@@ -70,55 +75,92 @@ set N3d5f800 [stack 0]
   color 1
   name AddChannels1
   xpos 620
-  ypos -571
+  ypos -568
  }
-set N34c47800 [stack 0]
-push $N34c47800
+set N9f0b3000 [stack 0]
+push $N9f0b3000
  Copy {
   inputs 2
   from0 rgba.alpha
   to0 rgba.alpha
   name Copy1
   xpos 620
-  ypos -523
+  ypos -520
  }
  Dot {
   name Dot20
   xpos 654
   ypos -486
  }
-set N34c47000 [stack 0]
+set N3faff800 [stack 0]
  Dot {
   name Dot17
   xpos 764
   ypos -486
  }
+set N3fafe400 [stack 0]
+ Dot {
+  name Dot6
+  xpos 874
+  ypos -486
+ }
  Expression {
   channel0 alpha
-  expr0 "(a < 1 && a > 0) ? 1 : 0"
-  name Expression6
+  expr0 "(a >= 1) ? 1 : 0"
+  name Expression3
+  label 原始正确数据mask
+  xpos 840
+  ypos -448
+ }
+ Dot {
+  name Dot7
+  xpos 874
+  ypos -318
+ }
+push $N3fafe400
+ Expression {
+  channel0 alpha
+  expr0 "(a > 0) ? 1 : 0"
+  name Expression2
+  selected true
   xpos 730
-  ypos -395
+  ypos -451
+ }
+ Dilate {
+  channels alpha
+  size {{parent.mask_erode}}
+  name Dilate4
+  label mask扩边
+  xpos 730
+  ypos -410
+ }
+ ChannelMerge {
+  inputs 2
+  operation stencil
+  name ChannelMerge2
+  xpos 730
+  ypos -339
  }
  Dot {
   name Dot13
   xpos 764
   ypos -246
  }
-push $N34c47000
+push $N3faff800
  Dilate {
   channels depth
   size {{parent.pre_erode}}
   name Dilate2
   xpos 620
-  ypos -451
+  ypos -448
  }
  Expression {
   channel0 depth
   expr0 "(a < parent.threshold) ? 1 : z"
   name Expression5
+  label 正确的深度
   xpos 620
-  ypos -395
+  ypos -400
  }
  Dilate {
   channels depth
@@ -132,7 +174,7 @@ push $N34c47000
   xpos 654
   ypos -294
  }
-push $N3d5f800
+push $N9f0b3c00
  ChannelMerge {
   inputs 2+1
   A depth.Z
@@ -149,7 +191,7 @@ push $N3d5f800
   expr0 "(a == 0) ? parent.empty_area_depth : z"
   name Expression1
   xpos 510
-  ypos -178
+  ypos -202
   disable {{"parent.empty_area_depth == 2"}}
  }
  Expression {
@@ -158,41 +200,33 @@ push $N3d5f800
   channel1 none
   name Expression4
   xpos 510
-  ypos -137
+  ypos -160
  }
  Dilate {
   channels depth
   size {{parent.erode_size}}
   name Dilate3
+  label 整体收边
   xpos 510
-  ypos -109
+  ypos -134
  }
-set N34c9f800 [stack 0]
- Viewer {
-  frame_range 100-100
-  fps 25
-  input_process false
-  name Viewer1
-  xpos 621
-  ypos 60
- }
-push $N34c9f800
  Dot {
   name Dot4
   xpos 544
   ypos -54
  }
-push $N3d5e400
+push $N677e000
  Switch {
   inputs 2
   which {{"\[string match *\[value parent.depth_channel]* \[channels parent.Input]]\n"}}
   name Switch1
+  label 无深度层时自动停用
   xpos 400
-  ypos -59
+  ypos -64
  }
  Output {
   name Output1
   xpos 400
-  ypos 89
+  ypos 86
  }
 end_group
