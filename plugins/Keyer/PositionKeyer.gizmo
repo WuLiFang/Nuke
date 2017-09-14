@@ -1,9 +1,10 @@
 #! C:/Program Files/Nuke11.0v1/nuke-11.0.1.dll -nx
 version 10.0 v4
 Gizmo {
- onCreate "
-if not locals().get('__positionkeyer_on_create'):
-    def __positionkeyer_on_create():
+  onCreate "
+class __PositionKeyer(object):
+    @staticmethod
+    def on_create():
         if not nuke.numvalue('this.__initiated'):
             # in
             n = None
@@ -31,25 +32,46 @@ if not locals().get('__positionkeyer_on_create'):
 
         nuke.knob('this.__initiated', 'true')
 
-if not locals().get('__positionkeyer_knob_changed'):
-    def __positionkeyer_knob_changed():
+    @staticmethod
+    def sample(n):
         try:
-            n=nuke.thisNode()
-            if nuke.thisKnob() in (n['p0'], n['p1']):
-                sampler = n.node('Sampler')
-                channels = ('rgba.red', 'rgba.green', 'rgba.blue')
-                sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
-                sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))
+            sampler = n.node('Sampler')
+            channels = ('rgba.red', 'rgba.green', 'rgba.blue')
+            sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
+            sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))
         except ValueError:
             return
 
-__positionkeyer_on_create()
+    @classmethod
+    def knob_changed(cls):
+        n=nuke.thisNode()
+        if nuke.thisKnob() in (n['p0'], n['p1']):
+            cls.sample(n)
+
+    @classmethod
+    def layer_changed(cls):
+        if nuke.thisKnob() is nuke.thisNode()['in']:
+            cls.sample(nuke.thisParent())
+
+try:
+    __PositionKeyer.on_create()
+except:
+    print('EXCEPTION: __PositionKeyer.on_create')
+    raise
 "
  autolabel "nuke.tcl('return \[string trim \[join \"\[value name] \{\[expr \[expr \[numvalue x]|\[numvalue y]|\[numvalue z]]?\"[value in].\[join \"\[expr \[value x]?\{\[expr \[value invert_x]?\"~x\":\"x\"]\}:\{\}] \[expr \[value y]?\{\[expr \[value invert_y]?\"~y\":\"y\"]\}:\{\}] \[expr \[value z]?\{\[expr \[value invert_z]?\"~z\":\"z\"]\}:\{\}]\" |]\":\"none\"] -> \[value output]\} \{\[python \{nuke.thisNode()\[\\'label\\'].evaluate()\}]\}\" \"\\n\"]]')"
- knobChanged "__positionkeyer_knob_changed()"
+ knobChanged "
+try:
+    __PositionKeyer.knob_changed()
+except NameError:
+    pass
+except:
+    print('EXCEPTION: __PositionKeyer.knob_changed')
+    raise
+"
  tile_color 0xff00ff
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.3.6"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.3.7"}
  addUserKnob {41 in l "sample layer" t "用来取样的图层,一般是P层。但也可以用其他图层(例如depth)" T Shuffle2.in}
  addUserKnob {20 sampler l 取样器 n 1}
  addUserKnob {12 p0}
@@ -93,15 +115,15 @@ set N366dee00 [stack 0]
  Shuffle {
   in rgba
   name Shuffle2
-  onCreate "
-if not locals().get('__positionkeyer_layer_changed'):
-    def __positionkeyer_layer_changed():
-        n=nuke.thisParent()
-        sampler = n.node('Sampler')
-        channels = ('rgba.red', 'rgba.green', 'rgba.blue')
-        sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
-        sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))"
-  knobChanged "print(1)\n__positionkeyer_layer_changed()"
+  knobChanged "
+try:
+    __PositionKeyer.layer_changed()
+except NameError:
+    pass
+except:
+    print('EXCEPTION: __PositionKeyer.layer_changed')
+    raise
+"
   xpos 180
   ypos -1308
  }
