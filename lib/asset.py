@@ -11,7 +11,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.6'
+__version__ = '0.4.7'
 
 
 class DropFrames(object):
@@ -26,16 +26,12 @@ class DropFrames(object):
         return cls._file_dropframe.get(filename, default)
 
     @classmethod
-    def check(cls):
+    def check(cls, show_ok=False):
         """Check dropframe then show them if any.  """
 
         cls._file_dropframe.clear()
-        try:
-            cls.update()
-        except CancelledError:
-            pass
-        finally:
-            cls.show(show_all=True)
+        cls.update()
+        cls.show(show_all=True, show_ok=show_ok)
 
     @classmethod
     def update(cls, nodes=None):
@@ -43,6 +39,8 @@ class DropFrames(object):
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
         nodes = nodes or nuke.allNodes('Read')
+        if not nodes:
+            return
 
         footages = get_footages(nodes)
 
@@ -60,7 +58,7 @@ class DropFrames(object):
         pool.join()
 
     @classmethod
-    def show(cls, show_all=False):
+    def show(cls, show_all=False, show_ok=False):
         """Show all dropframes to user."""
         message = ''
         for filename, dropframes in cls._file_dropframe.items():
@@ -79,6 +77,8 @@ class DropFrames(object):
                 + message +\
                 '</table>'
             nuke.message(message)
+        elif show_ok:
+            nuke.message('没有发现缺帧素材')
 
 
 def get_footages(nodes=None):
@@ -134,12 +134,14 @@ def dropdata_handler(mime_type, data, from_dir=False):
 
     def _isdir():
         if os.path.isdir(get_encoded(data)):
-            task = Progress(data)
             _dirname = data.replace('\\', '/')
             filenames = nuke.getFileNameList(get_encoded(_dirname, 'UTF-8'))
-            total = len(filenames)
-            for index, filename in enumerate(filenames):
-                task.set(index * 100 // total, filename)
+            task = Progress(data, total=len(filenames))
+            for filename in filenames:
+                try:
+                    task.step(filename)
+                except CancelledError:
+                    return True
                 read_node = dropdata_handler(
                     mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
                 if isinstance(read_node, nuke.Node):
