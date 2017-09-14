@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.6'
+__version__ = '0.17.7'
 
 
 class Config(wlf.config.Config):
@@ -54,13 +54,14 @@ class Comp(object):
 
         self._config = dict(config or Config())
         self._errors = []
+        self._bg_ch_end_nodes = []
 
         for key, value in self._config.iteritems():
             if isinstance(value, str):
                 self._config[key] = value.replace(u'\\', '/')
 
         pprint.pprint(config)
-        task = Progress(u'自动合成')
+        self._task = Progress(u'自动合成', total=20)
         if config:
             print(u'\n# {}'.format(config['shot']))
             nuke.scriptClear()
@@ -70,9 +71,9 @@ class Comp(object):
                       r"[python {os.path.join("
                       r"nuke.value('root.name', ''), '../'"
                       r").replace('\\', '/')}]")
-        task.set(message=u'分析读取节点')
+        self.task_step(u'分析读取节点')
         self.setup()
-        task.set(30, u'创建节点树')
+        self.task_step(u'创建节点树')
         self.create_nodes()
         if config:
             self.output()
@@ -82,6 +83,12 @@ class Comp(object):
     def fps(self):
         """Frame per secondes.  """
         return self._config.get('fps') or nuke.numvalue('root.fps')
+
+    def task_step(self, message=None):
+        """Push task progress bar forward.  """
+        if message:
+            print(u'{:-^30s}'.format(message))
+        self._task.step(message)
 
     @staticmethod
     def get_shot_list(config, include_existed=False):
@@ -120,7 +127,7 @@ class Comp(object):
 
         # Get all subdir
         dirs = list(x[0] for x in os.walk(self._config['footage_dir']))
-        print(u'{:-^30s}'.format(u'开始 导入素材'))
+        self.task_step(u'导入素材')
         for dir_ in dirs:
             # Get footage in subdir
             print(u'文件夹 {}:'.format(dir_))
@@ -171,30 +178,21 @@ class Comp(object):
 
     def create_nodes(self):
         """Create nodes that a comp need."""
-        task = Progress(u'创建节点树')
-
-        def _task(message, progress=None):
-            task.set(message=message)
-            print(u'{:-^30s}'.format(message))
-            if progress:
-                task.set(progress)
-
-        _task(u'合并BG CH')
+        self.task_step(u'合并BG CH')
         n = self._bg_ch_nodes()
 
-        _task(u'创建MP', 60)
+        self.task_step(u'创建MP')
         n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
 
-        _task(u'创建整体深度', 65)
+        self.task_step(u'创建整体深度')
         nodes = nuke.allNodes('DepthFix')
         n = self._merge_depth(n, nodes)
-        _task(u'添加虚焦控制', 67)
+        self.task_step(u'添加虚焦控制')
         self._add_zdefocus_control(n)
 
-        nodes = nuke.allNodes('MotionFix')
-        _task(u'创建整体速度', 70)
-        n = self._merge_motion(n, nodes)
+        self.task_step(u'创建整体速度')
+        n = self._merge_other(n, self._bg_ch_end_nodes)
 
         n = nuke.nodes.Unpremult(inputs=[n], label='整体调色开始')
 
@@ -236,9 +234,9 @@ class Comp(object):
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
-        _task(u'输出节点创建', 85)
+        self.task_step(u'输出节点创建')
 
-        _task(u'设置查看器', 90)
+        self.task_step(u'设置查看器')
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
@@ -362,16 +360,14 @@ class Comp(object):
             print(u'{:-^30s}'.format(u'结束 输出'))
 
     def _bg_ch_nodes(self):
-        task = Progress(u'BG CH 节点创建')
-
         nodes = self._precomp()
 
         if not nodes:
             raise FootageError(u'BG', u'CH')
 
-        total = len(nodes)
         for i, n in enumerate(nodes):
-            task.set(i * 100 // total, n.name())
+            self.task_step(u'创建{}'.format(
+                n.metadata(self.tag_metadata_key) or n.name()))
             n = self._bg_ch_node(n)
 
             if i == 0:
@@ -504,6 +500,8 @@ class Comp(object):
             label='滤镜结束')
 
         n = nuke.nodes.DiskCache(inputs=[n])
+
+        self._bg_ch_end_nodes.append(n)
         return n
 
     @staticmethod
@@ -538,19 +536,22 @@ class Comp(object):
         return copy_node
 
     @classmethod
-    def _merge_motion(cls, input_node, nodes):
-        nodes = [n for n in nodes if 'motion' in nuke.layers(n)]
+    def _merge_other(cls, input_node, nodes):
         nodes.sort(key=cls._nodes_order)
         if not nodes:
             return input_node
         input0 = input_node
+        n = None
         for n in nodes:
             n = nuke.nodes.Dot(inputs=[n], hide_input=True)
+            n = nuke.nodes.Grade(inputs=[n],
+                                 channels='alpha',
+                                 blackpoint='0.99',
+                                 label='去除抗锯齿部分的内容')
             n = nuke.nodes.Merge2(
                 inputs=[input0, n, n],
-                tile_color=0xff3300ff,
                 operation='copy',
-                Achannels='motion', Bchannels='motion', output='motion',
+                also_merge='all',
                 label=n.metadata(cls.tag_metadata_key) or '')
             input0 = n
         n = nuke.nodes.Merge2(
