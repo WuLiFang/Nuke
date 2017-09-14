@@ -14,7 +14,7 @@ from wlf.path import remove_version, get_unicode, get_server, split_version
 from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.8'
+__version__ = '0.6.9'
 
 
 class Config(wlf.config.Config):
@@ -27,6 +27,9 @@ class Config(wlf.config.Config):
         'FOLDER': 'Comp\\mov',
         'EPISODE': '',
         'SCENE': '',
+        'MODE': 1,
+        'IS_SUBMIT': 2,
+        'IS_BURN_IN': 2
     }
     path = os.path.expanduser('~/.wlf.uploader.json')
 
@@ -110,7 +113,7 @@ class Dialog(QDialog):
                     elif isinstance(qt_edit, QtWidgets.QToolBox):
                         qt_edit.setCurrentIndex(self._config[k])
                 except KeyError as ex:
-                    print(ex)
+                    print('wlf.uploader: not found key {} in config'.format(ex))
             if HAS_NUKE:
                 from node import Last
                 if Last.mov_path:
