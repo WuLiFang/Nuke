@@ -7,7 +7,7 @@ from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
     set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.3'
+__version__ = '0.2.4'
 
 
 class ChannelsRename(nukescripts.PythonPanel):
@@ -148,6 +148,9 @@ class MultiEdit(nukescripts.PythonPanel):
                 new_k = knob_class(name, label, enums)
             elif issubclass(knob_class, nuke.Tab_Knob):
                 new_k = _tab_knob()
+            elif issubclass(knob_class, nuke.Array_Knob):
+                new_k = knob_class(name, label)
+                new_k.setRange(k.min(), k.max())
             else:
                 # print(knob_class, name, label)
                 new_k = knob_class(name, label)
