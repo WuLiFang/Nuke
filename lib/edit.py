@@ -13,7 +13,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.7.0'
+__version__ = '1.7.1'
 
 
 def rename_all_nodes():
@@ -669,6 +669,15 @@ def same_class_filter(nodes, node_class=None):
             nodes = [n for n in nodes if n.Class()
                      == nodes[0].Class()]
     return nodes
+
+
+def transfer_flags(src, dst):
+    """Transfer @src knob flags to @dst.  """
+    for flag in [pow(2, n) for n in range(31)]:
+        if src.getFlag(flag):
+            dst.setFlag(flag)
+        else:
+            dst.clearFlag(flag)
 
 
 def _print_flags():
