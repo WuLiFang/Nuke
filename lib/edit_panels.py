@@ -10,7 +10,7 @@ from wlf.notify import Progress, CancelledError
 __version__ = '0.2.2'
 
 
-class ChannelsRenamePanel(nukescripts.PythonPanel):
+class ChannelsRename(nukescripts.PythonPanel):
     """Dialog UI of channel_rename."""
 
     def __init__(self, prefix='PuzzleMatte', node=None):
@@ -63,16 +63,16 @@ class ChannelsRenamePanel(nukescripts.PythonPanel):
 
         nuke.Undo.enable()
 
-        nuke.addOnDestroy(ChannelsRenamePanel.destroy, args=(self))
-        nuke.addOnUserCreate(ChannelsRenamePanel.destroy, args=(self))
+        nuke.addOnDestroy(ChannelsRename.destroy, args=(self))
+        nuke.addOnUserCreate(ChannelsRename.destroy, args=(self))
 
     def __del__(self):
-        nuke.removeOnDestroy(ChannelsRenamePanel.destroy, args=(self))
-        nuke.removeOnUserCreate(ChannelsRenamePanel.destroy, args=(self))
+        nuke.removeOnDestroy(ChannelsRename.destroy, args=(self))
+        nuke.removeOnUserCreate(ChannelsRename.destroy, args=(self))
 
     def destroy(self):
         """Destroy the panel.  """
-        super(ChannelsRenamePanel, self).destroy()
+        super(ChannelsRename, self).destroy()
         nuke.Undo.disable()
         self._layercontactsheet['label'].setValue('[delete this]')
         nuke.Undo.enable()
@@ -101,7 +101,7 @@ class ChannelsRenamePanel(nukescripts.PythonPanel):
         if pane:
             self.addToPane(pane)
         else:
-            super(ChannelsRenamePanel, self).show()
+            super(ChannelsRename, self).show()
 
 
 class MultiEdit(nukescripts.PythonPanel):
