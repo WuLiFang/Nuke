@@ -13,7 +13,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.6.2'
+__version__ = '1.7.0'
 
 
 def rename_all_nodes():
@@ -642,3 +642,40 @@ def copy_layer(input0, input1=None, layer='rgba', output=None):
             Achannels=_input1_layer(layer) or _input1_layer(output) or 'rgba',
             Bchannels='none', output=output, label=layer)
     return ret
+
+
+def set_knobs(node, values):
+    """Set @node knobs from @values.  """
+    value_dict = dict()
+    value_dict.update(values)
+    for knob_name, value in value_dict.items():
+        try:
+            node[knob_name].setValue(value)
+        except (AttributeError, TypeError):
+            print('Can not set knob: {}.{} to {}'.format(
+                node.name(), knob_name, value))
+
+
+def same_class_filter(nodes, node_class=None):
+    """Filter nodes to one class."""
+    classes = list(
+        set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
+    if len(classes) > 1:
+        choice = nuke.choice('选择节点分类', '节点分类', classes, default=0)
+        if choice is not None:
+            nodes = [n for n in nodes if n.Class()
+                     == classes[choice]]
+        else:
+            nodes = [n for n in nodes if n.Class()
+                     == nodes[0].Class()]
+    return nodes
+
+
+def _print_flags():
+    import math
+    for attr in sorted(dir(nuke), key=lambda x: getattr(nuke, x)):
+        value = getattr(nuke, attr)
+        if isinstance(value, int) and value > 0:
+            _log = math.log(value, 2)
+            if int(_log) == _log:
+                print(attr, value)
