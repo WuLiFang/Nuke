@@ -3,10 +3,11 @@
 
 import nuke
 import nukescripts
-from edit import crate_copy_from_dict, replace_node, CurrentViewer, set_knobs, same_class_filter
+from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
+    set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 
 class ChannelsRenamePanel(nukescripts.PythonPanel):
@@ -112,34 +113,36 @@ class MultiEdit(nukescripts.PythonPanel):
 
         self.addKnob(nuke.Text_Knob('', '以 {} 为模版'.format(nodes[0].name())))
         self.addKnob(nuke.Tab_Knob('', nodes[0].Class()))
+
+        def _tab_knob():
+            if label is None:
+                new_k = nuke.Tab_Knob(name, label, nuke.TABENDGROUP)
+            elif label.startswith('@b;'):
+                new_k = nuke.Tab_Knob(name, label, nuke.TABBEGINGROUP)
+            else:
+                new_k = knob_class(name, label)
+            return new_k
+
         for k in knobs:
             name = k.name()
             label = k.label() or None
 
             knob_class = getattr(nuke, type(k).__name__)
 
-            if issubclass(knob_class, nuke.Channel_Knob):
+            if issubclass(knob_class, (nuke.Script_Knob, nuke.Obsolete_Knob)) \
+                    or knob_class is nuke.Knob:
+                continue
+            elif issubclass(knob_class, nuke.Channel_Knob):
                 new_k = nuke.Channel_Knob(name, label, k.depth())
             elif issubclass(knob_class, nuke.Enumeration_Knob):
                 enums = [k.enumName(i) for i in range(k.numValues())]
                 new_k = knob_class(name, label, enums)
-            elif isinstance(k, (nuke.Script_Knob, nuke.Obsolete_Knob)) or knob_class is nuke.Knob:
-                continue
-            elif isinstance(k, nuke.Tab_Knob):
-                if label is None:
-                    new_k = nuke.Tab_Knob(name, label, nuke.TABENDGROUP)
-                elif label.startswith('@b;'):
-                    new_k = nuke.Tab_Knob(name, label, nuke.TABBEGINGROUP)
-                else:
-                    new_k = knob_class(name, label)
+            elif issubclass(knob_class, nuke.Tab_Knob):
+                new_k = _tab_knob()
             else:
                 # print(knob_class, name, label)
                 new_k = knob_class(name, label)
-            for flag in [pow(2, n) for n in range(31)]:
-                if k.getFlag(flag):
-                    new_k.setFlag(flag)
-                else:
-                    new_k.clearFlag(flag)
+            transfer_flags(k, new_k)
             try:
                 new_k.setValue(k.value())
             except TypeError:
