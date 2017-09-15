@@ -3,9 +3,10 @@
 
 import nuke
 import nukescripts
-from edit import crate_copy_from_dict, replace_node, CurrentViewer
+from edit import crate_copy_from_dict, replace_node, CurrentViewer, set_knobs, same_class_filter
+from wlf.notify import Progress, CancelledError
 
-__version__ = '0.1.1'
+__version__ = '0.2.0'
 
 
 class ChannelsRenamePanel(nukescripts.PythonPanel):
@@ -91,3 +92,97 @@ class ChannelsRenamePanel(nukescripts.PythonPanel):
             self.addToPane(pane)
         else:
             super(ChannelsRenamePanel, self).show()
+
+
+class MultiEdit(nukescripts.PythonPanel):
+    """Edit multiple same class node at once.  """
+    nodes = None
+
+    def __init__(self, nodes=None):
+        nukescripts.PythonPanel.__init__(
+            self, '多节点编辑', 'com.wlf.multiedit')
+
+        nodes = nodes or nuke.selectedNodes()
+        assert nodes, 'Nodes not given. '
+        nodes = same_class_filter(nodes)
+        self.nodes = nodes
+        self._values = {}
+
+        knobs = nodes[0].allKnobs()
+
+        self.addKnob(nuke.Text_Knob('', '以 {} 为模版'.format(nodes[0].name())))
+        self.addKnob(nuke.Tab_Knob('', nodes[0].Class()))
+        for k in knobs:
+            name = k.name()
+            label = k.label() or None
+
+            knob_class = getattr(nuke, type(k).__name__)
+
+            if issubclass(knob_class, nuke.Channel_Knob):
+                new_k = nuke.Channel_Knob(name, label, k.depth())
+            elif issubclass(knob_class, nuke.Enumeration_Knob):
+                enums = [k.enumName(i) for i in range(k.numValues())]
+                new_k = knob_class(name, label, enums)
+            elif isinstance(k, (nuke.Script_Knob, nuke.Obsolete_Knob)) or knob_class is nuke.Knob:
+                continue
+            elif isinstance(k, nuke.Tab_Knob):
+                if label is None:
+                    new_k = nuke.Tab_Knob(name, label, nuke.TABENDGROUP)
+                elif label.startswith('@b;'):
+                    new_k = nuke.Tab_Knob(name, label, nuke.TABBEGINGROUP)
+                else:
+                    new_k = knob_class(name, label)
+            else:
+                # print(knob_class, name, label)
+                new_k = knob_class(name, label)
+            for flag in [pow(2, n) for n in range(31)]:
+                if k.getFlag(flag):
+                    new_k.setFlag(flag)
+                else:
+                    new_k.clearFlag(flag)
+            try:
+                new_k.setValue(k.value())
+            except TypeError:
+                pass
+
+            self.addKnob(new_k)
+
+        self.addKnob(nuke.EndTabGroup_Knob(''))
+
+        self._rename_knob = nuke.EvalString_Knob('', '重命名')
+        self.addKnob(self._rename_knob)
+        k = nuke.PyScript_Knob('ok', 'OK', 'nuke.tabClose()')
+        k.setFlag(nuke.STARTLINE)
+        self.addKnob(k)
+        self.addKnob(nuke.PyScript_Knob(
+            'cancel', 'Cancel', 'nuke.tabClose()'))
+
+        self._knobs = self.knobs()
+
+    def knobChanged(self, knob):
+        """Override. """
+        if knob is self._knobs['ok']:
+            nuke.Undo.begin()
+            nuke.Undo.name('同时编辑多个节点')
+            task = Progress('设置节点', total=len(self.nodes))
+            for n in self.nodes:
+                try:
+                    task.step(n.name())
+                except CancelledError:
+                    nuke.Undo.cancel()
+                    return
+                set_knobs(n, self._values)
+                new_name = self._rename_knob.evaluate()
+                if new_name:
+                    n.setName(new_name)
+            nuke.Undo.end()
+        else:
+            self._values[knob.name()] = knob.value()
+
+    def show(self):
+        """Show self to user.  """
+        pane = nuke.getPaneFor('Properties.1')
+        if pane:
+            self.addToPane(pane)
+        else:
+            self.showModal()
