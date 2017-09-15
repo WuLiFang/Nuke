@@ -34,6 +34,7 @@ def add_menu():
     def _edit(menu):
         m = menu.addMenu("编辑")
 
+        m.addCommand('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2')
         m.addCommand("分离rgba",
                      lambda: edit.shuffle_rgba(nuke.selectedNode()))
         m.addCommand('分离所有通道', lambda: edit.split_layers(nuke.selectedNode()),
@@ -47,7 +48,6 @@ def add_menu():
                      'SHIFT+F7')
         m.addCommand("设置帧范围",
                      edit.dialog_set_framerange)
-        m.addCommand('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2')
         m.addCommand('转换为相对路径',
                      lambda: edit.nodes_to_relpath(nuke.selectedNodes()),
                      icon="utilitiesfolder.png")
