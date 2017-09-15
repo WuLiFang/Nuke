@@ -7,7 +7,7 @@ from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
     set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 
 class ChannelsRename(nukescripts.PythonPanel):
@@ -163,6 +163,8 @@ class MultiEdit(nukescripts.PythonPanel):
 
         self._rename_knob = nuke.EvalString_Knob('', '重命名')
         self.addKnob(self._rename_knob)
+        self.addKnob(nuke.ColorChip_Knob('tile_color', '节点颜色'))
+        self.addKnob(nuke.ColorChip_Knob('gl_color', '框线颜色'))
         k = nuke.PyScript_Knob('ok', 'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
