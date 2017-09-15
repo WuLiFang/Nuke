@@ -7,7 +7,7 @@ from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
     set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 
 class ChannelsRenamePanel(nukescripts.PythonPanel):
@@ -55,31 +55,40 @@ class ChannelsRenamePanel(nukescripts.PythonPanel):
             if channel.endswith('.blue'):
                 self.addKnob(nuke.Text_Knob(''))
         self.addKnob(nuke.Text_Knob(''))
-        k = nuke.PyScript_Knob('ok', 'OK', 'nuke.tabClose()')
+        k = nuke.Script_Knob('ok', 'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
-        self.addKnob(nuke.PyScript_Knob(
-            'cancel', 'Cancel', 'nuke.tabClose()'))
+        self.addKnob(nuke.Script_Knob('cancel', 'Cancel'))
         self._knobs = self.knobs()
 
         nuke.Undo.enable()
 
+        nuke.addOnDestroy(ChannelsRenamePanel.destroy, args=(self))
+        nuke.addOnUserCreate(ChannelsRenamePanel.destroy, args=(self))
+
+    def __del__(self):
+        nuke.removeOnDestroy(ChannelsRenamePanel.destroy, args=(self))
+        nuke.removeOnUserCreate(ChannelsRenamePanel.destroy, args=(self))
+
+    def destroy(self):
+        """Destroy the panel.  """
+        super(ChannelsRenamePanel, self).destroy()
+        nuke.Undo.disable()
+        self._layercontactsheet['label'].setValue('[delete this]')
+        nuke.Undo.enable()
+        self.__del__()
+
     def knobChanged(self, knob):
         """Override. """
         if knob in (self._knobs['ok'], self._knobs['cancel']):
-            nuke.Undo.disable()
-            try:
-                nuke.delete(self._layercontactsheet)
-            except ValueError:
-                pass
             self._viewer.recover()
-            nuke.Undo.enable()
             if knob is self._knobs['ok']:
                 nuke.Undo.begin()
                 nuke.Undo.name('重命名通道')
                 n = crate_copy_from_dict(self.rename_dict, self._node)
                 replace_node(self._node, n)
                 nuke.Undo.end()
+            self.destroy()
 
     @property
     def rename_dict(self):
@@ -154,13 +163,23 @@ class MultiEdit(nukescripts.PythonPanel):
 
         self._rename_knob = nuke.EvalString_Knob('', '重命名')
         self.addKnob(self._rename_knob)
-        k = nuke.PyScript_Knob('ok', 'OK', 'nuke.tabClose()')
+        k = nuke.PyScript_Knob('ok', 'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
         self.addKnob(nuke.PyScript_Knob(
             'cancel', 'Cancel', 'nuke.tabClose()'))
 
         self._knobs = self.knobs()
+
+        nuke.addOnDestroy(MultiEdit.destroy, args=(self))
+
+    def __del__(self):
+        nuke.removeOnDestroy(MultiEdit.destroy, args=(self))
+
+    def destroy(self):
+        """Destroy the panel.  """
+        super(MultiEdit, self).destroy()
+        self.__del__()
 
     def knobChanged(self, knob):
         """Override. """
@@ -179,6 +198,7 @@ class MultiEdit(nukescripts.PythonPanel):
                 if new_name:
                     n.setName(new_name)
             nuke.Undo.end()
+            self.destroy()
         else:
             self._values[knob.name()] = knob.value()
 
@@ -188,4 +208,4 @@ class MultiEdit(nukescripts.PythonPanel):
         if pane:
             self.addToPane(pane)
         else:
-            self.showModal()
+            super(MultiEdit, self).show()
