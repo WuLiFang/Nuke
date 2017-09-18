@@ -4,6 +4,7 @@
 import os
 
 import nuke
+import nuke.localization
 import nukescripts
 
 import asset
@@ -38,6 +39,10 @@ def menu():
 
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
+
+    print(u'启用打开文件时更新缓存')
+    nuke.addOnScriptLoad(asset.Localization.update)
+    asset.Localization.start_upate()
 
     print(u'增强文件拖放')
     nukescripts.addDropDataCallback(asset.dropdata_handler)

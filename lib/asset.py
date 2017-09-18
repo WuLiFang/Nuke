@@ -3,15 +3,17 @@
 
 import os
 import re
+import time
 import multiprocessing.dummy as multiprocessing
 
 import nuke
+import nuke.localization
 
 from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.7'
+__version__ = '0.4.8'
 
 
 class DropFrames(object):
@@ -220,3 +222,28 @@ def dropdata_handler(mime_type, data, from_dir=False):
         ret = func()
         if ret:
             return ret
+
+
+class Localization(object):
+    """Nuke localization utility.  """
+    lock = multiprocessing.Lock()
+
+    @classmethod
+    def start_upate(cls, interval=1800):
+        """Start update thread"""
+        def _func():
+            while cls.lock.acquire(False):
+                time.sleep(interval)
+                nuke.executeInMainThread(cls.update)
+        proc = multiprocessing.Process(
+            target=_func, name='com.wlf.UpdateLocalization')
+        proc.setDaemon(True)
+        proc.start()
+
+    @staticmethod
+    def update():
+        """Update localized files"""
+        print('Updating localised files')
+        nuke.localization.resumeLocalization()
+        nuke.localization.forceUpdateAll()
+        nuke.localization.setAlwaysUseSourceFiles(False)
