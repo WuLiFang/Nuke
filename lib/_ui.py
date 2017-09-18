@@ -116,7 +116,7 @@ def add_menu():
         m.addCommand(
             "批量下载", r"nuke.message('已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>')")
         m.addCommand(
-            '创建项目色板', cgtwn.dialog_create_csheet)
+            '创建项目色板', lambda: cgtwn.ContactSheetPanel().show())
         m.addCommand(
             '创建项目文件夹', cgtwn.dialog_create_dirs)
 
