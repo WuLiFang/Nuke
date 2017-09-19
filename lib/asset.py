@@ -7,13 +7,12 @@ import time
 import multiprocessing.dummy as multiprocessing
 
 import nuke
-import nuke.localization
 
 from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.8'
+__version__ = '0.4.9'
 
 
 class DropFrames(object):
@@ -244,6 +243,8 @@ class Localization(object):
     def update():
         """Update localized files"""
         print('Updating localised files')
-        nuke.localization.resumeLocalization()
-        nuke.localization.forceUpdateAll()
-        nuke.localization.setAlwaysUseSourceFiles(False)
+        if nuke.env['NukeVersionMajor'] >= 10:
+            import nuke.localization as localization
+            localization.resumeLocalization()
+            localization.forceUpdateAll()
+            localization.setAlwaysUseSourceFiles(False)

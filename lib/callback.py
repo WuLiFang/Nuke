@@ -4,7 +4,6 @@
 import os
 
 import nuke
-import nuke.localization
 import nukescripts
 
 import asset
