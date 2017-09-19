@@ -4,8 +4,15 @@ Gizmo {
  inputs 2
  tile_color 0x9c0000ff
  label "** MP跟踪 **\n导出的摄像机连这个节点"
+ onCreate {
+nuke.thisNode()['custom_frame'].setEnabled(nuke.thisNode()['use_custom_frame'].value())
+}
+ knobChanged {
+if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
+    nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
+}
  note_font 微软雅黑
- addUserKnob {20 tab1 l "ProjectionMP v0.3.1"}
+ addUserKnob {20 tab1 l "ProjectionMP v0.3.2"}
  addUserKnob {4 screen_type l 屏幕类型 M {球Sphere 卡片Card}}
  addUserKnob {6 use_custom_frame l 指定基准帧 -STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}

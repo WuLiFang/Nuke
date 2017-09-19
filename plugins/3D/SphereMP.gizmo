@@ -2,6 +2,13 @@ set cut_paste_input [stack 0]
 version 10.0 v4
 push $cut_paste_input
 Group {
+ onCreate {
+nuke.thisNode()['custom_frame'].setEnabled(nuke.thisNode()['use_custom_frame'].value())
+}
+ knobChanged {
+if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
+    nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
+}
  name SphereMP
  tile_color 0x9c0000ff
  gl_color 0x32fffe00
@@ -9,7 +16,7 @@ Group {
  selected true
  xpos 620
  ypos -452
- addUserKnob {20 tab1 l SphereMP_v0.2}
+ addUserKnob {20 tab1 l "SphereMP v0.2.1"}
  addUserKnob {6 use_custom_frame l 指定基准帧 -STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 30
