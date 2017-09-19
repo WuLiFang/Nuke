@@ -13,7 +13,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.7.1'
+__version__ = '1.7.2'
 
 
 def rename_all_nodes():
@@ -660,6 +660,7 @@ def same_class_filter(nodes, node_class=None):
     """Filter nodes to one class."""
     classes = list(
         set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
+    classes.sort()
     if len(classes) > 1:
         choice = nuke.choice('选择节点分类', '节点分类', classes, default=0)
         if choice is not None:
