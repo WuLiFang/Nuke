@@ -12,7 +12,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.10'
+__version__ = '0.4.11'
 
 
 class DropFrames(object):
@@ -257,8 +257,8 @@ class Localization(object):
     @check_localization_support
     def update():
         """Update localized files"""
-        nuke.tprint('{} 更新素材缓存'.format(
-            time.strftime('[%H:%M:%S]')))
+        nuke.tprint(get_encoded('{} 更新素材缓存'.format(
+            time.strftime('[%H:%M:%S]'))))
         import nuke.localization as localization
         localization.resumeLocalization()
         localization.forceUpdateAll()
