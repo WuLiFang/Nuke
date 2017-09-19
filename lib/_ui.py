@@ -21,7 +21,7 @@ import splitexr
 import scanner
 import panels
 
-__version__ = '0.5.3'
+__version__ = '0.5.4'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -189,7 +189,7 @@ def create_menu_by_dir(parent, dir_):
                     _name), icon='{}.png'.format(_name))
 
 
-def custom_autolabel(enable_text_style=True):
+def custom_autolabel():
     '''
     add addition information on Node in Gui
     '''
@@ -213,22 +213,13 @@ def custom_autolabel(enable_text_style=True):
         ret = _add_to_autolabel(label)
     elif _class == 'Read':
         dropframes = str(asset.DropFrames.get(nuke.filename(this), ''))
+        label = '<style>* {font-family:微软雅黑} span {color:red} b {color:#548DD4}</style>'
+        label += '<b>帧范围: </b><span>{} - {}</span>'.format(
+            this.firstFrame(), this.lastFrame())
         if dropframes:
             nuke.warning('{}:[dropframes]{}'.format(this.name(), dropframes))
-            if enable_text_style:
-                dropframes = '\n<span style=\"color:red\">缺帧:{}</span>'.format(
-                    dropframes)
-            else:
-                dropframes = '\n缺帧:' + dropframes
-        if enable_text_style:
-            label = '<span style=\"color:#548DD4;font-family:微软雅黑\">'\
-                '<b> 帧范围 :</b> '\
-                '<span style=\"color:red\">{} - {}</span>{}</span>'
-            label = label.format(nuke.value('this.first'),
-                                 nuke.value('this.last'), dropframes)
-        else:
-            label = '帧范围 :' + nuke.value('this.first') + \
-                ' - ' + nuke.value('this.last')
+            label += '\n<span>缺帧: {}</span>'.format(dropframes)
+        label += '\n<b>修改日期: </b>{}'.format(this.metadata('input/mtime'))
         ret = _add_to_autolabel(label, True)
     elif _class == 'Shuffle':
         channels = dict.fromkeys(['in', 'in2', 'out', 'out2'], '')
