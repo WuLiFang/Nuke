@@ -12,7 +12,7 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.9'
+__version__ = '0.4.10'
 
 
 class DropFrames(object):
@@ -223,13 +223,27 @@ def dropdata_handler(mime_type, data, from_dir=False):
             return ret
 
 
+def check_localization_support(func):
+    """Decorator.  """
+    def _func(*args, **kwargs):
+        if nuke.env['NukeVersionMajor'] < 10:
+            print('Localization update only support Nuke10.0 or above.')
+            return
+        func(*args, **kwargs)
+    _func.__name__ = func.__name__
+    _func.__doc__ = func.__doc__
+    return _func
+
+
 class Localization(object):
     """Nuke localization utility.  """
     lock = multiprocessing.Lock()
 
     @classmethod
+    @check_localization_support
     def start_upate(cls, interval=1800):
         """Start update thread"""
+
         def _func():
             while cls.lock.acquire(False):
                 time.sleep(interval)
@@ -240,11 +254,12 @@ class Localization(object):
         proc.start()
 
     @staticmethod
+    @check_localization_support
     def update():
         """Update localized files"""
-        print('Updating localised files')
-        if nuke.env['NukeVersionMajor'] >= 10:
-            import nuke.localization as localization
-            localization.resumeLocalization()
-            localization.forceUpdateAll()
-            localization.setAlwaysUseSourceFiles(False)
+        nuke.tprint('{} 更新素材缓存'.format(
+            time.strftime('[%H:%M:%S]')))
+        import nuke.localization as localization
+        localization.resumeLocalization()
+        localization.forceUpdateAll()
+        localization.setAlwaysUseSourceFiles(False)
