@@ -7,7 +7,7 @@ import nuke
 
 import wlf.path
 
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 
 
 def append_knob(node, knob):
@@ -95,7 +95,7 @@ def parent_backdrop(node):
 class Last(object):
     """For recording last script infomation"""
     mov_path = None
-    script_mtime = None
+    script_mtime = time.localtime()
     showed_warning = []
 
     @classmethod
@@ -104,7 +104,8 @@ class Last(object):
         del cls.showed_warning[:]
         cls.record()
         try:
-            cls.script_mtime = time.gmtime(os.path.getmtime(nuke.scriptName()))
+            cls.script_mtime = time.localtime(
+                os.path.getmtime(nuke.scriptName()))
         except RuntimeError:
             pass
 
@@ -112,7 +113,7 @@ class Last(object):
     def on_save_callback(cls):
         """On close callback.  """
         cls.record()
-        cls.script_mtime = time.gmtime()
+        cls.script_mtime = time.localtime()
 
     @classmethod
     def record(cls):
