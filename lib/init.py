@@ -8,7 +8,7 @@ import re
 from wlf import files
 import callback
 
-__version__ = '0.3.8'
+__version__ = '0.3.9'
 
 
 print("python sys.setdefaultencoding('UTF-8')")
