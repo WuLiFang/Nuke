@@ -14,7 +14,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import Last
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 
 
 class DropFrames(object):
@@ -106,6 +106,7 @@ def warn_mtime(show_dialog=False, show_ok=False):
     msg += '<div>上次修改此nk文件: {}</div><br>'.format(
         time.strftime('%y-%m-%d %H:%M:%S', Last.script_mtime))
     if newer_footages and show_dialog:
+        msg += u'发现以下素材变更:<br>'
         msg += '<tabel>'
         msg += '<tr><th>修改日期</th><th>素材</th></tr>'
         msg += '\n'.join(['<tr><td>{}</td><td>{}</td></tr>'.format(newer_footages[i], i)
