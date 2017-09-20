@@ -12,7 +12,9 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.4.11'
+from node import Last
+
+__version__ = '0.5.0'
 
 
 class DropFrames(object):
@@ -80,6 +82,39 @@ class DropFrames(object):
             nuke.message(message)
         elif show_ok:
             nuke.message('没有发现缺帧素材')
+
+
+def warn_mtime(show_dialog=False, show_ok=False):
+    """Show footage that mtime newer than script mtime. """
+    msg = ''
+    newer_footages = {}
+    for n in nuke.allNodes('Read', nuke.Root()):
+        try:
+            mtime = time.strptime(n.metadata(
+                'input/mtime'), '%Y-%m-%d %H:%M:%S')
+        except TypeError:
+            continue
+        if mtime > Last.script_mtime:
+            ftime = time.strftime('%m-%d %H:%M:%S', mtime)
+            newer_footages[nuke.filename(n)] = ftime
+            msg = '{}: [new footage]{}'.format(n.name(), ftime)
+            if msg not in Last.showed_warning:
+                nuke.warning(msg)
+                Last.showed_warning.append(msg)
+
+    msg = '<style>td {padding:8px;}</style>'
+    msg += '<div>上次修改此nk文件: {}</div><br>'.format(
+        time.strftime('%y-%m-%d %H:%M:%S', Last.script_mtime))
+    if newer_footages and show_dialog:
+        msg += '<tabel>'
+        msg += '<tr><th>修改日期</th><th>素材</th></tr>'
+        msg += '\n'.join(['<tr><td>{}</td><td>{}</td></tr>'.format(newer_footages[i], i)
+                          for i in newer_footages])
+        msg += '</tabel>'
+        nuke.message(msg)
+    elif show_ok:
+        msg += u'没有发现更新的素材'
+        nuke.message(msg)
 
 
 def get_footages(nodes=None):

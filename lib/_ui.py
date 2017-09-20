@@ -61,6 +61,8 @@ def add_menu():
         m.addCommand(
             "Reload所有", edit.reload_all_read_node)
         m.addCommand("检查缺帧", lambda: asset.DropFrames.check(show_ok=True))
+        m.addCommand("检查素材更新", lambda: asset.warn_mtime(
+            show_ok=True, show_dialog=True))
         m.addCommand("转换单帧为序列",
                      edit.replace_sequence)
 

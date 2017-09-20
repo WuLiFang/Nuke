@@ -26,7 +26,9 @@ def init():
 
 def menu():
     """Add callback for nuke menu phase."""
+    nuke.addOnScriptLoad(Last.on_load_callback)
 
+    nuke.addOnScriptSave(Last.on_save_callback)
     nuke.addOnScriptSave(_autoplace)
     nuke.addOnScriptSave(_enable_node)
     nuke.addOnScriptSave(_lock_connections)
@@ -40,8 +42,13 @@ def menu():
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
     print(u'启用打开文件时更新缓存')
-    nuke.addOnScriptLoad(asset.Localization.update)
     asset.Localization.start_upate()
+    nuke.addOnScriptLoad(asset.Localization.update)
+
+    print(u'启用文件更新提醒')
+    nuke.addUpdateUI(asset.warn_mtime)
+    nuke.addOnScriptLoad(lambda: asset.warn_mtime(show_dialog=True))
+    nuke.addOnScriptSave(lambda: asset.warn_mtime(show_dialog=True))
 
     print(u'增强文件拖放')
     nukescripts.addDropDataCallback(asset.dropdata_handler)
@@ -56,7 +63,6 @@ def menu():
     print(u'启用自动工程设置')
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
-    nuke.addOnScriptLoad(Last.on_load_callback)
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_check_fps)
 
