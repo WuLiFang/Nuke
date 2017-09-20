@@ -1,10 +1,10 @@
 #! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
 version 10.0 v4
 Group {
- name Antialiasing1
+ name AntiAliasing1
  tile_color 0xcc804eff
  note_font 微软雅黑
- addUserKnob {20 tab_1 l "Antialiasing v0.1.0"}
+ addUserKnob {20 tab_1 l "AntiAliasing v0.1.0"}
  addUserKnob {41 channels T Matrix3.channels}
  addUserKnob {7 size l "size(强度)" R -10 10}
  addUserKnob {26 "" }
