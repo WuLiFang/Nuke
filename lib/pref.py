@@ -1,11 +1,15 @@
 # -*- coding=UTF-8 -*-
 """Custom nuke preference."""
+import logging
 
 import nuke
+
+LOGGER = logging.getLogger('com.wlf.pref')
 
 
 def set_knob_default():
     """Set nuke knob default when node create."""
+    LOGGER.info(u'设置knob默认值')
 
     def _vectorblur2():
         nuke.knobDefault("VectorBlur2.uv", "motion")
@@ -51,6 +55,7 @@ def set_knob_default():
 
 def add_preferences():
     """Add a prefrences panel."""
+    LOGGER.info(u'添加首选项')
     pref = nuke.toNode('preferences')
     k = nuke.Tab_Knob('wlf_tab', '吾立方')
     pref.addKnob(k)

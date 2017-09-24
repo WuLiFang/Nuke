@@ -2,6 +2,7 @@
 """Add callback for wlf plugins."""
 
 import os
+import logging
 
 import nuke
 import nukescripts
@@ -16,12 +17,14 @@ from wlf.notify import Progress
 
 from node import wlf_write_node, Last
 
+LOGGER = logging.getLogger('com.wlf.callback')
+
 
 def init():
     """Add callback for nuke init phase."""
 
     nuke.addBeforeRender(create_out_dirs, nodeClass='Write')
-    print(u'启用渲染前自动生成文件夹')
+    LOGGER.info(u'启用渲染前自动生成文件夹')
 
 
 def menu():
@@ -41,33 +44,33 @@ def menu():
     nuke.addUpdateUI(_gizmo_to_group_update_ui)
     nuke.addOnUserCreate(_gizmo_to_group_on_create)
 
-    print(u'启用打开文件时更新缓存')
+    LOGGER.info(u'启用打开文件时更新缓存')
     asset.Localization.start_upate()
     nuke.addOnScriptLoad(asset.Localization.update)
 
-    print(u'启用文件更新提醒')
+    LOGGER.info(u'启用文件更新提醒')
     nuke.addUpdateUI(asset.warn_mtime)
     nuke.addOnScriptLoad(lambda: asset.warn_mtime(show_dialog=True))
     nuke.addOnScriptSave(lambda: asset.warn_mtime(show_dialog=True))
 
-    print(u'增强文件拖放')
+    LOGGER.info(u'增强文件拖放')
     nukescripts.addDropDataCallback(asset.dropdata_handler)
 
-    print(u'启用缺帧检查')
+    LOGGER.info(u'启用缺帧检查')
     nuke.addOnScriptLoad(asset.DropFrames.check)
     nuke.addOnScriptSave(asset.DropFrames.show)
 
-    print(u'随机节点控制器颜色')
+    LOGGER.info(u'随机节点控制器颜色')
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
 
-    print(u'启用自动工程设置')
+    LOGGER.info(u'启用自动工程设置')
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
     nuke.addOnScriptSave(_check_project)
     nuke.addOnScriptSave(_check_fps)
 
     if cgtwn.cgtwq.MODULE_ENABLE:
-        print(u'启用CGTeamWork集成')
+        LOGGER.info(u'启用CGTeamWork集成')
         nuke.addOnScriptLoad(cgtwn.on_load_callback)
         nuke.addOnScriptSave(cgtwn.on_save_callback)
         nuke.addOnScriptClose(cgtwn.on_close_callback)
@@ -169,7 +172,7 @@ def _render_jpg():
     if nuke.numvalue('preferences.wlf_render_jpg', 0.0):
         n = wlf_write_node()
         if n:
-            print('render_jpg: {}'.format(n.name()))
+            LOGGER.info('render_jpg: %s', n.name())
             try:
                 n['bt_render_JPG'].execute()
             except RuntimeError as ex:
@@ -208,10 +211,6 @@ def _autoplace():
             orgnize.autoplace()
         else:
             map(nuke.autoplace, nuke.allNodes())
-
-
-def _print_name():
-    print(nuke.thisNode().name())
 
 
 def _add_root_info():

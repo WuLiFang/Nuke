@@ -2,6 +2,7 @@
 """Setup UI."""
 
 import os
+import logging
 
 import nuke
 import nukescripts
@@ -27,9 +28,13 @@ WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
 DAG_CONTEXT = 2
 
+LOGGER = logging.getLogger('com.wlf.ui')
+
 
 def add_menu():
     """Add menu for commands and nodes."""
+
+    LOGGER.info(u'添加菜单')
 
     def _edit(menu):
         m = menu.addMenu("编辑")
@@ -157,11 +162,13 @@ def add_menu():
 
 def add_panel():
     """Add custom pannel. """
+    LOGGER.info(u'添加面板')
     panels.register(uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
 def add_autolabel():
     """Add custom autolabel. """
+    LOGGER.info(u'增强节点标签')
     nuke.addAutolabel(custom_autolabel)
 
 
