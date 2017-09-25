@@ -13,7 +13,6 @@ def set_knob_default():
 
     def _vectorblur2():
         nuke.knobDefault("VectorBlur2.uv", "motion")
-        # nuke.knobDefault("VectorBlur2.blur_uv", "uniform")
         nuke.knobDefault("VectorBlur2.uv_offset", "0")
         nuke.knobDefault("VectorBlur2.scale", "1")
         nuke.knobDefault("VectorBlur2.soft_lines", "True")
@@ -22,11 +21,6 @@ def set_knob_default():
     def _root():
         nuke.knobDefault("Root.fps", "25")
         nuke.knobDefault("Root.format", "1920 1080 0 0 1920 1080 1 HD_1080")
-        # nuke.knobDefault("Root.project_directory",
-        #                  r"[python {os.path.join("
-        #                  r"nuke.value('root.name', ''), '../'"
-        #                  r").replace('\\', '/')}]")
-        # nuke.knobDefault("Root.free_type_font_path", "//SERVER/scripts/NukePlugins/Fonts")
 
     def _zdefocus2():
         nuke.knobDefault("ZDefocus2.blur_dof", "0")
@@ -47,10 +41,6 @@ def set_knob_default():
     k = nuke.toNode('preferences')['UIFontSize']
     if k.value() == 11:
         k.setValue(12)
-
-    k = nuke.toNode('preferences')['autoLocalCachePath']
-    if not k.value():
-        k.setValue('Z:/')
 
 
 def add_preferences():
