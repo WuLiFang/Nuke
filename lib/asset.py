@@ -4,6 +4,7 @@
 import os
 import re
 import time
+import logging
 import multiprocessing.dummy as multiprocessing
 
 import nuke
@@ -15,6 +16,8 @@ from wlf.notify import Progress, CancelledError
 from node import Last
 
 __version__ = '0.5.1'
+
+LOGGER = logging.getLogger('com.wlf.asset')
 
 
 class DropFrames(object):
@@ -293,8 +296,7 @@ class Localization(object):
     @check_localization_support
     def update():
         """Update localized files"""
-        nuke.tprint(get_encoded('{} 更新素材缓存'.format(
-            time.strftime('[%H:%M:%S]'))))
+        LOGGER.info(u'更新素材缓存')
         import nuke.localization as localization
         localization.resumeLocalization()
         localization.forceUpdateAll()
