@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.7'
+__version__ = '0.17.8'
 
 
 class Config(wlf.config.Config):
@@ -285,13 +285,6 @@ class Comp(object):
         return n
 
     @classmethod
-    def _colorcorrect_with_positionkeyer(cls, input_node, cc_label=None, **pk_kwargs):
-        n = nuke.nodes.PositionKeyer(inputs=[input_node], **pk_kwargs)
-        n = nuke.nodes.ColorCorrect(
-            inputs=[input_node, n], label=cc_label, disable=True)
-        return n
-
-    @classmethod
     def _nodes_order(cls, n):
         tag = n.metadata(
             cls.tag_metadata_key) or n[ReadNode.tag_knob_name].value()
@@ -458,9 +451,15 @@ class Comp(object):
             n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
             print(u'{:-^30s}'.format(u'结束 自动亮度'))
         n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
-        _kwargs = {'in': 'depth'}
-        n = self._colorcorrect_with_positionkeyer(n, '远处', **_kwargs)
-        n = self._colorcorrect_with_positionkeyer(n, '近处', **_kwargs)
+
+        def _grade_with_positionkeyer(input_node, cc_label=None):
+            _kwargs = {'in': 'depth'}
+            n = nuke.nodes.PositionKeyer(inputs=[input_node], **_kwargs)
+            n = nuke.nodes.ColorCorrect(
+                inputs=[input_node, n], label=cc_label, disable=True)
+            return n
+        n = _grade_with_positionkeyer(n, '远处')
+        n = _grade_with_positionkeyer(n, '远处')
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
