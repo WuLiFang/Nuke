@@ -88,6 +88,7 @@ def abort_modified(func):
 
 def _enable_node():
     if nuke.numvalue('preferences.wlf_enable_node', 0.0):
+        LOGGER.debug(u'Enable "__enable__" nodes.')
         enable_node('_enable_')
 
 
@@ -111,12 +112,14 @@ def _create_csheet():
 
 
 def _eval_proj_dir():
+    LOGGER.debug('Eval project dir')
     if nuke.numvalue('preferences.wlf_eval_proj_dir', 0.0):
         attr = 'root.project_directory'
         nuke.knob(attr, os.path.abspath(nuke.value(attr)).replace('\\', '/'))
 
 
 def _check_project():
+    LOGGER.debug('Check project dir')
     project_directory = nuke.value('root.project_directory')
     if not project_directory:
         _name = nuke.value('root.name', '')
@@ -138,6 +141,7 @@ def _check_project():
 
 def _check_fps():
     default_fps = cgtwn.CurrentShot.get_info().get('fps', 30)
+    LOGGER.debug(u'Check fps. default: %s', default_fps)
     fps = nuke.numvalue('root.fps')
 
     if fps != default_fps:
@@ -148,12 +152,14 @@ def _check_fps():
 
 def _lock_connections():
     if nuke.numvalue('preferences.wlf_lock_connections', 0.0):
+        LOGGER.debug(u'Lock connections')
         nuke.Root()['lock_connections'].setValue(1)
         nuke.Root().setModified(False)
 
 
 def _jump_frame():
     if nuke.numvalue('preferences.wlf_jump_frame', 0.0):
+        LOGGER.debug(u'Jump frame')
         n = wlf_write_node()
         if n:
             nuke.frame(n['frame'].value())
@@ -163,8 +169,9 @@ def _jump_frame():
 @abort_modified
 def _send_to_render_dir():
     if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-        asset.sent_to_dir(
-            unicode(nuke.value('preferences.wlf_render_dir'), 'UTF-8'))
+        render_dir = nuke.value('preferences.wlf_render_dir')
+        LOGGER.debug(u'Send to render dir: %s', render_dir)
+        asset.sent_to_dir(render_dir)
 
 
 @abort_modified
@@ -207,7 +214,9 @@ def _gizmo_to_group_update_ui():
 
 def _autoplace():
     if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.Root().modified():
-        if nuke.numvalue('preferences.wlf_autoplace_type', 0.0) == 0.0:
+        autoplace_type = nuke.numvalue('preferences.wlf_autoplace_type', 0.0)
+        LOGGER.debug(u'Autoplace. type: %s', autoplace_type)
+        if autoplace_type == 0.0:
             orgnize.autoplace()
         else:
             map(nuke.autoplace, nuke.allNodes())
@@ -229,6 +238,7 @@ def _add_root_info():
         k.setFlag(nuke.STARTLINE)
         k.setValue(artist)
         n.addKnob(k)
+        LOGGER.debug(u'Add root info artist: %s', artist)
     else:
         if nuke.exists('root.wlf_artist') and not nuke.value('root.wlf_artist', ''):
             nuke.knob('root.wlf_artist', artist)
@@ -239,4 +249,5 @@ def create_out_dirs():
 
     target_dir = os.path.dirname(nuke.filename(nuke.thisNode()))
     if not os.path.isdir(target_dir):
+        LOGGER.debug(u'Create dir: %s', target_dir)
         os.makedirs(target_dir)
