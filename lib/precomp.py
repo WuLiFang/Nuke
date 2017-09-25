@@ -10,7 +10,7 @@ from wlf.path import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.13'
+__version__ = '0.3.14'
 
 
 def redshift(nodes):
@@ -100,7 +100,8 @@ class Precomp(object):
             _kwargs = {'in': layer}
             ret = nuke.nodes.Shuffle(
                 inputs=[self.last_node],
-                label=self.l10n(layer),
+                label=u'修改日期: [metadata input/mtime]\n{}'.format(
+                    self.l10n(layer)),
                 postage_stamp=self.last_node.Class() != 'Read', **_kwargs)
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
