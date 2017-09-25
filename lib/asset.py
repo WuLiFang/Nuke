@@ -15,7 +15,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import Last
 
-__version__ = '0.5.3'
+__version__ = '0.5.4'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -300,8 +300,9 @@ class Localization(object):
     @check_localization_support
     def update():
         """Update localized files"""
-        LOGGER.info(u'更新素材缓存')
+        LOGGER.info(u'清理素材缓存')
         import nuke.localization as localization
-        localization.resumeLocalization()
+        localization.clearUnusedFiles()
+        localization.pauseLocalization()
         localization.forceUpdateAll()
-        localization.setAlwaysUseSourceFiles(False)
+        localization.setAlwaysUseSourceFiles(True)
