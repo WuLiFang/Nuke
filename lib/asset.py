@@ -15,7 +15,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import Last
 
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -285,8 +285,10 @@ class Localization(object):
 
         def _func():
             while cls.lock.acquire(False):
-                time.sleep(interval)
+                LOGGER.debug(u'Update asset from thread.')
                 nuke.executeInMainThread(cls.update)
+                cls.lock.release()
+                time.sleep(interval)
         proc = multiprocessing.Process(
             target=_func, name='com.wlf.UpdateLocalization')
         proc.setDaemon(True)
