@@ -3,6 +3,7 @@
 cgteamwork integration with nuke.
 """
 import os
+import logging
 
 import nuke
 
@@ -16,6 +17,8 @@ from asset import copy
 from node import wlf_write_node
 
 __version__ = '0.9.11'
+
+LOGGER = logging.getLogger('com.wlf.cgtwn')
 
 
 class Config(wlf.config.Config):
@@ -250,7 +253,7 @@ class ContactSheetPanel(object):
             if created_file:
                 url_open(created_file, isfile=True)
         except CancelledError:
-            print('用户取消创建色板')
+            LOGGER.debug(u'用户取消创建色板')
 
     def get(self, key, default=None):
         """Get value from panel.  """
@@ -319,4 +322,4 @@ def dialog_create_dirs():
                 os.makedirs(_path)
         url_open(save_path, isfile=True)
     except CancelledError:
-        print('用户取消创建文件夹')
+        LOGGER.debug(u'用户取消创建文件夹')
