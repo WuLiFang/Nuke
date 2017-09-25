@@ -172,7 +172,7 @@ def _render_jpg():
     if nuke.numvalue('preferences.wlf_render_jpg', 0.0):
         n = wlf_write_node()
         if n:
-            LOGGER.info('render_jpg: %s', n.name())
+            LOGGER.debug(u'render_jpg: %s', n.name())
             try:
                 n['bt_render_JPG'].execute()
             except RuntimeError as ex:
