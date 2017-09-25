@@ -1,7 +1,7 @@
 #! C:/Program Files/Nuke11.0v1/nuke-11.0.1.dll -nx
 version 10.0 v4
 Gizmo {
-  onCreate "
+  onCreate {
 class __PositionKeyer(object):
     @staticmethod
     def on_create():
@@ -13,7 +13,7 @@ class __PositionKeyer(object):
                 active_input = viewerwindow.activeInput()
                 if active_input:
                     n = viewerwindow.node().input(active_input)
-            
+
             layers = nuke.layers(n)
             for layer in ('P', 'depth'):
                 if layer in layers:
@@ -33,18 +33,47 @@ class __PositionKeyer(object):
         nuke.knob('this.__initiated', 'true')
 
     @staticmethod
+    def autolabel():
+        this = nuke.thisNode()
+        xyz_indicator = [
+            ('x' if not this['invert_x'].value() else '~x')
+            if this['x'].value() else None,
+            ('y' if not this['invert_y'].value() else '~y')
+            if this['y'].value() else None,
+            ('z' if not this['invert_y'].value() else '~z')
+            if this['z'].value() else None,
+        ]
+        xyz_indicator = '|'.join([i for i in xyz_indicator if i])
+        if xyz_indicator:
+            channels = '{}.{} -> {}'.format(this['in'].value(),
+                                            xyz_indicator,
+                                            this['output'].value())
+        else:
+            channels = '({})'.format(this['in'].value())
+        ret = [
+            this.name(),
+            channels,
+            this['label'].evaluate()
+        ]
+        ret = '\n'.join([i for i in ret if i])
+        ret = ret or autolabel()
+        return ret
+
+    @staticmethod
     def sample(n):
         try:
             sampler = n.node('Sampler')
             channels = ('rgba.red', 'rgba.green', 'rgba.blue')
-            sampler['p0'].setValue(tuple(sampler.sample(channel, *n['p0'].value()) for channel in channels))
-            sampler['p1'].setValue(tuple(sampler.sample(channel, *n['p1'].value()) for channel in channels))
+            sampler['p0'].setValue(tuple(sampler.sample(
+                channel, *n['p0'].value()) for channel in channels))
+            sampler['p1'].setValue(tuple(sampler.sample(
+                channel, *n['p1'].value()) for channel in channels))
         except ValueError:
             return
 
     @classmethod
     def knob_changed(cls):
-        n=nuke.thisNode()
+        n = nuke.thisNode()
         if nuke.thisKnob() in (n['p0'], n['p1']):
             cls.sample(n)
 
@@ -53,25 +82,19 @@ class __PositionKeyer(object):
         if nuke.thisKnob() is nuke.thisNode()['in']:
             cls.sample(nuke.thisParent())
 
-try:
-    __PositionKeyer.on_create()
-except:
-    print('EXCEPTION: __PositionKeyer.on_create')
-    raise
-"
- autolabel "nuke.tcl('return \[string trim \[join \"\[value name] \{\[expr \[expr \[numvalue x]|\[numvalue y]|\[numvalue z]]?\"[value in].\[join \"\[expr \[value x]?\{\[expr \[value invert_x]?\"~x\":\"x\"]\}:\{\}] \[expr \[value y]?\{\[expr \[value invert_y]?\"~y\":\"y\"]\}:\{\}] \[expr \[value z]?\{\[expr \[value invert_z]?\"~z\":\"z\"]\}:\{\}]\" |]\":\"none\"] -> \[value output]\} \{\[python \{nuke.thisNode()\[\\'label\\'].evaluate()\}]\}\" \"\\n\"]]')"
- knobChanged "
+
+__PositionKeyer.on_create()
+}
+ autolabel __PositionKeyer.autolabel()
+ knobChanged {
 try:
     __PositionKeyer.knob_changed()
 except NameError:
     pass
-except:
-    print('EXCEPTION: __PositionKeyer.knob_changed')
-    raise
-"
+}
  tile_color 0xff00ff
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.3.7"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.3.9"}
  addUserKnob {41 in l "sample layer" t "用来取样的图层,一般是P层。但也可以用其他图层(例如depth)" T Shuffle2.in}
  addUserKnob {20 sampler l 取样器 n 1}
  addUserKnob {12 p0}
