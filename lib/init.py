@@ -13,13 +13,19 @@ __version__ = '0.3.11'
 
 def _logger():
     logger = logging.getLogger('com.wlf')
+    logger.propagate = False
     _handler = logging.StreamHandler()
     _formatter = logging.Formatter(
         '%(levelname)-6s[%(asctime)s]: %(name)s: %(message)s', '%H:%M:%S')
     _handler.setFormatter(_formatter)
-    logger.setLevel(logging.DEBUG)
     logger.addHandler(_handler)
-    logger.propagate = False
+
+    try:
+        loglevel = int(os.getenv('WLF_LOGLEVEL', logging.INFO))
+        logger.setLevel(loglevel)
+    except TypeError:
+        logger.warning('Can not recognize env:WLF_LOGLEVEL, expect a int')
+
     return logger
 
 
