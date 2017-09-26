@@ -455,7 +455,7 @@ class Comp(object):
         def _grade_with_positionkeyer(input_node, cc_label=None):
             _kwargs = {'in': 'depth'}
             n = nuke.nodes.PositionKeyer(inputs=[input_node], **_kwargs)
-            n = nuke.nodes.ColorCorrect(
+            n = nuke.nodes.Grade(
                 inputs=[input_node, n], label=cc_label, disable=True)
             return n
         n = _grade_with_positionkeyer(n, '远处')
