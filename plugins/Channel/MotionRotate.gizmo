@@ -2,6 +2,7 @@
 version 10.0 v4
 Group {
  tile_color 0xff3300ff
+ name MotionRotate1
  note_font 微软雅黑
  addUserKnob {20 tab_1 l "MotionRotate v0.1.0"}
  addUserKnob {41 channels T Shuffle1.in}
