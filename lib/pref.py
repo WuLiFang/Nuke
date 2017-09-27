@@ -37,6 +37,7 @@ def set_knob_default():
     nuke.knobDefault("PositionToPoints.P_channel", "P")
     nuke.knobDefault('Roto.cliptype', 'no clip')
     nuke.knobDefault('RotoPaint.cliptype', 'no clip')
+    nuke.knobDefault('Denoise2.type', 'Digital')
 
     k = nuke.toNode('preferences')['UIFontSize']
     if k.value() == 11:
