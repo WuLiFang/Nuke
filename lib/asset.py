@@ -15,7 +15,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import Last
 
-__version__ = '0.5.4'
+__version__ = '0.5.5'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -97,7 +97,7 @@ def warn_mtime(show_dialog=False, show_ok=False):
                 'input/mtime'), '%Y-%m-%d %H:%M:%S')
         except TypeError:
             continue
-        if mtime > Last.script_mtime:
+        if mtime > Last.mtime:
             ftime = time.strftime('%m-%d %H:%M:%S', mtime)
             newer_footages[nuke.filename(n)] = ftime
             msg = '{}: [new footage]{}'.format(n.name(), ftime)
@@ -105,19 +105,20 @@ def warn_mtime(show_dialog=False, show_ok=False):
                 nuke.warning(msg)
                 Last.showed_warning.append(msg)
 
-    msg = '<style>td {padding:8px;}</style>'
-    msg += '<div>上次修改此nk文件: {}</div><br>'.format(
-        time.strftime('%y-%m-%d %H:%M:%S', Last.script_mtime))
-    if newer_footages and show_dialog:
-        msg += u'发现以下素材变更:<br>'
-        msg += '<tabel>'
-        msg += '<tr><th>修改日期</th><th>素材</th></tr>'
-        msg += '\n'.join(['<tr><td>{}</td><td>{}</td></tr>'.format(newer_footages[i], i)
-                          for i in newer_footages])
-        msg += '</tabel>'
-        nuke.message(msg)
-    elif show_ok:
-        msg += u'没有发现更新的素材'
+    if show_dialog and (newer_footages or show_ok):
+        msg = '<style>td {padding:8px;}</style>'
+        msg += u'<b>{}</b>'.format((os.path.basename(Last.name)))
+        msg += u'<div>上次修改: {}</div><br><br>'.format(
+            time.strftime('%y-%m-%d %H:%M:%S', Last.mtime))
+        if newer_footages:
+            msg += u'发现以下素材变更:<br>'
+            msg += '<tabel>'
+            msg += '<tr><th>修改日期</th><th>素材</th></tr>'
+            msg += '\n'.join(['<tr><td>{}</td><td>{}</td></tr>'.format(newer_footages[i], i)
+                              for i in newer_footages])
+            msg += '</tabel>'
+        elif show_ok:
+            msg += u'没有发现更新的素材'
         nuke.message(msg)
 
 
@@ -198,7 +199,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
             nuke.createNode(
                 'StickyNote', 'autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
                 'label {{{}\n\n<span style="color:red;text-align:center;font-weight:bold">'
-                '不支持非英文路径</span>}}'.format(data))
+                '不支持非英文路径</span>}}'.format(data), inpanel=False)
             return True
 
     def _file_protocol():
@@ -251,7 +252,8 @@ def dropdata_handler(mime_type, data, from_dir=False):
 
     def _from_dir():
         if from_dir:
-            n = nuke.createNode('Read', 'file "{}"'.format(data))
+            n = nuke.createNode(
+                'Read', 'file "{}"'.format(data), inpanel=False)
             if n.hasError():
                 n['disable'].setValue(True)
             return n
