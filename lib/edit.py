@@ -5,6 +5,7 @@ import os
 import re
 import colorsys
 import random
+import logging
 
 import nuke
 import nukescripts
@@ -13,7 +14,8 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.7.2'
+__version__ = '1.7.3'
+LOGGER = logging.getLogger('com.wlf.edit')
 
 
 def rename_all_nodes():
@@ -651,9 +653,9 @@ def set_knobs(node, values):
     for knob_name, value in value_dict.items():
         try:
             node[knob_name].setValue(value)
-        except (AttributeError, TypeError):
-            print('Can not set knob: {}.{} to {}'.format(
-                node.name(), knob_name, value))
+        except (AttributeError, NameError, TypeError):
+            LOGGER.debug('Can not set knob: %s.%s to %s',
+                         node.name(), knob_name, value)
 
 
 def same_class_filter(nodes, node_class=None):
