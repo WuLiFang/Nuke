@@ -7,7 +7,7 @@ from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
     set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 
 class ChannelsRename(nukescripts.PythonPanel):
@@ -101,7 +101,7 @@ class ChannelsRename(nukescripts.PythonPanel):
         if pane:
             self.addToPane(pane)
         else:
-            super(ChannelsRename, self).show()
+            self.addToPane(nuke.getPaneFor('Viewer.1'))
 
 
 class MultiEdit(nukescripts.PythonPanel):
@@ -181,6 +181,9 @@ class MultiEdit(nukescripts.PythonPanel):
     def __del__(self):
         nuke.removeOnDestroy(MultiEdit.destroy, args=(self))
 
+    def __getitem__(self, name):
+        return self._knobs[name]
+
     def destroy(self):
         """Destroy the panel.  """
         super(MultiEdit, self).destroy()
@@ -188,7 +191,7 @@ class MultiEdit(nukescripts.PythonPanel):
 
     def knobChanged(self, knob):
         """Override. """
-        if knob is self._knobs['ok']:
+        if knob is self['ok']:
             nuke.Undo.begin()
             nuke.Undo.name('同时编辑多个节点')
             task = Progress('设置节点', total=len(self.nodes))
@@ -213,4 +216,4 @@ class MultiEdit(nukescripts.PythonPanel):
         if pane:
             self.addToPane(pane)
         else:
-            super(MultiEdit, self).show()
+            self.addToPane(nuke.getPaneFor('Viewer.1'))
