@@ -2,12 +2,15 @@
 """Setup node.  """
 import os
 import time
+import logging
 
 import nuke
 
 import wlf.path
 
-__version__ = '0.3.5'
+__version__ = '0.3.6'
+
+LOGGER = logging.getLogger('com.wlf.node')
 
 
 def append_knob(node, knob):
@@ -95,31 +98,36 @@ def parent_backdrop(node):
 class Last(object):
     """For recording last script infomation"""
     mov_path = None
-    script_mtime = time.localtime()
+    mtime = time.localtime()
+    name = None
     showed_warning = []
 
     @classmethod
     def on_load_callback(cls):
         """On close callback.  """
         del cls.showed_warning[:]
-        cls.record()
         try:
-            cls.script_mtime = time.localtime(
+            cls.mtime = time.localtime(
                 os.path.getmtime(nuke.scriptName()))
         except RuntimeError:
             pass
+        cls.record()
 
     @classmethod
     def on_save_callback(cls):
         """On close callback.  """
+        cls.mtime = time.localtime()
         cls.record()
-        cls.script_mtime = time.localtime()
 
     @classmethod
     def record(cls):
         """Record information.  """
         try:
+            cls.name = nuke.scriptName()
+        except RuntimeError:
+            pass
+        try:
             cls.mov_path = os.path.dirname(
                 nuke.filename(wlf_write_node().node('Write_MOV_1'))) or cls.mov_path
         except AttributeError:
-            print('Can not record last script information')
+            LOGGER.debug('Can not record last mov path')
