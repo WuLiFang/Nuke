@@ -49,7 +49,7 @@ def menu():
     nuke.addOnScriptLoad(asset.Localization.update)
 
     LOGGER.info(u'启用文件更新提醒')
-    nuke.addUpdateUI(asset.warn_mtime)
+    # nuke.addUpdateUI(asset.warn_mtime)
     nuke.addOnScriptLoad(lambda: asset.warn_mtime(show_dialog=True))
     nuke.addOnScriptSave(lambda: asset.warn_mtime(show_dialog=True))
 
