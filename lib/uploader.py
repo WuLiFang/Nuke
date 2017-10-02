@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Upload files to server.  """
-
+# TODO: non-block upload
 import os
 import sys
 import threading
