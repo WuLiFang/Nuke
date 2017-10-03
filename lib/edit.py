@@ -14,7 +14,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.7.3'
+__version__ = '1.7.4'
 LOGGER = logging.getLogger('com.wlf.edit')
 
 
@@ -412,7 +412,8 @@ def split_layers(node):
         if layer in ['rgb', 'rgba', 'alpha']:
             continue
         knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
-        n = nuke.nodes.Shuffle(inputs=[node], label=layer, **knob_in)
+        n = nuke.nodes.Shuffle(
+            inputs=[node], label=layer, postage_stamp=True, **knob_in)
         ret.append(n)
     return ret
 
