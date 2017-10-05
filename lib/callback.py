@@ -58,7 +58,7 @@ def menu():
 
     LOGGER.info(u'启用缺帧检查')
     nuke.addOnScriptLoad(asset.DropFrames.check)
-    nuke.addOnScriptSave(asset.DropFrames.show)
+    nuke.addOnScriptSave(asset.DropFrames.check)
 
     LOGGER.info(u'随机节点控制器颜色')
     nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
