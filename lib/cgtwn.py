@@ -14,9 +14,9 @@ from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
 
 from asset import copy
-from node import wlf_write_node
+from node import wlf_write_node, Last
 
-__version__ = '0.9.11'
+__version__ = '0.9.12'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -81,7 +81,7 @@ class CurrentShot(cgtwq.Shot):
     @classmethod
     def get_name(cls):
         """The current shot name.  """
-        return remove_version(os.path.splitext(os.path.basename(nuke.scriptName()))[0])
+        return remove_version(os.path.splitext(os.path.basename(Last.name))[0])
 
     @property
     def name(self):
