@@ -42,6 +42,8 @@ def set_knob_default():
     k = nuke.toNode('preferences')['UIFontSize']
     if k.value() == 11:
         k.setValue(12)
+    k = nuke.toNode('preferences')['LocalizationPauseOnProjectLoad']
+    k.setValue(True)
 
 
 def add_preferences():
