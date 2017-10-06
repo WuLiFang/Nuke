@@ -17,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import wlf_write_node, Last
 
-__version__ = '0.9.13'
+__version__ = '0.9.14'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -92,19 +92,17 @@ class CurrentShot(cgtwq.Shot):
     @property
     def workfile(self):
         """The path of current nk_file.  """
-        return nuke.scriptName()
+        return Last.name
 
     @property
     def image(self):
         """The rendered single image.  """
-        return os.path.join(nuke.value(
-            'root.project_directory', ''), nuke.filename(wlf_write_node().node('Write_JPG_1')))
+        return Last.jpg_path
 
     @property
     def video(self):
         """The rendered single image.  """
-        return os.path.join(nuke.value(
-            'root.project_directory', ''), nuke.filename(wlf_write_node().node('Write_MOV_1')))
+        return Last.mov_path
 
     def upload_image(self):
         """Upload imge to server and record it to cgtw database.  """
