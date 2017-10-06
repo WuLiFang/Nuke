@@ -89,6 +89,8 @@ class DropFrames(object):
 
 def warn_mtime(show_dialog=False, show_ok=False):
     """Show footage that mtime newer than script mtime. """
+
+    LOGGER.debug('Check warn_mtime')
     msg = ''
     newer_footages = {}
     for n in nuke.allNodes('Read', nuke.Root()):
@@ -124,6 +126,7 @@ def warn_mtime(show_dialog=False, show_ok=False):
 
 def get_footages(nodes=None):
     """Footage used for @nodes.  """
+
     nodes = nodes or nuke.allNodes('Read')
     nodes = list(n for n in nodes if 'disable' in n.knobs()
                  and not n['disable'].value())

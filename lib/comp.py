@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.8'
+__version__ = '0.17.9'
 
 
 class Config(wlf.config.Config):
@@ -563,7 +563,7 @@ class Comp(object):
 
     @staticmethod
     def _merge_occ(input_node):
-        _nodes = Comp.get_nodes_by_tags(u'OC')
+        _nodes = Comp.get_nodes_by_tags(('OC', 'OCC'))
         n = input_node
         for _read_node in _nodes:
             _reformat_node = nuke.nodes.Reformat(
