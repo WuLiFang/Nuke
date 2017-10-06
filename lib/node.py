@@ -8,7 +8,7 @@ import nuke
 
 import wlf.path
 
-__version__ = '0.3.6'
+__version__ = '0.3.7'
 
 LOGGER = logging.getLogger('com.wlf.node')
 
@@ -64,8 +64,10 @@ def wlf_write_node():
     """Return founded wlf_write node.  """
 
     n = nuke.toNode('_Write')\
-        or nuke.toNode('wlf_Write1')\
-        or nuke.allNodes('wlf_Write')[0]
+        or nuke.toNode('wlf_Write1')
+    if not n:
+        nodes = nuke.allNodes('wlf_Write')
+        n = nodes and nodes[0]
 
     return n
 
@@ -98,6 +100,7 @@ def parent_backdrop(node):
 class Last(object):
     """For recording last script infomation"""
     mov_path = None
+    jpg_path = None
     mtime = time.localtime()
     name = None
     showed_warning = []
@@ -122,12 +125,16 @@ class Last(object):
     @classmethod
     def record(cls):
         """Record information.  """
+
         try:
             cls.name = nuke.scriptName()
         except RuntimeError:
             pass
-        try:
-            cls.mov_path = os.path.dirname(
-                nuke.filename(wlf_write_node().node('Write_MOV_1'))) or cls.mov_path
-        except AttributeError:
-            LOGGER.debug('Can not record last mov path')
+
+        n = wlf_write_node()
+        if n:
+            cls.jpg_path = nuke.filename(n.node('Write_JPG_1'))
+            cls.mov_path = nuke.filename(n.node('Write_MOV_1'))
+        else:
+            cls.jpg_path = None
+            cls.mov_path = None
