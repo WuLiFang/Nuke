@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.11'
+__version__ = '0.17.12'
 
 
 class Config(wlf.config.Config):
@@ -167,13 +167,18 @@ class Comp(object):
             ReadNode(n)
             if n.format().name() == 'HD_1080':
                 root_format = 'HD_1080'
+
         if n:
+            first = n['first'].value()
+            last = n['last'].value()
+
             if not root_format:
                 root_format = n.format()
-            nuke.Root()['first_frame'].setValue(n['first'].value())
-            nuke.Root()['last_frame'].setValue(n['last'].value())
+            nuke.Root()['first_frame'].setValue(first)
+            nuke.Root()['last_frame'].setValue(last)
             nuke.Root()['lock_range'].setValue(True)
             nuke.Root()['format'].setValue(root_format)
+            nuke.frame((first + last) / 2)
         nuke.Root()['fps'].setValue(self.fps)
 
     def create_nodes(self):
@@ -234,7 +239,6 @@ class Comp(object):
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
-        nuke.frame(nuke.numvalue('_Write.frame', 1))
         self.task_step(u'输出节点创建')
 
         self.task_step(u'设置查看器')
