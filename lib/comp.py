@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.12'
+__version__ = '0.17.13'
 
 
 class Config(wlf.config.Config):
@@ -163,23 +163,26 @@ class Comp(object):
 
         n = None
         root_format = None
+        root = nuke.Root()
+        first = root['first_frame'].value()
+        last = root['last_frame'].value()
+
         for n in _nodes:
             ReadNode(n)
             if n.format().name() == 'HD_1080':
                 root_format = 'HD_1080'
+            first = min(last, n.firstFrame())
+            last = max(last, n.lastFrame())
 
         if n:
-            first = n['first'].value()
-            last = n['last'].value()
-
             if not root_format:
                 root_format = n.format()
-            nuke.Root()['first_frame'].setValue(first)
-            nuke.Root()['last_frame'].setValue(last)
-            nuke.Root()['lock_range'].setValue(True)
-            nuke.Root()['format'].setValue(root_format)
+            root['first_frame'].setValue(first)
+            root['last_frame'].setValue(last)
+            root['lock_range'].setValue(True)
+            root['format'].setValue(root_format)
             nuke.frame((first + last) / 2)
-        nuke.Root()['fps'].setValue(self.fps)
+        root['fps'].setValue(self.fps)
 
     def create_nodes(self):
         """Create nodes that a comp need."""
