@@ -65,7 +65,7 @@ def wlf_write_node():
 
     n = nuke.toNode('_Write')\
         or nuke.toNode('wlf_Write1')\
-        or (nuke.allNodes('wlf_Write') and nuke.allNodes('wlf_Write')[0])
+        or nuke.allNodes('wlf_Write')[0]
 
     return n
 
