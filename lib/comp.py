@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.10'
+__version__ = '0.17.11'
 
 
 class Config(wlf.config.Config):
@@ -234,6 +234,7 @@ class Comp(object):
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName(u'_Write')
+        nuke.frame(nuke.numvalue('_Write.frame', 1))
         self.task_step(u'输出节点创建')
 
         self.task_step(u'设置查看器')
