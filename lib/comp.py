@@ -8,12 +8,12 @@ import re
 import sys
 import threading
 import traceback
+import webbrowser
 from subprocess import PIPE, Popen
 
 import nuke
 import nukescripts
 
-from wlf.files import url_open
 from wlf.path import escape_batch, get_encoded, get_unicode
 from wlf.notify import Progress
 import wlf.config
@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.9'
+__version__ = '0.17.10'
 
 
 class Config(wlf.config.Config):
@@ -669,8 +669,8 @@ def render_png(nodes, frame=None, show=False):
 
         nuke.delete(n)
     if show:
-        url_open(
-            'file://{}/{}'.format(nuke.value('root.project_directory'), script_name))
+        webbrowser.open(os.path.join(nuke.value(
+            'root.project_directory'), script_name))
 
 
 class CompDialog(nukescripts.PythonPanel):
@@ -741,7 +741,7 @@ class CompDialog(nukescripts.PythonPanel):
         with open(get_encoded(path), 'w') as f:
             f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
                                 for i in self.shot_list))
-        url_open(path, isfile=True)
+        webbrowser.open(path)
 
     @property
     def txt_name(self):
@@ -810,8 +810,8 @@ class CompDialog(nukescripts.PythonPanel):
         with open(log_path, 'w') as f:
             f.write(html_page.encode('UTF-8'))
         # nuke.executeInMainThread(nuke.message, args=(errors,))
-        url_open(u'file://{}'.format(log_path))
-        url_open(u'file://{}'.format(self._config['output_dir']))
+        webbrowser.open(log_path)
+        webbrowser.open(self._config['output_dir'])
 
     @property
     def shot_list(self):
