@@ -15,7 +15,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import Last
 
-__version__ = '0.5.5'
+__version__ = '0.5.6'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -171,7 +171,8 @@ def sent_to_dir(dir_):
 
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
-    # print(mime_type, data)
+
+    LOGGER.debug('Handling dropdata: %s %s', mime_type, data)
     if mime_type != 'text/plain':
         return
     data = get_unicode(data)
@@ -206,10 +207,10 @@ def dropdata_handler(mime_type, data, from_dir=False):
             return True
 
     def _file_protocol():
-        match = re.match(r'file:///([^/].*)', data)
+        match = re.match(r'file://+([^/].*)', data)
         if match:
             _data = match.group(1)
-            return dropdata_handler(mime_type, _data)
+            return dropdata_handler(mime_type, _data, from_dir=True)
 
     def _fbx():
         if data.endswith('.fbx'):
@@ -259,7 +260,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
                 'Read', 'file "{}"'.format(data), inpanel=False)
             if n.hasError():
                 n['disable'].setValue(True)
-            return n
+            return True
 
     for func in (_isdir, _ignore, _file_protocol, _video, _vf, _fbx, _from_dir, _nk):
         ret = func()
