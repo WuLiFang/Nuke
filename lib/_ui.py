@@ -40,10 +40,10 @@ def add_menu():
         m = menu.addMenu("编辑")
 
         m.addCommand('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2')
-        m.addCommand("分离rgba",
-                     lambda: edit.shuffle_rgba(nuke.selectedNode()))
-        m.addCommand('分离所有通道', lambda: edit.split_layers(nuke.selectedNode()),
+        m.addCommand('分离图层', lambda: edit.split_layers(nuke.selectedNode()),
                      'F3', icon="SplitLayers.png")
+        m.addCommand("分离rgba",
+                     lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3')
         m.addCommand("重命名PuzzleMatte",
                      lambda: edit_panels.ChannelsRename(prefix='PuzzleMatte').show(), 'F4')
         m.addCommand("标记为_enable_",
