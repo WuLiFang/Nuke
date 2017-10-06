@@ -467,7 +467,7 @@ class Comp(object):
                 inputs=[input_node, n], label=cc_label, disable=True)
             return n
         n = _grade_with_positionkeyer(n, '远处')
-        n = _grade_with_positionkeyer(n, '远处')
+        n = _grade_with_positionkeyer(n, '近处')
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
