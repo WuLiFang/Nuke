@@ -15,7 +15,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import Last
 
-__version__ = '0.5.6'
+__version__ = '0.5.7'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -166,7 +166,8 @@ def get_dropframe(filename, framerange):
 
 def sent_to_dir(dir_):
     """Send current working file to dir."""
-    copy(nuke.value('root.name'), dir_)
+
+    copy(nuke.value('root.name'), dir_, threading=True)
 
 
 def dropdata_handler(mime_type, data, from_dir=False):
