@@ -4,6 +4,7 @@ cgteamwork integration with nuke.
 """
 import os
 import logging
+import threading
 
 import nuke
 
@@ -16,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import wlf_write_node, Last
 
-__version__ = '0.9.12'
+__version__ = '0.9.13'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -107,6 +108,8 @@ class CurrentShot(cgtwq.Shot):
 
     def upload_image(self):
         """Upload imge to server and record it to cgtw database.  """
+
+        LOGGER.debug('Uploading image to cgtw.')
         ret = copy(self.image, self.image_dest)
         if ret:
             self.shot_image = ret
@@ -139,32 +142,40 @@ class CurrentShot(cgtwq.Shot):
 @check_login(False)
 def on_load_callback():
     """Show cgtwn status"""
-    try:
-        traytip('当前CGTeamWork项目', '{}:合成'.format(
-            CurrentShot().info.get('name')))
-    except cgtwq.LoginError:
-        traytip('Nuke无法访问数据库', '请登录CGTeamWork')
-    except cgtwq.IDError as ex:
-        traytip('CGteamwork找不到对应条目', str(ex))
+
+    def _run():
+        try:
+            traytip('当前CGTeamWork项目', '{}:合成'.format(
+                CurrentShot().info.get('name')))
+        except cgtwq.LoginError:
+            traytip('Nuke无法访问数据库', '请登录CGTeamWork')
+        except cgtwq.IDError as ex:
+            traytip('CGteamwork找不到对应条目', str(ex))
+
+    threading.Thread(target=_run).start()
 
 
 @abort_when_module_not_enable
 @check_login(True)
 def on_save_callback():
     """Try upload nk file to server."""
-    try:
-        shot = CurrentShot()
-        shot.check_account()
-        dst = copy(shot.workfile, shot.workfile_dest)
-        if dst:
-            traytip('更新文件', dst)
-    except cgtwq.LoginError:
-        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-    except cgtwq.IDError:
-        traytip('更新文件', u'CGTW上未找到对应镜头')
-    except cgtwq.AccountError as ex:
-        traytip('未更新文件',
-                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+
+    def _run():
+        try:
+            shot = CurrentShot()
+            shot.check_account()
+            dst = copy(shot.workfile, shot.workfile_dest)
+            if dst:
+                traytip('更新文件', dst)
+        except cgtwq.LoginError:
+            traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+        except cgtwq.IDError:
+            traytip('更新文件', u'CGTW上未找到对应镜头')
+        except cgtwq.AccountError as ex:
+            traytip('未更新文件',
+                    '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+
+    threading.Thread(target=_run).start()
 
 
 @abort_when_module_not_enable
@@ -172,23 +183,28 @@ def on_save_callback():
 @check_login(False)
 def on_close_callback():
     """Try upload image to server."""
-    try:
-        nuke.scriptName()
-    except RuntimeError:
-        return
-    try:
-        shot = CurrentShot()
-        shot.check_account()
-        dst = shot.upload_image()
-        if dst:
-            traytip('更新单帧', dst)
-    except cgtwq.LoginError:
-        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-    except cgtwq.IDError:
-        traytip('更新单帧', u'CGTW上未找到对应镜头')
-    except cgtwq.AccountError as ex:
-        traytip('未更新单帧',
-                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+
+    def _run():
+        try:
+            nuke.scriptName()
+        except RuntimeError:
+            LOGGER.warning('尝试在未保存时上传单帧')
+            return
+        try:
+            shot = CurrentShot()
+            shot.check_account()
+            dst = shot.upload_image()
+            if dst:
+                traytip('更新单帧', dst)
+        except cgtwq.LoginError:
+            traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+        except cgtwq.IDError:
+            traytip('更新单帧', u'CGTW上未找到对应镜头')
+        except cgtwq.AccountError as ex:
+            traytip('未更新单帧',
+                    '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+
+    threading.Thread(target=_run).start()
 
 
 class ContactSheetPanel(object):
