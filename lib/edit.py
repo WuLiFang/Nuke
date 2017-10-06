@@ -14,7 +14,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.7.4'
+__version__ = '1.7.5'
 LOGGER = logging.getLogger('com.wlf.edit')
 
 
@@ -406,26 +406,42 @@ def set_project_root_by_name(path='E:'):
 
 def split_layers(node):
     """Create Shuffle node for all layers in node @n.  """
+
     ret = []
-    n = node
-    for layer in nuke.layers(n):
+
+    for layer in nuke.layers(node):
         if layer in ['rgb', 'rgba', 'alpha']:
             continue
-        knob_in = {'in': layer}  # Avoid use of python keyword 'in'.
+        kwargs = {'in': layer,
+                  'label': layer}
+        try:
+            kwargs['postage_stamp'] = node['postage_stamp'].value()
+        except NameError:
+            pass
         n = nuke.nodes.Shuffle(
-            inputs=[node], label=layer, postage_stamp=True, **knob_in)
+            inputs=[node], **kwargs)
         ret.append(n)
     return ret
 
 
 def shuffle_rgba(node):
     """Create rgba shuffle."""
-    channels = ['red', 'green', 'blue', 'alpha']
+
+    channels = ('red', 'green', 'blue', 'alpha')
+    ret = []
+
     for channel in channels:
-        shuffle = nuke.nodes.Shuffle(label=channel)
-        shuffle.setInput(0, node)
-        for color in channels:
-            shuffle[color].setValue(channel)
+        kwargs = {'label': channel}
+        for i in channels:
+            kwargs[i] = channel
+        try:
+            kwargs['postage_stamp'] = node['postage_stamp'].value()
+        except NameError:
+            pass
+        n = nuke.nodes.Shuffle(inputs=[node], **kwargs)
+        ret.append(n)
+
+    return ret
 
 
 def nodes_to_relpath(nodes):
