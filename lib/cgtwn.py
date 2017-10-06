@@ -6,17 +6,17 @@ import os
 import logging
 import threading
 import time
+import webbrowser
 
 import nuke
 
 from wlf import cgtwq, csheet, files
-from wlf.files import url_open
 from wlf.path import remove_version
 from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
 
 from asset import copy
-from node import wlf_write_node, Last
+from node import Last
 
 __version__ = '0.9.15'
 
@@ -276,7 +276,7 @@ class ContactSheetPanel(object):
                 created_file = csheet.create_html(images, save_path,
                                                   title=u'色板 {}@{}'.format(prefix, database))
             if created_file:
-                url_open(created_file, isfile=True)
+                webbrowser.open(created_file)
         except CancelledError:
             LOGGER.debug(u'用户取消创建色板')
 
@@ -345,6 +345,6 @@ def dialog_create_dirs():
             _path = os.path.join(save_path, name)
             if not os.path.exists(_path):
                 os.makedirs(_path)
-        url_open(save_path, isfile=True)
+        webbrowser.open(save_path)
     except CancelledError:
         LOGGER.debug(u'用户取消创建文件夹')
