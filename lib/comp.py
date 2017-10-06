@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.13'
+__version__ = '0.17.14'
 
 
 class Config(wlf.config.Config):
@@ -460,14 +460,16 @@ class Comp(object):
             print(u'{:-^30s}'.format(u'结束 自动亮度'))
         n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
 
-        def _grade_with_positionkeyer(input_node, label=None):
-            _kwargs = {'in': 'depth', 'label': label}
-            n = nuke.nodes.PositionKeyer(inputs=[input_node], **_kwargs)
-            n = nuke.nodes.Grade(
-                inputs=[input_node, n], disable=True)
+        def _node_with_positionkeyer(node_type, input_node, knobs):
+            n = nuke.nodes.PositionKeyer(inputs=[input_node], **knobs)
+            n = node_type(inputs=[input_node, n], disable=True)
             return n
-        n = _grade_with_positionkeyer(n, '远处')
-        n = _grade_with_positionkeyer(n, '近处')
+        n = _node_with_positionkeyer(
+            nuke.nodes.Grade, n,
+            {'in': 'depth', 'label': '远处'})
+        n = _node_with_positionkeyer(
+            nuke.nodes.ColorCorrect, n,
+            {'in': 'depth', 'label': '近处'})
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
