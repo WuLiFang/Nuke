@@ -81,7 +81,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.50.9"}
+ addUserKnob {20 Write l "wlf_Write v1.51.0"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -98,6 +98,7 @@ except NameError:
  addUserKnob {22 bt_jpg_dir l 单帧输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
  addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
  addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {6 output_exr l 输出exr t 在输出mov的同时输出exr +STARTLINE}
  addUserKnob {26 ""}
  addUserKnob {83 reading l 读取 M {none mov jpg}}
  addUserKnob {22 reload -STARTLINE T "for n in nuke.thisNode().nodes():\n    if n.Class() == 'Read':\n        n\['reload'].execute()"}
@@ -107,10 +108,9 @@ except NameError:
   file "\[value Write_JPG_1.file]"
   proxy "\[value Write_JPG_1.proxy]"
   origset true
-  on_error error
   name Read_JPG_1
   xpos 90
-  ypos -182
+  ypos -190
  }
  Read {
   inputs 0
@@ -119,10 +119,10 @@ except NameError:
   last {{"root.last_frame - root.first_frame + 1"}}
   frame "frame - root.first_frame + 1"
   origset true
-  on_error error
+
   name Read_MOV_2
-  xpos 93
-  ypos -332
+  xpos 90
+  ypos -320
  }
  Constant {
   inputs 0
@@ -130,7 +130,7 @@ except NameError:
   format "1920 1080 0 0 1920 1080 1 HD_1080"
   name Constant1
   xpos 90
-  ypos -768
+  ypos -722
  }
  Text2 {
   font_size_toolbar 100
@@ -156,9 +156,9 @@ except NameError:
   background_opacity 0.3
   background_border_x 20
   name Text_Shot
-  label "镜头名称"
+  label 镜头名称
   xpos 90
-  ypos -688
+  ypos -646
  }
  Text2 {
   font_size_toolbar 100
@@ -185,9 +185,9 @@ except NameError:
   background_opacity 0.3
   background_border_x 20
   name Text_Frame
-  label "帧编号"
+  label 帧编号
   xpos 90
-  ypos -646
+  ypos -604
  }
  Text2 {
   font_size_toolbar 100
@@ -214,13 +214,13 @@ except NameError:
   name Text_Artist
   label 制作人
   xpos 90
-  ypos -604
+  ypos -562
  }
  Reformat {
   resize fit
   name Reformat1
   xpos 90
-  ypos -514
+  ypos -520
  }
  Input {
   inputs 0
@@ -235,6 +235,18 @@ except NameError:
   ypos -938
  }
  Write {
+  file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
+  proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
+  file_type exr
+  name Write_EXR_1
+  xpos 0
+  ypos -908
+  disable {{"! parent.output_exr"}}
+  addUserKnob {20 caravr l CaraVR}
+  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+ }
+ Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   proxy "mov/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   colorspace sRGB
@@ -247,8 +259,8 @@ except NameError:
   beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
   name Write_MOV_1
   xpos 0
-  ypos -906
- }
+  ypos -860
+   }
  Write {
   file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
   proxy "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
@@ -263,15 +275,15 @@ except NameError:
   name Write_JPG_1
   label "单帧\n会在退出脚本时自动输出"
   xpos 0
-  ypos -850
+  ypos -804
   disable true
- }
+   }
  Merge2 {
   inputs 2
   name Merge1
   label burn-in
   xpos 0
-  ypos -482
+  ypos -490
  }
  Write {
   file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -288,7 +300,7 @@ except NameError:
   name Write_MOV_2
   label 带帧编号的MOV
   xpos 0
-  ypos -434
+  ypos -448
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
@@ -298,21 +310,21 @@ except NameError:
   message 工程目录未设置
   name Assert3
   xpos 0
-  ypos -366
+  ypos -380
  }
  Assert {
   expression {{"\[python bool(nuke.value('root.name'))]"}}
   message 工程未保存
   name Assert1
   xpos 0
-  ypos -334
+  ypos -350
  }
  Switch {
   inputs 3
   which {{parent.reading}}
   name Switch2
   xpos 0
-  ypos -62
+  ypos -60
  }
  Output {
   name Output1
