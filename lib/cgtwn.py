@@ -5,6 +5,7 @@ cgteamwork integration with nuke.
 import os
 import logging
 import threading
+import time
 
 import nuke
 
@@ -17,7 +18,7 @@ import wlf.config
 from asset import copy
 from node import wlf_write_node, Last
 
-__version__ = '0.9.14'
+__version__ = '0.9.15'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -191,6 +192,16 @@ def on_close_callback():
         try:
             shot = CurrentShot()
             shot.check_account()
+            start_time = time.time()
+            # Wait on close jpg rendering.
+            while True:
+                mtime = os.path.getmtime(shot.image)
+                if mtime - start_time > -10:
+                    break
+                elif time.time() - start_time > 100:
+                    LOGGER.warning('单帧等待时间超时: %s', shot.image)
+                    break
+                time.sleep(1)
             dst = shot.upload_image()
             if dst:
                 traytip('更新单帧', dst)
