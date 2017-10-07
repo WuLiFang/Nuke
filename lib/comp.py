@@ -23,7 +23,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.14'
+__version__ = '0.17.15'
 
 
 class Config(wlf.config.Config):
@@ -157,31 +157,35 @@ class Comp(object):
     def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
 
-        _nodes = nuke.allNodes(u'Read')
-        if not _nodes:
+        nodes = nuke.allNodes(u'Read')
+        if not nodes:
             raise FootageError(u'没有读取节点')
 
         n = None
         root_format = None
         root = nuke.Root()
-        first = root['first_frame'].value()
-        last = root['last_frame'].value()
+        first = None
+        last = None
 
-        for n in _nodes:
+        for n in nodes:
             ReadNode(n)
             if n.format().name() == 'HD_1080':
                 root_format = 'HD_1080'
-            first = min(last, n.firstFrame())
-            last = max(last, n.lastFrame())
+            n_first, n_last = n.firstFrame(), n.lastFrame()
+            if first is None:
+                first = n_first
+                last = n_last
+            elif n_first != n_last:
+                first = min(last, n.firstFrame())
+                last = max(last, n.lastFrame())
 
-        if n:
-            if not root_format:
-                root_format = n.format()
-            root['first_frame'].setValue(first)
-            root['last_frame'].setValue(last)
-            root['lock_range'].setValue(True)
-            root['format'].setValue(root_format)
-            nuke.frame((first + last) / 2)
+        root_format = root_format or n.format()
+
+        root['first_frame'].setValue(first)
+        root['last_frame'].setValue(last)
+        nuke.frame((first + last) / 2)
+        root['lock_range'].setValue(True)
+        root['format'].setValue(root_format)
         root['fps'].setValue(self.fps)
 
     def create_nodes(self):
