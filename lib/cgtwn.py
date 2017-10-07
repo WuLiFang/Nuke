@@ -18,7 +18,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.15'
+__version__ = '0.9.16'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -183,37 +183,34 @@ def on_save_callback():
 def on_close_callback():
     """Try upload image to server."""
 
-    def _run():
-        try:
-            nuke.scriptName()
-        except RuntimeError:
-            LOGGER.warning('尝试在未保存时上传单帧')
-            return
-        try:
-            shot = CurrentShot()
-            shot.check_account()
-            start_time = time.time()
-            # Wait on close jpg rendering.
-            while True:
-                mtime = os.path.getmtime(shot.image)
-                if mtime - start_time > -10:
-                    break
-                elif time.time() - start_time > 100:
-                    LOGGER.warning('单帧等待时间超时: %s', shot.image)
-                    break
-                time.sleep(1)
-            dst = shot.upload_image()
-            if dst:
-                traytip('更新单帧', dst)
-        except cgtwq.LoginError:
-            traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-        except cgtwq.IDError:
-            traytip('更新单帧', u'CGTW上未找到对应镜头')
-        except cgtwq.AccountError as ex:
-            traytip('未更新单帧',
-                    '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
-
-    threading.Thread(target=_run).start()
+    try:
+        nuke.scriptName()
+    except RuntimeError:
+        LOGGER.warning('尝试在未保存时上传单帧')
+        return
+    try:
+        shot = CurrentShot()
+        shot.check_account()
+        start_time = time.time()
+        # Wait on close jpg rendering.
+        while True:
+            mtime = os.path.getmtime(shot.image)
+            if mtime - start_time > -10:
+                break
+            elif time.time() - start_time > 10:
+                LOGGER.warning('单帧等待时间超时: %s', shot.image)
+                break
+            time.sleep(1)
+        dst = shot.upload_image()
+        if dst:
+            traytip('更新单帧', dst)
+    except cgtwq.LoginError:
+        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+    except cgtwq.IDError:
+        traytip('更新单帧', u'CGTW上未找到对应镜头')
+    except cgtwq.AccountError as ex:
+        traytip('未更新单帧',
+                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
 
 
 class ContactSheetPanel(object):
