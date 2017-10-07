@@ -5,16 +5,17 @@ import os
 import sys
 import threading
 import time
+import webbrowser
 
 from wlf import cgtwq
 from wlf.Qt import QtCore, QtWidgets, QtCompat, QtGui
 from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-from wlf.files import version_filter, copy, is_same, url_open
+from wlf.files import version_filter, copy, is_same
 from wlf.path import remove_version, get_unicode, get_server, split_version
 from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
 
-__version__ = '0.6.9'
+__version__ = '0.6.10'
 
 
 class Config(wlf.config.Config):
@@ -62,8 +63,10 @@ class Dialog(QDialog):
             self.actionSync.triggered.connect(self.upload)
             self.actionServer.triggered.connect(self.ask_server)
             self.actionUpdateUI.triggered.connect(self.update_ui)
-            self.actionOpenDir.triggered.connect(self.open_dir)
-            self.actionOpenServer.triggered.connect(self.open_server)
+            self.actionOpenDir.triggered.connect(
+                lambda: webbrowser.open(self._config['DIR']))
+            self.actionOpenServer.triggered.connect(
+                lambda: webbrowser.open(self._config['SERVER']))
 
         def _edits():
             def _set_config(k, v):
@@ -117,7 +120,8 @@ class Dialog(QDialog):
             if HAS_NUKE:
                 from node import Last
                 if Last.mov_path:
-                    self.directory = get_unicode(Last.mov_path)
+                    self.directory = get_unicode(
+                        os.path.dirname(Last.mov_path))
 
         QDialog.__init__(self, parent)
         QtCompat.loadUi(os.path.abspath(
@@ -308,16 +312,6 @@ class Dialog(QDialog):
         if dir_:
             self.serverEdit.setText(dir_)
 
-    def open_dir(self):
-        """Open config['DIR'] in explorer.  """
-
-        url_open('file://{}'.format(self._config['DIR']))
-
-    def open_server(self):
-        """Open config['SERVER'] in explorer.  """
-
-        url_open('file://{}'.format(self._config['SERVER']))
-
 
 class FileListWidget(object):
     """Folder viewer.  """
@@ -455,15 +449,15 @@ class FileListWidget(object):
     @QtCore.Slot(QtWidgets.QListWidgetItem)
     def open_file(self, item):
         """Open mov file for preview.  """
+
         filename = item.text()
         path = os.path.join(self.directory, filename)
         burn_in_path = os.path.join(
             self.directory, self.burnin_folder, filename)
 
-        url_open(burn_in_path
-                 if self.is_use_burnin and os.path.exists(burn_in_path)
-                 else path,
-                 isfile=True)
+        webbrowser.open(burn_in_path
+                        if self.is_use_burnin and os.path.exists(burn_in_path)
+                        else path)
 
     def items(self):
         """Item in list widget -> list."""
