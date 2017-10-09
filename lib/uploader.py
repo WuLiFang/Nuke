@@ -1,21 +1,22 @@
 # -*- coding=UTF-8 -*-
 """Upload files to server.  """
-# TODO: non-block upload
+
 import os
 import sys
 import threading
 import time
 import webbrowser
 
-from wlf import cgtwq
-from wlf.Qt import QtCore, QtWidgets, QtCompat, QtGui
-from wlf.Qt.QtWidgets import QDialog, QApplication, QFileDialog
-from wlf.files import version_filter, copy, is_same
-from wlf.path import remove_version, get_unicode, get_server, split_version
-from wlf.notify import Progress, CancelledError, HAS_NUKE
 import wlf.config
+from wlf import cgtwq
+from wlf.decorators import run_async
+from wlf.files import copy, is_same, version_filter
+from wlf.notify import HAS_NUKE, CancelledError, Progress
+from wlf.path import get_server, get_unicode, remove_version, split_version
+from wlf.Qt import QtCompat, QtCore, QtGui, QtWidgets
+from wlf.Qt.QtWidgets import QApplication, QDialog, QFileDialog
 
-__version__ = '0.6.10'
+__version__ = '0.6.11'
 
 
 class Config(wlf.config.Config):
@@ -187,8 +188,10 @@ class Dialog(QDialog):
         self.syncButton.setText(sync_button_text)
         self.syncButton.setEnabled(sync_button_enable)
 
+    @run_async
     def upload(self):
         """Upload videos to server.  """
+
         if not os.path.exists(self.dest_folder):
             os.mkdir(self.dest_folder)
         try:
