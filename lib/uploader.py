@@ -16,7 +16,7 @@ from wlf.path import get_server, get_unicode, remove_version, split_version
 from wlf.Qt import QtCompat, QtCore, QtGui, QtWidgets
 from wlf.Qt.QtWidgets import QApplication, QDialog, QFileDialog
 
-__version__ = '0.6.11'
+__version__ = '0.6.12'
 
 
 class Config(wlf.config.Config):
@@ -192,8 +192,6 @@ class Dialog(QDialog):
     def upload(self):
         """Upload videos to server.  """
 
-        if not os.path.exists(self.dest_folder):
-            os.mkdir(self.dest_folder)
         try:
             task = Progress()
             files = list(self.checked_files)
@@ -218,6 +216,7 @@ class Dialog(QDialog):
     @property
     def dest_folder(self):
         """File upload folder destination.  """
+
         ret = os.path.join(
             self.server,
             self.project,
@@ -230,6 +229,7 @@ class Dialog(QDialog):
 
     def get_dest(self, filename, refresh=False):
         """Get destination for @filename. """
+
         mode = self.mode()
         if mode == 0:
             return os.path.join(self.dest_folder, remove_version(filename))
