@@ -1,5 +1,6 @@
-#! C:/Program Files/Nuke11.0v1/nuke-11.0.1.dll -nx
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
+
 Gizmo {
   onCreate {
 class __PositionKeyer(object):
@@ -94,7 +95,7 @@ except NameError:
 }
  tile_color 0xff00ff
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.3.9"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.4.0"}
  addUserKnob {41 in l "sample layer" t "用来取样的图层,一般是P层。但也可以用其他图层(例如depth)" T Shuffle2.in}
  addUserKnob {20 sampler l 取样器 n 1}
  addUserKnob {12 p0}
@@ -103,12 +104,15 @@ except NameError:
  p1 {300 100}
  addUserKnob {20 sampler_end n -1}
  addUserKnob {26 div_settings l <b>设置</b>}
+ addUserKnob {4 mode l mode(模式) M {Ramp(渐变) Distance(距离) Sphere(球)}}
  addUserKnob {41 blackpoint l blackpoint(黑点) t 低于此值将为黑色 T Sampler.p0}
  addUserKnob {41 whitepoint l whitepoint(白点) t 高于此值将为白色 T Sampler.p1}
  addUserKnob {7 rotation_x l "rotation x(旋转x轴)" R 0 180}
  addUserKnob {7 rotation l "rotation y(旋转y轴)" R 0 180}
  rotation 90
  addUserKnob {7 rotation_z l "rotation z(旋转z轴)" R 0 180}
+ addUserKnob {13 scale l scale(缩放)}
+ scale {1 1 1}
  addUserKnob {26 t_alpha_output l output}
  addUserKnob {6 x +STARTLINE}
  x true
@@ -124,7 +128,7 @@ except NameError:
  addUserKnob {32 bt_y l Y -STARTLINE T "knob x 0\nknob y 1\nknob z 0\nknob invert_x 0\nknob invert_y 0\nknob invert_z 0\nknob rotation 90\nknob rotation_x 0\nknob rotation_z 0"}
  addUserKnob {32 bt_z l Z -STARTLINE T "knob x 0\nknob y 0\nknob z 1\nknob invert_x 0\nknob invert_y 0\nknob invert_z 0\nknob rotation 90\nknob rotation_x 0\nknob rotation_z 0"}
  addUserKnob {20 endGroup n -1}
- addUserKnob {32 bt_update INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {32 bt_update l INVISIBLE +INVISIBLE +STARTLINE}
  addUserKnob {6 __initiated l INVISIBLE +INVISIBLE +STARTLINE}
  __initiated false
 }
@@ -162,10 +166,9 @@ except:
   p1 {0 0 0}
  }
  BlinkScript {
-  recompileCount 51
   ProgramGroup 1
-  KernelDescription "2 \"PositionKeyer\" iterate pixelWise ee6e9b933da380ff164e65e7c7e9d8f402fa426d9298c6d74394c02f146f67c7 2 \"position\" Read Point \"dst\" Write Point 9 \"invert_x\" Bool 1 AA== \"invert_y\" Bool 1 AA== \"invert_z\" Bool 1 AA== \"enable_x\" Bool 1 AA== \"enable_y\" Bool 1 AA== \"enable_z\" Bool 1 AA== \"rotate\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"p0_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"p1_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== 9 \"invert_x\" 1 1 \"invert_y\" 1 1 \"invert_z\" 1 1 \"enable_x\" 1 1 \"enable_y\" 1 1 \"enable_z\" 1 1 \"rotate\" 3 1 \"p0_color\" 4 1 \"p1_color\" 4 1 2 \"p0\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA== \"p1\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
-  kernelSource "// PositionKeyerKernel\n// VERSION: 0.4.4\nkernel PositionKeyer : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> position;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  bool invert_x;\n  bool invert_y;\n  bool invert_z;\n  bool enable_x;\n  bool enable_y;\n  bool enable_z;\n  float3 rotate;\n  float4 p0_color;\n  float4 p1_color;\n\nlocal:\n  float4 p0;\n  float4 p1;\n\n  float4 rotate3(float4 point, float3 rotate)\n  \{\n    float sx = sin(rotate.x);\n    float cx = cos(rotate.x);\n    float sy = sin(rotate.y);\n    float cy = cos(rotate.y);\n    float sz = sin(rotate.z);\n    float cz = cos(rotate.z);\n    float xy, xz, yx, yz, zx, zy;\n    xy = cx * point.y - sx * point.z;\n    xz = sx * point.y + cx * point.z;\n    yx = cy * point.x - sy * xz;\n    yz = sy * point.x + cy * xz;\n    zx = cz * yx - sz * xy;\n    zy = sz * yx + cz * xy;\n    point.x = zx;\n    point.y = zy;\n    point.z = yz;\n    return point;\n  \}\n\n  float linear(float x, float p0, float p1)\n  \{\n    if (p1 == p0)\{\n      return p0;\n    \}\n    return (x - p0) / (p1 - p0);\n  \}\n\n  void init()\n  \{\n    p0 = rotate3(p0_color, rotate);\n    p1 = rotate3(p1_color, rotate);\n  \}\n\n  void process()\n  \{\n    float4 pos = rotate3(position(), rotate);\n\n    float4 result;\n    result\[0] = linear(pos\[0], p0\[0], p1\[0]);\n    result\[1] = linear(pos\[1], p0\[1], p1\[1]);\n    result\[2] = linear(pos\[2], p0\[2], p1\[2]);\n    result = clamp(result, float4(0.0f), float4(1.0f));\n\n    result\[0] = invert_x ? (1 - result\[0]) : result\[0];\n    result\[1] = invert_y ? (1 - result\[1]) : result\[1];\n    result\[2] = invert_z ? (1 - result\[2]) : result\[2];\n    result\[3] = (enable_x ? result\[0] : 1) * (enable_y ? result\[1] : 1) * (enable_z ? result\[2] : 1);\n\n    dst() = result;\n  \}\n\};"
+  KernelDescription "2 \"PositionKeyer\" iterate pixelWise f1af00ca2b0dcd0698c1f06ac7b7b96ae4cb2deac07e1ed7fafdf9e11390c022 2 \"position\" Read Point \"dst\" Write Point 11 \"invert_x\" Bool 1 AA== \"invert_y\" Bool 1 AA== \"invert_z\" Bool 1 AA== \"enable_x\" Bool 1 AA== \"enable_y\" Bool 1 AA== \"enable_z\" Bool 1 AA== \"mode\" Int 1 AAAAAA== \"rotate\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"scale\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"p0_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"p1_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== 11 \"invert_x\" 1 1 \"invert_y\" 1 1 \"invert_z\" 1 1 \"enable_x\" 1 1 \"enable_y\" 1 1 \"enable_z\" 1 1 \"mode\" 1 1 \"rotate\" 3 1 \"scale\" 3 1 \"p0_color\" 4 1 \"p1_color\" 4 1 2 \"p0\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"p1\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "// PositionKeyerKernel\n// VERSION: 0.5.0\nkernel PositionKeyer : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> position;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  bool invert_x;\n  bool invert_y;\n  bool invert_z;\n  bool enable_x;\n  bool enable_y;\n  bool enable_z;\n  int mode;\n  float3 rotate;\n  float3 scale;\n  float4 p0_color;\n  float4 p1_color;\n\nlocal:\n  float3 p0;\n  float3 p1;\n\n  float3 rotate3(float3 point, float3 rotate)\n  \{\n    float sx = sin(rotate.x);\n    float cx = cos(rotate.x);\n    float sy = sin(rotate.y);\n    float cy = cos(rotate.y);\n    float sz = sin(rotate.z);\n    float cz = cos(rotate.z);\n    float xy, xz, yx, yz, zx, zy;\n    xy = cx * point.y - sx * point.z;\n    xz = sx * point.y + cx * point.z;\n    yx = cy * point.x - sy * xz;\n    yz = sy * point.x + cy * xz;\n    zx = cz * yx - sz * xy;\n    zy = sz * yx + cz * xy;\n    point.x = zx;\n    point.y = zy;\n    point.z = yz;\n    return point;\n  \}\n  float3 rotate3(float4 point, float3 rotate)\n  \{\n    return rotate3(to_float3(point), rotate);\n  \}\n  float linear(float x, float p0, float p1)\n  \{\n    if (p1 == p0)\n    \{\n      return p0;\n    \}\n    return (x - p0) / (p1 - p0);\n  \}\n  float3 to_float3(float4 input)\n  \{\n    return float3(input.x, input.y, input.z);\n  \}\n  void init()\n  \{\n    p0 = rotate3(p0_color, rotate);\n    p1 = rotate3(p1_color, rotate);\n    // if (scale.x == 0)\{\n    //   scale.x == 1e-6;\n    // \}\n    // if (scale.y == 0)\{\n    //   scale.y == 1e-6;\n    // \}\n    // if (scale.z == 0)\{\n    //   scale.z == 1e-6;\n    // \}\n  \}\n\n  void process()\n  \{\n    float3 pos = rotate3(position(), rotate);\n    float4 result;\n\n    if (mode == 0)\n    \{\n      result\[0] = linear(pos.x, p0.x, p1.x);\n      result\[1] = linear(pos.y, p0.y, p1.y);\n      result\[2] = linear(pos.z, p0.z, p1.z);\n    \}\n    else if (mode == 1)\n    \{\n      result\[0] = 1 - fabs(pos.x - p1.x) / fabs(p1.x - p0.x) / scale.x;\n      result\[1] = 1 - fabs(pos.y - p1.y) / fabs(p1.y - p0.y) / scale.y;\n      result\[2] = 1 - fabs(pos.z - p1.z) / fabs(p1.z - p0.z) / scale.z;\n    \}\n    else if (mode == 2)\n    \{\n      float ret = 1 - length((pos - p1) / scale) / (length(p1 - p0));\n      result\[0] = ret;\n      result\[1] = ret;\n      result\[2] = ret;\n    \}\n    result = clamp(result, float4(0.0f), float4(1.0f));\n    result\[0] = invert_x ? (1 - result\[0]) : result\[0];\n    result\[1] = invert_y ? (1 - result\[1]) : result\[1];\n    result\[2] = invert_z ? (1 - result\[2]) : result\[2];\n    result\[3] = (enable_x ? result\[0] : 1) * (enable_y ? result\[1] : 1) * (enable_z ? result\[2] : 1);\n\n    dst() = result;\n  \}\n\};\n"
   useGPUIfAvailable false
   vectorize false
   rebuild ""
@@ -175,7 +178,9 @@ except:
   PositionKeyer_enable_x {{parent.x}}
   PositionKeyer_enable_y {{parent.y}}
   PositionKeyer_enable_z {{parent.z}}
+  PositionKeyer_mode {{parent.mode}}
   PositionKeyer_rotate {{radians(parent.knob.rotation_x)} {"radians(parent.knob.rotation - 90)"} {radians(parent.knob.rotation_z)}}
+  PositionKeyer_scale {{parent.scale} {parent.scale} {parent.scale}}
   PositionKeyer_p0_color {{parent.Sampler.p0} {parent.Sampler.p0} {parent.Sampler.p0} {parent.Sampler.p0}}
   PositionKeyer_p1_color {{parent.Sampler.p1} {parent.Sampler.p1} {parent.Sampler.p1} {parent.Sampler.p1}}
   protectKernelWhenPublishing true
