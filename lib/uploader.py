@@ -193,11 +193,10 @@ class Dialog(QDialog):
         """Upload videos to server.  """
 
         try:
-            task = Progress()
             files = list(self.checked_files)
-            all_num = len(files)
-            for index, i in enumerate(files):
-                task.set(index * 100 // all_num, i)
+            task = Progress(total=len(files))
+            for i in files:
+                task.step(i)
                 src = os.path.join(self.directory, i)
                 dst = self.get_dest(i)
                 if isinstance(dst, Exception):
