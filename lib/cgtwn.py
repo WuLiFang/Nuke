@@ -4,7 +4,6 @@ cgteamwork integration with nuke.
 """
 import os
 import logging
-import threading
 import time
 import webbrowser
 
@@ -18,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.19'
+__version__ = '0.9.20'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -142,16 +141,13 @@ class CurrentShot(cgtwq.Shot):
 def on_load_callback():
     """Show cgtwn status"""
 
-    def _run():
-        try:
-            traytip('当前CGTeamWork项目', '{}:合成'.format(
-                CurrentShot().info.get('name')))
-        except cgtwq.LoginError:
-            traytip('Nuke无法访问数据库', '请登录CGTeamWork')
-        except cgtwq.IDError as ex:
-            traytip('CGteamwork找不到对应条目', str(ex))
-
-    threading.Thread(target=_run).start()
+    try:
+        traytip('当前CGTeamWork项目', '{}:合成'.format(
+            CurrentShot().info.get('name')))
+    except cgtwq.LoginError:
+        traytip('Nuke无法访问数据库', '请登录CGTeamWork')
+    except cgtwq.IDError as ex:
+        traytip('CGteamwork找不到对应条目', str(ex))
 
 
 @abort_when_module_not_enable
@@ -159,22 +155,19 @@ def on_load_callback():
 def on_save_callback():
     """Try upload nk file to server."""
 
-    def _run():
-        try:
-            shot = CurrentShot()
-            shot.check_account()
-            dst = copy(shot.workfile, shot.workfile_dest)
-            if dst:
-                traytip('更新文件', dst)
-        except cgtwq.LoginError:
-            traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-        except cgtwq.IDError:
-            traytip('更新文件', u'CGTW上未找到对应镜头')
-        except cgtwq.AccountError as ex:
-            traytip('未更新文件',
-                    '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
-
-    threading.Thread(target=_run).start()
+    try:
+        shot = CurrentShot()
+        shot.check_account()
+        dst = copy(shot.workfile, shot.workfile_dest)
+        if dst:
+            traytip('更新文件', dst)
+    except cgtwq.LoginError:
+        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+    except cgtwq.IDError:
+        traytip('更新文件', u'CGTW上未找到对应镜头')
+    except cgtwq.AccountError as ex:
+        traytip('未更新文件',
+                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
 
 
 @abort_when_module_not_enable
@@ -193,8 +186,8 @@ def on_close_callback():
         shot.check_account()
         start_time = time.time()
 
-        if os.path.exists(shot.image):
-            # Wait on close jpg rendering.
+        if shot.image and os.path.exists(shot.image):
+            # Wait jpg rendering.
             while True:
                 try:
                     mtime = os.path.getmtime(shot.image)
@@ -203,8 +196,9 @@ def on_close_callback():
                 except OSError as ex:
                     if ex.errno != 2:
                         raise
-                if time.time() - start_time > 10:
-                    LOGGER.warning('单帧等待时间超时: %s', shot.image)
+                if time.time() - start_time > 2:
+                    LOGGER.debug('Wait timeout, file mtime: %s', time.strftime(
+                        '%x %X', time.localtime(mtime)))
                     break
                 time.sleep(1)
         else:
@@ -216,11 +210,14 @@ def on_close_callback():
             traytip('更新单帧', dst)
     except cgtwq.LoginError:
         traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-    except cgtwq.IDError:
-        traytip('未更新单帧', u'CGTW上未找到对应镜头')
+    except cgtwq.IDError as ex:
+        traytip('未更新单帧', u'CGTW上未找到对应镜头\n {}'.format(ex))
     except cgtwq.AccountError as ex:
         traytip('未更新单帧',
                 '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+    except Exception as ex:
+        LOGGER.error('Unexpected exception', exc_info=True)
+        raise
 
 
 class ContactSheetPanel(object):
