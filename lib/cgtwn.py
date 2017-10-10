@@ -18,7 +18,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.17'
+__version__ = '0.9.18'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -198,10 +198,12 @@ def on_close_callback():
                 mtime = os.path.getmtime(shot.image)
                 if mtime - start_time > -10:
                     break
-                elif time.time() - start_time > 10:
-                    LOGGER.warning('单帧等待时间超时: %s', shot.image)
-            except OSError:
-                pass
+            except OSError as ex:
+                if ex.errno != 2:
+                    raise
+            if time.time() - start_time > 10:
+                LOGGER.warning('单帧等待时间超时: %s', shot.image)
+                break
             time.sleep(1)
         dst = shot.upload_image()
         if dst:
