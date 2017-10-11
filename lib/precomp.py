@@ -10,7 +10,7 @@ from wlf.path import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.14'
+__version__ = '0.3.15'
 
 
 def redshift(nodes):
@@ -97,22 +97,30 @@ class Precomp(object):
         add_layer(layer)
         ret = self.source.get(layer)
         if layer in self.layers():
-            _kwargs = {'in': layer}
+            kwargs = {'inputs': [self.last_node],
+                      'in': layer,
+                      'label': u'修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
+            try:
+                kwargs['postage_stamp'] = self.last_node['postage_stamp'].value()
+            except NameError:
+                pass
             ret = nuke.nodes.Shuffle(
-                inputs=[self.last_node],
-                label=u'修改日期: [metadata input/mtime]\n{}'.format(
-                    self.l10n(layer)),
-                postage_stamp=self.last_node.Class() != 'Read', **_kwargs)
+                **kwargs)
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
             if self.source.get(pair[0])\
                     and self.source.get(pair[1]):
                 input0, input1 = self.node(pair[0]), self.node(pair[1])
-                n = nuke.nodes.Merge2(
-                    inputs=[input0, input1],
-                    operation='multiply', output='rgb',
-                    label=self.l10n(layer),
-                    postage_stamp=True)
+                kwargs = {'inputs': [input0, input1],
+                          'operation': 'multiply',
+                          'output': 'rgb',
+                          'label': self.l10n(layer)}
+                try:
+                    kwargs['postage_stamp'] = (input0['postage_stamp'].value()
+                                               and input1['postage_stamp'].value())
+                except NameError:
+                    pass
+                n = nuke.nodes.Merge2(**kwargs)
                 self.source[layer] = n
                 ret = n
         return ret
