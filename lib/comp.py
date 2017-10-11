@@ -842,7 +842,7 @@ class CompDialog(nukescripts.PythonPanel):
                 self._config['output_dir'], '{}_v0.nk'.format(self._config['shot']))
             self._config['footage_dir'] = shot if os.path.isdir(
                 shot) else os.path.join(self._config['input_dir'], self._config['shot'])
-            _cmd = u'"{nuke}" -t {script} "{config}"'.format(
+            _cmd = u'"{nuke}" -t -priority low {script} "{config}"'.format(
                 nuke=nuke.EXE_PATH,
                 script=os.path.normcase(__file__).rstrip(u'c'),
                 config=get_encoded(escape_batch(json.dumps(self._config)))
