@@ -1,29 +1,53 @@
 # -*- coding=UTF-8 -*-
-"""Comp footages adn create output, can be run as script.  """
-# TODO: Use multiprocessing
+"""Comp footages and create output, can be run as script.  """
+
 import json
+import logging
 import os
-import pprint
 import re
 import sys
-import threading
-import traceback
 import webbrowser
+import traceback
+from multiprocessing.dummy import Pool, Process, cpu_count
 from subprocess import PIPE, Popen
 
 import nuke
 import nukescripts
 
-from wlf.path import escape_batch, get_encoded, get_unicode
-from wlf.notify import Progress
 import wlf.config
+import wlf.mp_logging
+from wlf.notify import Progress, CancelledError
+from wlf.path import escape_batch, get_encoded, get_unicode
 
 import precomp
 from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.17.15'
+__version__ = '0.18.0'
+
+LOGGER = logging.getLogger('com.wlf.comp')
+COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
+
+
+def _set_logger():
+    logger = logging.getLogger('com.wlf.comp')
+    logger.propagate = False
+    _handler = logging.StreamHandler()
+    _formatter = logging.Formatter(
+        '%(levelname)-6s[%(asctime)s]:%(name)s:%(threadName)s:%(message)s', '%H:%M:%S')
+    _handler.setFormatter(_formatter)
+    logger.addHandler(_handler)
+
+    try:
+        loglevel = int(os.getenv('WLF_LOGLEVEL', logging.INFO))
+        logger.setLevel(loglevel)
+    except TypeError:
+        logger.warning('Can not recognize env:WLF_LOGLEVEL, expect a int')
+
+
+if __name__ != '__main__':
+    _set_logger()
 
 
 class Config(wlf.config.Config):
@@ -50,7 +74,7 @@ class Comp(object):
     tag_metadata_key = 'comp/tag'
 
     def __init__(self, config=None):
-        print(u'\n吾立方批量合成 {}\n'.format(__version__))
+        LOGGER.info(u'吾立方批量合成 %s', __version__)
 
         self._config = dict(config or Config())
         self._errors = []
@@ -60,10 +84,9 @@ class Comp(object):
             if isinstance(value, str):
                 self._config[key] = value.replace(u'\\', '/')
 
-        pprint.pprint(config)
         self._task = Progress(u'自动合成', total=20)
         if config:
-            print(u'\n# {}'.format(config['shot']))
+            LOGGER.info(u'# %s', config['shot'])
             nuke.scriptClear()
             self.import_resource()
         if not nuke.value('root.project_directory'):
@@ -77,7 +100,7 @@ class Comp(object):
         self.create_nodes()
         if config:
             self.output()
-        print(u'\n\n')
+        LOGGER.info(u'\n\n')
 
     @property
     def fps(self):
@@ -87,7 +110,7 @@ class Comp(object):
     def task_step(self, message=None):
         """Push task progress bar forward.  """
         if message:
-            print(u'{:-^30s}'.format(message))
+            LOGGER.info(u'{:-^30s}'.format(message))
         self._task.step(message)
 
     @staticmethod
@@ -130,9 +153,9 @@ class Comp(object):
         self.task_step(u'导入素材')
         for dir_ in dirs:
             # Get footage in subdir
-            print(u'文件夹 {}:'.format(dir_))
+            LOGGER.info(u'文件夹 %s:', dir_)
             if not re.match(self._config['dir_pat'], os.path.basename(dir_.rstrip('\\/'))):
-                print(u'\t不匹配文件夹正则, 跳过\n')
+                LOGGER.info(u'\t不匹配文件夹正则, 跳过')
                 continue
 
             _footages = [i for i in nuke.getFileNameList(dir_) if
@@ -140,16 +163,15 @@ class Comp(object):
             if _footages:
                 for f in _footages:
                     if os.path.isdir(os.path.join(dir_, f)):
-                        print(u'\t文件夹: {}'.format(f))
+                        LOGGER.info(u'\t文件夹: %s', f)
                         continue
-                    print(u'\t素材: {}'.format(f))
+                    LOGGER.info(u'\t素材: %s', f)
                     if re.match(self._config['footage_pat'], f, flags=re.I):
                         nuke.createNode(
                             u'Read', 'file {{{}/{}}}'.format(dir_, f))
                     else:
-                        print(u'\t\t不匹配素材正则, 跳过\n')
-            print('')
-        print(u'{:-^30s}'.format(u'结束 导入素材'))
+                        LOGGER.info(u'\t\t不匹配素材正则, 跳过')
+        LOGGER.info(u'{:-^30s}'.format(u'结束 导入素材'))
 
         if not nuke.allNodes(u'Read'):
             raise FootageError(self._config['footage_dir'], u'没有素材')
@@ -232,7 +254,7 @@ class Comp(object):
         try:
             n = nuke.nodes.RSMB(inputs=[n], disable=True, label='整体运动模糊')
         except RuntimeError:
-            print(u'RSMB插件未安装')
+            LOGGER.info(u'RSMB插件未安装')
         if 'motion' in nuke.layers(n):
             n = nuke.nodes.VectorBlur2(
                 inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=False, disable=True)
@@ -322,14 +344,14 @@ class Comp(object):
     def output(self):
         """Save .nk file and render .jpg file."""
 
-        print(u'{:-^30s}'.format(u'开始 输出'))
+        LOGGER.info(u'{:-^30s}'.format(u'开始 输出'))
         _path = self._config['save_path'].replace('\\', '/')
         _dir = os.path.dirname(_path)
         if not os.path.exists(_dir):
             os.makedirs(_dir)
 
         # Save nk
-        print(u'保存为:\n\t\t\t{}\n'.format(_path))
+        LOGGER.info(u'保存为:\t%s', _path)
         nuke.Root()['name'].setValue(_path)
         nuke.scriptSave(_path)
 
@@ -361,8 +383,8 @@ class Comp(object):
             else:
                 self._errors.append(
                     u'{}:\t渲染出错'.format(os.path.basename(_path)))
-                raise RenderError(u'渲染出错: Write_JPG_1')
-            print(u'{:-^30s}'.format(u'结束 输出'))
+                raise RenderError(u'Write_JPG_1')
+            LOGGER.info(u'{:-^30s}'.format(u'结束 输出'))
 
     def _bg_ch_nodes(self):
         nodes = self._precomp()
@@ -452,7 +474,7 @@ class Comp(object):
         n = nuke.nodes.Unpremult(inputs=[n], label='调色开始')
 
         if self._config['autograde']:
-            print(u'{:-^30s}'.format(u'开始 自动亮度'))
+            LOGGER.info(u'{:-^30s}'.format(u'开始 自动亮度'))
             n = nuke.nodes.Grade(
                 inputs=[n],
                 unpremult='rgba.alpha',
@@ -461,7 +483,7 @@ class Comp(object):
             _max = self._autograde_get_max(input_node)
             n['whitepoint'].setValue(_max)
             n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
-            print(u'{:-^30s}'.format(u'结束 自动亮度'))
+            LOGGER.info(u'{:-^30s}'.format(u'结束 自动亮度'))
         n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
 
         def _node_with_positionkeyer(node_type, input_node, knobs):
@@ -525,7 +547,7 @@ class Comp(object):
         n = nuke.nodes.Dilate(inputs=[n])
         while ret > 1 and erode > n.height() / -100.0:
             n['size'].setValue(erode)
-            print(u'收边 {}'.format(erode))
+            LOGGER.info(u'收边 %s', erode)
             ret = get_max(n, 'rgb')
             erode -= 1
         nuke.delete(n)
@@ -662,6 +684,7 @@ if not nuke.GUI:
 
 def render_png(nodes, frame=None, show=False):
     """create png for given @nodes."""
+
     assert isinstance(nodes, (nuke.Node, list, tuple))
     assert nuke.value('root.project_directory'), u'未设置工程目录'
     if isinstance(nodes, nuke.Node):
@@ -672,7 +695,7 @@ def render_png(nodes, frame=None, show=False):
         if read_node.hasError() or read_node['disable'].value():
             continue
         name = read_node.name()
-        print(u'渲染: {}'.format(name))
+        LOGGER.info(u'渲染: %s', name)
         n = nuke.nodes.Write(
             inputs=[read_node], channels='rgba')
         n['file'].fromUserText(os.path.join(
@@ -730,7 +753,7 @@ class CompDialog(nukescripts.PythonPanel):
         """Overrride for buttons."""
 
         if knob is self.knobs()['OK']:
-            threading.Thread(target=self.progress).start()
+            Process(target=self.progress).start()
             Config().update(self._config)
         elif knob is self.knobs()['info']:
             self.update()
@@ -772,13 +795,48 @@ class CompDialog(nukescripts.PythonPanel):
     def progress(self):
         """Start process all shots with a processbar."""
 
-        task = Progress('批量合成')
+        task = Progress('批量合成', total=len(self._shot_list))
         shot_info = dict.fromkeys(Comp.get_shot_list(
             self._config, include_existed=True), '本次未处理')
+        pool = Pool()
 
-        total = len(self._shot_list)
-        for i, shot in enumerate(self._shot_list):
-            task.set(i * 100 // total, shot)
+        def _run(cmd, shot):
+            def _handle_cancel():
+                if task.is_cancelled():
+                    shot_info[shot] = '用户取消'
+                    raise CancelledError
+            try:
+                _handle_cancel()
+                LOGGER.info('开始自动合成: %s', shot)
+                proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
+                while proc.poll() is None:
+                    if task.is_cancelled():
+                        try:
+                            _handle_cancel()
+                        except CancelledError:
+                            proc.terminate()
+                            raise
+                stderr = proc.communicate()[1]
+                if COMP_START_MESSAGE in stderr:
+                    stderr = stderr.partition(COMP_START_MESSAGE)[2].strip()
+                if stderr:
+                    shot_info[shot] = stderr
+                elif proc.returncode:
+                    shot_info[shot] = '非正常退出码:{}'.format(proc.returncode)
+                else:
+                    shot_info[shot] = '正常退出'
+                LOGGER.info('完成自动合成: %s', shot)
+            except CancelledError:
+                pass
+            except:
+                shot_info[shot] = traceback.format_exc()
+                LOGGER.error('Unexpected exception during comp', exc_info=True)
+                raise
+            finally:
+                task.step(shot)
+
+        task.set(0, '正在使用 {} 线程进行……'.format(cpu_count()))
+        for shot in self._shot_list:
             self._config['shot'] = os.path.basename(shot)
             self._config['save_path'] = os.path.join(
                 self._config['output_dir'], '{}_v0.nk'.format(self._config['shot']))
@@ -789,14 +847,10 @@ class CompDialog(nukescripts.PythonPanel):
                 script=os.path.normcase(__file__).rstrip(u'c'),
                 config=get_encoded(escape_batch(json.dumps(self._config)))
             )
-            proc = Popen(_cmd, shell=True, stderr=PIPE)
-            stderr = proc.communicate()[1]
-            if stderr:
-                shot_info[shot] = stderr
-            elif proc.returncode:
-                shot_info[shot] = '非正常退出码:{}'.format(proc.returncode)
-            else:
-                shot_info[shot] = '正常退出'
+
+            pool.apply_async(_run, args=(_cmd, shot))
+        pool.close()
+        pool.join()
 
         infos = ''
         for shot in sorted(shot_info.keys()):
@@ -903,13 +957,17 @@ class RenderError(Exception):
 def main():
     """Run this moudule as a script."""
 
-    reload(sys)
-    sys.setdefaultencoding('UTF-8')
+    if sys.getdefaultencoding != 'UTF-8':
+        reload(sys)
+        sys.setdefaultencoding('UTF-8')
+    LOGGER.info(COMP_START_MESSAGE)
+    LOGGER.setLevel(logging.WARNING)
     try:
         Comp(json.loads(sys.argv[1]))
-    except FootageError as ex:
-        print(u'** FootageError: {}\n\n'.format(ex))
-        traceback.print_exc()
+    except FootageError:
+        LOGGER.error('没有素材')
+    except RenderError as ex:
+        LOGGER.error('渲染出错: %s', ex)
 
 
 if __name__ == '__main__':
