@@ -822,9 +822,9 @@ class CompDialog(nukescripts.PythonPanel):
                 if stderr:
                     shot_info[shot] = stderr
                 elif proc.returncode:
-                    shot_info[shot] = '非正常退出码:{}'.format(proc.returncode)
+                    shot_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
                 else:
-                    shot_info[shot] = '正常退出'
+                    shot_info[shot] = '正常完成'
                 LOGGER.info('完成自动合成: %s', shot)
             except CancelledError:
                 pass
