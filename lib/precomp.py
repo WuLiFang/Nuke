@@ -133,7 +133,7 @@ class Precomp(object):
             else:
                 LOGGER.debug('Source not enough: %s', self.source.keys())
         if not ret:
-            LOGGER.warning(u'无法获得图层:%s', layer)
+            LOGGER.debug('Can not get node for layer:%s', layer)
         return ret
 
     def plus(self, layer):

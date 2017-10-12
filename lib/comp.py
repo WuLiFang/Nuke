@@ -837,10 +837,11 @@ class CompDialog(nukescripts.PythonPanel):
                 stderr = proc.communicate()[1]
 
                 _check_cancel()
+                if COMP_START_MESSAGE in stderr:
+                    stderr = stderr.partition(
+                        COMP_START_MESSAGE)[2].strip()
+
                 if stderr:
-                    if COMP_START_MESSAGE in stderr:
-                        stderr = stderr.partition(
-                            COMP_START_MESSAGE)[2].strip()
                     shot_info[shot] = stderr
                 elif proc.returncode:
                     shot_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
@@ -982,7 +983,7 @@ def main():
         reload(sys)
         sys.setdefaultencoding('UTF-8')
     LOGGER.info(COMP_START_MESSAGE)
-    LOGGER.setLevel(logging.WARNING)
+    logging.getLogger('com.wlf').setLevel(logging.WARNING)
     try:
         Comp(json.loads(sys.argv[1]))
     except FootageError:
