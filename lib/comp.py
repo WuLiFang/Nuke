@@ -435,6 +435,7 @@ class Comp(object):
         for tag in tags:
             nodes = tag_nodes_dict[tag]
             try:
+                LOGGER.debug('Precomp: %s', tag)
                 n = precomp.redshift(nodes)
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} {}}}'.format(
