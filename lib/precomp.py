@@ -3,6 +3,7 @@
 import os
 import json
 import re
+import logging
 
 import nuke
 
@@ -10,7 +11,8 @@ from wlf.path import get_layer
 from edit import add_layer, copy_layer
 from orgnize import autoplace
 
-__version__ = '0.3.15'
+__version__ = '0.3.16'
+LOGGER = logging.getLogger('com.wlf.precomp')
 
 
 def redshift(nodes):
@@ -35,24 +37,30 @@ class Precomp(object):
             nodes = [nodes]
         nodes = list(n for n in nodes if n.Class() == 'Read')
 
-        if len(nodes) == 1:
-            n = nodes[0]
+        # Record node for every source layer.
+        self.source = {}
+        for n in nodes:
+            layer = get_layer(
+                nuke.filename(n), layers=self._config['layers'])
+            n['label'].setValue(
+                '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
+            if layer:
+                self.source[layer] = n
+            else:
+                self.source['beauty'] = n
+        if len(self.source) == 1:
+            n = sorted(nodes,
+                       key=lambda n: (len(nuke.layers(n)),
+                                      len(nuke.filename(n)) * -1),
+                       reverse=True)[0]
             layers = nuke.layers(n)
-            self._source = {layer: True
-                            for layer in layers if layer in self._config['layers']}
+            LOGGER.debug(
+                'Precomp single node that has this layers:\n%s', layers)
+            self.source = {layer: True
+                           for layer in layers if layer in self._config['layers']}
             self.source['beauty'] = n
             self.last_node = n
-        else:
-            self._source = {}
-            for n in nodes:
-                layer = get_layer(
-                    nuke.filename(n), layers=self._config['layers'])
-                n['label'].setValue(
-                    '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
-                if layer:
-                    self._source[layer] = n
-                else:
-                    self._source['beauty'] = n
+        LOGGER.debug('Source layers:\n%s', self.source.keys())
 
         self.last_node = self.node('beauty')
         for layer in self._config.get('copy'):
@@ -68,17 +76,13 @@ class Precomp(object):
 
         autoplace(self.last_node, recursive=True)
 
-    @property
-    def source(self):
-        """A layer-node dictionary.  """
-        return self._source
-
     def check(self):
         """Check if has all necessary layer.  """
         pass
 
     def layers(self):
         """Return layers in self.last_node. """
+
         if not self.last_node:
             return []
         return nuke.layers(self.last_node)
@@ -94,6 +98,7 @@ class Precomp(object):
 
     def node(self, layer):
         """Return a node that should be treat as @layer.  """
+
         add_layer(layer)
         ret = self.source.get(layer)
         if layer in self.layers():
@@ -110,6 +115,8 @@ class Precomp(object):
             pair = self._combine_dict[layer]
             if self.source.get(pair[0])\
                     and self.source.get(pair[1]):
+                LOGGER.debug('Combine for layer: %s, %s -> %s',
+                             pair[0], pair[1], layer)
                 input0, input1 = self.node(pair[0]), self.node(pair[1])
                 kwargs = {'inputs': [input0, input1],
                           'operation': 'multiply',
@@ -123,6 +130,10 @@ class Precomp(object):
                 n = nuke.nodes.Merge2(**kwargs)
                 self.source[layer] = n
                 ret = n
+            else:
+                LOGGER.debug('Source not enough: %s', self.source.keys())
+        if not ret:
+            LOGGER.warning(u'无法获得图层:%s', layer)
         return ret
 
     def plus(self, layer):
@@ -131,6 +142,7 @@ class Precomp(object):
         input1 = self.node(layer)
         if not input1:
             return
+        LOGGER.debug('Plus layer to last:%s', layer)
         if not self.last_node:
             self.last_node = nuke.nodes.Constant()
 
@@ -148,6 +160,7 @@ class Precomp(object):
         if not self.last_node:
             self.last_node = self.node(layer)
         elif layer not in self.layers() and self.source.get(layer):
+            LOGGER.debug('Copy layer to last:%s -> %s', layer, output or layer)
             self.last_node = copy_layer(
                 self.last_node, self.node(layer), layer=layer, output=output)
 
