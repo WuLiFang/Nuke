@@ -807,7 +807,7 @@ class CompDialog(nukescripts.PythonPanel):
                     raise CancelledError
             try:
                 _handle_cancel()
-                LOGGER.info('开始自动合成: %s', shot)
+                LOGGER.info('%s:开始', shot)
                 proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
                 while proc.poll() is None:
                     if task.is_cancelled():
@@ -825,7 +825,7 @@ class CompDialog(nukescripts.PythonPanel):
                     shot_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
                 else:
                     shot_info[shot] = '正常完成'
-                LOGGER.info('完成自动合成: %s', shot)
+                LOGGER.info('%s:结束', shot)
             except CancelledError:
                 pass
             except:
