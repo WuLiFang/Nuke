@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.0'
+__version__ = '0.18.1'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -219,14 +219,14 @@ class Comp(object):
         n = self._merge_mp(
             n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
 
+        self.task_step(u'合并其他层')
+        n = self._merge_other(n, self._bg_ch_end_nodes)
+
         self.task_step(u'创建整体深度')
         nodes = nuke.allNodes('DepthFix')
         n = self._merge_depth(n, nodes)
         self.task_step(u'添加虚焦控制')
         self._add_zdefocus_control(n)
-
-        self.task_step(u'创建整体速度')
-        n = self._merge_other(n, self._bg_ch_end_nodes)
 
         n = nuke.nodes.Unpremult(inputs=[n], label='整体调色开始')
 
@@ -248,6 +248,12 @@ class Comp(object):
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
 
+        n = nuke.nodes.Glow2(inputs=[n],
+                             tolerance=0.6,
+                             saturation=0.5,
+                             size=100,
+                             mix=0.25,
+                             disable=True)
         n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
         n = nuke.nodes.Merge2(
             inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
@@ -589,11 +595,15 @@ class Comp(object):
                 also_merge='all',
                 label=n.metadata(cls.tag_metadata_key) or '')
             input0 = n
+        n = nuke.nodes.Remove(inputs=[n],
+                              channels='rgba',
+                              )
         n = nuke.nodes.Merge2(
             inputs=[input_node, n],
             operation='copy',
-            Achannels='motion', Bchannels='motion', output='motion',
-            label='整体速度'
+            Achannels='none', Bchannels='none', output='none',
+            also_merge='all',
+            label='合并rgba以外的层'
         )
         return n
 
