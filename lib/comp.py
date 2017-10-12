@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.1'
+__version__ = '0.18.2'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -812,25 +812,35 @@ class CompDialog(nukescripts.PythonPanel):
         pool = Pool()
 
         def _run(cmd, shot):
-            def _handle_cancel():
+            def _check_cancel():
                 if task.is_cancelled():
-                    shot_info[shot] = '用户取消'
                     raise CancelledError
+
+            def _cancel_handler(proc):
+                assert isinstance(proc, Popen)
+                try:
+                    while True:
+                        if task.is_cancelled():
+                            proc.terminate()
+                            break
+                        elif proc.poll() is not None:
+                            break
+                except OSError:
+                    pass
+
             try:
-                _handle_cancel()
+                _check_cancel()
+
                 LOGGER.info('%s:开始', shot)
                 proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
-                while proc.poll() is None:
-                    if task.is_cancelled():
-                        try:
-                            _handle_cancel()
-                        except CancelledError:
-                            proc.terminate()
-                            raise
+                Process(target=_cancel_handler, args=(proc,)).start()
                 stderr = proc.communicate()[1]
-                if COMP_START_MESSAGE in stderr:
-                    stderr = stderr.partition(COMP_START_MESSAGE)[2].strip()
+
+                _check_cancel()
                 if stderr:
+                    if COMP_START_MESSAGE in stderr:
+                        stderr = stderr.partition(
+                            COMP_START_MESSAGE)[2].strip()
                     shot_info[shot] = stderr
                 elif proc.returncode:
                     shot_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
@@ -838,13 +848,13 @@ class CompDialog(nukescripts.PythonPanel):
                     shot_info[shot] = '正常完成'
                 LOGGER.info('%s:结束', shot)
             except CancelledError:
-                pass
+                shot_info[shot] = '用户取消'
             except:
                 shot_info[shot] = traceback.format_exc()
                 LOGGER.error('Unexpected exception during comp', exc_info=True)
                 raise
             finally:
-                task.step(shot)
+                task.step()
 
         task.set(0, '正在使用 {} 线程进行……'.format(cpu_count()))
         for shot in self._shot_list:
@@ -979,6 +989,9 @@ def main():
         LOGGER.error('没有素材')
     except RenderError as ex:
         LOGGER.error('渲染出错: %s', ex)
+    except Exception:
+        LOGGER.error('Unexpected exception during comp.', exc_info=True)
+        raise
 
 
 if __name__ == '__main__':
