@@ -42,8 +42,13 @@ def set_knob_default():
     k = nuke.toNode('preferences')['UIFontSize']
     if k.value() == 11:
         k.setValue(12)
-    # k = nuke.toNode('preferences')['LocalizationPauseOnProjectLoad']
-    # k.setValue(True)
+
+    try:
+        k = nuke.toNode('preferences')['LocalizationPauseOnProjectLoad']
+        k.setValue(True)
+    except NameError:
+        LOGGER.debug(
+            'Can not set localization preference, maybe using low version.')
 
 
 def add_preferences():
