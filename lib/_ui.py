@@ -9,6 +9,7 @@ import nukescripts
 from autolabel import autolabel
 
 import wlf
+import wlf.uploader
 
 import asset
 import precomp
@@ -17,7 +18,6 @@ import edit_panels
 import cgtwn
 import orgnize
 import comp
-import uploader
 import splitexr
 import scanner
 import panels
@@ -163,7 +163,7 @@ def add_menu():
 def add_panel():
     """Add custom pannel. """
     LOGGER.info(u'添加面板')
-    panels.register(uploader.Dialog, '上传mov', 'com.wlf.uploader')
+    panels.register(wlf.uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
 def add_autolabel():
