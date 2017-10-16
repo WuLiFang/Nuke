@@ -1,6 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Orgnize nodes layout.  """
 import random
+import logging
 
 import nuke
 
@@ -8,13 +9,17 @@ from wlf.notify import Progress, CancelledError
 
 from node import get_upstream_nodes
 
-__version__ = '0.5.2'
+__version__ = '0.6.0'
+
+LOGGER = logging.getLogger('com.wlf.orgnize')
 
 
 def autoplace(nodes=None, recursive=False):
     """Auto place nodes."""
+
+    nodes = nodes or nuke.allNodes()
     if not nodes:
-        nodes = nuke.allNodes()
+        return
     elif isinstance(nodes, nuke.Node):
         nodes = [nodes]
     if recursive:
@@ -139,6 +144,9 @@ class Nodes(list):
 
     def autoplace(self):
         """Auto place nodes."""
+
+        if not self:
+            return
         backdrops_dict = {n: Nodes(n.getNodes())
                           for n in self if n.Class() == 'BackdropNode'}
 
@@ -194,18 +202,11 @@ class Nodes(list):
 
 class Branch(Nodes):
     """A branch is a list of connected nodes. (e.g. [node1, node2, ... node_n]).  """
-    depth = 0
-    _parent_branch = None
-    _parent_nodes = None
+
+    parent_branch = None
+    base_node = None
     _expanded = None
     big_branch_thershold = 10
-
-    def __init__(self, node=None):
-        if isinstance(node, nuke.Node):
-            node = [node]
-        elif node is None:
-            node = []
-        Nodes.__init__(self, node)
 
     def expand(self, nodes=None):
         """Expand self to upstream 1 time, can limit in @nodes.  """
@@ -214,7 +215,8 @@ class Branch(Nodes):
             return False
         ret = Branches()
         nodes = nodes or nuke.allNodes()
-        input_nodes = self[-1].dependencies(nuke.INPUTS)
+        base = self[-1]
+        input_nodes = base.dependencies(nuke.INPUTS)
         for index, input_node in enumerate(input_nodes):
             if input_node not in nodes:
                 continue
@@ -222,9 +224,8 @@ class Branch(Nodes):
                 branch = self
             else:
                 branch = Branch()
-                branch.parent_nodes = Nodes(self[:-1])
                 branch.parent_branch = self
-                branch.depth = self.depth + len(self)
+                branch.base_node = base
             branch.append(input_node)
             ret.append(branch)
         return ret
@@ -238,43 +239,30 @@ class Branch(Nodes):
             self._expanded = not bool(input_nodes)
         return self._expanded
 
-    def new_nodes(self):
-        """Return nodes that need to be autoplaced in this branch.  """
-        return Nodes(n for n in self if n not in Branches.placed_nodes)
+    def dependent(self):
+        """All nodes read information from this branch.  """
 
-    def base_node(self, length_filter=None):
-        """Return the base node this branch splitted from.  """
-        if length_filter is None:
-            length_filter = self.big_branch_thershold
-        ret = self[0]
-        branch = self
-        while branch:
-            if branch.parent_nodes:
-                ret = branch.parent_nodes[-1]
-            else:
-                break
-            branch = branch.parent_branch
-            if len(branch) >= length_filter:
-                break
-        return ret
-
-    def prev_nodes(self):
-        """Return previous autoplaced nodes.  """
-        ret = Nodes()
-        if self.parent_nodes:
-            ret = Nodes(n for n in get_upstream_nodes(self.base_node())
-                        if n not in self.new_nodes()
-                        and n in Branches.placed_nodes)
+        ret = set()
+        for n in self:
+            ret.update(n.dependent(nuke.INPUTS))
+        ret.difference_update(self)
         return ret
 
     def autoplace(self):
         """Autoplace nodes in this branch.  """
-        nodes = self.new_nodes()
+
+        nodes = Nodes(n for n in self if n not in Branches.placed_nodes)
         if not nodes:
             return
+        if self.base_node:
+            prev_nodes = Nodes(n for n in get_upstream_nodes(self.base_node)
+                               if n in Branches.placed_nodes)
+        else:
+            prev_nodes = Nodes()
+        dependencies = self.dependent()
 
         # nuke.zoomToFitSelected()
-        # if not nuke.ask(str(self.base_node().name())):
+        # if not nuke.ask(self.base_node and self.base_node.name() or 'None'):
         #     raise RuntimeError
 
         # Y-axis.
@@ -282,17 +270,21 @@ class Branch(Nodes):
         for n in nodes:
             ypos -= n.screenHeight() + self.y_gap
             n.setYpos(ypos)
+        if self.base_node:
+            # Place nodes accroding base.
+            n = self.base_node
+            while n:
+                up_node = n.input(0)
+                if up_node and up_node in dependencies:
+                    n = up_node
+                    prev_nodes.remove(n)
+                else:
+                    break
+            nodes.bottom = n.ypos() - self.y_gap
         if len(nodes) < self.big_branch_thershold:
-            # Place nodes accroding parent.
-            if self.parent_nodes:
-                nodes.bottom = self.parent_nodes.ypos - self.y_gap
-            # Move other nodes up.
-            up_nodes = Nodes(n for n in self.prev_nodes()
-                             if Nodes(n).bottom <= nodes.bottom)
-            if up_nodes:
-                up_nodes.bottom = nodes.ypos - nodes.y_gap
-        elif self.parent_nodes:
-            nodes.bottom = self.parent_nodes.ypos - self.y_gap
+            # Move prev nodes up.
+            if prev_nodes:
+                prev_nodes.bottom = nodes.ypos - nodes.y_gap
 
         # X-axis.
         if len(nodes) >= self.big_branch_thershold and Branches.placed_nodes:
@@ -300,51 +292,20 @@ class Branch(Nodes):
         else:
             xpos = 0
 
-        if self.parent_nodes:
-            left_nodes = Nodes(n for n in self.prev_nodes()
-                               if n.ypos() >= nodes.ypos
-                               and Nodes(n).bottom <= nodes.bottom)
-            if left_nodes:
-                xpos = max([left_nodes.right + self.x_gap, xpos])
+        left_nodes = Nodes(n for n in prev_nodes
+                           if n.ypos() >= nodes.ypos
+                           and Nodes(n).bottom <= nodes.bottom)
+        if left_nodes:
+            xpos = max([left_nodes.right + self.x_gap, xpos])
+        if self.base_node:
+            xpos = max([Nodes(self.base_node).right + self.x_gap, xpos])
 
-        if self.parent_nodes:
-            xpos = max([Nodes(self.parent_nodes[-1]).right + self.x_gap, xpos])
         for n in nodes:
             n.setXpos(xpos + (nodes.max_width - n.screenWidth()) / 2)
 
-    @property
-    def parent_nodes(self):
-        """The nodes branch expand from."""
-        return self._parent_nodes
-
-    @parent_nodes.setter
-    def parent_nodes(self, value):
-        if not isinstance(value, list):
-            raise TypeError('Expected list type.  ')
-        self._parent_nodes = Nodes(value)
-
-    @property
-    def parent_branch(self):
-        """The branch this branch expand from."""
-        return self._parent_branch
-
-    @parent_branch.setter
-    def parent_branch(self, value):
-        if not isinstance(value, Branch):
-            raise TypeError('Expected Branch type.  ')
-        self._parent_branch = value
-
-    def total_length(self):
-        """Return length of this branch and branched to the start. """
-        parent_branch = self.parent_branch
-        ret = len(self)
-        while parent_branch:
-            ret += len(parent_branch)
-            parent_branch = parent_branch.parent_branch
-        return ret
-
     def __str__(self):
-        return 'Branch< {} >'.format(' -> '.join(n.name() for n in self))
+        return '<Branch<{}>@{}>'.format(' -> '.join(n.name() for n in self),
+                                        self.base_node and self.base_node.name())
 
 
 class Branches(list):
@@ -401,8 +362,10 @@ class Branches(list):
 
     def autoplace(self):
         """Auto place branches.  """
+
         Branches.placed_nodes.clear()
         for branch in self:
+            assert isinstance(branch, Branch)
             branch.autoplace()
             Branches.placed_nodes.update(branch)
 
