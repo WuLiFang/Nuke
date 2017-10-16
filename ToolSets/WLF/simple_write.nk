@@ -1,0 +1,96 @@
+set cut_paste_input [stack 0]
+version 10.0 v4
+push $cut_paste_input
+Text2 {
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ opacity 0.3
+ message "\[lindex \[split \[basename \[value root.name]] .] 0]"
+ old_expression_markers {{0 -1}
+   }
+ box {20 20 1000 75}
+ transforms {{0 2}
+   }
+ cursor_position 49
+ font {{ SimHei : Regular : simhei.ttf : 0 }}
+ global_font_scale 0.65
+ scale {1 1}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{24 122.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform"}
+ animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+   }
+ enable_background {{!root.proxy}}
+ background_opacity 0.3
+ background_border_x 20
+ name Text_Shot
+ gl_color 0x9b32ff00
+ label 镜头名称
+ selected true
+ xpos -187
+ ypos -384
+}
+Text2 {
+ font_size_toolbar 100
+ font_width_toolbar 100
+ font_height_toolbar 100
+ opacity 0.34
+ message "\[x]"
+ old_message {{49}
+   }
+ old_expression_markers {{0 0}
+   }
+ box {1700 20 1900 75}
+ xjustify right
+ transforms {{0 2}
+   }
+ cursor_position 3
+ font {{ SimHei : Regular : simhei.ttf : 0 }}
+ global_font_scale 0.65
+ scale {1 1}
+ cursor_initialised true
+ autofit_bbox false
+ initial_cursor_position {{1778.5 128.5}
+   }
+ group_animations {{0} imported: 0 selected: items: "root transform/"}
+ animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+   }
+ enable_background {{!root.proxy}}
+ background_opacity 0.3
+ background_border_x 20
+ name Text_Frame
+ gl_color 0x9d32ff00
+ label 帧编号
+ selected true
+ xpos -187
+ ypos -338
+}
+Write {
+ file "mov/\[lindex \[split \[basename \[metadata input/filename]] .] 0].mov"
+ proxy "mov/proxy/\[lindex \[split \[basename \[metadata input/filename]] .] 0].mov"
+ colorspace sRGB
+ file_type mov
+ meta_codec apch
+ mov32_pixel_format {{0} "default (YCbCrA 8-bit 444 Biased (r408))" "RGBA  8-bit" "YCbCrA 8-bit 444 Biased (r408)" "YCbCr  8-bit 422 (2vuy)"}
+ mov64_codec apch
+ mov64_fps {{root.fps}}
+ mov64_bitrate 20000
+ mov64_bitrate_tolerance 40000000
+ mov64_quality_min 2
+ mov64_quality_max 31
+ mov64_gop_size 12
+ mov64_b_frames 0
+ checkHashOnRead false
+ version 3
+ beforeRender "file = nuke.tcl('eval list \{'+nuke.thisNode()\[\"file\"].value()+'\}');\nabsolutePath = os.path.splitdrive(file)\[0];\nproject_directory = nuke.tcl('eval list \{'+nuke.root()\[\"project_directory\"].value()+'\}');\npathHead = '' if absolutePath else project_directory+'/';\ntarget = pathHead+os.path.dirname(file)\nif os.path.exists(target):\n    pass;\nelse:\n    os.makedirs(target);\n"
+ name Write1
+ selected true
+ xpos -187
+ ypos -292
+ addUserKnob {20 caravr l CaraVR}
+ addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
+ addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
+}
