@@ -3,7 +3,7 @@
 import nuke
 from nukescripts.panels import PythonPanel, registerPanel
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def register(widget, name, widget_id, create=False):
@@ -24,7 +24,8 @@ def register(widget, name, widget_id, create=False):
             self.custom_knob = nuke.PyCustom_Knob(
                 name, "",
                 "__import__('nukescripts').panels.WidgetKnob("
-                "__import__('{0.__module__}').{0.__name__})".format(widget))
+                "__import__('{0.__module__}', globals(), locals(), ['{0.__name__}'])"
+                ".{0.__name__})".format(widget))
             self.addKnob(self.custom_knob)
 
     def _add():
