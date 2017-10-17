@@ -204,7 +204,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
             nuke.createNode(
                 'StickyNote', 'autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
                 'label {{{}\n\n<span style="color:red;text-align:center;font-weight:bold">'
-                '不支持非英文路径</span>}}'.format(data), inpanel=False)
+                'mov格式使用非英文路径将可能导致崩溃</span>}}'.format(data), inpanel=False)
             return True
 
     def _file_protocol():
