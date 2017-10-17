@@ -14,7 +14,7 @@ from wlf.notify import Progress
 
 from asset import dropdata_handler
 
-__version__ = '1.7.5'
+__version__ = '1.7.6'
 LOGGER = logging.getLogger('com.wlf.edit')
 
 
@@ -288,7 +288,7 @@ def fix_error_read():
     filename_dict = {nukescripts.replaceHashes(os.path.basename(nuke.filename(n))): nuke.filename(n)
                      for n in nuke.allNodes('Read') if not n.hasError()}
     for n in nuke.allNodes('Read'):
-        if not n.hasError():
+        if not n.hasError() or n['disable'].value():
             continue
         fix_result = None
         filename = nuke.filename(n)
@@ -303,10 +303,19 @@ def fix_error_read():
         else:
             fix_result = dropdata_handler('text/plain', filename)
         if fix_result:
-            if isinstance(fix_result, nuke.Node) and fix_result.hasErorr():
-                nuke.delete(fix_result)
-            else:
-                nuke.delete(n)
+            nuke.delete(n)
+
+
+def clear_selection():
+    """Clear node selection.  """
+
+    for n in nuke.allNodes():
+        try:
+            selected = n['selected'].value()
+        except NameError:
+            continue
+        if selected:
+            n['selected'].setValue(False)
 
 
 def delete_unused_nodes(nodes=None, message=False):
