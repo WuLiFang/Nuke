@@ -9,6 +9,7 @@ import nukescripts
 from autolabel import autolabel
 
 import wlf
+import wlf.uploader
 
 import asset
 import precomp
@@ -17,7 +18,6 @@ import edit_panels
 import cgtwn
 import orgnize
 import comp
-import uploader
 import splitexr
 import scanner
 import panels
@@ -62,7 +62,7 @@ def add_menu():
         m.addCommand("禁用所有_enable_节点",
                      lambda: edit.disable_nodes(prefix='_enable_'), 'CTRL+SHIFT+D')
         m.addCommand(
-            "修正读取错误", edit.fix_error_read, 'F6')
+            "修正读取错误", asset.fix_error_read, 'F6')
         m.addCommand(
             "Reload所有", edit.reload_all_read_node)
         m.addCommand("检查缺帧", lambda: asset.DropFrames.check(show_ok=True))
@@ -163,7 +163,7 @@ def add_menu():
 def add_panel():
     """Add custom pannel. """
     LOGGER.info(u'添加面板')
-    panels.register(uploader.Dialog, '上传mov', 'com.wlf.uploader')
+    panels.register(wlf.uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
 def add_autolabel():

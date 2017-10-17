@@ -8,14 +8,16 @@ import logging
 import multiprocessing.dummy as multiprocessing
 
 import nuke
+import nukescripts
 
 from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 
+from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.7'
+__version__ = '0.5.8'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -188,10 +190,8 @@ def dropdata_handler(mime_type, data, from_dir=False):
                     task.step(filename)
                 except CancelledError:
                     return True
-                read_node = dropdata_handler(
+                dropdata_handler(
                     mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
-                if isinstance(read_node, nuke.Node):
-                    DropFrames.update(read_node)
             return True
 
     def _ignore():
@@ -200,11 +200,11 @@ def dropdata_handler(mime_type, data, from_dir=False):
         for pat in ignore_pat:
             if re.match(get_unicode(pat), get_unicode(filename), flags=re.I | re.U):
                 return True
-        if from_dir and not is_ascii(data):
+        if data.endswith('.mov') and not is_ascii(data):
             nuke.createNode(
                 'StickyNote', 'autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
                 'label {{{}\n\n<span style="color:red;text-align:center;font-weight:bold">'
-                '不支持非英文路径</span>}}'.format(data), inpanel=False)
+                'mov格式使用非英文路径将可能导致崩溃</span>}}'.format(data), inpanel=False)
             return True
 
     def _file_protocol():
@@ -253,6 +253,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
             n = nuke.createNode('Read', 'file "{}"'.format(data))
             if n.hasError():
                 n['disable'].setValue(True)
+            DropFrames.update(n)
             return True
 
     def _from_dir():
@@ -263,10 +264,34 @@ def dropdata_handler(mime_type, data, from_dir=False):
                 n['disable'].setValue(True)
             return True
 
+    clear_selection()
     for func in (_isdir, _ignore, _file_protocol, _video, _vf, _fbx, _from_dir, _nk):
-        ret = func()
-        if ret:
-            return ret
+        if func():
+            return True
+
+
+def fix_error_read():
+    """Try fix all read nodes tha has error."""
+
+    filename_dict = {nukescripts.replaceHashes(os.path.basename(nuke.filename(n))): nuke.filename(n)
+                     for n in nuke.allNodes('Read') if not n.hasError()}
+    for n in nuke.allNodes('Read'):
+        if not n.hasError() or n['disable'].value():
+            continue
+        fix_result = None
+        filename = nuke.filename(n)
+        name = os.path.basename(nuke.filename(n))
+        new_path = filename_dict.get(nukescripts.replaceHashes(name))
+        if os.path.basename(filename).lower() == 'thumbs.db':
+            fix_result = True
+        elif new_path:
+            filename_knob = n['file'] if not n['proxy'].value() \
+                or nuke.value('root.proxy') == 'false' else n['proxy']
+            filename_knob.setValue(new_path)
+        else:
+            fix_result = dropdata_handler('text/plain', filename)
+        if fix_result:
+            nuke.delete(n)
 
 
 def check_localization_support(func):
