@@ -62,7 +62,7 @@ def add_menu():
         m.addCommand("禁用所有_enable_节点",
                      lambda: edit.disable_nodes(prefix='_enable_'), 'CTRL+SHIFT+D')
         m.addCommand(
-            "修正读取错误", edit.fix_error_read, 'F6')
+            "修正读取错误", asset.fix_error_read, 'F6')
         m.addCommand(
             "Reload所有", edit.reload_all_read_node)
         m.addCommand("检查缺帧", lambda: asset.DropFrames.check(show_ok=True))

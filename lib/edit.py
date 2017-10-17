@@ -8,13 +8,10 @@ import random
 import logging
 
 import nuke
-import nukescripts
 
 from wlf.notify import Progress
 
-from asset import dropdata_handler
-
-__version__ = '1.7.6'
+__version__ = '1.7.7'
 LOGGER = logging.getLogger('com.wlf.edit')
 
 
@@ -280,30 +277,6 @@ def enable_rsmb(prefix='_'):
     for i in nuke.allNodes('OFXcom.revisionfx.rsmb_v3'):
         if i.name().startswith(prefix):
             i['disable'].setValue(False)
-
-
-def fix_error_read():
-    """Try fix all read nodes tha has error."""
-
-    filename_dict = {nukescripts.replaceHashes(os.path.basename(nuke.filename(n))): nuke.filename(n)
-                     for n in nuke.allNodes('Read') if not n.hasError()}
-    for n in nuke.allNodes('Read'):
-        if not n.hasError() or n['disable'].value():
-            continue
-        fix_result = None
-        filename = nuke.filename(n)
-        name = os.path.basename(nuke.filename(n))
-        new_path = filename_dict.get(nukescripts.replaceHashes(name))
-        if os.path.basename(filename).lower() == 'thumbs.db':
-            fix_result = True
-        elif new_path:
-            filename_knob = n['file'] if not n['proxy'].value() \
-                or nuke.value('root.proxy') == 'false' else n['proxy']
-            filename_knob.setValue(new_path)
-        else:
-            fix_result = dropdata_handler('text/plain', filename)
-        if fix_result:
-            nuke.delete(n)
 
 
 def clear_selection():
