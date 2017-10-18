@@ -192,7 +192,7 @@ def on_load_callback():
     try:
         check_with_upstream()
         traytip('当前CGTeamWork项目', '{}:合成'.format(
-            CurrentShot().name))
+            CurrentShot().info.get('name')))
 
     except cgtwq.LoginError:
         traytip('Nuke无法访问数据库', '请登录CGTeamWork')
