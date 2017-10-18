@@ -17,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.21'
+__version__ = '0.9.22'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -146,7 +146,7 @@ def check_frame_count():
     msg = []
     first = root['first_frame'].value()
     last = root['last_frame'].value()
-    current = last - first
+    current = last - first + 1
     shot = CurrentShot()
     videos = shot.upstream_videos()
 
@@ -164,12 +164,12 @@ def check_frame_count():
                 continue
         n['frame_mode'].setValue('start_at')
         n['frame'].setValue(str(first))
-        correct = n['origlast'].value() - n['origfirst'].value()
+        correct = n['origlast'].value() - n['origfirst'].value() + 1
         if correct != current:
             msg.append('{}: {}帧'.format(name, correct))
 
     if msg:
-        msg = '发现帧数和上游不一致\n当前: {}帧\n{}'.format(current, '\n'.join(msg))
+        msg = '发现帧数和上游不一致\n当前: {:.0f}帧\n{}'.format(current, '\n'.join(msg))
         nuke.message(msg)
 
 
