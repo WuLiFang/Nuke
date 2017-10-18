@@ -3,6 +3,7 @@
 
 import os
 import logging
+import webbrowser
 
 import nuke
 import nukescripts
@@ -29,6 +30,8 @@ APPLICATION_CONTEXT = 1
 DAG_CONTEXT = 2
 
 LOGGER = logging.getLogger('com.wlf.ui')
+
+RESOURCE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
 
 
 def add_menu():
@@ -140,6 +143,17 @@ def add_menu():
         m.addCommand("分割当前文件(根据背板)",
                      edit.split_by_backdrop)
 
+    def _help(menu):
+        def _open_help():
+            help_page = os.path.join(
+                RESOURCE_DIR, 'Documentation/build/html/index.html')
+            webbrowser.open(help_page)
+        m = menu.addMenu('帮助')
+
+        m.addCommand('吾立方插件 文档', _open_help)
+        m.addCommand(
+            "吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
+
     def _create_node_menu():
         _plugin_path = '../../plugins'
 
@@ -147,8 +161,6 @@ def add_menu():
         m = m.addMenu('吾立方', icon='Modify.png')
         create_menu_by_dir(m, os.path.abspath(
             os.path.join(__file__, _plugin_path)))
-        m.addCommand(
-            "吾立方网站", "nukescripts.start('http://www.wlf-studio.com/')")
 
     menubar = nuke.menu("Nuke")
 
@@ -157,6 +169,7 @@ def add_menu():
     _tools(menubar)
     if wlf.cgtwq.MODULE_ENABLE:
         _cgtw(menubar)
+    _help(menubar)
     _create_node_menu()
 
 
