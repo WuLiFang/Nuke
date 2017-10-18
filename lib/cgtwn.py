@@ -17,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.20'
+__version__ = '0.9.21'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -136,14 +136,53 @@ class CurrentShot(cgtwq.Shot):
             self.add_note(note)
 
 
+def check_frame_count():
+    """Check if frame count match upstream.  """
+
+    nodes = {
+        '动画视频': u'animation'
+    }
+    root = nuke.Root()
+    msg = []
+    first = root['first_frame'].value()
+    last = root['last_frame'].value()
+    current = last - first
+    shot = CurrentShot()
+    videos = shot.upstream_videos()
+
+    LOGGER.debug('Upstream videos: %s', videos)
+
+    for name, pipeline in nodes.items():
+        n = nuke.toNode(name)
+        if n is None:
+            video = videos.get(pipeline)
+            if video:
+                n = nuke.nodes.Read(name=name)
+                n['file'].fromUserText(video)
+            else:
+                LOGGER.debug('Can not get video: %s', pipeline)
+                continue
+        n['frame_mode'].setValue('start_at')
+        n['frame'].setValue(str(first))
+        correct = n['origlast'].value() - n['origfirst'].value()
+        if correct != current:
+            msg.append('{}: {}帧'.format(name, correct))
+
+    if msg:
+        msg = '发现帧数和上游不一致\n当前: {}帧\n{}'.format(current, '\n'.join(msg))
+        nuke.message(msg)
+
+
 @abort_when_module_not_enable
 @check_login(False)
 def on_load_callback():
     """Show cgtwn status"""
 
     try:
+        check_frame_count()
         traytip('当前CGTeamWork项目', '{}:合成'.format(
-            CurrentShot().info.get('name')))
+            CurrentShot().name))
+
     except cgtwq.LoginError:
         traytip('Nuke无法访问数据库', '请登录CGTeamWork')
     except cgtwq.IDError as ex:
