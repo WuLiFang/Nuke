@@ -17,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.22'
+__version__ = '0.9.23'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -136,8 +136,8 @@ class CurrentShot(cgtwq.Shot):
             self.add_note(note)
 
 
-def check_frame_count():
-    """Check if frame count match upstream.  """
+def check_with_upstream():
+    """Check if script setting match upstream.  """
 
     nodes = {
         '动画视频': u'animation'
@@ -146,9 +146,13 @@ def check_frame_count():
     msg = []
     first = root['first_frame'].value()
     last = root['last_frame'].value()
-    current = last - first + 1
+    current = {
+        'frame_count': last - first + 1,
+        'fps': root['fps'].value()
+    }
     shot = CurrentShot()
     videos = shot.upstream_videos()
+    row_format = '<tr><td>{0}</td><td>{1[frame_count]:.0f}帧</td><td>{1[fps]:.0f}fps</td></tr>'
 
     LOGGER.debug('Upstream videos: %s', videos)
 
@@ -164,13 +168,20 @@ def check_frame_count():
                 continue
         n['frame_mode'].setValue('start_at')
         n['frame'].setValue(str(first))
-        correct = n['origlast'].value() - n['origfirst'].value() + 1
-        if correct != current:
-            msg.append('{}: {}帧'.format(name, correct))
+        upstream = {
+            'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,
+            'fps': n.metadata('input/frame_rate') or 23
+        }
+        if upstream != current:
+            msg.append(row_format.format(name, upstream))
 
     if msg:
-        msg = '发现帧数和上游不一致\n当前: {:.0f}帧\n{}'.format(current, '\n'.join(msg))
-        nuke.message(msg)
+        msg.insert(0, row_format.format('当前', current))
+        style = '<style>td{padding:8px;align:center;border: 1px solid white}</style>'
+        msg = '<font color="red">工程和上游不一致</font><br>'\
+            '<th columnspan=3>{}<th>{}'.format(
+                shot.name, ''.join(msg))
+        nuke.message(style + msg)
 
 
 @abort_when_module_not_enable
@@ -179,7 +190,7 @@ def on_load_callback():
     """Show cgtwn status"""
 
     try:
-        check_frame_count()
+        check_with_upstream()
         traytip('当前CGTeamWork项目', '{}:合成'.format(
             CurrentShot().name))
 
