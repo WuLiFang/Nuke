@@ -67,13 +67,15 @@ def menu():
     nuke.addOnScriptLoad(_add_root_info)
     nuke.addOnScriptLoad(_eval_proj_dir)
     nuke.addOnScriptSave(_check_project)
-    nuke.addOnScriptSave(_check_fps)
 
     if cgtwn.cgtwq.MODULE_ENABLE:
         LOGGER.info(u'启用CGTeamWork集成')
         nuke.addOnScriptLoad(cgtwn.on_load_callback)
         nuke.addOnScriptSave(cgtwn.on_save_callback)
         nuke.addOnScriptClose(cgtwn.on_close_callback)
+    else:
+        # Check fps already included in cgtwn
+        nuke.addOnScriptSave(_check_fps)
 
 
 def abort_modified(func):

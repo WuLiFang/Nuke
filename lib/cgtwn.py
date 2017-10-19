@@ -17,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.24'
+__version__ = '0.9.25'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -151,11 +151,14 @@ def check_with_upstream():
         'fps': root['fps'].value()
     }
     shot = CurrentShot()
+    info = shot.get_info()
+    default_fps = info.get('fps', 30)
     videos = shot.upstream_videos()
     row_format = '<tr><td>{0}</td><td>{1[frame_count]:.0f}帧</td><td>{1[fps]:.0f}fps</td></tr>'
 
     LOGGER.debug('Upstream videos: %s', videos)
 
+    has_video_node = False
     for name, pipeline in nodes.items():
         n = nuke.toNode(name)
         if n is None:
@@ -166,22 +169,30 @@ def check_with_upstream():
             else:
                 LOGGER.debug('Can not get video: %s', pipeline)
                 continue
+        has_video_node = True
         n['frame_mode'].setValue('start_at')
         n['frame'].setValue(str(first))
         upstream = {
             'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,
-            'fps': n.metadata('input/frame_rate') or 23
+            'fps': n.metadata('input/frame_rate') or default_fps
         }
         if upstream != current:
             msg.append(row_format.format(name, upstream))
 
     if msg:
         msg.insert(0, row_format.format('当前', current))
-        style = '<style>td{padding:8px;align:center;border: 1px solid white}</style>'
+        style = '<style>td{padding:8px;}</style>'
         msg = '<font color="red">工程和上游不一致</font><br>'\
-            '<th columnspan=3>{}<th>{}'.format(
-                shot.name, ''.join(msg))
+            '<table><th columnspan=3>{}<th>{}</table><hr>{}'.format(
+                shot.name, ''.join(msg),
+                '{} 默认fps:{}'.format(info.get('name'), default_fps))
         nuke.message(style + msg)
+    elif not has_video_node:
+        if current['fps'] != default_fps:
+            confirm = nuke.ask(
+                '当前fps: {}, 设为默认值: {} ?'.format(current['fps'], default_fps))
+            if confirm:
+                nuke.knob('root.fps', str(default_fps))
 
 
 @abort_when_module_not_enable
