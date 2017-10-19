@@ -16,8 +16,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
 # import sys
+RESOURCE_DIR = os.path.dirname(__file__)
 # sys.path.insert(0, os.path.abspath('.'))
 
 
@@ -111,6 +112,11 @@ html_sidebars = {
 }
 
 html_search_language = 'zh'
+html_search_options = {
+    'type': 'jieba',
+    'dic_enc': 'utf-8',
+    'dict':  os.path.join(RESOURCE_DIR, 'jieba_dict.txt'),
+}
 
 # -- Options for HTMLHelp output ------------------------------------------
 
