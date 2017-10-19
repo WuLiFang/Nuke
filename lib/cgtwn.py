@@ -17,7 +17,7 @@ import wlf.config
 from asset import copy
 from node import Last
 
-__version__ = '0.9.23'
+__version__ = '0.9.24'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -206,6 +206,7 @@ def on_save_callback():
     """Try upload nk file to server."""
 
     try:
+        check_with_upstream()
         shot = CurrentShot()
         shot.check_account()
         dst = copy(shot.workfile, shot.workfile_dest)
