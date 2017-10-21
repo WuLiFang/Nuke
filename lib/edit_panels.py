@@ -7,7 +7,7 @@ from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
     set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 
 
 class ChannelsRename(nukescripts.PythonPanel):
@@ -32,20 +32,21 @@ class ChannelsRename(nukescripts.PythonPanel):
             for k, v in repl.iteritems():
                 ret = ret.replace(k, v)
             return ret
+
+        viewer = CurrentViewer()
+        n = node or nuke.selectedNode()
+        self._channels = sorted((channel for channel in n.channels()
+                                 if channel.startswith(prefix)), key=_pannel_order) + ['rgba.alpha']
+        self._node = n
+        self._viewer = viewer
+
         nuke.Undo.disable()
         nukescripts.PythonPanel.__init__(
             self, '重命名通道', 'com.wlf.channels_rename')
 
-        viewer = CurrentViewer()
-        self._viewer = viewer
-
-        self._node = node or nuke.selectedNode()
-        n = self._node
-        self._channels = sorted((channel for channel in n.channels()
-                                 if channel.startswith(prefix)), key=_pannel_order)
-
         n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
         self._layercontactsheet = n
+
         viewer.link(n)
         viewer.node['channels'].setValue('rgba')
 
