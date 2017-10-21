@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.2'
+__version__ = '0.18.3'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -295,10 +295,12 @@ class Comp(object):
             n['vfield_file'].fromUserText(lut)
             return n
 
+        mp_file = mp_file.replace('\\', '/')
+
         if mp_file.endswith('.nk'):
             n = nuke.nodes.Precomp(file=mp_file, postage_stamp=True)
         else:
-            n = nuke.nodes.Read(file=mp_file.replace('\\', '/'))
+            n = nuke.nodes.Read(file=mp_file)
             n['file'].fromUserText(mp_file)
         n.setName(u'MP')
         n = nuke.nodes.ModifyMetaData(
