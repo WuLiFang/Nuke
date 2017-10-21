@@ -63,3 +63,6 @@ build/
 
 # executable
 !/traytip.exe
+
+# Temp toolset
+/Toolsets/Temp/
