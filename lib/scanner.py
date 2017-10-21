@@ -4,12 +4,13 @@
 import os
 import sys
 import re
+import webbrowser
 
 from wlf.Qt import QtCore, QtWidgets, QtCompat
-from wlf.files import url_open
+from wlf.Qt.QtWidgets import QFileDialog
 import wlf.config
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 class Config(wlf.config.Config):
@@ -30,7 +31,7 @@ class MainWindow(QtWidgets.QMainWindow):
         def _icon():
             _stdicon = self.style().standardIcon
 
-            _icon = _stdicon(QtWidgets.QStyle.SP_DirOpenIcon)
+            _icon = _stdicon(QtWidgets.QStyle.SP_DialogOpenButton)
             self._ui.toolButtonPath.setIcon(_icon)
 
             _icon = _stdicon(QtWidgets.QStyle.SP_FileDialogToParent)
@@ -90,22 +91,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self._config = Config()
         self.labelVersion.setText('v{}'.format(__version__))
         self.setWindowTitle(u'空文件夹扫描')
+        self.resize(500, 600)
 
         _icon()
         _actions()
         _edits()
         self._shots = []
-        self._start_update()
+
+    def showEvent(self, event):
+        self.update_ui()
+        event.accept()
 
     def __getattr__(self, name):
         return getattr(self._ui, name)
-
-    def _start_update(self):
-        """Start a thread for update."""
-
-        _timer = QtCore.QTimer(self)
-        _timer.timeout.connect(self.update_ui)
-        _timer.start(1000)
 
     def update_ui(self):
         """Update dialog UI content.  """
@@ -133,14 +131,14 @@ class MainWindow(QtWidgets.QMainWindow):
         path = os.path.expanduser('~/wlf.scanner.txt')
         with open(path, 'w') as f:
             f.write('\n'.join(self._shots))
-        url_open(path, isfile=True)
+        webbrowser.open(path)
 
     def ask_path(self):
         """Show a dialog ask user self._config['DIR'].  """
 
-        file_dialog = QtWidgets.QFileDialog()
-        _dir = file_dialog.getExistingDirectory(
-        )
+        default_dir = os.path.dirname(self.path)
+
+        _dir = QFileDialog.getExistingDirectory(self, dir=default_dir)
         if _dir:
             self.path = _dir
 
