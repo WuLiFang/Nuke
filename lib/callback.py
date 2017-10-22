@@ -249,7 +249,10 @@ def _add_root_info():
 def create_out_dirs():
     """Create this read node's output dir if need."""
 
-    target_dir = os.path.dirname(nuke.filename(nuke.thisNode()))
+    this = nuke.thisNode()
+    if this['disable'].value():
+        return
+    target_dir = os.path.dirname(nuke.filename(this))
     if not os.path.isdir(target_dir):
         LOGGER.debug(u'Create dir: %s', target_dir)
         os.makedirs(target_dir)
