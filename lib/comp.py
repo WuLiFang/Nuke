@@ -20,11 +20,11 @@ from wlf.notify import Progress, CancelledError
 from wlf.path import escape_batch, get_encoded, get_unicode
 
 import precomp
-from edit import get_max, clear_selection
+from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.4'
+__version__ = '0.18.5'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -213,23 +213,21 @@ class Comp(object):
         root['fps'].setValue(self.fps)
 
     def _attenuation_adjust(self, input_node):
-
         n = input_node
         if self._attenuation_radial is None:
             radial_node = nuke.nodes.Radial(
                 area='0 0 {} {}'.format(n.width(), n.height()))
+            self._attenuation_radial = radial_node
         else:
-            clear_selection()
-            radial_node = nuke.clone(
-                self._attenuation_radial,  inpanel=False)
+            radial_node = nuke.nodes.Dot(
+                inputs=[self._attenuation_radial], hide_input=True)
+
         n = nuke.nodes.Merge2(
             inputs=[n, radial_node],
             operation='soft-light',
             mix='0.618',
             label='衰减调整',
             disable=True)
-
-        self._attenuation_radial = radial_node
 
         return n
 
@@ -297,7 +295,6 @@ class Comp(object):
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
         autoplace()
-        clear_selection()
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
@@ -636,8 +633,7 @@ class Comp(object):
                 label=n.metadata(cls.tag_metadata_key) or '')
             input0 = n
         n = nuke.nodes.Remove(inputs=[n],
-                              channels='rgba',
-                              )
+                              channels='rgba')
         n = nuke.nodes.Merge2(
             inputs=[input_node, n],
             operation='copy',
