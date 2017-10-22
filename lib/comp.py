@@ -20,11 +20,11 @@ from wlf.notify import Progress, CancelledError
 from wlf.path import escape_batch, get_encoded, get_unicode
 
 import precomp
-from edit import get_max
+from edit import get_max, clear_selection
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.3'
+__version__ = '0.18.4'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -71,7 +71,9 @@ class Config(wlf.config.Config):
 
 class Comp(object):
     """Create .nk file from footage that taged in filename."""
+
     tag_metadata_key = 'comp/tag'
+    _attenuation_radial = None
 
     def __init__(self, config=None):
         LOGGER.info(u'吾立方批量合成 %s', __version__)
@@ -210,6 +212,27 @@ class Comp(object):
         root['format'].setValue(root_format)
         root['fps'].setValue(self.fps)
 
+    def _attenuation_adjust(self, input_node):
+
+        n = input_node
+        if self._attenuation_radial is None:
+            radial_node = nuke.nodes.Radial(
+                area='0 0 {} {}'.format(n.width(), n.height()))
+        else:
+            clear_selection()
+            radial_node = nuke.clone(
+                self._attenuation_radial,  inpanel=False)
+        n = nuke.nodes.Merge2(
+            inputs=[n, radial_node],
+            operation='soft-light',
+            mix='0.618',
+            label='衰减调整',
+            disable=True)
+
+        self._attenuation_radial = radial_node
+
+        return n
+
     def create_nodes(self):
         """Create nodes that a comp need."""
         self.task_step(u'合并BG CH')
@@ -230,14 +253,7 @@ class Comp(object):
 
         n = nuke.nodes.Unpremult(inputs=[n], label='整体调色开始')
 
-        radial_node = nuke.nodes.Radial(
-            area='0 0 {} {}'.format(n.width(), n.height()))
-        n = nuke.nodes.Merge2(
-            inputs=[n, radial_node],
-            operation='soft-light',
-            mix='0.618',
-            label='衰减调整',
-            disable=True)
+        # n = self._attenuation_adjust(n)
 
         n = nuke.nodes.Premult(inputs=[n], label='整体调色结束')
 
@@ -254,9 +270,9 @@ class Comp(object):
                              size=100,
                              mix=0.25,
                              disable=True)
-        n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
-        n = nuke.nodes.Merge2(
-            inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
+        # n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
+        # n = nuke.nodes.Merge2(
+        #     inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
         try:
             n = nuke.nodes.RSMB(inputs=[n], disable=True, label='整体运动模糊')
         except RuntimeError:
@@ -281,6 +297,7 @@ class Comp(object):
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
         autoplace()
+        clear_selection()
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
@@ -460,7 +477,15 @@ class Comp(object):
                 input='SSS',
                 output='SSS.alpha',
                 operation='luminance key',
-                range='0 0.007297795507 1 1'
+                range='0 0.01 1 1'
+            )
+        if 'Emission.alpha' in input_node.channels():
+            n = nuke.nodes.Keyer(
+                inputs=[n],
+                input='Emission',
+                output='Emission.alpha',
+                operation='luminance key',
+                range='0 0.2 1 1'
             )
         if 'depth.Z' not in input_node.channels():
             _constant = nuke.nodes.Constant(
@@ -495,16 +520,22 @@ class Comp(object):
             LOGGER.info(u'{:-^30s}'.format(u'结束 自动亮度'))
         n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
 
-        def _node_with_positionkeyer(node_type, input_node, knobs):
-            n = nuke.nodes.PositionKeyer(inputs=[input_node], **knobs)
-            n = node_type(inputs=[input_node, n], disable=True)
+        def _node_with_positionkeyer(node_types, input_node, knobs):
+            if not isinstance(node_types, list):
+                node_types = [node_types]
+
+            pk_node = nuke.nodes.PositionKeyer(inputs=[input_node], **knobs)
+            n = input_node
+            for node_type in node_types:
+                n = node_type(inputs=[n, pk_node], disable=True)
             return n
         n = _node_with_positionkeyer(
-            nuke.nodes.Grade, n,
+            [nuke.nodes.Grade, nuke.nodes.ColorCorrect], n,
             {'in': 'depth', 'label': '远处'})
         n = _node_with_positionkeyer(
-            nuke.nodes.ColorCorrect, n,
+            nuke.nodes.RolloffContrast, n,
             {'in': 'depth', 'label': '近处'})
+        n = self._attenuation_adjust(n)
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
@@ -537,6 +568,12 @@ class Comp(object):
         if 'motion' in nuke.layers(n):
             n = nuke.nodes.VectorBlur2(
                 inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=True, disable=True)
+
+        if 'Emission' in nuke.layers(n):
+            kwargs = {'W': 'Emission.alpha'}
+        else:
+            kwargs = {'disable': True}
+        n = nuke.nodes.Glow2(inputs=[n], size=30, label='自发光辉光', **kwargs)
 
         n = nuke.nodes.Crop(
             inputs=[n],
