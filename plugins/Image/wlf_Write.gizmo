@@ -26,7 +26,9 @@ class __wlf_Write(object):
         old = nuke.value('this.Text_Artist.message')
         new = nuke.value('root.wlf_artist', '')
         if new != old:
+            nuke.Undo.disable()
             nuke.knob('this.Text_Artist.message', new)
+            nuke.Undo.enable()
 
     @staticmethod
     def knob_changed():
@@ -81,7 +83,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.51.0"}
+ addUserKnob {20 Write l "wlf_Write v1.51.1"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
