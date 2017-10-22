@@ -11,7 +11,7 @@ import nuke
 
 from wlf.notify import Progress
 
-__version__ = '1.7.7'
+__version__ = '1.7.8'
 LOGGER = logging.getLogger('com.wlf.edit')
 
 
@@ -64,18 +64,25 @@ class CurrentViewer(object):
         self.knob_values = {}
         self.record()
 
-    def link(self, input_node):
+    def link(self, input_node, input_num=0, replace=True):
         """Connet input_node to viewer.input0 the activate it, create viewer if needed."""
+
         if self.viewer:
             n = self.node
         else:
-            n = nuke.nodes.Viewer()
-        n.setInput(0, input_node)
+            viewers = nuke.allNodes('Viewer')
+            if viewers:
+                n = viewers[0]
+            else:
+                n = nuke.nodes.Viewer()
         self.node = n
-        try:
-            nuke.activeViewer().activateInput(0)
-        except AttributeError:
-            pass
+
+        if replace or not n.input(input_num):
+            n.setInput(input_num, input_node)
+            try:
+                nuke.activeViewer().activateInput(input_num)
+            except AttributeError:
+                pass
 
     def record(self):
         """Record current active viewer status."""
