@@ -15,9 +15,10 @@ from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
 
 from asset import copy
+from edit import CurrentViewer
 from node import Last
 
-__version__ = '0.9.25'
+__version__ = '0.9.26'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -159,6 +160,7 @@ def check_with_upstream():
     LOGGER.debug('Upstream videos: %s', videos)
 
     has_video_node = False
+    input_num = 4
     for name, pipeline in nodes.items():
         n = nuke.toNode(name)
         if n is None:
@@ -172,6 +174,8 @@ def check_with_upstream():
         has_video_node = True
         n['frame_mode'].setValue('start_at')
         n['frame'].setValue(str(first))
+        CurrentViewer().link(n, input_num, replace=False)
+        input_num += 1
         upstream = {
             'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,
             'fps': n.metadata('input/frame_rate') or default_fps
