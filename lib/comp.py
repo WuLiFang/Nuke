@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.5'
+__version__ = '0.18.6'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -271,10 +271,6 @@ class Comp(object):
         # n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
         # n = nuke.nodes.Merge2(
         #     inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
-        try:
-            n = nuke.nodes.RSMB(inputs=[n], disable=True, label='整体运动模糊')
-        except RuntimeError:
-            LOGGER.info(u'RSMB插件未安装')
         if 'motion' in nuke.layers(n):
             n = nuke.nodes.VectorBlur2(
                 inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=False, disable=True)
@@ -562,9 +558,15 @@ class Comp(object):
             '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
             '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
         )
+
         if 'motion' in nuke.layers(n):
             n = nuke.nodes.VectorBlur2(
                 inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=True, disable=True)
+
+        try:
+            n = nuke.nodes.RSMB(inputs=[n], disable=True, label='运动模糊')
+        except RuntimeError:
+            LOGGER.info(u'RSMB插件未安装')
 
         if 'Emission' in nuke.layers(n):
             kwargs = {'W': 'Emission.alpha'}
