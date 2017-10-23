@@ -4,7 +4,6 @@ cgteamwork integration with nuke.
 """
 import os
 import logging
-import time
 import webbrowser
 
 import nuke
@@ -18,7 +17,7 @@ from asset import copy
 from edit import CurrentViewer
 from node import Last
 
-__version__ = '0.9.26'
+__version__ = '0.9.27'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -250,30 +249,15 @@ def on_close_callback():
     try:
         shot = CurrentShot()
         shot.check_account()
-        start_time = time.time()
-
-        if shot.image and os.path.exists(shot.image):
-            # Wait jpg rendering.
-            while True:
-                try:
-                    mtime = os.path.getmtime(shot.image)
-                    if mtime - start_time > -10:
-                        break
-                except OSError as ex:
-                    if ex.errno != 2:
-                        raise
-                if time.time() - start_time > 2:
-                    LOGGER.debug('Wait timeout, file mtime: %s', time.strftime(
-                        '%x %X', time.localtime(mtime)))
-                    break
-                time.sleep(1)
-        else:
-            traytip('未更新单帧', '找不到文件 {}'.format(shot.image))
+        if not shot.image:
+            traytip('未更新单帧', '找不到单帧路径')
             return
 
         dst = shot.upload_image()
         if dst:
             traytip('更新单帧', dst)
+    except OSError:
+        traytip('未更新单帧', '找不到文件 {}'.format(shot.image))
     except cgtwq.LoginError:
         traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
     except cgtwq.IDError as ex:
