@@ -61,7 +61,10 @@ class __wlf_Write(object):
                     True), cls.blur_nodes)
             
             # Remove previous rendered jpg
-            os.remove(nuke.value('this.file'))
+            try:
+                os.remove(nuke.value('this.file'))
+            except OSError:
+                pass
 
         @classmethod
         def after_render(cls):
@@ -83,7 +86,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.51.3"}
+ addUserKnob {20 Write l "wlf_Write v1.51.4"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
