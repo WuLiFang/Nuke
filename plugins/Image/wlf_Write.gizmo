@@ -77,12 +77,6 @@ class __wlf_Write(object):
             if nuke.numvalue('parent.no_motionblur'):
                 map(lambda n: n['disable'].setValue(
                     True), cls.blur_nodes)
-            
-            # Remove previous rendered jpg
-            try:
-                os.remove(nuke.value('this.file'))
-            except OSError:
-                pass
 
         @classmethod
         def after_render(cls):
@@ -105,7 +99,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.51.5"}
+ addUserKnob {20 Write l "wlf_Write v1.51.6"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -118,7 +112,7 @@ except NameError:
  addUserKnob {6 no_motionblur l 单帧渲染时不带运动模糊 +STARTLINE}
  no_motionblur true
  addUserKnob {26 ""}
- addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.reading none\nknob this.Write_JPG_1.disable 0\nexecute this.Write_JPG_1 \[value this.knob.frame]\nknob this.Read_JPG_1.version \[expr \[value this.Read_JPG_1.version]+1]\nknob this.reading jpg" +STARTLINE}
+ addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.reading none\nknob this.Write_JPG_1.disable 0\nknob this.Read_JPG_1.disable 1\nexecute this.Write_JPG_1 \[value this.knob.frame]\nknob this.Read_JPG_1.version \[expr \[value this.Read_JPG_1.version]+1]\nknob this.Read_JPG_1.disable 0\nknob this.reading jpg" +STARTLINE}
  addUserKnob {22 bt_jpg_dir l 单帧输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
  addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
  addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
