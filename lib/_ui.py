@@ -174,6 +174,7 @@ def add_menu():
 
     def _toolsets():
         m = nuke.menu('Nodes').addMenu('ToolSets')
+        m.addCommand('刷新', _refresh_toolsets_menu)
         m.addCommand(
             '创建共享工具集', _create_shared_toolsets)
         m.addCommand(
