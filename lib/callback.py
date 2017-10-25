@@ -214,6 +214,29 @@ def _gizmo_to_group_update_ui():
         n.removeKnob(n['User'])
 
 
+def clean():
+    """Remove error callback.  """
+
+    groups = ('onScriptLoads', 'onScriptSaves', 'onScriptCloses',
+              'onDestroys', 'onCreates', 'onUserCreates', 'knobChangeds',
+              'updateUIs', 'renderProgresses',
+              'beforeBackgroundRenders', 'afterBackgroundRenders',
+              'beforeBackgroundFrameRenders', 'afterBackgroundFrameRenders',
+              'beforeRenders', 'afterRenders',
+              'beforeFrameRenders', 'afterFrameRenders',
+              'validateFilenames')
+    for group in groups:
+        group = getattr(nuke, group, None)
+        if not isinstance(group, dict):
+            continue
+        for callbacks in group.values():
+            for callback in callbacks:
+                try:
+                    str(callback)
+                except ValueError:
+                    callbacks.remove(callback)
+
+
 def _autoplace():
     if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.Root().modified():
         autoplace_type = nuke.numvalue('preferences.wlf_autoplace_type', 0.0)
