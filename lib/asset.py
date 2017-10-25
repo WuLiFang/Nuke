@@ -13,11 +13,12 @@ import nukescripts
 from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
+from wlf.Qt.QtCore import QTimer
 
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.8'
+__version__ = '0.5.9'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -308,33 +309,27 @@ def check_localization_support(func):
 
 class Localization(object):
     """Nuke localization utility.  """
-    lock = multiprocessing.Lock()
+
+    timer = QTimer()
 
     @classmethod
-    @check_localization_support
     def start_upate(cls, interval=1800):
         """Start update thread"""
 
-        def _func():
-            LOGGER.debug(u'Thread start: com.wlf.UpdateLocalization')
-            time.sleep(interval)
-            while cls.lock.acquire(False):
-                LOGGER.debug(u'Localization.update from thread')
-                nuke.executeInMainThread(cls.update)
-                cls.lock.release()
-                time.sleep(interval)
-        proc = multiprocessing.Process(
-            target=_func, name='com.wlf.UpdateLocalization')
-        proc.setDaemon(True)
-        proc.start()
+        cls.timer.setInterval(interval * 1000)
+        cls.timer.start()
 
     @staticmethod
     @check_localization_support
     def update():
         """Update localized files"""
+
         LOGGER.info(u'清理素材缓存')
         import nuke.localization as localization
         localization.clearUnusedFiles()
         localization.pauseLocalization()
         localization.forceUpdateAll()
         localization.setAlwaysUseSourceFiles(True)
+
+
+Localization.timer.timeout.connect(Localization.update)
