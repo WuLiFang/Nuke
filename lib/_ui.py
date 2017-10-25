@@ -177,6 +177,7 @@ def add_menu():
             '创建共享工具集', _create_shared_toolsets)
         m.addCommand(
             '打开共享工具集文件夹', lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
+    nuke.addUpdateUI(_toolsets)
 
     menubar = nuke.menu("Nuke")
 
