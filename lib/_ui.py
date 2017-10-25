@@ -172,6 +172,20 @@ def add_menu():
     _help(menubar)
     _create_node_menu()
 
+    def _create_shared_toolsets():
+        if not nuke.selectedNodes():
+            nuke.message('未选中任何节点,不能创建工具集')
+            return
+        filename = nuke.getInput('ToolSet name')
+        if filename:
+            nuke.createToolset(filename=os.path.join(
+                'Shared', filename), rootPath=RESOURCE_DIR)
+
+    nuke.menu('Nodes').addMenu('ToolSets').addCommand(
+        '创建共享工具集', _create_shared_toolsets)
+    nuke.menu('Nodes').addMenu('ToolSets').addCommand(
+        '打开共享工具集文件夹', lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
+
 
 def add_panel():
     """Add custom pannel. """

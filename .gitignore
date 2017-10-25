@@ -64,5 +64,5 @@ build/
 # executable
 !/traytip.exe
 
-# Temp toolset
-/Toolsets/Temp/
+# Shared toolset
+/Toolsets/Shared/
