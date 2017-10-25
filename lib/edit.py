@@ -11,7 +11,9 @@ import nuke
 
 from wlf.notify import Progress
 
-__version__ = '1.7.8'
+import callback
+
+__version__ = '1.7.9'
 LOGGER = logging.getLogger('com.wlf.edit')
 
 
@@ -505,6 +507,8 @@ def gizmo_to_group(gizmo):
     nuke.delete(gizmo)
     _group.setName(_name)
     _group['selected'].setValue(_selected)
+
+    callback.clean()
 
     return _group
 
