@@ -170,6 +170,7 @@ def add_menu():
         if filename:
             nuke.createToolset(filename=os.path.join(
                 'Shared', filename), rootPath=RESOURCE_DIR)
+        _refresh_toolsets_menu()
 
     def _toolsets():
         m = nuke.menu('Nodes').addMenu('ToolSets')
@@ -177,7 +178,16 @@ def add_menu():
             '创建共享工具集', _create_shared_toolsets)
         m.addCommand(
             '打开共享工具集文件夹', lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
-    nuke.addUpdateUI(_toolsets)
+
+    _raw_refresh_toolsets_menu = nukescripts.toolsets.refreshToolsetsMenu
+
+    def _refresh_toolsets_menu():
+        """Extend nuke function.  """
+
+        _raw_refresh_toolsets_menu()
+        _toolsets()
+
+    nukescripts.toolsets.refreshToolsetsMenu = _refresh_toolsets_menu
 
     menubar = nuke.menu("Nuke")
 
