@@ -162,16 +162,6 @@ def add_menu():
         create_menu_by_dir(m, os.path.abspath(
             os.path.join(__file__, _plugin_path)))
 
-    menubar = nuke.menu("Nuke")
-
-    _edit(menubar)
-    _comp(menubar)
-    _tools(menubar)
-    if wlf.cgtwq.MODULE_ENABLE:
-        _cgtw(menubar)
-    _help(menubar)
-    _create_node_menu()
-
     def _create_shared_toolsets():
         if not nuke.selectedNodes():
             nuke.message('未选中任何节点,不能创建工具集')
@@ -181,10 +171,23 @@ def add_menu():
             nuke.createToolset(filename=os.path.join(
                 'Shared', filename), rootPath=RESOURCE_DIR)
 
-    nuke.menu('Nodes').addMenu('ToolSets').addCommand(
-        '创建共享工具集', _create_shared_toolsets)
-    nuke.menu('Nodes').addMenu('ToolSets').addCommand(
-        '打开共享工具集文件夹', lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
+    def _toolsets():
+        m = nuke.menu('Nodes').addMenu('ToolSets')
+        m.addCommand(
+            '创建共享工具集', _create_shared_toolsets)
+        m.addCommand(
+            '打开共享工具集文件夹', lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
+
+    menubar = nuke.menu("Nuke")
+
+    _edit(menubar)
+    _comp(menubar)
+    _tools(menubar)
+    if wlf.cgtwq.MODULE_ENABLE:
+        _cgtw(menubar)
+    _help(menubar)
+    _create_node_menu()
+    _toolsets()
 
 
 def add_panel():
