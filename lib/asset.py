@@ -18,7 +18,7 @@ from wlf.Qt.QtCore import QTimer
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.9'
+__version__ = '0.5.10'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -254,13 +254,13 @@ def dropdata_handler(mime_type, data, from_dir=False):
             n = nuke.createNode('Read', 'file "{}"'.format(data))
             if n.hasError():
                 n['disable'].setValue(True)
-            DropFrames.update(n)
             return True
 
     def _from_dir():
         if from_dir:
             n = nuke.createNode(
                 'Read', 'file "{}"'.format(data), inpanel=False)
+            DropFrames.update(n)
             if n.hasError():
                 n['disable'].setValue(True)
             return True
