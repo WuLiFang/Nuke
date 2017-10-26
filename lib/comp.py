@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.6'
+__version__ = '0.18.7'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -461,6 +461,7 @@ class Comp(object):
 
     def _bg_ch_node(self, input_node):
         n = input_node
+        tag = n.metadata(self.tag_metadata_key)
         if 'MotionVectors' in nuke.layers(input_node):
             n = nuke.nodes.MotionFix(
                 inputs=[n], channel='MotionVectors', output='motion')
@@ -512,6 +513,8 @@ class Comp(object):
             n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
             LOGGER.info(u'{:-^30s}'.format(u'结束 自动亮度'))
         n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
+        n = nuke.nodes.RolloffContrast(
+            inputs=[n], contrast=2, center=0.001, soft_clip=1, disable=True)
 
         def _node_with_positionkeyer(node_types, input_node, knobs):
             if not isinstance(node_types, list):
@@ -522,12 +525,14 @@ class Comp(object):
             for node_type in node_types:
                 n = node_type(inputs=[n, pk_node], disable=True)
             return n
-        n = _node_with_positionkeyer(
-            [nuke.nodes.Grade, nuke.nodes.ColorCorrect], n,
-            {'in': 'depth', 'label': '远处'})
-        n = _node_with_positionkeyer(
-            nuke.nodes.RolloffContrast, n,
-            {'in': 'depth', 'label': '近处'})
+
+        if tag and tag.startswith('BG'):
+            n = _node_with_positionkeyer(
+                [nuke.nodes.Grade, nuke.nodes.ColorCorrect], n,
+                {'in': 'depth', 'label': '远处'})
+            n = _node_with_positionkeyer(
+                nuke.nodes.RolloffContrast, n,
+                {'in': 'depth', 'label': '近处'})
         n = self._attenuation_adjust(n)
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
