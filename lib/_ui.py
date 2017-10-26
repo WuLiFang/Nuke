@@ -49,7 +49,7 @@ def add_menu():
                      lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3')
         m.addCommand("重命名PuzzleMatte",
                      lambda: edit_panels.ChannelsRename(prefix='PuzzleMatte').show(), 'F4')
-        m.addCommand("标记为_enable_",
+        m.addCommand("标记为稍后启用",
                      lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D')
         m.addCommand('输出当前帧png',
                      lambda: comp.render_png(nuke.selectedNodes(), show=True),
@@ -62,8 +62,8 @@ def add_menu():
 
         m.addSeparator()
 
-        m.addCommand("禁用所有_enable_节点",
-                     lambda: edit.disable_nodes(prefix='_enable_'), 'CTRL+SHIFT+D')
+        m.addCommand("禁用所有稍后启用节点",
+                     lambda: edit.marked_nodes().disable(), 'CTRL+SHIFT+D')
         m.addCommand(
             "修正读取错误", asset.fix_error_read, 'F6')
         m.addCommand(

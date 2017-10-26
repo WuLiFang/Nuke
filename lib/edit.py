@@ -13,8 +13,9 @@ from wlf.notify import Progress
 
 import callback
 
-__version__ = '1.7.9'
+__version__ = '1.7.10'
 LOGGER = logging.getLogger('com.wlf.edit')
+ENABLE_MARK = '_enable_'
 
 
 def rename_all_nodes():
@@ -526,27 +527,32 @@ def all_gizmo_to_group():
 
 def mark_enable(nodes):
     """Mark selected node enable on script save.  """
+
     if isinstance(nodes, nuke.Node):
         nodes = (nodes)
     for n in nodes:
-        old_name = n.name()
-        if not old_name.startswith('_enable_'):
-            n.setName('_enable_{}'.format(old_name))
         try:
+            label_knob = n['label']
+            label = label_knob.value()
+            if ENABLE_MARK not in label:
+                label_knob.setValue('{}\n{}'.format(label, ENABLE_MARK))
             n['disable'].setValue(True)
-        except AttributeError:
-            pass
+        except NameError:
+            continue
 
 
-def disable_nodes(prefix):
-    """Disable multiple nodes.  """
+def marked_nodes():
+    """Marked nodes to enable.  """
 
+    ret = set()
     for n in nuke.allNodes():
-        if n.name().startswith(prefix):
-            try:
-                n['disable'].setValue(True)
-            except AttributeError:
-                pass
+        try:
+            label = n['label'].value()
+            name = n.name()
+            _ = [ret.add(n) for i in (label, name) if ENABLE_MARK in i]
+        except NameError:
+            continue
+    return Nodes(ret)
 
 
 def autoplace_all():
@@ -701,3 +707,33 @@ def _print_flags():
             _log = math.log(value, 2)
             if int(_log) == _log:
                 print(attr, value)
+
+
+class Nodes(list):
+    """Multipe node set.  """
+
+    def __init__(self, nodes=None):
+        if nodes is None:
+            nodes = []
+        elif isinstance(nodes, nuke.Node):
+            nodes = [nodes]
+
+        list.__init__(self, nodes)
+
+    def disable(self):
+        """Disable all.  """
+
+        for n in self:
+            try:
+                n['disable'].setValue(True)
+            except NameError:
+                continue
+
+    def enable(self):
+        """Enable all.  """
+
+        for n in self:
+            try:
+                n['disable'].setValue(False)
+            except NameError:
+                continue

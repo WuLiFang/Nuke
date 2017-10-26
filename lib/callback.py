@@ -91,18 +91,7 @@ def abort_modified(func):
 def _enable_node():
     if nuke.numvalue('preferences.wlf_enable_node', 0.0):
         LOGGER.debug(u'Enable "__enable__" nodes.')
-        enable_node('_enable_')
-
-
-def enable_node(prefix='_'):
-    """Enable all nodes with given prefix."""
-    task = Progress('启用节点')
-    nodes = tuple(n for n in nuke.allNodes() if n.name().startswith(prefix))
-
-    total = len(nodes)
-    for index, n in enumerate(nodes):
-        task.set(index * 100 // total, n.name())
-        n['disable'].setValue(False)
+        edit.marked_nodes().enable()
 
 
 @abort_modified

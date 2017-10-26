@@ -88,7 +88,7 @@ def add_preferences():
         (nuke.Enumeration_Knob,
          ('wlf_autoplace_type', '风格', ['竖式', '横式(Nuke)'])),
         (nuke.Boolean_Knob, ('wlf_lock_connections', '锁定节点连接')),
-        (nuke.Boolean_Knob, ('wlf_enable_node', '启用名称以 _enable_ 开头的节点', True)),
+        (nuke.Boolean_Knob, ('wlf_enable_node', '启用被标记为稍后启用的节点', True)),
         (nuke.Boolean_Knob, ('wlf_jump_frame', '跳至_Write节点指定的帧', True)),
         (nuke.Text_Knob, ('wlf_on_script_close', '保存并退出时')),
         (nuke.Boolean_Knob, ('wlf_render_jpg', '渲染_Write节点单帧', True)),
