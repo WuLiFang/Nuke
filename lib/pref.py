@@ -26,9 +26,15 @@ def set_knob_default():
         nuke.knobDefault("ZDefocus2.blur_dof", "0")
         nuke.knobDefault("ZDefocus2.math", "depth")
 
+    def _rolloffcontrast():
+        nuke.knobDefault("RolloffContrast.contrast", "2")
+        nuke.knobDefault("RolloffContrast.center", "0.001")
+        nuke.knobDefault("RolloffContrast.soft_clip", "1")
+
     _root()
     _vectorblur2()
     _zdefocus2()
+    _rolloffcontrast()
     nuke.knobDefault("LayerContactSheet.showLayerNames", "1")
     nuke.knobDefault("note_font", '微软雅黑')
     nuke.knobDefault("Switch.which", "1")
