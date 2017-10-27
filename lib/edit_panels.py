@@ -9,6 +9,9 @@ from wlf.notify import Progress, CancelledError
 
 __version__ = '0.2.6'
 
+if not nuke.GUI:
+    nukescripts.PythonPanel = object
+
 
 class ChannelsRename(nukescripts.PythonPanel):
     """Dialog UI of channel_rename."""

@@ -5,6 +5,7 @@ cgteamwork integration with nuke.
 import os
 import logging
 import webbrowser
+from functools import wraps
 
 import nuke
 
@@ -55,7 +56,10 @@ def abort_when_module_not_enable(func):
 
 def check_login(update=False):
     """(Decorator)Abort funciton if not logged in."""
+
     def _deco(func):
+
+        @wraps(func)
         def _func(*args, **kwargs):
             if update:
                 cgtwq.CGTeamWork.update_status()

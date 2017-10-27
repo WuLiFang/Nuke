@@ -272,7 +272,7 @@ def dropdata_handler(mime_type, data, from_dir=False):
 
 
 def fix_error_read():
-    """Try fix all read nodes tha has error."""
+    """Try fix all read nodes that has error."""
 
     filename_dict = {nukescripts.replaceHashes(os.path.basename(nuke.filename(n))): nuke.filename(n)
                      for n in nuke.allNodes('Read') if not n.hasError()}

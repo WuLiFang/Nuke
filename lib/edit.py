@@ -11,7 +11,9 @@ import nuke
 
 from wlf.notify import Progress
 
+
 import callback
+from node import wlf_write_node
 
 __version__ = '1.7.10'
 LOGGER = logging.getLogger('com.wlf.edit')
@@ -380,7 +382,7 @@ def replace_sequence():
                 n['last'].setValue(last)
                 n['origlast'].setValue(last)
 
-        n = nuke.toNode('_Write')
+        n = wlf_write_node()
         if n:
             if flag_frame:
                 flag_frame = int(flag_frame)
@@ -526,7 +528,7 @@ def all_gizmo_to_group():
 
 
 def mark_enable(nodes):
-    """Mark selected node enable on script save.  """
+    """Mark nodes enable later then disabled them.  """
 
     if isinstance(nodes, nuke.Node):
         nodes = (nodes)

@@ -18,7 +18,7 @@ __version__ = '0.1.1'
 
 
 class Dialog(nukescripts.PythonPanel):
-    """Dialog UI of class Comp."""
+    """Dialog UI of splitexr."""
 
     knob_list = [
         (nuke.Tab_Knob, 'general_setting', '常用设置'),

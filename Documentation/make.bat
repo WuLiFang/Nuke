@@ -5,7 +5,7 @@ pushd %~dp0
 REM Command file for Sphinx documentation
 
 if "%SPHINXBUILD%" == "" (
-	set SPHINXBUILD=py -msphinx
+	set SPHINXBUILD="C:\Program Files\Nuke10.0v4\python.exe" -msphinx
 )
 set SOURCEDIR=source
 set BUILDDIR=build
