@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.7'
+__version__ = '0.18.8'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -255,8 +255,9 @@ class Comp(object):
 
         n = nuke.nodes.Premult(inputs=[n], label='整体调色结束')
 
-        n = nuke.nodes.Crop(
-            inputs=[n], box='0 0 input.width input.height', crop=False,
+        n = nuke.nodes.Reformat(
+            inputs=[n],
+            resize='none',
             label='整体滤镜开始')
 
         n = nuke.nodes.SoftClip(
@@ -277,9 +278,9 @@ class Comp(object):
         n = nuke.nodes.Aberration(
             inputs=[n], distortion1='0 0 0.003', label='溢色')
 
-        n = nuke.nodes.Crop(
+        n = nuke.nodes.Reformat(
             inputs=[n],
-            box='0 0 input.width input.height',
+            resize='none',
             label='整体滤镜结束')
 
         n = nuke.nodes.wlf_Write(inputs=[n])
@@ -327,7 +328,7 @@ class Comp(object):
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
         n = nuke.nodes.Defocus(inputs=[n], disable=True)
-        n = nuke.nodes.BlackOutside(inputs=[n])
+        n = nuke.nodes.Reformat(inputs=[n], resize='none')
         n = nuke.nodes.DiskCache(inputs=[n])
         input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n],
                                               label='MP灯光包裹')
@@ -516,29 +517,31 @@ class Comp(object):
         n = nuke.nodes.RolloffContrast(
             inputs=[n], contrast=2, center=0.001, soft_clip=1, disable=True)
 
-        def _node_with_positionkeyer(node_types, input_node, knobs):
-            if not isinstance(node_types, list):
-                node_types = [node_types]
-
-            pk_node = nuke.nodes.PositionKeyer(inputs=[input_node], **knobs)
-            n = input_node
-            for node_type in node_types:
-                n = node_type(inputs=[n, pk_node], disable=True)
-            return n
-
         if tag and tag.startswith('BG'):
-            n = _node_with_positionkeyer(
-                [nuke.nodes.Grade, nuke.nodes.ColorCorrect], n,
-                {'in': 'depth', 'label': '远处'})
-            n = _node_with_positionkeyer(
-                nuke.nodes.RolloffContrast, n,
-                {'in': 'depth', 'label': '近处'})
+            kwargs = {'in': 'depth', 'label': '远处'}
+            input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
+            n = nuke.nodes.ColorCorrect(inputs=[n, input_mask], disable=True)
+            n = nuke.nodes.Grade(
+                inputs=[n, input_mask],
+                black=0.01,
+                black_panelDropped=True,
+                label='深度雾',
+                disable=True)
+            kwargs = {'in': 'depth', 'label': '近处'}
+            input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
+            n = nuke.nodes.RolloffContrast(
+                inputs=[n, input_mask],
+                contrast=2,
+                center=0.001,
+                soft_clip=1,
+                disable=True)
         n = self._attenuation_adjust(n)
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
-        n = nuke.nodes.Crop(
-            inputs=[n], box='0 0 input.width input.height', crop=False,
+        n = nuke.nodes.Reformat(
+            inputs=[n],
+            resize='none',
             label='滤镜开始')
 
         n = nuke.nodes.SoftClip(
@@ -579,9 +582,9 @@ class Comp(object):
             kwargs = {'disable': True}
         n = nuke.nodes.Glow2(inputs=[n], size=30, label='自发光辉光', **kwargs)
 
-        n = nuke.nodes.Crop(
+        n = nuke.nodes.Reformat(
             inputs=[n],
-            box='0 0 input.width input.height',
+            resize='none',
             label='滤镜结束')
 
         n = nuke.nodes.DiskCache(inputs=[n])
