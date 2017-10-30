@@ -7,6 +7,7 @@ class __wlf_Write(object):
     def on_create(cls):
         this = nuke.thisNode()
         this['custom_frame'].setEnabled(this['use_custom_frame'].value())
+        this['bt_render_MOV_from_EXR'].setEnabled(this['output_exr'].value())
 
         old = nuke.value('this.Text_Artist.message')
         new = nuke.value('root.wlf_artist', '')
@@ -39,6 +40,8 @@ class __wlf_Write(object):
     def knob_changed():
         if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
             nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
+        elif nuke.thisKnob() is nuke.thisNode()['output_exr']:
+            nuke.thisNode()['bt_render_MOV_from_EXR'].setEnabled(nuke.thisKnob().value())
 
     @staticmethod
     def ask_output_exr(this):
@@ -99,7 +102,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.51.6"}
+ addUserKnob {20 Write l "wlf_Write v1.52.0"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
@@ -117,6 +120,7 @@ except NameError:
  addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
  addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
  addUserKnob {6 output_exr l 输出exr t 在输出mov的同时输出exr +STARTLINE}
+ addUserKnob {32 bt_render_MOV_from_EXR l 用exr渲染mov T "set tar this.Write_EXR_1\nknob \$tar.reading 1\npython -exec {nukescripts.showRenderDialog(\[nuke.thisNode()], False)}\nknob \$tar.reading 0"}
  addUserKnob {26 ""}
  addUserKnob {83 reading l 读取 M {none mov jpg}}
  addUserKnob {22 reload -STARTLINE T "for n in nuke.thisNode().nodes():\n    if n.Class() == 'Read':\n        n\['reload'].execute()"}
@@ -257,6 +261,7 @@ except NameError:
   proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
   file_type exr
   name Write_EXR_1
+  checkHashOnRead false
   xpos 0
   ypos -908
   disable {{"! parent.output_exr"}}
