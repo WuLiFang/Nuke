@@ -9,7 +9,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import get_upstream_nodes
 
-__version__ = '0.6.1'
+__version__ = '0.6.2'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
@@ -444,11 +444,12 @@ def create_backdrop(nodes, autoplace_nodes=False):
 class Worker(object):
     """Autoplace worker"""
 
-    y_gap = 10
     x_gap = 10
+    y_gap = 10
     min_height = 22
-    min_width = 80
+    min_width = 60
     branch_thershold = 20
+    non_base_node_classes = ('Viewer',)
 
     def __init__(self, nodes=None):
         self.nodes = nodes or nuke.allNodes()
@@ -457,19 +458,22 @@ class Worker(object):
         self.counted_nodes = set()
         self.upstream_counts = {}
         self.prev_nodes = set()
+        self.prev_branch_nodes = set()
+        self.task = Progress('摆放节点', len(self.nodes))
 
-        self.count(self.nodes, False)
-        self.count(self.end_nodes, True)
+        self.count()
 
-    def count(self, nodes, distinct=True):
+    def count(self):
         """Count @nodes upstream. recorded in self.upstream_counts.  """
 
-        self.upstream_counts.clear()
         self.counted_nodes.clear()
-        for n in list(nodes):
-            self.get_count(n, distinct)
+        nodes = sorted(self.nodes, key=self.get_count, reverse=True)
+        self.upstream_counts.clear()
 
-    def get_count(self, node, distinct=True):
+        for n in nodes:
+            self.get_count(n, True)
+
+    def get_count(self, node, distinct=False):
         """Get upstream nodes count for @node.  """
 
         assert isinstance(node, nuke.Node), 'Expect a nuke.Node Type.'
@@ -482,16 +486,17 @@ class Worker(object):
             if n not in self.nodes:
                 continue
             ret += 1
-            if node.Class() not in ('Viewer',)\
+            if node.Class() not in self.non_base_node_classes \
                     and (not distinct or n not in self.counted_nodes):
-                ret += self.get_count(n)
+                ret += self.get_count(n, distinct)
                 self.end_nodes.discard(n)
 
         if DEBUG:
             node['label'].setValue(str(ret))
 
         counts_dict[node] = ret
-        self.counted_nodes.add(node)
+        if distinct:
+            self.counted_nodes.add(node)
         return ret
 
     def autoplace(self):
@@ -508,46 +513,53 @@ class Worker(object):
 
         assert isinstance(node, nuke.Node)
         if node in self.placed_nodes:
-            LOGGER.warning('Ignored placed node: %s', repr(node))
+            LOGGER.debug('Ignored placed node: %s', repr(node))
             return
         LOGGER.debug('Place node: %s', repr(node))
         base_node = self.get_base_node(node)
-        is_new_branch = self.get_count(node) > self.branch_thershold
+        is_new_branch = self.get_count(
+            node) > self.branch_thershold
 
         # Place self
-        if self.placed_nodes:
-            xpos = Nodes(self.placed_nodes).right + self.x_gap
-        else:
-            xpos = 0
-        ypos = 0
         if base_node:
             LOGGER.debug('Base: %s', repr(base_node))
             assert isinstance(base_node, nuke.Node)
             base_dep = base_node.dependencies()
             self_index = base_dep.index(node)
-            xpos = base_node.xpos()
+            xpos = base_node.xpos() + base_node.screenWidth() / 2 - node.screenWidth() / 2
             ypos = base_node.ypos() - self.y_gap - node.screenHeight()
             if self_index == 0:
                 pass
-            elif is_new_branch:
-                xpos += self.x_gap * 50
+            elif is_new_branch and self.placed_nodes:
+                xpos = Nodes(self.placed_nodes).right + self.x_gap * 50
             else:
                 prev_node = base_dep[self_index - 1]
-                xpos = prev_node.xpos() + prev_node.screenWidth() + self.x_gap
+                xpos = prev_node.xpos() + int(1.5 * max(prev_node.screenWidth(), self.min_width))  \
+                    - node.screenWidth() / 2 + self.x_gap
 
-            if not is_new_branch:
+            if not is_new_branch and base_node:
                 # Replace prev nodes
                 prev_nodes = Nodes(self.get_prev_nodes(node))
                 if prev_nodes:
                     prev_nodes.bottom = min(
                         ypos - self.y_gap, prev_nodes.bottom)
+        elif self.placed_nodes:
+            xpos = Nodes(self.placed_nodes).right + self.x_gap
+            ypos = 0
+        else:
+            xpos = 0
+            ypos = 0
 
         LOGGER.debug('%s %s', xpos, ypos)
-        node.setXYpos(xpos, ypos)
+        nuke.executeInMainThreadWithResult(
+            nuke.Node.setXYpos, (node, xpos, ypos))
+        if not base_node:
+            self.prev_branch_nodes.update(self.placed_nodes)
         self.placed_nodes.add(node)
-        self.prev_nodes.add(node)
+        self.task.step()
 
         if DEBUG:
+            # node.selectOnly()
             nuke.zoomToFitSelected()
             if not nuke.ask('{}:\nbase:{}\nup count:{}\nx: {} y: {}\nnew_branch:{}'.format(
                     node.name(),
@@ -558,10 +570,11 @@ class Worker(object):
                     is_new_branch)):
                 raise RuntimeError
 
-        # Place upstream
-        for n in node.dependencies():
-            if n in self.nodes:
-                self.autoplace_from(n)
+        if node.Class() not in self.non_base_node_classes:
+            # Place upstream
+            for n in node.dependencies(nuke.INPUTS):
+                if n in self.nodes:
+                    self.autoplace_from(n)
 
     def get_base_node(self, node):
         """Get primary base node of @node.  """
@@ -569,7 +582,10 @@ class Worker(object):
         assert isinstance(node, nuke.Node)
         downstream_nodes = sorted(
             node.dependent(nuke.INPUTS),
-            key=lambda x: (x not in self.placed_nodes, self.upstream_counts[x]))
+            key=lambda x: (x not in self.placed_nodes, self.get_count(x)))
+        downstream_nodes = [
+            i for i in downstream_nodes
+            if i.Class() not in self.non_base_node_classes]
         base_node = (downstream_nodes and downstream_nodes[0]) or None
 
         return base_node
@@ -586,8 +602,7 @@ class Worker(object):
             if base:
                 assert isinstance(base, nuke.Node)
                 ret.insert(0, base)
-                if base.dependencies(nuke.INPUTS).index(n) != 0\
-                        or self.get_count(base) > self.branch_thershold:
+                if self.get_count(base) > self.branch_thershold:
                     break
                 n = base
             else:
@@ -603,6 +618,7 @@ class Worker(object):
         branch_base = self.get_base_node(branch[0])
         ret = set(self.placed_nodes)
         ret.difference_update(branch)
+        ret.difference_update(self.prev_branch_nodes)
         if branch_base:
             ret.intersection_update(get_upstream_nodes(branch_base))
 
