@@ -9,7 +9,7 @@ from wlf.notify import Progress, CancelledError
 
 from node import get_upstream_nodes
 
-__version__ = '0.6.2'
+__version__ = '0.7.0'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
@@ -58,17 +58,12 @@ def is_node_inside(node, backdrop):
 
 class Nodes(list):
     """Geometry boder size of @nodes.  """
-    y_gap = 10
-    x_gap = 10
-    placed_nodes = set()
 
     def __init__(self, nodes=None):
         if nodes is None:
             nodes = []
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
-        if isinstance(nodes, Branches):
-            nodes = nodes.nodes
 
         list.__init__(self, nodes)
 
@@ -151,16 +146,7 @@ class Nodes(list):
         backdrops_dict = {n: Nodes(n.getNodes())
                           for n in self if n.Class() == 'BackdropNode'}
 
-        Nodes.placed_nodes.clear()
-
-        for n in self.endnodes():
-            branches = Branches(
-                n, nodes=list(n for n in self if n not in Nodes.placed_nodes))
-
-            branches.autoplace()
-            if Nodes.placed_nodes and branches.nodes:
-                branches.nodes.xpos = Nodes(Nodes.placed_nodes).right + 20
-            Nodes.placed_nodes.update(set(branches.nodes))
+        Worker(self).autoplace()
 
         left, top, right, bottom = (-10, -80, 10, 10)
         for backdrop, nodes_in_backdrop in backdrops_dict.items():
@@ -170,7 +156,7 @@ class Nodes(list):
                              if n.ypos() < nodes_in_backdrop.bottom
                              and n not in nodes_in_backdrop)
             if up_nodes:
-                up_nodes.bottom = nodes_in_backdrop.ypos + top - self.y_gap
+                up_nodes.bottom = nodes_in_backdrop.ypos + top - bottom
             up_nodes.extend(nodes_in_backdrop)
             up_nodes.ypos -= bottom
 
@@ -199,202 +185,6 @@ class Nodes(list):
             get_upstream_nodes(x)), reverse=True)
         ret.extend(other)
         return ret
-
-
-class Branch(Nodes):
-    """A branch is a list of connected nodes. (e.g. [node1, node2, ... node_n]).  """
-
-    parent_branch = None
-    base_node = None
-    _expanded = None
-    big_branch_thershold = 10
-
-    def expand(self, nodes=None):
-        """Expand self to upstream 1 time, can limit in @nodes.  """
-
-        if self.expanded:
-            return False
-        ret = Branches()
-        nodes = nodes or nuke.allNodes()
-        base = self[-1]
-        input_nodes = base.dependencies(nuke.INPUTS)
-        for index, input_node in enumerate(input_nodes):
-            if input_node not in nodes:
-                continue
-            if index == 0:
-                branch = self
-            else:
-                branch = Branch()
-                branch.parent_branch = self
-                branch.base_node = base
-            branch.append(input_node)
-            ret.append(branch)
-        return ret
-
-    @property
-    def expanded(self):
-        """Return if this branch is expanded to end.  """
-        if not self._expanded:
-            startnode = self[-1]
-            input_nodes = startnode.dependencies(nuke.INPUTS)
-            self._expanded = not bool(input_nodes)
-        return self._expanded
-
-    def dependent(self):
-        """All nodes read information from this branch.  """
-
-        ret = set()
-        for n in self:
-            ret.update(n.dependent(nuke.INPUTS))
-        ret.difference_update(self)
-        return ret
-
-    def autoplace(self):
-        """Autoplace nodes in this branch.  """
-
-        nodes = Nodes(n for n in self if n not in Branches.placed_nodes)
-        if not nodes:
-            return
-        if self.base_node:
-            prev_nodes = Nodes(n for n in get_upstream_nodes(self.base_node)
-                               if n in Branches.placed_nodes)
-        else:
-            prev_nodes = Nodes()
-        dependencies = self.dependent()
-
-        # nuke.zoomToFitSelected()
-        # if not nuke.ask(self.base_node and self.base_node.name() or 'None'):
-        #     raise RuntimeError
-
-        # Y-axis.
-        ypos = 0
-        for n in nodes:
-            ypos -= n.screenHeight() + self.y_gap
-            n.setYpos(ypos)
-        if self.base_node:
-            # Place nodes accroding base.
-            n = self.base_node
-            while n:
-                up_node = n.input(0)
-                if up_node and up_node in dependencies:
-                    n = up_node
-                    prev_nodes.remove(n)
-                else:
-                    break
-            nodes.bottom = n.ypos() - self.y_gap
-        if len(nodes) < self.big_branch_thershold:
-            # Move prev nodes up.
-            if prev_nodes:
-                prev_nodes.bottom = nodes.ypos - nodes.y_gap
-
-        # X-axis.
-        if len(nodes) >= self.big_branch_thershold and Branches.placed_nodes:
-            xpos = Nodes(Branches.placed_nodes).right + self.x_gap * 50
-        else:
-            xpos = 0
-
-        left_nodes = Nodes(n for n in prev_nodes
-                           if n.ypos() >= nodes.ypos
-                           and Nodes(n).bottom <= nodes.bottom)
-        if left_nodes:
-            xpos = max([left_nodes.right + self.x_gap, xpos])
-        if self.base_node:
-            xpos = max([Nodes(self.base_node).right + self.x_gap, xpos])
-
-        for n in nodes:
-            n.setXpos(xpos + (nodes.max_width - n.screenWidth()) / 2)
-
-    def __str__(self):
-        return '<Branch<{}>@{}>'.format(' -> '.join(n.name() for n in self),
-                                        self.base_node and self.base_node.name())
-
-
-class Branches(list):
-    """A branches is a list of branch. (e.g. [branch1, branch2, ... branch_n]).  """
-    placed_nodes = set()
-
-    def __init__(self, branches=None, nodes=None):
-        if isinstance(branches, nuke.Node):
-            branches = [Branch(branches)]
-        elif isinstance(branches, Branch):
-            branches = [branches]
-        elif branches is None:
-            branches = []
-        self._nodes = nodes or nuke.allNodes()
-        list.__init__(self, branches)
-        if self:
-            self.expand()
-
-            # for i in self:
-
-    def expand(self):
-        """Expand all branches to the end.  """
-        not_done = True
-        task = Progress('分析结构')
-        count = 0
-        while not_done:
-            task.set(message='向上{}层节点'.format(count))
-            count += 1
-            not_done = False
-            itering = list(self)
-            del self[:]
-            all_num = len(itering)
-            for index, branch in enumerate(itering):
-                if count >= 50:
-                    task.set(index * 100 // all_num)
-                expanded = branch.expand(nodes=self._nodes)
-                if expanded:
-                    not_done = True
-                    self.extend(expanded)
-                else:
-                    self.append(branch)
-            self._remove_duplicated()
-        tested = set()
-        for branch in self:
-            for i in tested:
-                if i in branch:
-                    branch.remove(i)
-                tested.add(i)
-
-    def _remove_duplicated(self):
-        for branch in list(self):
-            if any(set(branch).issubset(set(i)) for i in list(self) if i is not branch):
-                self.remove(branch)
-
-    def autoplace(self):
-        """Auto place branches.  """
-
-        Branches.placed_nodes.clear()
-        for branch in self:
-            assert isinstance(branch, Branch)
-            branch.autoplace()
-            Branches.placed_nodes.update(branch)
-
-    def __str__(self):
-        return 'Branches[ {} ]'.format(', '.join(str(i) for i in self))
-
-    def __contains__(self, operand):
-        if isinstance(operand, Branch):
-            return list.__contains__(self, operand)
-        elif isinstance(operand, nuke.Node):
-            return any(Branch.__contains__(i, operand) for i in self)
-        else:
-            raise TypeError
-
-    def find(self, node):
-        """Return first @node contained branch. """
-        for branch in self:
-            if node in branch:
-                return branch
-
-    @property
-    def nodes(self):
-        """The nodes in this."""
-        ret = []
-        for i in self:
-            ret.extend(i)
-        ret = set(ret)
-        return Nodes(ret)
 
 
 def create_backdrop(nodes, autoplace_nodes=False):
@@ -586,7 +376,7 @@ class Worker(object):
         downstream_nodes = [
             i for i in downstream_nodes
             if i.Class() not in self.non_base_node_classes]
-        base_node = (downstream_nodes and downstream_nodes[0]) or None
+        base_node = downstream_nodes[0] if downstream_nodes else None
 
         return base_node
 
