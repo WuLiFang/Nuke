@@ -2,8 +2,8 @@
 """Orgnize nodes layout.  """
 import random
 import logging
-import threading
 import traceback
+import time
 
 import nuke
 
@@ -11,8 +11,9 @@ from wlf.notify import Progress, CancelledError
 from wlf.decorators import run_async
 
 from node import get_upstream_nodes
+from edit import run_in_main_thread
 
-__version__ = '0.7.1'
+__version__ = '0.7.2'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
@@ -22,6 +23,7 @@ DEBUG = False
 def autoplace(nodes=None, recursive=False):
     """Auto place nodes."""
 
+    start = time.clock()
     try:
         nodes = nodes or nuke.allNodes()
         if not nodes:
@@ -37,6 +39,7 @@ def autoplace(nodes=None, recursive=False):
         nodes.autoplace()
         if nodes != nuke.allNodes():
             nodes.xpos, nodes.ypos = xpos, ypos
+        LOGGER.debug(u'自动摆放耗时: %0.2f秒', time.clock() - start)
     except:
         traceback.print_exc()
         nuke.Undo.end()
@@ -230,6 +233,7 @@ class Worker(object):
 
         self.count()
 
+    @run_in_main_thread
     def count(self):
         """Count @nodes upstream. recorded in self.upstream_counts.  """
 
@@ -243,7 +247,8 @@ class Worker(object):
     def get_count(self, node, distinct=False):
         """Get upstream nodes count for @node.  """
 
-        assert isinstance(node, nuke.Node), 'Expect a nuke.Node Type.'
+        assert isinstance(node, nuke.Node),\
+            'Expect a nuke.Node Type, got {}.'.format(repr(node))
         ret = 0
         counts_dict = self.upstream_counts
         if counts_dict.has_key(node):
@@ -374,6 +379,7 @@ class Worker(object):
                 if n in self.nodes:
                     self.autoplace_from(n)
 
+    @run_in_main_thread
     def get_base_node(self, node):
         """Get primary base node of @node.  """
 
@@ -382,12 +388,8 @@ class Worker(object):
         if node in outcome_dict:
             return outcome_dict[node]
 
-        if nuke.GUI and threading.current_thread().name != 'MainThread':
-            downstream_nodes = nuke.executeInMainThreadWithResult(
-                nuke.Node.dependent, (node, nuke.INPUTS))
-            downstream_nodes = downstream_nodes or []
-        else:
-            downstream_nodes = node.dependent(nuke.INPUTS)
+        downstream_nodes = node.dependent(nuke.INPUTS)
+        downstream_nodes = downstream_nodes or []
         assert isinstance(downstream_nodes, list), downstream_nodes
         downstream_nodes = [i for i in downstream_nodes
                             if i.Class() not in self.non_base_node_classes]
@@ -399,6 +401,7 @@ class Worker(object):
         LOGGER.debug('Base node for %s : %s', repr(node), repr(base_node))
         return base_node
 
+    @run_in_main_thread
     def get_branch(self, node):
         """Get primary branch of @node.  """
 
@@ -418,6 +421,7 @@ class Worker(object):
                 break
         return ret
 
+    @run_in_main_thread
     def get_prev_nodes(self, node):
         """Get previous placed nodes for @node.  """
 
