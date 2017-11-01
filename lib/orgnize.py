@@ -2,40 +2,45 @@
 """Orgnize nodes layout.  """
 import random
 import logging
+import threading
+import traceback
 
 import nuke
 
 from wlf.notify import Progress, CancelledError
+from wlf.decorators import run_async
 
 from node import get_upstream_nodes
 
-__version__ = '0.7.0'
+__version__ = '0.7.1'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
 
 
+@run_async
 def autoplace(nodes=None, recursive=False):
     """Auto place nodes."""
 
-    nodes = nodes or nuke.allNodes()
-    if not nodes:
-        return
-    elif isinstance(nodes, nuke.Node):
-        nodes = [nodes]
-    if recursive:
-        nodes = get_upstream_nodes(nodes).union(nodes)
-    nodes = Nodes(nodes)
-
-    xpos, bottom = nodes.xpos, nodes.bottom
     try:
+        nodes = nodes or nuke.allNodes()
+        if not nodes:
+            return
+        elif isinstance(nodes, nuke.Node):
+            nodes = [nodes]
+        if recursive:
+            nodes = get_upstream_nodes(nodes).union(nodes)
+        nodes = Nodes(nodes)
+
+        xpos, ypos = nodes.xpos, nodes.ypos
+
         nodes.autoplace()
-    except CancelledError:
-        nuke.Undo.cancel()
-        print('用户取消自动摆放')
-        return
-    if nodes != nuke.allNodes():
-        nodes.xpos, nodes.bottom = xpos, bottom
+        if nodes != nuke.allNodes():
+            nodes.xpos, nodes.ypos = xpos, ypos
+    except:
+        traceback.print_exc()
+        nuke.Undo.end()
+        raise
 
 
 def is_node_inside(node, backdrop):
@@ -141,36 +146,7 @@ class Nodes(list):
     def autoplace(self):
         """Auto place nodes."""
 
-        if not self:
-            return
-        backdrops_dict = {n: Nodes(n.getNodes())
-                          for n in self if n.Class() == 'BackdropNode'}
-
         Worker(self).autoplace()
-
-        left, top, right, bottom = (-10, -80, 10, 10)
-        for backdrop, nodes_in_backdrop in backdrops_dict.items():
-            if not nodes_in_backdrop:
-                continue
-            up_nodes = Nodes(n for n in get_upstream_nodes(nodes_in_backdrop)
-                             if n.ypos() < nodes_in_backdrop.bottom
-                             and n not in nodes_in_backdrop)
-            if up_nodes:
-                up_nodes.bottom = nodes_in_backdrop.ypos + top - bottom
-            up_nodes.extend(nodes_in_backdrop)
-            up_nodes.ypos -= bottom
-
-        for backdrop, nodes_in_backdrop in backdrops_dict.items():
-            if not nodes_in_backdrop:
-                continue
-            backdrop.setXYpos(nodes_in_backdrop.xpos + left,
-                              nodes_in_backdrop.ypos + top)
-            backdrop['bdwidth'].setValue(
-                nodes_in_backdrop.width + (right - left))
-            backdrop['bdheight'].setValue(
-                nodes_in_backdrop.height + (bottom - top))
-
-        nuke.Root().setModified(True)
 
     def endnodes(self):
         """Return Nodes that has no contained downstream founded in given nodes.  """
@@ -244,6 +220,7 @@ class Worker(object):
     def __init__(self, nodes=None):
         self.nodes = nodes or nuke.allNodes()
         self.end_nodes = set(self.nodes)
+        self.base_node_dict = {}
         self.placed_nodes = set()
         self.counted_nodes = set()
         self.upstream_counts = {}
@@ -292,11 +269,42 @@ class Worker(object):
     def autoplace(self):
         """Autoplace nodes.  """
 
+        nuke.Undo.begin('自动摆放')
+        backdrops_dict = {n: Nodes(n.getNodes())
+                          for n in self.nodes if n.Class() == 'BackdropNode'}
+
         for n in sorted(self.end_nodes, key=self.get_count, reverse=True):
             assert isinstance(n, nuke.Node)
-            self.autoplace_from(n)
+            try:
+                self.autoplace_from(n)
+            except CancelledError:
+                nuke.Undo.cancel()
+                return
+
+        left, top, right, bottom = (-10, -80, 10, 10)
+        for backdrop, nodes_in_backdrop in backdrops_dict.items():
+            if not nodes_in_backdrop:
+                continue
+            up_nodes = Nodes(n for n in get_upstream_nodes(nodes_in_backdrop)
+                             if n.ypos() < nodes_in_backdrop.bottom
+                             and n not in nodes_in_backdrop)
+            if up_nodes:
+                up_nodes.bottom = nodes_in_backdrop.ypos + top - bottom
+            up_nodes.extend(nodes_in_backdrop)
+            up_nodes.ypos -= bottom
+
+        for backdrop, nodes_in_backdrop in backdrops_dict.items():
+            if not nodes_in_backdrop:
+                continue
+            backdrop.setXYpos(nodes_in_backdrop.xpos + left,
+                              nodes_in_backdrop.ypos + top)
+            backdrop['bdwidth'].setValue(
+                nodes_in_backdrop.width + (right - left))
+            backdrop['bdheight'].setValue(
+                nodes_in_backdrop.height + (bottom - top))
 
         nuke.Root().setModified(True)
+        nuke.Undo.end()
 
     def autoplace_from(self, node):
         """Autoplace @node and it's upstream.  """
@@ -305,12 +313,13 @@ class Worker(object):
         if node in self.placed_nodes:
             LOGGER.debug('Ignored placed node: %s', repr(node))
             return
-        LOGGER.debug('Place node: %s', repr(node))
+        LOGGER.debug('Analysing node: %s', repr(node))
         base_node = self.get_base_node(node)
         is_new_branch = self.get_count(
             node) > self.branch_thershold
 
         # Place self
+        LOGGER.debug('Placing node: %s', repr(node))
         if base_node:
             LOGGER.debug('Base: %s', repr(base_node))
             assert isinstance(base_node, nuke.Node)
@@ -341,8 +350,7 @@ class Worker(object):
             ypos = 0
 
         LOGGER.debug('%s %s', xpos, ypos)
-        nuke.executeInMainThreadWithResult(
-            nuke.Node.setXYpos, (node, xpos, ypos))
+        node.setXYpos(xpos, ypos)
         if not base_node:
             self.prev_branch_nodes.update(self.placed_nodes)
         self.placed_nodes.add(node)
@@ -370,14 +378,25 @@ class Worker(object):
         """Get primary base node of @node.  """
 
         assert isinstance(node, nuke.Node)
-        downstream_nodes = sorted(
-            node.dependent(nuke.INPUTS),
-            key=lambda x: (x not in self.placed_nodes, self.get_count(x)))
-        downstream_nodes = [
-            i for i in downstream_nodes
-            if i.Class() not in self.non_base_node_classes]
-        base_node = downstream_nodes[0] if downstream_nodes else None
+        outcome_dict = self.base_node_dict
+        if node in outcome_dict:
+            return outcome_dict[node]
 
+        if nuke.GUI and threading.current_thread().name != 'MainThread':
+            downstream_nodes = nuke.executeInMainThreadWithResult(
+                nuke.Node.dependent, (node, nuke.INPUTS))
+            downstream_nodes = downstream_nodes or []
+        else:
+            downstream_nodes = node.dependent(nuke.INPUTS)
+        assert isinstance(downstream_nodes, list), downstream_nodes
+        downstream_nodes = [i for i in downstream_nodes
+                            if i.Class() not in self.non_base_node_classes]
+        downstream_nodes.sort(
+            key=lambda x: (x not in self.placed_nodes, self.get_count(x)))
+        base_node = downstream_nodes[0] if downstream_nodes else None
+        outcome_dict[node] = base_node
+
+        LOGGER.debug('Base node for %s : %s', repr(node), repr(base_node))
         return base_node
 
     def get_branch(self, node):
