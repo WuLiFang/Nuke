@@ -15,7 +15,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.4'
+__version__ = '0.7.5'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
@@ -33,13 +33,10 @@ def autoplace(nodes=None, recursive=False):
             nodes = [nodes]
         if recursive:
             nodes = get_upstream_nodes(nodes).union(nodes)
+
         nodes = Nodes(nodes)
-
-        xpos, ypos = nodes.xpos, nodes.ypos
-
         nodes.autoplace()
-        if nodes != nuke.allNodes():
-            nodes.xpos, nodes.ypos = xpos, ypos
+
         LOGGER.debug(u'自动摆放耗时: %0.2f秒', time.clock() - start)
     except:
         traceback.print_exc()
@@ -228,6 +225,7 @@ class Worker(object):
 
     def __init__(self, nodes=None):
         self.nodes = nodes or nuke.allNodes()
+        self.nodes = Nodes(self.nodes)
         self.end_nodes = set(self.nodes)
         self.base_node_dict = {}
         self.placed_nodes = set()
@@ -361,9 +359,12 @@ class Worker(object):
         elif self.placed_nodes:
             xpos = Nodes(self.placed_nodes).right + self.x_gap
             ypos = 0
-        else:
+        elif self.nodes == nuke.allNodes():
             xpos = 0
             ypos = 0
+        else:
+            xpos = self.nodes.xpos
+            ypos = self.nodes.bottom - self.min_height
 
         LOGGER.debug('%s %s', xpos, ypos)
         node.setXYpos(xpos, ypos)
