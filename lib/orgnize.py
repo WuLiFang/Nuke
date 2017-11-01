@@ -13,7 +13,7 @@ from wlf.decorators import run_async
 from node import get_upstream_nodes
 from edit import run_in_main_thread
 
-__version__ = '0.7.2'
+__version__ = '0.7.3'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
@@ -219,6 +219,7 @@ class Worker(object):
     min_width = 60
     branch_thershold = 20
     non_base_node_classes = ('Viewer',)
+    executing = False
 
     def __init__(self, nodes=None):
         self.nodes = nodes or nuke.allNodes()
@@ -274,6 +275,9 @@ class Worker(object):
     def autoplace(self):
         """Autoplace nodes.  """
 
+        if Worker.executing and not run_in_main_thread(nuke.ask)('你确定要同时进行两个自动摆放?'):
+            return
+        Worker.executing = True
         nuke.Undo.begin('自动摆放')
         backdrops_dict = {n: Nodes(n.getNodes())
                           for n in self.nodes if n.Class() == 'BackdropNode'}
@@ -310,6 +314,8 @@ class Worker(object):
 
         nuke.Root().setModified(True)
         nuke.Undo.end()
+
+        Worker.executing = False
 
     def autoplace_from(self, node):
         """Autoplace @node and it's upstream.  """
