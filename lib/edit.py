@@ -6,6 +6,8 @@ import re
 import colorsys
 import random
 import logging
+from functools import wraps
+import threading
 
 import nuke
 
@@ -15,9 +17,22 @@ from wlf.notify import Progress
 import callback
 from node import wlf_write_node
 
-__version__ = '1.7.10'
+__version__ = '1.7.11'
 LOGGER = logging.getLogger('com.wlf.edit')
 ENABLE_MARK = '_enable_'
+
+
+def run_in_main_thread(func):
+    """(Decorator)Run @func in nuke main_thread.   """
+
+    @wraps(func)
+    def _func(*args, **kwargs):
+        if nuke.GUI and threading.current_thread().name != 'MainThread':
+            return nuke.executeInMainThreadWithResult(func, args, kwargs)
+        else:
+            return func(*args, **kwargs)
+
+    return _func
 
 
 def rename_all_nodes():
