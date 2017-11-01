@@ -357,7 +357,7 @@ class Worker(object):
                     prev_nodes.bottom = min(
                         ypos - self.y_gap, prev_nodes.bottom)
         elif self.placed_nodes:
-            xpos = Nodes(self.placed_nodes).right + self.x_gap
+            xpos = Nodes(self.placed_nodes).right + self.x_gap * 10
             ypos = 0
         elif self.nodes == nuke.allNodes():
             xpos = 0
