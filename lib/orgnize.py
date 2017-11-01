@@ -1,25 +1,26 @@
 # -*- coding=UTF-8 -*-
 """Orgnize nodes layout.  """
-import random
+
 import logging
-import traceback
+import random
+import sys
 import time
+import traceback
 
 import nuke
 
-from wlf.notify import Progress, CancelledError
 from wlf.decorators import run_async
+from wlf.notify import CancelledError, Progress
 
-from node import get_upstream_nodes
 from edit import run_in_main_thread
+from node import get_upstream_nodes
 
-__version__ = '0.7.3'
+__version__ = '0.7.4'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
 
 
-@run_async
 def autoplace(nodes=None, recursive=False):
     """Auto place nodes."""
 
@@ -44,6 +45,10 @@ def autoplace(nodes=None, recursive=False):
         traceback.print_exc()
         nuke.Undo.end()
         raise
+
+
+if nuke.GUI:
+    setattr(sys.modules[__name__], 'autoplace', run_async(autoplace))
 
 
 def is_node_inside(node, backdrop):
