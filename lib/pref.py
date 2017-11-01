@@ -56,6 +56,8 @@ def set_knob_default():
         LOGGER.debug(
             'Can not set localization preference, maybe using low version.')
 
+    nuke.untitled = '未命名'
+
 
 def add_preferences():
     """Add a prefrences panel."""
