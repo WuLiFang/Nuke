@@ -19,7 +19,7 @@ from wlf.decorators import run_with_clock
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.11'
+__version__ = '0.5.12'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -98,19 +98,24 @@ def warn_mtime(show_dialog=False, show_ok=False):
     LOGGER.debug('Check warn_mtime')
     msg = ''
     newer_footages = {}
-    for n in nuke.allNodes('Read', nuke.Root()):
-        try:
-            mtime = time.strptime(n.metadata(
-                'input/mtime'), '%Y-%m-%d %H:%M:%S')
-        except TypeError:
-            continue
-        if mtime > Last.mtime:
-            ftime = time.strftime('%m-%d %H:%M:%S', mtime)
-            newer_footages[nuke.filename(n)] = ftime
-            msg = '{}: [new footage]{}'.format(n.name(), ftime)
-            if msg not in Last.showed_warning:
-                nuke.warning(msg)
-                Last.showed_warning.append(msg)
+
+    @run_with_clock('检查素材修改日期')
+    def _get_mtime_info():
+        for n in nuke.allNodes('Read', nuke.Root()):
+            try:
+                mtime = time.strptime(n.metadata(
+                    'input/mtime'), '%Y-%m-%d %H:%M:%S')
+            except TypeError:
+                continue
+            if mtime > Last.mtime:
+                ftime = time.strftime('%m-%d %H:%M:%S', mtime)
+                newer_footages[nuke.filename(n)] = ftime
+                msg = '{}: [new footage]{}'.format(n.name(), ftime)
+                if msg not in Last.showed_warning:
+                    nuke.warning(msg)
+                    Last.showed_warning.append(msg)
+
+    _get_mtime_info()
 
     if show_dialog and (newer_footages or show_ok):
         msg = '<style>td {padding:8px;}</style>'
