@@ -19,6 +19,7 @@ from node import wlf_write_node
 
 __version__ = '1.7.14'
 LOGGER = logging.getLogger('com.wlf.edit')
+assert isinstance(LOGGER, logging.Logger)
 ENABLE_MARK = '_enable_'
 
 
@@ -50,6 +51,9 @@ def undoable_func(name=None):
                 if not isinstance(ret, threading.Thread):
                     # Async function should call nuke.Undo.end by itself.
                     nuke.Undo.end()
+                else:
+                    LOGGER.warning(
+                        'Async function should implement undoable itself.')
                 return ret
             except:
                 nuke.Undo.cancel()
