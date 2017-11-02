@@ -8,15 +8,17 @@ import logging
 import nuke
 
 from wlf.path import get_layer
-from edit import add_layer, copy_layer
+from edit import add_layer, copy_layer, undoable_func
 from orgnize import autoplace
 
-__version__ = '0.3.16'
+__version__ = '0.3.17'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
+@undoable_func('Redshift预合成')
 def redshift(nodes):
     """Precomp reshift footages.  """
+
     return Precomp(nodes, renderer='redshift').last_node
 
 
@@ -74,7 +76,7 @@ class Precomp(object):
         for layer in self._config.get('plus'):
             self.plus(layer)
 
-        autoplace(self.last_node, recursive=True)
+        autoplace(self.last_node, recursive=True, undoable=False)
 
     def check(self):
         """Check if has all necessary layer.  """
