@@ -9,8 +9,9 @@ import nuke
 import nukescripts
 from autolabel import autolabel
 
-import wlf
 import wlf.uploader
+import wlf.cgtwq
+import wlf.csheet
 
 import asset
 import precomp
@@ -23,7 +24,7 @@ import splitexr
 import scanner
 import panels
 
-__version__ = '0.5.4'
+__version__ = '0.5.5'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -204,6 +205,7 @@ def add_menu():
 
 def add_panel():
     """Add custom pannel. """
+
     LOGGER.info(u'添加面板')
     panels.register(wlf.uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
