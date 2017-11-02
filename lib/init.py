@@ -31,10 +31,10 @@ def _logger():
 
 LOGGER = _logger()
 
-
-LOGGER.debug("python sys.setdefaultencoding('UTF-8')")
-reload(sys)
-sys.setdefaultencoding('UTF-8')
+if sys.getdefaultencoding != 'UTF-8':
+    reload(sys)
+    LOGGER.debug("python sys.setdefaultencoding('UTF-8')")
+    sys.setdefaultencoding('UTF-8')
 
 try:
     import validation
