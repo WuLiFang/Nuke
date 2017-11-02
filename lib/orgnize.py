@@ -3,12 +3,11 @@
 
 import logging
 import random
-import time
 import threading
 
 import nuke
 
-from wlf.decorators import run_async
+from wlf.decorators import run_async, run_with_clock
 from wlf.notify import CancelledError, Progress
 
 from edit import run_in_main_thread
@@ -36,27 +35,25 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=True):
     if async_ and nuke.GUI:
         return run_async(autoplace)(nodes, recursive, undoable, async_=False)
 
+    nodes = nodes or nuke.allNodes()
+    if not nodes:
+        return
+    elif isinstance(nodes, nuke.Node):
+        nodes = [nodes]
+
+    if recursive:
+        nodes = get_upstream_nodes(nodes).union(nodes)
+
+    nodes = Nodes(nodes)
+    cancelled = False
     with LOCK:
         if undoable:
             run_in_main_thread(nuke.Undo.end)()
             run_in_main_thread(nuke.Undo.begin)('自动摆放')
 
-        start = time.clock()
-        nodes = nodes or nuke.allNodes()
-        cancelled = False
-        if not nodes:
-            return
-        elif isinstance(nodes, nuke.Node):
-            nodes = [nodes]
-        if recursive:
-            nodes = get_upstream_nodes(nodes).union(nodes)
-
-        nodes = Nodes(nodes)
-
         try:
             worker = Worker(nodes)
             worker.autoplace()
-            LOGGER.debug(u'自动摆放耗时: %0.2f秒', time.clock() - start)
         except CancelledError:
             cancelled = True
             print('用户取消自动摆放')
@@ -298,6 +295,7 @@ class Worker(object):
             self.counted_nodes.add(node)
         return ret
 
+    @run_with_clock('自动摆放')
     def autoplace(self):
         """Autoplace nodes.  """
 
@@ -308,27 +306,27 @@ class Worker(object):
             assert isinstance(n, nuke.Node)
             self.autoplace_from(n)
 
-        left, top, right, bottom = (-10, -80, 10, 10)
-        for backdrop, nodes_in_backdrop in backdrops_dict.items():
-            if not nodes_in_backdrop:
-                continue
-            up_nodes = Nodes(n for n in get_upstream_nodes(nodes_in_backdrop)
-                             if n.ypos() < nodes_in_backdrop.bottom
-                             and n not in nodes_in_backdrop)
-            if up_nodes:
-                up_nodes.bottom = nodes_in_backdrop.ypos + top - bottom
-            up_nodes.extend(nodes_in_backdrop)
-            up_nodes.ypos -= bottom
+        # left, top, right, bottom = (-10, -80, 10, 10)
+        # for backdrop, nodes_in_backdrop in backdrops_dict.items():
+        #     if not nodes_in_backdrop:
+        #         continue
+        #     up_nodes = Nodes(n for n in get_upstream_nodes(nodes_in_backdrop)
+        #                      if n.ypos() < nodes_in_backdrop.bottom
+        #                      and n not in nodes_in_backdrop)
+        #     if up_nodes:
+        #         up_nodes.bottom = nodes_in_backdrop.ypos + top - bottom
+        #     up_nodes.extend(nodes_in_backdrop)
+        #     up_nodes.ypos -= bottom
 
-        for backdrop, nodes_in_backdrop in backdrops_dict.items():
-            if not nodes_in_backdrop:
-                continue
-            backdrop.setXYpos(nodes_in_backdrop.xpos + left,
-                              nodes_in_backdrop.ypos + top)
-            backdrop['bdwidth'].setValue(
-                nodes_in_backdrop.width + (right - left))
-            backdrop['bdheight'].setValue(
-                nodes_in_backdrop.height + (bottom - top))
+        # for backdrop, nodes_in_backdrop in backdrops_dict.items():
+        #     if not nodes_in_backdrop:
+        #         continue
+        #     backdrop.setXYpos(nodes_in_backdrop.xpos + left,
+        #                       nodes_in_backdrop.ypos + top)
+        #     backdrop['bdwidth'].setValue(
+        #         nodes_in_backdrop.width + (right - left))
+        #     backdrop['bdheight'].setValue(
+        #         nodes_in_backdrop.height + (bottom - top))
 
         nuke.Root().setModified(True)
 
