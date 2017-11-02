@@ -345,7 +345,7 @@ class Worker(object):
             base_dep = base_node.dependencies()
             self_index = base_dep.index(node)
             xpos = base_node.xpos() + base_node.screenWidth() / 2 - node.screenWidth() / 2
-            ypos = base_node.ypos() - self.y_gap - node.screenHeight()
+            ypos = base_node.ypos() - self.y_gap - max(node.screenHeight(), self.min_height)
             if self_index == 0:
                 pass
             elif is_new_branch and self.placed_nodes:
