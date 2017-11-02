@@ -12,32 +12,37 @@ import nuke
 from wlf.decorators import run_async
 from wlf.notify import CancelledError, Progress
 
-from edit import run_in_main_thread
+from edit import run_in_main_thread, undoable_func
 from node import get_upstream_nodes
 
-__version__ = '0.7.5'
+__version__ = '0.7.6'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 DEBUG = False
 
 
-def autoplace(nodes=None, recursive=False):
+def autoplace(nodes=None, recursive=False, undoable=True):
     """Auto place nodes."""
 
+    if undoable:
+        return undoable_func('自动摆放')(autoplace)(nodes, recursive, undoable=False)
+
     start = time.clock()
+    nodes = nodes or nuke.allNodes()
+    if not nodes:
+        return
+    elif isinstance(nodes, nuke.Node):
+        nodes = [nodes]
+    if recursive:
+        nodes = get_upstream_nodes(nodes).union(nodes)
+
+    nodes = Nodes(nodes)
+
     try:
-        nodes = nodes or nuke.allNodes()
-        if not nodes:
-            return
-        elif isinstance(nodes, nuke.Node):
-            nodes = [nodes]
-        if recursive:
-            nodes = get_upstream_nodes(nodes).union(nodes)
-
-        nodes = Nodes(nodes)
         nodes.autoplace()
-
         LOGGER.debug(u'自动摆放耗时: %0.2f秒', time.clock() - start)
+    except CancelledError:
+        nuke.Undo.cancel()
     except:
         traceback.print_exc()
         nuke.Undo.end()
@@ -281,17 +286,13 @@ class Worker(object):
         if Worker.executing and not run_in_main_thread(nuke.ask)('你确定要同时进行两个自动摆放?'):
             return
         Worker.executing = True
-        nuke.Undo.begin('自动摆放')
+
         backdrops_dict = {n: Nodes(n.getNodes())
                           for n in self.nodes if n.Class() == 'BackdropNode'}
 
         for n in sorted(self.end_nodes, key=self.get_count, reverse=True):
             assert isinstance(n, nuke.Node)
-            try:
-                self.autoplace_from(n)
-            except CancelledError:
-                nuke.Undo.cancel()
-                return
+            self.autoplace_from(n)
 
         left, top, right, bottom = (-10, -80, 10, 10)
         for backdrop, nodes_in_backdrop in backdrops_dict.items():
@@ -316,7 +317,6 @@ class Worker(object):
                 nodes_in_backdrop.height + (bottom - top))
 
         nuke.Root().setModified(True)
-        nuke.Undo.end()
 
         Worker.executing = False
 
