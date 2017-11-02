@@ -17,7 +17,7 @@ from wlf.notify import Progress
 import callback
 from node import wlf_write_node
 
-__version__ = '1.7.12'
+__version__ = '1.7.13'
 LOGGER = logging.getLogger('com.wlf.edit')
 ENABLE_MARK = '_enable_'
 
@@ -35,7 +35,7 @@ def run_in_main_thread(func):
     return _func
 
 
-def undoable(name):
+def undoable_func(name=''):
     """(Decorator)Record nuke undo set for @func.   """
 
     def _wrap(func):
@@ -43,7 +43,7 @@ def undoable(name):
         @wraps(func)
         def _func(*args, **kwargs):
             try:
-                nuke.Undo.begin(*((name,) or tuple()))
+                nuke.Undo.begin(name)
                 ret = func(*args, **kwargs)
                 nuke.Undo.end()
                 return ret
