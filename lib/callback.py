@@ -231,7 +231,7 @@ def _autoplace():
         autoplace_type = nuke.numvalue('preferences.wlf_autoplace_type', 0.0)
         LOGGER.debug(u'Autoplace. type: %s', autoplace_type)
         if autoplace_type == 0.0:
-            orgnize.Worker().autoplace()
+            orgnize.autoplace(async_=False)
         else:
             map(nuke.autoplace, nuke.allNodes())
 
