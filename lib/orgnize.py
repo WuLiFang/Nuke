@@ -13,7 +13,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.8'
+__version__ = '0.7.9'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -48,7 +48,6 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=True):
     cancelled = False
     with LOCK:
         if undoable:
-            run_in_main_thread(nuke.Undo.end)()
             run_in_main_thread(nuke.Undo.begin)('自动摆放')
 
         try:
