@@ -17,7 +17,7 @@ from wlf.notify import Progress
 import callback
 from node import wlf_write_node
 
-__version__ = '1.7.15'
+__version__ = '1.7.16'
 LOGGER = logging.getLogger('com.wlf.edit')
 assert isinstance(LOGGER, logging.Logger)
 ENABLE_MARK = '_enable_'
@@ -44,14 +44,13 @@ def undoable_func(name=None):
         @wraps(func)
         def _func(*args, **kwargs):
             _name = name if name is not None else func.__name__
-            run_in_main_thread(nuke.Undo.end)()
             run_in_main_thread(nuke.Undo.begin)(_name)
 
             try:
                 ret = func(*args, **kwargs)
                 if not isinstance(ret, threading.Thread):
                     # Async function should call nuke.Undo.end by itself.
-                    nuke.Undo.end()
+                    run_in_main_thread(nuke.Undo.end)()
                 else:
                     LOGGER.warning(
                         'Async function should implement undoable itself.')
