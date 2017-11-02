@@ -17,7 +17,7 @@ from wlf.notify import Progress
 import callback
 from node import wlf_write_node
 
-__version__ = '1.7.13'
+__version__ = '1.7.14'
 LOGGER = logging.getLogger('com.wlf.edit')
 ENABLE_MARK = '_enable_'
 
@@ -35,17 +35,21 @@ def run_in_main_thread(func):
     return _func
 
 
-def undoable_func(name=''):
+def undoable_func(name=None):
     """(Decorator)Record nuke undo set for @func.   """
 
     def _wrap(func):
 
         @wraps(func)
         def _func(*args, **kwargs):
+            _name = name if name is not None else func.__name__
+            nuke.Undo.begin(_name)
+
             try:
-                nuke.Undo.begin(name)
                 ret = func(*args, **kwargs)
-                nuke.Undo.end()
+                if not isinstance(ret, threading.Thread):
+                    # Async function should call nuke.Undo.end by itself.
+                    nuke.Undo.end()
                 return ret
             except:
                 nuke.Undo.cancel()
