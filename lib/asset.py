@@ -14,11 +14,12 @@ from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
 from wlf.notify import Progress, CancelledError
 from wlf.Qt.QtCore import QTimer
+from wlf.decorators import run_with_clock
 
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.10'
+__version__ = '0.5.11'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -43,6 +44,7 @@ class DropFrames(object):
         cls.show(show_all=True, show_ok=show_ok)
 
     @classmethod
+    @run_with_clock('检查缺帧')
     def update(cls, nodes=None):
         """update self."""
         if isinstance(nodes, nuke.Node):
