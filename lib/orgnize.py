@@ -4,6 +4,7 @@
 import logging
 import random
 import threading
+from collections import namedtuple, Iterable
 
 import nuke
 
@@ -13,7 +14,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.9'
+__version__ = '0.7.10'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -24,35 +25,34 @@ LOCK = threading.Lock()
 def autoplace(nodes=None, recursive=False, undoable=True, async_=True):
     """Auto place nodes."""
 
+    # Executing check
     if not LOCK.acquire(False):
         msg = u'不能同时进行两个自动摆放'
         nuke.message(msg)
         LOGGER.warning(msg)
         return
-    else:
-        LOCK.release()
+    LOCK.release()
 
-    if async_ and nuke.GUI:
-        return run_async(autoplace)(nodes, recursive, undoable, async_=False)
-
-    nodes = nodes or nuke.allNodes()
+    # Args check
+    nodes = nuke.allNodes() if not nodes else nodes
     if not nodes:
         return
-    elif isinstance(nodes, nuke.Node):
-        nodes = [nodes]
+    elif async_ and nuke.GUI and not DEBUG:
+        return run_async(autoplace)(nodes, recursive, undoable, async_=False)
 
-    if recursive:
-        nodes = get_upstream_nodes(nodes).union(nodes)
-
+    # Call worker
+    nodes = [nodes] if isinstance(nodes, nuke.Node) else nodes
+    nodes = get_upstream_nodes(nodes).union(nodes) if recursive else nodes
     nodes = Nodes(nodes)
     cancelled = False
+
     with LOCK:
         if undoable:
             run_in_main_thread(nuke.Undo.begin)('自动摆放')
 
         try:
-            worker = Worker(nodes)
-            worker.autoplace()
+            manager = Manager(nodes)
+            manager.autoplace()
         except CancelledError:
             cancelled = True
             print('用户取消自动摆放')
@@ -61,11 +61,10 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=True):
                 'Unexcepted excepitoion during autoplace.', exc_info=True)
             raise
         finally:
-            if undoable:
-                if cancelled:
-                    run_in_main_thread(nuke.Undo.cancel)()
-                else:
-                    run_in_main_thread(nuke.Undo.end)()
+            if undoable and cancelled:
+                run_in_main_thread(nuke.Undo.cancel)()
+            elif undoable:
+                run_in_main_thread(nuke.Undo.end)()
 
 
 def is_node_inside(node, backdrop):
@@ -171,7 +170,7 @@ class Nodes(list):
     def autoplace(self):
         """Auto place nodes."""
 
-        Worker(self).autoplace()
+        autoplace(self)
 
     def endnodes(self):
         """Return Nodes that has no contained downstream founded in given nodes.  """
@@ -232,27 +231,18 @@ def create_backdrop(nodes, autoplace_nodes=False):
     return n
 
 
-class Worker(object):
-    """Autoplace worker"""
+class Analyser(object):
+    """Nodes stuct analyser.  """
 
-    x_gap = 10
-    y_gap = 10
-    min_height = 22
-    min_width = 60
-    branch_thershold = 20
     non_base_node_classes = ('Viewer',)
+    branch_thershold = 20
 
-    def __init__(self, nodes=None):
-        self.nodes = nodes or nuke.allNodes()
-        self.nodes = Nodes(self.nodes)
-        self.end_nodes = set(self.nodes)
+    def __init__(self, nodes):
+        self.nodes = nodes
+        self._end_nodes = set(self.nodes)
         self.base_node_dict = {}
-        self.placed_nodes = set()
         self.counted_nodes = set()
         self.upstream_counts = {}
-        self.prev_nodes = set()
-        self.prev_branch_nodes = set()
-        self.task = Progress('摆放节点', len(self.nodes))
 
         self.count()
 
@@ -267,24 +257,35 @@ class Worker(object):
         for n in nodes:
             self.get_count(n, True)
 
+    @property
+    def end_nodes(self):
+        """Nodes that have no downstream node.  """
+
+        return sorted(self._end_nodes, key=self.get_count, reverse=True)
+
     def get_count(self, node, distinct=False):
         """Get upstream nodes count for @node.  """
 
         assert isinstance(node, nuke.Node),\
             'Expect a nuke.Node Type, got {}.'.format(repr(node))
+
         ret = 0
+
         counts_dict = self.upstream_counts
         if counts_dict.has_key(node):
             return counts_dict[node]
 
-        for n in node.dependencies(nuke.INPUTS):
-            if n not in self.nodes:
-                continue
-            ret += 1
-            if node.Class() not in self.non_base_node_classes \
-                    and (not distinct or n not in self.counted_nodes):
-                ret += self.get_count(n, distinct)
-                self.end_nodes.discard(n)
+        if isinstance(node, nuke.BackdropNode):
+            map(ret.__add__, [self.get_count(n) for n in node.getNodes()])
+        else:
+            for n in node.dependencies(nuke.INPUTS):
+                if n not in self.nodes:
+                    continue
+                ret += 1
+                if node.Class() not in self.non_base_node_classes \
+                        and (not distinct or n not in self.counted_nodes):
+                    ret += self.get_count(n, distinct)
+                    self._end_nodes.discard(n)
 
         if DEBUG:
             node['label'].setValue(str(ret))
@@ -294,106 +295,195 @@ class Worker(object):
             self.counted_nodes.add(node)
         return ret
 
+
+class Manager(Analyser):
+    """Autoplace manager.  """
+
+    def __init__(self, nodes):
+        assert isinstance(nodes, Iterable)
+
+        nodes = Nodes(nodes)
+        super(Manager, self).__init__(nodes)
+
+        self.nodes = nodes
+        self.prev_nodes = set()
+        self.task = Progress('摆放节点', len(self.nodes))
+
     @run_with_clock('自动摆放')
     def autoplace(self):
         """Autoplace nodes.  """
 
-        backdrops_dict = {n: Nodes(n.getNodes())
-                          for n in self.nodes if n.Class() == 'BackdropNode'}
+        backdrops = [n for n in self.nodes if isinstance(n, nuke.BackdropNode)]
+        backdrops.sort(self.get_count)
+        remains_nodes = set(self.nodes)
 
-        for n in sorted(self.end_nodes, key=self.get_count, reverse=True):
-            assert isinstance(n, nuke.Node)
-            self.autoplace_from(n)
+        # TODO
 
-        # left, top, right, bottom = (-10, -80, 10, 10)
-        # for backdrop, nodes_in_backdrop in backdrops_dict.items():
-        #     if not nodes_in_backdrop:
-        #         continue
-        #     up_nodes = Nodes(n for n in get_upstream_nodes(nodes_in_backdrop)
-        #                      if n.ypos() < nodes_in_backdrop.bottom
-        #                      and n not in nodes_in_backdrop)
-        #     if up_nodes:
-        #         up_nodes.bottom = nodes_in_backdrop.ypos + top - bottom
-        #     up_nodes.extend(nodes_in_backdrop)
-        #     up_nodes.ypos -= bottom
+        # for backdrop in backdrops:
+        #     assert isinstance(backdrop, nuke.BackdropNode)
 
-        # for backdrop, nodes_in_backdrop in backdrops_dict.items():
-        #     if not nodes_in_backdrop:
-        #         continue
-        #     backdrop.setXYpos(nodes_in_backdrop.xpos + left,
-        #                       nodes_in_backdrop.ypos + top)
-        #     backdrop['bdwidth'].setValue(
-        #         nodes_in_backdrop.width + (right - left))
-        #     backdrop['bdheight'].setValue(
-        #         nodes_in_backdrop.height + (bottom - top))
+        #     nodes = remains_nodes.intersection(backdrop.getNodes())
+        #     Worker(self, nodes, backdrop).run()
+        #     remains_nodes.difference_update(backdrops)
+        #     remains_nodes.difference_update(nodes)
+        #     self.task.step(backdrop.name())
+
+        Worker(self, remains_nodes).run()
 
         nuke.Root().setModified(True)
+
+
+class Worker(Analyser):
+    """Autoplace worker.  """
+
+    x_gap = 10
+    y_gap = 10
+    min_height = 22
+    min_width = 60
+    Padding = namedtuple('Padding', 'top right bottom left')
+    backdrop_padding = Padding(80, 10, 10, 10)
+
+    def __init__(self, manager, nodes, backdrop=None):
+        assert isinstance(manager, Manager)
+        assert isinstance(nodes, Iterable), nodes
+        assert backdrop is None \
+            or isinstance(backdrop, nuke.BackdropNode)
+
+        super(Worker, self).__init__(nodes)
+
+        nodes = Nodes(nodes)
+
+        self.backdrop = backdrop
+        self.nodes = nodes
+        self.task = manager.task
+        self.placed_nodes = set()
+        self.prev_branch_nodes = set()
+
+    def run(self):
+        """Run this worker.  """
+
+        for n in self.end_nodes:
+            self.autoplace_from(n)
+
+        self.autoplace_backdrop()
 
     def autoplace_from(self, node):
         """Autoplace @node and it's upstream.  """
 
         assert isinstance(node, nuke.Node)
-        if node in self.placed_nodes:
-            return
-        base_node = self.get_base_node(node)
-        is_new_branch = self.get_count(
-            node) > self.branch_thershold
 
-        # Place self
-        if base_node:
-            assert isinstance(base_node, nuke.Node)
-            base_dep = base_node.dependencies()
-            self_index = base_dep.index(node)
-            xpos = base_node.xpos() + base_node.screenWidth() / 2 - node.screenWidth() / 2
-            ypos = base_node.ypos() - self.y_gap - max(node.screenHeight(), self.min_height)
-            if self_index == 0:
-                pass
-            elif is_new_branch and self.placed_nodes:
-                xpos = Nodes(self.placed_nodes).right + self.x_gap * 50
-            else:
-                prev_node = base_dep[self_index - 1]
-                xpos = prev_node.xpos() + int(1.5 * max(prev_node.screenWidth(), self.min_width))  \
-                    - node.screenWidth() / 2 + self.x_gap
+        self.autoplace(node)
+        self.task.step(node.name())
 
-            if not is_new_branch and base_node:
-                # Replace prev nodes
-                prev_nodes = Nodes(self.get_prev_nodes(node))
-                if prev_nodes:
-                    prev_nodes.bottom = min(
-                        ypos - self.y_gap, prev_nodes.bottom)
-        elif self.placed_nodes:
-            xpos = Nodes(self.placed_nodes).right + self.x_gap * 10
-            ypos = 0
-        elif self.nodes == nuke.allNodes():
-            xpos = 0
-            ypos = 0
+        if node.Class() not in self.non_base_node_classes:
+            for n in node.dependencies(nuke.INPUTS):
+                if n in self.nodes and n not in self.placed_nodes:
+                    self.autoplace_from(n)
+
+    @run_in_main_thread
+    def autoplace_backdrop(self):
+        """Match backdrop size and position to nodes.   """
+
+        nodes = Nodes(self.nodes)
+        backdrop = self.backdrop
+        top, right, bottom, left = self.backdrop_padding
+
+        if not backdrop:
+            pass
+        elif nodes:
+            backdrop.setXYpos(nodes.xpos - left, nodes.ypos - top)
+            backdrop['bdwidth'].setValue(nodes.width + right + left)
+            backdrop['bdheight'].setValue(nodes.height + bottom + top)
         else:
+            self.autoplace(backdrop)
+
+    @run_in_main_thread
+    def autoplace(self, node):
+        """Autoplace single node.  """
+
+        def _base_node():
+            if base_node and base_node in self.nodes:
+                assert isinstance(base_node, nuke.Node)
+                base_dep = base_node.dependencies()
+                self_index = base_dep.index(node)
+                is_new_branch = self.get_count(
+                    node) > self.branch_thershold
+                xpos = base_node.xpos() + base_node.screenWidth() / 2 - node.screenWidth() / 2
+                ypos = base_node.ypos() - self.y_gap - max(node.screenHeight(), self.min_height)
+                if self_index == 0:
+                    pass
+                elif is_new_branch and self.placed_nodes:
+                    xpos = Nodes(self.placed_nodes).right + self.x_gap * 50
+                else:
+                    prev_node = base_dep[self_index - 1]
+                    xpos = prev_node.xpos()\
+                        + int(1.5 * max(prev_node.screenWidth(), self.min_width))  \
+                        - node.screenWidth() / 2 + self.x_gap
+
+                if not is_new_branch:
+                    # Replace prev nodes
+                    prev_nodes = Nodes(self.get_prev_nodes(node))
+                    if prev_nodes:
+                        prev_nodes.bottom = min(
+                            ypos - self.y_gap, prev_nodes.bottom)
+                return (xpos, ypos)
+
+        def _backdrop():
+            backdrop = self.backdrop
+            padding = self.backdrop_padding
+
+            if backdrop:
+                assert isinstance(backdrop, nuke.Node)
+
+                backdrop = Nodes(backdrop)
+                xpos = backdrop.xpos + padding.left
+                ypos = backdrop.bottom - padding.bottom - node.screenHeight()
+                return (xpos, ypos)
+
+        def _placed_nodes():
+            if self.placed_nodes:
+                nodes = Nodes(self.placed_nodes)
+                xpos = nodes.right + self.x_gap * 10
+                ypos = -node.screenHeight()
+                return (xpos, ypos)
+
+        def _all_nodes():
+            if not set(nuke.allNodes()).difference(self.nodes):
+                xpos = 0
+                ypos = -node.screenHeight()
+                return (xpos, ypos)
+
+        def _default():
             xpos = self.nodes.xpos
             ypos = self.nodes.bottom - self.min_height
+            return (xpos, ypos)
 
-        node.setXYpos(xpos, ypos)
+        base_node = self.get_base_node(node)
+        methods = (_base_node, _backdrop, _placed_nodes, _all_nodes, _default)
+        pos = None
+        method = None
+        for method in methods:
+            pos = method()
+            if pos:
+                node.setXYpos(*pos)
+                break
+        else:
+            raise RuntimeError('No autoplace method can be used.')
+
         if not base_node:
             self.prev_branch_nodes.update(self.placed_nodes)
         self.placed_nodes.add(node)
-        self.task.step()
 
         if DEBUG:
-            # node.selectOnly()
+            node.selectOnly()
             nuke.zoomToFitSelected()
-            if not nuke.ask('{}:\nbase:{}\nup count:{}\nx: {} y: {}\nnew_branch:{}'.format(
+            if not nuke.ask('{}:\nbase:{}\nup count:{}\nmethod:{}\nx: {} y: {}'.format(
                     node.name(),
                     base_node and base_node.name(),
                     self.get_count(node),
-                    xpos,
-                    ypos,
-                    is_new_branch)):
+                    method.__name__,
+                    *pos)):
                 raise RuntimeError
-
-        if node.Class() not in self.non_base_node_classes:
-            # Place upstream
-            for n in node.dependencies(nuke.INPUTS):
-                if n in self.nodes:
-                    self.autoplace_from(n)
 
     @run_in_main_thread
     def get_base_node(self, node):
@@ -409,12 +499,28 @@ class Worker(object):
         assert isinstance(downstream_nodes, list), downstream_nodes
         downstream_nodes = [i for i in downstream_nodes
                             if i.Class() not in self.non_base_node_classes]
-        downstream_nodes.sort(
-            key=lambda x: (x not in self.placed_nodes, self.get_count(x)))
+        downstream_nodes.sort(key=lambda x: (
+            x not in self.placed_nodes, self.get_count(x)))
         base_node = downstream_nodes[0] if downstream_nodes else None
         outcome_dict[node] = base_node
 
         return base_node
+
+    @run_in_main_thread
+    def get_prev_nodes(self, node):
+        """Get previous placed nodes for @node.  """
+
+        assert isinstance(node, nuke.Node)
+
+        branch = self.get_branch(node)
+        branch_base = self.get_base_node(branch[0])
+        ret = set(self.placed_nodes)
+        ret.difference_update(branch)
+        ret.difference_update(self.prev_branch_nodes)
+        if branch_base:
+            ret.intersection_update(get_upstream_nodes(branch_base))
+
+        return ret
 
     @run_in_main_thread
     def get_branch(self, node):
@@ -434,20 +540,4 @@ class Worker(object):
                 n = base
             else:
                 break
-        return ret
-
-    @run_in_main_thread
-    def get_prev_nodes(self, node):
-        """Get previous placed nodes for @node.  """
-
-        assert isinstance(node, nuke.Node)
-
-        branch = self.get_branch(node)
-        branch_base = self.get_base_node(branch[0])
-        ret = set(self.placed_nodes)
-        ret.difference_update(branch)
-        ret.difference_update(self.prev_branch_nodes)
-        if branch_base:
-            ret.intersection_update(get_upstream_nodes(branch_base))
-
         return ret
