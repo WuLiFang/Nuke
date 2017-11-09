@@ -20,6 +20,7 @@ import edit_panels
 import cgtwn
 import orgnize
 import comp
+import batchcomp
 import splitexr
 import scanner
 import panels
@@ -133,7 +134,7 @@ def add_menu():
 
     def _tools(menu):
         m = menu.addMenu('工具')
-        m.addCommand('批量自动合成', comp.Comp.show_dialog,
+        m.addCommand('批量自动合成', lambda: batchcomp.Dialog().showModalDialog(),
                      icon='autocomp.png')
         m.addCommand(
             '创建色板', wlf.csheet.dialog_create_html)
