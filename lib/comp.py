@@ -24,7 +24,7 @@ from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
 
-__version__ = '0.18.8'
+__version__ = '0.18.9'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -236,10 +236,6 @@ class Comp(object):
         self.task_step(u'合并BG CH')
         n = self._bg_ch_nodes()
 
-        self.task_step(u'创建MP')
-        n = self._merge_mp(
-            n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
-
         self.task_step(u'合并其他层')
         n = self._merge_other(n, self._bg_ch_end_nodes)
 
@@ -320,14 +316,13 @@ class Comp(object):
         n = nuke.nodes.Reformat(inputs=[n], resize='fill')
         n = nuke.nodes.Transform(inputs=[n])
         n = _add_lut(n)
-        n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
+        n = nuke.nodes.Grade(inputs=[n], disable=True)
         n = nuke.nodes.Grade(
             inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')],
             disable=True)
         n = nuke.nodes.ProjectionMP(inputs=[n])
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
-        n = nuke.nodes.Defocus(inputs=[n], disable=True)
         n = nuke.nodes.Reformat(inputs=[n], resize='none')
         n = nuke.nodes.DiskCache(inputs=[n])
         input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n],
@@ -414,21 +409,28 @@ class Comp(object):
         for i, n in enumerate(nodes):
             self.task_step(u'创建{}'.format(
                 n.metadata(self.tag_metadata_key) or n.name()))
-            n = self._bg_ch_node(n)
+            n = self._bg_ch_node_1(n)
 
             if i == 0:
+                self.task_step(u'创建MP')
+                n = self._merge_mp(
+                    n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
                 n = self._merge_occ(n)
                 n = self._merge_shadow(n)
                 n = self._merge_screen(n)
+            n = self._bg_ch_node_2(n)
+            if i == 0:
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} main}}'.format(
                         self.tag_metadata_key),
                     label='主干开始')
+
             if i > 0:
                 n = nuke.nodes.Merge2(
                     inputs=[nodes[i - 1], n],
                     label=n.metadata(self.tag_metadata_key) or ''
                 )
+
             nodes[i] = n
         return n
 
@@ -449,7 +451,7 @@ class Comp(object):
             nodes = tag_nodes_dict[tag]
             try:
                 LOGGER.debug('Precomp: %s', tag)
-                n = precomp.redshift(nodes)
+                n = precomp.redshift(nodes, async_=False)
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} {}}}'.format(
                         self.tag_metadata_key, tag),
@@ -460,7 +462,7 @@ class Comp(object):
 
         return ret
 
-    def _bg_ch_node(self, input_node):
+    def _bg_ch_node_1(self, input_node):
         n = input_node
         tag = n.metadata(self.tag_metadata_key)
         if 'MotionVectors' in nuke.layers(input_node):
@@ -523,7 +525,7 @@ class Comp(object):
             n = nuke.nodes.ColorCorrect(inputs=[n, input_mask], disable=True)
             n = nuke.nodes.Grade(
                 inputs=[n, input_mask],
-                black=0.01,
+                black=0.05,
                 black_panelDropped=True,
                 label='深度雾',
                 disable=True)
@@ -539,8 +541,11 @@ class Comp(object):
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
+        return n
+
+    def _bg_ch_node_2(self, input_node):
         n = nuke.nodes.Reformat(
-            inputs=[n],
+            inputs=[input_node],
             resize='none',
             label='滤镜开始')
 
@@ -704,33 +709,6 @@ class Comp(object):
         n = nuke.nodes.ZDefocus2(inputs=[input_node], math='depth', output='focal plane setup',
                                  center=0.00234567, blur_dof=False, label='** 虚焦总控制 **\n在此拖点定虚焦及设置')
         n.setName(u'_ZDefocus')
-        return n
-
-    @staticmethod
-    def _add_depthfog_control(input_node):
-        node_color = 596044543
-        n = nuke.nodes.DepthKeyer(
-            label='**深度雾总控制**\n在此设置深度雾范围及颜色',
-            range='1 1 1 1',
-            gl_color=node_color,
-            tile_color=node_color,
-        )
-
-        n.setName(u'_DepthFogControl')
-        # n = n.makeGroup()
-
-        k = nuke.Text_Knob('颜色控制')
-        n.addKnob(k)
-
-        k = nuke.Color_Knob('fog_color', '雾颜色')
-        k.setValue((0.009, 0.025133, 0.045))
-        n.addKnob(k)
-
-        k = nuke.Double_Knob('fog_mix', 'mix')
-        k.setValue(1)
-        n.addKnob(k)
-
-        n.setInput(0, input_node)
         return n
 
 
