@@ -11,22 +11,22 @@ from wlf.path import get_layer
 from edit import add_layer, copy_layer, undoable_func
 from orgnize import autoplace
 
-__version__ = '0.3.17'
+__version__ = '0.3.18'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
 @undoable_func('Redshift预合成')
-def redshift(nodes):
+def redshift(nodes, **kwargs):
     """Precomp reshift footages.  """
 
-    return Precomp(nodes, renderer='redshift').last_node
+    return Precomp(nodes, renderer='redshift', **kwargs).last_node
 
 
 class Precomp(object):
     """A sequence of merge or copy.  """
     last_node = None
 
-    def __init__(self, nodes, renderer='redshift'):
+    def __init__(self, nodes, renderer='redshift', async_=True):
         assert nodes, 'Can not precomp without node.'
 
         config_file = os.path.join(
@@ -76,7 +76,8 @@ class Precomp(object):
         for layer in self._config.get('plus'):
             self.plus(layer)
 
-        autoplace(self.last_node, recursive=True, undoable=False)
+        autoplace(self.last_node, recursive=True,
+                  undoable=False, async_=async_)
 
     def check(self):
         """Check if has all necessary layer.  """
