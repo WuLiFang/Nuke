@@ -1,12 +1,12 @@
 # -*- coding=UTF-8 -*-
 """Comp footages and create output, can be run as script.  """
 
-import json
 import logging
 import os
 import re
 import sys
 import webbrowser
+import argparse
 
 import nuke
 import nukescripts
@@ -14,17 +14,20 @@ import nukescripts
 import wlf.config
 import wlf.mp_logging
 from wlf.notify import Progress
-from wlf.path import get_unicode
 
 import precomp
-from edit import get_max
 from node import ReadNode
 from orgnize import autoplace
+from edit import undoable_func
 
-__version__ = '0.18.10'
+__version__ = '0.19.0'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
+
+if sys.getdefaultencoding != 'UTF-8':
+    reload(sys)
+    sys.setdefaultencoding('UTF-8')
 
 
 def _set_logger():
@@ -52,21 +55,85 @@ class Config(wlf.config.Config):
     default = {
         'fps': 25,
         'footage_pat': r'^.+\.exr[0-9\- ]*$',
-        'dir_pat': r'^.{4,}$',
         'tag_pat':
         r'(?i)(?:[^_]+_)?(?:ep\d+_)?(?:\d+[a-zA-Z]*_)?'
         r'(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
-        'output_dir': 'E:/precomp',
-        'input_dir': 'Z:/SNJYW/Render/EP',
-        'txt_name': '镜头备注',
         'mp': r"Z:\SNJYW\MP\EP14\MP_EP14_1.nk",
-        'autograde': False,
-        'exclude_existed': True,
+        'precomp': True,
+        'masks': True,
+        'colorcorrect': True,
+        'filters': True,
+        'zdefocus': True,
+        'depth': True,
+        'other': True,
     }
     path = os.path.expanduser(u'~/.nuke/wlf.comp.json')
 
 
 CONFIG = Config()
+
+if not nuke.GUI:
+    nukescripts.PythonPanel = object
+
+
+class Dialog(nukescripts.PythonPanel):
+    """Dialog UI of comp config.  """
+
+    knob_list = [
+        (nuke.File_Knob, 'mp', '指定MP'),
+        (nuke.File_Knob, 'mp_lut', 'MP LUT'),
+        (nuke.Tab_Knob, 'parts', '节点组开关'),
+        (nuke.Boolean_Knob, 'precomp', '预合成'),
+        (nuke.Boolean_Knob, 'masks', '预建常用mask'),
+        (nuke.Boolean_Knob, 'colorcorrect', '预建调色节点'),
+        (nuke.Boolean_Knob, 'filters', '预建滤镜节点'),
+        (nuke.Boolean_Knob, 'zdefocus', '预建ZDefocus'),
+        (nuke.Boolean_Knob, 'depth', '合并depth'),
+        (nuke.Boolean_Knob, 'other', '合并其他通道'),
+        (nuke.Tab_Knob, 'filter', '正则过滤'),
+        (nuke.String_Knob, 'footage_pat', '素材名'),
+        (nuke.String_Knob, 'tag_pat', '标签'),
+        (nuke.Script_Knob, 'reset', '重置'),
+    ]
+
+    def __init__(self):
+        nukescripts.PythonPanel.__init__(
+            self, '自动合成设置', 'com.wlf.comp')
+        self._shot_list = None
+
+        for i in self.knob_list:
+            k = i[0](i[1], i[2])
+            try:
+                k.setValue(CONFIG.get(i[1]))
+            except TypeError:
+                pass
+            self.addKnob(k)
+        for i in ('reset', 'precomp', 'masks', 'colorcorrect', 'filters', 'zdefocus',
+                  'depth', 'other'):
+            self.knobs()[i].setFlag(nuke.STARTLINE)
+
+    def knobChanged(self, knob):
+        """Overrride for buttons."""
+
+        if knob is self.knobs()['OK']:
+            self.update_config()
+        elif knob is self.knobs()['reset']:
+            self.reset()
+
+    def reset(self):
+        """Reset re pattern.  """
+
+        for i in ('footage_pat', 'tag_pat'):
+            knob = self.knobs()[i]
+            knob.setValue(CONFIG.default.get(i))
+            self.knobChanged(knob)
+
+    def update_config(self):
+        """Write all setting to config.  """
+
+        for i in self.knob_list:
+            if i[1] in CONFIG:
+                CONFIG[i[1]] = self.knobs()[i[1]].value()
 
 
 class Comp(object):
@@ -75,22 +142,17 @@ class Comp(object):
     tag_metadata_key = 'comp/tag'
     _attenuation_radial = None
 
-    def __init__(self, config=None):
-        LOGGER.info(u'吾立方批量合成 %s', __version__)
+    def __init__(self):
+        LOGGER.info(u'吾立方自动合成 %s', __version__)
 
-        self._config = dict(config or Config())
         self._errors = []
         self._bg_ch_end_nodes = []
-
-        for key, value in self._config.iteritems():
-            if isinstance(value, str):
-                self._config[key] = value.replace(u'\\', '/')
-
         self._task = Progress(u'自动合成', total=20)
-        if config:
-            LOGGER.info(u'# %s', config['shot'])
-            nuke.scriptClear()
-            self.import_resource()
+
+        for key, value in CONFIG.iteritems():
+            if isinstance(value, str):
+                CONFIG[key] = value.replace(u'\\', '/')
+
         if not nuke.value('root.project_directory'):
             nuke.knob("root.project_directory",
                       r"[python {os.path.join("
@@ -100,14 +162,13 @@ class Comp(object):
         self.setup()
         self.task_step(u'创建节点树')
         self.create_nodes()
-        if config:
-            self.output()
+
         LOGGER.info(u'\n\n')
 
     @property
     def fps(self):
         """Frame per secondes.  """
-        return self._config.get('fps') or nuke.numvalue('root.fps')
+        return CONFIG.get('fps') or nuke.numvalue('root.fps')
 
     def task_step(self, message=None):
         """Push task progress bar forward.  """
@@ -115,42 +176,16 @@ class Comp(object):
             LOGGER.info(u'{:-^30s}'.format(message))
         self._task.step(message)
 
-    @staticmethod
-    def get_shot_list(config, include_existed=False):
-        """Return shot_list generator from a config dict."""
-
-        _dir = config['input_dir']
-        _out_dir = config[u'output_dir']
-        if not os.path.isdir(_dir):
-            return
-
-        _ret = os.listdir(_dir)
-        if isinstance(_ret[0], str):
-            _ret = (get_unicode(i) for i in _ret)
-        if config['exclude_existed'] and not include_existed:
-            _ret = (i for i in _ret
-                    if not os.path.exists(os.path.join(_out_dir, u'{}_v0.nk'.format(i)))
-                    and not os.path.exists(os.path.join(_out_dir, u'{}.nk'.format(i))))
-        _ret = (i for i in _ret if (
-            re.match(config['dir_pat'], i) and os.path.isdir(os.path.join(_dir, i))))
-
-        if not _ret:
-            _dir = _dir.rstrip('\\/')
-            _dirname = os.path.basename(_dir)
-            if re.match(config['dir_pat'], _dir):
-                _ret = [_dir]
-        return sorted(_ret)
-
-    def import_resource(self):
+    def import_resource(self, dir_path):
         """Import footages from config dictionary."""
 
         # Get all subdir
-        dirs = list(x[0] for x in os.walk(self._config['footage_dir']))
+        dirs = list(x[0] for x in os.walk(dir_path))
         self.task_step(u'导入素材')
         for dir_ in dirs:
             # Get footage in subdir
             LOGGER.info(u'文件夹 %s:', dir_)
-            if not re.match(self._config['dir_pat'], os.path.basename(dir_.rstrip('\\/'))):
+            if not re.match(CONFIG['dir_pat'], os.path.basename(dir_.rstrip('\\/'))):
                 LOGGER.info(u'\t不匹配文件夹正则, 跳过')
                 continue
 
@@ -162,7 +197,7 @@ class Comp(object):
                         LOGGER.info(u'\t文件夹: %s', f)
                         continue
                     LOGGER.info(u'\t素材: %s', f)
-                    if re.match(self._config['footage_pat'], f, flags=re.I):
+                    if re.match(CONFIG['footage_pat'], f, flags=re.I):
                         nuke.createNode(
                             u'Read', 'file {{{}/{}}}'.format(dir_, f))
                     else:
@@ -170,7 +205,7 @@ class Comp(object):
         LOGGER.info(u'{:-^30s}'.format(u'结束 导入素材'))
 
         if not nuke.allNodes(u'Read'):
-            raise FootageError(self._config['footage_dir'], u'没有素材')
+            raise FootageError(CONFIG['footage_dir'], u'没有素材')
 
     def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
@@ -225,23 +260,26 @@ class Comp(object):
 
         return n
 
+    @undoable_func('自动合成')
     def create_nodes(self):
         """Create nodes that a comp need."""
         self.task_step(u'合并BG CH')
         n = self._bg_ch_nodes()
 
-        self.task_step(u'合并其他层')
-        n = self._merge_other(n, self._bg_ch_end_nodes)
+        if CONFIG['other']:
+            self.task_step(u'合并其他层')
+            n = self._merge_other(n, self._bg_ch_end_nodes)
 
-        self.task_step(u'创建整体深度')
-        nodes = nuke.allNodes('DepthFix')
-        n = self._merge_depth(n, nodes)
-        self.task_step(u'添加虚焦控制')
-        self._add_zdefocus_control(n)
+        if CONFIG['depth']:
+            self.task_step(u'创建整体深度')
+            nodes = nuke.allNodes('DepthFix')
+            n = self._merge_depth(n, nodes)
+
+        if CONFIG['zdefocus']:
+            self.task_step(u'添加虚焦控制')
+            self._add_zdefocus_control(n)
 
         n = nuke.nodes.Unpremult(inputs=[n], label='整体调色开始')
-
-        # n = self._attenuation_adjust(n)
 
         n = nuke.nodes.Premult(inputs=[n], label='整体调色结束')
 
@@ -252,19 +290,17 @@ class Comp(object):
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
-
-        n = nuke.nodes.Glow2(inputs=[n],
-                             tolerance=0.6,
-                             saturation=0.5,
-                             size=100,
-                             mix=0.25,
-                             disable=True)
-        # n = nuke.nodes.HighPassSharpen(inputs=[n], mode='highpass only')
-        # n = nuke.nodes.Merge2(
-        #     inputs=[n.input(0), n], operation='soft-light', mix='0.2', label='略微锐化')
-        if 'motion' in nuke.layers(n):
-            n = nuke.nodes.VectorBlur2(
-                inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=False, disable=True)
+        if CONFIG.get('filters'):
+            n = nuke.nodes.Glow2(inputs=[n],
+                                 tolerance=0.6,
+                                 saturation=0.5,
+                                 size=100,
+                                 mix=0.25,
+                                 disable=True)
+            if 'motion' in nuke.layers(n):
+                n = nuke.nodes.VectorBlur2(
+                    inputs=[n], uv='motion', scale=1,
+                    soft_lines=True, normalize=False, disable=True)
         n = nuke.nodes.Aberration(
             inputs=[n], distortion1='0 0 0.003', label='溢色')
 
@@ -281,7 +317,7 @@ class Comp(object):
         map(nuke.delete, nuke.allNodes('Viewer'))
         nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
-        autoplace()
+        autoplace(undoable=False)
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
@@ -299,21 +335,30 @@ class Comp(object):
         mp_file = mp_file.replace('\\', '/')
 
         if mp_file.endswith('.nk'):
-            n = nuke.nodes.Precomp(file=mp_file, postage_stamp=True)
+            n = nuke.nodes.Precomp(file=mp_file,
+                                   postage_stamp=True)
         else:
             n = nuke.nodes.Read(file=mp_file)
             n['file'].fromUserText(mp_file)
         n.setName(u'MP')
         n = nuke.nodes.ModifyMetaData(
-            inputs=[n], metadata='{{set comp/tag {}}}'.format('MP'))
+            inputs=[n],
+            label='元数据标签',
+            metadata='{{set comp/tag {}}}'.format('MP'))
 
         n = nuke.nodes.Reformat(inputs=[n], resize='fill')
         n = nuke.nodes.Transform(inputs=[n])
+
+        n = nuke.nodes.Unpremult(inputs=[n], label='调色开始')
         n = _add_lut(n)
-        n = nuke.nodes.Grade(inputs=[n], disable=True)
-        n = nuke.nodes.Grade(
-            inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')],
-            disable=True)
+
+        if CONFIG['colorcorrect']:
+            n = nuke.nodes.Grade(inputs=[n], disable=True)
+            n = nuke.nodes.Grade(
+                inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')],
+                disable=True)
+        n = nuke.nodes.Premult(inputs=[n], label='调色结束')
+
         n = nuke.nodes.ProjectionMP(inputs=[n])
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
@@ -349,11 +394,11 @@ class Comp(object):
         ret.sort(key=cls._nodes_order, reverse=True)
         return ret
 
-    def output(self):
+    def output(self, filename):
         """Save .nk file and render .jpg file."""
 
         LOGGER.info(u'{:-^30s}'.format(u'开始 输出'))
-        _path = self._config['save_path'].replace('\\', '/')
+        _path = filename.replace('\\', '/')
         _dir = os.path.dirname(_path)
         if not os.path.exists(_dir):
             os.makedirs(_dir)
@@ -364,7 +409,7 @@ class Comp(object):
         nuke.scriptSave(_path)
 
         # Render png
-        if self._config.get('RENDER_JPG'):
+        if CONFIG.get('RENDER_JPG'):
             for n in nuke.allNodes('Read'):
                 name = n.name()
                 if name in ('MP', 'Read_Write_JPG'):
@@ -403,16 +448,19 @@ class Comp(object):
         for i, n in enumerate(nodes):
             self.task_step(u'创建{}'.format(
                 n.metadata(self.tag_metadata_key) or n.name()))
-            n = self._bg_ch_node_1(n)
+            n = self._prepare_channels(n)
+            n = self._add_colorcorrect_nodes(n)
 
             if i == 0:
                 self.task_step(u'创建MP')
                 n = self._merge_mp(
-                    n, mp_file=self._config['mp'], lut=self._config.get('mp_lut'))
+                    n, mp_file=CONFIG['mp'], lut=CONFIG.get('mp_lut'))
                 n = self._merge_occ(n)
                 n = self._merge_shadow(n)
                 n = self._merge_screen(n)
-            n = self._bg_ch_node_2(n)
+
+            n = self._add_filter_nodes(n)
+
             if i == 0:
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} main}}'.format(
@@ -445,39 +493,43 @@ class Comp(object):
             nodes = tag_nodes_dict[tag]
             try:
                 LOGGER.debug('Precomp: %s', tag)
-                n = precomp.redshift(nodes, async_=False)
+                if len(nodes) == 1 and not CONFIG.get('precomp'):
+                    n = nodes[0]
+                else:
+                    n = precomp.redshift(nodes, async_=False)
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} {}}}'.format(
                         self.tag_metadata_key, tag),
-                    label='预合成结束')
+                    label='元数据标签')
                 ret.append(n)
             except AssertionError:
                 ret.extend(nodes)
 
         return ret
 
-    def _bg_ch_node_1(self, input_node):
+    @classmethod
+    def _prepare_channels(cls, input_node):
         n = input_node
-        tag = n.metadata(self.tag_metadata_key)
+        if CONFIG['masks']:
+            if 'SSS.alpha' in input_node.channels():
+                n = nuke.nodes.Keyer(
+                    inputs=[n],
+                    input='SSS',
+                    output='SSS.alpha',
+                    operation='luminance key',
+                    range='0 0.01 1 1'
+                )
+            if 'Emission.alpha' in input_node.channels():
+                n = nuke.nodes.Keyer(
+                    inputs=[n],
+                    input='Emission',
+                    output='Emission.alpha',
+                    operation='luminance key',
+                    range='0 0.2 1 1'
+                )
         if 'MotionVectors' in nuke.layers(input_node):
             n = nuke.nodes.MotionFix(
                 inputs=[n], channel='MotionVectors', output='motion')
-        if 'SSS.alpha' in input_node.channels():
-            n = nuke.nodes.Keyer(
-                inputs=[n],
-                input='SSS',
-                output='SSS.alpha',
-                operation='luminance key',
-                range='0 0.01 1 1'
-            )
-        if 'Emission.alpha' in input_node.channels():
-            n = nuke.nodes.Keyer(
-                inputs=[n],
-                input='Emission',
-                output='Emission.alpha',
-                operation='luminance key',
-                range='0 0.2 1 1'
-            )
         if 'depth.Z' not in input_node.channels():
             _constant = nuke.nodes.Constant(
                 channels='depth',
@@ -492,52 +544,61 @@ class Comp(object):
         n = nuke.nodes.Reformat(inputs=[n], resize='fit')
 
         n = nuke.nodes.DepthFix(inputs=[n])
-        if self._config['autograde']:
-            if get_max(input_node, 'depth.Z') > 1.1:
-                n['farpoint'].setValue(10000)
+        return n
+
+    def _add_colorcorrect_nodes(self, input_node):
+
+        tag = input_node.metadata(self.tag_metadata_key)
+        n = input_node
+
+        # if CONFIG['autograde']:
+        #     if get_max(input_node, 'depth.Z') > 1.1:
+        #         n['farpoint'].setValue(10000)
 
         n = nuke.nodes.Unpremult(inputs=[n], label='调色开始')
 
-        if self._config['autograde']:
-            LOGGER.info(u'{:-^30s}'.format(u'开始 自动亮度'))
-            n = nuke.nodes.Grade(
-                inputs=[n],
-                unpremult='rgba.alpha',
-                label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
-            )
-            _max = self._autograde_get_max(input_node)
-            n['whitepoint'].setValue(_max)
-            n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
-            LOGGER.info(u'{:-^30s}'.format(u'结束 自动亮度'))
-        n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
-        n = nuke.nodes.RolloffContrast(
-            inputs=[n], contrast=2, center=0.001, soft_clip=1, disable=True)
-
-        if tag and tag.startswith('BG'):
-            kwargs = {'in': 'depth', 'label': '远处'}
-            input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
-            n = nuke.nodes.ColorCorrect(inputs=[n, input_mask], disable=True)
-            n = nuke.nodes.Grade(
-                inputs=[n, input_mask],
-                black=0.05,
-                black_panelDropped=True,
-                label='深度雾',
-                disable=True)
-            kwargs = {'in': 'depth', 'label': '近处'}
-            input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
+        # if CONFIG['autograde']:
+        #     LOGGER.info(u'{:-^30s}'.format(u'开始 自动亮度'))
+        #     n = nuke.nodes.Grade(
+        #         inputs=[n],
+        #         unpremult='rgba.alpha',
+        #         label='白点: [value this.whitepoint]\n混合:[value this.mix]\n使亮度范围靠近0-1'
+        #     )
+        #     _max = self._autograde_get_max(input_node)
+        #     n['whitepoint'].setValue(_max)
+        #     n['mix'].setValue(0.3 if _max < 0.5 else 0.6)
+        #     LOGGER.info(u'{:-^30s}'.format(u'结束 自动亮度'))
+        if CONFIG['colorcorrect']:
+            n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
             n = nuke.nodes.RolloffContrast(
-                inputs=[n, input_mask],
-                contrast=2,
-                center=0.001,
-                soft_clip=1,
-                disable=True)
-        n = self._attenuation_adjust(n)
+                inputs=[n], contrast=2, center=0.001, soft_clip=1, disable=True)
+
+            if tag and tag.startswith('BG'):
+                kwargs = {'in': 'depth', 'label': '远处'}
+                input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
+                n = nuke.nodes.ColorCorrect(
+                    inputs=[n, input_mask], disable=True)
+                n = nuke.nodes.Grade(
+                    inputs=[n, input_mask],
+                    black=0.05,
+                    black_panelDropped=True,
+                    label='深度雾',
+                    disable=True)
+                kwargs = {'in': 'depth', 'label': '近处'}
+                input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
+                n = nuke.nodes.RolloffContrast(
+                    inputs=[n, input_mask],
+                    contrast=2,
+                    center=0.001,
+                    soft_clip=1,
+                    disable=True)
+            n = self._attenuation_adjust(n)
 
         n = nuke.nodes.Premult(inputs=[n], label='调色结束')
 
         return n
 
-    def _bg_ch_node_2(self, input_node):
+    def _add_filter_nodes(self, input_node):
         n = nuke.nodes.Reformat(
             inputs=[input_node],
             resize='none',
@@ -545,41 +606,44 @@ class Comp(object):
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
-        n = nuke.nodes.ZDefocus2(
-            inputs=[n],
-            math='depth',
-            center='{{[value _ZDefocus.center curve]}}',
-            focal_point='1.#INF 1.#INF',
-            dof='{{[value _ZDefocus.dof curve]}}',
-            blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
-            size='{{[value _ZDefocus.size curve]}}',
-            max_size='{{[value _ZDefocus.max_size curve]}}',
-            label='[\nset trg parent._ZDefocus\n'
-            'knob this.math [value $trg.math depth]\n'
-            'knob this.z_channel [value $trg.z_channel depth.Z]\n'
-            'if {[exists _ZDefocus]} '
-            '{return \"由_ZDefocus控制\"} '
-            'else '
-            '{return \"需要_ZDefocus节点\"}\n]',
-            disable='{{![exists _ZDefocus] '
-            '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
-            '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
-        )
 
-        if 'motion' in nuke.layers(n):
-            n = nuke.nodes.VectorBlur2(
-                inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=True, disable=True)
+        if CONFIG['zdefocus']:
+            n = nuke.nodes.ZDefocus2(
+                inputs=[n],
+                math='depth',
+                center='{{[value _ZDefocus.center curve]}}',
+                focal_point='1.#INF 1.#INF',
+                dof='{{[value _ZDefocus.dof curve]}}',
+                blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
+                size='{{[value _ZDefocus.size curve]}}',
+                max_size='{{[value _ZDefocus.max_size curve]}}',
+                label='[\nset trg parent._ZDefocus\n'
+                'knob this.math [value $trg.math depth]\n'
+                'knob this.z_channel [value $trg.z_channel depth.Z]\n'
+                'if {[exists _ZDefocus]} '
+                '{return \"由_ZDefocus控制\"} '
+                'else '
+                '{return \"需要_ZDefocus节点\"}\n]',
+                disable='{{![exists _ZDefocus] '
+                '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
+                '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
+            )
 
-        try:
-            n = nuke.nodes.RSMB(inputs=[n], disable=True, label='运动模糊')
-        except RuntimeError:
-            LOGGER.info(u'RSMB插件未安装')
+        if CONFIG['filters']:
+            if 'motion' in nuke.layers(n):
+                n = nuke.nodes.VectorBlur2(
+                    inputs=[n], uv='motion', scale=1, soft_lines=True, normalize=True, disable=True)
 
-        if 'Emission' in nuke.layers(n):
-            kwargs = {'W': 'Emission.alpha'}
-        else:
-            kwargs = {'disable': True}
-        n = nuke.nodes.Glow2(inputs=[n], size=30, label='自发光辉光', **kwargs)
+            try:
+                n = nuke.nodes.RSMB(inputs=[n], disable=True, label='运动模糊')
+            except RuntimeError:
+                LOGGER.info(u'RSMB插件未安装')
+
+            if 'Emission' in nuke.layers(n):
+                kwargs = {'W': 'Emission.alpha'}
+            else:
+                kwargs = {'disable': True}
+            n = nuke.nodes.Glow2(inputs=[n], size=30, label='自发光辉光', **kwargs)
 
         n = nuke.nodes.Reformat(
             inputs=[n],
@@ -591,20 +655,20 @@ class Comp(object):
         self._bg_ch_end_nodes.append(n)
         return n
 
-    @staticmethod
-    def _autograde_get_max(n):
-        # Exclude small highlight
-        ret = 100
-        erode = 0
-        n = nuke.nodes.Dilate(inputs=[n])
-        while ret > 1 and erode > n.height() / -100.0:
-            n['size'].setValue(erode)
-            LOGGER.info(u'收边 %s', erode)
-            ret = get_max(n, 'rgb')
-            erode -= 1
-        nuke.delete(n)
+    # @staticmethod
+    # def _autograde_get_max(n):
+    #     # Exclude small highlight
+    #     ret = 100
+    #     erode = 0
+    #     n = nuke.nodes.Dilate(inputs=[n])
+    #     while ret > 1 and erode > n.height() / -100.0:
+    #         n['size'].setValue(erode)
+    #         LOGGER.info(u'收边 %s', erode)
+    #         ret = get_max(n, 'rgb')
+    #         erode -= 1
+    #     nuke.delete(n)
 
-        return ret
+    #     return ret
 
     @staticmethod
     def _merge_depth(input_node, nodes):
@@ -763,13 +827,17 @@ class RenderError(Exception):
 def main():
     """Run this moudule as a script."""
 
-    if sys.getdefaultencoding != 'UTF-8':
-        reload(sys)
-        sys.setdefaultencoding('UTF-8')
+    parser = argparse.ArgumentParser(description='WuLiFang auto comper.')
+    parser.add_argument('input_dir', help='Folder that contained footages')
+    parser.add_argument('output', help='Script output path.')
+    args = parser.parse_args()
+
     LOGGER.info(COMP_START_MESSAGE)
     logging.getLogger('com.wlf').setLevel(logging.WARNING)
     try:
-        Comp(json.loads(sys.argv[1]))
+        comp = Comp()
+        comp.import_resource(args.input_dir)
+        comp.output(args.output)
     except FootageError:
         LOGGER.error('没有素材')
     except RenderError as ex:

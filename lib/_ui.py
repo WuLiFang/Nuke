@@ -105,6 +105,8 @@ def add_menu():
             except comp.FootageError:
                 nuke.message('请先导入素材')
         m.addCommand('自动合成', _autocomp, icon='autocomp.png')
+        m.addCommand('自动合成设置', lambda: comp.Dialog(
+        ).showModalDialog(), icon='autocomp.png')
         m.addCommand('redshift预合成',
                      lambda: precomp.Precomp(
                          nuke.selectedNodes(), renderer='redshift'),
