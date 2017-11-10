@@ -101,7 +101,7 @@ def add_menu():
 
         def _autocomp():
             try:
-                comp.Comp()
+                comp.Comp().create_nodes()
             except comp.FootageError:
                 nuke.message('请先导入素材')
         m.addCommand('自动合成', _autocomp, icon='autocomp.png')

@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.0'
+__version__ = '0.19.1'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -153,18 +153,6 @@ class Comp(object):
             if isinstance(value, str):
                 CONFIG[key] = value.replace(u'\\', '/')
 
-        if not nuke.value('root.project_directory'):
-            nuke.knob("root.project_directory",
-                      r"[python {os.path.join("
-                      r"nuke.value('root.name', ''), '../'"
-                      r").replace('\\', '/')}]")
-        self.task_step(u'分析读取节点')
-        self.setup()
-        self.task_step(u'创建节点树')
-        self.create_nodes()
-
-        LOGGER.info(u'\n\n')
-
     @property
     def fps(self):
         """Frame per secondes.  """
@@ -209,6 +197,12 @@ class Comp(object):
 
     def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
+
+        if not nuke.value('root.project_directory'):
+            nuke.knob("root.project_directory",
+                      r"[python {os.path.join("
+                      r"nuke.value('root.name', ''), '../'"
+                      r").replace('\\', '/')}]")
 
         nodes = nuke.allNodes(u'Read')
         if not nodes:
@@ -263,6 +257,11 @@ class Comp(object):
     @undoable_func('自动合成')
     def create_nodes(self):
         """Create nodes that a comp need."""
+
+        self.task_step(u'分析读取节点')
+        self.setup()
+        self.task_step(u'创建节点树')
+
         self.task_step(u'合并BG CH')
         n = self._bg_ch_nodes()
 
@@ -837,6 +836,7 @@ def main():
     try:
         comp = Comp()
         comp.import_resource(args.input_dir)
+        comp.create_nodes()
         comp.output(args.output)
     except FootageError:
         LOGGER.error('没有素材')
