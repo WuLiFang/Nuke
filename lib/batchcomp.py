@@ -4,49 +4,65 @@
 import os
 import webbrowser
 import logging
-import json
 import traceback
+import re
 from multiprocessing.dummy import Pool, Process, cpu_count
 from subprocess import Popen, PIPE
 
 import nuke
 import nukescripts
 
-from wlf.path import get_encoded, escape_batch
+import wlf.config
+from wlf.path import get_encoded, get_unicode
 from wlf.notify import Progress, CancelledError
 
-from comp import CONFIG, Comp, COMP_START_MESSAGE
+from comp import COMP_START_MESSAGE
 from comp import __file__ as script_file
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
+
+# bitmask
+IGNORE_EXISTED = 1 << 0
+MULTI_THREADING = 1 << 1
+
+
+class Config(wlf.config.Config):
+    """BatchComp config.  """
+
+    default = {
+        'dir_pat': r'^.{4,}$',
+        'output_dir': 'E:/precomp',
+        'input_dir': 'Z:/SNJYW/Render/EP',
+        'txt_name': '镜头备注',
+        'exclude_existed': True,
+        'multi_threading': False,
+    }
+    path = os.path.expanduser(u'~/.nuke/wlf.batchcomp.json')
+
+
+CONFIG = Config()
 
 
 class Dialog(nukescripts.PythonPanel):
     """Dialog UI of class Comp."""
 
     knob_list = [
-        (nuke.Tab_Knob, 'general_setting', '常用设置'),
         (nuke.File_Knob, 'input_dir', '输入文件夹'),
         (nuke.File_Knob, 'output_dir', '输出文件夹'),
-        (nuke.File_Knob, 'mp', '指定MP'),
-        (nuke.File_Knob, 'mp_lut', 'MP LUT'),
         (nuke.Boolean_Knob, 'exclude_existed', '排除已输出镜头'),
-        (nuke.Boolean_Knob, 'autograde', '自动亮度'),
-        (nuke.Tab_Knob, 'filter', '正则过滤'),
-        (nuke.String_Knob, 'footage_pat', '素材名'),
-        (nuke.String_Knob, 'dir_pat', '路径'),
-        (nuke.String_Knob, 'tag_pat', '标签'),
-        (nuke.Script_Knob, 'reset', '重置'),
-        (nuke.EndTabGroup_Knob, 'end_tab', ''),
+        (nuke.Boolean_Knob, 'multi_threading', '多线程'),
+        (nuke.Text_Knob, '', ''),
         (nuke.String_Knob, 'txt_name', ''),
         (nuke.Script_Knob, 'generate_txt', '生成'),
         (nuke.Multiline_Eval_String_Knob, 'info', ''),
+        (nuke.String_Knob, 'dir_pat', '文件夹正则'),
+        (nuke.Script_Knob, 'reset', '重置'),
     ]
 
     def __init__(self):
-        nukescripts.PythonPanel.__init__(self, '吾立方批量合成', 'com.wlf.multicomp')
+        nukescripts.PythonPanel.__init__(self, '批量合成', 'com.wlf.batchcomp')
         self._shot_list = None
 
         for i in self.knob_list:
@@ -56,18 +72,19 @@ class Dialog(nukescripts.PythonPanel):
             except TypeError:
                 pass
             self.addKnob(k)
-        self.knobs()['exclude_existed'].setFlag(nuke.STARTLINE)
-        self.knobs()['reset'].setFlag(nuke.STARTLINE)
+        for i in ('exclude_existed',):
+            self.knobs()[i].setFlag(nuke.STARTLINE)
         self.knobs()['generate_txt'].setLabel(
             '生成 {}.txt'.format(self.txt_name))
+
+    def __getattr__(self, name):
+        return self.knobs()[name].value()
 
     def knobChanged(self, knob):
         """Overrride for buttons."""
 
         if knob is self.knobs()['OK']:
-            BatchComp(self._shot_list).start()
-        elif knob is self.knobs()['info']:
-            self.update()
+            self.batchcomp.start()
         elif knob is self.knobs()['reset']:
             self.reset()
         elif knob is self.knobs()['generate_txt']:
@@ -77,48 +94,54 @@ class Dialog(nukescripts.PythonPanel):
                 '生成 {}.txt'.format(self.txt_name))
         else:
             CONFIG[knob.name()] = knob.value()
-            CONFIG[knob.name()] = knob.value()
-            self.update()
+        self.update()
 
     def generate_txt(self):
         """Generate txt contain shot list.  """
+
+        shots = self.batchcomp.get_shot_list()
         path = os.path.join(self.output_dir, '{}.txt'.format(self.txt_name))
-        line_width = max(len(i) for i in self.shot_list)
+        line_width = max(len(i) for i in shots)
         if os.path.exists(get_encoded(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
             return
         with open(get_encoded(path), 'w') as f:
             f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
-                                for i in self.shot_list))
-        webbrowser.open(path)
+                                for i in shots))
+        webbrowser.open(get_unicode(path))
 
     @property
     def txt_name(self):
         """Output txt name. """
         return self.knobs()['txt_name'].value()
 
+    @property
+    def batchcomp(self):
+        """Batch comp object related to current setting. """
+
+        i_dir = self.input_dir
+        o_dir = self.output_dir
+
+        flags = 0
+        if self.knobs()['exclude_existed'].value():
+            flags |= IGNORE_EXISTED
+        if self.knobs()['multi_threading'].value():
+            flags |= MULTI_THREADING
+
+        return BatchComp(i_dir, o_dir, flags=flags)
+
     def reset(self):
         """Reset re pattern.  """
-        for i in ('footage_pat', 'dir_pat', 'tag_pat'):
+        for i in ('dir_pat',):
             knob = self.knobs()[i]
             knob.setValue(CONFIG.default.get(i))
             self.knobChanged(knob)
-
-    @property
-    def shot_list(self):
-        """Shot name list. """
-        return self._shot_list
-
-    @property
-    def output_dir(self):
-        """Output directory. """
-        return self.knobs()['output_dir'].value()
 
     def update(self):
         """Update ui info and button enabled."""
 
         def _info():
             _info = u'测试'
-            self._shot_list = list(Comp.get_shot_list(CONFIG))
+            self._shot_list = list(self.batchcomp.get_shot_list())
             if self._shot_list:
                 _info = u'# 共{}个镜头\n'.format(len(self._shot_list))
                 _info += u'\n'.join(self._shot_list)
@@ -129,9 +152,7 @@ class Dialog(nukescripts.PythonPanel):
         def _button_enabled():
             _knobs = [
                 'output_dir',
-                'mp',
                 'exclude_existed',
-                'autograde',
                 'info',
                 'OK',
             ]
@@ -157,18 +178,22 @@ class Dialog(nukescripts.PythonPanel):
 class BatchComp(Process):
     """Multiple comp.  """
 
-    def __init__(self, shot_list):
+    def __init__(self, input_dir, output_dir, flags=IGNORE_EXISTED | MULTI_THREADING):
         super(BatchComp, self).__init__()
-        self._shot_list = list(shot_list)
-        self.shot_info = dict.fromkeys(Comp.get_shot_list(
-            CONFIG, include_existed=True), '本次未处理')
+
+        self.input_dir = input_dir
+        self.output_dir = output_dir
+        self.flags = flags
+        self._all_shots = tuple()
 
     def run(self):
         """Start process all shots with a processbar."""
 
-        task = Progress('批量合成', total=len(self._shot_list))
-        pool = Pool()
-        shot_info = self.shot_info
+        shots = self.get_shot_list()
+        task = Progress('批量合成', total=len(shots))
+        thread_count = cpu_count() if self.flags & MULTI_THREADING else 1
+        pool = Pool(thread_count)
+        shots_info = dict.fromkeys(self._all_shots, '本次未处理')
 
         def _run(cmd, shot):
             def _check_cancel():
@@ -187,6 +212,8 @@ class BatchComp(Process):
                 except OSError:
                     pass
 
+            if not self.flags & MULTI_THREADING:
+                task.step(shot)
             try:
                 _check_cancel()
 
@@ -201,53 +228,54 @@ class BatchComp(Process):
                         COMP_START_MESSAGE)[2].strip()
 
                 if stderr:
-                    shot_info[shot] = stderr
+                    shots_info[shot] = stderr
                 elif proc.returncode:
-                    shot_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
+                    shots_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
                 else:
-                    shot_info[shot] = '正常完成'
+                    shots_info[shot] = '正常完成'
                 LOGGER.info('%s:结束', shot)
             except CancelledError:
-                shot_info[shot] = '用户取消'
+                shots_info[shot] = '用户取消'
             except:
-                shot_info[shot] = traceback.format_exc()
+                shots_info[shot] = traceback.format_exc()
                 LOGGER.error('Unexpected exception during comp', exc_info=True)
                 raise
             finally:
-                task.step()
+                if self.flags & MULTI_THREADING:
+                    task.step()
 
-        task.set(0, '正在使用 {} 线程进行……'.format(cpu_count()))
-        for shot in self._shot_list:
-            CONFIG['shot'] = os.path.basename(shot)
-            CONFIG['save_path'] = os.path.join(
-                CONFIG['output_dir'], '{}_v0.nk'.format(CONFIG['shot']))
-            CONFIG['footage_dir'] = shot if os.path.isdir(
-                shot) else os.path.join(CONFIG['input_dir'], CONFIG['shot'])
-            _cmd = u'"{nuke}" -t -priority low {script} "{CONFIG}"'.format(
+        task.set(0, '正在使用 {} 线程进行……'.format(thread_count))
+        for shot in shots:
+            shot = os.path.basename(shot)
+            output = os.path.join(
+                CONFIG['output_dir'], '{}_v0.nk'.format(shot))
+            input_dir = shot if os.path.isdir(
+                shot) else os.path.join(CONFIG['input_dir'], shot)
+            _cmd = u'"{nuke}" -t -priority low {script} "{input_dir}" "{output}"'.format(
                 nuke=nuke.EXE_PATH,
-                script_file=os.path.normcase(script_file).rstrip(u'c'),
-                CONFIG=get_encoded(escape_batch(json.dumps(CONFIG)))
+                script=os.path.normcase(script_file).rstrip(u'c'),
+                input_dir=input_dir,
+                output=output
             )
 
             pool.apply_async(_run, args=(_cmd, shot))
         pool.close()
         pool.join()
 
-        self.generate_report()
+        self.generate_report(shots_info)
 
-    def generate_report(self):
+    @classmethod
+    def generate_report(cls, shots_info):
         """Generate batchcomp report.  """
 
-        shot_info = self.shot_info
-
         infos = ''
-        for shot in sorted(shot_info.keys()):
+        for shot in sorted(shots_info.keys()):
             infos += u'''\
     <tr>
         <td class="shot"><img src="images/{0}_v0.jpg" class="preview"></img><br>{0}</td>
         <td class="info">{1}</td>
     </tr>
-'''.format(shot, shot_info[shot])
+'''.format(shot, shots_info[shot])
         with open(os.path.join(__file__, '../comp.head.html')) as f:
             head = f.read()
         html_page = head
@@ -267,3 +295,29 @@ class BatchComp(Process):
             f.write(html_page.encode('UTF-8'))
         webbrowser.open(log_path)
         webbrowser.open(CONFIG['output_dir'])
+
+    def get_shot_list(self):
+        """Return shot_list generator from a config dict."""
+
+        _dir = self.input_dir
+        _out_dir = self.output_dir
+        if not os.path.isdir(_dir):
+            return
+
+        _ret = os.listdir(_dir)
+        if isinstance(_ret[0], str):
+            _ret = tuple(get_unicode(i) for i in _ret)
+        self._all_shots = _ret
+        if self.flags & IGNORE_EXISTED:
+            _ret = (i for i in _ret
+                    if not os.path.exists(os.path.join(_out_dir, u'{}_v0.nk'.format(i)))
+                    and not os.path.exists(os.path.join(_out_dir, u'{}.nk'.format(i))))
+        _ret = (i for i in _ret if (
+            re.match(CONFIG['dir_pat'], i) and os.path.isdir(os.path.join(_dir, i))))
+
+        if not _ret:
+            _dir = _dir.rstrip('\\/')
+            _dirname = os.path.basename(_dir)
+            if re.match(CONFIG['dir_pat'], _dir):
+                _ret = [_dir]
+        return sorted(_ret)
