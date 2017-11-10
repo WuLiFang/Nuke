@@ -8,7 +8,7 @@ import logging
 from wlf import files
 import callback
 
-__version__ = '0.4.13'
+__version__ = '0.4.14'
 
 
 def _logger():
