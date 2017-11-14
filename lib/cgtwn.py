@@ -9,7 +9,7 @@ from functools import wraps
 
 import nuke
 
-from wlf import cgtwq, csheet, files
+from wlf import cgtwq
 from wlf.path import remove_version
 from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
@@ -18,7 +18,7 @@ from asset import copy
 from edit import CurrentViewer
 from node import Last
 
-__version__ = '0.9.27'
+__version__ = '0.9.28'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -272,81 +272,6 @@ def on_close_callback():
     except Exception as ex:
         LOGGER.error('Unexpected exception', exc_info=True)
         raise
-
-
-class ContactSheetPanel(object):
-    """Panel for html contactsheet creation.  """
-    edits = [
-        ('SingleLineInput', 'csheet_database', '数据库'),
-        ('SingleLineInput', 'csheet_prefix', '镜头名前缀限制'),
-        ('FilenameSearch', 'csheet_outdir', '输出文件夹'),
-        ('BooleanCheckBox', 'csheet_checked', '忽略不存在的图像'),
-        ('BooleanCheckBox', 'csheet_save_images', '打包到本地'),
-    ]
-    default = {
-        'csheet_save_images': False
-    }
-
-    def __init__(self):
-        self._config = Config()
-        self._panel = nuke.Panel('为项目创建HTML色板')
-        for i in self.edits:
-            default = self.default.get(i[1]) or self._config.get(i[1])
-            getattr(self._panel, 'add{}'.format(i[0]))(i[2], default)
-
-    @check_login(True)
-    def show(self):
-        """Show the panel.  """
-        confirm = self._panel.show()
-        if not confirm:
-            return
-
-        try:
-            task = Progress('创建色板')
-            database = self.get('csheet_database')
-            prefix = self.get('csheet_prefix')
-            outdir = self.get('csheet_outdir')
-            save_path = os.path.join(outdir,
-                                     u'{}_{}_色板.html'.format(database, prefix.strip('_')))
-
-            task.set(message='访问数据库文件')
-            try:
-                images = cgtwq.Shots(database, prefix=prefix).get_all_image()
-            except cgtwq.IDError as ex:
-                nuke.message('找不到对应条目\n{}'.format(ex))
-                return
-            except RuntimeError:
-                return
-
-            if self.get('csheet_checked'):
-                images = files.checked_exists(images)
-
-            task.set(50, '生成文件')
-            if self.get('csheet_save_images'):
-                task = Progress('下载图像到本地', total=len(images))
-                for f in images:
-                    task.step(f)
-                    image_dir = os.path.join(
-                        outdir, '{}_images/'.format(database))
-                    copy(f, image_dir)
-                created_file = csheet.create_html_from_dir(image_dir)
-            else:
-                created_file = csheet.create_html(images, save_path,
-                                                  title=u'色板 {}@{}'.format(prefix, database))
-            if created_file:
-                webbrowser.open(created_file)
-        except CancelledError:
-            LOGGER.debug(u'用户取消创建色板')
-
-    def get(self, key, default=None):
-        """Get value from panel.  """
-        try:
-            name = [i for i in self.edits if i[1] == key][0][2]
-            ret = self._panel.value(name)
-            self._config[key] = ret
-            return ret
-        except IndexError:
-            return default
 
 
 def dialog_login():
