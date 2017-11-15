@@ -193,7 +193,7 @@ class Comp(object):
         LOGGER.info(u'{:-^30s}'.format(u'结束 导入素材'))
 
         if not nuke.allNodes(u'Read'):
-            raise FootageError(dir_path, u'没有素材')
+            raise FootageError(dir_path)
 
     def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
