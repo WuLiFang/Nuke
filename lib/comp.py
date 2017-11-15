@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.1'
+__version__ = '0.19.2'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -193,7 +193,7 @@ class Comp(object):
         LOGGER.info(u'{:-^30s}'.format(u'结束 导入素材'))
 
         if not nuke.allNodes(u'Read'):
-            raise FootageError(CONFIG['footage_dir'], u'没有素材')
+            raise FootageError(dir_path, u'没有素材')
 
     def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
@@ -838,8 +838,8 @@ def main():
         comp.import_resource(args.input_dir)
         comp.create_nodes()
         comp.output(args.output)
-    except FootageError:
-        LOGGER.error('没有素材')
+    except FootageError as ex:
+        LOGGER.error('没有素材: %s', ex)
     except RenderError as ex:
         LOGGER.error('渲染出错: %s', ex)
     except Exception:
