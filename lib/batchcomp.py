@@ -6,11 +6,13 @@ import webbrowser
 import logging
 import traceback
 import re
+import time
 from multiprocessing.dummy import Pool, Process, cpu_count
 from subprocess import Popen, PIPE
 
 import nuke
 import nukescripts
+import psutil
 
 import wlf.config
 from wlf.path import get_encoded, get_unicode
@@ -19,7 +21,7 @@ from wlf.notify import Progress, CancelledError
 from comp import COMP_START_MESSAGE
 from comp import __file__ as script_file
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
@@ -37,7 +39,6 @@ class Config(wlf.config.Config):
         'input_dir': 'Z:/SNJYW/Render/EP',
         'txt_name': '镜头备注',
         'exclude_existed': True,
-        'multi_threading': False,
     }
     path = os.path.expanduser(u'~/.nuke/wlf.batchcomp.json')
 
@@ -52,7 +53,6 @@ class Dialog(nukescripts.PythonPanel):
         (nuke.File_Knob, 'input_dir', '输入文件夹'),
         (nuke.File_Knob, 'output_dir', '输出文件夹'),
         (nuke.Boolean_Knob, 'exclude_existed', '排除已输出镜头'),
-        (nuke.Boolean_Knob, 'multi_threading', '多线程'),
         (nuke.Text_Knob, '', ''),
         (nuke.String_Knob, 'txt_name', ''),
         (nuke.Script_Knob, 'generate_txt', '生成'),
@@ -124,7 +124,7 @@ class Dialog(nukescripts.PythonPanel):
         flags = 0
         if self.knobs()['exclude_existed'].value():
             flags |= IGNORE_EXISTED
-        if self.knobs()['multi_threading'].value():
+        if psutil.virtual_memory().free > 16 * 1024 ** 3:
             flags |= MULTI_THREADING
 
         return BatchComp(i_dir, o_dir, flags=flags)
@@ -211,6 +211,10 @@ class BatchComp(Process):
                             break
                 except OSError:
                     pass
+
+            while self.flags & MULTI_THREADING and psutil.virtual_memory().free < 8 * 1024 ** 3:
+                time.sleep(1)
+                task.set(message='等待8G空闲内存……')
 
             if not self.flags & MULTI_THREADING:
                 task.step(shot)
