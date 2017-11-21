@@ -19,9 +19,10 @@ from wlf.path import get_encoded, get_unicode
 from wlf.notify import Progress, CancelledError
 
 from comp import COMP_START_MESSAGE
+from comp import Dialog as CompDialog
 from comp import __file__ as script_file
 
-__version__ = '0.2.1'
+__version__ = '0.2.2'
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
@@ -53,6 +54,7 @@ class Dialog(nukescripts.PythonPanel):
         (nuke.File_Knob, 'input_dir', '输入文件夹'),
         (nuke.File_Knob, 'output_dir', '输出文件夹'),
         (nuke.Boolean_Knob, 'exclude_existed', '排除已输出镜头'),
+        (nuke.Script_Knob, 'setting', '合成设置'),
         (nuke.Text_Knob, '', ''),
         (nuke.String_Knob, 'txt_name', ''),
         (nuke.Script_Knob, 'generate_txt', '生成'),
@@ -66,7 +68,7 @@ class Dialog(nukescripts.PythonPanel):
         self._shot_list = None
 
         for i in self.knob_list:
-            k = i[0](i[1], i[2])
+            k = i[0](*i[1:])
             try:
                 k.setValue(CONFIG.get(i[1]))
             except TypeError:
@@ -83,17 +85,22 @@ class Dialog(nukescripts.PythonPanel):
     def knobChanged(self, knob):
         """Overrride for buttons."""
 
-        if knob is self.knobs()['OK']:
+        name = knob.name()
+
+        if name == 'OK':
             self.batchcomp.start()
-        elif knob is self.knobs()['reset']:
+        elif name == 'reset':
             self.reset()
-        elif knob is self.knobs()['generate_txt']:
+        elif name == 'generate_txt':
             self.generate_txt()
-        elif knob is self.knobs()['txt_name']:
+        elif name == 'setting':
+            CompDialog().showModalDialog()
+        elif name == 'txt_name':
             self.knobs()['generate_txt'].setLabel(
                 '生成 {}.txt'.format(self.txt_name))
-        else:
-            CONFIG[knob.name()] = knob.value()
+        elif name in self.knobs():
+            CONFIG[name] = knob.value()
+
         self.update()
 
     def generate_txt(self):
