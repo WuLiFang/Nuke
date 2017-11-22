@@ -25,7 +25,7 @@ import splitexr
 import scanner
 import panels
 
-__version__ = '0.5.5'
+__version__ = '0.5.6'
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -249,9 +249,6 @@ def custom_autolabel():
     '''
     add addition information on Node in Gui
     '''
-    this = nuke.thisNode()
-    _class = this.Class()
-    ret = None
 
     def _add_to_autolabel(text, center=False):
         if not isinstance(text, (str, unicode)):
@@ -264,10 +261,12 @@ def custom_autolabel():
                 ret)
         return ret
 
-    if _class == 'Keyer':
+    def _keyer():
         label = '输入通道 : ' + nuke.value('this.input')
         ret = _add_to_autolabel(label)
-    elif _class == 'Read':
+        return ret
+
+    def _read():
         dropframes = str(asset.DropFrames.get(nuke.filename(this), ''))
         label = '<style>* {font-family:微软雅黑} span {color:red} b {color:#548DD4}</style>'
         label += '<b>帧范围: </b><span>{} - {}</span>'.format(
@@ -277,7 +276,9 @@ def custom_autolabel():
             label += '\n<span>缺帧: {}</span>'.format(dropframes)
         label += '\n<b>修改日期: </b>{}'.format(this.metadata('input/mtime'))
         ret = _add_to_autolabel(label, True)
-    elif _class == 'Shuffle':
+        return ret
+
+    def _shuffle():
         channels = dict.fromkeys(['in', 'in2', 'out', 'out2'], '')
         for i in channels.keys():
             channel_value = nuke.value('this.' + i)
@@ -286,8 +287,20 @@ def custom_autolabel():
         label = (channels['in'] + channels['in2'] + '-> ' +
                  channels['out'] + channels['out2']).rstrip(' ')
         ret = _add_to_autolabel(label)
+        return ret
 
-    return ret
+    def _timeoffset():
+        return _add_to_autolabel('{:.0f}'.format(this['time_offset'].value()))
+
+    this = nuke.thisNode()
+    class_ = this.Class()
+    dict_ = {'Keyer': _keyer,
+             'Read': _read,
+             'Shuffle': _shuffle,
+             'TimeOffset': _timeoffset}
+
+    if class_ in dict_:
+        return dict_[class_]()
 
 
 def panel_show(keyword):
