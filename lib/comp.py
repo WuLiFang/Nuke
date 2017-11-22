@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.2'
+__version__ = '0.19.3'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -248,7 +248,8 @@ class Comp(object):
         n = nuke.nodes.Merge2(
             inputs=[n, radial_node],
             operation='soft-light',
-            mix='0.618',
+            output='rgb',
+            mix='0.6',
             label='衰减调整',
             disable=True)
 
@@ -570,7 +571,8 @@ class Comp(object):
         if CONFIG['colorcorrect']:
             n = nuke.nodes.ColorCorrect(inputs=[n], disable=True)
             n = nuke.nodes.RolloffContrast(
-                inputs=[n], contrast=2, center=0.001, soft_clip=1, disable=True)
+                inputs=[n], channels='rgb',
+                contrast=2, center=0.001, soft_clip=1, disable=True)
 
             if tag and tag.startswith('BG'):
                 kwargs = {'in': 'depth', 'label': '远处'}
@@ -587,6 +589,7 @@ class Comp(object):
                 input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
                 n = nuke.nodes.RolloffContrast(
                     inputs=[n, input_mask],
+                    channels='rgb',
                     contrast=2,
                     center=0.001,
                     soft_clip=1,
@@ -627,6 +630,9 @@ class Comp(object):
                 '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
                 '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
             )
+            if not (n.metadata(self.tag_metadata_key) or '').startswith('BG'):
+                n['autoLayerSpacing'].setValue(False)
+                n['layers'].setValue(5)
 
         if CONFIG['filters']:
             if 'motion' in nuke.layers(n):
