@@ -30,6 +30,7 @@ def set_knob_default():
         nuke.knobDefault("RolloffContrast.contrast", "2")
         nuke.knobDefault("RolloffContrast.center", "0.001")
         nuke.knobDefault("RolloffContrast.soft_clip", "1")
+        nuke.knobDefault("RolloffContrast.channels", "rgb")
 
     _root()
     _vectorblur2()
