@@ -18,7 +18,7 @@ from asset import copy
 from edit import CurrentViewer
 from node import Last
 
-__version__ = '0.9.28'
+__version__ = '0.9.29'
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -202,6 +202,17 @@ def check_with_upstream():
                 nuke.knob('root.fps', str(default_fps))
 
 
+def check_fx():
+    """Check if has fx footage.  """
+
+    info = CurrentShot().task_module.get_filebox_with_sign('fx')
+    if info:
+        dir_ = info['path']
+        if os.listdir(dir_):
+            nuke.message('此镜头有特效素材')
+            webbrowser.open(dir_)
+
+
 @abort_when_module_not_enable
 @check_login(False)
 def on_load_callback():
@@ -209,6 +220,7 @@ def on_load_callback():
 
     try:
         check_with_upstream()
+        check_fx()
         traytip('当前CGTeamWork项目', '{}:合成'.format(
             CurrentShot().info.get('name')))
 
