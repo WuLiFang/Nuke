@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.3'
+__version__ = '0.19.4'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -723,7 +723,7 @@ class Comp(object):
 
     @staticmethod
     def _merge_occ(input_node):
-        _nodes = Comp.get_nodes_by_tags(('OC', 'OCC'))
+        _nodes = Comp.get_nodes_by_tags(('OC', 'OCC', 'AO'))
         n = input_node
         for _read_node in _nodes:
             _reformat_node = nuke.nodes.Reformat(
