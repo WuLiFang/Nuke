@@ -5,20 +5,19 @@ import sys
 import re
 import logging
 
-from wlf import files
+from wlf.files import map_drivers
 from wlf.mp_logging import set_basic_logger
+from wlf.env import set_default_encoding
+
 import callback
 
 __version__ = '0.4.16'
 
 LOGGER = logging.getLogger('com.wlf')
 set_basic_logger(LOGGER)
+set_default_encoding('UTF-8')
 
-if sys.getdefaultencoding != 'UTF-8':
-    reload(sys)
-    LOGGER.debug("python sys.setdefaultencoding('UTF-8')")
-    sys.setdefaultencoding('UTF-8')
-
+# Validation.
 try:
     import validation
 except ImportError:
@@ -31,9 +30,10 @@ print(u'吾立方插件 {}\n许可至: {}'.format(__version__, validation.EXPIRE
 print('-' * 20)
 del validation.EXPIRE_AT
 
+
+# Map drivers.
 if sys.platform == 'win32':
     if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
-        LOGGER.info(u'映射网络驱动器')
-        files.map_drivers()
+        map_drivers()
 
 callback.init()
