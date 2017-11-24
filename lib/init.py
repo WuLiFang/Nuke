@@ -6,30 +6,13 @@ import re
 import logging
 
 from wlf import files
+from wlf.mp_logging import set_basic_logger
 import callback
 
 __version__ = '0.4.16'
 
-
-def _logger():
-    logger = logging.getLogger('com.wlf')
-    logger.propagate = False
-    _handler = logging.StreamHandler()
-    _formatter = logging.Formatter(
-        '%(levelname)-6s[%(asctime)s]: %(name)s: %(message)s', '%H:%M:%S')
-    _handler.setFormatter(_formatter)
-    logger.addHandler(_handler)
-
-    try:
-        loglevel = int(os.getenv('WLF_LOGLEVEL', logging.INFO))
-        logger.setLevel(loglevel)
-    except TypeError:
-        logger.warning('Can not recognize env:WLF_LOGLEVEL, expect a int')
-
-    return logger
-
-
-LOGGER = _logger()
+LOGGER = logging.getLogger('com.wlf')
+set_basic_logger(LOGGER)
 
 if sys.getdefaultencoding != 'UTF-8':
     reload(sys)
