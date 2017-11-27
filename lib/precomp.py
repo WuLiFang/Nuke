@@ -11,7 +11,7 @@ from wlf.path import get_layer
 from edit import add_layer, copy_layer, undoable_func
 from orgnize import autoplace
 
-__version__ = '0.3.18'
+__version__ = '0.3.19'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -71,10 +71,15 @@ class Precomp(object):
                     self.copy(i)
         for layer, output in dict(self._config.get('rename')).items():
             self.copy(layer, output)
-        self.last_node = nuke.nodes.Remove(
+
+        # Plus nodes.
+        remove_node = nuke.nodes.Remove(
             inputs=[self.last_node], channels='rgb')
+        self.last_node = remove_node
         for layer in self._config.get('plus'):
             self.plus(layer)
+        if self.last_node is remove_node:
+            remove_node['disable'].setValue(True)
 
         autoplace(self.last_node, recursive=True,
                   undoable=False, async_=async_)
