@@ -14,7 +14,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.11'
+__version__ = '0.7.12'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -377,7 +377,7 @@ class Worker(Analyser):
         self.task.step(node.name())
 
         if rim(node.Class)() not in self.non_base_node_classes:
-            for n in rim(node.dependencies)(nuke.INPUTS):
+            for n in rim(node.dependencies)(nuke.INPUTS) or tuple():
                 if n in self.nodes and n not in self.placed_nodes:
                     self.autoplace_from(n)
 
