@@ -8,10 +8,9 @@ import logging
 import multiprocessing.dummy as multiprocessing
 
 import nuke
-import nukescripts
 
 from wlf.files import copy
-from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii
+from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii, get_footage_name
 from wlf.notify import Progress, CancelledError
 from wlf.Qt.QtCore import QTimer
 from wlf.decorators import run_with_clock
@@ -19,7 +18,7 @@ from wlf.decorators import run_with_clock
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.12'
+__version__ = '0.5.13'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -281,7 +280,10 @@ def dropdata_handler(mime_type, data, from_dir=False):
 def fix_error_read():
     """Try fix all read nodes that has error."""
 
-    filename_dict = {nukescripts.replaceHashes(os.path.basename(nuke.filename(n))): nuke.filename(n)
+    def _get_name(filename):
+        return os.path.basename(get_footage_name(filename))
+
+    filename_dict = {_get_name(nuke.filename(n)): nuke.filename(n)
                      for n in nuke.allNodes('Read') if not n.hasError()}
     for n in nuke.allNodes('Read'):
         if not n.hasError() or n['disable'].value():
@@ -289,7 +291,7 @@ def fix_error_read():
         fix_result = None
         filename = nuke.filename(n)
         name = os.path.basename(nuke.filename(n))
-        new_path = filename_dict.get(nukescripts.replaceHashes(name))
+        new_path = filename_dict.get(_get_name(name))
         if os.path.basename(filename).lower() == 'thumbs.db':
             fix_result = True
         elif new_path:
