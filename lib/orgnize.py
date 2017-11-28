@@ -14,7 +14,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.12'
+__version__ = '0.7.13'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -42,7 +42,8 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=True):
 
     # Call worker
     nodes = [nodes] if isinstance(nodes, nuke.Node) else nodes
-    nodes = get_upstream_nodes(nodes).union(nodes) if recursive else nodes
+    nodes = get_upstream_nodes(nodes, flags=nuke.INPUTS).union(
+        nodes) if recursive else nodes
     nodes = Nodes(nodes)
     cancelled = False
 
@@ -405,10 +406,9 @@ class Worker(Analyser):
         def _base_node():
             if base_node and base_node in self.nodes:
                 assert isinstance(base_node, nuke.Node)
-                base_dep = base_node.dependencies()
+                base_dep = base_node.dependencies(nuke.INPUTS)
                 self_index = base_dep.index(node)
-                is_new_branch = self.get_count(
-                    node) > self.branch_thershold
+                is_new_branch = self.is_new_branch(node)
                 xpos = base_node.xpos() + base_node.screenWidth() / 2 - node.screenWidth() / 2
                 ypos = base_node.ypos() - self.y_gap - max(node.screenHeight(), self.min_height)
                 if self_index == 0:
@@ -476,7 +476,7 @@ class Worker(Analyser):
         self.placed_nodes.add(node)
 
         if DEBUG:
-            node.selectOnly()
+            # node.selectOnly()
             nuke.zoomToFitSelected()
             if not nuke.ask('{}:\nbase:{}\nup count:{}\nmethod:{}\nx: {} y: {}'.format(
                     node.name(),
@@ -516,12 +516,22 @@ class Worker(Analyser):
         branch = self.get_branch(node)
         branch_base = self.get_base_node(branch[0])
         ret = set(self.placed_nodes)
+        if branch_base:
+            ret.intersection_update(get_upstream_nodes(
+                branch_base, flags=nuke.INPUTS))
         ret.difference_update(branch)
         ret.difference_update(self.prev_branch_nodes)
-        if branch_base:
-            ret.intersection_update(get_upstream_nodes(branch_base))
 
         return ret
+
+    @run_in_main_thread
+    def is_new_branch(self, node, from_bottom=True):
+        """Return if this @node starts a new branch.  """
+
+        assert isinstance(node, nuke.Node)
+        return not self.get_base_node(node)\
+            or self.get_count(node) > self.branch_thershold\
+            and (from_bottom or len(node.dependencies(nuke.INPUTS)) > 1)
 
     @run_in_main_thread
     def get_branch(self, node):
@@ -529,16 +539,12 @@ class Worker(Analyser):
 
         assert isinstance(node, nuke.Node)
 
-        ret = [node]
+        ret = []
         n = node
         while True:
-            base = self.get_base_node(n)
-            if base:
-                assert isinstance(base, nuke.Node)
-                ret.insert(0, base)
-                if self.get_count(base) > self.branch_thershold:
-                    break
-                n = base
-            else:
+            if not n or self.is_new_branch(n, from_bottom=False):
                 break
+            ret.insert(0, n)
+            base = self.get_base_node(n)
+            n = base
         return ret
