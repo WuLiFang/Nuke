@@ -17,12 +17,13 @@ import psutil
 import wlf.config
 from wlf.path import get_encoded, get_unicode
 from wlf.notify import Progress, CancelledError
+from wlf.decorators import run_async, run_in_main_thread
 
 from comp import COMP_START_MESSAGE
 from comp import Dialog as CompDialog
 from comp import __file__ as script_file
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
@@ -94,7 +95,7 @@ class Dialog(nukescripts.PythonPanel):
         elif name == 'generate_txt':
             self.generate_txt()
         elif name == 'setting':
-            CompDialog().showModalDialog()
+            self.show_setting()
         elif name == 'txt_name':
             self.knobs()['generate_txt'].setLabel(
                 '生成 {}.txt'.format(self.txt_name))
@@ -102,6 +103,13 @@ class Dialog(nukescripts.PythonPanel):
             CONFIG[name] = knob.value()
 
         self.update()
+
+    @run_async
+    @run_in_main_thread
+    def show_setting(self):
+        """Show comp setting.  """
+
+        CompDialog().showModalDialog()
 
     def generate_txt(self):
         """Generate txt contain shot list.  """
