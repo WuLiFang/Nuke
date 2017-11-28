@@ -8,7 +8,7 @@ import nuke
 
 import wlf.path
 
-__version__ = '0.3.7'
+__version__ = '0.3.8'
 
 LOGGER = logging.getLogger('com.wlf.node')
 
@@ -72,7 +72,7 @@ def wlf_write_node():
     return n
 
 
-def get_upstream_nodes(nodes):
+def get_upstream_nodes(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
     """ Return all nodes in the tree of the node. """
     ret = set()
     if isinstance(nodes, nuke.Node):
@@ -80,7 +80,7 @@ def get_upstream_nodes(nodes):
 
     nodes = list(nodes)
     while nodes:
-        deps = nuke.dependencies(nodes, nuke.INPUTS | nuke.HIDDEN_INPUTS)
+        deps = nuke.dependencies(nodes, flags)
         nodes = [n for n in deps if n not in ret and n not in nodes]
         ret.update(set(deps))
     return ret
