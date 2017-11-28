@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.4'
+__version__ = '0.19.5'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -219,12 +219,21 @@ class Comp(object):
             if n.format().name() == 'HD_1080':
                 root_format = 'HD_1080'
             n_first, n_last = n.firstFrame(), n.lastFrame()
+
+            # Ignore single frame.
+            if n_first == n_last:
+                continue
+
+            # Expand frame range.
             if first is None:
                 first = n_first
                 last = n_last
-            elif n_first != n_last:
+            else:
                 first = min(last, n.firstFrame())
                 last = max(last, n.lastFrame())
+
+        if first is None:
+            first = last = 1
 
         root_format = root_format or n.format()
 
