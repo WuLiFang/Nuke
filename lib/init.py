@@ -11,7 +11,7 @@ from wlf.env import set_default_encoding
 
 import callback
 
-__version__ = '0.4.16'
+__version__ = '0.4.17'
 
 LOGGER = logging.getLogger('com.wlf')
 set_basic_logger(LOGGER)
