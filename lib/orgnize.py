@@ -14,7 +14,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.13'
+__version__ = '0.7.14'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -22,8 +22,11 @@ DEBUG = False
 LOCK = threading.Lock()
 
 
-def autoplace(nodes=None, recursive=False, undoable=True, async_=True):
+def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
     """Auto place nodes."""
+
+    if async_ is None:
+        async_ = DEBUG
 
     # Executing check
     if not LOCK.acquire(False):
