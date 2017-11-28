@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.5'
+__version__ = '0.19.6'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -596,6 +596,8 @@ class Comp(object):
                     disable=True)
                 kwargs = {'in': 'depth', 'label': '近处'}
                 input_mask = nuke.nodes.PositionKeyer(inputs=[n], **kwargs)
+                n = nuke.nodes.ColorCorrect(
+                    inputs=[n, input_mask], disable=True)
                 n = nuke.nodes.RolloffContrast(
                     inputs=[n, input_mask],
                     channels='rgb',
