@@ -7,11 +7,11 @@ import logging
 
 import nuke
 
-from wlf.path import get_layer
+from wlf.path import PurePath
 from edit import add_layer, copy_layer, undoable_func
 from orgnize import autoplace
 
-__version__ = '0.3.19'
+__version__ = '0.4.0'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -42,8 +42,9 @@ class Precomp(object):
         # Record node for every source layer.
         self.source = {}
         for n in nodes:
-            layer = get_layer(
-                nuke.filename(n), layers=self._config['layers'])
+            path = PurePath(nuke.filename(n))
+            path.layers = self._config['layers']
+            layer = path.layer
             n['label'].setValue(
                 '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
             if layer:
@@ -73,13 +74,20 @@ class Precomp(object):
             self.copy(layer, output)
 
         # Plus nodes.
+        dot_node = nuke.nodes.Dot(inputs=(self.last_node,))
         remove_node = nuke.nodes.Remove(
-            inputs=[self.last_node], channels='rgb')
+            inputs=(dot_node,), channels='rgb')
         self.last_node = remove_node
         for layer in self._config.get('plus'):
             self.plus(layer)
+
+        # Precomp Switch.
+        kwargs = {'which': 1,
+                  'inputs': [dot_node, self.last_node],
+                  'label': '预合成开关'}
         if self.last_node is remove_node:
-            remove_node['disable'].setValue(True)
+            kwargs['disable'] = True
+        self.last_node = nuke.nodes.Switch(**kwargs)
 
         autoplace(self.last_node, recursive=True,
                   undoable=False, async_=async_)
@@ -110,7 +118,7 @@ class Precomp(object):
         add_layer(layer)
         ret = self.source.get(layer)
         if layer in self.layers():
-            kwargs = {'inputs': [self.last_node],
+            kwargs = {'inputs': (self.last_node,),
                       'in': layer,
                       'label': u'修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
             try:
