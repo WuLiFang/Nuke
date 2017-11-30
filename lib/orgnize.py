@@ -330,7 +330,6 @@ class Manager(Analyser):
         #     Worker(self, nodes, backdrop).run()
         #     remains_nodes.difference_update(backdrops)
         #     remains_nodes.difference_update(nodes)
-        #     self.task.step(backdrop.name())
 
         Worker(self, remains_nodes).run()
 
@@ -378,7 +377,6 @@ class Worker(Analyser):
         rim = run_in_main_thread
 
         self.autoplace(node)
-        self.task.step(node.name())
 
         if rim(node.Class)() not in self.non_base_node_classes:
             for n in rim(node.dependencies)(nuke.INPUTS) or tuple():
@@ -482,8 +480,6 @@ class Worker(Analyser):
             # node.selectOnly()
             nuke.zoomToFitSelected()
             if not nuke.ask('{}:\nbase:{}\nup count:{}\nmethod:{}\nx: {} y: {}'.format(
-                    node.name(),
-                    base_node and base_node.name(),
                     self.get_count(node),
                     method.__name__,
                     *pos)):
@@ -505,6 +501,11 @@ class Worker(Analyser):
         downstream_nodes.sort(key=lambda x: (
             x not in self.placed_nodes, self.get_count(x)))
         base_node = downstream_nodes[0] if downstream_nodes else None
+
+        # XXX: Sometimes nuke will return a wrong result...
+        if base_node not in node.dependent(nuke.INPUTS):
+            base_node = None
+
         outcome_dict[node] = base_node
 
         return base_node
