@@ -14,7 +14,7 @@ from edit import add_layer, copy_layer, undoable_func
 from orgnize import autoplace
 from wlf.path import PurePath
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -52,7 +52,22 @@ class __PrecompSwitch(object):
 
         assert isinstance(
             node, nuke.Node), 'Expect a node, got: {}'.format(node)
-        ret = hash(node.writeKnobs())
+
+        def _hash(n):
+            assert isinstance(n, nuke.Node)
+            ret = n.writeKnobs(nuke.WRITE_ALL | nuke.WRITE_NON_DEFAULT_ONLY)
+            assert isinstance(ret, (str, unicode))
+            ret = ret.split()
+            assert isinstance(ret, list)
+            for knob in ('xpos', 'ypos', 'selected',
+                         'name', 'gl_color', 'tile_color'
+                         'label', 'note_font', 'note_font_size', 'note_font_color',
+                         'hide_input', 'cached', 'cached', 'dope_sheet', 'bookmark',
+                         'postage_stamp', 'postage_stamp_frame'):
+                if knob in ret:
+                    ret.remove(knob)
+            ret = hash(tuple(ret))
+            return ret
 
         def _get_upstream(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
             ret = set()
@@ -70,8 +85,10 @@ class __PrecompSwitch(object):
             return ret
 
         nodes = _get_upstream(node)
+        ret = _hash(node)
+
         for n in nodes:
-            ret += hash(n.writeKnobs())
+            ret += _hash(n)
         ret = hash(ret)
 
         return ret
@@ -86,11 +103,13 @@ class __PrecompSwitch(object):
 
         n = node.input(1)
         if not n:
-            return False
+            ret = False
         elif cls.knob_name not in node.knobs():
-            return True
+            ret = True
         else:
-            return node[cls.knob_name].value() != cls.hash(n)
+            ret = node[cls.knob_name].value() != cls.hash(n)
+        node['tile_color'].setValue(0 if ret else 0x000000FF)
+        return ret
 
 
 PrecompSwitch = __PrecompSwitch
