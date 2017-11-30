@@ -14,7 +14,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.14'
+__version__ = '0.7.15'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -499,7 +499,6 @@ class Worker(Analyser):
             return outcome_dict[node]
 
         downstream_nodes = node.dependent(nuke.INPUTS)
-        downstream_nodes = downstream_nodes or []
         assert isinstance(downstream_nodes, list), downstream_nodes
         downstream_nodes = [i for i in downstream_nodes
                             if i.Class() not in self.non_base_node_classes]
