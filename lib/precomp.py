@@ -14,7 +14,7 @@ from edit import add_layer, copy_layer, undoable_func, replace_node
 from orgnize import autoplace
 from wlf.path import PurePath
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -38,12 +38,16 @@ class __PrecompSwitch(object):
             node, nuke.Node), 'Expect a node, got: {}'.format(node)
 
         knob_name = cls.knob_name
-        n = node.input(1)
-        raw_hash = cls.hash(n)
-        k = nuke.Int_Knob(knob_name)
-        k.setValue(raw_hash)
+        knobs = node.knobs()
+        if knob_name not in knobs:
+            n = node.input(1)
+            raw_hash = cls.hash(n)
+            k = nuke.Int_Knob(knob_name)
+            k.setValue(raw_hash)
+            node.addKnob(k)
+        else:
+            k = knobs[knob_name]
         k.setFlag(nuke.READ_ONLY)
-        node.addKnob(k)
         return node
 
     @classmethod
@@ -108,7 +112,13 @@ class __PrecompSwitch(object):
             ret = True
         else:
             ret = node[cls.knob_name].value() != cls.hash(n)
-        node['tile_color'].setValue(0xFFFFFF00 if ret else 0x000000FF)
+
+        # Set tile color
+        color = 0xFFFFFF00 if ret else 0x000000FF
+        k = node['tile_color']
+        if k.value() != color:
+            k.setValue(color)
+
         return ret
 
 
@@ -184,7 +194,8 @@ class Precomp(object):
                   '{{[python {__PrecompSwitch.get_which(nuke.thisNode())}]}}',
                   'inputs': [dot_node, self.last_node],
                   'label': '预合成自动开关',
-                  'onCreate': inspect.getsource(PrecompSwitch)}
+                  'onCreate': inspect.getsource(PrecompSwitch) + """
+__PrecompSwitch.init(nuke.thisNode())"""}
         setattr(sys.modules['__main__'], '__PrecompSwitch', PrecompSwitch)
         if self.last_node is remove_node:
             kwargs['disable'] = True
