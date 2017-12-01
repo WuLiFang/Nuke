@@ -10,11 +10,11 @@ import sys
 
 import nuke
 
-from edit import add_layer, copy_layer, undoable_func
+from edit import add_layer, copy_layer, undoable_func, replace_node
 from orgnize import autoplace
 from wlf.path import PurePath
 
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -108,7 +108,7 @@ class __PrecompSwitch(object):
             ret = True
         else:
             ret = node[cls.knob_name].value() != cls.hash(n)
-        node['tile_color'].setValue(0 if ret else 0x000000FF)
+        node['tile_color'].setValue(0xFFFFFF00 if ret else 0x000000FF)
         return ret
 
 
@@ -123,6 +123,9 @@ class Precomp(object):
     def __init__(self, nodes, renderer='redshift', async_=True):
         assert nodes, 'Can not precomp without node.'
 
+        def _get_filename(n):
+            return n.metadata('input/filename') or nuke.filename(n) or ''
+
         config_file = os.path.join(
             __file__, '../wlf/precomp.{}.json'.format(renderer))
         with open(config_file) as f:
@@ -131,12 +134,13 @@ class Precomp(object):
         self._translate_dict = dict(self._config.get('translate'))
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
-        nodes = list(n for n in nodes if n.Class() == 'Read')
+        elif len(nodes) > 1:
+            nodes = list(n for n in nodes if n.Class() == 'Read')
 
         # Record node for every source layer.
         self.source = {}
         for n in nodes:
-            path = PurePath(nuke.filename(n))
+            path = PurePath(_get_filename(n))
             path.layers = self._config['layers']
             layer = path.layer
             n['label'].setValue(
@@ -148,7 +152,7 @@ class Precomp(object):
         if len(self.source) == 1:
             n = sorted(nodes,
                        key=lambda n: (len(nuke.layers(n)),
-                                      len(nuke.filename(n)) * -1),
+                                      len(_get_filename(n)) * -1),
                        reverse=True)[0]
             layers = nuke.layers(n)
             LOGGER.debug(
@@ -185,6 +189,8 @@ class Precomp(object):
         if self.last_node is remove_node:
             kwargs['disable'] = True
         self.last_node = PrecompSwitch.init(nuke.nodes.Switch(**kwargs))
+
+        replace_node(dot_node.input(0), self.last_node)
 
         autoplace(self.last_node, recursive=True,
                   undoable=False, async_=async_)
