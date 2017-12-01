@@ -14,7 +14,7 @@ from edit import add_layer, copy_layer, undoable_func, replace_node
 from orgnize import autoplace
 from wlf.path import PurePath
 
-__version__ = '0.4.4'
+__version__ = '0.4.5'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -113,12 +113,7 @@ class __PrecompSwitch(object):
         else:
             ret = node[cls.knob_name].value() != cls.hash(n)
 
-        # Set tile color
-        color = 0xFFFFFF00 if ret else 0x000000FF
-        k = node['tile_color']
-        if k.value() != color:
-            k.setValue(color)
-
+        node['tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
         return ret
 
 
