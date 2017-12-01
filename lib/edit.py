@@ -30,8 +30,8 @@ def run_in_main_thread(func):
     def _func(*args, **kwargs):
         if nuke.GUI and threading.current_thread().name != 'MainThread':
             return nuke.executeInMainThreadWithResult(func, args, kwargs)
-        else:
-            return func(*args, **kwargs)
+
+        return func(*args, **kwargs)
 
     return _func
 
