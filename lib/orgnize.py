@@ -14,7 +14,7 @@ from wlf.notify import CancelledError, Progress
 from edit import run_in_main_thread
 from node import get_upstream_nodes
 
-__version__ = '0.7.15'
+__version__ = '0.7.16'
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -494,17 +494,13 @@ class Worker(Analyser):
         if node in outcome_dict:
             return outcome_dict[node]
 
-        downstream_nodes = node.dependent(nuke.INPUTS)
+        downstream_nodes = node.dependent(nuke.INPUTS, False)
         assert isinstance(downstream_nodes, list), downstream_nodes
         downstream_nodes = [i for i in downstream_nodes
                             if i.Class() not in self.non_base_node_classes]
         downstream_nodes.sort(key=lambda x: (
             x not in self.placed_nodes, self.get_count(x)))
         base_node = downstream_nodes[0] if downstream_nodes else None
-
-        # XXX: Sometimes nuke will return a wrong result...
-        if base_node not in node.dependent(nuke.INPUTS):
-            base_node = None
 
         outcome_dict[node] = base_node
 
