@@ -18,7 +18,7 @@ from wlf.decorators import run_with_clock
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.13'
+__version__ = '0.5.14'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -55,13 +55,17 @@ class DropFrames(object):
         footages = get_footages(nodes)
 
         def _check(filename):
-            framerange = footages[filename]
-            framerange.compact()
-            dropframes = get_dropframe(filename, framerange.toFrameList())
-            if str(dropframes):
-                cls._file_dropframe[filename] = dropframes
-            elif cls._file_dropframe.has_key(filename):
-                del cls._file_dropframe[filename]
+            try:
+                framerange = footages[filename]
+                framerange.compact()
+                dropframes = get_dropframe(filename, framerange.toFrameList())
+                if str(dropframes):
+                    cls._file_dropframe[filename] = dropframes
+                elif cls._file_dropframe.has_key(filename):
+                    del cls._file_dropframe[filename]
+            except:
+                LOGGER.error(
+                    'Unexpected exception during check dropframes.', exc_info=True)
         pool = multiprocessing.Pool()
         pool.map(_check, footages)
         pool.close()
@@ -150,6 +154,7 @@ def get_footages(nodes=None):
 
 def get_dropframe(filename, framerange):
     """Return dropframes for @filename in @framerange. -> nuke.FrameRanges """
+
     assert isinstance(framerange, (list, nuke.FrameRange))
     filename = get_unicode(filename)
     dir_path = os.path.dirname(filename)
