@@ -66,6 +66,7 @@ class DropFrames(object):
             except:
                 LOGGER.error(
                     'Unexpected exception during check dropframes.', exc_info=True)
+                raise
         pool = multiprocessing.Pool()
         pool.map(_check, footages)
         pool.close()
