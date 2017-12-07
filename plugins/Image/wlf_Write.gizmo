@@ -2,92 +2,93 @@
 version 10.0 v4
 Gizmo {
   onCreate {
-class __wlf_Write(object):
-    @classmethod
-    def on_create(cls):
-        this = nuke.thisNode()
-        this['custom_frame'].setEnabled(this['use_custom_frame'].value())
-        this['bt_render_MOV_from_EXR'].setEnabled(this['output_exr'].value())
-
-        old = nuke.value('this.Text_Artist.message')
-        new = nuke.value('root.wlf_artist', '')
-        if new != old:
-            nuke.Undo.disable()
-            nuke.knob('this.Text_Artist.message', new)
-            nuke.Undo.enable()
-
-        nuke.addOnScriptSave(cls.ask_output_exr, args=(this,))
-    
-    @classmethod
-    def on_destroy(cls):
-        this = nuke.thisNode()
-        nuke.removeOnScriptSave(cls.ask_output_exr, args=(this,))
-
-    @staticmethod
-    def autolabel():
-        this = nuke.thisNode()
-        ret = [
-            this.name(),
-            this.node('Write_MOV_1')['file'].evaluate(),
-            this.node('Write_JPG_1')['file'].evaluate(),
-            this['label'].evaluate()
-        ]
-        ret = '\n'.join([i for i in ret if i])
-        ret = ret or autolabel()
-        return ret
-
-    @staticmethod
-    def knob_changed():
-        if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
-            nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
-        elif nuke.thisKnob() is nuke.thisNode()['output_exr']:
-            nuke.thisNode()['bt_render_MOV_from_EXR'].setEnabled(nuke.thisKnob().value())
-
-    @staticmethod
-    def ask_output_exr(this):
-        if not this['output_exr'].value():
-            root = nuke.Root()
-            first = root['first_frame'].value()
-            last = root['last_frame'].value()
-            frames = abs(last - first) +1
-            if frames >= 100:
-                if nuke.ask('{}:\n镜头长达 {:.0f} 帧, 输出时同时输出exr序列?'.format(this.name(),frames)):
-                    this['output_exr'].setValue(True)
-
-    class WriteJPG(object):
-        blur_node_classes = (
-            'VectorBlur',
-            'VectorBlur2',
-            'CameraShake',
-            'MotionBlur',
-            'OFXcom.revisionfx.rsmb_v3',
-            'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'
-        )
-        last_render_mode = False
-        blur_nodes = []
-
+if '__wlf_Write' not in locals():
+    class __wlf_Write(object):
         @classmethod
-        def before_render(cls):
-            cls.last_render_mode = nuke.Root()['proxy'].value()
-            cls.blur_nodes = [n for n in nuke.allNodes(group=nuke.Root())
-                              if n.Class() in cls.blur_node_classes and not n['disable'].value()]
-            # Create output folder
-            _dir = os.path.abspath(
-                '{}/../'.format(nuke.filename(nuke.thisNode())))
-            if not os.path.exists(_dir):
-                os.makedirs(_dir)
-            nuke.knob('root.proxy', 'False')
-            if nuke.numvalue('parent.no_motionblur'):
-                map(lambda n: n['disable'].setValue(
-                    True), cls.blur_nodes)
+        def on_create(cls):
+            this = nuke.thisNode()
+            this['custom_frame'].setEnabled(this['use_custom_frame'].value())
+            this['bt_render_MOV_from_EXR'].setEnabled(this['output_exr'].value())
 
+            old = nuke.value('this.Text_Artist.message')
+            new = nuke.value('root.wlf_artist', '')
+            if new != old:
+                nuke.Undo.disable()
+                nuke.knob('this.Text_Artist.message', new)
+                nuke.Undo.enable()
+
+            nuke.addOnScriptSave(cls.ask_output_exr, args=(this,))
+        
         @classmethod
-        def after_render(cls):
-            nuke.knob('root.proxy', str(cls.last_render_mode))
-            if nuke.numvalue('parent.no_motionblur'):
-                map(lambda n: n['disable'].setValue(
-                    False), cls.blur_nodes)
-            nuke.knob('this.disable', 'True')
+        def on_destroy(cls):
+            this = nuke.thisNode()
+            nuke.removeOnScriptSave(cls.ask_output_exr, args=(this,))
+
+        @staticmethod
+        def autolabel():
+            this = nuke.thisNode()
+            ret = [
+                this.name(),
+                this.node('Write_MOV_1')['file'].evaluate(),
+                this.node('Write_JPG_1')['file'].evaluate(),
+                this['label'].evaluate()
+            ]
+            ret = '\n'.join([i for i in ret if i])
+            ret = ret or autolabel()
+            return ret
+
+        @staticmethod
+        def knob_changed():
+            if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
+                nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
+            elif nuke.thisKnob() is nuke.thisNode()['output_exr']:
+                nuke.thisNode()['bt_render_MOV_from_EXR'].setEnabled(nuke.thisKnob().value())
+
+        @staticmethod
+        def ask_output_exr(this):
+            if not this['output_exr'].value():
+                root = nuke.Root()
+                first = root['first_frame'].value()
+                last = root['last_frame'].value()
+                frames = abs(last - first) +1
+                if frames >= 100:
+                    if nuke.ask('{}:\n镜头长达 {:.0f} 帧, 输出时同时输出exr序列?'.format(this.name(),frames)):
+                        this['output_exr'].setValue(True)
+
+        class WriteJPG(object):
+            blur_node_classes = (
+                'VectorBlur',
+                'VectorBlur2',
+                'CameraShake',
+                'MotionBlur',
+                'OFXcom.revisionfx.rsmb_v3',
+                'OFXcom.genarts.sapphire.blursharpen.s_blurdirectional_v1'
+            )
+            last_render_mode = False
+            blur_nodes = []
+
+            @classmethod
+            def before_render(cls):
+                cls.last_render_mode = nuke.Root()['proxy'].value()
+                cls.blur_nodes = [n for n in nuke.allNodes(group=nuke.Root())
+                                if n.Class() in cls.blur_node_classes and not n['disable'].value()]
+                # Create output folder
+                _dir = os.path.abspath(
+                    '{}/../'.format(nuke.filename(nuke.thisNode())))
+                if not os.path.exists(_dir):
+                    os.makedirs(_dir)
+                nuke.knob('root.proxy', 'False')
+                if nuke.numvalue('parent.no_motionblur'):
+                    map(lambda n: n['disable'].setValue(
+                        True), cls.blur_nodes)
+
+            @classmethod
+            def after_render(cls):
+                nuke.knob('root.proxy', str(cls.last_render_mode))
+                if nuke.numvalue('parent.no_motionblur'):
+                    map(lambda n: n['disable'].setValue(
+                        False), cls.blur_nodes)
+                nuke.knob('this.disable', 'True')
 
 
 __wlf_Write.on_create()
@@ -102,7 +103,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.52.1"}
+ addUserKnob {20 Write l "wlf_Write v1.52.2"}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
  addUserKnob {3 custom_frame l "" -STARTLINE}
  custom_frame 1
