@@ -1,17 +1,20 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
-import os
+
+import inspect
 import json
-import re
 import logging
+import os
+import re
+import sys
 
 import nuke
 
-from wlf.path import get_layer
-from edit import add_layer, copy_layer, undoable_func
+from edit import add_layer, copy_layer, undoable_func, replace_node
 from orgnize import autoplace
+from wlf.path import PurePath
 
-__version__ = '0.3.19'
+__version__ = '0.4.5'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
@@ -22,12 +25,111 @@ def redshift(nodes, **kwargs):
     return Precomp(nodes, renderer='redshift', **kwargs).last_node
 
 
+class __PrecompSwitch(object):
+    """Modified switch node for precomp.  """
+
+    knob_name = 'raw_hash'
+
+    @classmethod
+    def init(cls, node):
+        """Add necessary knobs.  """
+
+        assert isinstance(
+            node, nuke.Node), 'Expect a node, got: {}'.format(node)
+
+        knob_name = cls.knob_name
+        knobs = node.knobs()
+        if knob_name not in knobs:
+            n = node.input(1)
+            raw_hash = cls.hash(n)
+            k = nuke.Int_Knob(knob_name)
+            k.setValue(raw_hash)
+            node.addKnob(k)
+        else:
+            k = knobs[knob_name]
+        k.setFlag(nuke.READ_ONLY)
+        return node
+
+    @classmethod
+    def hash(cls, node):
+        """Node hash result of @node up to upstream start.  """
+
+        assert isinstance(
+            node, nuke.Node), 'Expect a node, got: {}'.format(node)
+
+        def _hash(n):
+            assert isinstance(n, nuke.Node)
+            ret = n.writeKnobs(nuke.WRITE_ALL | nuke.WRITE_NON_DEFAULT_ONLY)
+            assert isinstance(ret, (str, unicode))
+            ret = ret.split()
+            assert isinstance(ret, list)
+            for knob in ('xpos', 'ypos', 'selected',
+                         'name', 'gl_color', 'tile_color'
+                         'label', 'note_font', 'note_font_size', 'note_font_color',
+                         'hide_input', 'cached', 'cached', 'dope_sheet', 'bookmark',
+                         'postage_stamp', 'postage_stamp_frame'):
+                if knob in ret:
+                    ret.remove(knob)
+            ret = hash(tuple(ret))
+            return ret
+
+        def _get_upstream(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
+            ret = set()
+            if isinstance(nodes, nuke.Node):
+                nodes = [nodes]
+
+            nodes = tuple(nodes)
+            while nodes:
+                deps = nuke.dependencies(nodes, flags)
+                nodes = [n for n in deps
+                         if n not in ret
+                         and n not in nodes
+                         and n.Class() in ('Merge2', 'Shuffle')]
+                ret.update(set(deps))
+            return ret
+
+        nodes = _get_upstream(node)
+        ret = _hash(node)
+
+        for n in nodes:
+            ret += _hash(n)
+        ret = hash(ret)
+
+        return ret
+
+    @classmethod
+    def get_which(cls, node):
+        """Return auto input choice for @node.  """
+
+        assert isinstance(node, nuke.Node)\
+            and node.Class() == 'Switch',\
+            'Expect a switch node, got: {}'.format(node)
+
+        n = node.input(1)
+        if not n:
+            ret = False
+        elif cls.knob_name not in node.knobs():
+            ret = True
+        else:
+            ret = node[cls.knob_name].value() != cls.hash(n)
+
+        node['tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
+        return ret
+
+
+PrecompSwitch = __PrecompSwitch
+
+
 class Precomp(object):
     """A sequence of merge or copy.  """
+
     last_node = None
 
     def __init__(self, nodes, renderer='redshift', async_=True):
         assert nodes, 'Can not precomp without node.'
+
+        def _get_filename(n):
+            return n.metadata('input/filename') or nuke.filename(n) or ''
 
         config_file = os.path.join(
             __file__, '../wlf/precomp.{}.json'.format(renderer))
@@ -37,13 +139,15 @@ class Precomp(object):
         self._translate_dict = dict(self._config.get('translate'))
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
-        nodes = list(n for n in nodes if n.Class() == 'Read')
+        elif len(nodes) > 1:
+            nodes = list(n for n in nodes if n.Class() == 'Read')
 
         # Record node for every source layer.
         self.source = {}
         for n in nodes:
-            layer = get_layer(
-                nuke.filename(n), layers=self._config['layers'])
+            path = PurePath(_get_filename(n))
+            path.layers = self._config['layers']
+            layer = path.layer
             n['label'].setValue(
                 '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
             if layer:
@@ -53,7 +157,7 @@ class Precomp(object):
         if len(self.source) == 1:
             n = sorted(nodes,
                        key=lambda n: (len(nuke.layers(n)),
-                                      len(nuke.filename(n)) * -1),
+                                      len(_get_filename(n)) * -1),
                        reverse=True)[0]
             layers = nuke.layers(n)
             LOGGER.debug(
@@ -73,13 +177,26 @@ class Precomp(object):
             self.copy(layer, output)
 
         # Plus nodes.
+        dot_node = nuke.nodes.Dot(inputs=(self.last_node,))
         remove_node = nuke.nodes.Remove(
-            inputs=[self.last_node], channels='rgb')
+            inputs=(dot_node,), channels='rgb')
         self.last_node = remove_node
         for layer in self._config.get('plus'):
             self.plus(layer)
+
+        # Precomp Switch.
+        kwargs = {'which':
+                  '{{[python {__PrecompSwitch.get_which(nuke.thisNode())}]}}',
+                  'inputs': [dot_node, self.last_node],
+                  'label': '预合成自动开关',
+                  'onCreate': inspect.getsource(PrecompSwitch) + """
+__PrecompSwitch.init(nuke.thisNode())"""}
+        setattr(sys.modules['__main__'], '__PrecompSwitch', PrecompSwitch)
         if self.last_node is remove_node:
-            remove_node['disable'].setValue(True)
+            kwargs['disable'] = True
+        self.last_node = PrecompSwitch.init(nuke.nodes.Switch(**kwargs))
+
+        replace_node(dot_node.input(0), self.last_node)
 
         autoplace(self.last_node, recursive=True,
                   undoable=False, async_=async_)
@@ -97,6 +214,7 @@ class Precomp(object):
 
     def l10n(self, value):
         """Return translated value.  """
+
         if not value:
             return ''
         for pat in self._translate_dict:
@@ -110,7 +228,7 @@ class Precomp(object):
         add_layer(layer)
         ret = self.source.get(layer)
         if layer in self.layers():
-            kwargs = {'inputs': [self.last_node],
+            kwargs = {'inputs': (self.last_node,),
                       'in': layer,
                       'label': u'修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
             try:

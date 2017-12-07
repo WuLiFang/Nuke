@@ -18,7 +18,7 @@ from wlf.decorators import run_with_clock
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.14'
+__version__ = '0.5.15'
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -147,9 +147,14 @@ def get_footages(nodes=None):
 
     ret = {}
     for n in nodes:
+        if n.Class() != 'Read':
+            continue
         filename = nuke.filename(n)
         ret.setdefault(filename, nuke.FrameRanges())
-        ret[filename].add(n.frameRange())
+        # `nuke.Node.frameRange` may wrong when using `frame` knob.
+        framerange = nuke.FrameRange(
+            '{:.0f}-{:.0f}'.format(n['first'].value(), n['last'].value()))
+        ret[filename].add(framerange)
     return ret
 
 

@@ -139,7 +139,7 @@ def add_menu():
         m.addCommand('批量自动合成', lambda: batchcomp.Dialog().showModalDialog(),
                      icon='autocomp.png')
         m.addCommand(
-            '创建色板', wlf.csheet.dialog_create_html)
+            '创建色板', lambda:  wlf.csheet_tool.Dialog().exec_())
         m.addCommand('上传mov', lambda: nukescripts.panels.restorePanel(
             'com.wlf.uploader'))
         m.addCommand('扫描空文件夹', scanner.call_from_nuke)

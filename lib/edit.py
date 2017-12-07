@@ -17,7 +17,7 @@ from wlf.notify import Progress
 import callback
 from node import wlf_write_node
 
-__version__ = '1.7.16'
+__version__ = '1.7.17'
 LOGGER = logging.getLogger('com.wlf.edit')
 assert isinstance(LOGGER, logging.Logger)
 ENABLE_MARK = '_enable_'
@@ -30,8 +30,8 @@ def run_in_main_thread(func):
     def _func(*args, **kwargs):
         if nuke.GUI and threading.current_thread().name != 'MainThread':
             return nuke.executeInMainThreadWithResult(func, args, kwargs)
-        else:
-            return func(*args, **kwargs)
+
+        return func(*args, **kwargs)
 
     return _func
 
@@ -219,9 +219,9 @@ def add_layer(layername):
 def replace_node(node, repl_node):
     """Replace all nodes except @repl_node input to @node with @repl_node."""
 
-    for n in nuke.allNodes():
-        if n is repl_node:
-            continue
+    assert isinstance(node, nuke.Node)
+    nodes = node.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, False)
+    for n in nodes:
         for i in range(n.inputs()):
             if n.input(i) is node:
                 n.setInput(i, repl_node)
