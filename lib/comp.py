@@ -20,7 +20,7 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.6'
+__version__ = '0.19.7'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -186,8 +186,9 @@ class Comp(object):
                         continue
                     LOGGER.info(u'\t素材: %s', f)
                     if re.match(CONFIG['footage_pat'], f, flags=re.I):
-                        nuke.createNode(
+                        n = nuke.createNode(
                             u'Read', 'file {{{}/{}}}'.format(dir_, f))
+                        n['on_error'].setValue('nearest frame')
                     else:
                         LOGGER.info(u'\t\t不匹配素材正则, 跳过')
         LOGGER.info(u'{:-^30s}'.format(u'结束 导入素材'))
@@ -762,15 +763,20 @@ class Comp(object):
             )
         return n
 
-    @staticmethod
-    def _merge_screen(input_node):
+    @classmethod
+    def _merge_screen(cls, input_node):
         _nodes = Comp.get_nodes_by_tags(u'FOG')
         n = input_node
         for _read_node in _nodes:
-            _reformat_node = nuke.nodes.Reformat(
+            input1 = nuke.nodes.Reformat(
                 inputs=[_read_node], resize='fit')
+            if 'VolumeLighting' in nuke.layers(input1):
+                input1 = nuke.nodes.Shuffle(
+                    inputs=[input1],
+                    ** {'in': 'VolumeLighting'})
             n = nuke.nodes.Merge2(
-                inputs=[n, _reformat_node],
+                inputs=[n, input1],
+                output='rgb',
                 operation='screen',
                 maskChannelInput='rgba.alpha',
                 label=_read_node[ReadNode.tag_knob_name].value(),
