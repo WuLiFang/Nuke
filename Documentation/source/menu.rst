@@ -163,11 +163,9 @@ CGTeamWork
 ****************
 为项目创建色板
 
-.. note::
+此功能在CGTeamWork右键菜单中也能访问
 
-    准备将此功能集成至CGTeamWork上
-
-.. autoclass:: cgtwn.ContactSheetPanel
+.. autoclass:: wlf.csheet.__main__.Dialog()
 
 创建项目文件夹
 ******************
@@ -195,11 +193,9 @@ CGTeamWork
 合成/自动合成的批量版本
 直接自动合成大量镜头
 
-.. warning::
+使用多线程, 内存不足时会等待足够的空闲内存再继续。
 
-    使用多线程, 渲染同时进行批量自动合成可能导致死机
-
-.. automethod:: comp.Comp.show_dialog
+.. autofunction:: batchcomp.Dialog
 
 .. _创建色板:
 

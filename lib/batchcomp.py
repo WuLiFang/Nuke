@@ -49,7 +49,7 @@ CONFIG = Config()
 
 
 class Dialog(nukescripts.PythonPanel):
-    """Dialog UI of class Comp."""
+    """Dialog UI of class BatchComp."""
 
     knob_list = [
         (nuke.File_Knob, 'input_dir', '输入文件夹'),
