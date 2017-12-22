@@ -13,7 +13,7 @@ from wlf.mp_logging import set_basic_logger
 from wlf.env import set_default_encoding
 
 
-__version__ = '0.4.19'
+__version__ = '0.4.20'
 
 LOGGER = logging.getLogger('com.wlf')
 
