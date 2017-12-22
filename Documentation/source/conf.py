@@ -33,14 +33,18 @@ sys.path.insert(0, os.path.abspath('./../../lib'))
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.viewcode', 'sphinx_git']
 
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-# source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
+# source_suffix = '.rst'
+source_parsers = {
+    '.md': 'recommonmark.parser.CommonMarkParser',
+}
 
 # The master toctree document.
 master_doc = 'index'
@@ -89,7 +93,9 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'logo': 'logo.png',
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -105,9 +111,9 @@ html_sidebars = {
     '**': [
         'about.html',
         'navigation.html',
-        'relations.html',  # needs 'show_related': True theme option to display
+        # 'relations.html',  # needs 'show_related': True theme option to display
         'searchbox.html',
-        'donate.html',
+        # 'donate.html',
     ]
 }
 
@@ -117,6 +123,8 @@ html_search_options = {
     'dic_enc': 'utf-8',
     'dict':  os.path.join(RESOURCE_DIR, 'jieba_dict.txt'),
 }
+
+modindex_common_prefix = ['wlf.']
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -173,3 +181,8 @@ texinfo_documents = [
      author, 'WuLiFangNuke', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+# -- Options for autodoc -------------------------------------------------
+
+autodoc_default_flags = ['members', 'show-inheritance']
+autodoc_member_order = 'groupwise'

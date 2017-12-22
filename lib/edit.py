@@ -14,7 +14,6 @@ import nuke
 from wlf.notify import Progress
 
 
-import callback
 from node import wlf_write_node
 
 __version__ = '1.7.17'
@@ -104,6 +103,7 @@ def update_toolsets(toolset_name, toolset_path):
 
 class CurrentViewer(object):
     """Manipulate currunt viewer."""
+
     viewer = None
     node = None
     inputs = None
@@ -554,8 +554,6 @@ def gizmo_to_group(gizmo):
     nuke.delete(gizmo)
     _group.setName(_name)
     _group['selected'].setValue(_selected)
-
-    callback.clean()
 
     return _group
 

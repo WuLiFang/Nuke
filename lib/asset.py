@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 """Deal with assets and files in nuke."""
+from __future__ import absolute_import
 
 import os
 import re

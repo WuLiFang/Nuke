@@ -7,4 +7,6 @@
     plug-ins
     menu
     pref
+    spec
+    reference
     changelog

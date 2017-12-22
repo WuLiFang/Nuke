@@ -11,10 +11,10 @@ import nuke
 
 from wlf import cgtwq
 from wlf.path import remove_version
+from wlf.files import copy
 from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
 
-from asset import copy
 from edit import CurrentViewer
 from node import Last
 
