@@ -6,9 +6,10 @@
     :maxdepth: 2
     :caption: 节点分类:
 
+    plug-ins/Image
+    plug-ins/Draw
     plug-ins/Channels
     plug-ins/Color
-    plug-ins/Draw
     plug-ins/Filter
-    plug-ins/Image
     plug-ins/Keyer
+    plug-ins/3D

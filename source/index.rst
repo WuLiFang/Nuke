@@ -7,6 +7,7 @@
     plug-ins
     menu
     pref
+    cgtw_integrate
     spec
     reference
     changelog
