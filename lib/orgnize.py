@@ -1,5 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Orgnize nodes layout.  """
+from __future__ import absolute_import
 
 import logging
 import random

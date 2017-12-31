@@ -1,5 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Found empty shot forlder.  """
+from __future__ import absolute_import
 
 import os
 import sys

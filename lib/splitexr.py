@@ -1,5 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Split all-in-one exr to multiple files."""
+from __future__ import absolute_import
+
 import os
 import re
 import sys

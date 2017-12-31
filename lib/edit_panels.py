@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 """UI for edit operation."""
+from __future__ import absolute_import
 
 import nuke
 import nukescripts

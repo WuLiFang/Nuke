@@ -1,5 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Setup node.  """
+from __future__ import absolute_import
+
 import os
 import time
 import logging

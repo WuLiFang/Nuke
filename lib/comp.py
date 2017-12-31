@@ -1,5 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Comp footages and create output, can be run as script.  """
+from __future__ import absolute_import
 
 import logging
 import os

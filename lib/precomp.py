@@ -1,5 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
+from __future__ import absolute_import
 
 import inspect
 import json

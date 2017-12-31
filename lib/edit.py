@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 """Edit existed content in workfile."""
+from __future__ import absolute_import
 
 import os
 import re

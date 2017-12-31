@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 """Setup UI."""
+from __future__ import absolute_import
 
 import os
 import logging
