@@ -1,6 +1,0 @@
-panels
-=================
-
-此模块用于 构建和注册Nuke面板
-
-.. automodule:: panels

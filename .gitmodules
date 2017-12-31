@@ -1,3 +1,6 @@
 [submodule "lib/wlf"]
 	path = lib/wlf
 	url = git@github.com:WuLiFang/wlf.git
+[submodule "Documentation"]
+	path = Documentation
+	url = git@github.com:WuLiFang/Nuke-doc.git
