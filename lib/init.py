@@ -12,8 +12,7 @@ from wlf.files import map_drivers
 from wlf.mp_logging import set_basic_logger
 from wlf.env import set_default_encoding
 
-
-__version__ = '0.4.20'
+from lib import __version__
 
 LOGGER = logging.getLogger('com.wlf')
 

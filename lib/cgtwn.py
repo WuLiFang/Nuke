@@ -18,8 +18,6 @@ import wlf.config
 from edit import CurrentViewer
 from node import Last
 
-__version__ = '0.9.29'
-
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
 
@@ -257,6 +255,7 @@ def on_save_callback():
 def on_close_callback():
     """Try upload image to server."""
 
+    on_save_callback()
     try:
         nuke.scriptName()
     except RuntimeError:
