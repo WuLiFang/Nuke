@@ -21,7 +21,6 @@ from node import ReadNode
 from orgnize import autoplace
 from edit import undoable_func
 
-__version__ = '0.19.7'
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -743,6 +742,7 @@ class Comp(object):
                 inputs=[_read_node], resize='fit')
             n = nuke.nodes.Merge2(
                 inputs=[n, _reformat_node],
+                channels='rgb',
                 operation='multiply',
                 screen_alpha=True,
                 label='OCC'
@@ -756,11 +756,34 @@ class Comp(object):
         for _read_node in _nodes:
             _reformat_node = nuke.nodes.Reformat(
                 inputs=[_read_node], resize='fit')
-            n = nuke.nodes.Grade(
-                inputs=[n, _reformat_node],
-                white="0.08420000225 0.1441999972 0.2041999996 0.0700000003",
-                white_panelDropped=True,
-                label='Shadow'
+            n = Comp._grade_shadow([n, _reformat_node])
+        return n
+
+    @staticmethod
+    def _grade_shadow(inputs):
+        n = nuke.nodes.Grade(
+            inputs=inputs,
+            white="0.08420000225 0.1441999972 0.2041999996 0.0700000003",
+            white_panelDropped=True,
+            label='Shadow'
+        )
+        return n
+
+    @staticmethod
+    def _merge_occsh(input_node):
+        nodes = Comp.get_nodes_by_tags(('OCCSH',))
+        n = input_node
+        for read_node in nodes:
+            input1 = nuke.nodes.Reformat(
+                inputs=[read_node], resize='fit')
+            n = Comp._grade_shadow([n, input1])
+            input1 = nuke.nodes.Invert(inputs=[input1])
+            n = nuke.nodes.Merge2(
+                inputs=[n, input1],
+                channels='rgb',
+                operation='multiply',
+                screen_alpha=True,
+                label='OCC'
             )
         return n
 
