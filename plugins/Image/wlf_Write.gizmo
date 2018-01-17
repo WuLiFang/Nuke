@@ -17,13 +17,6 @@ if '__wlf_Write' not in locals():
                 nuke.knob('this.Text_Artist.message', new)
                 nuke.Undo.enable()
 
-            nuke.addOnScriptSave(cls.ask_output_exr, args=(this,))
-        
-        @classmethod
-        def on_destroy(cls):
-            this = nuke.thisNode()
-            nuke.removeOnScriptSave(cls.ask_output_exr, args=(this,))
-
         @staticmethod
         def autolabel():
             this = nuke.thisNode()
@@ -43,17 +36,6 @@ if '__wlf_Write' not in locals():
                 nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
             elif nuke.thisKnob() is nuke.thisNode()['output_exr']:
                 nuke.thisNode()['bt_render_MOV_from_EXR'].setEnabled(nuke.thisKnob().value())
-
-        @staticmethod
-        def ask_output_exr(this):
-            if not this['output_exr'].value():
-                root = nuke.Root()
-                first = root['first_frame'].value()
-                last = root['last_frame'].value()
-                frames = abs(last - first) +1
-                if frames >= 100:
-                    if nuke.ask('{}:\n镜头长达 {:.0f} 帧, 输出时同时输出exr序列?'.format(this.name(),frames)):
-                        this['output_exr'].setValue(True)
 
         class WriteJPG(object):
             blur_node_classes = (
@@ -103,9 +85,13 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.52.2"}
+ addUserKnob {20 Write l "wlf_Write v1.53.0"}
+ addUserKnob {41 format l 输出格式 T Reformat1.format}
+ addUserKnob {45 views l 视图}
+ views {main}
+ addUserKnob {26 jpg_text l 单帧}
  addUserKnob {6 use_custom_frame l 指定帧 +STARTLINE}
- addUserKnob {3 custom_frame l "" -STARTLINE}
+ addUserKnob {3 custom_frame l "" -STARTLINE +DISABLED}
  custom_frame 1
  addUserKnob {3 frame l INVISIBLE +INVISIBLE}
  frame {{"\[python -execlocal first,\\ last\\ =\\ nuke.numvalue('root.first_frame'),\\ nuke.numvalue('root.last_frame')\\nmiddle\\ =\\ (first\\ +\\ last)//2\\nthisNode\\ =\\ nuke.thisNode()\\nif\\ thisNode\\\['use_custom_frame'\\].value()\\ :\\n\\ \\ \\ \\ ret\\ =\\ thisNode\\\['custom_frame'\\].value()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ middle]"}}
@@ -113,17 +99,23 @@ except NameError:
  addUserKnob {32 bt_middle l 中间帧(默认) -STARTLINE T "knob this.use_custom_frame 0\nframe \[value this.knob.frame]"}
  addUserKnob {32 bt_last l 末帧 -STARTLINE T "set last_frame \[value root.last_frame] \nknob use_custom_frame 1\nknob custom_frame \$last_frame\nframe \$last_frame"}
  addUserKnob {32 bt_this l 当前帧 -STARTLINE T "knob use_custom_frame 1\nknob custom_frame \[x]"}
- addUserKnob {6 no_motionblur l 单帧渲染时不带运动模糊 +STARTLINE}
+ addUserKnob {6 no_motionblur l 渲染时不带运动模糊 +STARTLINE}
  no_motionblur true
+ addUserKnob {26 exr_text l 序列}
+ addUserKnob {6 output_exr l exr t 在输出mov的同时输出exr +STARTLINE}
+ output_exr true
+ addUserKnob {3 exr_threshold l 启用阈值 t 工程长度大于此值时才会输出 -STARTLINE}
+ exr_threshold 100
  addUserKnob {26 ""}
  addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.reading none\nknob this.Write_JPG_1.disable 0\nknob this.Read_JPG_1.disable 1\nexecute this.Write_JPG_1 \[value this.knob.frame]\nknob this.Read_JPG_1.version \[expr \[value this.Read_JPG_1.version]+1]\nknob this.Read_JPG_1.disable 0\nknob this.reading jpg" +STARTLINE}
- addUserKnob {22 bt_jpg_dir l 单帧输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
- addUserKnob {22 bt_render l 渲染MOV T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)" +STARTLINE}
- addUserKnob {22 bt_mov_dir l 视频输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
- addUserKnob {6 output_exr l 输出exr t 在输出mov的同时输出exr +STARTLINE}
- addUserKnob {22 bt_exr_dir l 序列输出文件夹 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'sequences')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
- addUserKnob {32 bt_render_MOV_from_EXR l 用exr渲染mov T "set tar this.Write_EXR_1\nknob \$tar.reading 1\npython -exec {nukescripts.showRenderDialog(\[nuke.thisNode()], False)}\nknob \$tar.reading 0"}
- addUserKnob {26 ""}
+ addUserKnob {22 bt_render l 渲染视频 -STARTLINE T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)"}
+ addUserKnob {32 bt_render_MOV_from_EXR l 用序列渲染视频 -STARTLINE T "set tar this.Write_EXR_1\nknob \$tar.reading 1\npython -exec \{nukescripts.showRenderDialog(\[nuke.thisNode()], False)\}\nknob \$tar.reading 0"}
+ addUserKnob {20 group_folders l 打开输出文件夹 n 1}
+ group_folders 0
+ addUserKnob {22 bt_jpg_dir l 单帧 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {22 bt_mov_dir l 视频 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'mov')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {22 bt_exr_dir l 序列 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'sequences')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
+ addUserKnob {20 endGroup n -1}
  addUserKnob {83 reading l 读取 M {none mov jpg}}
  addUserKnob {22 reload -STARTLINE T "for n in nuke.thisNode().nodes():\n    if n.Class() == 'Read':\n        n\['reload'].execute()"}
 }
@@ -246,27 +238,26 @@ except NameError:
   xpos 90
   ypos -520
  }
+ set Cb149000 [stack 0]
  Input {
   inputs 0
   name Input
   xpos 0
   ypos -968
  }
- Reformat {
-  resize fit
-  name Reformat2
+clone $Cb149000 {
   xpos 0
   ypos -938
  }
  Write {
   file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
   proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
+  views {{{parent.views}}}
   file_type exr
   name Write_EXR_1
-  checkHashOnRead false
   xpos 0
   ypos -908
-  disable {{"! parent.output_exr"}}
+  disable {{"!(parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
   addUserKnob {20 caravr l CaraVR}
   addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
   addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
@@ -275,6 +266,7 @@ except NameError:
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   proxy "mov/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   colorspace sRGB
+  views {{{parent.views}}}
   file_type mov
   meta_codec apch
   mov32_codec "rle "
@@ -289,6 +281,7 @@ except NameError:
  Write {
   file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
   proxy "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+  views {{{parent.views}}}
   file_type jpeg
   _jpeg_quality 1
   render_order 2
@@ -314,6 +307,7 @@ except NameError:
   file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   proxy "mov/proxy/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
   colorspace sRGB
+  views {{{parent.views}}}
   file_type mov
   meta_codec apch
   mov32_codec "rle "
