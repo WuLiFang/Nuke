@@ -2,21 +2,22 @@
 """Deal with assets and files in nuke."""
 from __future__ import absolute_import
 
+import logging
+import multiprocessing.dummy as multiprocessing
 import os
 import re
 import time
-import logging
-import multiprocessing.dummy as multiprocessing
+from functools import wraps
 
 import nuke
 
-from wlf.files import copy
-from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii, get_footage_name
-from wlf.decorators import run_with_clock
-from wlf.env import has_gui
-
 from edit import clear_selection
 from node import Last
+from wlf.decorators import run_with_clock
+from wlf.env import has_gui
+from wlf.files import copy
+from wlf.path import (expand_frame, get_encoded, get_footage_name, get_unicode,
+                      is_ascii)
 
 LOGGER = logging.getLogger('com.wlf.asset')
 
@@ -319,13 +320,14 @@ def fix_error_read():
 
 def check_localization_support(func):
     """Decorator.  """
+
+    @wraps(func)
     def _func(*args, **kwargs):
         if nuke.env['NukeVersionMajor'] < 10:
             print('Localization update only support Nuke10.0 or above.')
             return
         func(*args, **kwargs)
-    _func.__name__ = func.__name__
-    _func.__doc__ = func.__doc__
+
     return _func
 
 

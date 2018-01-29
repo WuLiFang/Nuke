@@ -216,6 +216,7 @@ def add_panel():
 
 def add_autolabel():
     """Add custom autolabel. """
+
     LOGGER.info('增强节点标签')
     nuke.addAutolabel(custom_autolabel)
 
