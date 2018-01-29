@@ -12,9 +12,8 @@ import nuke
 
 from wlf.files import copy
 from wlf.path import expand_frame, get_encoded, get_unicode, is_ascii, get_footage_name
-from wlf.notify import Progress, CancelledError
-from wlf.Qt.QtCore import QTimer
 from wlf.decorators import run_with_clock
+from wlf.env import has_gui
 
 from edit import clear_selection
 from node import Last
@@ -162,6 +161,8 @@ def get_footages(nodes=None):
 def get_dropframe(filename, framerange):
     """Return dropframes for @filename in @framerange. -> nuke.FrameRanges """
 
+    from wlf.notify import Progress, CancelledError
+
     assert isinstance(framerange, (list, nuke.FrameRange))
     filename = get_unicode(filename)
     dir_path = os.path.dirname(filename)
@@ -193,6 +194,8 @@ def sent_to_dir(dir_):
 
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
+
+    from wlf.notify import Progress, CancelledError
 
     LOGGER.debug('Handling dropdata: %s %s', mime_type, data)
     if mime_type != 'text/plain':
@@ -328,29 +331,31 @@ def check_localization_support(func):
     return _func
 
 
-class Localization(object):
-    """Nuke localization utility.  """
+if has_gui():
+    from Qt.QtCore import QTimer
 
-    timer = QTimer()
+    class Localization(object):
+        """Nuke localization utility.  """
 
-    @classmethod
-    def start_upate(cls, interval=1800):
-        """Start update thread"""
+        timer = QTimer()
 
-        cls.timer.setInterval(interval * 1000)
-        cls.timer.start()
+        @classmethod
+        def start_upate(cls, interval=1800):
+            """Start update thread"""
 
-    @staticmethod
-    @check_localization_support
-    def update():
-        """Update localized files"""
+            cls.timer.setInterval(interval * 1000)
+            cls.timer.start()
 
-        LOGGER.info(u'清理素材缓存')
-        import nuke.localization as localization
-        localization.clearUnusedFiles()
-        localization.pauseLocalization()
-        localization.forceUpdateAll()
-        localization.setAlwaysUseSourceFiles(True)
+        @staticmethod
+        @check_localization_support
+        def update():
+            """Update localized files"""
 
+            LOGGER.info(u'清理素材缓存')
+            import nuke.localization as localization
+            localization.clearUnusedFiles()
+            localization.pauseLocalization()
+            localization.forceUpdateAll()
+            localization.setAlwaysUseSourceFiles(True)
 
-Localization.timer.timeout.connect(Localization.update)
+    Localization.timer.timeout.connect(Localization.update)

@@ -12,9 +12,6 @@ import threading
 
 import nuke
 
-from wlf.notify import Progress
-
-
 from node import wlf_write_node
 
 __version__ = '1.7.17'
@@ -350,6 +347,8 @@ def clear_selection():
 
 def delete_unused_nodes(nodes=None, message=False):
     """Delete all unused nodes."""
+
+    from wlf.notify import Progress
 
     def _is_used(n):
         if n.name().startswith('_')\

@@ -66,3 +66,6 @@ build/
 
 # Shared toolset
 /Toolsets/Shared/
+
+# venv
+.venv/

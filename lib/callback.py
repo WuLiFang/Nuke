@@ -6,7 +6,6 @@ import os
 import logging
 
 import nuke
-import nukescripts
 
 import asset
 import edit
@@ -30,6 +29,9 @@ def init():
 
 def menu():
     """Add callback for nuke menu phase."""
+
+    import nukescripts
+
     nuke.addOnScriptLoad(Last.on_load_callback)
 
     nuke.addOnScriptSave(Last.on_save_callback)
