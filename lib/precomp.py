@@ -11,11 +11,10 @@ import sys
 
 import nuke
 
-from edit import add_layer, copy_layer, undoable_func, replace_node
+from edit import add_layer, copy_layer, replace_node, undoable_func
 from orgnize import autoplace
 from wlf.path import PurePath
 
-__version__ = '0.4.5'
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 

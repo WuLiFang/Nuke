@@ -18,8 +18,6 @@ from wlf.env import has_gui
 from edit import clear_selection
 from node import Last
 
-__version__ = '0.5.15'
-
 LOGGER = logging.getLogger('com.wlf.asset')
 
 

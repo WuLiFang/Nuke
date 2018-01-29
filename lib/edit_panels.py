@@ -8,8 +8,6 @@ from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
     set_knobs, same_class_filter, transfer_flags
 from wlf.notify import Progress, CancelledError
 
-__version__ = '0.2.6'
-
 if not nuke.GUI:
     nukescripts.PythonPanel = object
 

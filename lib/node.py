@@ -2,15 +2,13 @@
 """Setup node.  """
 from __future__ import absolute_import
 
+import logging
 import os
 import time
-import logging
 
 import nuke
 
 import wlf.path
-
-__version__ = '0.3.8'
 
 LOGGER = logging.getLogger('com.wlf.node')
 

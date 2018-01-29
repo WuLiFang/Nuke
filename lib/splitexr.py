@@ -2,21 +2,18 @@
 """Split all-in-one exr to multiple files."""
 from __future__ import absolute_import
 
+import argparse
 import os
 import re
 import sys
 import threading
-import argparse
 from subprocess import Popen
-
 
 import nuke
 import nukescripts
 
+from wlf.files import get_encoded, get_footage_name, url_open
 from wlf.notify import Progress
-from wlf.files import url_open, get_footage_name, get_encoded
-
-__version__ = '0.1.1'
 
 
 class Dialog(nukescripts.PythonPanel):

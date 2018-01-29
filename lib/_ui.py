@@ -1,32 +1,29 @@
 # -*- coding: UTF-8 -*-
 """Setup UI."""
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
-import os
 import logging
+import os
 import webbrowser
 
 import nuke
 import nukescripts
-from autolabel import autolabel
-
-import wlf.uploader
-import wlf.cgtwq
-import wlf.csheet_tool
 
 import asset
-import precomp
+import batchcomp
+import cgtwn
+import comp
 import edit
 import edit_panels
-import cgtwn
 import orgnize
-import comp
-import batchcomp
-import splitexr
-import scanner
 import panels
-
-__version__ = '0.5.6'
+import precomp
+import scanner
+import splitexr
+import wlf.cgtwq
+import wlf.csheet_tool
+import wlf.uploader
+from wlf.path import get_encoded
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -40,133 +37,147 @@ RESOURCE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
 def add_menu():
     """Add menu for commands and nodes."""
 
-    LOGGER.info(u'添加菜单')
+    LOGGER.info('添加菜单')
 
-    def _edit(menu):
-        m = menu.addMenu("编辑")
+    def _(*args, **kwargs):
+        args = (i.encode('utf-8') if isinstance(i, unicode) else i
+                for i in args)
+        kwargs = tuple({k: v.encode('utf-8') if isinstance(v, unicode) else v
+                        for k, v in kwargs.items()}.items())
+        return (args, kwargs)
 
-        m.addCommand('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2')
-        m.addCommand('分离图层', lambda: edit.split_layers(nuke.selectedNode()),
-                     'F3', icon="SplitLayers.png")
-        m.addCommand("分离rgba",
-                     lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3')
-        m.addCommand("重命名PuzzleMatte",
-                     lambda: edit_panels.ChannelsRename(prefix='PuzzleMatte').show(), 'F4')
-        m.addCommand("标记为稍后启用",
-                     lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D')
-        m.addCommand('输出当前帧png',
-                     lambda: comp.render_png(nuke.selectedNodes(), show=True),
-                     'SHIFT+F7')
-        m.addCommand("设置帧范围",
-                     edit.dialog_set_framerange)
-        m.addCommand('转换为相对路径',
-                     lambda: edit.nodes_to_relpath(nuke.selectedNodes()),
-                     icon="utilitiesfolder.png")
-
-        m.addSeparator()
-
-        m.addCommand("禁用所有稍后启用节点",
-                     lambda: edit.marked_nodes().disable(), 'CTRL+SHIFT+D')
-        m.addCommand(
-            "修正读取错误", asset.fix_error_read, 'F6')
-        m.addCommand(
-            "Reload所有", edit.reload_all_read_node)
-        m.addCommand("检查缺帧", lambda: asset.DropFrames.check(show_ok=True))
-        m.addCommand("检查素材更新", lambda: asset.warn_mtime(
-            show_ok=True, show_dialog=True))
-        m.addCommand("转换单帧为序列",
-                     edit.replace_sequence)
-
-        n = m.addMenu('整理')
-        n.addCommand("整理所选节点(竖式摆放)",
-                     lambda: orgnize.autoplace(nuke.selectedNodes()),
-                     "L", shortcutContext=DAG_CONTEXT)
+    def _autocomp():
         try:
-            nuke.menu("Nuke").findItem('Edit').findItem(
-                'Node').findItem('Autoplace').setShortcut("Ctrl+L")
-        except AttributeError as ex:
-            print(ex)
-        n.addCommand("清理无用节点",
-                     lambda: edit.delete_unused_nodes(message=True))
-        n.addCommand("所有Gizmo转Group",
-                     edit.all_gizmo_to_group)
-        n.addCommand("根据背板重命名所有节点",
-                     edit.rename_all_nodes)
-        n.addCommand("节点添加Dots变成90度",
-                     lambda: edit.nodes_add_dots(nuke.selectedNodes()))
-        n.addCommand("所有节点添加Dots变成90度",
-                     lambda: edit.nodes_add_dots(nuke.allNodes()))
+            comp.Comp().create_nodes()
+        except comp.FootageError:
+            nuke.message('请先导入素材')
 
-    def _comp(menu):
-        m = menu.addMenu('合成')
+    def _open_help():
+        help_page = os.path.join(
+            RESOURCE_DIR, 'Documentation/build/html/index.html')
+        webbrowser.open(help_page)
 
-        def _autocomp():
-            try:
-                comp.Comp().create_nodes()
-            except comp.FootageError:
-                nuke.message('请先导入素材')
-        m.addCommand('自动合成', _autocomp, icon='autocomp.png')
-        m.addCommand('自动合成设置', lambda: comp.Dialog(
-        ).showModalDialog(), icon='autocomp.png')
-        m.addCommand('redshift预合成',
-                     lambda: precomp.Precomp(
-                         nuke.selectedNodes(), renderer='redshift'),
-                     'F1',
-                     shortcutContext=DAG_CONTEXT,
-                     icon='autocomp.png')
-        _path = os.path.abspath(os.path.join(
-            __file__, '../../scenetools/scenetools.exe'))
+    cgtw_menu = _('CGTeamWork', icon='cgteamwork.png')
+    all_menu = [
+        {_('编辑'): [
+            _('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2'),
+            _('分离图层', lambda: edit.split_layers(nuke.selectedNode()),
+              'F3', icon="SplitLayers.png"),
+            _("分离rgba",
+              lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3'),
+            _("重命名PuzzleMatte",
+              lambda: edit_panels.ChannelsRename(prefix='PuzzleMatte').show(), 'F4'),
+            _("标记为稍后启用",
+              lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D'),
+            _('输出当前帧png',
+              lambda: comp.render_png(nuke.selectedNodes(), show=True),
+              'SHIFT+F7'),
+            _("设置帧范围",
+              edit.dialog_set_framerange),
+            _('转换为相对路径',
+              lambda: edit.nodes_to_relpath(nuke.selectedNodes()), icon="utilitiesfolder.png"),
+            None,
+            _("禁用所有稍后启用节点",
+              lambda: edit.marked_nodes().disable(), 'CTRL+SHIFT+D'),
+            _("修正读取错误", asset.fix_error_read, 'F6'),
+            _("Reload所有", edit.reload_all_read_node),
+            _("检查缺帧", lambda: asset.DropFrames.check(show_ok=True)),
+            _("检查素材更新", lambda: asset.warn_mtime(
+                show_ok=True, show_dialog=True)),
+            _("转换单帧为序列",
+              edit.replace_sequence),
+            {_('整理'): [
+                _("整理所选节点(竖式摆放)",
+                  lambda: orgnize.autoplace(nuke.selectedNodes()),
+                  "L", shortcutContext=DAG_CONTEXT),
+                _("清理无用节点",
+                  lambda: edit.delete_unused_nodes(message=True)),
+                _("所有Gizmo转Group",
+                  edit.all_gizmo_to_group),
+                _("根据背板重命名所有节点",
+                  edit.rename_all_nodes),
+                _("节点添加Dots变成90度",
+                  lambda: edit.nodes_add_dots(nuke.selectedNodes())),
+                _("所有节点添加Dots变成90度", lambda: edit.nodes_add_dots(nuke.allNodes()))
+            ]
+            }
+        ]},
+        {_('合成'): [
+            _('自动合成', _autocomp, icon='autocomp.png'),
+            _('自动合成设置', lambda: comp.Dialog().showModalDialog(), icon='autocomp.png'),
+            _('redshift预合成',
+              lambda: precomp.Precomp(
+                  nuke.selectedNodes(), renderer='redshift'),
+              'F1',
+              shortcutContext=DAG_CONTEXT,
+              icon='autocomp.png')
+        ]},
+        {cgtw_menu: [
+            _('登录', cgtwn.dialog_login),
+            _('添加note', lambda: cgtwn.CurrentShot().ask_add_note()),
+            _('提交单帧', lambda: cgtwn.CurrentShot().submit_image()),
+            _('提交视频', lambda: cgtwn.CurrentShot().submit_video()),
+            _("批量下载", lambda: nuke.message(
+                '已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>')),
+            _('创建项目色板', cgtwn.check_login(True)
+              (lambda: wlf.csheet_tool.Dialog().exec_())),
+            _('创建项目文件夹', cgtwn.dialog_create_dirs)
+        ]},
+        {_('工具'): [
+            _('批量自动合成', lambda: batchcomp.Dialog().showModalDialog(),
+              icon='autocomp.png'),
+            _('创建色板', lambda: wlf.csheet.__main__.Dialog().exec_()),
+            _('上传mov', lambda: nukescripts.panels.restorePanel(
+                'com.wlf.uploader')),
+            _('扫描空文件夹', scanner.call_from_nuke),
+            _('分离exr', splitexr.Dialog.show),
+            _("分割当前文件(根据背板)", edit.split_by_backdrop)
+        ]},
+        {_('帮助'): [
+            _('吾立方插件 文档', _open_help),
+            _("吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
+        ]}
+    ]
 
-    def _cgtw(menu):
+    # Hide cgtw menu if not installed.
+    if not wlf.cgtwq.MODULE_ENABLE:
+        for i in all_menu:
+            if cgtw_menu in i:
+                all_menu.remove(i)
 
-        m = menu.addMenu('CGTeamWork', icon='cgteamwork.png')
-        m.addCommand(
-            '登录', cgtwn.dialog_login)
-        m.addCommand(
-            '添加note', lambda: cgtwn.CurrentShot().ask_add_note())
-        m.addCommand(
-            '提交单帧', lambda: cgtwn.CurrentShot().submit_image())
-        m.addCommand(
-            '提交视频', lambda: cgtwn.CurrentShot().submit_video())
-        m.addCommand(
-            "批量下载", r"nuke.message('已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>')")
-        m.addCommand(
-            '创建项目色板', cgtwn.check_login(True)(lambda: wlf.csheet_tool.Dialog().exec_()))
-        m.addCommand(
-            '创建项目文件夹', cgtwn.dialog_create_dirs)
+    # Add all menu.
+    def _add_menu(menu, parent=nuke.menu("Nuke")):
+        assert isinstance(menu, dict)
 
-    def _tools(menu):
-        m = menu.addMenu('工具')
-        m.addCommand('批量自动合成', lambda: batchcomp.Dialog().showModalDialog(),
-                     icon='autocomp.png')
-        m.addCommand(
-            '创建色板', lambda:  wlf.csheet_tool.Dialog().exec_())
-        m.addCommand('上传mov', lambda: nukescripts.panels.restorePanel(
-            'com.wlf.uploader'))
-        m.addCommand('扫描空文件夹', scanner.call_from_nuke)
-        m.addCommand('分离exr', splitexr.Dialog.show)
-        m.addCommand("分割当前文件(根据背板)",
-                     edit.split_by_backdrop)
+        for k, v in menu.items():
+            m = parent.addMenu(*k[0], **dict(k[1]))
+            for i in v:
+                if i is None:
+                    m.addSeparator()
+                elif isinstance(i, dict):
+                    _add_menu(i, m)
+                elif isinstance(i, tuple):
+                    m.addCommand(*i[0], **dict(i[1]))
 
-    def _help(menu):
-        def _open_help():
-            help_page = os.path.join(
-                RESOURCE_DIR, 'Documentation/build/html/index.html')
-            webbrowser.open(help_page)
-        m = menu.addMenu('帮助')
+    for menu in all_menu:
+        _add_menu(menu)
 
-        m.addCommand('吾立方插件 文档', _open_help)
-        m.addCommand(
-            "吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
+    # Set old autoplace shortcut.
+    try:
+        nuke.menu("Nuke").findItem('Edit').findItem(
+            'Node').findItem('Autoplace').setShortcut("Ctrl+L")
+    except AttributeError as ex:
+        print(ex)
 
-    def _create_node_menu():
-        _plugin_path = '../../plugins'
+    # create_node_menu
+    _plugin_path = '../../plugins'
 
-        m = nuke.menu("Nodes")
-        m = m.addMenu('吾立方', icon='Modify.png')
-        create_menu_by_dir(m, os.path.abspath(
-            os.path.join(__file__, _plugin_path)))
+    m = nuke.menu("Nodes")
+    m = m.addMenu('吾立方'.encode('utf-8'), icon='Modify.png')
+    create_menu_by_dir(m, os.path.abspath(
+        os.path.join(__file__, _plugin_path)))
 
+    # Enhance 'ToolSets' menu.
     def _create_shared_toolsets():
         if not nuke.selectedNodes():
             nuke.message('未选中任何节点,不能创建工具集')
@@ -177,46 +188,35 @@ def add_menu():
                 'Shared', filename), rootPath=RESOURCE_DIR)
         _refresh_toolsets_menu()
 
-    def _toolsets():
-        m = nuke.menu('Nodes').addMenu('ToolSets')
-        m.addCommand('刷新', _refresh_toolsets_menu)
-        m.addCommand(
-            '创建共享工具集', _create_shared_toolsets)
-        m.addCommand(
-            '打开共享工具集文件夹', lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
-
-    _raw_refresh_toolsets_menu = nukescripts.toolsets.refreshToolsetsMenu
-
     def _refresh_toolsets_menu():
-        """Extend nuke function.  """
+        """Extended nuke function.  """
 
-        _raw_refresh_toolsets_menu()
-        _toolsets()
+        nukescripts.toolsets._refreshToolsetsMenu()
+        m = nuke.menu('Nodes').addMenu('ToolSets')
+        m.addCommand('刷新'.encode('utf-8'), _refresh_toolsets_menu)
+        m.addCommand(
+            '创建共享工具集'.encode('utf-8'), _create_shared_toolsets)
+        m.addCommand(
+            '打开共享工具集文件夹'.encode('utf-8'),
+            lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
 
+    if not getattr(nukescripts.toolsets, '_refreshToolsetsMenu', None):
+        setattr(nukescripts.toolsets, '_refreshToolsetsMenu',
+                nukescripts.toolsets.refreshToolsetsMenu)
+    _refresh_toolsets_menu()
     nukescripts.toolsets.refreshToolsetsMenu = _refresh_toolsets_menu
-
-    menubar = nuke.menu("Nuke")
-
-    _edit(menubar)
-    _comp(menubar)
-    _tools(menubar)
-    if wlf.cgtwq.MODULE_ENABLE:
-        _cgtw(menubar)
-    _help(menubar)
-    _create_node_menu()
-    _toolsets()
 
 
 def add_panel():
     """Add custom pannel. """
 
-    LOGGER.info(u'添加面板')
+    LOGGER.info('添加面板')
     panels.register(wlf.uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
 def add_autolabel():
     """Add custom autolabel. """
-    LOGGER.info(u'增强节点标签')
+    LOGGER.info('增强节点标签')
     nuke.addAutolabel(custom_autolabel)
 
 
@@ -242,8 +242,10 @@ def create_menu_by_dir(parent, dir_):
         else:
             _name, _ext = os.path.splitext(i)
             if _ext.lower() == '.gizmo':
-                parent.addCommand(_name, 'nuke.createNode("{0}")'.format(
-                    _name), icon='{}.png'.format(_name))
+                parent.addCommand(
+                    _name,
+                    lambda: nuke.createNode('{}'.format(_name)),
+                    icon='{}.png'.format(_name))
 
 
 def custom_autolabel():
@@ -252,9 +254,10 @@ def custom_autolabel():
     '''
 
     def _add_to_autolabel(text, center=False):
+
         if not isinstance(text, (str, unicode)):
             return
-        ret = autolabel().split('\n')
+        ret = nuke.autolabel().split('\n')
         ret.insert(1, text)
         ret = '\n'.join(ret).rstrip('\n')
         if center:

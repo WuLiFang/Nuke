@@ -1,33 +1,28 @@
 # -*- coding=UTF-8 -*-
 """Comp footages and create output, can be run as script.  """
+
 from __future__ import absolute_import
 
+import argparse
 import logging
 import os
 import re
 import sys
 import webbrowser
-import argparse
 
 import nuke
 import nukescripts
 
+import precomp
 import wlf.config
 import wlf.mp_logging
-from wlf.notify import Progress
-
-import precomp
+from edit import undoable_func
 from node import ReadNode
 from orgnize import autoplace
-from edit import undoable_func
-
+from wlf.notify import Progress
 
 LOGGER = logging.getLogger('com.wlf.comp')
 COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
-
-if sys.getdefaultencoding != 'UTF-8':
-    reload(sys)
-    sys.setdefaultencoding('UTF-8')
 
 
 def _set_logger():

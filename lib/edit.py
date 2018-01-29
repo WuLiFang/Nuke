@@ -2,19 +2,19 @@
 """Edit existed content in workfile."""
 from __future__ import absolute_import
 
-import os
-import re
 import colorsys
-import random
 import logging
-from functools import wraps
+import os
+import random
+import re
 import threading
+from functools import wraps
 
 import nuke
 
 from node import wlf_write_node
+from wlf.notify import Progress
 
-__version__ = '1.7.17'
 LOGGER = logging.getLogger('com.wlf.edit')
 assert isinstance(LOGGER, logging.Logger)
 ENABLE_MARK = '_enable_'
@@ -347,8 +347,6 @@ def clear_selection():
 
 def delete_unused_nodes(nodes=None, message=False):
     """Delete all unused nodes."""
-
-    from wlf.notify import Progress
 
     def _is_used(n):
         if n.name().startswith('_')\

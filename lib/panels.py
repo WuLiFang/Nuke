@@ -3,7 +3,7 @@
 import nuke
 from nukescripts.panels import PythonPanel, registerPanel
 
-__version__ = '0.1.1'
+from wlf.path import get_encoded
 
 
 def register(widget, name, widget_id, create=False):
@@ -32,7 +32,7 @@ def register(widget, name, widget_id, create=False):
         return _Panel(widget, name, widget_id).addToPane()
 
     menu = nuke.menu('Pane')
-    menu.addCommand(name, _add)
+    menu.addCommand(get_encoded(name), _add)
     registerPanel(widget_id, _add)
 
     if (create):

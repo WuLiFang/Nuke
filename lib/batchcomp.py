@@ -24,8 +24,6 @@ from comp import COMP_START_MESSAGE
 from comp import Dialog as CompDialog
 from comp import __file__ as script_file
 
-__version__ = '0.2.3'
-
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
 # bitmask

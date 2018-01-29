@@ -5,17 +5,14 @@ from __future__ import absolute_import
 import logging
 import random
 import threading
-from collections import namedtuple, Iterable
+from collections import Iterable, namedtuple
 
 import nuke
 
-from wlf.decorators import run_async, run_with_clock
-from wlf.notify import CancelledError, Progress
-
 from edit import run_in_main_thread
 from node import get_upstream_nodes
-
-__version__ = '0.7.16'
+from wlf.decorators import run_async, run_with_clock
+from wlf.notify import CancelledError, Progress
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
