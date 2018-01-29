@@ -10,7 +10,6 @@ import logging
 
 from wlf.files import map_drivers
 from wlf.mp_logging import set_basic_logger
-from wlf.env import set_default_encoding
 
 from lib import __version__
 
@@ -23,7 +22,7 @@ def main():
     import callback
 
     set_basic_logger(LOGGER)
-    set_default_encoding('UTF-8')
+    os.environ['PYTHONIOENCODING'] = 'utf-8'
 
     # Validation.
     try:
