@@ -20,7 +20,7 @@ from edit import undoable_func
 from node import ReadNode
 from orgnize import autoplace
 from wlf.notify import Progress
-from wlf.path import get_encoded as e
+from wlf.path import get_encoded as e, get_unicode as u
 from nuketools import utf8, utf8_dict
 
 LOGGER = logging.getLogger('com.wlf.comp')
@@ -174,8 +174,8 @@ class Comp(object):
                 LOGGER.info('\t不匹配文件夹正则, 跳过')
                 continue
 
-            footages = [i for i in nuke.getFileNameList(dir_) if
-                        not i.endswith(('副本', '.lock'))]
+            footages = [u(i) for i in nuke.getFileNameList(dir_) if
+                        not u(i).endswith(('副本', '.lock'))]
             if footages:
                 for f in footages:
                     if os.path.isdir(e(os.path.join(dir_, f))):
@@ -541,7 +541,7 @@ class Comp(object):
             _constant = nuke.nodes.Constant(
                 channels='depth',
                 color=1,
-                label='**用渲染出的depth层替换这个**\n或者手动指定数值'
+                label=utf8('**用渲染出的depth层替换这个**\n或者手动指定数值')
             )
             n = nuke.nodes.Merge2(
                 inputs=[n, _constant],
@@ -743,7 +743,7 @@ class Comp(object):
                 inputs=[_read_node], resize='fit')
             n = nuke.nodes.Merge2(
                 inputs=[n, _reformat_node],
-                channels='rgb',
+                output='rgb',
                 operation='multiply',
                 screen_alpha=True,
                 label='OCC'
