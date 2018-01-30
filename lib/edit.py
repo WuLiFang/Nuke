@@ -14,7 +14,7 @@ import nuke
 
 from node import wlf_write_node
 from wlf.notify import Progress
-
+from nuketools import utf8
 LOGGER = logging.getLogger('com.wlf.edit')
 assert isinstance(LOGGER, logging.Logger)
 ENABLE_MARK = '_enable_'
@@ -41,7 +41,7 @@ def undoable_func(name=None):
         @wraps(func)
         def _func(*args, **kwargs):
             _name = name if name is not None else func.__name__
-            run_in_main_thread(nuke.Undo.begin)(_name)
+            run_in_main_thread(nuke.Undo.begin)(utf8(_name))
 
             try:
                 ret = func(*args, **kwargs)

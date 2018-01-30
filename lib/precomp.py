@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
 import inspect
 import json
@@ -13,6 +13,7 @@ import nuke
 
 from edit import add_layer, copy_layer, replace_node, undoable_func
 from orgnize import autoplace
+from nuketools import utf8, utf8_dict
 from wlf.path import PurePath
 
 LOGGER = logging.getLogger('com.wlf.precomp')
@@ -194,7 +195,8 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         setattr(sys.modules['__main__'], '__PrecompSwitch', PrecompSwitch)
         if self.last_node is remove_node:
             kwargs['disable'] = True
-        self.last_node = PrecompSwitch.init(nuke.nodes.Switch(**kwargs))
+        self.last_node = PrecompSwitch.init(
+            nuke.nodes.Switch(**utf8_dict(kwargs)))
 
         replace_node(dot_node.input(0), self.last_node)
 
@@ -230,13 +232,12 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         if layer in self.layers():
             kwargs = {'inputs': (self.last_node,),
                       'in': layer,
-                      'label': u'修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
+                      'label': '修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
             try:
                 kwargs['postage_stamp'] = self.last_node['postage_stamp'].value()
             except NameError:
                 pass
-            ret = nuke.nodes.Shuffle(
-                **kwargs)
+            ret = nuke.nodes.Shuffle(**utf8_dict(kwargs))
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
             if self.source.get(pair[0])\
@@ -253,7 +254,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                                                and input1['postage_stamp'].value())
                 except NameError:
                     pass
-                n = nuke.nodes.Merge2(**kwargs)
+                n = nuke.nodes.Merge2(**utf8_dict(kwargs))
                 self.source[layer] = n
                 ret = n
             else:
@@ -277,7 +278,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         self.last_node = nuke.nodes.Merge2(
             inputs=[self.last_node, input1], operation='plus',
             also_merge=layer if layer not in self.layers() else 'none',
-            label=self.l10n(layer),
+            label=utf8(self.l10n(layer)),
             output='rgb')
 
     def copy(self, layer, output=None):

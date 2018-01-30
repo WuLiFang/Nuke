@@ -1,28 +1,28 @@
 # -*- coding=UTF-8 -*-
 """Batch comp runner.  """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function, unicode_literals
 
-import os
-import webbrowser
 import logging
-import traceback
+import os
 import re
 import time
+import traceback
+import webbrowser
 from multiprocessing.dummy import Pool, Process, cpu_count
-from subprocess import Popen, PIPE
+from subprocess import PIPE, Popen
 
 import nuke
 import nukescripts
 import psutil
 
 import wlf.config
-from wlf.path import get_encoded, get_unicode
-from wlf.notify import Progress, CancelledError
-from wlf.decorators import run_async, run_in_main_thread
-
-from comp import COMP_START_MESSAGE
 from comp import Dialog as CompDialog
 from comp import __file__ as script_file
+from comp import COMP_START_MESSAGE
+from nuketools import utf8, iutf8
+from wlf.decorators import run_async, run_in_main_thread
+from wlf.notify import CancelledError, Progress
+from wlf.path import get_encoded as e, get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
@@ -64,20 +64,21 @@ class Dialog(nukescripts.PythonPanel):
     ]
 
     def __init__(self):
-        nukescripts.PythonPanel.__init__(self, '批量合成', 'com.wlf.batchcomp')
+        nukescripts.PythonPanel.__init__(
+            self, utf8('批量合成'), 'com.wlf.batchcomp')
         self._shot_list = None
 
         for i in self.knob_list:
-            k = i[0](*i[1:])
+            k = i[0](*iutf8(i[1:]))
             try:
-                k.setValue(CONFIG.get(i[1]))
+                k.setValue(utf8(CONFIG.get(i[1])))
             except TypeError:
                 pass
             self.addKnob(k)
         for i in ('exclude_existed',):
             self.knobs()[i].setFlag(nuke.STARTLINE)
         self.knobs()['generate_txt'].setLabel(
-            '生成 {}.txt'.format(self.txt_name))
+            utf8('生成 {}.txt'.format(self.txt_name)))
 
     def __getattr__(self, name):
         return self.knobs()[name].value()
@@ -116,17 +117,17 @@ class Dialog(nukescripts.PythonPanel):
         shots = self.batchcomp.get_shot_list()
         path = os.path.join(self.output_dir, '{}.txt'.format(self.txt_name))
         line_width = max(len(i) for i in shots)
-        if os.path.exists(get_encoded(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
+        if os.path.exists(e(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
             return
-        with open(get_encoded(path), 'w') as f:
+        with open(e(path), 'w') as f:
             f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
                                 for i in shots))
-        webbrowser.open(get_unicode(path))
+        webbrowser.open(path)
 
     @property
     def txt_name(self):
         """Output txt name. """
-        return self.knobs()['txt_name'].value()
+        return u(self.knobs()['txt_name'].value())
 
     @property
     def batchcomp(self):
@@ -145,9 +146,10 @@ class Dialog(nukescripts.PythonPanel):
 
     def reset(self):
         """Reset re pattern.  """
+
         for i in ('dir_pat',):
             knob = self.knobs()[i]
-            knob.setValue(CONFIG.default.get(i))
+            knob.setValue(utf8(CONFIG.default.get(i)))
             self.knobChanged(knob)
 
     def update(self):
@@ -161,7 +163,7 @@ class Dialog(nukescripts.PythonPanel):
                 _info += u'\n'.join(self._shot_list)
             else:
                 _info = u'找不到镜头'
-            self.knobs()['info'].setValue(_info)
+            self.knobs()['info'].setValue(utf8(_info))
 
         def _button_enabled():
             _knobs = [
@@ -238,7 +240,7 @@ class BatchComp(Process):
                 LOGGER.info('%s:开始', shot)
                 proc = Popen(cmd, shell=True, stdout=PIPE, stderr=PIPE)
                 Process(target=_cancel_handler, args=(proc,)).start()
-                stderr = proc.communicate()[1]
+                stderr = u(proc.communicate()[1])
 
                 _check_cancel()
                 if COMP_START_MESSAGE in stderr:
@@ -288,7 +290,7 @@ class BatchComp(Process):
 
         infos = ''
         for shot in sorted(shots_info.keys()):
-            infos += u'''\
+            infos += '''\
     <tr>
         <td class="shot"><img src="images/{0}_v0.jpg" class="preview"></img><br>{0}</td>
         <td class="info">{1}</td>
@@ -297,7 +299,7 @@ class BatchComp(Process):
         with open(os.path.join(__file__, '../comp.head.html')) as f:
             head = f.read()
         html_page = head
-        html_page += u'''
+        html_page += '''
 <body>
     <table id="mytable">
     <tr>
@@ -324,7 +326,7 @@ class BatchComp(Process):
 
         _ret = os.listdir(_dir)
         if isinstance(_ret[0], str):
-            _ret = tuple(get_unicode(i) for i in _ret)
+            _ret = tuple(u(i) for i in _ret)
         self._all_shots = _ret
         if self.flags & IGNORE_EXISTED:
             _ret = (i for i in _ret
