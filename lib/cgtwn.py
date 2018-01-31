@@ -177,7 +177,7 @@ def check_with_upstream():
         has_video_node = True
         n['frame_mode'].setValue('start_at')
         n['frame'].setValue(unicode(first))
-        CurrentViewer().link(n, input_num, replace=False)
+        CurrentViewer().link(n.obj, input_num, replace=False)
         input_num += 1
         upstream = {
             'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,

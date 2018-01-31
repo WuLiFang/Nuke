@@ -11,8 +11,6 @@ class NukeToolsTestCase(TestCase):
         name = '测试节点'
         node = nuke.nodes.NoOp(name=utf8(name))
         utf8_obj = UTF8Object(node)
-        self.assertIsInstance(utf8_obj, nuke.Node)
-        print(repr(utf8_obj))
         for i in dir(node):
             self.assertIn(i, dir(utf8_obj))
 

@@ -17,24 +17,22 @@ class UTF8Object(object):
 
     def __init__(self, obj):
         self.obj = obj
-        # self.__class__ = type(obj.__class__.__name__,
-        #                       (self.__class__, obj.__class__), {})
+        for i in dir(obj):
+            if not i.startswith('_') and i in self.__dict__:
+                continue
+            try:
+                self.__dict__[i] = utf8(getattr(obj, i))
+            except AttributeError:
+                self.__dict__[i] = getattr(obj, i)
 
     def __repr__(self):
-        obj = super(UTF8Object, self).__getattribute__('obj')
-        return get_encoded('|utf8 {}|' .format(repr(obj).decode('utf-8')))
+        return get_encoded('|utf8 {}|' .format(repr(self.obj).decode('utf-8')))
 
     def __dir__(self):
-        obj = super(UTF8Object, self).__getattribute__('obj')
-        return dir(obj)
-
-    def __getattribute__(self, name):
-        obj = super(UTF8Object, self).__getattribute__('obj')
-        return utf8(obj.__getattribute__(name))
+        return dir(self.obj)
 
     def __getitem__(self, name):
-        obj = super(UTF8Object, self).__getattribute__('obj')
-        return utf8(obj.__getitem__(name))
+        return utf8(self.obj.__getitem__(name))
 
 
 def utf8(obj):
