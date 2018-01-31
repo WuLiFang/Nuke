@@ -3,7 +3,7 @@
 cgteamwork integration with nuke.
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals, print_function
 
 import os
 import logging
@@ -13,13 +13,14 @@ from functools import wraps
 import nuke
 
 from wlf import cgtwq
-from wlf.path import remove_version
+from wlf.path import remove_version, get_unicode as u
 from wlf.files import copy
 from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
 
 from edit import CurrentViewer
 from node import Last
+from nuketools import utf8, UTF8Object
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -32,7 +33,7 @@ class Config(wlf.config.Config):
         'csheet_outdir': 'E:/',
         'csheet_checked': False,
     }
-    path = os.path.expanduser(u'~/.nuke/wlf.comp.json')
+    path = os.path.expanduser('~/.nuke/wlf.comp.json')
 
 
 def abort_modified(func):
@@ -133,10 +134,7 @@ class CurrentShot(cgtwq.Shot):
     def ask_add_note(self):
         """Show a dialog for self.add_note function."""
 
-        note = nuke.getInput(
-            u'note内容'.encode('UTF-8'),
-            u'来自nuke的note'.encode('UTF-8')
-        )
+        note = nuke.getInput(utf8('note内容'), utf8('来自nuke的note'))
         if note:
             self.add_note(note)
 
@@ -145,7 +143,7 @@ def check_with_upstream():
     """Check if script setting match upstream.  """
 
     nodes = {
-        '动画视频': u'animation'
+        '动画视频': 'animation'
     }
     root = nuke.Root()
     msg = []
@@ -166,18 +164,19 @@ def check_with_upstream():
     has_video_node = False
     input_num = 4
     for name, pipeline in nodes.items():
-        n = nuke.toNode(name)
+        n = nuke.toNode(utf8(name))
         if n is None:
             video = videos.get(pipeline)
             if video:
-                n = nuke.nodes.Read(name=name)
-                n['file'].fromUserText(video)
+                n = nuke.nodes.Read(name=utf8(name))
+                n[utf8('file')].fromUserText(video)
             else:
                 LOGGER.debug('Can not get video: %s', pipeline)
                 continue
+        n = UTF8Object(n)
         has_video_node = True
         n['frame_mode'].setValue('start_at')
-        n['frame'].setValue(str(first))
+        n['frame'].setValue(unicode(first))
         CurrentViewer().link(n, input_num, replace=False)
         input_num += 1
         upstream = {
@@ -194,13 +193,13 @@ def check_with_upstream():
             '<table><th columnspan=3>{}<th>{}</table><hr>{}'.format(
                 shot.name, ''.join(msg),
                 '{} 默认fps:{}'.format(info.get('name'), default_fps))
-        nuke.message(style + msg)
+        nuke.message(utf8(style + msg))
     elif not has_video_node:
         if current['fps'] != default_fps:
-            confirm = nuke.ask(
-                '当前fps: {}, 设为默认值: {} ?'.format(current['fps'], default_fps))
+            confirm = nuke.ask(utf8(
+                '当前fps: {}, 设为默认值: {} ?'.format(current['fps'], default_fps)))
             if confirm:
-                nuke.knob('root.fps', str(default_fps))
+                nuke.knob('root.fps', utf8(default_fps))
 
 
 def check_fx():
@@ -210,7 +209,7 @@ def check_fx():
     if info:
         dir_ = info['path']
         if os.listdir(dir_):
-            nuke.message('此镜头有特效素材')
+            nuke.message(utf8('此镜头有特效素材'))
             webbrowser.open(dir_)
 
 
@@ -228,7 +227,7 @@ def on_load_callback():
     except cgtwq.LoginError:
         traytip('Nuke无法访问数据库', '请登录CGTeamWork')
     except cgtwq.IDError as ex:
-        traytip('CGteamwork找不到对应条目', str(ex))
+        traytip('CGteamwork找不到对应条目', u(ex))
 
 
 @abort_when_module_not_enable
@@ -244,9 +243,9 @@ def on_save_callback():
         if dst:
             traytip('更新文件', dst)
     except cgtwq.LoginError:
-        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+        traytip('需要登录', '请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
     except cgtwq.IDError:
-        traytip('更新文件', u'CGTW上未找到对应镜头')
+        traytip('更新文件', 'CGTW上未找到对应镜头')
     except cgtwq.AccountError as ex:
         traytip('未更新文件',
                 '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
@@ -277,9 +276,9 @@ def on_close_callback():
     except OSError:
         traytip('未更新单帧', '找不到文件 {}'.format(shot.image))
     except cgtwq.LoginError:
-        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+        traytip('需要登录', '请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
     except cgtwq.IDError as ex:
-        traytip('未更新单帧', u'CGTW上未找到对应镜头\n {}'.format(ex))
+        traytip('未更新单帧', 'CGTW上未找到对应镜头\n {}'.format(ex))
     except cgtwq.AccountError as ex:
         traytip('未更新单帧',
                 '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
@@ -292,9 +291,9 @@ def dialog_login():
     """Login teamwork.  """
     account = '帐号'
     password = '密码'
-    panel = nuke.Panel('登录CGTeamWork')
-    panel.addSingleLineInput('帐号', '')
-    panel.addPasswordInput('密码', '')
+    panel = nuke.Panel(utf8('登录CGTeamWork'))
+    panel.addSingleLineInput(utf8('帐号'), '')
+    panel.addPasswordInput(utf8('密码'), '')
 
     success = False
     while not success:
@@ -316,7 +315,7 @@ def dialog_create_dirs():
     folder_input_name = '输出文件夹'
     database_input_name = '数据库'
     prefix_input_name = '镜头名前缀限制'
-    panel = nuke.Panel('为项目创建文件夹')
+    panel = nuke.Panel(utf8('为项目创建文件夹'))
     panel.addSingleLineInput(database_input_name, 'proj_qqfc_2017')
     panel.addSingleLineInput(prefix_input_name, '')
     panel.addFilenameSearch(folder_input_name, 'E:/temp')
@@ -334,7 +333,7 @@ def dialog_create_dirs():
         try:
             names = cgtwq.Shots(database, prefix=prefix).shots
         except cgtwq.IDError as ex:
-            nuke.message('找不到对应条目\n{}'.format(ex))
+            nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
             return
         task.set(20)
 
@@ -344,4 +343,4 @@ def dialog_create_dirs():
                 os.makedirs(_path)
         webbrowser.open(save_path)
     except CancelledError:
-        LOGGER.debug(u'用户取消创建文件夹')
+        LOGGER.debug('用户取消创建文件夹')

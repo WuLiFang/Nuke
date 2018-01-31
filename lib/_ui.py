@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 """Setup UI."""
-from __future__ import absolute_import, unicode_literals
+
+from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import os
@@ -8,6 +9,7 @@ import webbrowser
 
 import nuke
 import nukescripts
+from autolabel import autolabel
 
 import asset
 import batchcomp
@@ -23,6 +25,8 @@ import splitexr
 import wlf.cgtwq
 import wlf.csheet_tool
 import wlf.uploader
+from nuketools import utf8
+from wlf.path import get_unicode as u
 from wlf.path import get_encoded
 
 WINDOW_CONTEXT = 0
@@ -50,7 +54,7 @@ def add_menu():
         try:
             comp.Comp().create_nodes()
         except comp.FootageError:
-            nuke.message('请先导入素材')
+            nuke.message(utf8('请先导入素材'))
 
     def _open_help():
         help_page = os.path.join(
@@ -117,8 +121,8 @@ def add_menu():
             _('添加note', lambda: cgtwn.CurrentShot().ask_add_note()),
             _('提交单帧', lambda: cgtwn.CurrentShot().submit_image()),
             _('提交视频', lambda: cgtwn.CurrentShot().submit_video()),
-            _("批量下载", lambda: nuke.message(
-                '已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>')),
+            _("批量下载", lambda: nuke.message(utf8(
+                '已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>'))),
             _('创建项目色板', cgtwn.check_login(True)
               (lambda: wlf.csheet_tool.Dialog().exec_())),
             _('创建项目文件夹', cgtwn.dialog_create_dirs)
@@ -180,7 +184,7 @@ def add_menu():
     # Enhance 'ToolSets' menu.
     def _create_shared_toolsets():
         if not nuke.selectedNodes():
-            nuke.message('未选中任何节点,不能创建工具集')
+            nuke.message(utf8('未选中任何节点,不能创建工具集'))
             return
         filename = nuke.getInput('ToolSet name')
         if filename:
@@ -258,7 +262,7 @@ def custom_autolabel():
 
         if not isinstance(text, (str, unicode)):
             return
-        ret = nuke.autolabel().split('\n')
+        ret = u(autolabel()).split('\n')
         ret.insert(1, text)
         ret = '\n'.join(ret).rstrip('\n')
         if center:
@@ -267,17 +271,18 @@ def custom_autolabel():
         return ret
 
     def _keyer():
-        label = '输入通道 : ' + nuke.value('this.input')
+        label = '输入通道 : ' + u(nuke.value('this.input'))
         ret = _add_to_autolabel(label)
         return ret
 
     def _read():
-        dropframes = str(asset.DropFrames.get(nuke.filename(this), ''))
+        dropframes = u(asset.DropFrames.get(u(nuke.filename(this)), ''))
         label = '<style>* {font-family:微软雅黑} span {color:red} b {color:#548DD4}</style>'
         label += '<b>帧范围: </b><span>{} - {}</span>'.format(
             this.firstFrame(), this.lastFrame())
         if dropframes:
-            nuke.warning('{}:[dropframes]{}'.format(this.name(), dropframes))
+            nuke.warning(
+                utf8('{}:[dropframes]{}'.format(u(this.name()), dropframes)))
             label += '\n<span>缺帧: {}</span>'.format(dropframes)
         label += '\n<b>修改日期: </b>{}'.format(this.metadata('input/mtime'))
         ret = _add_to_autolabel(label, True)
@@ -286,7 +291,7 @@ def custom_autolabel():
     def _shuffle():
         channels = dict.fromkeys(['in', 'in2', 'out', 'out2'], '')
         for i in channels.keys():
-            channel_value = nuke.value('this.' + i)
+            channel_value = u(nuke.value('this.' + i))
             if channel_value != 'none':
                 channels[i] = channel_value + ' '
         label = (channels['in'] + channels['in2'] + '-> ' +
@@ -305,7 +310,7 @@ def custom_autolabel():
              'TimeOffset': _timeoffset}
 
     if class_ in dict_:
-        return dict_[class_]()
+        return utf8(dict_[class_]())
 
 
 def panel_show(keyword):
