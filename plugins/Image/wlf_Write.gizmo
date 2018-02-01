@@ -17,6 +17,10 @@ if '__wlf_Write' not in locals():
                 nuke.knob('this.Text_Artist.message', new)
                 nuke.Undo.enable()
 
+        @classmethod
+        def on_destroy(cls):
+            pass
+            
         @staticmethod
         def autolabel():
             this = nuke.thisNode()
@@ -85,7 +89,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.53.0"}
+ addUserKnob {20 Write l "wlf_Write v1.53.1"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
