@@ -15,6 +15,7 @@ class NukeToolsTestCase(TestCase):
             self.assertIn(i, dir(utf8_obj))
 
         n = UTF8Object(nuke.toNode(utf8(name)))
+        self.assertIs(UTF8Object(n), n)
         label = '中文标签'
         k = n['label']
         self.assertIsInstance(k, UTF8Object)

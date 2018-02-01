@@ -11,11 +11,13 @@ class UTF8Object(object):
     """UTF8Wraper for nuke object.  """
 
     def __new__(cls, obj):
-        if obj is None or isinstance(obj, (float, int)):
+        if obj is None or isinstance(obj, (float, int, UTF8Object)):
             return obj
         return super(UTF8Object, cls).__new__(cls, obj)
 
     def __init__(self, obj):
+        if obj is self:
+            return
         self.obj = obj
         for i in dir(obj):
             if not i.startswith('_') and i in self.__dict__:
