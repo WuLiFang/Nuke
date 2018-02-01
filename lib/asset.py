@@ -38,11 +38,13 @@ CachedDropframes = namedtuple('CachedDropframes',
 class Asset(object):
     """Asset for nuke node.  """
 
+    update_interval = 10
+
     def __new__(cls, filename):
         # Try find cached asset.
         for i in CACHED_ASSET:
             assert isinstance(i, Asset)
-            if i.filename == cls.filename_factory(filename):
+            if u(i.filename) == u(cls.filename_factory(filename)):
                 return i
         ret = super(Asset, cls).__new__(cls, filename)
         CACHED_ASSET.add(ret)
@@ -103,7 +105,7 @@ class Asset(object):
 
         # Try used caced result.
         if (isinstance(self._dropframes, CachedDropframes)
-                and time.time() - self._dropframes.timestamp < 10):
+                and time.time() - self._dropframes.timestamp < self.update_interval):
             print('used_cached')
             return nuke.FrameRanges(
                 set(self._dropframes.dropframes).intersection(frame_list))

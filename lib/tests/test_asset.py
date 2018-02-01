@@ -9,6 +9,16 @@ import os
 from random import sample
 
 
+class AssetTestCase(TestCase):
+    def test_cache(self):
+        from lib.asset import Asset
+
+        def _pop():
+            return Asset('test测试')
+        first = _pop()
+        self.assertIs(first, _pop())
+
+
 class DropFrameTestCase(TestCase):
     def setUp(self):
         import nuke
