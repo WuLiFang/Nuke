@@ -44,7 +44,7 @@ def utf8(obj):
         return get_encoded(obj, 'utf-8')
     elif isinstance(obj, dict):
         return utf8_dict(obj)
-    elif callable(obj):
+    if callable(obj):
         return utf8_func(obj)
     return UTF8Object(obj)
 
