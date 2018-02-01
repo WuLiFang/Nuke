@@ -89,7 +89,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.53.1"}
+ addUserKnob {20 Write l "wlf_Write v1.53.2"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -256,15 +256,11 @@ clone $Cb149000 {
  Write {
   file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
   proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%04d.exr"
-  views {{{parent.views}}}
   file_type exr
   name Write_EXR_1
   xpos 0
   ypos -908
   disable {{"!(parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
-  addUserKnob {20 caravr l CaraVR}
-  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
-  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
  Write {
   file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -281,7 +277,7 @@ clone $Cb149000 {
   name Write_MOV_1
   xpos 0
   ypos -860
-   }
+ }
  Write {
   file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
   proxy "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
@@ -324,9 +320,6 @@ clone $Cb149000 {
   label 带帧编号的MOV
   xpos 0
   ypos -448
-  addUserKnob {20 caravr l CaraVR}
-  addUserKnob {4 viewPresets l "View Presets" M {main stereo cams all}}
-  addUserKnob {22 set l Set -STARTLINE T "w = nuke.thisNode()\nscriptViews = nuke.views()\nviewPreset = w\['viewPresets'].getValue()\nselectedViews = None\nif viewPreset == 0:\n  selectedViews = \['main']\nif viewPreset == 1:\n  stereoViews = \['left', 'right']\n  if set(stereoViews).issubset(set(scriptViews)):\n    selectedViews = stereoViews\n  else:\n    selectedViews = None\nelif viewPreset == 2:\n  selectedViews = \[v for v in scriptViews if 'cam' in v.lower()]\nelif viewPreset == 3:\n  selectedViews = scriptViews\nif selectedViews:\n  w\['views'].fromScript(' '.join(selectedViews))\n"}
  }
  Assert {
   expression {{"\[python bool(nuke.value('root.project_directory'))]"}}
