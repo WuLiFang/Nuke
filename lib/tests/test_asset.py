@@ -11,19 +11,26 @@ from random import sample
 
 class DropFrameTestCase(TestCase):
     def setUp(self):
-        self.temp_dir = mkdtemp()
-        self.test_file = os.path.join(self.temp_dir, 'test_seq.%04d.exr')
         import nuke
         from wlf.path import Path
-        frameranges = nuke.FrameRanges(
-            list(xrange(91, 101)) + sample(xrange(91), 10))
-        frameranges.compact()
-        self.expected_dropframes = frameranges
-        # create temp file.
+
+        self.temp_dir = mkdtemp()
+        self.test_file = os.path.join(self.temp_dir, 'test_seq.%04d.exr')
+        self.expected_dropframes = nuke.FrameRanges(
+            sample(xrange(1, 91), 10) + list(xrange(91, 101)))
+        self.expected_dropframes.compact()
+
+        # Create temp file.
         path = Path(self.temp_dir) / 'test_seq.%04d.exr'
-        for i in set(xrange(91)).difference(frameranges.toFrameList()):
+        for i in set(xrange(1, 91)).difference(self.expected_dropframes.toFrameList()):
             with Path(path.with_frame(i)).open('w') as f:
                 f.write(unicode(i))
+
+        # Create node.
+        self.assertFalse(nuke.allNodes())
+        self.node = nuke.nodes.Read(file=self.test_file.replace('\\', '/'),
+                                    first=1,
+                                    last=100)
 
     def _test_dropframe(self, filename):
         import nuke
@@ -37,15 +44,17 @@ class DropFrameTestCase(TestCase):
         self._test_dropframe(self.test_file)
 
     def test_dropframe_with_node(self):
-        import nuke
-        n = nuke.nodes.Read(file=self.test_file.replace('\\', '/'),
-                            first=1,
-                            last=100)
-        assert isinstance(n, nuke.Node)
-        self._test_dropframe(n)
+        self._test_dropframe(self.node)
+
+    def test_warn(self):
+        from lib.asset import warn_dropframes
+        warn_dropframes()
 
     def tearDown(self):
+        import nuke
         from wlf.path import Path
+
+        # Clean up files.
         try:
             path = Path(self.temp_dir)
             for i in path.iterdir():
@@ -53,6 +62,9 @@ class DropFrameTestCase(TestCase):
             os.removedirs(str(path))
         except OSError as ex:
             raise RuntimeError(os.strerror(ex.errno) + str(ex))
+
+        # Clear working script.
+        nuke.delete(self.node)
 
 
 if __name__ == '__main__':

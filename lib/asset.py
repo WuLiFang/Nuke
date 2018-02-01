@@ -12,6 +12,7 @@ from collections import namedtuple
 from functools import wraps
 
 import nuke
+# import jinja2
 
 from edit import clear_selection
 from node import Last
@@ -36,7 +37,6 @@ CachedDropframes = namedtuple('CachedDropframes',
 
 class Asset(object):
     """Asset for nuke node.  """
-    _dropframes = None
 
     def __new__(cls, filename):
         # Try find cached asset.
@@ -51,6 +51,8 @@ class Asset(object):
     def __init__(self, filename):
         filename = self.filename_factory(filename)
         self.filename = filename
+        self.is_showed = False
+        self._dropframes = None
 
         self.type = (A_SINGLEFILE
                      if filename.with_frame(1) == filename.with_frame(2)
@@ -121,12 +123,10 @@ class Asset(object):
                 except OSError as ex:
                     LOGGER.error(os.strerror(ex.errno), exc_info=True)
 
-            for i in frame_list:
-                _check(i)
-            # pool = multiprocessing.Pool()
-            # pool.map(_check, frame_list)
-            # pool.close()
-            # pool.join()
+            pool = multiprocessing.Pool()
+            pool.map(_check, frame_list)
+            pool.close()
+            pool.join()
             ret.compact()
         elif self.type & A_SINGLEFILE:
             ret = nuke.FrameRanges(
@@ -210,6 +210,37 @@ class DropFrames(object):
             nuke.message(message)
         elif show_ok:
             nuke.message('没有发现缺帧素材')
+
+
+def warn_dropframes(show_all=False, show_ok=False):
+    @run_with_clock('检查缺帧')
+    def _check():
+        nodes = nuke.allNodes('Read')
+        ret = {}
+
+        def _check_node(node):
+            asset = Asset(node)
+            dropframes = asset.dropframes(node)
+            if dropframes:
+                key = asset.filename.as_posix()
+                ret.setdefault(key, nuke.FrameRanges())
+                ret[key].add(dropframes)
+        pool = multiprocessing.Pool()
+        pool.map(_check_node, nodes)
+        pool.close()
+        pool.join()
+
+        return ret
+
+    # env = Environment(
+    #     loader=PackageLoader(__name__),
+    # )
+
+    # template = env.get_template('csheet.html')
+
+    # return template.render(**updated_config(config))
+    for k, v in _check().items():
+        print(k, v)
 
 
 def warn_mtime(show_dialog=False, show_ok=False):
