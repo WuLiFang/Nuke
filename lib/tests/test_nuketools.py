@@ -2,11 +2,11 @@
 """Nuke initiate test.  """
 from __future__ import absolute_import, unicode_literals
 from unittest import TestCase, main
+import nuke
 
 
 class NukeToolsTestCase(TestCase):
     def test_utf8_obj(self):
-        import nuke
         from nuketools import UTF8Object, utf8
         name = '测试节点'
         node = nuke.nodes.NoOp(name=utf8(name))

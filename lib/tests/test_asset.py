@@ -1,12 +1,16 @@
 # -*- coding=UTF-8 -*-
 """Test asset module.  """
 
-from __future__ import absolute_import, unicode_literals, print_function
-from unittest import TestCase, main
+from __future__ import absolute_import, print_function, unicode_literals
 
-from tempfile import mkdtemp
 import os
 from random import sample
+from tempfile import mkdtemp
+from unittest import TestCase, main
+
+import nuke
+
+from wlf.path import Path
 
 
 class AssetTestCase(TestCase):
@@ -21,8 +25,6 @@ class AssetTestCase(TestCase):
 
 class DropFrameTestCase(TestCase):
     def setUp(self):
-        import nuke
-        from wlf.path import Path
 
         self.temp_dir = mkdtemp()
         self.test_file = os.path.join(self.temp_dir, 'test_seq.%04d.exr')
@@ -43,7 +45,6 @@ class DropFrameTestCase(TestCase):
                                     last=100)
 
     def _test_dropframe(self, filename):
-        import nuke
         from lib.asset import Asset
         asset_ = Asset(filename)
         self.assertEqual(asset_.dropframes().toFrameList(),
@@ -61,9 +62,6 @@ class DropFrameTestCase(TestCase):
         warn_dropframes()
 
     def tearDown(self):
-        import nuke
-        from wlf.path import Path
-
         # Clean up files.
         try:
             path = Path(self.temp_dir)

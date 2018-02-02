@@ -1,27 +1,23 @@
 # -*- coding: UTF-8 -*-
 """Nuke init file.  """
-
 from __future__ import absolute_import, print_function, unicode_literals
 
-import logging
-import os
-import re
-import sys
 
-from lib import __version__
-from wlf.files import map_drivers
-from wlf.mp_logging import set_basic_logger
-from wlf.path import get_encoded
-
-LOGGER = logging.getLogger('com.wlf')
-
-
-def main():
+def _wlf_plugin_setup():
     """Main entry.  """
 
+    import logging
+    import os
+    import re
+    import sys
+
+    from lib import __version__
+    from wlf.files import map_drivers
+    from wlf.mp_logging import set_basic_logger
+    from wlf.path import get_encoded
     import callback
 
-    set_basic_logger(LOGGER)
+    set_basic_logger(logging.getLogger('com.wlf'))
 
     # Validation.
     try:
@@ -46,4 +42,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    _wlf_plugin_setup()
