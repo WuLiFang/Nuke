@@ -3,25 +3,29 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+import io
 import logging
 import multiprocessing.dummy as multiprocessing
 import os
 import re
 import time
+import webbrowser
 from collections import namedtuple
 from functools import wraps
+from tempfile import mkstemp
 
 import nuke
+from jinja2 import Environment, PackageLoader
 
 from edit import clear_selection
 from node import Last
+from nuketools import utf8
 from wlf.decorators import run_with_clock
 from wlf.env import has_gui
 from wlf.files import Path, copy
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
 from wlf.path import expand_frame, get_footage_name, is_ascii
-from nuketools import utf8
 
 LOGGER = logging.getLogger('com.wlf.asset')
 TEMPLATES_DIR = os.path.abspath(os.path.join(__file__, '../templates'))
@@ -42,31 +46,36 @@ class Asset(object):
     update_interval = 10
 
     def __new__(cls, filename):
+        # Skip new from other Asset objet.
+        if isinstance(filename, Asset):
+            return filename
         # Try find cached asset.
         for i in CACHED_ASSET:
             assert isinstance(i, Asset)
             if u(i.filename) == u(cls.filename_factory(filename)):
                 return i
-        ret = super(Asset, cls).__new__(cls, filename)
-        CACHED_ASSET.add(ret)
-        return ret
+        return super(Asset, cls).__new__(cls, filename)
 
     def __init__(self, filename):
+        # Skip init from other Asset objet.
+        if isinstance(filename, Asset):
+            return
+
         filename = self.filename_factory(filename)
         self.filename = filename
-        self.is_showed = False
         self._dropframes = None
 
         self.type = (A_SINGLEFILE
                      if filename.with_frame(1) == filename.with_frame(2)
                      else A_SEQUENCE)
+        CACHED_ASSET.add(self)
 
     def __str__(self):
         return e('Asset: {}'.format(self.filename))
 
     @classmethod
     def filename_factory(cls, obj):
-        """get filename from a object as filename.
+        """get filename from a object.
 
         Args:
             obj (str or unicode or nuke.Node): Object contain filename.
@@ -78,9 +87,31 @@ class Asset(object):
         filename = obj
         if isinstance(obj, nuke.Node):
             filename = nuke.filename(obj)
+        elif isinstance(obj, Asset):
+            filename = obj.filename
 
         path = Path(filename)
         return path
+
+    @classmethod
+    def framelist_factory(cls, obj):
+        """Get frmaelist frome a object.
+
+        Args:
+            obj (nuke.Node or nuke.FrameRanges): Object contain framelist.
+                will use nuke.Root() instead object when object is not acceptable.
+
+        Returns:
+            Iteable: Iterable cotains framelist.
+
+        """
+
+        if isinstance(obj, nuke.Node):
+            return obj.frameRange()
+        elif isinstance(obj, nuke.FrameRanges):
+            return obj.toFrameList()
+
+        return cls.framelist_factory(nuke.Root())
 
     def dropframes(self, frame_list=None):
         # type: (...) -> nuke.FrameRanges
@@ -95,14 +126,7 @@ class Asset(object):
             nuke.FrameRanges: dropframe ranges.
         """
 
-        if frame_list is None:
-            frame_list = nuke.Root().frameRange()
-        # suport nuke.Node as input
-        elif isinstance(frame_list, nuke.Node):
-            frame_list = frame_list.frameRange()
-        # suport nuke.FrameRanges as input
-        elif isinstance(frame_list, nuke.FrameRanges):
-            frame_list = frame_list.toFrameList()
+        frame_list = self.framelist_factory(frame_list)
 
         # Try used caced result.
         if (isinstance(self._dropframes, CachedDropframes)
@@ -134,6 +158,7 @@ class Asset(object):
             pool.map(_check, frame_list)
             pool.close()
             pool.join()
+
             ret.compact()
         elif self.type & A_SINGLEFILE:
             ret = nuke.FrameRanges(
@@ -220,39 +245,100 @@ class DropFrames(object):
             nuke.message('没有发现缺帧素材')
 
 
-def warn_dropframes(show_all=False, show_ok=False):
-    @run_with_clock('检查缺帧')
-    def _check():
-        nodes = nuke.allNodes('Read')
-        ret = {}
+def all_assets():
+    """Get all assets current using.
+    """
 
-        def _check_node(node):
-            asset = Asset(node)
-            dropframes = asset.dropframes(node)
-            if dropframes:
-                key = u(asset.filename.as_posix())
-                ret.setdefault(key, nuke.FrameRanges())
-                ret[key].add(dropframes)
-        pool = multiprocessing.Pool()
-        pool.map(_check_node, nodes)
-        pool.close()
-        pool.join()
+    return get_assets(nuke.allNodes('Read'))
 
-        return ret
 
-    # env = Environment(
-    #     loader=PackageLoader(__name__),
-    # )
+class DropFramesDict(dict):
+    def __str__(self):
+        rows = ['Filename - DropFrames:']
+        for k, v in self.items():
+            rows.append('<{} - {}>'.format(k, v))
+        return '\n'.join(rows)
 
-    # template = env.get_template('csheet.html')
-    ret = _check()
-    # return template.render(**updated_config(config))
-    from jinja2 import Environment, FileSystemLoader
-    env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
-    template = env.get_template('dropframes.html')
-    msg = template.render(data=ret.items())
-    nuke.message(utf8(msg))
+    def as_html(self):
+        env = Environment(loader=PackageLoader(__name__))
+        template = env.get_template('dropframes.html')
+        return template.render(data=self.items())
+
+
+@run_with_clock('检查缺帧')
+def get_dropframes(assets=None):
+    """Get dropframes from assets.
+
+    Decorators:
+        run_with_clock
+
+    Args:
+        assets (Iterable, optional): Defaults to None. Objects that Asset accepts.
+        html (bool, optional): Return formatted html.
+    """
+
+    assets = get_assets(assets)
+
+    Job = namedtuple('Job', ['asset', 'frame_list'])
+    jobs = [Job(Asset(i), Asset.framelist_factory(i)) for i in assets]
+    ret = DropFramesDict()
+
+    def _do(job):
+        dropframes = job.asset.dropframes(job.frame_list)
+        if dropframes:
+            key = u(job.asset.filename.as_posix())
+            ret.setdefault(key, nuke.FrameRanges())
+            ret[key].add(dropframes)
+
+    pool = multiprocessing.Pool()
+    pool.map(_do, jobs)
+    pool.close()
+    pool.join()
+
     return ret
+
+
+def get_assets(obj, is_strict=False):
+    """Get assets from a obj.
+
+    Args:
+        obj (Assets supported types): object may contain multiple assets.
+        is_strict (bool) : Defaults to False, strict mode switch.
+
+    Raises:
+        ValueError: when `is_strict` is True and can not get assets from `obj`.
+
+    Returns:
+        list[Assets]: List of asset in `obj`, or all_assets as default.
+    """
+
+    try:
+        return Asset(obj)
+    except TypeError:
+        try:
+            return [Asset(i) for i in obj]
+        except TypeError:
+            if is_strict:
+                raise ValueError
+
+    return all_assets()
+
+
+def warn_dropframes(assets=None, show_ok=False):
+    result = get_dropframes(assets)
+    if not result and show_ok:
+        nuke.message(utf8('没有发现缺帧素材'))
+    elif len(result) < 10:
+        if nuke.GUI:
+            nuke.message(utf8(result.as_html()))
+        else:
+            LOGGER.warning(result)
+    else:
+        # Use html to display.
+        fd, name = mkstemp('.html', text=True)
+        with io.open(fd, 'w') as f:
+            f.write(result.as_html())
+        webbrowser.open(name)
 
 
 def warn_mtime(show_dialog=False, show_ok=False):
