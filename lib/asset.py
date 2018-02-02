@@ -12,7 +12,6 @@ from collections import namedtuple
 from functools import wraps
 
 import nuke
-# import jinja2
 
 from edit import clear_selection
 from node import Last
@@ -22,8 +21,10 @@ from wlf.files import Path, copy
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
 from wlf.path import expand_frame, get_footage_name, is_ascii
+from nuketools import utf8
 
 LOGGER = logging.getLogger('com.wlf.asset')
+TEMPLATES_DIR = os.path.abspath(os.path.join(__file__, '../templates'))
 
 CACHED_ASSET = set()
 
@@ -229,7 +230,7 @@ def warn_dropframes(show_all=False, show_ok=False):
             asset = Asset(node)
             dropframes = asset.dropframes(node)
             if dropframes:
-                key = asset.filename.as_posix()
+                key = u(asset.filename.as_posix())
                 ret.setdefault(key, nuke.FrameRanges())
                 ret[key].add(dropframes)
         pool = multiprocessing.Pool()
@@ -244,10 +245,14 @@ def warn_dropframes(show_all=False, show_ok=False):
     # )
 
     # template = env.get_template('csheet.html')
-
+    ret = _check()
     # return template.render(**updated_config(config))
-    for k, v in _check().items():
-        print(k, v)
+    from jinja2 import Environment, FileSystemLoader
+    env = Environment(loader=FileSystemLoader(TEMPLATES_DIR))
+    template = env.get_template('dropframes.html')
+    msg = template.render(data=ret.items())
+    nuke.message(utf8(msg))
+    return ret
 
 
 def warn_mtime(show_dialog=False, show_ok=False):

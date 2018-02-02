@@ -39,10 +39,9 @@ class DropFrameTestCase(TestCase):
             j = Path(path.with_frame(i))
             with j.open('w') as f:
                 f.write(unicode(i))
-            self.addCleanup(j.unlink)
+            # self.addCleanup(j.unlink)
 
         # Create node.
-        nuke.scriptClear()
         self.node = nuke.nodes.Read(file=self.test_file.replace('\\', '/'),
                                     first=1,
                                     last=100)
@@ -76,7 +75,7 @@ class DropFrameTestCase(TestCase):
 
     def test_warn(self):
         from lib.asset import warn_dropframes
-        warn_dropframes()
+        self.assertIsInstance(warn_dropframes(), dict)
 
 
 if __name__ == '__main__':

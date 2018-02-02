@@ -1,0 +1,17 @@
+<style>
+    td {
+        padding: 8px;
+    }
+</style>
+<table>
+    <tr>
+        <th>缺帧</th>
+        <th>素材</th>
+    </tr> {% for filename, dropframes in data %}
+    <tr>
+        <td>
+            <span style="color:red">{{dropframes | e}}</span>
+        </td>
+        <td>{{filename | e}}</td>
+    </tr> {% endfor %}
+</table>
