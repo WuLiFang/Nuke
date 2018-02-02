@@ -8,7 +8,6 @@ class NukeTestCase(TestCase):
 
     def test_init(self):
         before = dict(globals())
-        import inspect
         import nuke
         after = dict(globals())
         for i in after:
