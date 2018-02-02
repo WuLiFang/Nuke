@@ -2,10 +2,10 @@
 """Nuke init file.  """
 from __future__ import absolute_import, print_function, unicode_literals
 
+_GLOBAL_BEFORE_INIT = dict(globals())
 
-def _wlf_plugin_setup():
-    """Main entry.  """
 
+def main():
     import logging
     import os
     import re
@@ -40,6 +40,9 @@ def _wlf_plugin_setup():
 
     callback.init()
 
+    # Recover outter scope env.
+    globals().update(_GLOBAL_BEFORE_INIT)
+
 
 if __name__ == '__main__':
-    _wlf_plugin_setup()
+    main()
