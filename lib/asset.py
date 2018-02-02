@@ -101,14 +101,18 @@ class Asset(object):
             frame_list = frame_list.frameRange()
         # suport nuke.FrameRanges as input
         elif isinstance(frame_list, nuke.FrameRanges):
-            frame_list = frame_list.toFrame_List()
+            frame_list = frame_list.toFrameList()
 
         # Try used caced result.
         if (isinstance(self._dropframes, CachedDropframes)
                 and time.time() - self._dropframes.timestamp < self.update_interval):
-            print('used_cached')
-            return nuke.FrameRanges(
-                set(self._dropframes.dropframes).intersection(frame_list))
+            cached = self._dropframes.dropframes
+            assert isinstance(cached, nuke.FrameRanges)
+            ret = nuke.FrameRanges([i for i in cached.toFrameList()
+                                    if i in frame_list])
+            ret.compact()
+            # Skip cache phase.
+            return ret
 
         elif self.type & A_SEQUENCE:
             ret = nuke.FrameRanges()
@@ -136,6 +140,7 @@ class Asset(object):
         else:
             raise NotImplementedError
 
+        # Cache result.
         if not set(nuke.Root().frameRange()).difference(frame_list):
             self._dropframes = CachedDropframes(ret, time.time())
         return ret
@@ -176,7 +181,7 @@ class DropFrames(object):
             try:
                 framerange = footages[filename]
                 framerange.compact()
-                dropframes = get_dropframe(filename, framerange.toFrame_List())
+                dropframes = get_dropframe(filename, framerange.toFrameList())
                 if str(dropframes):
                     cls._file_dropframe[filename] = dropframes
                 elif cls._file_dropframe.has_key(filename):

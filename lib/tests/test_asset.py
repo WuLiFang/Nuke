@@ -27,6 +27,7 @@ class DropFrameTestCase(TestCase):
     def setUp(self):
 
         self.temp_dir = mkdtemp()
+        self.addCleanup(os.removedirs, self.temp_dir)
         self.test_file = os.path.join(self.temp_dir, 'test_seq.%04d.exr')
         self.expected_dropframes = nuke.FrameRanges(
             sample(xrange(1, 91), 10) + list(xrange(91, 101)))
@@ -35,21 +36,37 @@ class DropFrameTestCase(TestCase):
         # Create temp file.
         path = Path(self.temp_dir) / 'test_seq.%04d.exr'
         for i in set(xrange(1, 91)).difference(self.expected_dropframes.toFrameList()):
-            with Path(path.with_frame(i)).open('w') as f:
+            j = Path(path.with_frame(i))
+            with j.open('w') as f:
                 f.write(unicode(i))
+            self.addCleanup(j.unlink)
 
         # Create node.
-        self.assertFalse(nuke.allNodes())
+        nuke.scriptClear()
         self.node = nuke.nodes.Read(file=self.test_file.replace('\\', '/'),
                                     first=1,
                                     last=100)
 
     def _test_dropframe(self, filename):
-        from lib.asset import Asset
+        from lib.asset import Asset, CachedDropframes
         asset_ = Asset(filename)
-        self.assertEqual(asset_.dropframes().toFrameList(),
-                         self.expected_dropframes.toFrameList())
-        self.assert_(asset_._dropframes)
+
+        def _pop():
+            ret = asset_.dropframes()
+            self.assertEqual(ret.toFrameList(),
+                             self.expected_dropframes.toFrameList())
+            return ret
+
+        _pop()
+
+        # test cache
+        cached = asset_._dropframes
+        self.assertIsInstance(cached, CachedDropframes)
+        _pop()
+        self.assertIs(cached, asset_._dropframes)
+        asset_.update_interval = 0
+        _pop()
+        self.assertIsNot(cached, asset_._dropframes)
 
     def test_dropframe_dry(self):
         self._test_dropframe(self.test_file)
@@ -60,19 +77,6 @@ class DropFrameTestCase(TestCase):
     def test_warn(self):
         from lib.asset import warn_dropframes
         warn_dropframes()
-
-    def tearDown(self):
-        # Clean up files.
-        try:
-            path = Path(self.temp_dir)
-            for i in path.iterdir():
-                i.unlink()
-            os.removedirs(str(path))
-        except OSError as ex:
-            raise RuntimeError(os.strerror(ex.errno) + str(ex))
-
-        # Clear working script.
-        nuke.delete(self.node)
 
 
 if __name__ == '__main__':
