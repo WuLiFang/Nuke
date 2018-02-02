@@ -14,7 +14,6 @@ def main():
     from lib import __version__
     from wlf.files import map_drivers
     from wlf.mp_logging import set_basic_logger
-    from wlf.path import get_encoded
     import callback
 
     set_basic_logger(logging.getLogger('com.wlf'))
@@ -28,8 +27,8 @@ def main():
         sys.exit(1)
 
     print('-' * 20)
-    print(get_encoded('吾立方插件 {}\n许可至: {}'.format(__version__,
-                                                 validation.EXPIRE_AT)))
+    print('吾立方插件 {}\n许可至: {}'.format(__version__,
+                                     validation.EXPIRE_AT).encode(sys.stdout.encoding))
     print('-' * 20)
     del validation.EXPIRE_AT
 
