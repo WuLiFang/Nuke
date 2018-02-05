@@ -27,6 +27,22 @@ class AssetTestCase(TestCase):
         first = self._pop()
         self.assertIs(first, self._pop())
 
+    def test_auto_framerange(self):
+        from asset import Asset
+        first = Asset('test测试')
+        self.assertEqual(str(first.frame_ranges), '1-1')
+        last = Asset('test测试.%04d.exr')
+        self.assertEqual(str(last.frame_ranges), '1-100')
+
+    def test_expand_range(self):
+        from asset import Asset
+
+        first = Asset('test测试')
+        print(first.frame_ranges)
+        last = Asset('test测试', '2-200')
+        print(last.frame_ranges)
+        print(first.frame_ranges)
+
 
 class DropFrameTestCase(TestCase):
     def setUp(self):
