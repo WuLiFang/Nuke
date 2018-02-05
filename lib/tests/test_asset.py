@@ -34,13 +34,13 @@ class DropFrameTestCase(TestCase):
         self.temp_dir = mkdtemp()
         self.addCleanup(os.removedirs, self.temp_dir)
         self.test_file = os.path.join(self.temp_dir, 'test_seq.%04d.exr')
-        self.expected_dropframes = nuke.FrameRanges(
+        self.expected_missing_frames = nuke.FrameRanges(
             sample(xrange(1, 91), 10) + list(xrange(91, 101)))
-        self.expected_dropframes.compact()
+        self.expected_missing_frames.compact()
 
         # Create temp file.
-        path = Path(self.temp_dir) / 'test_seq.%04d.exr'
-        for i in set(xrange(1, 91)).difference(self.expected_dropframes.toFrameList()):
+        path = Path(Path(self.temp_dir) / 'test_seq.%04d.exr')
+        for i in set(xrange(1, 91)).difference(self.expected_missing_frames.toFrameList()):
             j = Path(path.with_frame(i))
             with j.open('w') as f:
                 f.write(unicode(i))
@@ -51,42 +51,42 @@ class DropFrameTestCase(TestCase):
                                     first=1,
                                     last=100)
 
-    def _test_dropframe(self, filename):
-        from asset import Asset, CachedDropframes
+    def _test_missing_frame(self, filename):
+        from asset import Asset, CachedMissingFrames
         asset_ = Asset(filename)
 
         def _pop():
-            ret = asset_.dropframes()
+            ret = asset_.missing_frames()
             self.assertEqual(ret.toFrameList(),
-                             self.expected_dropframes.toFrameList())
+                             self.expected_missing_frames.toFrameList())
             return ret
 
         _pop()
 
         # test cache
-        cached = asset_._dropframes
-        self.assertIsInstance(cached, CachedDropframes)
+        cached = asset_._missing_frames
+        self.assertIsInstance(cached, CachedMissingFrames)
         _pop()
-        self.assertIs(cached, asset_._dropframes)
-        asset_.update_interval = 0
+        self.assertIs(cached, asset_._missing_frames)
+        asset_.update_interval = -1
         _pop()
-        self.assertIsNot(cached, asset_._dropframes)
+        self.assertIsNot(cached, asset_._missing_frames)
 
-    def test_dropframe_dry(self):
-        self._test_dropframe(self.test_file)
+    def test_missing_frame_dry(self):
+        self._test_missing_frame(self.test_file)
 
-    def test_dropframe_with_node(self):
-        self._test_dropframe(self.node)
+    def test_missing_frame_with_node(self):
+        self._test_missing_frame(self.node)
 
-    def test_get_dropframes(self):
-        from asset import get_dropframes, DropFramesDict
-        result = get_dropframes()
-        self.assertIsInstance(result, DropFramesDict)
+    def test_get_missing_frames(self):
+        from asset import Assets, MissingFramesDict
+        result = Assets.all().missing_frames_dict()
+        self.assertIsInstance(result, MissingFramesDict)
         self.assertIsInstance(result.as_html(), unicode)
 
-    def test_warn_dropframes(self):
-        from asset import warn_dropframes
-        warn_dropframes()
+    def test_warn_missing_frames(self):
+        from asset import warn_missing_frames
+        warn_missing_frames()
 
 
 if __name__ == '__main__':
