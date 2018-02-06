@@ -41,57 +41,91 @@ CachedMissingFrames = namedtuple('CachedMissingFrames',
 
 
 class FrameRanges(object):
-    """wrapper for nuke.FrameRanges. 
+    """Wrap a object for get nuke.FrameRanges.
 
     Args:
-        obj (any): Object contain frame_ranges.
+        obj (any): Object contains frame_ranges.
             will use nuke.Root() instead when object is not support.
     """
 
     def __init__(self, obj=None):
         self._wrapped = obj
+        self._list = None
+        self._node_filename = (nuke.filename(obj)
+                               if isinstance(obj, nuke.Node) else None)
 
     @property
     def wrapped(self):
+        obj = self._wrapped
+        if isinstance(obj, nuke.FrameRanges):
+            return obj
+
+        # Get frame_list from obj
         try:
-            obj = self._wrapped
-            if isinstance(obj, nuke.FrameRanges):
-                return obj
-            elif self._wrapped is None:
-                return self.from_root()
-            elif isinstance(obj, list):
-                list_ = obj
+            # LOGGER.debug('get from %s', type(obj))
+            if self._wrapped is None:
+                raise TypeError
+            elif isinstance(obj, (list, nuke.FrameRange)):
+                list_ = list(obj)
+            elif isinstance(obj, nuke.Root):
+                first = int(obj['first_frame'].value())
+                last = int(obj['last_frame'].value())
+                if first > last:
+                    first, last = last, first
+                list_ = range(first, last+1)
             elif isinstance(obj, nuke.Node):
-                list_ = [obj.frameRange()]
+                is_deleted = True
+                try:
+                    repr(obj)
+                    is_deleted = False
+                except ValueError:
+                    pass
+                # When node deleted or filename changed,
+                # use previous result.
+                if (is_deleted
+                        or nuke.filename(obj) != self._node_filename):
+                    list_ = self._list
+                    if list_ is None:
+                        raise TypeError
+                else:
+                    first = obj.firstFrame()
+                    last = obj.lastFrame()
+                    if first > last:
+                        first, last = last, first
+                    list_ = range(first, last+1)
             elif isinstance(obj, Asset):
                 list_ = obj.frame_ranges.toFrameList()
             elif isinstance(obj, FrameRanges):
                 list_ = obj.wrapped.toFrameList()
-            elif isinstance(obj, (str, unicode)):
+            elif (isinstance(obj, (str, unicode))
+                  and re.match(r'^[\d -x]*$', u(obj))):
                 # Parse Nuke frameranges string:
                 try:
-                    self._wrapped = nuke.FrameRanges(obj)
-                    return self.wrapped
+                    list_ = nuke.FrameRanges(obj).toFrameList()
                 except RuntimeError:
-                    # Reconize as single frame
-                    path = PurePath(obj)
-                    if path.with_frame(1) == path.with_frame(2):
-                        list_ = [1]
-                    else:
-                        raise TypeError
+                    raise TypeError
+            elif isinstance(obj, (str, unicode, PurePath)):
+                # Reconize as single frame
+                path = PurePath(obj)
+                if path.with_frame(1) == path.with_frame(2):
+                    list_ = [1]
+                else:
+                    raise TypeError
             else:
                 raise TypeError
 
+            self._list = list_
             ret = nuke.FrameRanges(list_)
 
             # Save result for some case.
-            if isinstance(obj, (list,)):
+            if isinstance(obj, (list, str, unicode, PurePath)):
                 self._wrapped = ret
 
+            self._wrapped_result = ret
             return ret
         except TypeError:
             self._wrapped = None
-            return self.wrapped
+            return self.from_root()
 
     def __str__(self):
         return str(self.wrapped)
@@ -111,6 +145,11 @@ class FrameRanges(object):
 
     @classmethod
     def from_root(cls):
+        root = nuke.Root()
+        first = root['first_frame'].value()
+        last = root['last_frame'].value()
+        ret = nuke.FrameRanges(first, last, 1)
+        ret = FrameRanges(ret)
         return FrameRanges(nuke.Root())
 
 # class Filename(Path):
@@ -161,7 +200,7 @@ class Assets(list):
             list_ = obj
         else:
             try:
-                list_ = [Asset(obj)]
+                list_ = set(Asset(obj))
             except TypeError:
                 try:
                     list_ = list(Asset(i) for i in obj)
@@ -169,7 +208,13 @@ class Assets(list):
                     if is_strict:
                         raise TypeError('Not supported type: {}', type(obj))
                     list_ = []
-        super(Assets, self).__init__(list_)
+        super(Assets, self).__init__(set(list_))
+
+    def __str__(self):
+        return e(self.__unicode__())
+
+    def __unicode__(self):
+        return [u(i) for i in self]
 
     @classmethod
     def all(cls):
@@ -183,13 +228,13 @@ class Assets(list):
 
     # @run_with_clock('检查缺帧')
     def missing_frames_dict(self):
-        """Get dropframes from assets.
+        """Get missing_frames from assets.
 
         Decorators:
             run_with_clock
 
         Returns:
-            DropFramesDict: Dict of (asset, dropframes) pair.
+            DropFramesDict: Dict of (asset, missing_frames) pair.
         """
 
         ret = MissingFramesDict()
@@ -197,11 +242,13 @@ class Assets(list):
         def _run(asset):
             assert isinstance(asset, Asset)
             try:
-                dropframes = asset.missing_frames()
-                if dropframes:
+                missing_frames = asset.missing_frames()
+                if missing_frames:
                     key = u(asset.filename.as_posix())
-                    ret.setdefault(key, FrameRanges())
-                    ret[key].add(dropframes)
+                    if key in ret:
+                        ret[key].add(missing_frames)
+                    else:
+                        ret[key] = missing_frames
             except:
                 import traceback
                 raise RuntimeError(traceback.format_exc())
@@ -225,32 +272,36 @@ class Asset(object):
         if isinstance(filename, Asset):
             return filename
 
+        frame_ranges = filename if frame_ranges is None else frame_ranges
         filename = cls.filename_factory(filename)
 
         # Try find cached asset.
         for i in CACHED_ASSET:
             assert isinstance(i, Asset)
             if u(i.filename) == u(filename):
-                i.frame_ranges += FrameRanges(frame_ranges)
+                if filename.with_frame(1) != filename.with_frame(2):
+                    i.frame_ranges += FrameRanges(frame_ranges)
                 return i
-        return super(Asset, cls).__new__(cls, filename)
+        return super(Asset, cls).__new__(cls, filename, frame_ranges)
 
     def __init__(self, filename, frame_ranges=None):
-        # Skip init from other Asset objet.
-        if isinstance(filename, Asset):
+        # Skip init cached Asset objet.
+        if self in CACHED_ASSET:
             return
 
+        frame_ranges = filename if frame_ranges is None else frame_ranges
         filename = self.filename_factory(filename)
-        frame_ranges = FrameRanges(
-            filename if frame_ranges is None else frame_ranges)
         self.filename = filename
-        self.frame_ranges = frame_ranges
+        self.frame_ranges = FrameRanges(frame_ranges)
         self._missing_frames = None
 
         CACHED_ASSET.add(self)
 
+    def __unicode__(self):
+        return 'Asset: {0.filename} {0.frame_ranges}'.format(self)
+
     def __str__(self):
-        return e('Asset: {}'.format(self.filename))
+        return e(self.__unicode__())
 
     @classmethod
     def filename_factory(cls, obj):
@@ -332,6 +383,7 @@ class Asset(object):
     def _update_missing_frame(self):
         ret = nuke.FrameRanges()
         checked = set()
+        frames = self.frame_ranges.toFrameList()
 
         def _check(frame):
             try:
@@ -345,7 +397,7 @@ class Asset(object):
                 LOGGER.error(os.strerror(ex.errno), exc_info=True)
 
         pool = multiprocessing.Pool()
-        pool.map(_check, self.frame_ranges.toFrameList())
+        pool.map(_check, frames)
         pool.close()
         pool.join()
 
@@ -357,8 +409,8 @@ class Asset(object):
 class MissingFramesDict(dict):
     def __str__(self):
         rows = ['| Filename | MissingFrames |:']
-        for k, v in self.items():
-            rows.append('| {} | {} |'.format(k, v))
+        for k in sorted(self):
+            rows.append('| {} | {} |'.format(k, self[k]))
         return '\n'.join(rows)
 
     def as_html(self):
