@@ -4,6 +4,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import os
+import sys
 
 import nuke
 
@@ -13,11 +14,10 @@ import edit
 import orgnize
 from node import Last, wlf_write_node
 from nuketools import utf8
-from wlf.path import get_unicode as u
 from wlf import csheet
-import sys
+from wlf.path import get_unicode as u
+
 LOGGER = logging.getLogger('com.wlf.callback')
-from collections import namedtuple
 
 
 class Callbacks(list):
