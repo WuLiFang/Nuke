@@ -311,7 +311,7 @@ class Manager(Analyser):
         self.prev_nodes = set()
         self.task = Progress('摆放节点', len(self.nodes))
 
-    @run_with_clock('自动摆放')
+    @run_with_clock(u'自动摆放')
     def autoplace(self):
         """Autoplace nodes.  """
 
