@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 """Nuke init file.  """
+
 from __future__ import absolute_import, print_function, unicode_literals
 
 _GLOBAL_BEFORE_INIT = dict(globals())
@@ -37,7 +38,10 @@ def main():
         if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
             map_drivers()
 
-    callback.init()
+    callback.setup()
+    callback.install()
+    del callback.setup
+    del callback.install
 
     # Recover outter scope env.
     globals().update(_GLOBAL_BEFORE_INIT)

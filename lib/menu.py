@@ -17,7 +17,6 @@ def main():
     _ui.add_autolabel()
     pref.add_preferences()
     pref.set_knob_default()
-    callback.menu()
 
     if cgtwq.MODULE_ENABLE:
         cgtwq.CGTeamWork.update_status()

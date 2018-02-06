@@ -15,69 +15,111 @@ from node import Last, wlf_write_node
 from nuketools import utf8
 from wlf.path import get_unicode as u
 from wlf import csheet
-
+import sys
 LOGGER = logging.getLogger('com.wlf.callback')
+from collections import namedtuple
 
 
-def init():
-    """Add callback for nuke init phase."""
+class Callbacks(list):
+    """Failsafe callbacks executor.  """
 
-    nuke.addBeforeRender(create_out_dirs, nodeClass='Write')
-    LOGGER.info('启用渲染前自动生成文件夹')
+    def execute(self):
+        try:
+            for i in self:
+                try:
+                    i()
+                except:
+                    import traceback
+                    raise RuntimeError(traceback.format_exc())
+        except RuntimeError:
+            LOGGER.error('Error during execute callbacks', exc_info=True)
 
 
-def menu():
-    """Add callback for nuke menu phase."""
+CALLBACKS_BEFORE_RENDER = Callbacks()
+CALLBACKS_ON_CREATE = Callbacks()
+CALLBACKS_ON_DROP_DATA = Callbacks()
+CALLBACKS_ON_USER_CREATE = Callbacks()
+CALLBACKS_ON_SCRIPT_LOAD = Callbacks()
+CALLBACKS_ON_SCRIPT_SAVE = Callbacks()
+CALLBACKS_ON_SCRIPT_CLOSE = Callbacks()
+CALLBACKS_UPDATE_UI = Callbacks()
 
-    import nukescripts
 
-    nuke.addOnScriptLoad(Last.on_load_callback)
+def setup():
+    """Setup callbacks.  """
 
-    nuke.addOnScriptSave(Last.on_save_callback)
-    nuke.addOnScriptSave(_autoplace)
-    nuke.addOnScriptSave(_enable_node)
-    nuke.addOnScriptSave(_lock_connections)
-    nuke.addOnScriptSave(_jump_frame)
-
-    nuke.addOnScriptClose(_send_to_render_dir)
-    nuke.addOnScriptClose(_render_jpg)
-    nuke.addOnScriptClose(_create_csheet)
-
-    nuke.addUpdateUI(_gizmo_to_group_update_ui)
-    nuke.addOnUserCreate(_gizmo_to_group_on_create)
-
-    LOGGER.info('启用打开文件时更新缓存')
-    asset.Localization.start_upate()
-    nuke.addOnScriptLoad(asset.Localization.update)
-
-    LOGGER.info('启用文件更新提醒')
-    # nuke.addUpdateUI(asset.warn_mtime)
-    nuke.addOnScriptLoad(lambda: asset.warn_mtime(show_dialog=True))
-    nuke.addOnScriptSave(lambda: asset.warn_mtime(show_dialog=True))
-
-    LOGGER.info('增强文件拖放')
-    nukescripts.addDropDataCallback(asset.dropdata_handler)
-
-    LOGGER.info('启用缺帧检查')
-    nuke.addOnScriptLoad(lambda: asset.warn_missing_frames())
-    nuke.addOnScriptSave(lambda: asset.warn_missing_frames())
-
-    LOGGER.info('随机节点控制器颜色')
-    nuke.addOnCreate(lambda: edit.set_random_glcolor(nuke.thisNode()))
-
-    LOGGER.info('启用自动工程设置')
-    nuke.addOnScriptLoad(_add_root_info)
-    nuke.addOnScriptLoad(_eval_proj_dir)
-    nuke.addOnScriptSave(_check_project)
+    CALLBACKS_BEFORE_RENDER.extend([
+        create_out_dirs
+    ])
+    if nuke.GUI:
+        CALLBACKS_ON_CREATE.extend(
+            [
+                lambda: edit.set_random_glcolor(nuke.thisNode())
+            ])
+        CALLBACKS_ON_DROP_DATA.extend(
+            [
+                asset.dropdata_handler
+            ])
+        CALLBACKS_ON_USER_CREATE.extend(
+            [
+                _gizmo_to_group_on_create
+            ]
+        )
+        CALLBACKS_ON_SCRIPT_LOAD.extend(
+            [
+                Last.on_load_callback,
+                lambda: asset.warn_mtime(show_dialog=True),
+                asset.Localization.update,
+                asset.warn_missing_frames,
+                _add_root_info,
+                _eval_proj_dir
+            ])
+        CALLBACKS_ON_SCRIPT_SAVE.extend(
+            [
+                Last.on_save_callback,
+                _autoplace,
+                _enable_node,
+                _lock_connections,
+                _jump_frame,
+                lambda: asset.warn_mtime(show_dialog=True),
+                asset.warn_missing_frames,
+                _check_project
+            ])
+        CALLBACKS_ON_SCRIPT_CLOSE.extend(
+            [
+                _send_to_render_dir,
+                _render_jpg,
+                _create_csheet
+            ])
+        CALLBACKS_UPDATE_UI.extend(
+            [
+                _gizmo_to_group_update_ui
+            ])
 
     if cgtwn.cgtwq.MODULE_ENABLE:
         LOGGER.info('启用CGTeamWork集成')
-        nuke.addOnScriptLoad(cgtwn.on_load_callback)
-        nuke.addOnScriptSave(cgtwn.on_save_callback)
-        nuke.addOnScriptClose(cgtwn.on_close_callback)
+        CALLBACKS_ON_SCRIPT_LOAD.append(cgtwn.on_load_callback)
+        CALLBACKS_ON_SCRIPT_SAVE.append(cgtwn.on_save_callback)
+        CALLBACKS_ON_SCRIPT_CLOSE.append(cgtwn.on_close_callback)
     else:
         # Check fps already included in cgtwn
-        nuke.addOnScriptSave(_check_fps)
+        CALLBACKS_ON_SCRIPT_CLOSE.append(_check_fps)
+
+
+def install():
+    """Install all callbacks to nuke.  """
+
+    if nuke.GUI:
+        asset.Localization.start_upate()
+    nuke.addBeforeRender(CALLBACKS_BEFORE_RENDER.execute)
+    nuke.addOnScriptLoad(CALLBACKS_ON_SCRIPT_LOAD.execute)
+    nuke.addOnScriptSave(CALLBACKS_ON_SCRIPT_SAVE.execute)
+    nuke.addOnScriptClose(CALLBACKS_ON_SCRIPT_CLOSE.execute)
+    nuke.addOnCreate(CALLBACKS_ON_CREATE.execute)
+    nuke.addUpdateUI(CALLBACKS_UPDATE_UI.execute)
+    if nuke.GUI:
+        import nukescripts
+        nukescripts.addDropDataCallback(CALLBACKS_ON_CREATE.execute)
 
 
 def abort_modified(func):
@@ -264,6 +306,8 @@ def create_out_dirs():
     """Create this read node's output dir if need."""
 
     this = nuke.thisNode()
+    if this.Class() != 'Read':
+        return
     if this['disable'].value():
         return
     target_dir = os.path.dirname(nuke.filename(this))
