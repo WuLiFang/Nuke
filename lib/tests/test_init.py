@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Nuke initiate test.  """
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals, print_function
 from unittest import TestCase, main
 
 
@@ -9,6 +9,7 @@ class NukeTestCase(TestCase):
     def test_init(self):
         before = dict(globals())
         import nuke
+        print(nuke.env)
         after = dict(globals())
         for i in after:
             if i in ('__doc__', '__file__'):
