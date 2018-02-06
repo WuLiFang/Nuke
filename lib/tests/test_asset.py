@@ -98,6 +98,18 @@ class FrameRangesTestCase(TestCase):
         self.assertEqual(last.toFrameList(), range(100, 201))
         nuke.delete(n)
 
+    def test_to_frame_list(self):
+        from asset import FrameRanges
+        empty = nuke.FrameRanges([])
+        self.assertIs(empty.toFrameList(), None)
+        self.assertIsInstance(FrameRanges(empty).to_frame_list(), list)
+
+    def test_bool(self):
+        from asset import FrameRanges
+        empty = nuke.FrameRanges([])
+        self.assertFalse(FrameRanges(empty))
+        self.assert_(FrameRanges())
+
 
 class AssetTestCase(TestCase):
     def _pop(self):

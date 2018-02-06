@@ -85,7 +85,7 @@ def add_menu():
               lambda: edit.marked_nodes().disable(), 'CTRL+SHIFT+D'),
             _("修正读取错误", asset.fix_error_read, 'F6'),
             _("Reload所有", edit.reload_all_read_node),
-            _("检查缺帧", lambda: asset.DropFrames.check(show_ok=True)),
+            _("检查缺帧", lambda: asset.warn_missing_frames(show_ok=True)),
             _("检查素材更新", lambda: asset.warn_mtime(
                 show_ok=True, show_dialog=True)),
             _("转换单帧为序列",
@@ -276,14 +276,12 @@ def custom_autolabel():
         return ret
 
     def _read():
-        dropframes = u(asset.DropFrames.get(u(nuke.filename(this)), ''))
+        missing_frames = asset.Asset(this).missing_frames(this)
         label = '<style>* {font-family:微软雅黑} span {color:red} b {color:#548DD4}</style>'
         label += '<b>帧范围: </b><span>{} - {}</span>'.format(
             this.firstFrame(), this.lastFrame())
-        if dropframes:
-            nuke.warning(
-                utf8('{}:[dropframes]{}'.format(u(this.name()), dropframes)))
-            label += '\n<span>缺帧: {}</span>'.format(dropframes)
+        if missing_frames:
+            label += '\n<span>缺帧: {}</span>'.format(missing_frames)
         label += '\n<b>修改日期: </b>{}'.format(this.metadata('input/mtime'))
         ret = _add_to_autolabel(label, True)
         return ret
@@ -310,7 +308,10 @@ def custom_autolabel():
              'TimeOffset': _timeoffset}
 
     if class_ in dict_:
-        return utf8(dict_[class_]())
+        ret = dict_[class_]()
+        if isinstance(ret, unicode):
+            ret = utf8(ret)
+        return ret
 
 
 def panel_show(keyword):

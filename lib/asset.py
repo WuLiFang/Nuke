@@ -25,7 +25,7 @@ from wlf.env import has_gui
 from wlf.files import Path, copy, PurePath
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
-from wlf.path import expand_frame, get_footage_name, is_ascii
+from wlf.path import is_ascii
 
 LOGGER = logging.getLogger('com.wlf.asset')
 TEMPLATES_DIR = os.path.abspath(os.path.join(__file__, '../templates'))
@@ -143,6 +143,21 @@ class FrameRanges(object):
     def __getattr__(self, name):
         return getattr(self.wrapped, name)
 
+    def __nonzero__(self):
+        return bool(self.to_frame_list())
+
+    def to_frame_list(self):
+        """nuke.FrameRanges will returns None if no frame in it.
+        this will return a empty list.
+
+        Returns:
+            list: Frame list in this frame ranges.
+        """
+        ret = self.wrapped.toFrameList()
+        if ret is None:
+            ret = []
+        return ret
+
     @classmethod
     def from_root(cls):
         root = nuke.Root()
@@ -151,34 +166,6 @@ class FrameRanges(object):
         ret = nuke.FrameRanges(first, last, 1)
         ret = FrameRanges(ret)
         return FrameRanges(nuke.Root())
-
-# class Filename(Path):
-#     """get filename from a object.
-
-#     Args:
-#         obj (str or unicode or nuke.Node): Object contain filename.
-
-#     Returns:
-#         wlf.path.Path: filename path.
-#     """
-#     @classmethod
-#     def _find_filename(cls, obj):
-#         if isinstance(obj, nuke.Node):
-#             filename = nuke.filename(obj)
-#         elif isinstance(obj, Asset):
-#             filename = obj.filename
-#         elif isinstance(obj, (str, unicode)):
-#             filename = obj
-#         else:
-#             raise TypeError('Can not use as filename: {}'.format(type(obj)))
-
-#         return u(filename)
-
-#     def __new__(cls, obj):
-#         return super(Filename, cls).__new__(cls, cls._find_filename(obj))
-
-#     def __init__(self, obj):
-#         super(Filename, self).__init__(self._find_filename(obj))
 
 
 class Assets(list):
@@ -226,7 +213,7 @@ class Assets(list):
 
         return cls(nuke.allNodes('Read'))
 
-    # @run_with_clock('检查缺帧')
+    @run_with_clock('检查缺帧')
     def missing_frames_dict(self):
         """Get missing_frames from assets.
 
@@ -298,10 +285,10 @@ class Asset(object):
         CACHED_ASSET.add(self)
 
     def __unicode__(self):
-        return 'Asset: {0.filename} {0.frame_ranges}'.format(self)
+        return '素材: {0.filename} {0.frame_ranges}'.format(self)
 
     def __str__(self):
-        return e(self.__unicode__())
+        return self.__unicode__().encode('utf-8')
 
     @classmethod
     def filename_factory(cls, obj):
@@ -326,30 +313,6 @@ class Asset(object):
         path = Path(u(filename))
         return path
 
-    # @classmethod
-    # def frame_ranges_factory(cls, obj):
-    #     """Get frame_ranges from a object.
-
-    #     Args:
-    #         obj (nuke.Node or nuke.FrameRanges): Object contain frame_ranges.
-    #             will use nuke.Root() when object is not acceptable.
-
-    #     Returns:
-    #         FrameRanges: frame_ranges in obj
-
-    #     """
-
-    #     if isinstance(obj, nuke.Node):
-    #         return nuke.FrameRanges([obj.frameRange()])
-    #     elif isinstance(obj, Asset):
-    #         return obj.frame_ranges
-    #     try:
-    #         path = PurePath(obj)
-    #         if path.with_frame(1) == path.with_frame(2):
-    #             return nuke.FrameRanges([1])
-    #     except TypeError:
-    #         return cls.frame_ranges_factory(nuke.Root())
-
     def missing_frames(self, frame_ranges=None):
         """Get missing frame ranges compare to frame_list.
 
@@ -359,7 +322,7 @@ class Asset(object):
                 None mean return whole missing frame ranges.
 
         Returns:
-            nuke.FrameRanges: missing frame ranges.
+            FrameRanges: missing frame ranges.
         """
 
         if frame_ranges is None:
@@ -375,13 +338,13 @@ class Asset(object):
         assert isinstance(self._missing_frames, CachedMissingFrames)
         cached = self._missing_frames.frame_ranges
 
-        ret = nuke.FrameRanges([i for i in cached.toFrameList()
-                                if i in frame_ranges.toFrameList()])
+        ret = FrameRanges([i for i in cached.to_frame_list()
+                           if i in frame_ranges.to_frame_list()])
         ret.compact()
         return ret
 
     def _update_missing_frame(self):
-        ret = nuke.FrameRanges()
+        ret = FrameRanges([])
         checked = set()
         frames = self.frame_ranges.toFrameList()
 
@@ -403,6 +366,9 @@ class Asset(object):
 
         ret.compact()
         self._missing_frames = CachedMissingFrames(ret, time.time())
+        if ret:
+            msg = '{} 缺帧: {}'.format(self, ret)
+            nuke.warning(utf8(msg))
         return ret
 
 
@@ -427,13 +393,18 @@ def warn_missing_frames(assets=None, show_ok=False):
             If show message for no missing frames.
     """
 
-    result = Assets(assets).missing_frames_dict()
+    if assets is None:
+        assets = Assets.all()
+    else:
+        assets = Assets(assets)
+
+    result = assets.missing_frames_dict()
     if not result:
         if show_ok:
             nuke.message(utf8('没有发现缺帧素材'))
     elif len(result) < 10:
         if nuke.GUI:
-            nuke.message(utf8(result.as_html()))
+            nuke.message(utf8(result.as_html().replace('\n', '')))
         else:
             LOGGER.warning(result)
     else:
@@ -471,67 +442,19 @@ def warn_mtime(show_dialog=False, show_ok=False):
 
     if show_dialog and (newer_footages or show_ok):
         msg = '<style>td {padding:8px;}</style>'
-        msg += u'<b>{}</b>'.format((os.path.basename(Last.name)))
-        msg += u'<div>上次修改: {}</div><br><br>'.format(
+        msg += '<b>{}</b>'.format((os.path.basename(Last.name)))
+        msg += '<div>上次修改: {}</div><br><br>'.format(
             time.strftime('%y-%m-%d %H:%M:%S', Last.mtime))
         if newer_footages:
-            msg += u'发现以下素材变更:<br>'
+            msg += '发现以下素材变更:<br>'
             msg += '<tabel>'
             msg += '<tr><th>修改日期</th><th>素材</th></tr>'
             msg += '\n'.join(['<tr><td>{}</td><td>{}</td></tr>'.format(newer_footages[i], i)
                               for i in newer_footages])
             msg += '</tabel>'
         elif show_ok:
-            msg += u'没有发现更新的素材'
-        nuke.message(msg)
-
-
-def get_footages(nodes=None):
-    """Footage used for @nodes.  """
-
-    nodes = nodes or nuke.allNodes('Read')
-    nodes = list(n for n in nodes if 'disable' in n.knobs()
-                 and not n['disable'].value())
-
-    ret = {}
-    for n in nodes:
-        if n.Class() != 'Read':
-            continue
-        filename = nuke.filename(n)
-        ret.setdefault(filename, nuke.FrameRanges())
-        # `nuke.Node.frameRange` may wrong when using `frame` knob.
-        framerange = nuke.FrameRange(
-            '{:.0f}-{:.0f}'.format(n['first'].value(), n['last'].value()))
-        ret[filename].add(framerange)
-    return ret
-
-
-def get_dropframe(filename, framerange):
-    """Return dropframes for @filename in @framerange. -> nuke.FrameRanges """
-
-    from wlf.notify import Progress, CancelledError
-
-    assert isinstance(framerange, (list, nuke.FrameRange))
-    filename = u(filename)
-    dir_path = os.path.dirname(filename)
-
-    task = Progress(u'验证文件', total=len(framerange))
-    ret = nuke.FrameRanges()
-    if not os.path.isdir(e(dir_path)) or \
-        (expand_frame(filename, 1) == filename
-         and not os.path.isfile(e(filename))):
-        ret.add(framerange)
-        return ret
-
-    files = os.listdir(e(dir_path))
-    basename = os.path.basename(filename)
-    for f in framerange:
-        frame_file = expand_frame(basename, f)
-        task.step(frame_file)
-        if e(frame_file) not in files:
-            ret.add([f])
-    ret.compact()
-    return ret
+            msg += '没有发现更新的素材'
+        nuke.message(utf8(msg))
 
 
 def sent_to_dir(dir_):
@@ -543,7 +466,7 @@ def sent_to_dir(dir_):
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
 
-    from wlf.notify import Progress, CancelledError
+    from wlf.notify import progress, CancelledError
 
     LOGGER.debug('Handling dropdata: %s %s', mime_type, data)
     if mime_type != 'text/plain':
@@ -554,14 +477,13 @@ def dropdata_handler(mime_type, data, from_dir=False):
         if os.path.isdir(e(data)):
             _dirname = data.replace('\\', '/')
             filenames = nuke.getFileNameList(e(_dirname, 'UTF-8'))
-            task = Progress(data, total=len(filenames))
-            for filename in filenames:
-                try:
-                    task.step(filename)
-                except CancelledError:
-                    return True
-                dropdata_handler(
-                    mime_type, '{}/{}'.format(_dirname, filename), from_dir=True)
+            try:
+                for filename in progress(filenames):
+                    dropdata_handler(
+                        mime_type, '{}/{}'.format(_dirname, filename),
+                        from_dir=True)
+            except CancelledError:
+                pass
             return True
 
     def _ignore():
@@ -587,12 +509,12 @@ def dropdata_handler(mime_type, data, from_dir=False):
         if data.endswith('.fbx'):
             n = nuke.createNode(
                 'Camera2',
-                'read_from_file True '
-                'frame_rate 25 '
-                'suppress_dialog True '
-                'label {'
-                '导入的摄像机：\n'
-                '[basename [value file]]\n}')
+                b'read_from_file True '
+                b'frame_rate 25 '
+                b'suppress_dialog True '
+                b'label {'
+                b'导入的摄像机：\n'
+                b'[basename [value file]]\n}')
             n.setName('Camera_3DEnv_1')
             n['file'].fromUserText(data)
             if nuke.expression('{}.animated'.format(n.name())):
@@ -629,7 +551,6 @@ def dropdata_handler(mime_type, data, from_dir=False):
         if from_dir:
             n = nuke.createNode(
                 'Read', 'file "{}"'.format(data), inpanel=False)
-            DropFrames.update(n)
             if n.hasError():
                 n['disable'].setValue(True)
             return True
@@ -644,7 +565,7 @@ def fix_error_read():
     """Try fix all read nodes that has error."""
 
     def _get_name(filename):
-        return os.path.basename(get_footage_name(filename))
+        return PurePath(filename).name
 
     filename_dict = {_get_name(nuke.filename(n)): nuke.filename(n)
                      for n in nuke.allNodes('Read') if not n.hasError()}
@@ -708,78 +629,3 @@ if has_gui():
             localization.setAlwaysUseSourceFiles(True)
 
     Localization.timer.timeout.connect(Localization.update)
-
-# Deprecated below:
-
-
-class DropFrames(object):
-    """Check drop frames and record on the node."""
-
-    _showed_files = set()
-    _file_dropframe = {}
-
-    @classmethod
-    def get(cls, filename, default=None):
-        """Get dropframes for @filename"""
-        return cls._file_dropframe.get(filename, default)
-
-    @classmethod
-    def check(cls, show_ok=False):
-        """Check dropframe then show them if any.  """
-
-        cls._file_dropframe.clear()
-        cls.update()
-        cls.show(show_all=True, show_ok=show_ok)
-
-    @classmethod
-    @run_with_clock('检查缺帧')
-    def update(cls, nodes=None):
-        """update self."""
-        if isinstance(nodes, nuke.Node):
-            nodes = [nodes]
-        nodes = nodes or nuke.allNodes('Read')
-        if not nodes:
-            return
-
-        footages = get_footages(nodes)
-
-        def _check(filename):
-            try:
-                framerange = footages[filename]
-                framerange.compact()
-                dropframes = get_dropframe(filename, framerange.toFrameList())
-                if str(dropframes):
-                    cls._file_dropframe[filename] = dropframes
-                elif cls._file_dropframe.has_key(filename):
-                    del cls._file_dropframe[filename]
-            except:
-                LOGGER.error(
-                    'Unexpected exception during check dropframes.', exc_info=True)
-                raise
-        pool = multiprocessing.Pool()
-        pool.map(_check, footages)
-        pool.close()
-        pool.join()
-
-    @classmethod
-    def show(cls, show_all=False, show_ok=False):
-        """Show all dropframes to user."""
-        message = ''
-        for filename, dropframes in cls._file_dropframe.items():
-            if not show_all\
-                    and filename in cls._showed_files:
-                continue
-            if dropframes:
-                message += '<tr><td><span style=\"color:red\">{}</span>'\
-                    '</td><td>{}</td></tr>'.format(dropframes, filename)
-                cls._showed_files.add(filename)
-
-        if message:
-            message = '<style>td{padding:8px;}</style>'\
-                '<table>'\
-                '<tr><th>缺帧</th><th>素材</th></tr>'\
-                + message +\
-                '</table>'
-            nuke.message(message)
-        elif show_ok:
-            nuke.message('没有发现缺帧素材')
