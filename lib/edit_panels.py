@@ -3,10 +3,12 @@
 from __future__ import absolute_import
 
 import nuke
-import nukescripts
-from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
-    set_knobs, same_class_filter, transfer_flags
-from wlf.notify import Progress, CancelledError
+import nukescripts  # pylint: disable=import-error
+
+from edit import (CurrentViewer, named_copy, replace_node,
+                  set_knobs, transfer_flags)
+from wlf.notify import CancelledError, Progress
+from nuketools import undoable_func
 
 if not nuke.GUI:
     nukescripts.PythonPanel = object
@@ -86,17 +88,16 @@ class ChannelsRename(nukescripts.PythonPanel):
         if knob in (self._knobs['ok'], self._knobs['cancel']):
             self._viewer.recover()
             if knob is self._knobs['ok']:
-                nuke.Undo.begin()
-                nuke.Undo.name('重命名通道')
-                n = crate_copy_from_dict(self.rename_dict, self._node)
-                replace_node(self._node, n)
-                nuke.Undo.end()
+                self.execute()
             self.destroy()
 
-    @property
-    def rename_dict(self):
-        """Dictionary for channels_rename().  """
-        return {channel: self._knobs[channel].value() for channel in self._channels}
+    @undoable_func('重命名通道')
+    def execute(self):
+        """Execute named copy.  """
+        n = named_copy(self._node,
+                       {channel: self._knobs[channel].value()
+                        for channel in self._channels})
+        replace_node(self._node, n)
 
     def show(self):
         """Show self to user.  """
@@ -204,7 +205,7 @@ class MultiEdit(nukescripts.PythonPanel):
                 except CancelledError:
                     nuke.Undo.cancel()
                     return
-                set_knobs(n, self._values)
+                set_knobs(n, **self._values)
                 new_name = self._rename_knob.evaluate()
                 if new_name:
                     n.setName(new_name)
@@ -220,3 +221,20 @@ class MultiEdit(nukescripts.PythonPanel):
             self.addToPane(pane)
         else:
             self.addToPane(nuke.getPaneFor('Viewer.1'))
+
+
+def same_class_filter(nodes, node_class=None):
+    """Filter nodes to one class."""
+
+    classes = list(
+        set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
+    classes.sort()
+    if len(classes) > 1:
+        choice = nuke.choice('选择节点分类', '节点分类', classes, default=0)
+        if choice is not None:
+            nodes = [n for n in nodes if n.Class()
+                     == classes[choice]]
+        else:
+            nodes = [n for n in nodes if n.Class()
+                     == nodes[0].Class()]
+    return nodes

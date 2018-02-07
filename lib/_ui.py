@@ -8,7 +8,7 @@ import os
 import webbrowser
 
 import nuke
-import nukescripts
+import nukescripts  # pylint: disable=import-error
 from autolabel import autolabel
 
 import asset
@@ -23,7 +23,7 @@ import precomp
 import scanner
 import splitexr
 import wlf.cgtwq
-import wlf.csheet_tool
+import wlf.csheet
 import wlf.uploader
 from nuketools import utf8
 from wlf.path import get_unicode as u
@@ -79,7 +79,7 @@ def add_menu():
             _("设置帧范围",
               edit.dialog_set_framerange),
             _('转换为相对路径',
-              lambda: edit.nodes_to_relpath(nuke.selectedNodes()), icon="utilitiesfolder.png"),
+              lambda: edit.use_relative_path(nuke.selectedNodes()), icon="utilitiesfolder.png"),
             None,
             _("禁用所有稍后启用节点",
               lambda: edit.marked_nodes().disable(), 'CTRL+SHIFT+D'),
@@ -99,7 +99,7 @@ def add_menu():
                 _("所有Gizmo转Group",
                   edit.all_gizmo_to_group),
                 _("根据背板重命名所有节点",
-                  edit.rename_all_nodes),
+                  orgnize.rename_all_nodes),
                 _("节点添加Dots变成90度",
                   lambda: edit.nodes_add_dots(nuke.selectedNodes())),
                 _("所有节点添加Dots变成90度", lambda: edit.nodes_add_dots(nuke.allNodes()))
@@ -124,7 +124,7 @@ def add_menu():
             _("批量下载", lambda: nuke.message(utf8(
                 '已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>'))),
             _('创建项目色板', cgtwn.check_login(True)
-              (lambda: wlf.csheet_tool.Dialog().exec_())),
+              (lambda: wlf.csheet.__main__.Dialog().exec_())),
             _('创建项目文件夹', cgtwn.dialog_create_dirs)
         ]},
         {_('工具'): [
@@ -135,7 +135,7 @@ def add_menu():
                 'com.wlf.uploader')),
             _('扫描空文件夹', scanner.call_from_nuke),
             _('分离exr', splitexr.Dialog.show),
-            _("分割当前文件(根据背板)", edit.split_by_backdrop)
+            _("分割当前文件(根据背板)", orgnize.split_by_backdrop)
         ]},
         {_('帮助'): [
             _('吾立方插件 文档', _open_help),

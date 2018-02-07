@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
 """Edit existed content in workfile."""
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function, unicode_literals
 
 import colorsys
 import logging
+import math
 import os
 import random
 import re
@@ -13,90 +14,49 @@ from functools import wraps
 import nuke
 
 from node import wlf_write_node
-from wlf.notify import Progress
-from nuketools import utf8
+from nuketools import Nodes, undoable_func, utf8
+from wlf.notify import get_default_progress_handler, progress
+from wlf.path import get_unicode as u
+from wlf.path import PurePath
+
 LOGGER = logging.getLogger('com.wlf.edit')
-assert isinstance(LOGGER, logging.Logger)
 ENABLE_MARK = '_enable_'
 
 
-def run_in_main_thread(func):
-    """(Decorator)Run @func in nuke main_thread.   """
+def add_channel(name):
+    """Add a channel from `{layer}.{channel}` format string.
 
-    @wraps(func)
-    def _func(*args, **kwargs):
-        if nuke.GUI and threading.current_thread().name != 'MainThread':
-            return nuke.executeInMainThreadWithResult(func, args, kwargs)
+    Args:
+        name (str): Channel name.
+    """
 
-        return func(*args, **kwargs)
+    try:
+        name = str(name).encode('ascii')
+    except (UnicodeDecodeError, UnicodeEncodeError):
+        raise ValueError('Non-ascii character not acceptable.')
 
-    return _func
-
-
-def undoable_func(name=None):
-    """(Decorator)Record nuke undo set for @func.   """
-
-    def _wrap(func):
-
-        @wraps(func)
-        def _func(*args, **kwargs):
-            _name = name if name is not None else func.__name__
-            run_in_main_thread(nuke.Undo.begin)(utf8(_name))
-
-            try:
-                ret = func(*args, **kwargs)
-                if not isinstance(ret, threading.Thread):
-                    # Async function should call nuke.Undo.end by itself.
-                    run_in_main_thread(nuke.Undo.end)()
-                else:
-                    LOGGER.warning(
-                        'Async function should implement undoable itself.')
-                return ret
-            except:
-                run_in_main_thread(nuke.Undo.cancel)()
-                raise
-
-        return _func
-
-    return _wrap
+    try:
+        layer, channel = name.split('.', 1)
+    except ValueError:
+        layer, channel = 'other', name
+    if '.' in channel:
+        raise ValueError('Wrong channel format.', name)
+    nuke.Layer(layer, [name])
 
 
-def rename_all_nodes():
-    """Rename all nodes by them belonged backdrop node ."""
+def add_layer(layername):
+    """Add layer to nuke from @layername.  
 
-    for i in nuke.allNodes('BackdropNode'):
-        _nodes = i.getNodes()
-        j = i['label'].value().split('\n')[0].split(' ')[0]
-        for k in _nodes:
-            if k.Class() == 'Group' and not '_' in k.name() and not (k['disable'].value()):
-                name = k.name().rstrip('0123456789')
-                k.setName(name + '_' + j + '_1', updateExpressions=True)
-            elif not '_' in k.name() \
-                    and (not nuke.exists(k.name() + '.disable') or not (k['disable'].value())):
-                k.setName(k.Class() + '_' + j + '_1', updateExpressions=True)
+    Returns:
+        nuke.Layer or None: Added layer.
+    """
 
+    if layername in nuke.layers():
+        return
 
-def swap_knob_value(knob_a, knob_b):
-    """Swap two same type knob value."""
-    value_a, value_b = knob_a.value(), knob_b.value()
-    knob_a.setValue(value_b)
-    knob_b.setValue(value_a)
-
-
-def update_toolsets(toolset_name, toolset_path):
-    """Replace name matched node with given toolset."""
-
-    for i in nuke.allNodes():
-        if toolset_name in i.name() and 'python' not in i['label'].value():
-            i.selectOnly()
-            n = nuke.loadToolset(toolset_path)
-            for k in i.allKnobs():
-                knob_name = k.name()
-                if knob_name in ['name', '', 'label']:
-                    pass
-                elif knob_name in n.knobs():
-                    n[knob_name].setValue(i[knob_name].value())
-            nuke.delete(i)
+    channels = ['{}.{}'.format(layername, channel)
+                for channel in ('red', 'green', 'blue', 'alpha')]
+    return nuke.Layer(layername, channels)
 
 
 class CurrentViewer(object):
@@ -132,7 +92,7 @@ class CurrentViewer(object):
                 pass
 
     def record(self):
-        """Record current active viewer status."""
+        """Record current active viewer state."""
 
         self.viewer = nuke.activeViewer()
         if self.viewer:
@@ -142,7 +102,7 @@ class CurrentViewer(object):
                 self.knob_values[knob] = knob.value()
 
     def recover(self):
-        """Recover viewer status to last record."""
+        """Recover viewer state to last record."""
 
         if self.viewer:
             self.node.setInput(
@@ -156,18 +116,50 @@ class CurrentViewer(object):
             nuke.delete(self.node)
 
 
-def format_channel_name(text):
-    """Return formatted text with nuke standard.  """
+def escape_for_channel(text):
+    """Escape text for channel name.
 
-    ret = text
+    Args:
+        text (str): Text for escaped
+
+    Returns:
+        str: Esacped text.
+
+    Example:
+        >>> escape_for_channel('apple')
+        'mask_extra.apple'
+        >>> escape_for_channel('tree.apple')
+        'tree.apple'
+        >>> escape_for_channel('tree.apple.leaf')
+        'tree.apple_leaf'
+        >>> escape_for_channel('tree.apple.leaf.根')
+        'tree.apple_leaf_?'
+        >>> escape_for_channel(None)
+        'mask_extra.None'
+
+    """
+
+    ret = u(text)
+    if '.' not in ret:
+        ret = 'mask_extra.{}'.format(ret)
     ret = ret.replace(' ', '_')
     ret = '{0[0]}{0[1]}{1}'.format(
         ret.partition('.')[:-1], ret.partition('.')[-1].replace('.', '_'))
+    ret = ret.encode('ascii', 'replace')
     return ret
 
 
-def crate_copy_from_dict(dict_, input_node):
-    """Create multiple Copy node from @dict_.  """
+def named_copy(n, names_dict):
+    """Create multiple Copy node on demand.
+
+    Args:
+        n (nuke.Node): Node as input.
+        names_dict (dict[str:str]): A dict with source channel name as key,
+            target channel name as value.
+
+    Returns:
+        nuke.Node: Output node.
+    """
 
     def _rgba_order(channel):
         ret = channel
@@ -176,115 +168,53 @@ def crate_copy_from_dict(dict_, input_node):
         ret = reduce(lambda text, repl: text.replace(*repl), repl, ret)
         return ret
 
-    count = 0
-    n = input_node
-    new_names_dict = {
-        k:
-        format_channel_name(v) if '.' in v else 'mask_extra.{}'.format(v)
-        for k, v in dict_.items() if v}
-    old_names = sorted(new_names_dict.keys(), key=_rgba_order)
+    # For short version channel name.
+    convert_dict = {
+        'r': 'rgba.red',
+        'g': 'rgba.green',
+        'b': 'rgba.blue',
+        'a': 'rgba.alpha',
+        'red': 'rgba.red',
+        'green': 'rgba.green',
+        'blue': 'rgba.blue',
+        'alpha': 'rgba.alpha',
+    }
 
-    for old_name in old_names:
-        new_name = new_names_dict[old_name]
-        index = count % 4
+    # Escape input
+    names_dict = {
+        convert_dict.get(k, k): escape_for_channel(v)
+        for k, v in names_dict.items() if v}
+
+    for i, k in enumerate(sorted(names_dict, key=_rgba_order)):
+        v = names_dict[k]
+
+        index = i % 4
         if not index:
             n = nuke.nodes.Copy(inputs=[n, n])
-        n['from{}'.format(index)].setValue(old_name)
-        add_channel(new_name)
-        n['to{}'.format(index)].setValue(new_name)
-        count += 1
+        n['from{}'.format(index)].setValue(k)
+        add_channel(v)
+        n['to{}'.format(index)].setValue(v)
     return n
 
 
-def add_channel(name):
-    """Add channel to nuke from a (Layer).(channel) string.  """
-
-    layer = name.split('.')[0]
-    nuke.Layer(layer, [name])
-
-
-def add_layer(layername):
-    """Add layer to nuke from @layername.  """
-
-    if layername == 'depth':
-        channels = ['depth.z']
-    else:
-        channels = list('{}.{}'.format(layername, channel)
-                        for channel in ('red', 'green', 'blue', 'alpha'))
-    nuke.Layer(layername, channels)
-
-
 def replace_node(node, repl_node):
-    """Replace all nodes except @repl_node input to @node with @repl_node."""
+    """Replace a node with another in node graph.
 
-    assert isinstance(node, nuke.Node)
+    Args:
+        node (nuke.Node): Node to be replaced.
+        repl_node (nuke.Node): Node to replace.
+    """
+
+    if not (isinstance(node, nuke.Node)
+            and isinstance(repl_node, nuke.Node)):
+        raise TypeError('Expect two nuke.Node, got: {} and {}'.format(
+            type(node), type(repl_node)))
+
     nodes = node.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, False)
     for n in nodes:
         for i in range(n.inputs()):
             if n.input(i) is node:
                 n.setInput(i, repl_node)
-
-
-def split_by_backdrop():
-    """Split workfile to multiple file by backdrop."""
-
-    text_saveto = '保存至:'
-    text_ask_if_create_new_folder = '目标文件夹不存在, 是否创建?'
-
-    # Panel
-    panel = nuke.Panel('splitByBackdrop')
-    panel.addFilenameSearch(text_saveto, os.getenv('TEMP'))
-    panel.show()
-
-    # Save splited .nk file
-    save_path = panel.value(text_saveto).rstrip('\\/')
-    noname_count = 0
-    for i in nuke.allNodes('BackdropNode'):
-        label = repr(i['label'].value()).strip(
-            "'").replace('\\', '_').replace('/', '_')
-        if not label:
-            noname_count += 1
-            label = 'noname_{0:03d}'.format(noname_count)
-        if not os.path.exists(save_path):
-            if not nuke.ask(text_ask_if_create_new_folder):
-                return False
-        dir_ = save_path + '/splitnk/'
-        dir_ = os.path.normcase(dir_)
-        if not os.path.exists(dir_):
-            os.makedirs(dir_)
-        filename = dir_ + label + '.nk'
-        i.selectOnly()
-        i.selectNodes()
-        nuke.nodeCopy(filename)
-    os.system('explorer "' + dir_ + '"')
-    return True
-
-
-def link_zdefocus():
-    """Link all zdefocus node to '_ZDefocus' node."""
-
-    n = nuke.toNode('_ZDefocus')
-    if not n:
-        return False
-    for i in nuke.allNodes('ZDefocus2'):
-        if i.name().startswith('_'):
-            continue
-        i['size'].setExpression('_ZDefocus.size')
-        i['max_size'].setExpression('_ZDefocus.max_size')
-        i['disable'].setExpression(
-            '( [ exists _ZDefocus ] ) ? !_ZDefocus.disable : 0')
-        i['center'].setExpression(
-            '( [exists _ZDefocus] ) ? _ZDefocus.center : 0')
-        i['dof'].setExpression(
-            '( [exists _ZDefocus] ) ? _ZDefocus.dof : 0')
-        i['label'].setValue('[\n'
-                            'set trg parent._ZDefocus\n'
-                            'if { [ exists $trg ] } {\n'
-                            '    knob this.math [value $trg.math]\n'
-                            '    knob this.z_channel [value $trg.z_channel]\n'
-                            '}\n'
-                            ']')
-    return True
 
 
 def get_min_max(src_node, channel='depth.Z'):
@@ -313,24 +243,20 @@ def get_min_max(src_node, channel='depth.Z'):
 
 
 def set_random_glcolor(n):
-    """Set node glcolor a random hue color."""
+    """Set glcolor of node to a hue random color. 
 
-    if 'gl_color' in n.knobs()\
-            and not n['gl_color'].value()\
-            and not n.name().startswith('_'):
+    Args:
+        n (nuke.Node): Node to manipulate.
+    """
+
+    if ('gl_color' in n.knobs()
+            and not n['gl_color'].value()
+            and not n.name().startswith('_')):
 
         color = colorsys.hsv_to_rgb(random.random(), 0.8, 1)
         color = tuple(int(i * 255) for i in color)
         n['gl_color'].setValue(
             color[0] << 24 | color[1] << 16 | color[2] << 8)
-
-
-def enable_rsmb(prefix='_'):
-    """Enable all rsmb node with given prefix."""
-
-    for i in nuke.allNodes('OFXcom.revisionfx.rsmb_v3'):
-        if i.name().startswith(prefix):
-            i['disable'].setValue(False)
 
 
 def clear_selection():
@@ -346,6 +272,7 @@ def clear_selection():
 
 
 def delete_unused_nodes(nodes=None, message=False):
+    # TODO: Need refactor and test.
     """Delete all unused nodes."""
 
     def _is_used(n):
@@ -358,14 +285,13 @@ def delete_unused_nodes(nodes=None, message=False):
                                 if n.Class() not in [''] or n.name().startswith('_'))
         return any(nodes_dependent_this)
 
-    task = Progress('清除无用节点')
     if nodes is None:
         nodes = nuke.allNodes()
     count = 0
+    handler = get_default_progress_handler()
+    handler.message_factory = lambda n: n.name()
     while True:
-        total = len(nodes)
-        for index, n in enumerate(nodes):
-            task.set(index * 100 / total, n.name())
+        for n in progress(nodes, '清除无用节点', handler):
             if not _is_used(n):
                 nuke.delete(n)
                 nodes.remove(n)
@@ -377,23 +303,24 @@ def delete_unused_nodes(nodes=None, message=False):
     print('Deleted {} unused nodes.'.format(count))
     if message:
         nuke.message(
-            '<font size=5>删除了 {} 个未使用的节点。</font>\n'
-            '<i>名称以"_"(下划线)开头的节点及其上游节点将不会被删除</i>'.format(count))
+            b'<font size=5>删除了 {} 个未使用的节点。</font>\n'
+            b'<i>名称以"_"(下划线)开头的节点及其上游节点将不会被删除</i>'.format(count))
 
 
 def replace_sequence():
-    '''
-    Replace all read node to specified frame range sequence.
-    '''
+    # TODO: Need refactor and test.
+    '''Replace all read node to specified frame range sequence.  '''
+
     # Prepare Panel
-    panel = nuke.Panel('单帧替换为序列')
+    panel = nuke.Panel(b'单帧替换为序列')
     render_path_text = '限定只替换此文件夹中的读取节点'
-    panel.addFilenameSearch(render_path_text, 'z:/SNJYW/Render/')
+    panel.addFilenameSearch(utf8(render_path_text), 'z:/SNJYW/Render/')
     first_text = '设置工程起始帧'
-    panel.addExpressionInput(first_text, int(
+    panel.addExpressionInput(utf8(first_text), int(
         nuke.Root()['first_frame'].value()))
     last_text = '设置工程结束帧'
-    panel.addExpressionInput(last_text, int(nuke.Root()['last_frame'].value()))
+    panel.addExpressionInput(utf8(last_text), int(
+        nuke.Root()['last_frame'].value()))
 
     confirm = panel.show()
     if confirm:
@@ -403,9 +330,9 @@ def replace_sequence():
         last = int(panel.value(last_text))
         flag_frame = None
 
-        nuke.Root()['proxy'].setValue(False)
-        nuke.Root()['first_frame'].setValue(first)
-        nuke.Root()['last_frame'].setValue(last)
+        nuke.Root()[b'proxy'].setValue(False)
+        nuke.Root()[b'first_frame'].setValue(first)
+        nuke.Root()[b'last_frame'].setValue(last)
 
         for n in nuke.allNodes('Read'):
             file_path = nuke.filename(n)
@@ -417,31 +344,24 @@ def replace_sequence():
                     r'\.([\d#]+)\.',
                     lambda matchobj: r'.%0{}d.'.format(len(matchobj.group(1))),
                     file_path)
-                n['file'].setValue(file_path)
-                n['format'].setValue('HD_1080')
-                n['first'].setValue(first)
-                n['origfirst'].setValue(first)
-                n['last'].setValue(last)
-                n['origlast'].setValue(last)
+                n[b'file'].setValue(file_path)
+                n[b'format'].setValue(b'HD_1080')
+                n[b'first'].setValue(first)
+                n[b'origfirst'].setValue(first)
+                n[b'last'].setValue(last)
+                n[b'origlast'].setValue(last)
 
         n = wlf_write_node()
         if n:
             if flag_frame:
                 flag_frame = int(flag_frame)
-                n['custom_frame'].setValue(flag_frame)
+                n[b'custom_frame'].setValue(flag_frame)
                 nuke.frame(flag_frame)
-            n['use_custom_frame'].setValue(True)
-
-
-def set_project_root_by_name(path='E:'):
-    """Set project root by underscore splitted filename."""
-
-    nuke.root()['project_directory'].setValue(os.path.dirname(
-        path + '/' + os.path.basename(nuke.scriptName()).split('.')[0].replace('_', '/')))
+            n[b'use_custom_frame'].setValue(True)
 
 
 def split_layers(node):
-    """Create Shuffle node for all layers in node @n.  """
+    """Create Shuffle node for each layers in node @n.  """
 
     ret = []
 
@@ -454,8 +374,7 @@ def split_layers(node):
             kwargs['postage_stamp'] = node['postage_stamp'].value()
         except NameError:
             pass
-        n = nuke.nodes.Shuffle(
-            inputs=[node], **kwargs)
+        n = nuke.nodes.Shuffle(inputs=[node], **kwargs)
         ret.append(n)
     return ret
 
@@ -480,50 +399,19 @@ def shuffle_rgba(node):
     return ret
 
 
-def nodes_to_relpath(nodes):
+def use_relative_path(nodes):
     """Convert given nodes's file knob to relative path."""
 
-    perfix = r'[value root.project_directory]'
-    proj_dir = nuke.root().knob('project_directory').getValue()
-    for read_node in nodes:
-        if read_node.knob('file') is not None:
-            old_path = read_node.knob('file').getValue()
-            new_path = old_path.replace(proj_dir, perfix)
-            read_node.knob('file').setValue(new_path)
+    if isinstance(nodes, nuke.Node):
+        nodes = [nodes]
 
-
-def nodes_add_dots(nodes=None):
-    """Add dots to orgnize node tree."""
-
-    if not nodes:
-        nodes = nuke.selectedNodes()
-
-    def _add_dot(output_node, input_num):
-        input_node = output_node.input(input_num)
-        if not input_node\
-                or input_node.Class() in ['Dot']\
-                or abs(output_node.xpos() - input_node.xpos()) < output_node.screenWidth()\
-                or abs(output_node.ypos() - input_node.ypos()) <= output_node.screenHeight():
-            return None
-        if output_node.Class() in ['Viewer'] or output_node['hide_input'].value():
-            return None
-
-        _dot = nuke.nodes.Dot(inputs=[input_node])
-        output_node.setInput(input_num, _dot)
-        _dot.setXYpos(
-            input_node.xpos() + input_node.screenWidth() / 2 - _dot.screenWidth() / 2,
-            output_node.ypos() + output_node.screenHeight() / 2 - _dot.screenHeight() /
-            2 - (_dot.screenHeight() + 5) * input_num
-        )
-
-    def _all_input_add_dot(node):
-        for input_num in range(node.inputs()):
-            _add_dot(node, input_num)
-
+    proj_dir = PurePath(nuke.value('root.project_directory'))
     for n in nodes:
-        if n.Class() in ['Dot']:
+        try:
+            path = PurePath(n['file'].value())
+            n['file'].setValue(utf8(path.relative_to(proj_dir).as_posix()))
+        except NameError:
             continue
-        _all_input_add_dot(n)
 
 
 def gizmo_to_group(gizmo):
@@ -584,7 +472,11 @@ def mark_enable(nodes):
 
 
 def marked_nodes():
-    """Marked nodes to enable.  """
+    """ Get marked nodes.
+
+    Returns:
+        Nodes: maked nodes.
+    """
 
     ret = set()
     for n in nuke.allNodes():
@@ -597,25 +489,24 @@ def marked_nodes():
     return Nodes(ret)
 
 
-def autoplace_all():
-    """Place all nodes position so them won't overlap."""
-
-    for n in nuke.allNodes():
-        nuke.autoplace(n)
-
-
 def insert_node(node, input_node):
-    """Insert @node after @input_node."""
+    """Insert @node after @input_node in node graph
+
+    Args:
+        node (nuke.Node): Node to insert.
+        input_node (nuke.Node): Node as input.
+    """
 
     for n in nuke.allNodes():
-        for i in range(n.inputs()):
-            if n.input(i) == input_node:
+        for i in xrange(n.inputs()):
+            if n.input(i) is input_node:
                 n.setInput(i, node)
 
     node.setInput(0, input_node)
 
 
 def get_max(node, channel='rgb'):
+    # TODO: Need test.
     '''
     Return themax values of a given node's image at middle frame
 
@@ -650,12 +541,14 @@ def get_max(node, channel='rgb'):
 
 def reload_all_read_node():
     """Reload all read node by reload button.  """
+
     for n in nuke.allNodes('Read'):
         n['reload'].execute()
 
 
 def set_framerange(first, last, nodes=None):
     """Set read nodes framerange.  """
+
     if nodes is None:
         nodes = nuke.selectedNodes()
     first, last = int(first), int(last)
@@ -669,6 +562,7 @@ def set_framerange(first, last, nodes=None):
 
 def dialog_set_framerange():
     """Dialog for set_framerange.  """
+
     panel = nuke.Panel('设置帧范围')
     panel.addExpressionInput('first', nuke.numvalue('root.first_frame'))
     panel.addExpressionInput('last', nuke.numvalue('root.last_frame'))
@@ -679,19 +573,41 @@ def dialog_set_framerange():
 
 
 def copy_layer(input0, input1=None, layer='rgba', output=None):
-    """Copy @input1 / (@layer or rgba) to @input0 / @layer.  """
+    """Copy whole layer from a node to another.
+
+    Args:
+        input0 (nuke.Node): Source node
+        input1 (nuke.Node, optional): Defaults to None. 
+            If given, use source layer from this node.
+        layer (str, optional): Defaults to 'rgba'. 
+            Source layer name.
+        output (str, optional): Defaults to None. 
+            Output layer name. If not given, use same with source layer.
+
+    Returns:
+        nuke.Node: Final output node.
+    """
 
     output = output or layer
     input1 = input1 or input0
-    if input0 is input1 and layer == output and layer in nuke.layers(input0):
+
+    # Skip case that has no effect.
+    if (input0 is input1
+        and layer == output
+            and layer in nuke.layers(input0)):
         return input0
 
-    def _input1_layer(layer):
-        if layer in nuke.layers(input1):
-            return layer
+    # Choice input channel name.
+    try:
+        input1_layers = nuke.layers(input1)
+        input_channel = [i for i in (layer, output, 'rgba')
+                         if i in input1_layers][0]
+    except IndexError:
+        raise ValueError('Can not find avaliable layer in input1',
+                         input1_layers)
 
     add_layer(output)
-    input_channel = _input1_layer(layer) or _input1_layer(output) or 'rgba'
+    # Use shuffle if input0 is input1 else use merge.
     if input0 is input1:
         _d = {"in": input_channel}
         ret = nuke.nodes.Shuffle(inputs=[input1], out=output, **_d)
@@ -699,16 +615,20 @@ def copy_layer(input0, input1=None, layer='rgba', output=None):
         ret = nuke.nodes.Merge2(
             tile_color=0x9e3c63ff,
             inputs=[input0, input1], operation='copy',
-            Achannels=_input1_layer(layer) or _input1_layer(output) or 'rgba',
+            Achannels=input_channel,
             Bchannels='none', output=output, label=layer)
     return ret
 
 
-def set_knobs(node, values):
-    """Set @node knobs from @values.  """
-    value_dict = dict()
-    value_dict.update(values)
-    for knob_name, value in value_dict.items():
+def set_knobs(node, **knob_values):
+    """Set multiple knobs at once.
+
+    Args:
+        node (nuke.Node): Node to set knobs.
+        **knob_values (any): Use pair of (knob name, value).
+    """
+
+    for knob_name, value in knob_values.items():
         try:
             node[knob_name].setValue(value)
         except (AttributeError, NameError, TypeError):
@@ -716,24 +636,18 @@ def set_knobs(node, values):
                          node.name(), knob_name, value)
 
 
-def same_class_filter(nodes, node_class=None):
-    """Filter nodes to one class."""
-    classes = list(
-        set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
-    classes.sort()
-    if len(classes) > 1:
-        choice = nuke.choice('选择节点分类', '节点分类', classes, default=0)
-        if choice is not None:
-            nodes = [n for n in nodes if n.Class()
-                     == classes[choice]]
-        else:
-            nodes = [n for n in nodes if n.Class()
-                     == nodes[0].Class()]
-    return nodes
-
-
 def transfer_flags(src, dst):
-    """Transfer @src knob flags to @dst.  """
+    """Transfer flag from knob to another.
+
+    Args:
+        src (nuke.Knob): Get flags from this knob.
+        dst (nuke.Knob): Set flags to this knob.
+    """
+
+    assert isinstance(src, nuke.Knob)
+    assert isinstance(dst, nuke.Knob)
+
+    # Set all possible flag.
     for flag in [pow(2, n) for n in range(31)]:
         if src.getFlag(flag):
             dst.setFlag(flag)
@@ -741,41 +655,20 @@ def transfer_flags(src, dst):
             dst.clearFlag(flag)
 
 
-def _print_flags():
-    import math
+def all_flags():
+    """Get all flags in nuke.
+
+    Returns:
+        dict: Flag name as key, flag value as value.
+    """
+
+    ret = dict()
+
     for attr in sorted(dir(nuke), key=lambda x: getattr(nuke, x)):
         value = getattr(nuke, attr)
         if isinstance(value, int) and value > 0:
             _log = math.log(value, 2)
             if int(_log) == _log:
-                print(attr, value)
+                ret[attr] = value
 
-
-class Nodes(list):
-    """Multipe node set.  """
-
-    def __init__(self, nodes=None):
-        if nodes is None:
-            nodes = []
-        elif isinstance(nodes, nuke.Node):
-            nodes = [nodes]
-
-        list.__init__(self, nodes)
-
-    def disable(self):
-        """Disable all.  """
-
-        for n in self:
-            try:
-                n['disable'].setValue(True)
-            except NameError:
-                continue
-
-    def enable(self):
-        """Enable all.  """
-
-        for n in self:
-            try:
-                n['disable'].setValue(False)
-            except NameError:
-                continue
+    return ret

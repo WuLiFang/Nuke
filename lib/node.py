@@ -72,20 +72,6 @@ def wlf_write_node():
     return n
 
 
-def get_upstream_nodes(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
-    """ Return all nodes in the tree of the node. """
-    ret = set()
-    if isinstance(nodes, nuke.Node):
-        nodes = [nodes]
-
-    nodes = list(nodes)
-    while nodes:
-        deps = nuke.dependencies(nodes, flags)
-        nodes = [n for n in deps if n not in ret and n not in nodes]
-        ret.update(set(deps))
-    return ret
-
-
 def parent_backdrop(node):
     """ Return direct parent backdrop for @node.  """
     backdrops = nuke.allNodes('BackdropNode')

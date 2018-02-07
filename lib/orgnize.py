@@ -1,17 +1,17 @@
 # -*- coding=UTF-8 -*-
 """Orgnize nodes layout.  """
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function
 
 import logging
+import os
 import random
 import threading
 from collections import Iterable, namedtuple
 
 import nuke
 
-from edit import run_in_main_thread
-from node import get_upstream_nodes
-from wlf.decorators import run_async, run_with_clock
+from nuketools import Nodes, get_upstream_nodes
+from wlf.decorators import run_async, run_in_main_thread, run_with_clock
 from wlf.notify import CancelledError, Progress
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
@@ -87,106 +87,90 @@ def is_node_inside(node, backdrop):
     return topleft and bottomright
 
 
-class Nodes(list):
-    """Geometry boder size of @nodes.  """
+def rename_all_nodes():
+    """Rename all nodes by them belonged backdrop node ."""
 
-    def __init__(self, nodes=None):
-        if nodes is None:
-            nodes = []
-        if isinstance(nodes, nuke.Node):
-            nodes = [nodes]
+    for i in nuke.allNodes('BackdropNode'):
+        _nodes = i.getNodes()
+        j = i['label'].value().split('\n')[0].split(' ')[0]
+        for k in _nodes:
+            if k.Class() == 'Group' and not '_' in k.name() and not (k['disable'].value()):
+                name = k.name().rstrip('0123456789')
+                k.setName(name + '_' + j + '_1', updateExpressions=True)
+            elif not ('_' in k.name()
+                      or nuke.exists(k.name() + '.disable')
+                      or (k['disable'].value())):
+                k.setName(k.Class() + '_' + j + '_1', updateExpressions=True)
 
-        list.__init__(self, nodes)
 
-    @property
-    def xpos(self):
-        """The x position.  """
-        return min(n.xpos() for n in self)
+def split_by_backdrop():
+    # TODO: need refactor and test.
+    """Split workfile to multiple file by backdrop."""
 
-    @xpos.setter
-    def xpos(self, value):
-        extend_x = value - self.xpos
-        for n in self:
-            xpos = n.xpos() + extend_x
-            n.setXpos(xpos)
+    text_saveto = '保存至:'
+    text_ask_if_create_new_folder = '目标文件夹不存在, 是否创建?'
 
-    @property
-    def ypos(self):
-        """The y position.  """
-        return min([node.ypos() for node in self])
+    # Panel
+    panel = nuke.Panel('splitByBackdrop')
+    panel.addFilenameSearch(text_saveto, os.getenv('TEMP'))
+    panel.show()
 
-    @ypos.setter
-    def ypos(self, value):
-        extend_y = value - self.ypos
-        for n in self:
-            ypos = n.ypos() + extend_y
-            n.setYpos(ypos)
+    # Save splited .nk file
+    save_path = panel.value(text_saveto).rstrip('\\/')
+    noname_count = 0
+    for i in nuke.allNodes('BackdropNode'):
+        label = repr(i['label'].value()).strip(
+            "'").replace('\\', '_').replace('/', '_')
+        if not label:
+            noname_count += 1
+            label = 'noname_{0:03d}'.format(noname_count)
+        if not os.path.exists(save_path):
+            if not nuke.ask(text_ask_if_create_new_folder):
+                return False
+        dir_ = save_path + '/splitnk/'
+        dir_ = os.path.normcase(dir_)
+        if not os.path.exists(dir_):
+            os.makedirs(dir_)
+        filename = dir_ + label + '.nk'
+        i.selectOnly()
+        i.selectNodes()
+        nuke.nodeCopy(filename)
+    os.system('explorer "' + dir_ + '"')
+    return True
 
-    @property
-    def width(self):
-        """The total width of all nodes.  """
-        return self.right - self.xpos
 
-    @property
-    def max_width(self):
-        """The node width max value in this."""
-        return max(n.screenWidth() for n in self)
+def nodes_add_dots(nodes=None):
+    """Add dots to orgnize node tree."""
 
-    @property
-    def height(self):
-        """The total height of all nodes.  """
-        return self.bottom - self.ypos
+    if not nodes:
+        nodes = nuke.selectedNodes()
 
-    @property
-    def bottom(self):
-        """The bottom border of all nodes.  """
-        return max([node.ypos() + node.screenHeight()
-                    for node in self])
+    def _add_dot(output_node, input_num):
+        input_node = output_node.input(input_num)
+        if not input_node\
+                or input_node.Class() in ['Dot']\
+                or abs(output_node.xpos() - input_node.xpos()) < output_node.screenWidth()\
+                or abs(output_node.ypos() - input_node.ypos()) <= output_node.screenHeight():
+            return None
+        if output_node.Class() in ['Viewer'] or output_node['hide_input'].value():
+            return None
 
-    @bottom.setter
-    def bottom(self, value):
-        extend_y = value - self.bottom
-        for n in self:
-            ypos = n.ypos() + extend_y
-            n.setYpos(ypos)
+        _dot = nuke.nodes.Dot(inputs=[input_node])
+        output_node.setInput(input_num, _dot)
+        _dot.setXYpos(
+            input_node.xpos() + input_node.screenWidth() / 2 - _dot.screenWidth() / 2,
+            output_node.ypos() + output_node.screenHeight() / 2 - _dot.screenHeight() /
+            2 - (_dot.screenHeight() + 5) * input_num
+        )
 
-    @property
-    def right(self):
-        """The right border of all nodes.  """
-        return max(n.xpos() + n.screenWidth() for n in self)
+    def _all_input_add_dot(node):
+        for input_num in range(node.inputs()):
+            _add_dot(node, input_num)
 
-    @right.setter
-    def right(self, value):
-        extend_x = value - self.right
-        for n in self:
-            xpos = n.xpos() + extend_x
-            n.setXpos(xpos)
-
-    def set_position(self, xpos=None, ypos=None):
-        """Move nodes to given @xpos, @ypos.  """
-        if xpos:
-            self.xpos = xpos
-        if ypos:
-            self.ypos = ypos
-
-    def autoplace(self):
-        """Auto place nodes."""
-
-        autoplace(self)
-
-    def endnodes(self):
-        """Return Nodes that has no contained downstream founded in given nodes.  """
-        ret = set(n for n in self if n.Class() not in ('Viewer',))
-        other = list(n for n in self if n not in ret)
-
-        for n in list(ret):
-            dep = n.dependencies(nuke.INPUTS)
-            if set(self).intersection(dep):
-                ret.difference_update(dep)
-        ret = sorted(ret, key=lambda x: len(
-            get_upstream_nodes(x)), reverse=True)
-        ret.extend(other)
-        return ret
+    for n in nodes:
+        if n.Class() in ['Dot']:
+            continue
+        _all_input_add_dot(n)
 
 
 def create_backdrop(nodes, autoplace_nodes=False):
