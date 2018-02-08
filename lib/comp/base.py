@@ -1,9 +1,8 @@
 # -*- coding=UTF-8 -*-
-"""Comp footages and create output, can be run as script.  """
+"""Gather footages and create output.  """
 
-from __future__ import absolute_import, unicode_literals, print_function
+from __future__ import absolute_import, print_function, unicode_literals
 
-import argparse
 import logging
 import os
 import re
@@ -13,124 +12,18 @@ import webbrowser
 import nuke
 import nukescripts  # pylint: disable=import-error
 
-import precomp
-import wlf.config
-import wlf.mp_logging
+from comp.config import CompConfig
+from comp.precomp import Precomp
 from edit import undoable_func
 from node import ReadNode
-from orgnize import autoplace
-from wlf.notify import Progress
-from wlf.path import get_encoded as e, get_unicode as u
 from nuketools import utf8, utf8_dict
+from orgnize import autoplace
+from wlf.path import get_encoded as e
+from wlf.path import get_unicode as u
+from wlf.notify import get_default_progress_handler
 
+CONFIG = CompConfig()
 LOGGER = logging.getLogger('com.wlf.comp')
-COMP_START_MESSAGE = '{:-^50s}'.format('COMP START')
-
-
-def _set_logger():
-    logger = logging.getLogger('com.wlf.comp')
-    logger.propagate = False
-    _handler = logging.StreamHandler()
-    _formatter = logging.Formatter(
-        '%(levelname)-6s[%(asctime)s]:%(name)s:%(threadName)s:%(message)s', '%H:%M:%S')
-    _handler.setFormatter(_formatter)
-    logger.addHandler(_handler)
-
-    try:
-        loglevel = int(os.getenv('WLF_LOGLEVEL', logging.INFO))
-        logger.setLevel(loglevel)
-    except TypeError:
-        logger.warning('Can not recognize env:WLF_LOGLEVEL, expect a int')
-
-
-if __name__ != '__main__':
-    _set_logger()
-
-
-class Config(wlf.config.Config):
-    """Comp config.  """
-    default = {
-        'fps': 25,
-        'footage_pat': r'^.+\.exr[0-9\- ]*$',
-        'tag_pat':
-        r'(?i)(?:[^_]+_)?(?:ep\d+_)?(?:\d+[a-zA-Z]*_)?'
-        r'(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
-        'mp': r"Z:\SNJYW\MP\EP14\MP_EP14_1.nk",
-        'precomp': True,
-        'masks': True,
-        'colorcorrect': True,
-        'filters': True,
-        'zdefocus': True,
-        'depth': True,
-        'other': True,
-    }
-    path = os.path.expanduser('~/.nuke/wlf.comp.json')
-
-
-CONFIG = Config()
-
-if not nuke.GUI:
-    nukescripts.PythonPanel = object
-
-
-class Dialog(nukescripts.PythonPanel):
-    """Dialog UI of comp config.  """
-
-    knob_list = [
-        (nuke.File_Knob, 'mp', b'指定MP'),
-        (nuke.File_Knob, 'mp_lut', 'MP LUT'),
-        (nuke.Tab_Knob, 'parts', b'节点组开关'),
-        (nuke.Boolean_Knob, 'precomp', b'预合成'),
-        (nuke.Boolean_Knob, 'masks', b'预建常用mask'),
-        (nuke.Boolean_Knob, 'colorcorrect', b'预建调色节点'),
-        (nuke.Boolean_Knob, 'filters', b'预建滤镜节点'),
-        (nuke.Boolean_Knob, 'zdefocus', b'预建ZDefocus'),
-        (nuke.Boolean_Knob, 'depth', b'合并depth'),
-        (nuke.Boolean_Knob, 'other', b'合并其他通道'),
-        (nuke.Tab_Knob, 'filter', b'正则过滤'),
-        (nuke.String_Knob, 'footage_pat', b'素材名'),
-        (nuke.String_Knob, 'tag_pat', b'标签'),
-        (nuke.Script_Knob, 'reset', b'重置'),
-    ]
-
-    def __init__(self):
-        nukescripts.PythonPanel.__init__(
-            self, b'自动合成设置', 'com.wlf.comp')
-        self._shot_list = None
-
-        for i in self.knob_list:
-            k = i[0](i[1], i[2])
-            try:
-                k.setValue(CONFIG.get(i[1]))
-            except TypeError:
-                pass
-            self.addKnob(k)
-        for i in ('reset', 'precomp', 'masks', 'colorcorrect', 'filters', 'zdefocus',
-                  'depth', 'other'):
-            self.knobs()[i].setFlag(nuke.STARTLINE)
-
-    def knobChanged(self, knob):
-        """Overrride for buttons."""
-
-        if knob is self.knobs()['OK']:
-            self.update_config()
-        elif knob is self.knobs()['reset']:
-            self.reset()
-
-    def reset(self):
-        """Reset re pattern.  """
-
-        for i in ('footage_pat', 'tag_pat'):
-            knob = self.knobs()[i]
-            knob.setValue(CONFIG.default.get(i))
-            self.knobChanged(knob)
-
-    def update_config(self):
-        """Write all setting to config.  """
-
-        for i in self.knob_list:
-            if i[1] in CONFIG:
-                CONFIG[i[1]] = self.knobs()[i[1]].value()
 
 
 class Comp(object):
@@ -142,7 +35,9 @@ class Comp(object):
     def __init__(self):
         self._errors = []
         self._bg_ch_end_nodes = []
-        self._task = Progress('自动合成', total=20)
+        self._task = get_default_progress_handler()
+        self._task.total = 20
+        self._task.on_started()
 
         for key, value in CONFIG.iteritems():
             if isinstance(value, str):
@@ -155,6 +50,7 @@ class Comp(object):
 
     def task_step(self, message=None):
         """Push task progress bar forward.  """
+
         if message:
             LOGGER.info('{:-^30s}'.format(message))
         self._task.step(message)
@@ -501,7 +397,7 @@ class Comp(object):
                 if len(nodes) == 1 and not CONFIG.get('precomp'):
                     n = nodes[0]
                 else:
-                    n = precomp.redshift(nodes, async_=False)
+                    n = Precomp.redshift(nodes, async_=False)
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} {}}}'.format(
                         self.tag_metadata_key, tag),
@@ -629,12 +525,12 @@ class Comp(object):
                 size='{{[value _ZDefocus.size curve]}}',
                 max_size='{{[value _ZDefocus.max_size curve]}}',
                 label=b'[\nset trg parent._ZDefocus\n'
-                           b'knob this.math [value $trg.math depth]\n'
-                           b'knob this.z_channel [value $trg.z_channel depth.Z]\n'
-                           b'if {[exists _ZDefocus]} '
-                           b'{return \"由_ZDefocus控制\"} '
-                           b'else '
-                           b'{return \"需要_ZDefocus节点\"}\n]',
+                b'knob this.math [value $trg.math depth]\n'
+                b'knob this.z_channel [value $trg.z_channel depth.Z]\n'
+                b'if {[exists _ZDefocus]} '
+                b'{return \"由_ZDefocus控制\"} '
+                b'else '
+                b'{return \"需要_ZDefocus节点\"}\n]',
                 disable='{{![exists _ZDefocus] '
                 '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
                 '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
@@ -815,10 +711,6 @@ class Comp(object):
         return n
 
 
-if not nuke.GUI:
-    nukescripts.PythonPanel = object
-
-
 def render_png(nodes, frame=None, show=False):
     """create png for given @nodes."""
 
@@ -867,31 +759,3 @@ class RenderError(Exception):
 
     def __str__(self):
         return ' # '.join(self.tags)
-
-
-def main():
-    """Run this moudule as a script."""
-
-    parser = argparse.ArgumentParser(description='WuLiFang auto comper.')
-    parser.add_argument('input_dir', help='Folder that contained footages')
-    parser.add_argument('output', help='Script output path.')
-    args = parser.parse_args()
-
-    LOGGER.info(COMP_START_MESSAGE)
-    logging.getLogger('com.wlf').setLevel(logging.WARNING)
-    try:
-        comp = Comp()
-        comp.import_resource(args.input_dir)
-        comp.create_nodes()
-        comp.output(args.output)
-    except FootageError as ex:
-        LOGGER.error('没有素材: %s', ex)
-    except RenderError as ex:
-        LOGGER.error('渲染出错: %s', ex)
-    except Exception:
-        LOGGER.error('Unexpected exception during comp.', exc_info=True)
-        raise
-
-
-if __name__ == '__main__':
-    main()

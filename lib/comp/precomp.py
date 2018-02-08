@@ -19,13 +19,6 @@ from wlf.path import PurePath
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
-@undoable_func('Redshift预合成')
-def redshift(nodes, **kwargs):
-    """Precomp reshift footages.  """
-
-    return Precomp(nodes, renderer='redshift', **kwargs).last_node
-
-
 class __PrecompSwitch(object):
     """Modified switch node for precomp.  """
 
@@ -133,7 +126,7 @@ class Precomp(object):
             return n.metadata('input/filename') or nuke.filename(n) or ''
 
         config_file = os.path.join(
-            __file__, '../wlf/precomp.{}.json'.format(renderer))
+            __file__, '../../wlf/precomp.{}.json'.format(renderer))
         with open(config_file) as f:
             self._config = json.load(f)
         self._combine_dict = dict(self._config.get('combine'))
@@ -237,7 +230,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                 kwargs['postage_stamp'] = self.last_node['postage_stamp'].value()
             except NameError:
                 pass
-            ret = nuke.nodes.Shuffle(**utf8_dict(kwargs))
+            ret = nuke.nodes.Shuffle(**utf8(kwargs))
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
             if self.source.get(pair[0])\
@@ -294,3 +287,10 @@ __PrecompSwitch.init(nuke.thisNode())"""}
     def multiply(self, layer):
         """Plus a layer to last.  """
         pass
+
+    @classmethod
+    @undoable_func('Redshift预合成')
+    def redshift(cls, nodes, **kwargs):
+        """Precomp reshift footages.  """
+
+        return cls(nodes, renderer='redshift', **kwargs).last_node

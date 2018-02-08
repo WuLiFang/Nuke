@@ -12,14 +12,13 @@ import nukescripts  # pylint: disable=import-error
 from autolabel import autolabel
 
 import asset
-import batchcomp
 import cgtwn
 import comp
+import comp.panels
 import edit
 import edit_panels
 import orgnize
 import panels
-import precomp
 import scanner
 import splitexr
 import wlf.cgtwq
@@ -108,10 +107,10 @@ def add_menu():
         ]},
         {_('合成'): [
             _('自动合成', _autocomp, icon='autocomp.png'),
-            _('自动合成设置', lambda: comp.Dialog().showModalDialog(), icon='autocomp.png'),
+            _('自动合成设置',
+              lambda: comp.panels.CompConfigPanel().showModalDialog(), icon='autocomp.png'),
             _('redshift预合成',
-              lambda: precomp.Precomp(
-                  nuke.selectedNodes(), renderer='redshift'),
+              lambda: comp.Precomp.redshift(nuke.selectedNodes()),
               'F1',
               shortcutContext=DAG_CONTEXT,
               icon='autocomp.png')
@@ -128,7 +127,7 @@ def add_menu():
             _('创建项目文件夹', cgtwn.dialog_create_dirs)
         ]},
         {_('工具'): [
-            _('批量自动合成', lambda: batchcomp.Dialog().showModalDialog(),
+            _('批量自动合成', lambda: comp.panels.BatchCompPanel().showModalDialog(),
               icon='autocomp.png'),
             _('创建色板', lambda: wlf.csheet.__main__.Dialog().exec_()),
             _('上传mov', lambda: nukescripts.panels.restorePanel(
