@@ -29,7 +29,7 @@ def main():
 
     print('-' * 20)
     print('吾立方插件 {}\n许可至: {}'.format(__version__,
-                                     validation.EXPIRE_AT).encode(sys.stdout.encoding or 'utf8'))
+                                     validation.EXPIRE_AT).encode(sys.getfilesystemencoding()))
     print('-' * 20)
     del validation.EXPIRE_AT
 
