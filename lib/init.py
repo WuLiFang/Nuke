@@ -12,7 +12,7 @@ def main():
     import re
     import sys
 
-    from lib import __version__
+    from __about__ import __version__
     from wlf.files import map_drivers
     from wlf.mp_logging import set_basic_logger
     import callback
@@ -28,8 +28,12 @@ def main():
         sys.exit(1)
 
     print('-' * 20)
-    print('吾立方插件 {}\n许可至: {}'.format(__version__,
-                                     validation.EXPIRE_AT).encode(sys.getfilesystemencoding()))
+    msg = '吾立方插件 {}\n许可至: {}'.format(__version__,
+                                     validation.EXPIRE_AT)
+    try:
+        print(msg.encode(sys.getfilesystemencoding()))
+    except UnicodeDecodeError:
+        print(msg)
     print('-' * 20)
     del validation.EXPIRE_AT
 

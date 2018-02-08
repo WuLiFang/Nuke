@@ -14,19 +14,19 @@ from subprocess import PIPE, Popen
 import nuke
 import nukescripts  # pylint: disable=import-error
 import psutil
+from jinja2 import Environment, PackageLoader
 
+import __about__
 import wlf.config
+from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
-# from comp import Dialog as CompDialog
-# from comp import __file__ as script_file
-# from comp import COMP_START_MESSAGE
 from nuketools import iutf8, utf8
 from wlf.decorators import run_async, run_in_main_thread
 from wlf.notify import CancelledError, Progress
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
-from comp.__main__ import __path__
+
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
 
@@ -135,31 +135,14 @@ class BatchComp(Process):
     def generate_report(cls, shots_info):
         """Generate batchcomp report.  """
 
-        infos = ''
-        for shot in sorted(shots_info.keys()):
-            infos += '''\
-    <tr>
-        <td class="shot"><img src="images/{0}_v0.jpg" class="preview"></img><br>{0}</td>
-        <td class="info">{1}</td>
-    </tr>
-'''.format(shot, shots_info[shot])
-        with open(os.path.join(__file__, '../comp.head.html')) as f:
-            head = f.read()
-        html_page = head
-        html_page += '''
-<body>
-    <table id="mytable">
-    <tr>
-        <th>镜头</th>
-        <th>信息</th>
-    </tr>
-    {}
-    </table>
-</body>
-'''.format(infos)
+        assert isinstance(shots_info, dict)
+        env = Environment(loader=PackageLoader(__about__.__name__))
+        template = env.get_template('batchcomp.html')
+        data = template.render(shots_info=shots_info.items())
+
         log_path = os.path.join(CONFIG['output_dir'], u'批量合成日志.html')
         with open(e(log_path), 'w') as f:
-            f.write(html_page.encode('UTF-8'))
+            f.write(data.encode('UTF-8'))
         webbrowser.open(log_path)
         webbrowser.open(CONFIG['output_dir'])
 
