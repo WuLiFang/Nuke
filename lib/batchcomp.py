@@ -12,7 +12,7 @@ from multiprocessing.dummy import Pool, Process, cpu_count
 from subprocess import PIPE, Popen
 
 import nuke
-import nukescripts
+import nukescripts  # pylint: disable=import-error
 import psutil
 
 import wlf.config
@@ -322,7 +322,7 @@ class BatchComp(Process):
         _dir = self.input_dir
         _out_dir = self.output_dir
         if not os.path.isdir(_dir):
-            return
+            return []
 
         _ret = os.listdir(_dir)
         if isinstance(_ret[0], str):
