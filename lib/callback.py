@@ -31,15 +31,16 @@ class Callbacks(list):
                     ret = i(*args, **kwargs) or ret
                 except:
                     import inspect
+                    type_, value, traceback = sys.exc_info()
                     raise RuntimeError(
                         i.__name__,
                         args, kwargs,
-                        sys.exc_info()[:2],
+                        type_, value,
                         inspect.getsourcefile(i),
-                        inspect.getsourcelines(i)
+                        traceback.tb_lineno
                     )
-        except RuntimeError:
-            LOGGER.error('Error during execute callbacks', exc_info=True)
+        except RuntimeError as ex:
+            LOGGER.error('Error during execute callbacks:\n%s', ex)
         return ret
 
 
