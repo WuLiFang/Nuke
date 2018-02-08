@@ -13,7 +13,7 @@ import cgtwn
 import edit
 import orgnize
 from node import Last, wlf_write_node
-from nuketools import utf8
+from nuketools import utf8, abort_modified
 from wlf import csheet
 from wlf.path import get_unicode as u
 
@@ -131,16 +131,6 @@ def install():
     if nuke.GUI:
         import nukescripts
         nukescripts.addDropDataCallback(CALLBACKS_ON_DROP_DATA.execute)
-
-
-def abort_modified(func):
-    """(Decorator)Abort function when project has been modified."""
-
-    def _func():
-        if nuke.Root().modified():
-            return False
-        func()
-    return _func
 
 
 def _enable_node():

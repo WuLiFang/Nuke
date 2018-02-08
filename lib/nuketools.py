@@ -258,3 +258,14 @@ def get_upstream_nodes(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
         nodes = [n for n in deps if n not in ret and n not in nodes]
         ret.update(set(deps))
     return ret
+
+
+def abort_modified(func):
+    """(Decorator)Abort function when project has been modified."""
+
+    @wraps(func)
+    def _func():
+        if nuke.Root().modified():
+            return False
+        return func()
+    return _func

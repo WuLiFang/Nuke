@@ -20,7 +20,7 @@ import wlf.config
 
 from edit import CurrentViewer
 from node import Last
-from nuketools import utf8, UTF8Object
+from nuketools import utf8, abort_modified
 from functools import wraps
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
@@ -35,17 +35,6 @@ class Config(wlf.config.Config):
         'csheet_checked': False,
     }
     path = os.path.expanduser('~/.nuke/wlf.comp.json')
-
-
-def abort_modified(func):
-    """(Decorator)Abort function when project has been modified."""
-
-    @wraps(func)
-    def _func():
-        if nuke.Root().modified():
-            return False
-        return func()
-    return _func
 
 
 def abort_when_module_not_enable(func):
