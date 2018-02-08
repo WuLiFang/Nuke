@@ -31,16 +31,20 @@ class Callbacks(list):
                     ret = i(*args, **kwargs) or ret
                 except:
                     import inspect
-                    type_, value, traceback = sys.exc_info()
-                    raise RuntimeError(
+                    try:
+                        lineno = inspect.getsourcelines(i)[1]
+                    except IOError:
+                        lineno = None
+                    LOGGER.error(
+                        'Error during execute callback: %s(%s,%s):'
+                        '\n%s : %s',
                         i.__name__,
                         args, kwargs,
-                        type_, value,
                         inspect.getsourcefile(i),
-                        traceback.tb_lineno
-                    )
-        except RuntimeError as ex:
-            LOGGER.error('Error during execute callbacks:\n%s', ex)
+                        lineno,
+                        exc_info=True)
+        except RuntimeError:
+            pass
         return ret
 
 
@@ -106,7 +110,7 @@ def setup():
             ])
 
     if cgtwn.cgtwq.MODULE_ENABLE:
-        LOGGER.info('启用CGTeamWork集成')
+        LOGGER.info('启用CGTeamWork集成 23')
         CALLBACKS_ON_SCRIPT_LOAD.append(cgtwn.on_load_callback)
         CALLBACKS_ON_SCRIPT_SAVE.append(cgtwn.on_save_callback)
         CALLBACKS_ON_SCRIPT_CLOSE.append(cgtwn.on_close_callback)
