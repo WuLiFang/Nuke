@@ -4,10 +4,10 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
-import sys
-from unittest import TestCase, main
 import random
+import sys
 import tempfile
+from unittest import TestCase, main
 
 import nuke
 

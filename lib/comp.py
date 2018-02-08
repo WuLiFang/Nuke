@@ -1,7 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Comp footages and create output, can be run as script.  """
 
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, unicode_literals, print_function
 
 import argparse
 import logging
@@ -11,7 +11,7 @@ import sys
 import webbrowser
 
 import nuke
-import nukescripts
+import nukescripts  # pylint: disable=import-error
 
 import precomp
 import wlf.config
@@ -77,25 +77,25 @@ class Dialog(nukescripts.PythonPanel):
     """Dialog UI of comp config.  """
 
     knob_list = [
-        (nuke.File_Knob, 'mp', '指定MP'),
+        (nuke.File_Knob, 'mp', b'指定MP'),
         (nuke.File_Knob, 'mp_lut', 'MP LUT'),
-        (nuke.Tab_Knob, 'parts', '节点组开关'),
-        (nuke.Boolean_Knob, 'precomp', '预合成'),
-        (nuke.Boolean_Knob, 'masks', '预建常用mask'),
-        (nuke.Boolean_Knob, 'colorcorrect', '预建调色节点'),
-        (nuke.Boolean_Knob, 'filters', '预建滤镜节点'),
-        (nuke.Boolean_Knob, 'zdefocus', '预建ZDefocus'),
-        (nuke.Boolean_Knob, 'depth', '合并depth'),
-        (nuke.Boolean_Knob, 'other', '合并其他通道'),
-        (nuke.Tab_Knob, 'filter', '正则过滤'),
-        (nuke.String_Knob, 'footage_pat', '素材名'),
-        (nuke.String_Knob, 'tag_pat', '标签'),
-        (nuke.Script_Knob, 'reset', '重置'),
+        (nuke.Tab_Knob, 'parts', b'节点组开关'),
+        (nuke.Boolean_Knob, 'precomp', b'预合成'),
+        (nuke.Boolean_Knob, 'masks', b'预建常用mask'),
+        (nuke.Boolean_Knob, 'colorcorrect', b'预建调色节点'),
+        (nuke.Boolean_Knob, 'filters', b'预建滤镜节点'),
+        (nuke.Boolean_Knob, 'zdefocus', b'预建ZDefocus'),
+        (nuke.Boolean_Knob, 'depth', b'合并depth'),
+        (nuke.Boolean_Knob, 'other', b'合并其他通道'),
+        (nuke.Tab_Knob, 'filter', b'正则过滤'),
+        (nuke.String_Knob, 'footage_pat', b'素材名'),
+        (nuke.String_Knob, 'tag_pat', b'标签'),
+        (nuke.Script_Knob, 'reset', b'重置'),
     ]
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, '自动合成设置', 'com.wlf.comp')
+            self, b'自动合成设置', 'com.wlf.comp')
         self._shot_list = None
 
         for i in self.knob_list:
@@ -140,8 +140,6 @@ class Comp(object):
     _attenuation_radial = None
 
     def __init__(self):
-        LOGGER.info('吾立方自动合成 %s', __version__)
-
         self._errors = []
         self._bg_ch_end_nodes = []
         self._task = Progress('自动合成', total=20)
@@ -257,7 +255,7 @@ class Comp(object):
             operation='soft-light',
             output='rgb',
             mix='0.6',
-            label=utf8('衰减调整'),
+            label=b'衰减调整',
             disable=True)
 
         return n
@@ -350,13 +348,13 @@ class Comp(object):
         n.setName('MP')
         n = nuke.nodes.ModifyMetaData(
             inputs=[n],
-            label=utf8('元数据标签'),
+            label=b'元数据标签',
             metadata='{{set comp/tag {}}}'.format('MP'))
 
         n = nuke.nodes.Reformat(inputs=[n], resize='fill')
         n = nuke.nodes.Transform(inputs=[n])
 
-        n = nuke.nodes.Unpremult(inputs=[n], label=utf8('调色开始'))
+        n = nuke.nodes.Unpremult(inputs=[n], label=b'调色开始')
         n = _add_lut(n)
 
         if CONFIG['colorcorrect']:
@@ -364,7 +362,7 @@ class Comp(object):
             n = nuke.nodes.Grade(
                 inputs=[n, nuke.nodes.Ramp(p0='1700 1000', p1='1700 500')],
                 disable=True)
-        n = nuke.nodes.Premult(inputs=[n], label=utf8('调色结束'))
+        n = nuke.nodes.Premult(inputs=[n], label=b'调色结束')
 
         n = nuke.nodes.ProjectionMP(inputs=[n])
         n = nuke.nodes.SoftClip(
@@ -372,7 +370,7 @@ class Comp(object):
         n = nuke.nodes.Reformat(inputs=[n], resize='none')
         n = nuke.nodes.DiskCache(inputs=[n])
         input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n],
-                                              label=utf8('MP灯光包裹'))
+                                              label=b'MP灯光包裹')
         n = nuke.nodes.Merge2(
             inputs=[input_node, n], operation='under', bbox='B', label='MP')
 
@@ -541,7 +539,7 @@ class Comp(object):
             _constant = nuke.nodes.Constant(
                 channels='depth',
                 color=1,
-                label=utf8('**用渲染出的depth层替换这个**\n或者手动指定数值')
+                label=b'**用渲染出的depth层替换这个**\n或者手动指定数值'
             )
             n = nuke.nodes.Merge2(
                 inputs=[n, _constant],
@@ -562,7 +560,7 @@ class Comp(object):
         #     if get_max(input_node, 'depth.Z') > 1.1:
         #         n['farpoint'].setValue(10000)
 
-        n = nuke.nodes.Unpremult(inputs=[n], label=utf8('调色开始'))
+        n = nuke.nodes.Unpremult(inputs=[n], label=b'调色开始')
 
         # if CONFIG['autograde']:
         #     LOGGER.info('{:-^30s}'.format('开始 自动亮度'))
@@ -607,7 +605,7 @@ class Comp(object):
                     disable=True)
             n = self._attenuation_adjust(n)
 
-        n = nuke.nodes.Premult(inputs=[n], label=utf8('调色结束'))
+        n = nuke.nodes.Premult(inputs=[n], label=b'调色结束')
 
         return n
 
@@ -615,7 +613,7 @@ class Comp(object):
         n = nuke.nodes.Reformat(
             inputs=[input_node],
             resize='none',
-            label=utf8('滤镜开始'))
+            label=b'滤镜开始')
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
@@ -630,13 +628,13 @@ class Comp(object):
                 blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
                 size='{{[value _ZDefocus.size curve]}}',
                 max_size='{{[value _ZDefocus.max_size curve]}}',
-                label=utf8('[\nset trg parent._ZDefocus\n'
-                           'knob this.math [value $trg.math depth]\n'
-                           'knob this.z_channel [value $trg.z_channel depth.Z]\n'
-                           'if {[exists _ZDefocus]} '
-                           '{return \"由_ZDefocus控制\"} '
-                           'else '
-                           '{return \"需要_ZDefocus节点\"}\n]'),
+                label=b'[\nset trg parent._ZDefocus\n'
+                           b'knob this.math [value $trg.math depth]\n'
+                           b'knob this.z_channel [value $trg.z_channel depth.Z]\n'
+                           b'if {[exists _ZDefocus]} '
+                           b'{return \"由_ZDefocus控制\"} '
+                           b'else '
+                           b'{return \"需要_ZDefocus节点\"}\n]',
                 disable='{{![exists _ZDefocus] '
                 '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
                 '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
@@ -652,7 +650,7 @@ class Comp(object):
 
             try:
                 n = nuke.nodes.RSMB(
-                    inputs=[n], disable=True, label=utf8('运动模糊'))
+                    inputs=[n], disable=True, label=b'运动模糊')
             except RuntimeError:
                 LOGGER.info('RSMB插件未安装')
 
@@ -661,12 +659,12 @@ class Comp(object):
             else:
                 kwargs = {'disable': True}
             n = nuke.nodes.Glow2(
-                inputs=[n], size=30, label=utf8('自发光辉光'), **kwargs)
+                inputs=[n], size=30, label=b'自发光辉光', **kwargs)
 
         n = nuke.nodes.Reformat(
             inputs=[n],
             resize='none',
-            label=utf8('滤镜结束'))
+            label=b'滤镜结束')
 
         n = nuke.nodes.DiskCache(inputs=[n])
 
@@ -695,10 +693,10 @@ class Comp(object):
 
         merge_node = nuke.nodes.Merge2(
             inputs=nodes[:2] + [None] + nodes[2:],
-            tile_color=2184871423L,
+            tile_color=2184871423,
             operation='min',
             Achannels='depth', Bchannels='depth', output='depth',
-            label=utf8('整体深度'),
+            label=b'整体深度',
             hide_input=True)
         copy_node = nuke.nodes.Copy(
             inputs=[input_node, merge_node], from0='depth.Z', to0='depth.Z')
@@ -716,7 +714,7 @@ class Comp(object):
             n = nuke.nodes.Grade(inputs=[n],
                                  channels='alpha',
                                  blackpoint='0.99',
-                                 label=utf8('去除抗锯齿部分的内容'))
+                                 label=b'去除抗锯齿部分的内容')
             n = nuke.nodes.Merge2(
                 inputs=[input0, n, n],
                 operation='copy',
@@ -730,7 +728,7 @@ class Comp(object):
             operation='copy',
             Achannels='none', Bchannels='none', output='none',
             also_merge='all',
-            label=utf8('合并rgba以外的层')
+            label=b'合并rgba以外的层'
         )
         return n
 

@@ -4,7 +4,7 @@
 from __future__ import unicode_literals, absolute_import
 
 import nuke
-from nukescripts.panels import PythonPanel, registerPanel
+from nukescripts.panels import PythonPanel, registerPanel  # pylint: disable=import-error
 
 from wlf.path import get_encoded
 
