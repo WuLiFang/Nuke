@@ -13,7 +13,7 @@ from functools import wraps
 import nuke
 
 from wlf import cgtwq
-from wlf.path import remove_version, get_unicode as u
+from wlf.path import PurePath, get_unicode as u
 from wlf.files import copy
 from wlf.notify import CancelledError, Progress, traytip
 import wlf.config
@@ -21,6 +21,7 @@ import wlf.config
 from edit import CurrentViewer
 from node import Last
 from nuketools import utf8, UTF8Object
+from functools import wraps
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -39,20 +40,22 @@ class Config(wlf.config.Config):
 def abort_modified(func):
     """(Decorator)Abort function when project has been modified."""
 
+    @wraps(func)
     def _func():
         if nuke.Root().modified():
             return False
-        func()
+        return func()
     return _func
 
 
 def abort_when_module_not_enable(func):
     """(Decorator)Abort function if MODULE_ENABLE is not true."""
 
+    @wraps(func)
     def _func():
         if not cgtwq.MODULE_ENABLE:
             return
-        func()
+        return func()
     return _func
 
 
@@ -88,7 +91,7 @@ class CurrentShot(cgtwq.Shot):
     @classmethod
     def get_name(cls):
         """The current shot name.  """
-        return remove_version(os.path.splitext(os.path.basename(Last.name))[0])
+        return PurePath(Last.name).shot
 
     @property
     def name(self):
@@ -173,7 +176,6 @@ def check_with_upstream():
             else:
                 LOGGER.debug('Can not get video: %s', pipeline)
                 continue
-        n = UTF8Object(n)
         has_video_node = True
         n['frame_mode'].setValue('start_at')
         n['frame'].setValue(unicode(first))
@@ -235,20 +237,21 @@ def on_load_callback():
 def on_save_callback():
     """Try upload nk file to server."""
 
-    try:
-        check_with_upstream()
-        shot = CurrentShot()
-        shot.check_account()
-        dst = copy(shot.workfile, shot.workfile_dest)
-        if dst:
-            traytip('更新文件', dst)
-    except cgtwq.LoginError:
-        traytip('需要登录', '请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-    except cgtwq.IDError:
-        traytip('更新文件', 'CGTW上未找到对应镜头')
-    except cgtwq.AccountError as ex:
-        traytip('未更新文件',
-                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
+    if nuke.GUI:
+        try:
+            check_with_upstream()
+            shot = CurrentShot()
+            shot.check_account()
+            dst = copy(shot.workfile, shot.workfile_dest)
+            if dst:
+                traytip('更新文件', dst)
+        except cgtwq.LoginError:
+            traytip('需要登录', '请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
+        except cgtwq.IDError:
+            traytip('更新文件', 'CGTW上未找到对应镜头')
+        except cgtwq.AccountError as ex:
+            traytip('未更新文件',
+                    '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
 
 
 @abort_when_module_not_enable
