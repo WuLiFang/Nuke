@@ -23,16 +23,24 @@ LOGGER = logging.getLogger('com.wlf.callback')
 class Callbacks(list):
     """Failsafe callbacks executor.  """
 
-    def execute(self):
+    def execute(self, *args, **kwargs):
+        ret = None
         try:
             for i in self:
                 try:
-                    i()
+                    ret = i(*args, **kwargs) or ret
                 except:
-                    import traceback
-                    raise RuntimeError(traceback.format_exc())
+                    import inspect
+                    raise RuntimeError(
+                        i.__name__,
+                        args, kwargs,
+                        sys.exc_info()[:2],
+                        inspect.getsourcefile(i),
+                        inspect.getsourcelines(i)
+                    )
         except RuntimeError:
             LOGGER.error('Error during execute callbacks', exc_info=True)
+        return ret
 
 
 CALLBACKS_BEFORE_RENDER = Callbacks()
@@ -119,7 +127,7 @@ def install():
     nuke.addUpdateUI(CALLBACKS_UPDATE_UI.execute)
     if nuke.GUI:
         import nukescripts
-        nukescripts.addDropDataCallback(CALLBACKS_ON_CREATE.execute)
+        nukescripts.addDropDataCallback(CALLBACKS_ON_DROP_DATA.execute)
 
 
 def abort_modified(func):
