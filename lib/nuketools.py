@@ -7,6 +7,7 @@ import threading
 from functools import wraps
 
 import nuke
+from collections import Iterable
 
 from wlf.decorators import run_in_main_thread
 from wlf.path import get_encoded
@@ -51,9 +52,8 @@ def utf8(obj):
         return get_encoded(obj, 'utf-8')
     elif isinstance(obj, dict):
         return utf8_dict(obj)
-    if callable(obj):
-        return utf8_func(obj)
-    return UTF8Object(obj)
+
+    return obj
 
 
 def iutf8(iterable):
