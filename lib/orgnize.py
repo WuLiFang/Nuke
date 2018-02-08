@@ -10,9 +10,8 @@ from collections import Iterable, namedtuple
 
 import nuke
 
-from nuketools import Nodes, get_upstream_nodes
+from nuketools import Nodes, get_upstream_nodes, undoable_func, utf8
 from wlf.decorators import run_async, run_in_main_thread, run_with_clock
-from wlf.notify import CancelledError, Progress
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
 assert isinstance(LOGGER, logging.Logger)
@@ -29,7 +28,7 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
     # Executing check
     if not LOCK.acquire(False):
         msg = u'不能同时进行两个自动摆放'
-        nuke.message(msg)
+        nuke.message(utf8(msg))
         LOGGER.warning(msg)
         return
     LOCK.release()
@@ -46,27 +45,15 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
     nodes = get_upstream_nodes(nodes, flags=nuke.INPUTS).union(
         nodes) if recursive else nodes
     nodes = Nodes(nodes)
-    cancelled = False
 
     with LOCK:
-        if undoable:
-            run_in_main_thread(nuke.Undo.begin)('自动摆放')
-
         try:
             manager = Manager(nodes)
             manager.autoplace()
-        except CancelledError:
-            cancelled = True
-            print('用户取消自动摆放')
         except:
             LOGGER.error(
                 'Unexcepted excepitoion during autoplace.', exc_info=True)
             raise
-        finally:
-            if undoable and cancelled:
-                run_in_main_thread(nuke.Undo.cancel)()
-            elif undoable:
-                run_in_main_thread(nuke.Undo.end)()
 
 
 def is_node_inside(node, backdrop):
@@ -293,9 +280,9 @@ class Manager(Analyser):
 
         self.nodes = nodes
         self.prev_nodes = set()
-        self.task = Progress('摆放节点', len(self.nodes))
 
     @run_with_clock(u'自动摆放')
+    @undoable_func(u'自动摆放')
     def autoplace(self):
         """Autoplace nodes.  """
 
@@ -340,7 +327,6 @@ class Worker(Analyser):
 
         self.backdrop = backdrop
         self.nodes = nodes
-        self.task = manager.task
         self.placed_nodes = set()
         self.prev_branch_nodes = set()
 
