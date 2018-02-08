@@ -101,8 +101,8 @@ def add_menu():
                 _("根据背板重命名所有节点",
                   orgnize.rename_all_nodes),
                 _("节点添加Dots变成90度",
-                  lambda: edit.nodes_add_dots(nuke.selectedNodes())),
-                _("所有节点添加Dots变成90度", lambda: edit.nodes_add_dots(nuke.allNodes()))
+                  lambda: orgnize.nodes_add_dots(nuke.selectedNodes())),
+                _("所有节点添加Dots变成90度", lambda: orgnize.nodes_add_dots(nuke.allNodes()))
             ]
             }
         ]},
