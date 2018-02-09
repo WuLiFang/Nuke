@@ -9,9 +9,9 @@ import sys
 import nuke
 
 import asset
-import cgtwn
 import edit
 import orgnize
+import wlf.cgtwq
 from node import Last, wlf_write_node
 from nuketools import utf8, abort_modified
 from wlf import csheet
@@ -107,14 +107,12 @@ def setup():
                 _gizmo_to_group_update_ui
             ])
 
-    if cgtwn.cgtwq.MODULE_ENABLE:
+    if wlf.cgtwq.MODULE_ENABLE:
+        import cgtwn
         LOGGER.info('启用CGTeamWork集成')
         CALLBACKS_ON_SCRIPT_LOAD.append(cgtwn.on_load_callback)
         CALLBACKS_ON_SCRIPT_SAVE.append(cgtwn.on_save_callback)
         CALLBACKS_ON_SCRIPT_CLOSE.append(cgtwn.on_close_callback)
-    else:
-        # Check fps already included in cgtwn
-        CALLBACKS_ON_SCRIPT_CLOSE.append(_check_fps)
 
 
 def install():
@@ -173,17 +171,6 @@ def _check_project():
                   r"[python {os.path.join("
                   r"nuke.value('root.name', ''), '../'"
                   r").replace('\\', '/')}]")
-
-
-def _check_fps():
-    default_fps = cgtwn.CurrentShot.get_info().get('fps', 30)
-    LOGGER.debug('Check fps. default: %s', default_fps)
-    fps = nuke.numvalue('root.fps')
-
-    if fps != default_fps:
-        confirm = nuke.ask(b'当前fps: {}, 设为默认值: {} ?'.format(fps, default_fps))
-        if confirm:
-            nuke.knob('root.fps', str(default_fps))
 
 
 def _lock_connections():
