@@ -482,9 +482,8 @@ def marked_nodes():
     ret = set()
     for n in nuke.allNodes():
         try:
-            label = n['label'].value()
-            name = n.name()
-            _ = [ret.add(n) for i in (label, name) if ENABLE_MARK in u(i)]
+            if ENABLE_MARK in u(n['label'].value()):
+                ret.add(n)
         except NameError:
             continue
     return Nodes(ret)
