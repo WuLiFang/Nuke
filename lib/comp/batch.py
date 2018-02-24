@@ -8,7 +8,7 @@ import re
 import time
 import traceback
 import webbrowser
-from multiprocessing.dummy import Pool, Process, cpu_count
+from multiprocessing.dummy import Pool, Process, cpu_count, Queue, Event
 from subprocess import PIPE, Popen
 
 import nuke
@@ -22,8 +22,8 @@ from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
 from nuketools import iutf8, utf8
-from wlf.decorators import run_async, run_in_main_thread
-from wlf.notify import CancelledError, Progress
+from wlf.decorators import run_async, run_in_main_thread, run_with_memory_require
+from wlf.notify import CancelledError, progress
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
 
@@ -48,47 +48,37 @@ class BatchComp(Process):
         """Start process all shots with a processbar."""
 
         shots = self.get_shot_list()
-        task = Progress('批量合成', total=len(shots))
-        thread_count = cpu_count() if self.flags & MULTI_THREADING else 1
-        pool = Pool(thread_count)
         shots_info = dict.fromkeys(self._all_shots, '本次未处理')
+        is_multi_threading = self.flags & MULTI_THREADING
+        thread_count = cpu_count() if is_multi_threading else 1
+        pool = Pool(thread_count)
+        proc_queue = Queue()
+        cancel_event = Event()
 
-        def _run(cmd, shot):
-            def _check_cancel():
-                if task.is_cancelled():
-                    raise CancelledError
+        def _run(shot):
+            if cancel_event.is_set():
+                return '取消: {}'.format(shot)
 
-            def _cancel_handler(proc):
-                assert isinstance(proc, Popen)
-                try:
-                    while True:
-                        if task.is_cancelled():
-                            proc.terminate()
-                            break
-                        elif proc.poll() is not None:
-                            break
-                except OSError:
-                    pass
+            output = os.path.join(
+                CONFIG['output_dir'], '{}_v0.nk'.format(shot))
+            input_dir = shot if os.path.isdir(
+                shot) else os.path.join(CONFIG['input_dir'], shot)
+            cmd = u'"{nuke}" -t -priority low "{script}" "{input_dir}" "{output}"'.format(
+                nuke=nuke.EXE_PATH,
+                script=__path__,
+                input_dir=input_dir,
+                output=output
+            )
 
-            while self.flags & MULTI_THREADING and psutil.virtual_memory().free < 8 * 1024 ** 3:
-                time.sleep(1)
-                task.set(message='等待8G空闲内存……')
-
-            if not self.flags & MULTI_THREADING:
-                task.step(shot)
             try:
-                _check_cancel()
-
                 LOGGER.info('%s:开始', shot)
                 proc = Popen(cmd,
                              #  shell=True,
                              stdout=PIPE,
                              stderr=PIPE)
-                Process(target=_cancel_handler, args=(proc,)).start()
+                proc_queue.put(proc)
                 stderr = u(proc.communicate()[1])
-                LOGGER.error(stderr)
 
-                _check_cancel()
                 if START_MESSAGE in stderr:
                     stderr = stderr.partition(
                         START_MESSAGE)[2].strip()
@@ -96,38 +86,45 @@ class BatchComp(Process):
                 if stderr:
                     shots_info[shot] = stderr
                 elif proc.returncode:
-                    shots_info[shot] = 'Nuke非正常退出: {}'.format(proc.returncode)
+                    if cancel_event.is_set():
+                        shots_info[shot] = '用户取消'
+                    else:
+                        shots_info[shot] = 'Nuke非正常退出: {}'.format(
+                            proc.returncode)
                 else:
                     shots_info[shot] = '正常完成'
+
                 LOGGER.info('%s:结束', shot)
-            except CancelledError:
-                shots_info[shot] = '用户取消'
             except:
                 shots_info[shot] = traceback.format_exc()
                 LOGGER.error('Unexpected exception during comp', exc_info=True)
-                raise
-            finally:
-                if self.flags & MULTI_THREADING:
-                    task.step()
+                raise RuntimeError
 
-        task.set(0, '正在使用 {} 线程进行……'.format(thread_count))
-        for shot in shots:
-            shot = os.path.basename(shot)
-            output = os.path.join(
-                CONFIG['output_dir'], '{}_v0.nk'.format(shot))
-            input_dir = shot if os.path.isdir(
-                shot) else os.path.join(CONFIG['input_dir'], shot)
-            _cmd = u'"{nuke}" -t -priority low "{script}" "{input_dir}" "{output}"'.format(
-                nuke=nuke.EXE_PATH,
-                script=__path__,
-                input_dir=input_dir,
-                output=output
-            )
-            LOGGER.debug(_cmd)
+            return '完成: {}'.format(shot)
 
-            pool.apply_async(_run, args=(_cmd, shot))
-        pool.close()
-        pool.join()
+        if is_multi_threading:
+            _run = run_with_memory_require(8)(_run)
+
+        def _oncancel():
+            cancel_event.set()
+            while not proc_queue.empty():
+                proc = proc_queue.get()
+                if proc.poll() is None:
+                    try:
+                        proc.terminate()
+                    except OSError:
+                        pass
+
+        try:
+            for _ in progress(pool.imap_unordered(_run, shots),
+                              name='批量合成',
+                              total=len(shots),
+                              start_message=(
+                                  '正在使用 {} 线程进行……'.format(thread_count)),
+                              oncancel=_oncancel):
+                pass
+        except (CancelledError, RuntimeError):
+            pass
 
         self.generate_report(shots_info)
 
