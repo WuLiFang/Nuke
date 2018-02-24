@@ -305,10 +305,10 @@ def dialog_login():
 def dialog_create_dirs():
     """A dialog for create dirs from cgtwq.  """
 
-    folder_input_name = '输出文件夹'
-    database_input_name = '数据库'
-    prefix_input_name = '镜头名前缀限制'
-    panel = nuke.Panel(utf8('为项目创建文件夹'))
+    folder_input_name = b'输出文件夹'
+    database_input_name = b'数据库'
+    prefix_input_name = b'镜头名前缀限制'
+    panel = nuke.Panel(b'为项目创建文件夹')
     panel.addSingleLineInput(database_input_name, 'proj_qqfc_2017')
     panel.addSingleLineInput(prefix_input_name, '')
     panel.addFilenameSearch(folder_input_name, 'E:/temp')
