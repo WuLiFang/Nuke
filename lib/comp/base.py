@@ -68,7 +68,7 @@ class Comp(object):
                 LOGGER.info('\t不匹配文件夹正则, 跳过')
                 continue
 
-            files = nuke.getFileNameList(dir_)
+            files = nuke.getFileNameList(utf8(dir_))
             footages = [u(i) for i in files if
                         not u(i).endswith(('副本', '.lock'))] if files else []
             if footages:
@@ -79,7 +79,7 @@ class Comp(object):
                     LOGGER.info('\t素材: %s', f)
                     if re.match(CONFIG['footage_pat'], f, flags=re.I):
                         n = nuke.createNode(
-                            'Read', 'file {{{}/{}}}'.format(dir_, f))
+                            'Read', utf8('file {{{}/{}}}'.format(dir_, f)))
                         n['on_error'].setValue(utf8('nearest frame'))
                     else:
                         LOGGER.info('\t\t不匹配素材正则, 跳过')
@@ -138,7 +138,8 @@ class Comp(object):
         nuke.frame((first + last) / 2)
         root['lock_range'].setValue(True)
         try:
-            format_ = sorted([(formats.count(i), i) for i in set(formats)])[-1][1]
+            format_ = sorted([(formats.count(i), i)
+                              for i in set(formats)])[-1][1]
             root['format'].setValue(nuke.addFormat('{} {}'.format(*format_)))
         except IndexError:
             root['format'].setValue('HD_1080')
@@ -147,16 +148,16 @@ class Comp(object):
         root['fps'].setValue(self.fps)
 
     def _attenuation_adjust(self, input_node):
-        n=input_node
+        n = input_node
         if self._attenuation_radial is None:
-            radial_node=nuke.nodes.Radial(
-                area = '0 0 {} {}'.format(n.width(), n.height()))
-            self._attenuation_radial=radial_node
+            radial_node = nuke.nodes.Radial(
+                area='0 0 {} {}'.format(n.width(), n.height()))
+            self._attenuation_radial = radial_node
         else:
-            radial_node=nuke.nodes.Dot(
-                inputs = [self._attenuation_radial], hide_input = True)
+            radial_node = nuke.nodes.Dot(
+                inputs=[self._attenuation_radial], hide_input=True)
 
-        n=nuke.nodes.Merge2(
+        n = nuke.nodes.Merge2(
             inputs=[n, radial_node],
             operation='soft-light',
             output='rgb',
