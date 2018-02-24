@@ -15,8 +15,9 @@ import nuke
 from wlf import cgtwq
 from wlf.path import PurePath, get_unicode as u
 from wlf.files import copy
-from wlf.notify import CancelledError, Progress, traytip
+from wlf.notify import CancelledError, progress, traytip
 import wlf.config
+from contextlib import contextmanager
 
 from edit import CurrentViewer
 from node import Last
@@ -316,20 +317,18 @@ def dialog_create_dirs():
         return
 
     try:
-        task = Progress('创建文件夹')
         database = panel.value(database_input_name)
         save_path = panel.value(folder_input_name)
         prefix = panel.value(prefix_input_name)
 
-        task.set(10)
-        try:
-            names = cgtwq.Shots(database, prefix=prefix).shots
-        except cgtwq.IDError as ex:
-            nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
-            return
-        task.set(20)
+        for _ in progress(['连接CGTeamWork...', ], '创建文件夹'):
+            try:
+                names = cgtwq.Shots(database, prefix=prefix).shots
+            except cgtwq.IDError as ex:
+                nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
+                return
 
-        for name in names:
+        for name in progress(names, '创建文件夹'):
             _path = os.path.join(save_path, name)
             if not os.path.exists(_path):
                 os.makedirs(_path)
