@@ -14,7 +14,7 @@ import nuke
 from edit import add_layer, copy_layer, replace_node, undoable_func
 from orgnize import autoplace
 from nuketools import utf8, utf8_dict
-from wlf.path import PurePath
+from wlf.path import PurePath, get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.precomp')
 
@@ -142,8 +142,11 @@ class Precomp(object):
             path = PurePath(_get_filename(n))
             path.layers = self._config['layers']
             layer = path.layer
-            n['label'].setValue(
-                '\n'.join([n['label'].value(), self.l10n(layer)]).strip().encode('utf-8'))
+            _layer = self.l10n(layer)
+            _label = u(n['label'].value())
+            if _layer not in _label:
+                n['label'].setValue('{}\n{}'.format(
+                    _label, _layer).strip().encode('utf-8'))
             if layer:
                 self.source[layer] = n
             else:
@@ -215,7 +218,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         for pat in self._translate_dict:
             if re.match(pat, value):
                 return re.sub(pat, self._translate_dict[pat], value)
-        return value
+        return u(value)
 
     def node(self, layer):
         """Return a node that should be treat as @layer.  """
