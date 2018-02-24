@@ -24,9 +24,10 @@ def main():
     parser.add_argument('input_dir', help='Folder that contained footages')
     parser.add_argument('output', help='Script output path.')
     args = parser.parse_args(_argv[1:])
+
     try:
         LOGGER.info(START_MESSAGE)
-        # logging.getLogger('com.wlf').setLevel(logging.WARNING)
+        logging.getLogger('com.wlf').setLevel(logging.WARNING)
         comp = Comp()
         comp.import_resource(args.input_dir)
         comp.create_nodes()

@@ -106,11 +106,14 @@ class Comp(object):
         root = nuke.Root()
         first = None
         last = None
+        formats = []
 
         for n in nodes:
             ReadNode(n)
-            if n.format().name() == 'HD_1080':
-                root_format = 'HD_1080'
+            format_ = n.format()
+            assert isinstance(format_, nuke.Format)
+            if not n.hasError():
+                formats.append((format_.width(), format_.height()))
             n_first, n_last = n.firstFrame(), n.lastFrame()
 
             # Ignore single frame.
@@ -134,20 +137,26 @@ class Comp(object):
         root['last_frame'].setValue(last)
         nuke.frame((first + last) / 2)
         root['lock_range'].setValue(True)
-        root['format'].setValue(root_format)
+        try:
+            format_ = sorted([(formats.count(i), i) for i in set(formats)])[-1][1]
+            root['format'].setValue(nuke.addFormat('{} {}'.format(*format_)))
+        except IndexError:
+            root['format'].setValue('HD_1080')
+            LOGGER.warning('不能获取工程格式, 使用默认值HD_1080')
+
         root['fps'].setValue(self.fps)
 
     def _attenuation_adjust(self, input_node):
-        n = input_node
+        n=input_node
         if self._attenuation_radial is None:
-            radial_node = nuke.nodes.Radial(
-                area='0 0 {} {}'.format(n.width(), n.height()))
-            self._attenuation_radial = radial_node
+            radial_node=nuke.nodes.Radial(
+                area = '0 0 {} {}'.format(n.width(), n.height()))
+            self._attenuation_radial=radial_node
         else:
-            radial_node = nuke.nodes.Dot(
-                inputs=[self._attenuation_radial], hide_input=True)
+            radial_node=nuke.nodes.Dot(
+                inputs = [self._attenuation_radial], hide_input = True)
 
-        n = nuke.nodes.Merge2(
+        n=nuke.nodes.Merge2(
             inputs=[n, radial_node],
             operation='soft-light',
             output='rgb',
