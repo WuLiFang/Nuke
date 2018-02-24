@@ -294,11 +294,15 @@ def create_out_dirs():
     """Create this read node's output dir if need."""
 
     this = nuke.thisNode()
-    if this.Class() != 'Read':
-        return
-    if this['disable'].value():
-        return
-    target_dir = os.path.dirname(nuke.filename(this))
-    if not os.path.isdir(target_dir):
-        LOGGER.debug('Create dir: %s', target_dir)
-        os.makedirs(target_dir)
+    try:
+        if this['disable'].value():
+            return
+    except NameError:
+        pass
+
+    filename = nuke.filename(this)
+    if filename:
+        target_dir = os.path.dirname(filename)
+        if not os.path.isdir(target_dir):
+            LOGGER.debug('Create dir: %s', target_dir)
+            os.makedirs(target_dir)
