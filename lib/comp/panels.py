@@ -43,7 +43,7 @@ class CompConfigPanel(nukescripts.PythonPanel):
         nukescripts.PythonPanel.__init__(
             self, b'自动合成设置', 'com.wlf.comp')
         self._shot_list = None
-        self.cfg = CompConfig()
+        self.cfg = CompConfig().read()
 
         for i in self.knob_list:
             k = i[0](i[1], i[2])
@@ -100,8 +100,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
         nukescripts.PythonPanel.__init__(
             self, utf8('批量合成'), 'com.wlf.batchcomp')
         self._shot_list = None
-        self.cfg = BatchCompConfig()
-        self.cfg.read()
+        self.cfg = BatchCompConfig().read()
 
         for i in self.knob_list:
             k = i[0](*iutf8(i[1:]))

@@ -6,6 +6,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 import os
 
 from wlf.config import Config
+from wlf.path import TAG_PATTERN
 
 
 START_MESSAGE = '{:-^50s}'.format('COMP START')
@@ -21,9 +22,7 @@ class CompConfig(Config):
     default = {
         'fps': 25,
         'footage_pat': r'^.+\.exr[0-9\- ]*$',
-        'tag_pat':
-        r'(?i)(?:[^_]+_)?(?:ep\d+_)?(?:\d+[a-zA-Z]*_)?'
-        r'(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,2})',
+        'tag_pat': TAG_PATTERN,
         'mp': r"Z:\SNJYW\MP\EP14\MP_EP14_1.nk",
         'precomp': True,
         'masks': True,

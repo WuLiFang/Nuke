@@ -138,7 +138,7 @@ class BatchComp(Process):
         assert isinstance(shots_info, dict)
         env = Environment(loader=PackageLoader(__about__.__name__))
         template = env.get_template('batchcomp.html')
-        data = template.render(shots_info=shots_info.items())
+        data = template.render(shots_info=sorted(shots_info.items()))
 
         log_path = os.path.join(CONFIG['output_dir'], u'批量合成日志.html')
         with open(e(log_path), 'w') as f:
