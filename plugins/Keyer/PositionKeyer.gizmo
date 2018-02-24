@@ -24,9 +24,7 @@ class __PositionKeyer(object):
             nuke.knob('this.in', layer)
 
         # gl_color
-        import colorsys
-        import random
-        color = colorsys.hsv_to_rgb(random.random(), 0.8, 1)
+        color = __import__('colorsys').hsv_to_rgb(__import__('random').random(), 0.8, 1)
         color = tuple(int(i * 255) for i in color)
         nuke.thisNode()['gl_color'].setValue(
             color[0] << 24 | color[1] << 16 | color[2] << 8)
@@ -95,7 +93,7 @@ except NameError:
 }
  tile_color 0xff00ff
  note_font 微软雅黑
- addUserKnob {20 positionkeyer l "PositionKeyer v1.4.0"}
+ addUserKnob {20 positionkeyer l "PositionKeyer v1.4.1"}
  addUserKnob {41 in l "sample layer" t "用来取样的图层,一般是P层。但也可以用其他图层(例如depth)" T Shuffle2.in}
  addUserKnob {20 sampler l 取样器 n 1}
  addUserKnob {12 p0}
