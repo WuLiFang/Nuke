@@ -9,7 +9,7 @@ import logging.config
 import os
 import sys
 
-from comp import Comp, FootageError, RenderError
+from comp import Comp, FootageError, RenderError, _argv
 from comp.config import START_MESSAGE
 
 __path__ = os.path.abspath(__file__).rstrip('c')
@@ -23,11 +23,10 @@ def main():
     parser = argparse.ArgumentParser(description='WuLiFang auto comper.')
     parser.add_argument('input_dir', help='Folder that contained footages')
     parser.add_argument('output', help='Script output path.')
-    args = parser.parse_args()
-
-    LOGGER.info(START_MESSAGE)
-    logging.getLogger('com.wlf').setLevel(logging.WARNING)
+    args = parser.parse_args(_argv[1:])
     try:
+        LOGGER.info(START_MESSAGE)
+        # logging.getLogger('com.wlf').setLevel(logging.WARNING)
         comp = Comp()
         comp.import_resource(args.input_dir)
         comp.create_nodes()

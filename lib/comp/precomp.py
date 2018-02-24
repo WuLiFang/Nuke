@@ -143,7 +143,7 @@ class Precomp(object):
             path.layers = self._config['layers']
             layer = path.layer
             n['label'].setValue(
-                '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
+                '\n'.join([n['label'].value(), self.l10n(layer)]).strip().encode('utf-8'))
             if layer:
                 self.source[layer] = n
             else:

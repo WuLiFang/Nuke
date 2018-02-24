@@ -101,6 +101,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
             self, utf8('批量合成'), 'com.wlf.batchcomp')
         self._shot_list = None
         self.cfg = BatchCompConfig()
+        self.cfg.read()
 
         for i in self.knob_list:
             k = i[0](*iutf8(i[1:]))

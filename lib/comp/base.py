@@ -68,8 +68,9 @@ class Comp(object):
                 LOGGER.info('\t不匹配文件夹正则, 跳过')
                 continue
 
-            footages = [u(i) for i in nuke.getFileNameList(dir_) if
-                        not u(i).endswith(('副本', '.lock'))]
+            files = nuke.getFileNameList(dir_)
+            footages = [u(i) for i in files if
+                        not u(i).endswith(('副本', '.lock'))] if files else []
             if footages:
                 for f in footages:
                     if os.path.isdir(e(os.path.join(dir_, f))):
@@ -178,7 +179,10 @@ class Comp(object):
 
         if CONFIG['zdefocus']:
             self.task_step('添加虚焦控制')
-            self._add_zdefocus_control(n)
+            try:
+                self._add_zdefocus_control(n)
+            except RuntimeError as ex:
+                LOGGER.error(u(ex))
 
         n = nuke.nodes.Unpremult(inputs=[n], label=utf8('整体调色开始'))
 
@@ -515,29 +519,32 @@ class Comp(object):
             inputs=[n], conversion='logarithmic compress')
 
         if CONFIG['zdefocus']:
-            n = nuke.nodes.ZDefocus2(
-                inputs=[n],
-                math='depth',
-                center='{{[value _ZDefocus.center curve]}}',
-                focal_point='1.#INF 1.#INF',
-                dof='{{[value _ZDefocus.dof curve]}}',
-                blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
-                size='{{[value _ZDefocus.size curve]}}',
-                max_size='{{[value _ZDefocus.max_size curve]}}',
-                label=b'[\nset trg parent._ZDefocus\n'
-                b'knob this.math [value $trg.math depth]\n'
-                b'knob this.z_channel [value $trg.z_channel depth.Z]\n'
-                b'if {[exists _ZDefocus]} '
-                b'{return \"由_ZDefocus控制\"} '
-                b'else '
-                b'{return \"需要_ZDefocus节点\"}\n]',
-                disable='{{![exists _ZDefocus] '
-                '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
-                '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
-            )
-            if not (n.metadata(self.tag_metadata_key) or '').startswith('BG'):
-                n['autoLayerSpacing'].setValue(False)
-                n['layers'].setValue(5)
+            try:
+                n = nuke.nodes.ZDefocus2(
+                    inputs=[n],
+                    math='depth',
+                    center='{{[value _ZDefocus.center curve]}}',
+                    focal_point='1.#INF 1.#INF',
+                    dof='{{[value _ZDefocus.dof curve]}}',
+                    blur_dof='{{[value _ZDefocus.blur_dof curve]}}',
+                    size='{{[value _ZDefocus.size curve]}}',
+                    max_size='{{[value _ZDefocus.max_size curve]}}',
+                    label=b'[\nset trg parent._ZDefocus\n'
+                    b'knob this.math [value $trg.math depth]\n'
+                    b'knob this.z_channel [value $trg.z_channel depth.Z]\n'
+                    b'if {[exists _ZDefocus]} '
+                    b'{return \"由_ZDefocus控制\"} '
+                    b'else '
+                    b'{return \"需要_ZDefocus节点\"}\n]',
+                    disable='{{![exists _ZDefocus] '
+                    '|| [if {[value _ZDefocus.focal_point \"200 200\"] == \"200 200\" '
+                    '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
+                )
+                if not (n.metadata(self.tag_metadata_key) or '').startswith('BG'):
+                    n['autoLayerSpacing'].setValue(False)
+                    n['layers'].setValue(5)
+            except RuntimeError as ex:
+                LOGGER.error(u(ex))
 
         if CONFIG['filters']:
             if 'motion' in nuke.layers(n):
