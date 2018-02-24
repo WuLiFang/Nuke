@@ -166,9 +166,9 @@ def check_with_upstream():
                 LOGGER.debug('Can not get video: %s', pipeline)
                 continue
         has_video_node = True
-        n['frame_mode'].setValue('start_at')
-        n['frame'].setValue(unicode(first))
-        CurrentViewer().link(n.obj, input_num, replace=False)
+        n['frame_mode'].setValue(b'start_at')
+        n['frame'].setValue(unicode(first).encode('utf-8'))
+        CurrentViewer().link(n, input_num, replace=False)
         input_num += 1
         upstream = {
             'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,
