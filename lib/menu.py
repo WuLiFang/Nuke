@@ -7,6 +7,11 @@ import _ui
 import callback
 import pref
 from wlf import cgtwq
+import os
+
+import pyblish.plugin
+import pyblish.api
+import pyblish_cgtwn
 
 
 def main():
@@ -17,6 +22,9 @@ def main():
     _ui.add_autolabel()
     pref.add_preferences()
     pref.set_knob_default()
+
+    for i in pyblish.plugin.plugins_from_module(pyblish_cgtwn):
+        pyblish.api.register_plugin(i)
 
     if cgtwq.MODULE_ENABLE:
         cgtwq.CGTeamWork.update_status()

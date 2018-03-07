@@ -16,26 +16,47 @@ from wlf import cgtwq
 from wlf.path import PurePath, get_unicode as u
 from wlf.files import copy
 from wlf.notify import CancelledError, progress, traytip
-import wlf.config
 from contextlib import contextmanager
 
 from edit import CurrentViewer
 from node import Last
 from nuketools import utf8, abort_modified
 from functools import wraps
+import pyblish.api
+import pyblish_lite
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
+COMP_PIPELINE_NAME = '合成'
 
-class Config(wlf.config.Config):
-    """Comp config.  """
-    default = {
-        'csheet_database': 'proj_big',
-        'csheet_prefix': 'SNJYW_EP14_',
-        'csheet_outdir': 'E:/',
-        'csheet_checked': False,
-    }
-    path = os.path.expanduser('~/.nuke/wlf.comp.json')
+
+class Database(cgtwq.Database):
+    @classmethod
+    def from_shot(cls, filename, default=None):
+        """Get database from filename.
+
+        Args:
+            filename (unicode): Filename to check.
+            default (unicode, optional): Defaults to None. 
+                Default database name.
+
+        Raises:
+            ValueError: When no matched database,
+                and `default` is not set.
+
+        Returns:
+            Database: Filename related database.
+        """
+
+        data = cgtwq.PROJECT.all().get_fields('code', 'database')
+        for i in data:
+            code, database = i
+            if unicode(filename).startswith(code):
+                return cls(database)
+        if default:
+            return cls(default)
+        raise ValueError(
+            'Can not determinate database from filename.', filename)
 
 
 def abort_when_module_not_enable(func):
@@ -130,6 +151,17 @@ class CurrentShot(cgtwq.Shot):
         note = nuke.getInput(utf8('note内容'), utf8('来自nuke的note'))
         if note:
             self.add_note(note)
+
+
+class Task(cgtwq.database.Selection):
+    def __init__(self, shot):
+        database = Database.from_shot(shot)
+        LOGGER.debug('Database: %s', database.name)
+        module = database['shot_task']
+        id_list = module.filter(cgtwq.Filter('shot', shot))
+
+        super(Task, self).__init__(id_list, module)
+        self.shot = shot
 
 
 def check_with_upstream():

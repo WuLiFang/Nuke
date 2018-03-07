@@ -16,8 +16,26 @@ from node import Last, wlf_write_node
 from nuketools import utf8, abort_modified
 from wlf import csheet
 from wlf.path import get_unicode as u
-
 LOGGER = logging.getLogger('com.wlf.callback')
+
+# pyblish_lite.settings.InitialTab = ''
+
+
+def _pyblish_action(name):
+
+    @abort_modified
+    def _func():
+        import pyblish_lite
+        window = pyblish_lite.show()
+
+        def publish():
+            window.controller.was_finished.disconnect(publish)
+            getattr(window, name)()
+        window.controller.was_finished.connect(publish)
+        window.show()
+
+    _func.__name__ = name.encode('utf-8', 'replace')
+    return _func
 
 
 class Callbacks(list):
@@ -83,7 +101,8 @@ def setup():
                 asset.Localization.update,
                 asset.warn_missing_frames,
                 _add_root_info,
-                _eval_proj_dir
+                _eval_proj_dir,
+                _pyblish_action('validate')
             ])
         CALLBACKS_ON_SCRIPT_SAVE.extend(
             [
@@ -94,25 +113,27 @@ def setup():
                 _jump_frame,
                 lambda: asset.warn_mtime(show_dialog=True),
                 asset.warn_missing_frames,
-                _check_project
+                _check_project,
+                _pyblish_action('validate')
             ])
         CALLBACKS_ON_SCRIPT_CLOSE.extend(
             [
                 _send_to_render_dir,
                 _render_jpg,
-                _create_csheet
+                _create_csheet,
+                _pyblish_action('publish')
             ])
         CALLBACKS_UPDATE_UI.extend(
             [
                 _gizmo_to_group_update_ui
             ])
 
-    if wlf.cgtwq.MODULE_ENABLE:
-        import cgtwn
-        LOGGER.info('启用CGTeamWork集成')
-        CALLBACKS_ON_SCRIPT_LOAD.append(cgtwn.on_load_callback)
-        CALLBACKS_ON_SCRIPT_SAVE.append(cgtwn.on_save_callback)
-        CALLBACKS_ON_SCRIPT_CLOSE.append(cgtwn.on_close_callback)
+    # if wlf.cgtwq.MODULE_ENABLE:
+    #     import cgtwn
+    #     LOGGER.info('启用CGTeamWork集成')
+    #     CALLBACKS_ON_SCRIPT_LOAD.append(cgtwn.on_load_callback)
+    #     CALLBACKS_ON_SCRIPT_SAVE.append(cgtwn.on_save_callback)
+    #     CALLBACKS_ON_SCRIPT_CLOSE.append(cgtwn.on_close_callback)
 
 
 def install():
