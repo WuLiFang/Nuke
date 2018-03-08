@@ -18,7 +18,6 @@ from wlf.path import PurePath
 
 LOGGER = logging.getLogger('wlf.pyblish_cgtwn')
 
-
 class CollectFile(pyblish.api.ContextPlugin):
     """获取当前Nuke使用的文件.   """
 
@@ -26,11 +25,12 @@ class CollectFile(pyblish.api.ContextPlugin):
     label = '当前文件'
 
     def process(self, context):
+        context.data['comment'] = ''
+
         assert isinstance(context, pyblish.api.Context)
         filename = nuke.value('root.name')
         if not filename:
-            LOGGER.error('工程尚未保存')
-            raise ValueError('Comp not saved yet.')
+            raise ValueError('工程尚未保存.')
         instance = context.create_instance(filename)
         instance.data['family'] = 'Nuke文件'
         instance.append(filename)
@@ -127,7 +127,7 @@ class VadiateFrameRange(pyblish.api.InstancePlugin):
                 '<table><th columnspan=3>{}<th>{}</table><hr>{}'.format(
                     shot.name, ''.join(msg),
                     '{} 默认fps:{}'.format(info.get('name'), default_fps))
-            nuke.message(utf8(style + msg))
+            # nuke.message(utf8(style + msg))
             raise ValueError(msg)
         elif not has_video_node:
             if current['fps'] != default_fps:

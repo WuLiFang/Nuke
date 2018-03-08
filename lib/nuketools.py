@@ -264,8 +264,16 @@ def abort_modified(func):
     """(Decorator)Abort function when project has been modified."""
 
     @wraps(func)
-    def _func():
+    def _func(*args, **kwargs):
         if nuke.Root().modified():
             return False
-        return func()
+        return func(*args, **kwargs)
     return _func
+
+
+def mainwindow():
+    from Qt import QtWidgets
+    for i in QtWidgets.QApplication.topLevelWidgets():
+        if isinstance(i, QtWidgets.QMainWindow):
+            return i
+    raise RuntimeError('Can not find main window')

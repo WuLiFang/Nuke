@@ -13,29 +13,15 @@ import edit
 import orgnize
 import wlf.cgtwq
 from node import Last, wlf_write_node
-from nuketools import utf8, abort_modified
+from nuketools import abort_modified, utf8
 from wlf import csheet
 from wlf.path import get_unicode as u
+
 LOGGER = logging.getLogger('com.wlf.callback')
 
-# pyblish_lite.settings.InitialTab = ''
 
-
-def _pyblish_action(name):
-
-    @abort_modified
-    def _func():
-        import pyblish_lite
-        window = pyblish_lite.show()
-
-        def publish():
-            window.controller.was_finished.disconnect(publish)
-            getattr(window, name)()
-        window.controller.was_finished.connect(publish)
-        window.show()
-
-    _func.__name__ = name.encode('utf-8', 'replace')
-    return _func
+class AbortedError(Exception):
+    pass
 
 
 class Callbacks(list):
@@ -47,6 +33,8 @@ class Callbacks(list):
             for i in self:
                 try:
                     ret = i(*args, **kwargs) or ret
+                except AbortedError:
+                    raise
                 except:
                     import inspect
 
@@ -81,6 +69,7 @@ def setup():
         create_out_dirs
     ])
     if nuke.GUI:
+        from pyblish_lite_nuke import Pyblish
         CALLBACKS_ON_CREATE.extend(
             [
                 lambda: edit.set_random_glcolor(nuke.thisNode())
@@ -102,7 +91,7 @@ def setup():
                 asset.warn_missing_frames,
                 _add_root_info,
                 _eval_proj_dir,
-                _pyblish_action('validate')
+                Pyblish.validate
             ])
         CALLBACKS_ON_SCRIPT_SAVE.extend(
             [
@@ -114,14 +103,14 @@ def setup():
                 lambda: asset.warn_mtime(show_dialog=True),
                 asset.warn_missing_frames,
                 _check_project,
-                _pyblish_action('validate')
+                Pyblish.validate
             ])
         CALLBACKS_ON_SCRIPT_CLOSE.extend(
             [
                 _send_to_render_dir,
                 _render_jpg,
                 _create_csheet,
-                _pyblish_action('publish')
+                Pyblish.publish
             ])
         CALLBACKS_UPDATE_UI.extend(
             [

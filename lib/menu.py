@@ -6,12 +6,10 @@ from __future__ import absolute_import
 import _ui
 import callback
 import pref
-from wlf import cgtwq
+from wlf import cgtwq, uitools
 import os
 
-import pyblish.plugin
-import pyblish.api
-import pyblish_cgtwn
+import pyblish_lite_nuke
 
 
 def main():
@@ -23,8 +21,7 @@ def main():
     pref.add_preferences()
     pref.set_knob_default()
 
-    for i in pyblish.plugin.plugins_from_module(pyblish_cgtwn):
-        pyblish.api.register_plugin(i)
+    pyblish_lite_nuke.setup()
 
     if cgtwq.MODULE_ENABLE:
         cgtwq.CGTeamWork.update_status()
