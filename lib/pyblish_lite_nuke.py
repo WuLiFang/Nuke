@@ -19,10 +19,10 @@ import pyblish_cgtwn
 from nuketools import abort_modified, mainwindow
 
 
-def _pyblish_action(name, block=False):
-    def _func(cls):
-        cls.dock()
-        window_ = cls.window
+def _pyblish_action(name, block=False, is_reset=True):
+    def _func():
+        Pyblish.dock()
+        window_ = Pyblish.window
         assert isinstance(window_, Window)
         controller = window_.controller
         assert isinstance(controller, control.Controller)
@@ -35,19 +35,36 @@ def _pyblish_action(name, block=False):
         def _action():
             assert isinstance(controller, control.Controller)
             controller.was_reset.disconnect(_action)
+            _start()
+
+        def _start():
             if block:
                 signal.connect(finish_event.set)
             getattr(window_, name)()
 
-        controller.was_reset.connect(_action)
-        window_.reset()
+        # Wait finish previous running.
+        while window_.is_running:
+            QApplication.processEvents()
+
+        if is_reset:
+            # Run after reset finish.
+            controller.was_reset.connect(_action)
+            window_.reset()
+        else:
+            # Run directly.
+            _start()
+
         if block:
+            # Wait finish.
             while not finish_event.is_set():
                 QApplication.processEvents()
             signal.disconnect(finish_event.set)
+            error = controller.current_error
+            if error:
+                raise callback.AbortedError(error)
 
     _func.__name__ = name.encode('utf-8', 'replace')
-    return classmethod(_func)
+    return _func
 
 
 class Pyblish(object):
@@ -87,9 +104,6 @@ class Pyblish(object):
                 cls.window = None
                 cls.dock()
 
-    publish = _pyblish_action('publish', True)
-    validate = _pyblish_action('validate')
-
 
 class Window(window.Window):
     """Modified pyblish_lite window for nuke.
@@ -100,14 +114,16 @@ class Window(window.Window):
     Raises:
         ValueError: When already exists another pyblish window.
     """
+    is_running = False
+    controller = control.Controller()
 
     def __init__(self, parent=None):
         if Pyblish.window:
             raise ValueError('Single instance.')
         Pyblish.window = self
-
+        controller = control.Controller()
         super(Window, self).__init__(
-            control.Controller(), parent)
+            controller, parent)
 
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
@@ -165,15 +181,36 @@ class Window(window.Window):
                 return parent
         raise ValueError('No such parent')
 
+    def validate(self):
+        if self.is_running:
+            return
+        self.is_running = True
+        super(Window, self).validate()
+
+    def publish(self):
+        if self.is_running:
+            return
+        self.is_running = True
+
+        super(Window, self).publish()
+
+    def on_finished(self):
+        self.is_running = False
+
+        super(Window, self).on_finished()
+
 
 def setup():
     """Set up pyblish.   """
 
     panels.register(Window, 'Pyblish', 'com.wlf.pyblish')
 
-    callback.CALLBACKS_ON_SCRIPT_LOAD.append(Pyblish.validate)
-    callback.CALLBACKS_ON_SCRIPT_SAVE.append(Pyblish.validate)
-    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(abort_modified(Pyblish.publish))
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(
+        _pyblish_action('validate'))
+    callback.CALLBACKS_ON_SCRIPT_SAVE.append(
+        _pyblish_action('validate', False, True))
+    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(
+        abort_modified(_pyblish_action('publish', True, False)))
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
