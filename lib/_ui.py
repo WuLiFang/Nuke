@@ -19,7 +19,6 @@ import edit
 import edit_panels
 import orgnize
 import panels
-import pyblish_lite_nuke
 import scanner
 import splitexr
 import wlf.cgtwq
@@ -216,7 +215,6 @@ def add_panel():
 
     LOGGER.info('添加面板')
     panels.register(wlf.uploader.Dialog, '上传mov', 'com.wlf.uploader')
-    panels.register(pyblish_lite_nuke.Window, 'Pyblish', 'com.wlf.pyblish')
 
 
 def add_autolabel():

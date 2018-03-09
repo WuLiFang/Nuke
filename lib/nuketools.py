@@ -272,6 +272,15 @@ def abort_modified(func):
 
 
 def mainwindow():
+    """Get nuke mainwindow.
+
+    Raises:
+        RuntimeError: When can not get mainwindow.
+
+    Returns:
+        QtWidgets.QMainWindow: Nuke main window.
+    """
+
     from Qt import QtWidgets
     for i in QtWidgets.QApplication.topLevelWidgets():
         if isinstance(i, QtWidgets.QMainWindow):

@@ -8,7 +8,7 @@ import time
 
 import nuke
 
-from wlf.path import PurePath, get_unicode
+from wlf.path import PurePath
 
 LOGGER = logging.getLogger('com.wlf.node')
 
@@ -59,7 +59,8 @@ def wlf_write_node():
     if not n:
         nodes = nuke.allNodes('wlf_Write')
         n = nodes and nodes[0]
-
+    if not n:
+        raise ValueError('Not found wlf_Write Node.')
     return n
 
 

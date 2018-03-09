@@ -9,20 +9,22 @@ import logging
 import nuke
 import pyblish.api
 
-from cgtwn import CurrentShot, Task
-from edit import CurrentViewer
-from node import Last
-from nuketools import utf8
+from cgtwn import Task
+from node import wlf_write_node
 from wlf import cgtwq
 from wlf.path import PurePath
+from wlf.files import copy
 
 LOGGER = logging.getLogger('wlf.pyblish_cgtwn')
+
+# pylint: disable=no-init
+
 
 class CollectFile(pyblish.api.ContextPlugin):
     """获取当前Nuke使用的文件.   """
 
     order = pyblish.api.CollectorOrder
-    label = '当前文件'
+    label = '获取当前文件'
 
     def process(self, context):
         context.data['comment'] = ''
@@ -31,18 +33,52 @@ class CollectFile(pyblish.api.ContextPlugin):
         filename = nuke.value('root.name')
         if not filename:
             raise ValueError('工程尚未保存.')
-        instance = context.create_instance(filename)
-        instance.data['family'] = 'Nuke文件'
-        instance.append(filename)
-        context.data['task'] = Task(PurePath(filename).shot)
 
+        context.data['task'] = Task(PurePath(filename).shot)
+        context.create_instance(filename,
+                                family='Nuke文件')
+
+
+class CollectFrameRange(pyblish.api.ContextPlugin):
+    """获取当前工程帧范围设置.   """
+    label = '获取帧范围'
+
+    def process(self, context):
         first = nuke.numvalue('root.first_frame')
         last = nuke.numvalue('root.last_frame')
-        instance = context.create_instance(
-            '帧范围 {:.0f}-{:.0f}'.format(first, last))
-        instance.data['family'] = '帧范围'
-        instance.data['first'] = first
-        instance.data['last'] = last
+        context.create_instance(
+            '帧范围: {:.0f}-{:.0f}'.format(first, last),
+            first=first,
+            last=last,
+            family='帧范围')
+
+
+class CollectFPS(pyblish.api.ContextPlugin):
+    """获取当前工程帧速率设置.   """
+    label = '获取帧速率'
+
+    def process(self, context):
+        fps = nuke.numvalue('root.fps')
+        context.create_instance(
+            name='帧速率: {:.0f}'.format(fps),
+            fps=fps,
+            family='帧速率')
+
+
+class CollectUser(pyblish.api.ContextPlugin):
+    """获取当前登录的用户帐号.   """
+
+    order = pyblish.api.CollectorOrder
+    label = '获取当前用户'
+
+    def process(self, context):
+        name = cgtwq.database.account_name()
+        assert isinstance(context, pyblish.api.Context)
+        context.create_instance(
+            name='制作者: {}'.format(name),
+            user=name,
+            id=cgtwq.server.account_id(),
+            family='制作者')
 
 
 class VadiateArtist(pyblish.api.InstancePlugin):
@@ -50,22 +86,23 @@ class VadiateArtist(pyblish.api.InstancePlugin):
 
     order = pyblish.api.ValidatorOrder
     label = '制作者检查'
-    families = ['Nuke文件']
+    families = ['制作者']
 
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
         task = instance.context.data['task']
         assert isinstance(task, Task)
-        current_account_id = cgtwq.server.account_id()
-        task_account_id = task['account_id']
+        current_id = instance.data['id']
+        task_account_id = task['account_id'][0]
         LOGGER.debug(task_account_id)
 
         for i in task_account_id:
-            if current_account_id in i.split(','):
+            if current_id in i.split(','):
                 return
-
+        LOGGER.error('用户不匹配: %s -> %s',
+                     instance.data['user'], task['artist'][0])
         raise cgtwq.AccountError(
-            owner=task_account_id, current=current_account_id)
+            owner=task_account_id, current=current_id)
 
 
 class VadiateFrameRange(pyblish.api.InstancePlugin):
@@ -77,86 +114,92 @@ class VadiateFrameRange(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
-        nodes = {
-            '动画视频': 'animation'
-        }
-        root = nuke.Root()
-        msg = []
-        first = instance.data['first']
-        last = instance.data['last']
-        current = {
-            'frame_count': last - first + 1,
-            'fps': root['fps'].value()
-        }
-        shot = CurrentShot()
-        info = shot.get_info()
-        default_fps = info.get('fps', 30)
-        videos = shot.upstream_videos()
-        row_format = '<tr><td>{0}</td><td>{1[frame_count]:.0f}帧</td><td>{1[fps]:.0f}fps</td></tr>'
+        task = instance.context.data['task']
+        assert isinstance(task, Task)
 
-        LOGGER.debug('Upstream videos: %s', videos)
+        n = task.import_video('animation_videos')
+        upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
+        current_framecount = instance.data['last'] - instance.data['first'] + 1
+        if upstream_framecount != current_framecount:
+            LOGGER.error('工程帧数和上游不一致: %s -> %s',
+                         current_framecount, upstream_framecount)
+            raise ValueError(
+                'Frame range not match.',
+                upstream_framecount,
+                current_framecount)
 
-        has_video_node = False
-        input_num = 4
-        for name, pipeline in nodes.items():
-            n = nuke.toNode(utf8(name))
-            if n is None:
-                video = videos.get(pipeline)
-                if video:
-                    n = nuke.nodes.Read(name=utf8(name))
-                    n[utf8('file')].fromUserText(video)
-                else:
-                    LOGGER.debug('Can not get video: %s', pipeline)
-                    continue
-            has_video_node = True
-            n['frame_mode'].setValue(b'start_at')
-            n['frame'].setValue(unicode(first).encode('utf-8'))
-            CurrentViewer().link(n, input_num, replace=False)
-            input_num += 1
-            upstream = {
-                'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,
-                'fps': n.metadata('input/frame_rate') or default_fps
-            }
-            if upstream != current:
-                msg.append(row_format.format(name, upstream))
 
-        if msg:
-            msg.insert(0, row_format.format('当前', current))
-            style = '<style>td{padding:8px;}</style>'
-            msg = '<font color="red">工程和上游不一致</font><br>'\
-                '<table><th columnspan=3>{}<th>{}</table><hr>{}'.format(
-                    shot.name, ''.join(msg),
-                    '{} 默认fps:{}'.format(info.get('name'), default_fps))
-            # nuke.message(utf8(style + msg))
-            raise ValueError(msg)
-        elif not has_video_node:
-            if current['fps'] != default_fps:
-                confirm = nuke.ask(utf8(
-                    '当前fps: {}, 设为默认值: {} ?'.format(current['fps'], default_fps)))
-                if confirm:
-                    nuke.knob('root.fps', utf8(default_fps))
+class VadiateFPS(pyblish.api.InstancePlugin):
+    """检查帧速率是否匹配数据库设置.   """
+
+    order = pyblish.api.ValidatorOrder
+    label = '检查帧速率'
+    families = ['帧速率']
+
+    def process(self, instance):
+        task = instance.context.data['task']
+        assert isinstance(task, Task)
+        database = task.module.database
+        fps = database.get_data('fps', is_user=False)
+        if not fps:
+            LOGGER.warning('数据库未设置帧速率: %s', database.name)
+        else:
+            current_fps = instance.data['fps']
+            if float(fps) != current_fps:
+                LOGGER.error('帧速率不一致: %s -> %s', current_fps, fps)
+                raise ValueError('Not same fps', fps, current_fps)
 
 
 class ExtractJPG(pyblish.api.InstancePlugin):
+    """生成单帧图.   """
+
     order = pyblish.api.ExtractorOrder
     label = '生成JPG'
+    families = ['Nuke文件']
 
     def process(self, instance):
-        pass
+        n = wlf_write_node()
+        if n:
+            LOGGER.debug('render_jpg: %s', n.name())
+            try:
+                n['bt_render_JPG'].execute()
+            except RuntimeError as ex:
+                nuke.message(str(ex))
+        else:
+            LOGGER.warning('工程中缺少wlf_Write节点')
 
 
 class UploadWorkFile(pyblish.api.InstancePlugin):
+    """上传工作文件至CGTeamWork.   """
+
     order = pyblish.api.IntegratorOrder
     label = '上传工作文件'
     families = ['Nuke文件']
 
     def process(self, instance):
-        pass
+        assert isinstance(instance, pyblish.api.Instance)
+        workfile = instance.data['name']
+        task = instance.context.data['task']
+        assert isinstance(task, Task)
+        dest = task.get_filebox('workfile').path + '/'
+        dest = 'E:/test_pyblish/'
+
+        copy(workfile, dest)
 
 
 class UploadJPG(pyblish.api.InstancePlugin):
+    """上传工作单帧至CGTeamWork.   """
+
     order = pyblish.api.IntegratorOrder
     label = '上传单帧'
+    families = ['Nuke文件']
 
     def process(self, instance):
-        pass
+        task = instance.context.data['task']
+        assert isinstance(task, Task)
+
+        n = wlf_write_node()
+        path = nuke.filename(n.node('Write_JPG_1'))
+        dest = task.get_filebox('image').path + '/'
+        dest = 'E:/test_pyblish/'
+        copy(path, dest)

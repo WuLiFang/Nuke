@@ -3,27 +3,23 @@
 cgteamwork integration with nuke.
 """
 
-from __future__ import absolute_import, unicode_literals, print_function
+from __future__ import absolute_import, print_function, unicode_literals
 
-import os
 import logging
+import os
 import webbrowser
 from functools import wraps
 
 import nuke
 
-from wlf import cgtwq
-from wlf.path import PurePath, get_unicode as u
-from wlf.files import copy
-from wlf.notify import CancelledError, progress, traytip
-from contextlib import contextmanager
-
 from edit import CurrentViewer
 from node import Last
-from nuketools import utf8, abort_modified
-from functools import wraps
-import pyblish.api
-import pyblish_lite
+from nuketools import abort_modified, utf8
+from wlf import cgtwq
+from wlf.files import copy
+from wlf.notify import CancelledError, progress, traytip
+from wlf.path import get_unicode as u
+from wlf.path import PurePath, Path
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -31,13 +27,15 @@ COMP_PIPELINE_NAME = '合成'
 
 
 class Database(cgtwq.Database):
+    """Optimized cgtwq database fro nuke.   """
+
     @classmethod
-    def from_shot(cls, filename, default=None):
+    def from_shot(cls, shot, default=None):
         """Get database from filename.
 
         Args:
-            filename (unicode): Filename to check.
-            default (unicode, optional): Defaults to None. 
+            shot (unicode): shot name to get database.
+            default (unicode, optional): Defaults to None.
                 Default database name.
 
         Raises:
@@ -51,12 +49,12 @@ class Database(cgtwq.Database):
         data = cgtwq.PROJECT.all().get_fields('code', 'database')
         for i in data:
             code, database = i
-            if unicode(filename).startswith(code):
+            if unicode(shot).startswith(code):
                 return cls(database)
         if default:
             return cls(default)
         raise ValueError(
-            'Can not determinate database from filename.', filename)
+            'Can not determinate database from filename.', shot)
 
 
 def abort_when_module_not_enable(func):
@@ -88,80 +86,124 @@ def check_login(update=False):
     return _deco
 
 
-class CurrentShot(cgtwq.Shot):
-    """The shot of current script.  """
+if cgtwq.MODULE_ENABLE:
+    class CurrentShot(cgtwq.Shot):
+        """The shot of current script.  """
 
-    def __init__(self):
-        cgtwq.Shot.__init__(self, self.name)
+        def __init__(self):
+            cgtwq.Shot.__init__(self, self.name)
 
-    @classmethod
-    def get_info(cls):
-        """The project info.  """
-        return cgtwq.proj_info(shot_name=cls.get_name())
+        @classmethod
+        def get_info(cls):
+            """The project info.  """
+            return cgtwq.proj_info(shot_name=cls.get_name())
 
-    @classmethod
-    def get_name(cls):
-        """The current shot name.  """
-        return PurePath(Last.name).shot
+        @classmethod
+        def get_name(cls):
+            """The current shot name.  """
+            return PurePath(Last.name).shot
 
-    @property
-    def name(self):
-        """The current shot name.  """
-        return self.get_name()
+        @property
+        def name(self):
+            """The current shot name.  """
+            return self.get_name()
 
-    @property
-    def workfile(self):
-        """The path of current nk_file.  """
-        return Last.name
+        @property
+        def workfile(self):
+            """The path of current nk_file.  """
+            return Last.name
 
-    @property
-    def image(self):
-        """The rendered single image.  """
-        return Last.jpg_path
+        @property
+        def image(self):
+            """The rendered single image.  """
+            return Last.jpg_path
 
-    @property
-    def video(self):
-        """The rendered single image.  """
-        return Last.mov_path
+        @property
+        def video(self):
+            """The rendered single image.  """
+            return Last.mov_path
 
-    def upload_image(self):
-        """Upload imge to server and record it to cgtw database.  """
+        def upload_image(self):
+            """Upload imge to server and record it to cgtw database.  """
 
-        LOGGER.debug('Uploading image to cgtw.')
-        ret = copy(self.image, self.image_dest)
-        if ret:
-            self.shot_image = ret
-        return ret
+            LOGGER.debug('Uploading image to cgtw.')
+            ret = copy(self.image, self.image_dest)
+            if ret:
+                self.shot_image = ret
+            return ret
 
-    def submit_image(self):
-        """Upload .jpg to server then sumbit these files."""
-        self.upload_image()
-        self.submit([self.image_dest])
+        def submit_image(self):
+            """Upload .jpg to server then sumbit these files."""
+            self.upload_image()
+            self.submit([self.image_dest])
 
-    def submit_video(self):
-        """Upload .mov to server then sumbit these files."""
+        def submit_video(self):
+            """Upload .mov to server then sumbit these files."""
 
-        copy(self.video, self.video_dest)
-        self.submit([self.video_dest])
+            copy(self.video, self.video_dest)
+            self.submit([self.video_dest])
 
-    @check_login(False)
-    def ask_add_note(self):
-        """Show a dialog for self.add_note function."""
+        @check_login(False)
+        def ask_add_note(self):
+            """Show a dialog for self.add_note function."""
 
-        note = nuke.getInput(utf8('note内容'), utf8('来自nuke的note'))
-        if note:
-            self.add_note(note)
+            note = nuke.getInput(utf8('note内容'), utf8('来自nuke的note'))
+            if note:
+                self.add_note(note)
 
 
 class Task(cgtwq.database.Selection):
-    def __init__(self, shot):
+    """Selection for single shot.  """
+
+    def __init__(self, shot, pipeline='合成'):
+        self.shot = shot
         database = Database.from_shot(shot)
         LOGGER.debug('Database: %s', database.name)
         module = database['shot_task']
-        id_list = module.filter(cgtwq.Filter('shot', shot))
+        id_list = module.filter(cgtwq.Filter('shot.shot', shot) &
+                                cgtwq.Filter('pipeline', pipeline))
+        if len(id_list) > 1:
+            LOGGER.warning('Duplicated task: %s', shot)
+            select = cgtwq.database.Selection(id_list, module)
+            current_account_id = cgtwq.server.account_id()
+            data = select.get_fields('id', 'account_id')
+            data = {i[0]: i[1] for i in data}
+
+            def _by_artist(id_):
+                task_account_id = data[id_]
+                if not task_account_id:
+                    return 2
+                if current_account_id in task_account_id:
+                    return 0
+                return 1
+            id_list = [sorted(id_list, key=_by_artist)[0]]
 
         super(Task, self).__init__(id_list, module)
-        self.shot = shot
+
+    def import_video(self, sign):
+        """Import corresponse video by filebox sign.
+
+        Args:
+            sign (unicode): Server defined fileboxsign
+
+        Returns:
+            nuke.Node: Created read node.
+        """
+
+        node_name = {'animation_videos': '动画视频'}.get(sign, sign)
+        n = nuke.toNode(utf8(node_name))
+        if n is None:
+            dir_ = self.get_filebox(sign).path
+            videos = Path(dir_).glob('{}.*'.format(self.shot))
+            for video in videos:
+                n = nuke.nodes.Read(name=utf8(node_name),
+                                    file=utf8(video.as_posix()))
+                break
+        n['frame_mode'].setValue(b'start_at')
+        n['frame'].setValue(b'{:.0f}'.format(
+            nuke.numvalue('root.first_frame')))
+        CurrentViewer().link(n, 4, replace=False)
+        return n
 
 
 def check_with_upstream():

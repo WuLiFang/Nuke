@@ -4,14 +4,12 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 import os
-import sys
 
 import nuke
 
 import asset
 import edit
 import orgnize
-import wlf.cgtwq
 from node import Last, wlf_write_node
 from nuketools import abort_modified, utf8
 from wlf import csheet
@@ -69,7 +67,6 @@ def setup():
         create_out_dirs
     ])
     if nuke.GUI:
-        from pyblish_lite_nuke import Pyblish
         CALLBACKS_ON_CREATE.extend(
             [
                 lambda: edit.set_random_glcolor(nuke.thisNode())
@@ -91,7 +88,6 @@ def setup():
                 asset.warn_missing_frames,
                 _add_root_info,
                 _eval_proj_dir,
-                Pyblish.validate
             ])
         CALLBACKS_ON_SCRIPT_SAVE.extend(
             [
@@ -103,26 +99,17 @@ def setup():
                 lambda: asset.warn_mtime(show_dialog=True),
                 asset.warn_missing_frames,
                 _check_project,
-                Pyblish.validate
             ])
         CALLBACKS_ON_SCRIPT_CLOSE.extend(
             [
                 _send_to_render_dir,
-                _render_jpg,
+                # _render_jpg,
                 _create_csheet,
-                Pyblish.publish
             ])
         CALLBACKS_UPDATE_UI.extend(
             [
                 _gizmo_to_group_update_ui
             ])
-
-    # if wlf.cgtwq.MODULE_ENABLE:
-    #     import cgtwn
-    #     LOGGER.info('启用CGTeamWork集成')
-    #     CALLBACKS_ON_SCRIPT_LOAD.append(cgtwn.on_load_callback)
-    #     CALLBACKS_ON_SCRIPT_SAVE.append(cgtwn.on_save_callback)
-    #     CALLBACKS_ON_SCRIPT_CLOSE.append(cgtwn.on_close_callback)
 
 
 def install():
