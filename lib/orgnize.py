@@ -10,6 +10,7 @@ from collections import Iterable, namedtuple
 
 import nuke
 
+import callback
 from nuketools import Nodes, get_upstream_nodes, undoable_func, utf8
 from wlf.decorators import run_async, run_in_main_thread, run_with_clock
 
@@ -515,3 +516,17 @@ class Worker(Analyser):
             base = self.get_base_node(n)
             n = base
         return ret
+
+
+def _autoplace():
+    if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.Root().modified():
+        autoplace_type = nuke.numvalue('preferences.wlf_autoplace_type', 0.0)
+        LOGGER.debug('Autoplace. type: %s', autoplace_type)
+        if autoplace_type == 0.0:
+            autoplace(async_=False)
+        else:
+            map(nuke.autoplace, nuke.allNodes())
+
+
+def setup():
+    callback.CALLBACKS_ON_SCRIPT_SAVE.append(_autoplace)

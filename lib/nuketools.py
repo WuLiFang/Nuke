@@ -7,7 +7,6 @@ import threading
 from functools import wraps
 
 import nuke
-from collections import Iterable
 
 from wlf.decorators import run_in_main_thread
 from wlf.path import get_encoded
@@ -85,7 +84,6 @@ def utf8_func(func):
         try:
             ret = func(*args, **kwargs)
         except:
-            import nuke
             nuke.message(repr(func))
             raise
         if isinstance(ret, str):

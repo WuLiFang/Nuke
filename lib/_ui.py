@@ -12,11 +12,13 @@ import nukescripts  # pylint: disable=import-error
 from autolabel import autolabel
 
 import asset
+import callback
 import cgtwn
 import comp
 import comp.panels
 import edit
 import edit_panels
+import enable_later
 import orgnize
 import panels
 import scanner
@@ -26,7 +28,6 @@ import wlf.csheet
 import wlf.uploader
 from nuketools import utf8
 from wlf.path import get_unicode as u
-from wlf.path import get_encoded
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -71,7 +72,7 @@ def add_menu():
             _("重命名PuzzleMatte",
               lambda: edit_panels.ChannelsRename(prefix='PuzzleMatte').show(), 'F4'),
             _("标记为稍后启用",
-              lambda: edit.mark_enable(nuke.selectedNodes()), 'SHIFT+D'),
+              lambda: enable_later.mark_enable(nuke.selectedNodes()), 'SHIFT+D'),
             _('输出当前帧png',
               lambda: comp.render_png(nuke.selectedNodes(), show=True),
               'SHIFT+F7'),
@@ -81,7 +82,7 @@ def add_menu():
               lambda: edit.use_relative_path(nuke.selectedNodes()), icon="utilitiesfolder.png"),
             None,
             _("禁用所有稍后启用节点",
-              lambda: edit.marked_nodes().disable(), 'CTRL+SHIFT+D'),
+              lambda: enable_later.marked_nodes().disable(), 'CTRL+SHIFT+D'),
             _("修正读取错误", asset.fix_error_read, 'F6'),
             _("Reload所有", edit.reload_all_read_node),
             _("检查缺帧", lambda: asset.warn_missing_frames(show_ok=True)),
@@ -117,9 +118,6 @@ def add_menu():
         ]},
         {cgtw_menu: [
             _('登录', cgtwn.dialog_login),
-            _('添加note', lambda: cgtwn.CurrentShot().ask_add_note()),
-            _('提交单帧', lambda: cgtwn.CurrentShot().submit_image()),
-            _('提交视频', lambda: cgtwn.CurrentShot().submit_video()),
             _("批量下载", lambda: nuke.message(utf8(
                 '已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>'))),
             _('创建项目色板', cgtwn.check_login(True)
@@ -194,7 +192,7 @@ def add_menu():
     def _refresh_toolsets_menu():
         """Extended nuke function.  """
 
-        nukescripts.toolsets._refreshToolsetsMenu()
+        nukescripts.toolsets._refreshToolsetsMenu()  # pylint: disable=protected-access
         m = nuke.menu('Nodes').addMenu('ToolSets')
         m.addCommand('刷新'.encode('utf-8'), _refresh_toolsets_menu)
         m.addCommand(
@@ -316,11 +314,19 @@ def custom_autolabel():
 def panel_show(keyword):
     """Show control panel for matched nodes."""
 
-    def _node_name(node):
-        return node.name()
     nodes = sorted((n for n in nuke.allNodes()
                     if keyword in n.name() and not nuke.numvalue('{}.disable'.format(n.name()), 0)),
                    key=lambda n: n.name(),
                    reverse=True)
     for n in nodes:
         n.showControlPanel()
+
+
+def setup():
+    """Setup ui.   """
+
+    add_autolabel()
+    add_menu()
+    add_panel()
+    callback.CALLBACKS_ON_CREATE.append(
+        lambda: edit.set_random_glcolor(nuke.thisNode()))

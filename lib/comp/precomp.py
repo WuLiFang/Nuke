@@ -11,9 +11,9 @@ import sys
 
 import nuke
 
-from edit import add_layer, copy_layer, replace_node, undoable_func
+from edit import add_layer, copy_layer, replace_node
 from orgnize import autoplace
-from nuketools import utf8, utf8_dict
+from nuketools import utf8, utf8_dict, undoable_func
 from wlf.path import PurePath, get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.precomp')

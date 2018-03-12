@@ -5,6 +5,8 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import logging
+import os
+import webbrowser
 
 import nuke
 import pyblish.api
@@ -12,57 +14,28 @@ import pyblish.api
 from cgtwn import Task
 from node import wlf_write_node
 from wlf import cgtwq
-from wlf.path import PurePath
 from wlf.files import copy
+from wlf.path import PurePath
 
 LOGGER = logging.getLogger('wlf.pyblish_cgtwn')
 
 # pylint: disable=no-init
 
 
-class CollectFile(pyblish.api.ContextPlugin):
-    """获取当前Nuke使用的文件.   """
+class CollectTask(pyblish.api.InstancePlugin):
+    """获取Nuke文件对应的CGTeamWork任务.   """
 
     order = pyblish.api.CollectorOrder
-    label = '获取当前文件'
+    label = '获取对应任务'
+    families = ['Nuke文件']
 
-    def process(self, context):
-        context.data['comment'] = ''
+    def process(self, instance):
 
-        assert isinstance(context, pyblish.api.Context)
-        filename = nuke.value('root.name')
-        if not filename:
-            raise ValueError('工程尚未保存.')
+        assert isinstance(instance, pyblish.api.Instance)
 
-        context.data['task'] = Task(PurePath(filename).shot)
-        context.create_instance(filename,
-                                family='Nuke文件')
-
-
-class CollectFrameRange(pyblish.api.ContextPlugin):
-    """获取当前工程帧范围设置.   """
-    label = '获取帧范围'
-
-    def process(self, context):
-        first = nuke.numvalue('root.first_frame')
-        last = nuke.numvalue('root.last_frame')
-        context.create_instance(
-            '帧范围: {:.0f}-{:.0f}'.format(first, last),
-            first=first,
-            last=last,
-            family='帧范围')
-
-
-class CollectFPS(pyblish.api.ContextPlugin):
-    """获取当前工程帧速率设置.   """
-    label = '获取帧速率'
-
-    def process(self, context):
-        fps = nuke.numvalue('root.fps')
-        context.create_instance(
-            name='帧速率: {:.0f}'.format(fps),
-            fps=fps,
-            family='帧速率')
+        task = Task(PurePath(instance.name).shot)
+        instance.context.data['task'] = task
+        LOGGER.info('任务 %s', task)
 
 
 class CollectUser(pyblish.api.ContextPlugin):
@@ -72,44 +45,75 @@ class CollectUser(pyblish.api.ContextPlugin):
     label = '获取当前用户'
 
     def process(self, context):
-        name = cgtwq.database.account_name()
         assert isinstance(context, pyblish.api.Context)
+
+        name = cgtwq.database.account_name()
+
+        context.data['artist'] = name
+        context.data['accountID'] = cgtwq.server.account_id()
         context.create_instance(
-            name='制作者: {}'.format(name),
-            user=name,
-            id=cgtwq.server.account_id(),
-            family='制作者')
+            '制作者: {}'.format(name),
+            family='制作者'
+        )
+
+
+class CollectFX(pyblish.api.ContextPlugin):
+    """获取特效素材.   """
+    order = pyblish.api.CollectorOrder + 0.1
+    label = '获取特效素材'
+
+    def process(self, context):
+        task = context.data['task']
+        assert isinstance(task, Task)
+        filebox = task.get_filebox('fx')
+        dir_ = filebox.path
+        context.create_instance(
+            '有特效素材' if os.listdir(dir_) else '无特效素材',
+            folder=dir_,
+            family='特效素材'
+        )
+
+
+class OpenFolder(pyblish.api.InstancePlugin):
+    """打开非空的文件夹.   """
+
+    order = pyblish.api.ValidatorOrder
+    label = '打开素材文件夹'
+    families = ['特效素材']
+
+    def process(self, instance):
+        if os.listdir(instance.data['folder']):
+            webbrowser.open(instance.data['folder'])
 
 
 class VadiateArtist(pyblish.api.InstancePlugin):
     """检查任务是否分配给当前用户。  """
 
     order = pyblish.api.ValidatorOrder
-    label = '制作者检查'
+    label = '检查制作者'
     families = ['制作者']
 
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
-        task = instance.context.data['task']
+        context = instance.context
+        task = context.data['task']
         assert isinstance(task, Task)
-        current_id = instance.data['id']
-        task_account_id = task['account_id'][0]
-        LOGGER.debug(task_account_id)
+        current_id = context.data['accountID']
+        current_artist = context.data['artist']
 
-        for i in task_account_id:
-            if current_id in i.split(','):
-                return
-        LOGGER.error('用户不匹配: %s -> %s',
-                     instance.data['user'], task['artist'][0])
-        raise cgtwq.AccountError(
-            owner=task_account_id, current=current_id)
+        id_ = task['account_id']
+        if current_id not in id_.split(','):
+            LOGGER.error('用户不匹配: %s -> %s',
+                         current_artist, task['artist'])
+            raise cgtwq.AccountError(
+                owner=id_, current=current_id)
 
 
 class VadiateFrameRange(pyblish.api.InstancePlugin):
     """检查帧范围是否匹配上游.  """
 
     order = pyblish.api.ValidatorOrder
-    label = '帧范围检查'
+    label = '检查帧范围'
     families = ['帧范围']
 
     def process(self, instance):
@@ -119,7 +123,8 @@ class VadiateFrameRange(pyblish.api.InstancePlugin):
 
         n = task.import_video('animation_videos')
         upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
-        current_framecount = instance.data['last'] - instance.data['first'] + 1
+        current_framecount = int(
+            instance.data['last'] - instance.data['first'] + 1)
         if upstream_framecount != current_framecount:
             LOGGER.error('工程帧数和上游不一致: %s -> %s',
                          current_framecount, upstream_framecount)
@@ -139,6 +144,7 @@ class VadiateFPS(pyblish.api.InstancePlugin):
     def process(self, instance):
         task = instance.context.data['task']
         assert isinstance(task, Task)
+
         database = task.module.database
         fps = database.get_data('fps', is_user=False)
         if not fps:
@@ -148,25 +154,6 @@ class VadiateFPS(pyblish.api.InstancePlugin):
             if float(fps) != current_fps:
                 LOGGER.error('帧速率不一致: %s -> %s', current_fps, fps)
                 raise ValueError('Not same fps', fps, current_fps)
-
-
-class ExtractJPG(pyblish.api.InstancePlugin):
-    """生成单帧图.   """
-
-    order = pyblish.api.ExtractorOrder
-    label = '生成JPG'
-    families = ['Nuke文件']
-
-    def process(self, instance):
-        n = wlf_write_node()
-        if n:
-            LOGGER.debug('render_jpg: %s', n.name())
-            try:
-                n['bt_render_JPG'].execute()
-            except RuntimeError as ex:
-                nuke.message(str(ex))
-        else:
-            LOGGER.warning('工程中缺少wlf_Write节点')
 
 
 class UploadWorkFile(pyblish.api.InstancePlugin):
@@ -179,7 +166,7 @@ class UploadWorkFile(pyblish.api.InstancePlugin):
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
         workfile = instance.data['name']
-        task = instance.context.data['task']
+        task = instance.data['task']
         assert isinstance(task, Task)
         dest = task.get_filebox('workfile').path + '/'
         dest = 'E:/test_pyblish/'
@@ -195,7 +182,7 @@ class UploadJPG(pyblish.api.InstancePlugin):
     families = ['Nuke文件']
 
     def process(self, instance):
-        task = instance.context.data['task']
+        task = instance.data['task']
         assert isinstance(task, Task)
 
         n = wlf_write_node()

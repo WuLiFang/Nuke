@@ -17,12 +17,13 @@ from tempfile import mkstemp
 import nuke
 from jinja2 import Environment, PackageLoader
 
+import callback
 from edit import clear_selection
 from node import Last
 from nuketools import utf8
 from wlf.decorators import run_with_clock
 from wlf.env import has_gui
-from wlf.files import Path, copy, PurePath
+from wlf.files import Path, PurePath, copy
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
 from wlf.path import is_ascii
@@ -629,3 +630,11 @@ if has_gui():
             localization.setAlwaysUseSourceFiles(True)
 
     Localization.timer.timeout.connect(Localization.update)
+
+
+def setup():
+    if nuke.GUI:
+        Localization.start_upate()
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(Localization.update)
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_missing_frames)
+    callback.CALLBACKS_ON_SCRIPT_SAVE.append(warn_missing_frames)

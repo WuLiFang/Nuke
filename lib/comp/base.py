@@ -6,17 +6,14 @@ from __future__ import absolute_import, print_function, unicode_literals
 import logging
 import os
 import re
-import sys
 import webbrowser
 
 import nuke
-import nukescripts  # pylint: disable=import-error
 
 from comp.config import CompConfig
 from comp.precomp import Precomp
-from edit import undoable_func
 from node import ReadNode
-from nuketools import utf8, utf8_dict
+from nuketools import utf8, utf8_dict, undoable_func
 from orgnize import autoplace
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u

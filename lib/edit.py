@@ -8,13 +8,11 @@ import math
 import os
 import random
 import re
-import threading
-from functools import wraps
 
 import nuke
 
 from node import wlf_write_node
-from nuketools import Nodes, undoable_func, utf8
+from nuketools import utf8
 from wlf.notify import get_default_progress_handler, progress
 from wlf.path import get_unicode as u
 from wlf.path import PurePath
@@ -45,7 +43,7 @@ def add_channel(name):
 
 
 def add_layer(layername):
-    """Add layer to nuke from @layername.  
+    """Add layer to nuke from @layername.
 
     Returns:
         nuke.Layer or None: Added layer.
@@ -453,40 +451,6 @@ def all_gizmo_to_group():
             continue
 
         gizmo_to_group(n)
-
-
-def mark_enable(nodes):
-    """Mark nodes enable later then disabled them.  """
-
-    if isinstance(nodes, nuke.Node):
-        nodes = (nodes)
-    for n in nodes:
-        try:
-            label_knob = n['label']
-            label = u(label_knob.value())
-            if ENABLE_MARK not in label:
-                label_knob.setValue(
-                    '{}\n{}'.format(label, ENABLE_MARK).encode('utf-8'))
-            n['disable'].setValue(True)
-        except NameError:
-            continue
-
-
-def marked_nodes():
-    """ Get marked nodes.
-
-    Returns:
-        Nodes: maked nodes.
-    """
-
-    ret = set()
-    for n in nuke.allNodes():
-        try:
-            if ENABLE_MARK in u(n['label'].value()):
-                ret.add(n)
-        except NameError:
-            continue
-    return Nodes(ret)
 
 
 def insert_node(node, input_node):

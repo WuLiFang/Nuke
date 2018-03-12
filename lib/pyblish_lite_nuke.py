@@ -4,13 +4,15 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import os
 from threading import Event
 
 import nuke
 import pyblish.plugin
 from nukescripts.panels import restorePanel  # pylint: disable=import-error
 from pyblish_lite import app, control, settings, util, window
-from Qt.QtWidgets import QApplication, QDialog, QStackedWidget, QMainWindow
+from Qt.QtCore import Qt
+from Qt.QtWidgets import QApplication, QDialog, QMainWindow, QStackedWidget
 
 import callback
 import panels
@@ -19,14 +21,14 @@ import pyblish_cgtwn
 from nuketools import abort_modified, mainwindow
 
 
-def _pyblish_action(name, block=False, is_reset=True):
+def _pyblish_action(name, is_block=False, is_reset=True):
     def _func():
-        Pyblish.dock()
-        window_ = Pyblish.window
+        if nuke.value('root.name', None):
+            Window.dock()
+        window_ = Window.instance
         assert isinstance(window_, Window)
         controller = window_.controller
         assert isinstance(controller, control.Controller)
-        controller.warning = window_.warning
 
         finish_event = Event()
         signal = {'publish': controller.was_published,
@@ -38,7 +40,7 @@ def _pyblish_action(name, block=False, is_reset=True):
             _start()
 
         def _start():
-            if block:
+            if is_block:
                 signal.connect(finish_event.set)
             getattr(window_, name)()
 
@@ -54,7 +56,7 @@ def _pyblish_action(name, block=False, is_reset=True):
             # Run directly.
             _start()
 
-        if block:
+        if is_block:
             # Wait finish.
             while not finish_event.is_set():
                 QApplication.processEvents()
@@ -67,44 +69,6 @@ def _pyblish_action(name, block=False, is_reset=True):
     return _func
 
 
-class Pyblish(object):
-    """Pyblish manager for nuke.   """
-
-    window = None
-
-    @classmethod
-    def dock(cls):
-        """Dock pyblish panel in same pane of properties,
-            or pop it out.
-        """
-
-        window_ = cls.window
-        if not window_:
-            pane = nuke.getPaneFor('Properties.1')
-            if pane:
-                panel = restorePanel('com.wlf.pyblish')
-                panel.addToPane(pane)
-            else:
-                try:
-                    window_ = Window(mainwindow())
-                except RuntimeError:
-                    window_ = Window()
-                window_.show()
-        else:
-            try:
-                window_.activate()
-            except ValueError:
-                # Window already closed.
-                cls.window = None
-                window_.close()
-                window_.deleteLater()
-                cls.dock()
-            except RuntimeError:
-                # Window already deleted.
-                cls.window = None
-                cls.dock()
-
-
 class Window(window.Window):
     """Modified pyblish_lite window for nuke.
 
@@ -115,12 +79,19 @@ class Window(window.Window):
         ValueError: When already exists another pyblish window.
     """
     is_running = False
+    _is_initiated = False
+    instance = None
     controller = control.Controller()
 
+    def __new__(cls, parent=None):
+        if not cls.instance:
+            cls.instance = super(Window, cls).__new__(cls, parent)
+        return cls.instance
+
     def __init__(self, parent=None):
-        if Pyblish.window:
-            raise ValueError('Single instance.')
-        Pyblish.window = self
+        if self._is_initiated:
+            return
+
         controller = control.Controller()
         super(Window, self).__init__(
             controller, parent)
@@ -144,10 +115,9 @@ class Window(window.Window):
         self.setStyleSheet(css)
 
         self.setObjectName('PyblishWindow')
+        self.setAttribute(Qt.WA_DeleteOnClose, True)
 
-    def closeEvent(self, event):
-        super(Window, self).closeEvent(event)
-        Pyblish.window = None
+        self._is_initiated = True
 
     def activate(self):
         """Active pyblish window.   """
@@ -160,6 +130,40 @@ class Window(window.Window):
             panel = self.get_parent(QStackedWidget)
             dialog = self.get_parent(QDialog)
             panel.setCurrentWidget(dialog)
+
+    @classmethod
+    def dock(cls):
+        """Dock pyblish panel in same pane of properties,
+            or pop it out.
+        """
+
+        window_ = cls.instance
+        if not window_:
+            try:
+                mainwindow_ = mainwindow()
+                pane = nuke.getPaneFor('Properties.1')
+                if pane:
+                    panel = restorePanel('com.wlf.pyblish')
+                    panel.addToPane(pane)
+                else:
+                    window_ = Window(mainwindow_)
+                    window_.show()
+            except RuntimeError:
+                window_ = Window()
+                window_.show()
+        else:
+            try:
+                window_.activate()
+            except ValueError:
+                # Window already closed.
+                cls.instance = None
+                window_.close()
+                window_.deleteLater()
+                cls.dock()
+            except RuntimeError:
+                # Window already deleted.
+                cls.instance = None
+                cls.dock()
 
     def get_parent(self, parent_class):
         """Get parent for window.
@@ -201,19 +205,21 @@ class Window(window.Window):
 
 
 def setup():
-    """Set up pyblish.   """
-
     panels.register(Window, 'Pyblish', 'com.wlf.pyblish')
 
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(
         _pyblish_action('validate'))
     callback.CALLBACKS_ON_SCRIPT_SAVE.append(
-        _pyblish_action('validate', False, True))
+        _pyblish_action('validate'))
     callback.CALLBACKS_ON_SCRIPT_CLOSE.append(
         abort_modified(_pyblish_action('publish', True, False)))
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
+    try:
+        settings.TerminalLoglevel = int(os.getenv('LOGLEVEL'))
+    except TypeError:
+        settings.TerminalLoglevel = 20
 
     app.install_fonts()
     app.install_translator(QApplication.instance())

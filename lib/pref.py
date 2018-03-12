@@ -110,3 +110,10 @@ def add_preferences():
         _add_knob(k)
 
     _remove_old()
+
+
+def setup():
+    """Setup preferences.   """
+
+    set_knob_default()
+    add_preferences()

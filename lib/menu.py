@@ -3,29 +3,23 @@
 
 from __future__ import absolute_import
 
-import _ui
-import callback
-import pref
-from wlf import cgtwq, uitools
-import os
-
-import pyblish_lite_nuke
-
 
 def main():
-    """Main entry.  """
+    import _ui
+    import dropdata_handler
+    import gizmo_convert
+    import pref
+    import project_settings
+    import pyblish_lite_nuke
 
-    _ui.add_menu()
-    _ui.add_panel()
-    _ui.add_autolabel()
-    pref.add_preferences()
-    pref.set_knob_default()
-
+    _ui.setup()
+    pref.setup()
+    dropdata_handler.setup()
+    gizmo_convert.setup()
+    project_settings.setup()
     pyblish_lite_nuke.setup()
-
-    if cgtwq.MODULE_ENABLE:
-        cgtwq.CGTeamWork.update_status()
 
 
 if __name__ == '__main__':
     main()
+    del main  # Clean namespace for script editor.
