@@ -190,7 +190,7 @@ class EditTestCase(TestCase):
             self.assertEqual(result['selected'].value(), is_selected)
 
     def test_enable_later(self):
-        from edit import mark_enable, marked_nodes
+        from enable_later import mark_enable, marked_nodes
         for _ in xrange(20):
             nuke.nodes.Grade()
         nodes = nuke.allNodes()

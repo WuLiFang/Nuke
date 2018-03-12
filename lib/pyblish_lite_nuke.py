@@ -205,7 +205,7 @@ class Window(window.Window):
 
 
 def setup():
-    panels.register(Window, 'Pyblish', 'com.wlf.pyblish')
+    panels.register(Window, '发布', 'com.wlf.pyblish')
 
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(
         _pyblish_action('validate'))

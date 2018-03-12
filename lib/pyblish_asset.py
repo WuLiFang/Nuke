@@ -80,7 +80,10 @@ class CollectMTime(pyblish.api.ContextPlugin):
         footages = set()
         root = nuke.Root()
         for n in nuke.allNodes('Read', nuke.Root()):
-            footage = FootageInfo(filename=n.metadata('input/filename'),
+            filename = n.metadata('input/filename')
+            if not filename:
+                continue
+            footage = FootageInfo(filename=filename,
                                   mtime=time.strptime(n.metadata('input/mtime'),
                                                       '%Y-%m-%d %H:%M:%S'))
             footages.add(footage)
