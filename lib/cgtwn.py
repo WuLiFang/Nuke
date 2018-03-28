@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """
-cgteamwork integration with nuke.
+cgteamwork integration for nuke.
 """
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -8,13 +8,12 @@ from __future__ import absolute_import, print_function, unicode_literals
 import logging
 import os
 import webbrowser
-from functools import wraps
 
 import nuke
 
 from edit import CurrentViewer
 from nuketools import utf8
-from wlf import cgtwq
+import cgtwq
 from wlf.notify import CancelledError, progress, traytip
 from wlf.path import Path
 
@@ -52,51 +51,11 @@ class Database(cgtwq.Database):
             'Can not determinate database from filename.', shot)
 
 
-def check_login(update=False):
-    """(Decorator)Abort funciton if not logged in."""
-
-    def _deco(func):
-
-        @wraps(func)
-        def _func(*args, **kwargs):
-            if update:
-                cgtwq.CGTeamWork.update_status()
-            if cgtwq.CGTeamWork.is_logged_in:
-                return func(*args, **kwargs)
-            else:
-                if nuke.GUI:
-                    traytip('警告', 'CGTeamWork未登录', options=2)
-        return _func
-    return _deco
-
-
-class Task(cgtwq.database.Selection):
+class Task(cgtwq.Entry):
     """Selection for single shot.  """
+    # pylint: disable=too-many-ancestors
 
-    def __init__(self, shot, pipeline='合成'):
-        self.shot = shot
-        database = Database.from_shot(shot)
-        LOGGER.debug('Database: %s', database.name)
-        module = database['shot_task']
-        id_list = module.filter(cgtwq.Filter('shot.shot', shot) &
-                                cgtwq.Filter('pipeline', pipeline))
-        if len(id_list) > 1:
-            LOGGER.warning('Duplicated task: %s', shot)
-            select = cgtwq.database.Selection(id_list, module)
-            current_account_id = cgtwq.server.account_id()
-            data = select.get_fields('id', 'account_id')
-            data = {i[0]: i[1] for i in data}
-
-            def _by_artist(id_):
-                task_account_id = data[id_]
-                if not task_account_id:
-                    return 2
-                if current_account_id in task_account_id:
-                    return 0
-                return 1
-            id_list = [sorted(id_list, key=_by_artist)[0]]
-
-        super(Task, self).__init__(id_list, module)
+    shot = None
 
     def __unicode__(self):
         database = self.module.database
@@ -120,8 +79,8 @@ class Task(cgtwq.database.Selection):
             dir_ = self.get_filebox(sign).path
             videos = Path(dir_).glob('{}.*'.format(self.shot))
             for video in videos:
-                n = nuke.nodes.Read(name=utf8(node_name),
-                                    file=utf8(video.as_posix()))
+                n = nuke.nodes.Read(name=utf8(node_name))
+                n['file'].fromUserText(unicode(video).encode('utf-8'))
                 break
         n['frame_mode'].setValue(b'start_at')
         n['frame'].setValue(b'{:.0f}'.format(
@@ -129,12 +88,38 @@ class Task(cgtwq.database.Selection):
         CurrentViewer().link(n, 4, replace=False)
         return n
 
-    def __getitem__(self, name):
-        ret = super(Task, self).__getitem__(name)
-        if isinstance(name, int):
-            return ret
-        assert len(self) == 1
-        return ret[0]
+    @classmethod
+    def from_shot(cls, shot, pipeline='合成'):
+        """Get task entry from shot name.
+
+        Args:
+        shot (str): Shot name.
+            pipeline (str, optional): Defaults to '合成'. Pipline name.
+        """
+        database = Database.from_shot(shot)
+        LOGGER.debug('Database: %s', database.name)
+        module = database['shot_task']
+        id_list = module.filter(cgtwq.Filter('shot.shot', shot) &
+                                cgtwq.Filter('pipeline', pipeline))
+        if len(id_list) > 1:
+            LOGGER.warning('Duplicated task: %s', shot)
+            select = module.select(*id_list)
+            current_account_id = cgtwq.util.current_account_id()
+            data = select.get_fields('id', 'account_id')
+            data = {i[0]: i[1] for i in data}
+
+            def _by_artist(id_):
+                task_account_id = data[id_]
+                if not task_account_id:
+                    return 2
+                if current_account_id in task_account_id:
+                    return 0
+                return 1
+            id_list = sorted(id_list, key=_by_artist)
+
+        ret = cls(module, id_list[0])
+        ret.shot = shot
+        return ret
 
 
 def dialog_login():
@@ -145,20 +130,19 @@ def dialog_login():
     panel.addSingleLineInput(utf8('帐号'), '')
     panel.addPasswordInput(utf8('密码'), '')
 
-    success = False
-    while not success:
+    while True:
         confirm = panel.show()
         if confirm:
-            success = cgtwq.CGTeamWork().login(panel.value(account), panel.value(password))
-            if not success:
+            try:
+                cgtwq.server.setting.DEFAULT_TOKEN = cgtwq.login(
+                    panel.value(account), panel.value(password))
+            except ValueError:
                 traytip('CGTeamWork', '登录失败')
-            else:
-                traytip('CGTeamWork', '登录成功')
-        else:
-            break
+                continue
+            traytip('CGTeamWork', '登录成功')
+        break
 
 
-@check_login(True)
 def dialog_create_dirs():
     """A dialog for create dirs from cgtwq.  """
 
@@ -180,15 +164,25 @@ def dialog_create_dirs():
 
         for _ in progress(['连接CGTeamWork...', ], '创建文件夹'):
             try:
-                names = cgtwq.Shots(database, prefix=prefix).shots
+                select = cgtwq.Database(database)['shot_task'].filter(
+                    cgtwq.Field('pipeline') == '合成')
             except cgtwq.IDError as ex:
                 nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
                 return
 
-        for name in progress(names, '创建文件夹'):
+        for name in progress(select['shot.shot'], '创建文件夹'):
+            if not name or not name.startswith(prefix):
+                continue
             _path = os.path.join(save_path, name)
             if not os.path.exists(_path):
                 os.makedirs(_path)
         webbrowser.open(save_path)
     except CancelledError:
         LOGGER.debug('用户取消创建文件夹')
+
+
+import callback
+
+
+def setup():
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(cgtwq.update_setting)

@@ -194,12 +194,14 @@ class EditTestCase(TestCase):
         for _ in xrange(20):
             nuke.nodes.Grade()
         nodes = nuke.allNodes()
-        mark_enable(nodes)
         self.assertEqual(len(nodes), 20)
-        marked_nodes().disable()
+        mark_enable(nodes)
+        marked = marked_nodes()
+        self.assertEqual(len(marked), 20)
+        marked.disable()
         for i in nodes:
             self.assert_(i['disable'].value())
-        marked_nodes().enable()
+        marked.enable()
         for i in nodes:
             self.assertFalse(i['disable'].value())
 

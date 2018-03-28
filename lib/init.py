@@ -1,10 +1,22 @@
 # -*- coding: UTF-8 -*-
 """Nuke init file.  """
 
-from __future__ import absolute_import, print_function, unicode_literals
-
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
 _GLOBAL_BEFORE_INIT = dict(globals())
+
+
+def setup_site():
+    """Add local site-packages to python.  """
+    import site
+    import os
+
+    site.addsitedir(os.path.abspath(
+        os.path.join(__file__, '../site-packages')))
+
+
+setup_site()
 
 
 def main():
@@ -21,7 +33,9 @@ def main():
             os.path.normpath(os.path.join(__file__, '../../'))))
         sys.exit(1)
 
-    wlf.mp_logging.basic_config()
+    # wlf.mp_logging.basic_config()
+    import logging
+    logging.basicConfig(level='DEBUG')
 
     validation.setup()
     callback.setup()

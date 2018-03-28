@@ -11,7 +11,6 @@ import edit
 import orgnize
 from node import Last, wlf_write_node
 from nuketools import abort_modified, utf8
-from wlf import csheet
 from wlf.path import get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.callback')

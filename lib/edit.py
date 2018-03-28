@@ -18,7 +18,6 @@ from wlf.path import get_unicode as u
 from wlf.path import PurePath
 
 LOGGER = logging.getLogger('com.wlf.edit')
-ENABLE_MARK = '_enable_'
 
 
 def add_channel(name):

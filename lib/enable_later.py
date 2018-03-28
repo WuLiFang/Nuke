@@ -8,13 +8,15 @@ import nuke
 
 import callback
 from nuketools import Nodes
+from wlf.path import get_unicode as u
+ENABLE_MARK = '_enable_'
 
 
 def mark_enable(nodes):
     """Mark nodes enable later then disabled them.  """
 
     if isinstance(nodes, nuke.Node):
-        nodes = (nodes)
+        nodes = (nodes,)
     for n in nodes:
         try:
             label_knob = n['label']
@@ -37,10 +39,12 @@ def marked_nodes():
     ret = set()
     for n in nuke.allNodes():
         try:
-            if ENABLE_MARK in u(n['label'].value()):
-                ret.add(n)
+            label = n['label'].value()
         except NameError:
             continue
+        label = u(label)
+        if ENABLE_MARK in label:
+            ret.add(n)
     return Nodes(ret)
 
 

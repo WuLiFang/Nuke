@@ -270,7 +270,7 @@ class Asset(object):
                 if filename.with_frame(1) != filename.with_frame(2):
                     i.frame_ranges += FrameRanges(frame_ranges)
                 return i
-        return super(Asset, cls).__new__(cls, filename, frame_ranges)
+        return super(Asset, cls).__new__(cls)
 
     def __init__(self, filename, frame_ranges=None):
         # Skip init cached Asset objet.

@@ -11,6 +11,7 @@ def main():
     import pref
     import project_settings
     import pyblish_lite_nuke
+    import cgtwn
 
     _ui.setup()
     pref.setup()
@@ -18,6 +19,7 @@ def main():
     gizmo_convert.setup()
     project_settings.setup()
     pyblish_lite_nuke.setup()
+    cgtwn.setup()
 
 
 if __name__ == '__main__':

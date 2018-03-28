@@ -4,6 +4,7 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import logging
 import os
 from threading import Event
 
@@ -81,7 +82,6 @@ class Window(window.Window):
     is_running = False
     _is_initiated = False
     instance = None
-    controller = control.Controller()
 
     def __new__(cls, parent=None):
         if not cls.instance:
@@ -217,8 +217,9 @@ def setup():
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
     try:
-        settings.TerminalLoglevel = int(os.getenv('LOGLEVEL'))
-    except TypeError:
+        settings.TerminalLoglevel = int(
+            logging.getLevelName(os.getenv('LOGLEVEL')))
+    except (TypeError, ValueError):
         settings.TerminalLoglevel = 20
 
     app.install_fonts()

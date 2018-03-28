@@ -10,7 +10,9 @@ from unittest import TestCase, main
 class TaskTestCase(TestCase):
     def test_init(self):
         from cgtwn import Task
-        select = Task('MT_EP06_06_sc013')
+        import cgtwq
+        cgtwq.update_setting()
+        select = Task.from_shot('MT_EP06_06_sc013')
         self.assertEqual(len(select), 1)
 
 

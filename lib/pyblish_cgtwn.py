@@ -11,9 +11,9 @@ import webbrowser
 import nuke
 import pyblish.api
 
+import cgtwq
 from cgtwn import Task
 from node import wlf_write_node
-from wlf import cgtwq
 from wlf.files import copy
 from wlf.path import PurePath
 
@@ -33,7 +33,7 @@ class CollectTask(pyblish.api.InstancePlugin):
 
         assert isinstance(instance, pyblish.api.Instance)
 
-        task = Task(PurePath(instance.name).shot)
+        task = Task.from_shot(PurePath(instance.name).shot)
         instance.context.data['task'] = task
         LOGGER.info('任务 %s', task)
 
@@ -47,10 +47,10 @@ class CollectUser(pyblish.api.ContextPlugin):
     def process(self, context):
         assert isinstance(context, pyblish.api.Context)
 
-        name = cgtwq.database.account_name()
+        name = cgtwq.current_account()
 
         context.data['artist'] = name
-        context.data['accountID'] = cgtwq.server.account_id()
+        context.data['accountID'] = cgtwq.current_account_id()
         context.create_instance(
             '制作者: {}'.format(name),
             family='制作者'
@@ -166,27 +166,27 @@ class UploadWorkFile(pyblish.api.InstancePlugin):
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
         workfile = instance.data['name']
-        task = instance.data['task']
+        task = instance.context.data['task']
         assert isinstance(task, Task)
         dest = task.get_filebox('workfile').path + '/'
-        dest = 'E:/test_pyblish/'
+        # dest = 'E:/test_pyblish/'
 
         copy(workfile, dest)
 
 
 class UploadJPG(pyblish.api.InstancePlugin):
-    """上传工作单帧至CGTeamWork.   """
+    """上传单帧至CGTeamWork.   """
 
     order = pyblish.api.IntegratorOrder
     label = '上传单帧'
     families = ['Nuke文件']
 
     def process(self, instance):
-        task = instance.data['task']
+        task = instance.context.data['task']
         assert isinstance(task, Task)
 
         n = wlf_write_node()
         path = nuke.filename(n.node('Write_JPG_1'))
-        dest = task.get_filebox('image').path + '/'
-        dest = 'E:/test_pyblish/'
+        dest = task.get_filebox('image').path + '/{}.jpg'.format(task.shot)
+        # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)

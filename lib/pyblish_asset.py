@@ -29,7 +29,7 @@ class CollectFile(pyblish.api.ContextPlugin):
 
     def process(self, context):
         context.data['comment'] = ''
-
+        LOGGER.error('Test')
         assert isinstance(context, pyblish.api.Context)
         filename = nuke.value('root.name')
         if not filename:
@@ -80,11 +80,16 @@ class CollectMTime(pyblish.api.ContextPlugin):
         footages = set()
         root = nuke.Root()
         for n in nuke.allNodes('Read', nuke.Root()):
-            filename = n.metadata('input/filename')
-            if not filename:
+            if n.hasError():
+                LOGGER.warning('读取节点出错: %s', n.name())
                 continue
+            filename = n.metadata('input/filename')
+            mtime = n.metadata('input/mtime')
+            if not filename or not mtime:
+                continue
+
             footage = FootageInfo(filename=filename,
-                                  mtime=time.strptime(n.metadata('input/mtime'),
+                                  mtime=time.strptime(mtime,
                                                       '%Y-%m-%d %H:%M:%S'))
             footages.add(footage)
         instance = context.create_instance(

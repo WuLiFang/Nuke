@@ -229,9 +229,11 @@ class Nodes(list):
         """Disable all.  """
 
         for n in self:
+            print(n)
             try:
                 n['disable'].setValue(True)
             except NameError:
+                raise
                 continue
 
     def enable(self):

@@ -23,9 +23,8 @@ import orgnize
 import panels
 import scanner
 import splitexr
-import wlf.cgtwq
-import wlf.csheet
-import wlf.uploader
+import cgtwq
+import cgtwq_uploader
 from nuketools import utf8
 from wlf.path import get_unicode as u
 
@@ -118,16 +117,11 @@ def add_menu():
         ]},
         {cgtw_menu: [
             _('登录', cgtwn.dialog_login),
-            _("批量下载", lambda: nuke.message(utf8(
-                '已在<b>CGTeamWork右键菜单</b>中集成此功能\n<i>预定删除此菜单</i>'))),
-            _('创建项目色板', cgtwn.check_login(True)
-              (lambda: wlf.csheet.__main__.Dialog().exec_())),
             _('创建项目文件夹', cgtwn.dialog_create_dirs)
         ]},
         {_('工具'): [
             _('批量自动合成', lambda: comp.panels.BatchCompPanel().showModalDialog(),
               icon='autocomp.png'),
-            _('创建色板', lambda: wlf.csheet.__main__.Dialog().exec_()),
             _('上传mov', lambda: nukescripts.panels.restorePanel(
                 'com.wlf.uploader')),
             _('扫描空文件夹', scanner.call_from_nuke),
@@ -139,12 +133,6 @@ def add_menu():
             _("吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
         ]}
     ]
-
-    # Hide cgtw menu if not installed.
-    if not wlf.cgtwq.MODULE_ENABLE:
-        for i in all_menu:
-            if cgtw_menu in i:
-                all_menu.remove(i)
 
     # Add all menu.
     def _add_menu(menu, parent=nuke.menu("Nuke")):
@@ -212,7 +200,7 @@ def add_panel():
     """Add custom pannel. """
 
     LOGGER.info('添加面板')
-    panels.register(wlf.uploader.Dialog, '上传mov', 'com.wlf.uploader')
+    panels.register(cgtwq_uploader.Dialog, '上传mov', 'com.wlf.uploader')
 
 
 def add_autolabel():
