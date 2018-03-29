@@ -72,3 +72,5 @@ build/
 
 # Site-pacakages
 /lib/site-packages
+
+.pytest_cache
