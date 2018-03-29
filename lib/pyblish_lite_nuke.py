@@ -6,21 +6,25 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 import os
-from multiprocessing.dummy import Queue, Lock, Event
+from multiprocessing.dummy import Event, Lock, Queue
 
 import nuke
 import pyblish.plugin
+import pyblish_lite
 from nukescripts.panels import restorePanel  # pylint: disable=import-error
 from pyblish_lite import app, control, settings, util, window
+from Qt import QtGui
 from Qt.QtCore import Qt
 from Qt.QtWidgets import QApplication, QDialog, QMainWindow, QStackedWidget
 
 import callback
+import filetools
 import panels
 import pyblish_asset
 import pyblish_cgtwn
 from nuketools import abort_modified, mainwindow
-
+from wlf.path import get_encoded as e
+from wlf.path import get_unicode as u
 
 ACTION_QUEUE = Queue()
 ACTION_LOCK = Lock()
@@ -112,13 +116,13 @@ class Window(window.Window):
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
 
-        with open(util.get_asset("app.css")) as f:
-            css = f.read()
+        with open(e(filetools.path("pyblish_lite.css"))) as f:
+            css = u(f.read())
 
             # Make relative paths absolute
             root = util.get_asset("").replace("\\", "/")
             css = css.replace("url(\"", "url(\"%s" % root)
-        self.setStyleSheet(css)
+        self.setStyleSheet(css.encode('utf-8'))
 
         self.setObjectName('PyblishWindow')
         self.setAttribute(Qt.WA_DeleteOnClose, True)
@@ -192,6 +196,19 @@ class Window(window.Window):
         raise ValueError('No such parent')
 
 
+def set_preferred_fonts(font, scale_factor=None):
+    """Set preferred font.  """
+
+    if scale_factor:
+        pyblish_lite.delegate.scale_factor = scale_factor
+    else:
+        scale_factor = pyblish_lite.delegate.scale_factor
+    pyblish_lite.delegate.fonts.update({
+        "h3": QtGui.QFont(font, 10 * scale_factor, 900),
+        "h4": QtGui.QFont(font, 8 * scale_factor, 400),
+        "h5": QtGui.QFont(font, 8 * scale_factor, 800)})
+
+
 def setup():
     panels.register(Window, '发布', 'com.wlf.pyblish')
 
@@ -209,6 +226,7 @@ def setup():
 
     app.install_fonts()
     app.install_translator(QApplication.instance())
+    set_preferred_fonts('微软雅黑', 1.2)
 
     for mod in (pyblish_cgtwn, pyblish_asset):
         for i in pyblish.plugin.plugins_from_module(mod):
