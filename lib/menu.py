@@ -12,6 +12,7 @@ def main():
     import project_settings
     import pyblish_lite_nuke
     import cgtwn
+    import cgtwq
 
     _ui.setup()
     pref.setup()
@@ -20,6 +21,7 @@ def main():
     project_settings.setup()
     pyblish_lite_nuke.setup()
     cgtwn.setup()
+    cgtwq.DesktopClient.start()
 
 
 if __name__ == '__main__':
