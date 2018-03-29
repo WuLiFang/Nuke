@@ -1,17 +1,17 @@
 # -*- coding=UTF-8 -*-
 """Found empty shot forlder.  """
+
 from __future__ import absolute_import
 
 import os
-import sys
 import re
+import sys
 import webbrowser
 
-from wlf.Qt import QtCore, QtWidgets, QtCompat
-from wlf.Qt.QtWidgets import QFileDialog
-import wlf.config
+from Qt import QtCompat, QtCore, QtWidgets
+from Qt.QtWidgets import QFileDialog
 
-__version__ = '0.1.2'
+import wlf.config
 
 
 class Config(wlf.config.Config):

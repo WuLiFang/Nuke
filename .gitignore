@@ -69,3 +69,6 @@ build/
 
 # venv
 .venv/
+
+# Site-pacakages
+/lib/site-packages

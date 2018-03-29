@@ -1,9 +1,12 @@
+# -*- coding=UTF-8 -*-
 """Wrap QWidget to nuke panel.  """
 
-import nuke
-from nukescripts.panels import PythonPanel, registerPanel
+from __future__ import unicode_literals, absolute_import
 
-__version__ = '0.1.1'
+import nuke
+from nukescripts.panels import PythonPanel, registerPanel, restorePanel  # pylint: disable=import-error
+
+from wlf.path import get_encoded
 
 
 def register(widget, name, widget_id, create=False):
@@ -20,9 +23,10 @@ def register(widget, name, widget_id, create=False):
     class _Panel(PythonPanel):
 
         def __init__(self, widget, name, widget_id):
-            PythonPanel.__init__(self, name, widget_id)
+            name_e = get_encoded(name, 'utf-8')
+            PythonPanel.__init__(self, name_e, widget_id)
             self.custom_knob = nuke.PyCustom_Knob(
-                name, "",
+                name_e, "",
                 "__import__('nukescripts').panels.WidgetKnob("
                 "__import__('{0.__module__}', globals(), locals(), ['{0.__name__}'])"
                 ".{0.__name__})".format(widget))
@@ -32,7 +36,7 @@ def register(widget, name, widget_id, create=False):
         return _Panel(widget, name, widget_id).addToPane()
 
     menu = nuke.menu('Pane')
-    menu.addCommand(name, _add)
+    menu.addCommand(get_encoded(name, 'utf-8'), _add)
     registerPanel(widget_id, _add)
 
     if (create):

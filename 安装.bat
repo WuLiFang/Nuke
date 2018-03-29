@@ -1,5 +1,6 @@
 @ECHO off
-SET "TEXT=nuke.pluginAddPath(r'%~dp0')"
+CHCP 936
+SET "TEXT=nuke.pluginAddPath(r'%~dp0/')"
 SET "FILE=%UserProfile%\.nuke\init.py"
 
 FIND /C /I "%TEXT%" "%FILE%" >nul 2>nul

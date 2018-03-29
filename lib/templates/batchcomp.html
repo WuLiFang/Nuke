@@ -34,20 +34,33 @@
         }
 
         .info {
-            width:  80%;
+            width: 80%;
             white-space: pre-wrap;
             word-break: break-all;
         }
     </style>
-    <script language="javascript">
+    <script>
         window.onload = function showtable() {
-            var tablename = document.getElementById("mytable");
-            var li = tablename.getElementsByTagName("tr");
-            for (var i = 0; i <= li.length; i++) {
-                if (i % 2 == 0) {
-                    li[i].style.backgroundColor = "#EEE";
-                } else li[i].style.backgroundColor = "#FFF";
+            var table = document.getElementById("report");
+            var rows = table.getElementsByTagName("tr");
+            for (var i = 0; i <= rows.length; i++) {
+                rows[i].style.backgroundColor = (i % 2 == 0) ? "#EEE" : "#FFF";
             }
         }
     </script>
 </head>
+
+<body>
+    <table id="report">
+        <tr>
+            <th>镜头</th>
+            <th>信息</th>
+        </tr>{% for shot, info in shots_info %}
+        <tr>
+            <td class="shot">
+                <img src="images/{{ shot }}_v0.jpg" class="preview"></img>
+                <br>{{ shot | e }}</td>
+            <td class="info">{{ info | e }}</td>
+        </tr>{% endfor %}
+    </table>
+</body>

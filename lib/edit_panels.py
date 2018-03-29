@@ -1,17 +1,15 @@
 # -*- coding: UTF-8 -*-
 """UI for edit operation."""
-from __future__ import absolute_import
+
+from __future__ import absolute_import, print_function, unicode_literals
 
 import nuke
-import nukescripts
-from edit import crate_copy_from_dict, replace_node, CurrentViewer,\
-    set_knobs, same_class_filter, transfer_flags
-from wlf.notify import Progress, CancelledError
+import nukescripts  # pylint: disable=import-error
 
-__version__ = '0.2.6'
-
-if not nuke.GUI:
-    nukescripts.PythonPanel = object
+from edit import (CurrentViewer, named_copy, replace_node, set_knobs,
+                  transfer_flags)
+from nuketools import undoable_func
+from wlf.notify import CancelledError, progress
 
 
 class ChannelsRename(nukescripts.PythonPanel):
@@ -46,7 +44,7 @@ class ChannelsRename(nukescripts.PythonPanel):
 
         nuke.Undo.disable()
         nukescripts.PythonPanel.__init__(
-            self, '重命名通道', 'com.wlf.channels_rename')
+            self, b'重命名通道', 'com.wlf.channels_rename')
 
         n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
         self._layercontactsheet = n
@@ -77,6 +75,7 @@ class ChannelsRename(nukescripts.PythonPanel):
 
     def destroy(self):
         """Destroy the panel.  """
+
         super(ChannelsRename, self).destroy()
         nuke.Undo.disable()
         self._layercontactsheet['label'].setValue('[delete this]')
@@ -88,17 +87,16 @@ class ChannelsRename(nukescripts.PythonPanel):
         if knob in (self._knobs['ok'], self._knobs['cancel']):
             self._viewer.recover()
             if knob is self._knobs['ok']:
-                nuke.Undo.begin()
-                nuke.Undo.name('重命名通道')
-                n = crate_copy_from_dict(self.rename_dict, self._node)
-                replace_node(self._node, n)
-                nuke.Undo.end()
+                self.execute()
             self.destroy()
 
-    @property
-    def rename_dict(self):
-        """Dictionary for channels_rename().  """
-        return {channel: self._knobs[channel].value() for channel in self._channels}
+    @undoable_func('重命名通道')
+    def execute(self):
+        """Execute named copy.  """
+        n = named_copy(self._node,
+                       {channel: self._knobs[channel].value()
+                        for channel in self._channels})
+        replace_node(self._node, n)
 
     def show(self):
         """Show self to user.  """
@@ -115,7 +113,7 @@ class MultiEdit(nukescripts.PythonPanel):
 
     def __init__(self, nodes=None):
         nukescripts.PythonPanel.__init__(
-            self, '多节点编辑', 'com.wlf.multiedit')
+            self, b'多节点编辑', 'com.wlf.multiedit')
 
         nodes = nodes or nuke.selectedNodes()
         assert nodes, 'Nodes not given. '
@@ -125,7 +123,7 @@ class MultiEdit(nukescripts.PythonPanel):
 
         knobs = nodes[0].allKnobs()
 
-        self.addKnob(nuke.Text_Knob('', '以 {} 为模版'.format(nodes[0].name())))
+        self.addKnob(nuke.Text_Knob('', b'以 {} 为模版'.format(nodes[0].name())))
         self.addKnob(nuke.Tab_Knob('', nodes[0].Class()))
 
         def _tab_knob():
@@ -169,10 +167,10 @@ class MultiEdit(nukescripts.PythonPanel):
 
         self.addKnob(nuke.EndTabGroup_Knob(''))
 
-        self._rename_knob = nuke.EvalString_Knob('', '重命名')
+        self._rename_knob = nuke.EvalString_Knob('', b'重命名')
         self.addKnob(self._rename_knob)
-        self.addKnob(nuke.ColorChip_Knob('tile_color', '节点颜色'))
-        self.addKnob(nuke.ColorChip_Knob('gl_color', '框线颜色'))
+        self.addKnob(nuke.ColorChip_Knob('tile_color', b'节点颜色'))
+        self.addKnob(nuke.ColorChip_Knob('gl_color', b'框线颜色'))
         k = nuke.PyScript_Knob('ok', 'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
@@ -197,28 +195,47 @@ class MultiEdit(nukescripts.PythonPanel):
     def knobChanged(self, knob):
         """Override. """
         if knob is self['ok']:
-            nuke.Undo.begin()
-            nuke.Undo.name('同时编辑多个节点')
-            task = Progress('设置节点', total=len(self.nodes))
-            for n in self.nodes:
-                try:
-                    task.step(n.name())
-                except CancelledError:
-                    nuke.Undo.cancel()
-                    return
-                set_knobs(n, self._values)
-                new_name = self._rename_knob.evaluate()
-                if new_name:
-                    n.setName(new_name)
-            nuke.Undo.end()
-            self.destroy()
+            try:
+                self.execute()
+                self.destroy()
+            except CancelledError:
+                pass
         else:
             self._values[knob.name()] = knob.value()
 
+    @undoable_func('同时编辑多个节点')
+    def execute(self):
+        for n in progress(self.nodes, '设置节点'):
+            set_knobs(n, **self._values)
+            new_name = self._rename_knob.evaluate()
+            if new_name:
+                try:
+                    n.setName(new_name)
+                except ValueError:
+                    nuke.message(b'非法名称, 已忽略')
+
     def show(self):
         """Show self to user.  """
+
         pane = nuke.getPaneFor('Properties.1')
         if pane:
             self.addToPane(pane)
         else:
             self.addToPane(nuke.getPaneFor('Viewer.1'))
+
+
+def same_class_filter(nodes, node_class=None):
+    """Filter nodes to one class."""
+
+    classes = list(
+        set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
+    classes.sort()
+    if len(classes) > 1:
+        choice = nuke.choice(b'选择节点分类', b'节点分类', classes, default=0)
+        if choice is not None:
+            nodes = [n for n in nodes if n.Class()
+                     == classes[choice]]
+        else:
+            nodes = [n for n in nodes if n.Class()
+                     == nodes[0].Class()]
+    return nodes

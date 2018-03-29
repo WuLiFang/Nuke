@@ -1,31 +1,31 @@
 # -*- coding: UTF-8 -*-
 """Nuke init file.  """
 
-from __future__ import print_function, unicode_literals, absolute_import
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
-import os
-import sys
-import re
-import logging
+_GLOBAL_BEFORE_INIT = dict(globals())
 
-from wlf.files import map_drivers
-from wlf.mp_logging import set_basic_logger
-from wlf.env import set_default_encoding
 
-from lib import __version__
+def setup_site():
+    """Add local site-packages to python.  """
+    import site
+    import os
 
-LOGGER = logging.getLogger('com.wlf')
+    site.addsitedir(os.path.abspath(
+        os.path.join(__file__, '../site-packages')))
+
+
+setup_site()
 
 
 def main():
-    """Main entry.  """
-
+    import os
+    import sys
     import callback
+    import render
+    import wlf.mp_logging
 
-    set_basic_logger(LOGGER)
-    set_default_encoding('UTF-8')
-
-    # Validation.
     try:
         import validation
     except ImportError:
@@ -33,17 +33,16 @@ def main():
             os.path.normpath(os.path.join(__file__, '../../'))))
         sys.exit(1)
 
-    print('-' * 20)
-    print(u'吾立方插件 {}\n许可至: {}'.format(__version__, validation.EXPIRE_AT))
-    print('-' * 20)
-    del validation.EXPIRE_AT
+    # wlf.mp_logging.basic_config()
+    import logging
+    logging.basicConfig(level='DEBUG')
 
-    # Map drivers.
-    if sys.platform == 'win32':
-        if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
-            map_drivers()
+    validation.setup()
+    callback.setup()
+    render.setup()
 
-    callback.init()
+    # Recover outter scope env.
+    globals().update(_GLOBAL_BEFORE_INIT)
 
 
 if __name__ == '__main__':

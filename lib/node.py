@@ -2,15 +2,13 @@
 """Setup node.  """
 from __future__ import absolute_import
 
+import logging
 import os
 import time
-import logging
 
 import nuke
 
-import wlf.path
-
-__version__ = '0.3.8'
+from wlf.path import PurePath
 
 LOGGER = logging.getLogger('com.wlf.node')
 
@@ -25,41 +23,32 @@ def append_knob(node, knob):
 
 
 class ReadNode(object):
-    """Modifiled ReadNode by wlf.  """
+    """Read node with tag and layer information  """
 
     tag_knob_name = u'wlf_tag'
     layer_knob_name = u'wlf_layer'
 
     def __init__(self, node):
-        if not isinstance(node, nuke.Node):
-            raise TypeError
+        assert isinstance(node, nuke.Node)
         n = node
-        self._node = n
+
         self._filename = nuke.filename(n)
-        tag = nuke.value(u'{}.{}'.format(n.name(), self.tag_knob_name), '')\
-            or self.tag()
+        path = PurePath(self._filename)
+
+        tag = (nuke.value(u'{}.{}'.format(n.name(), self.tag_knob_name), '')
+               or path.tag)
 
         k = nuke.String_Knob(self.tag_knob_name, '标签')
         append_knob(node, k)
         k.setValue(tag)
 
-        layer = wlf.path.get_layer(nuke.filename(n))
+        layer = path.layer
         k = nuke.String_Knob(self.layer_knob_name, '层')
         append_knob(node, k)
-        k.setValue(layer)
+        k.setValue(path.layer)
 
         n.setName('_'.join(i for i in (tag, layer) if i),
                   updateExpressions=True)
-
-    def tag(self):
-        """Return Read node tag.  """
-        ret = wlf.path.get_tag(self._filename)
-
-        return ret
-
-    def layer(self):
-        """Return Read node layer.  """
-        return wlf.path.get_layer(self._filename)
 
 
 def wlf_write_node():
@@ -70,22 +59,9 @@ def wlf_write_node():
     if not n:
         nodes = nuke.allNodes('wlf_Write')
         n = nodes and nodes[0]
-
+    if not n:
+        raise ValueError('Not found wlf_Write Node.')
     return n
-
-
-def get_upstream_nodes(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
-    """ Return all nodes in the tree of the node. """
-    ret = set()
-    if isinstance(nodes, nuke.Node):
-        nodes = [nodes]
-
-    nodes = list(nodes)
-    while nodes:
-        deps = nuke.dependencies(nodes, flags)
-        nodes = [n for n in deps if n not in ret and n not in nodes]
-        ret.update(set(deps))
-    return ret
 
 
 def parent_backdrop(node):

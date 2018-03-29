@@ -1,0 +1,1 @@
+pip install --target="%~pd0lib/site-packages" --process-dependency-links --upgrade -r "%~dp0requirements.txt"

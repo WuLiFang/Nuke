@@ -164,7 +164,7 @@ name-group=
 
 # Regular expression which should only match function or class names that do
 # not require a docstring.
-no-docstring-rgx=^_|(.*Event)|.*TestCase|^test_|^main$
+no-docstring-rgx=^_|(.*Event)|.*TestCase|^test_|^main$|^setup$
 
 # List of decorators that produce properties, such as abc.abstractproperty. Add
 # to this list to register other decorators that produce valid properties.
@@ -268,7 +268,7 @@ contextmanager-decorators=contextlib.contextmanager
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E1101 when accessed. Python regular
 # expressions are accepted.
-generated-members=
+generated-members=nuke\.nodes\..*,.+\.log$
 
 # Tells whether missing members accessed in mixin class should be ignored. A
 # mixin class is detected if its name ends with "mixin" (case insensitive).
@@ -395,7 +395,7 @@ allow-wildcard-with-all=no
 analyse-fallback-blocks=no
 
 # Deprecated modules which should not be used, separated by a comma
-deprecated-modules=regsub,TERMIOS,Bastion,rexec,wlf.progress,wlf.message
+deprecated-modules=regsub,TERMIOS,Bastion,rexec
 
 # Create a graph of external dependencies in the given file (report RP0402 must
 # not be disabled)
@@ -414,7 +414,7 @@ int-import-graph=
 known-standard-library=
 
 # Force import order to recognize a module as part of a third party library.
-known-third-party=enchant
+known-third-party=enchant,nuke,nukescripts
 
 
 [EXCEPTIONS]

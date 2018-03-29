@@ -1,6 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Comp multi pass to beauty."""
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
 import inspect
 import json
@@ -11,19 +11,12 @@ import sys
 
 import nuke
 
-from edit import add_layer, copy_layer, undoable_func, replace_node
+from edit import add_layer, copy_layer, replace_node
 from orgnize import autoplace
-from wlf.path import PurePath
+from nuketools import utf8, utf8_dict, undoable_func
+from wlf.path import PurePath, get_unicode as u
 
-__version__ = '0.4.5'
 LOGGER = logging.getLogger('com.wlf.precomp')
-
-
-@undoable_func('Redshift预合成')
-def redshift(nodes, **kwargs):
-    """Precomp reshift footages.  """
-
-    return Precomp(nodes, renderer='redshift', **kwargs).last_node
 
 
 class __PrecompSwitch(object):
@@ -133,7 +126,7 @@ class Precomp(object):
             return n.metadata('input/filename') or nuke.filename(n) or ''
 
         config_file = os.path.join(
-            __file__, '../wlf/precomp.{}.json'.format(renderer))
+            __file__, '../../wlf/precomp.{}.json'.format(renderer))
         with open(config_file) as f:
             self._config = json.load(f)
         self._combine_dict = dict(self._config.get('combine'))
@@ -149,8 +142,11 @@ class Precomp(object):
             path = PurePath(_get_filename(n))
             path.layers = self._config['layers']
             layer = path.layer
-            n['label'].setValue(
-                '\n'.join([n['label'].value(), self.l10n(layer)]).strip())
+            _layer = self.l10n(layer)
+            _label = u(n['label'].value())
+            if _layer not in _label:
+                n['label'].setValue('{}\n{}'.format(
+                    _label, _layer).strip().encode('utf-8'))
             if layer:
                 self.source[layer] = n
             else:
@@ -195,7 +191,8 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         setattr(sys.modules['__main__'], '__PrecompSwitch', PrecompSwitch)
         if self.last_node is remove_node:
             kwargs['disable'] = True
-        self.last_node = PrecompSwitch.init(nuke.nodes.Switch(**kwargs))
+        self.last_node = PrecompSwitch.init(
+            nuke.nodes.Switch(**utf8_dict(kwargs)))
 
         replace_node(dot_node.input(0), self.last_node)
 
@@ -221,7 +218,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         for pat in self._translate_dict:
             if re.match(pat, value):
                 return re.sub(pat, self._translate_dict[pat], value)
-        return value
+        return u(value)
 
     def node(self, layer):
         """Return a node that should be treat as @layer.  """
@@ -231,13 +228,12 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         if layer in self.layers():
             kwargs = {'inputs': (self.last_node,),
                       'in': layer,
-                      'label': u'修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
+                      'label': '修改日期: [metadata input/mtime]\n{}'.format(self.l10n(layer))}
             try:
                 kwargs['postage_stamp'] = self.last_node['postage_stamp'].value()
             except NameError:
                 pass
-            ret = nuke.nodes.Shuffle(
-                **kwargs)
+            ret = nuke.nodes.Shuffle(**utf8(kwargs))
         elif layer in self._combine_dict.keys():
             pair = self._combine_dict[layer]
             if self.source.get(pair[0])\
@@ -254,7 +250,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                                                and input1['postage_stamp'].value())
                 except NameError:
                     pass
-                n = nuke.nodes.Merge2(**kwargs)
+                n = nuke.nodes.Merge2(**utf8_dict(kwargs))
                 self.source[layer] = n
                 ret = n
             else:
@@ -278,7 +274,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         self.last_node = nuke.nodes.Merge2(
             inputs=[self.last_node, input1], operation='plus',
             also_merge=layer if layer not in self.layers() else 'none',
-            label=self.l10n(layer),
+            label=utf8(self.l10n(layer)),
             output='rgb')
 
     def copy(self, layer, output=None):
@@ -294,3 +290,10 @@ __PrecompSwitch.init(nuke.thisNode())"""}
     def multiply(self, layer):
         """Plus a layer to last.  """
         pass
+
+    @classmethod
+    @undoable_func('Redshift预合成')
+    def redshift(cls, nodes, **kwargs):
+        """Precomp reshift footages.  """
+
+        return cls(nodes, renderer='redshift', **kwargs).last_node

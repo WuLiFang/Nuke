@@ -1,322 +1,155 @@
 # -*- coding=UTF-8 -*-
 """
-cgteamwork integration with nuke.
+cgteamwork integration for nuke.
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, print_function, unicode_literals
 
-import os
 import logging
+import os
 import webbrowser
-from functools import wraps
 
 import nuke
 
-from wlf import cgtwq
-from wlf.path import remove_version
-from wlf.files import copy
-from wlf.notify import CancelledError, Progress, traytip
-import wlf.config
-
 from edit import CurrentViewer
-from node import Last
+from nuketools import utf8
+import cgtwq
+from wlf.notify import CancelledError, progress, traytip
+from wlf.path import Path
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
 
-class Config(wlf.config.Config):
-    """Comp config.  """
-    default = {
-        'csheet_database': 'proj_big',
-        'csheet_prefix': 'SNJYW_EP14_',
-        'csheet_outdir': 'E:/',
-        'csheet_checked': False,
-    }
-    path = os.path.expanduser(u'~/.nuke/wlf.comp.json')
-
-
-def abort_modified(func):
-    """(Decorator)Abort function when project has been modified."""
-
-    def _func():
-        if nuke.Root().modified():
-            return False
-        func()
-    return _func
-
-
-def abort_when_module_not_enable(func):
-    """(Decorator)Abort function if MODULE_ENABLE is not true."""
-
-    def _func():
-        if not cgtwq.MODULE_ENABLE:
-            return
-        func()
-    return _func
-
-
-def check_login(update=False):
-    """(Decorator)Abort funciton if not logged in."""
-
-    def _deco(func):
-
-        @wraps(func)
-        def _func(*args, **kwargs):
-            if update:
-                cgtwq.CGTeamWork.update_status()
-            if cgtwq.CGTeamWork.is_logged_in:
-                return func(*args, **kwargs)
-            else:
-                if nuke.GUI:
-                    traytip('警告', 'CGTeamWork未登录', options=2)
-        return _func
-    return _deco
-
-
-class CurrentShot(cgtwq.Shot):
-    """The shot of current script.  """
-
-    def __init__(self):
-        cgtwq.Shot.__init__(self, self.name)
+class Database(cgtwq.Database):
+    """Optimized cgtwq database fro nuke.   """
 
     @classmethod
-    def get_info(cls):
-        """The project info.  """
-        return cgtwq.proj_info(shot_name=cls.get_name())
+    def from_shot(cls, shot, default=None):
+        """Get database from filename.
 
-    @classmethod
-    def get_name(cls):
-        """The current shot name.  """
-        return remove_version(os.path.splitext(os.path.basename(Last.name))[0])
+        Args:
+            shot (unicode): shot name to get database.
+            default (unicode, optional): Defaults to None.
+                Default database name.
 
-    @property
-    def name(self):
-        """The current shot name.  """
-        return self.get_name()
+        Raises:
+            ValueError: When no matched database,
+                and `default` is not set.
 
-    @property
-    def workfile(self):
-        """The path of current nk_file.  """
-        return Last.name
+        Returns:
+            Database: Filename related database.
+        """
 
-    @property
-    def image(self):
-        """The rendered single image.  """
-        return Last.jpg_path
-
-    @property
-    def video(self):
-        """The rendered single image.  """
-        return Last.mov_path
-
-    def upload_image(self):
-        """Upload imge to server and record it to cgtw database.  """
-
-        LOGGER.debug('Uploading image to cgtw.')
-        ret = copy(self.image, self.image_dest)
-        if ret:
-            self.shot_image = ret
-        return ret
-
-    def submit_image(self):
-        """Upload .jpg to server then sumbit these files."""
-        self.upload_image()
-        self.submit([self.image_dest])
-
-    def submit_video(self):
-        """Upload .mov to server then sumbit these files."""
-
-        copy(self.video, self.video_dest)
-        self.submit([self.video_dest])
-
-    @check_login(False)
-    def ask_add_note(self):
-        """Show a dialog for self.add_note function."""
-
-        note = nuke.getInput(
-            u'note内容'.encode('UTF-8'),
-            u'来自nuke的note'.encode('UTF-8')
-        )
-        if note:
-            self.add_note(note)
+        data = cgtwq.PROJECT.all().get_fields('code', 'database')
+        for i in data:
+            code, database = i
+            if unicode(shot).startswith(code):
+                return cls(database)
+        if default:
+            return cls(default)
+        raise ValueError(
+            'Can not determinate database from filename.', shot)
 
 
-def check_with_upstream():
-    """Check if script setting match upstream.  """
+class Task(cgtwq.Entry):
+    """Selection for single shot.  """
+    # pylint: disable=too-many-ancestors
 
-    nodes = {
-        '动画视频': u'animation'
-    }
-    root = nuke.Root()
-    msg = []
-    first = root['first_frame'].value()
-    last = root['last_frame'].value()
-    current = {
-        'frame_count': last - first + 1,
-        'fps': root['fps'].value()
-    }
-    shot = CurrentShot()
-    info = shot.get_info()
-    default_fps = info.get('fps', 30)
-    videos = shot.upstream_videos()
-    row_format = '<tr><td>{0}</td><td>{1[frame_count]:.0f}帧</td><td>{1[fps]:.0f}fps</td></tr>'
+    shot = None
 
-    LOGGER.debug('Upstream videos: %s', videos)
+    def __unicode__(self):
+        database = self.module.database
+        project = cgtwq.PROJECT.filter(cgtwq.Filter(
+            'database', database.name))['full_name'][0]
+        return '{}: {}'.format(project, self.shot)
 
-    has_video_node = False
-    input_num = 4
-    for name, pipeline in nodes.items():
-        n = nuke.toNode(name)
+    def import_video(self, sign):
+        """Import corresponse video by filebox sign.
+
+        Args:
+            sign (unicode): Server defined fileboxsign
+
+        Returns:
+            nuke.Node: Created read node.
+        """
+
+        node_name = {'animation_videos': '动画视频'}.get(sign, sign)
+        n = nuke.toNode(utf8(node_name))
         if n is None:
-            video = videos.get(pipeline)
-            if video:
-                n = nuke.nodes.Read(name=name)
-                n['file'].fromUserText(video)
-            else:
-                LOGGER.debug('Can not get video: %s', pipeline)
-                continue
-        has_video_node = True
-        n['frame_mode'].setValue('start_at')
-        n['frame'].setValue(str(first))
-        CurrentViewer().link(n, input_num, replace=False)
-        input_num += 1
-        upstream = {
-            'frame_count':  n['origlast'].value() - n['origfirst'].value() + 1,
-            'fps': n.metadata('input/frame_rate') or default_fps
-        }
-        if upstream != current:
-            msg.append(row_format.format(name, upstream))
+            dir_ = self.get_filebox(sign).path
+            videos = Path(dir_).glob('{}.*'.format(self.shot))
+            for video in videos:
+                n = nuke.nodes.Read(name=utf8(node_name))
+                n['file'].fromUserText(unicode(video).encode('utf-8'))
+                break
+        n['frame_mode'].setValue(b'start_at')
+        n['frame'].setValue(b'{:.0f}'.format(
+            nuke.numvalue('root.first_frame')))
+        CurrentViewer().link(n, 4, replace=False)
+        return n
 
-    if msg:
-        msg.insert(0, row_format.format('当前', current))
-        style = '<style>td{padding:8px;}</style>'
-        msg = '<font color="red">工程和上游不一致</font><br>'\
-            '<table><th columnspan=3>{}<th>{}</table><hr>{}'.format(
-                shot.name, ''.join(msg),
-                '{} 默认fps:{}'.format(info.get('name'), default_fps))
-        nuke.message(style + msg)
-    elif not has_video_node:
-        if current['fps'] != default_fps:
-            confirm = nuke.ask(
-                '当前fps: {}, 设为默认值: {} ?'.format(current['fps'], default_fps))
-            if confirm:
-                nuke.knob('root.fps', str(default_fps))
+    @classmethod
+    def from_shot(cls, shot, pipeline='合成'):
+        """Get task entry from shot name.
 
+        Args:
+        shot (str): Shot name.
+            pipeline (str, optional): Defaults to '合成'. Pipline name.
+        """
+        database = Database.from_shot(shot)
+        LOGGER.debug('Database: %s', database.name)
+        module = database['shot_task']
+        id_list = module.filter(cgtwq.Filter('shot.shot', shot) &
+                                cgtwq.Filter('pipeline', pipeline))
+        if len(id_list) > 1:
+            LOGGER.warning('Duplicated task: %s', shot)
+            select = module.select(*id_list)
+            current_account_id = cgtwq.util.current_account_id()
+            data = select.get_fields('id', 'account_id')
+            data = {i[0]: i[1] for i in data}
 
-def check_fx():
-    """Check if has fx footage.  """
+            def _by_artist(id_):
+                task_account_id = data[id_]
+                if not task_account_id:
+                    return 2
+                if current_account_id in task_account_id:
+                    return 0
+                return 1
+            id_list = sorted(id_list, key=_by_artist)
 
-    info = CurrentShot().task_module.get_filebox_with_sign('fx')
-    if info:
-        dir_ = info['path']
-        if os.listdir(dir_):
-            nuke.message('此镜头有特效素材')
-            webbrowser.open(dir_)
-
-
-@abort_when_module_not_enable
-@check_login(False)
-def on_load_callback():
-    """Show cgtwn status"""
-
-    try:
-        check_with_upstream()
-        check_fx()
-        traytip('当前CGTeamWork项目', '{}:合成'.format(
-            CurrentShot().info.get('name')))
-
-    except cgtwq.LoginError:
-        traytip('Nuke无法访问数据库', '请登录CGTeamWork')
-    except cgtwq.IDError as ex:
-        traytip('CGteamwork找不到对应条目', str(ex))
-
-
-@abort_when_module_not_enable
-@check_login(True)
-def on_save_callback():
-    """Try upload nk file to server."""
-
-    try:
-        check_with_upstream()
-        shot = CurrentShot()
-        shot.check_account()
-        dst = copy(shot.workfile, shot.workfile_dest)
-        if dst:
-            traytip('更新文件', dst)
-    except cgtwq.LoginError:
-        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-    except cgtwq.IDError:
-        traytip('更新文件', u'CGTW上未找到对应镜头')
-    except cgtwq.AccountError as ex:
-        traytip('未更新文件',
-                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
-
-
-@abort_when_module_not_enable
-@abort_modified
-@check_login(False)
-def on_close_callback():
-    """Try upload image to server."""
-
-    on_save_callback()
-    try:
-        nuke.scriptName()
-    except RuntimeError:
-        LOGGER.warning('尝试在未保存时上传单帧')
-        return
-    try:
-        shot = CurrentShot()
-        shot.check_account()
-        if not shot.image:
-            traytip('未更新单帧', '找不到单帧路径')
-            return
-
-        dst = shot.upload_image()
-        if dst:
-            traytip('更新单帧', dst)
-    except OSError:
-        traytip('未更新单帧', '找不到文件 {}'.format(shot.image))
-    except cgtwq.LoginError:
-        traytip('需要登录', u'请尝试从Nuke的CGTeamWork菜单登录帐号或者重启电脑')
-    except cgtwq.IDError as ex:
-        traytip('未更新单帧', u'CGTW上未找到对应镜头\n {}'.format(ex))
-    except cgtwq.AccountError as ex:
-        traytip('未更新单帧',
-                '当前镜头已被分配给:\t{}\n当前用户:\t\t{}'.format(ex.owner or '<未分配>', ex.current))
-    except Exception as ex:
-        LOGGER.error('Unexpected exception', exc_info=True)
-        raise
+        ret = cls(module, id_list[0])
+        ret.shot = shot
+        return ret
 
 
 def dialog_login():
     """Login teamwork.  """
     account = '帐号'
     password = '密码'
-    panel = nuke.Panel('登录CGTeamWork')
-    panel.addSingleLineInput('帐号', '')
-    panel.addPasswordInput('密码', '')
+    panel = nuke.Panel(utf8('登录CGTeamWork'))
+    panel.addSingleLineInput(utf8('帐号'), '')
+    panel.addPasswordInput(utf8('密码'), '')
 
-    success = False
-    while not success:
+    while True:
         confirm = panel.show()
         if confirm:
-            success = cgtwq.CGTeamWork().login(panel.value(account), panel.value(password))
-            if not success:
+            try:
+                cgtwq.server.setting.DEFAULT_TOKEN = cgtwq.login(
+                    panel.value(account), panel.value(password))
+            except ValueError:
                 traytip('CGTeamWork', '登录失败')
-            else:
-                traytip('CGTeamWork', '登录成功')
-        else:
-            break
+                continue
+            traytip('CGTeamWork', '登录成功')
+        break
 
 
-@check_login(True)
 def dialog_create_dirs():
     """A dialog for create dirs from cgtwq.  """
 
-    folder_input_name = '输出文件夹'
-    database_input_name = '数据库'
-    prefix_input_name = '镜头名前缀限制'
-    panel = nuke.Panel('为项目创建文件夹')
+    folder_input_name = b'输出文件夹'
+    database_input_name = b'数据库'
+    prefix_input_name = b'镜头名前缀限制'
+    panel = nuke.Panel(b'为项目创建文件夹')
     panel.addSingleLineInput(database_input_name, 'proj_qqfc_2017')
     panel.addSingleLineInput(prefix_input_name, '')
     panel.addFilenameSearch(folder_input_name, 'E:/temp')
@@ -325,23 +158,31 @@ def dialog_create_dirs():
         return
 
     try:
-        task = Progress('创建文件夹')
         database = panel.value(database_input_name)
         save_path = panel.value(folder_input_name)
         prefix = panel.value(prefix_input_name)
 
-        task.set(10)
-        try:
-            names = cgtwq.Shots(database, prefix=prefix).shots
-        except cgtwq.IDError as ex:
-            nuke.message('找不到对应条目\n{}'.format(ex))
-            return
-        task.set(20)
+        for _ in progress(['连接CGTeamWork...', ], '创建文件夹'):
+            try:
+                select = cgtwq.Database(database)['shot_task'].filter(
+                    cgtwq.Field('pipeline') == '合成')
+            except cgtwq.IDError as ex:
+                nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
+                return
 
-        for name in names:
+        for name in progress(select['shot.shot'], '创建文件夹'):
+            if not name or not name.startswith(prefix):
+                continue
             _path = os.path.join(save_path, name)
             if not os.path.exists(_path):
                 os.makedirs(_path)
         webbrowser.open(save_path)
     except CancelledError:
-        LOGGER.debug(u'用户取消创建文件夹')
+        LOGGER.debug('用户取消创建文件夹')
+
+
+import callback
+
+
+def setup():
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(cgtwq.update_setting)
