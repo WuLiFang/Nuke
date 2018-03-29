@@ -40,7 +40,11 @@ def create_out_dirs(node=None):
 def _jump_frame():
     if nuke.numvalue('preferences.wlf_jump_frame', 0.0):
         LOGGER.debug('Jump frame')
-        n = wlf_write_node()
+        try:
+            n = wlf_write_node()
+        except ValueError:
+            LOGGER.warning('No `wlf_Write` node.')
+            return
         if n:
             nuke.frame(n['frame'].value())
             nuke.Root().setModified(False)
