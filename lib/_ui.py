@@ -234,7 +234,7 @@ def create_menu_by_dir(parent, dir_):
             if _ext.lower() == '.gizmo':
                 parent.addCommand(
                     _name,
-                    lambda: nuke.createNode('{}'.format(_name)),
+                    lambda name=_name: nuke.createNode(name),
                     icon='{}.png'.format(_name))
 
 
