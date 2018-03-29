@@ -145,7 +145,11 @@ class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
         assert isinstance(task, Task)
 
         with scripttools.keep_modifield_status():
-            n = task.import_video('animation_videos')
+            try:
+                n = task.import_video('animation_videos')
+            except ValueError:
+                self.log.error('导入上游视频失败')
+                raise
         upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
         current_framecount = int(
             instance.data['last'] - instance.data['first'] + 1)

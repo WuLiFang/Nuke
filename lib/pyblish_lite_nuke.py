@@ -6,7 +6,7 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 import os
-from threading import Event
+from multiprocessing.dummy import Queue, Lock, Event
 
 import nuke
 import pyblish.plugin
@@ -22,51 +22,62 @@ import pyblish_cgtwn
 from nuketools import abort_modified, mainwindow
 
 
-def _pyblish_action(name, is_block=False, is_reset=True):
+ACTION_QUEUE = Queue()
+ACTION_LOCK = Lock()
+
+
+def _do_actions():
+    with ACTION_LOCK:
+        while not ACTION_QUEUE.empty():
+            ACTION_QUEUE.get()()
+
+
+def _after_signal(signal, func):
+    def _func():
+        signal.disconnect(_func)
+        func()
+    signal.connect(_func)
+
+
+def _validate():
+    ACTION_QUEUE.put(_pyblish_action('validate', True))
+    _do_actions()
+
+
+def _publish():
+    ACTION_QUEUE.put(_pyblish_action('publish', False))
+    _do_actions()
+
+
+def _pyblish_action(name, is_reset=True):
     def _func():
         if nuke.value('root.name', None):
             Window.dock()
+
         window_ = Window.instance
         assert isinstance(window_, Window)
         controller = window_.controller
         assert isinstance(controller, control.Controller)
 
-        # Wait finish previous running.
-        while window_.running_event.is_set():
-            QApplication.processEvents()
-            nuke.tprint('waiting')
-        window_.running_event.set()
-
-        finish_event = Event()
+        start = getattr(window_, name)
         signal = {'publish': controller.was_published,
                   'validate': controller.was_validated}[name]
 
-        def _action():
-            assert isinstance(controller, control.Controller)
-            controller.was_reset.disconnect(_action)
-            _start()
-
-        def _start():
-            if is_block:
-                signal.connect(finish_event.set)
-            getattr(window_, name)()
+        finish_event = Event()
+        _after_signal(signal, finish_event.set)
 
         if is_reset:
             # Run after reset finish.
-            controller.was_reset.connect(_action)
+            _after_signal(controller.was_reset, start)
             window_.reset()
         else:
             # Run directly.
-            _start()
+            start()
 
-        if is_block:
-            # Wait finish.
-            while not finish_event.is_set():
-                QApplication.processEvents()
-            signal.disconnect(finish_event.set)
-            error = controller.current_error
-            if error:
-                raise callback.AbortedError(error)
+        # Wait finish.
+        while (not finish_event.is_set()
+               or controller.is_running):
+            QApplication.processEvents()
 
     _func.__name__ = name.encode('utf-8', 'replace')
     return _func
@@ -81,6 +92,7 @@ class Window(window.Window):
     Raises:
         ValueError: When already exists another pyblish window.
     """
+
     _is_initiated = False
     instance = None
 
@@ -97,18 +109,8 @@ class Window(window.Window):
         super(Window, self).__init__(
             controller, parent)
 
-        self.running_event = Event()
-        controller.was_finished.connect(self.running_event.clear)
-
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
-
-        font = self.font()
-        font.setFamily("Open Sans")
-        font.setPointSize(8)
-        font.setWeight(400)
-
-        self.setFont(font)
 
         with open(util.get_asset("app.css")) as f:
             css = f.read()
@@ -193,12 +195,9 @@ class Window(window.Window):
 def setup():
     panels.register(Window, '发布', 'com.wlf.pyblish')
 
-    callback.CALLBACKS_ON_SCRIPT_LOAD.append(
-        _pyblish_action('validate'))
-    callback.CALLBACKS_ON_SCRIPT_SAVE.append(
-        _pyblish_action('validate'))
-    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(
-        abort_modified(_pyblish_action('publish', True, False)))
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(_validate)
+    callback.CALLBACKS_ON_SCRIPT_SAVE.append(_validate)
+    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(abort_modified(_publish))
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
