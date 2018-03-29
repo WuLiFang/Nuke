@@ -33,6 +33,9 @@ class TaskMixin(object):
             raise
 
 
+import socket
+
+
 class CollectTask(pyblish.api.InstancePlugin):
     """获取Nuke文件对应的CGTeamWork任务.   """
 
@@ -43,6 +46,9 @@ class CollectTask(pyblish.api.InstancePlugin):
     def process(self, instance):
 
         assert isinstance(instance, pyblish.api.Instance)
+
+        if cgtwq.DesktopClient.is_logged_in():
+            cgtwq.update_setting()
 
         shot = PurePath(instance.name).shot
         try:

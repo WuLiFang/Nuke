@@ -22,6 +22,8 @@ def main():
     pyblish_lite_nuke.setup()
     cgtwn.setup()
     cgtwq.DesktopClient.start()
+    if cgtwq.DesktopClient.is_logged_in():
+        cgtwq.update_setting()
 
 
 if __name__ == '__main__':
