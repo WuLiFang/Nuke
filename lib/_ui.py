@@ -7,6 +7,7 @@ import logging
 import os
 import webbrowser
 
+import cgtwq_uploader
 import nuke
 import nukescripts  # pylint: disable=import-error
 from autolabel import autolabel
@@ -23,8 +24,6 @@ import orgnize
 import panels
 import scanner
 import splitexr
-import cgtwq
-import cgtwq_uploader
 from nuketools import utf8
 from wlf.path import get_unicode as u
 

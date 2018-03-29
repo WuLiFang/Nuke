@@ -31,6 +31,12 @@ def _pyblish_action(name, is_block=False, is_reset=True):
         controller = window_.controller
         assert isinstance(controller, control.Controller)
 
+        # Wait finish previous running.
+        while window_.running_event.is_set():
+            QApplication.processEvents()
+            nuke.tprint('waiting')
+        window_.running_event.set()
+
         finish_event = Event()
         signal = {'publish': controller.was_published,
                   'validate': controller.was_validated}[name]
@@ -44,10 +50,6 @@ def _pyblish_action(name, is_block=False, is_reset=True):
             if is_block:
                 signal.connect(finish_event.set)
             getattr(window_, name)()
-
-        # Wait finish previous running.
-        while window_.is_running:
-            QApplication.processEvents()
 
         if is_reset:
             # Run after reset finish.
@@ -79,7 +81,6 @@ class Window(window.Window):
     Raises:
         ValueError: When already exists another pyblish window.
     """
-    is_running = False
     _is_initiated = False
     instance = None
 
@@ -95,6 +96,9 @@ class Window(window.Window):
         controller = control.Controller()
         super(Window, self).__init__(
             controller, parent)
+
+        self.running_event = Event()
+        controller.was_finished.connect(self.running_event.clear)
 
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
@@ -184,24 +188,6 @@ class Window(window.Window):
             if isinstance(parent, parent_class):
                 return parent
         raise ValueError('No such parent')
-
-    def validate(self):
-        if self.is_running:
-            return
-        self.is_running = True
-        super(Window, self).validate()
-
-    def publish(self):
-        if self.is_running:
-            return
-        self.is_running = True
-
-        super(Window, self).publish()
-
-    def on_finished(self):
-        self.is_running = False
-
-        super(Window, self).on_finished()
 
 
 def setup():
