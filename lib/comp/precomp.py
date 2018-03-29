@@ -11,10 +11,12 @@ import sys
 
 import nuke
 
+import filetools
 from edit import add_layer, copy_layer, replace_node
+from nuketools import undoable_func, utf8, utf8_dict
 from orgnize import autoplace
-from nuketools import utf8, utf8_dict, undoable_func
-from wlf.path import PurePath, get_unicode as u
+from wlf.path import get_unicode as u, get_encoded as e
+from wlf.path import PurePath
 
 LOGGER = logging.getLogger('com.wlf.precomp')
 
@@ -125,9 +127,9 @@ class Precomp(object):
         def _get_filename(n):
             return n.metadata('input/filename') or nuke.filename(n) or ''
 
-        config_file = os.path.join(
-            __file__, '../../wlf/precomp.{}.json'.format(renderer))
-        with open(config_file) as f:
+        config_file = filetools.path(
+            'data', 'precomp.{}.json'.format(renderer))
+        with open(e(config_file)) as f:
             self._config = json.load(f)
         self._combine_dict = dict(self._config.get('combine'))
         self._translate_dict = dict(self._config.get('translate'))
