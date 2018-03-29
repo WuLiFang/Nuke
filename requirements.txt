@@ -1,4 +1,4 @@
-https://github.com/WuLiFang/cgtwq/archive/1.0.1.tar.gz
+https://github.com/WuLiFang/cgtwq/archive/1.0.2.tar.gz
 https://github.com/WuLiFang/wlf/archive/0.3.3.tar.gz
 https://github.com/WuLiFang/uploader/archive/1.0.0.tar.gz
 https://github.com/NateScarlet/pyblish-lite/archive/0.8.1.tar.gz

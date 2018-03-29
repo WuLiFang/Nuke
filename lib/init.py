@@ -33,9 +33,7 @@ def main():
             os.path.normpath(os.path.join(__file__, '../../'))))
         sys.exit(1)
 
-    # wlf.mp_logging.basic_config()
-    import logging
-    logging.basicConfig(level='DEBUG')
+    wlf.mp_logging.basic_config()
 
     validation.setup()
     callback.setup()
