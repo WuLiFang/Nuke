@@ -11,13 +11,14 @@ import nuke
 import pyblish.api
 
 import cgtwq
+import scripttools
 from cgtwn import Task
 from node import wlf_write_node
 from wlf.files import copy
 from wlf.path import PurePath
 
-
 # pylint: disable=no-init
+
 
 class TaskMixin(object):
     """Provide task related method.   """
@@ -31,9 +32,6 @@ class TaskMixin(object):
         except KeyError:
             self.log.error('无对应任务')
             raise
-
-
-import socket
 
 
 class CollectTask(pyblish.api.InstancePlugin):
@@ -146,7 +144,8 @@ class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
         task = self.get_task(instance.context)
         assert isinstance(task, Task)
 
-        n = task.import_video('animation_videos')
+        with scripttools.keep_modifield_status():
+            n = task.import_video('animation_videos')
         upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
         current_framecount = int(
             instance.data['last'] - instance.data['first'] + 1)
