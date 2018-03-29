@@ -11,9 +11,10 @@ import webbrowser
 
 import nuke
 
+import callback
+import cgtwq
 from edit import CurrentViewer
 from nuketools import utf8
-import cgtwq
 from wlf.notify import CancelledError, progress, traytip
 from wlf.path import Path
 
@@ -124,6 +125,11 @@ class Task(cgtwq.Entry):
 
 def dialog_login():
     """Login teamwork.  """
+
+    if cgtwq.DesktopClient.is_logged_in():
+        cgtwq.update_setting()
+        traytip('CGTeamWork', '登录成功')
+        return
     account = '帐号'
     password = '密码'
     panel = nuke.Panel(utf8('登录CGTeamWork'))
@@ -179,9 +185,6 @@ def dialog_create_dirs():
         webbrowser.open(save_path)
     except CancelledError:
         LOGGER.debug('用户取消创建文件夹')
-
-
-import callback
 
 
 def setup():
