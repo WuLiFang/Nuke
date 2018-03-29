@@ -17,7 +17,6 @@ from node import wlf_write_node
 from wlf.files import copy
 from wlf.path import PurePath
 
-LOGGER = logging.getLogger('wlf.pyblish_cgtwn')
 
 # pylint: disable=no-init
 
@@ -35,7 +34,7 @@ class CollectTask(pyblish.api.InstancePlugin):
 
         task = Task.from_shot(PurePath(instance.name).shot)
         instance.context.data['task'] = task
-        LOGGER.info('任务 %s', task)
+        self.log.info('任务 %s', task)
 
 
 class CollectUser(pyblish.api.ContextPlugin):
@@ -103,8 +102,8 @@ class VadiateArtist(pyblish.api.InstancePlugin):
 
         id_ = task['account_id']
         if current_id not in id_.split(','):
-            LOGGER.error('用户不匹配: %s -> %s',
-                         current_artist, task['artist'])
+            self.log.error('用户不匹配: %s -> %s',
+                           current_artist, task['artist'])
             raise cgtwq.AccountError(
                 owner=id_, current=current_id)
 
@@ -126,8 +125,8 @@ class VadiateFrameRange(pyblish.api.InstancePlugin):
         current_framecount = int(
             instance.data['last'] - instance.data['first'] + 1)
         if upstream_framecount != current_framecount:
-            LOGGER.error('工程帧数和上游不一致: %s -> %s',
-                         current_framecount, upstream_framecount)
+            self.log.error('工程帧数和上游不一致: %s -> %s',
+                           current_framecount, upstream_framecount)
             raise ValueError(
                 'Frame range not match.',
                 upstream_framecount,
@@ -148,11 +147,11 @@ class VadiateFPS(pyblish.api.InstancePlugin):
         database = task.module.database
         fps = database.get_data('fps', is_user=False)
         if not fps:
-            LOGGER.warning('数据库未设置帧速率: %s', database.name)
+            self.log.warning('数据库未设置帧速率: %s', database.name)
         else:
             current_fps = instance.data['fps']
             if float(fps) != current_fps:
-                LOGGER.error('帧速率不一致: %s -> %s', current_fps, fps)
+                self.log.error('帧速率不一致: %s -> %s', current_fps, fps)
                 raise ValueError('Not same fps', fps, current_fps)
 
 

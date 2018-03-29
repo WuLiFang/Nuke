@@ -15,7 +15,6 @@ import pyblish.api
 from node import wlf_write_node
 from wlf.files import copy
 
-LOGGER = logging.getLogger('wlf.pyblish_asset')
 FootageInfo = namedtuple('FootageInfo', ('filename', 'mtime'))
 
 # pylint: disable=no-init
@@ -29,7 +28,6 @@ class CollectFile(pyblish.api.ContextPlugin):
 
     def process(self, context):
         context.data['comment'] = ''
-        LOGGER.error('Test')
         assert isinstance(context, pyblish.api.Context)
         filename = nuke.value('root.name')
         if not filename:
@@ -81,7 +79,7 @@ class CollectMTime(pyblish.api.ContextPlugin):
         root = nuke.Root()
         for n in nuke.allNodes('Read', nuke.Root()):
             if n.hasError():
-                LOGGER.warning('读取节点出错: %s', n.name())
+                self.log.warning('读取节点出错: %s', n.name())
                 continue
             filename = n.metadata('input/filename')
             mtime = n.metadata('input/mtime')
@@ -112,7 +110,7 @@ class ValidateMTime(pyblish.api.InstancePlugin):
         for i in instance:
             assert isinstance(i, FootageInfo)
             if i.mtime > filemtime:
-                LOGGER.warning('新素材: %s: %s', i.filename, i.mtime)
+                self.log.warning('新素材: %s: %s', i.filename, i.mtime)
                 is_ok = False
         if not is_ok:
             raise ValueError('Footage newer than comp.')
@@ -127,18 +125,18 @@ class ExtractJPG(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         if not nuke.numvalue('preferences.wlf_render_jpg', 0.0):
-            LOGGER.info('因首选项而跳过生成JPG')
+            self.log.info('因首选项而跳过生成JPG')
             return
 
         n = wlf_write_node()
         if n:
-            LOGGER.debug('render_jpg: %s', n.name())
+            self.log.debug('render_jpg: %s', n.name())
             try:
                 n['bt_render_JPG'].execute()
             except RuntimeError as ex:
                 nuke.message(str(ex))
         else:
-            LOGGER.warning('工程中缺少wlf_Write节点')
+            self.log.warning('工程中缺少wlf_Write节点')
 
 
 class SendToRenderDir(pyblish.api.InstancePlugin):
@@ -154,4 +152,4 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
             render_dir = nuke.value('preferences.wlf_render_dir')
             copy(filename, render_dir + '/')
         else:
-            LOGGER.info('因为首选项设置而跳过')
+            self.log.info('因为首选项设置而跳过')
