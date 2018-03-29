@@ -87,7 +87,8 @@ class CollectMTime(pyblish.api.ContextPlugin):
 
             footage = FootageInfo(filename=filename,
                                   mtime=pendulum.from_format(mtime,
-                                                             '%Y-%m-%d %H:%M:%S'))
+                                                             '%Y-%m-%d %H:%M:%S',
+                                                             tz='Asia/Shanghai'))
             footages.add(footage)
         instance = context.create_instance(
             '{}个 素材'.format(len(footages)),
@@ -110,6 +111,7 @@ class ValidateMTime(pyblish.api.InstancePlugin):
         for i in instance:
             assert isinstance(i, FootageInfo)
             if i.mtime > filemtime:
+                self.log.debug('%s > %s', i.mtime, filemtime)
                 self.log.warning('新素材: %s: %s', i.filename,
                                  i.mtime.diff_for_humans(locale='zh'))
                 is_ok = False
