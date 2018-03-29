@@ -4,13 +4,14 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from unittest import TestCase, main
+from unittest import TestCase, main, skipUnless
+import cgtwq
 
 
+@skipUnless(cgtwq.DesktopClient.is_logged_in(), 'not logged in')
 class TaskTestCase(TestCase):
     def test_init(self):
         from cgtwn import Task
-        import cgtwq
         cgtwq.update_setting()
         select = Task.from_shot('MT_EP06_06_sc013')
         self.assertEqual(len(select), 1)

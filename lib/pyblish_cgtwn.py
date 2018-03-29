@@ -4,7 +4,6 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import logging
 import os
 import webbrowser
 
@@ -20,6 +19,19 @@ from wlf.path import PurePath
 
 # pylint: disable=no-init
 
+class TaskMixin(object):
+    """Provide task related method.   """
+
+    def get_task(self, context):
+        """Get task from context"""
+        try:
+            task = context.data['task']
+            assert isinstance(task, Task), type(task)
+            return task
+        except KeyError:
+            self.log.error('无对应任务')
+            raise
+
 
 class CollectTask(pyblish.api.InstancePlugin):
     """获取Nuke文件对应的CGTeamWork任务.   """
@@ -32,8 +44,13 @@ class CollectTask(pyblish.api.InstancePlugin):
 
         assert isinstance(instance, pyblish.api.Instance)
 
-        task = Task.from_shot(PurePath(instance.name).shot)
-        instance.context.data['task'] = task
+        shot = PurePath(instance.name).shot
+        try:
+            task = Task.from_shot(shot)
+            instance.context.data['task'] = task
+        except ValueError:
+            self.log.error('无法在数据库中找到对应任务: %s', shot)
+            raise
         self.log.info('任务 %s', task)
 
 
@@ -46,7 +63,8 @@ class CollectUser(pyblish.api.ContextPlugin):
     def process(self, context):
         assert isinstance(context, pyblish.api.Context)
 
-        name = cgtwq.current_account()
+        name = cgtwq.ACCOUNT.select(
+            cgtwq.current_account_id()).to_entry()['name']
 
         context.data['artist'] = name
         context.data['accountID'] = cgtwq.current_account_id()
@@ -56,13 +74,14 @@ class CollectUser(pyblish.api.ContextPlugin):
         )
 
 
-class CollectFX(pyblish.api.ContextPlugin):
+class CollectFX(TaskMixin, pyblish.api.ContextPlugin):
     """获取特效素材.   """
+
     order = pyblish.api.CollectorOrder + 0.1
     label = '获取特效素材'
 
     def process(self, context):
-        task = context.data['task']
+        task = self.get_task(context)
         assert isinstance(task, Task)
         filebox = task.get_filebox('fx')
         dir_ = filebox.path
@@ -85,7 +104,7 @@ class OpenFolder(pyblish.api.InstancePlugin):
             webbrowser.open(instance.data['folder'])
 
 
-class VadiateArtist(pyblish.api.InstancePlugin):
+class VadiateArtist(TaskMixin, pyblish.api.InstancePlugin):
     """检查任务是否分配给当前用户。  """
 
     order = pyblish.api.ValidatorOrder
@@ -95,8 +114,9 @@ class VadiateArtist(pyblish.api.InstancePlugin):
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
         context = instance.context
-        task = context.data['task']
+        task = self.get_task(instance.context)
         assert isinstance(task, Task)
+
         current_id = context.data['accountID']
         current_artist = context.data['artist']
 
@@ -108,7 +128,7 @@ class VadiateArtist(pyblish.api.InstancePlugin):
                 owner=id_, current=current_id)
 
 
-class VadiateFrameRange(pyblish.api.InstancePlugin):
+class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
     """检查帧范围是否匹配上游.  """
 
     order = pyblish.api.ValidatorOrder
@@ -117,7 +137,7 @@ class VadiateFrameRange(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
-        task = instance.context.data['task']
+        task = self.get_task(instance.context)
         assert isinstance(task, Task)
 
         n = task.import_video('animation_videos')
@@ -133,7 +153,7 @@ class VadiateFrameRange(pyblish.api.InstancePlugin):
                 current_framecount)
 
 
-class VadiateFPS(pyblish.api.InstancePlugin):
+class VadiateFPS(TaskMixin, pyblish.api.InstancePlugin):
     """检查帧速率是否匹配数据库设置.   """
 
     order = pyblish.api.ValidatorOrder
@@ -141,7 +161,7 @@ class VadiateFPS(pyblish.api.InstancePlugin):
     families = ['帧速率']
 
     def process(self, instance):
-        task = instance.context.data['task']
+        task = self.get_task(instance.context)
         assert isinstance(task, Task)
 
         database = task.module.database
@@ -155,7 +175,7 @@ class VadiateFPS(pyblish.api.InstancePlugin):
                 raise ValueError('Not same fps', fps, current_fps)
 
 
-class UploadWorkFile(pyblish.api.InstancePlugin):
+class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
     """上传工作文件至CGTeamWork.   """
 
     order = pyblish.api.IntegratorOrder
@@ -165,15 +185,19 @@ class UploadWorkFile(pyblish.api.InstancePlugin):
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
         workfile = instance.data['name']
-        task = instance.context.data['task']
+        task = self.get_task(instance.context)
         assert isinstance(task, Task)
-        dest = task.get_filebox('workfile').path + '/'
+        try:
+            dest = task.get_filebox('workfile').path + '/'
+        except:
+            self.log('找不到标识为workfile的文件框 请联系管理员进行设置')
+            raise
         # dest = 'E:/test_pyblish/'
 
         copy(workfile, dest)
 
 
-class UploadJPG(pyblish.api.InstancePlugin):
+class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
     """上传单帧至CGTeamWork.   """
 
     order = pyblish.api.IntegratorOrder
@@ -181,7 +205,7 @@ class UploadJPG(pyblish.api.InstancePlugin):
     families = ['Nuke文件']
 
     def process(self, instance):
-        task = instance.context.data['task']
+        task = self.get_task(instance.context)
         assert isinstance(task, Task)
 
         n = wlf_write_node()

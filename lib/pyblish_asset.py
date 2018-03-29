@@ -4,12 +4,11 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import logging
 import os
-import time
 from collections import namedtuple
 
 import nuke
+import pendulum
 import pyblish.api
 
 from node import wlf_write_node
@@ -87,8 +86,8 @@ class CollectMTime(pyblish.api.ContextPlugin):
                 continue
 
             footage = FootageInfo(filename=filename,
-                                  mtime=time.strptime(mtime,
-                                                      '%Y-%m-%d %H:%M:%S'))
+                                  mtime=pendulum.from_format(mtime,
+                                                             '%Y-%m-%d %H:%M:%S'))
             footages.add(footage)
         instance = context.create_instance(
             '{}个 素材'.format(len(footages)),
@@ -105,12 +104,14 @@ class ValidateMTime(pyblish.api.InstancePlugin):
     families = ['素材']
 
     def process(self, instance):
-        filemtime = time.localtime(os.path.getmtime(instance.data['filename']))
+        filemtime = pendulum.from_timestamp(
+            os.path.getmtime(instance.data['filename']))
         is_ok = True
         for i in instance:
             assert isinstance(i, FootageInfo)
             if i.mtime > filemtime:
-                self.log.warning('新素材: %s: %s', i.filename, i.mtime)
+                self.log.warning('新素材: %s: %s', i.filename,
+                                 i.mtime.diff_for_humans(locale='zh'))
                 is_ok = False
         if not is_ok:
             raise ValueError('Footage newer than comp.')
