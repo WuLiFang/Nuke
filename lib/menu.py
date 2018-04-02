@@ -13,6 +13,7 @@ def main():
     import pyblish_lite_nuke
     import cgtwn
     import cgtwq
+    import enable_later
 
     _ui.setup()
     pref.setup()
@@ -20,6 +21,7 @@ def main():
     gizmo_convert.setup()
     project_settings.setup()
     pyblish_lite_nuke.setup()
+    enable_later.setup()
     cgtwn.setup()
     cgtwq.DesktopClient.start()
     if cgtwq.DesktopClient.is_logged_in():
