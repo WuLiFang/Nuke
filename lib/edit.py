@@ -310,21 +310,22 @@ def replace_sequence():
 
     # Prepare Panel
     panel = nuke.Panel(b'单帧替换为序列')
-    render_path_text = '限定只替换此文件夹中的读取节点'
-    panel.addFilenameSearch(utf8(render_path_text), 'z:/SNJYW/Render/')
-    first_text = '设置工程起始帧'
-    panel.addExpressionInput(utf8(first_text), int(
+    label_path_prefix = b'限定只替换此文件夹中的读取节点'
+    label_first = b'设置工程起始帧'
+    label_last = b'设置工程结束帧'
+
+    panel.addFilenameSearch(label_path_prefix, 'z:/')
+    panel.addExpressionInput(label_first, int(
         nuke.Root()['first_frame'].value()))
-    last_text = '设置工程结束帧'
-    panel.addExpressionInput(utf8(last_text), int(
+    panel.addExpressionInput(label_last, int(
         nuke.Root()['last_frame'].value()))
 
     confirm = panel.show()
     if confirm:
-        render_path = os.path.normcase(panel.value(render_path_text))
+        render_path = os.path.normcase(u(panel.value(label_path_prefix)))
 
-        first = int(panel.value(first_text))
-        last = int(panel.value(last_text))
+        first = int(panel.value(label_first))
+        last = int(panel.value(label_last))
         flag_frame = None
 
         nuke.Root()[b'proxy'].setValue(False)
@@ -332,7 +333,7 @@ def replace_sequence():
         nuke.Root()[b'last_frame'].setValue(last)
 
         for n in nuke.allNodes('Read'):
-            file_path = nuke.filename(n)
+            file_path = u(nuke.filename(n))
             if os.path.normcase(file_path).startswith(render_path):
                 search_result = re.search(r'\.([\d]+)\.', file_path)
                 if search_result:
@@ -341,7 +342,7 @@ def replace_sequence():
                     r'\.([\d#]+)\.',
                     lambda matchobj: r'.%0{}d.'.format(len(matchobj.group(1))),
                     file_path)
-                n[b'file'].setValue(file_path)
+                n[b'file'].setValue(file_path.encode('utf-8'))
                 n[b'format'].setValue(b'HD_1080')
                 n[b'first'].setValue(first)
                 n[b'origfirst'].setValue(first)
