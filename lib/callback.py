@@ -3,15 +3,10 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
-import os
+import contextlib
 
 import nuke
 
-import edit
-import orgnize
-from node import Last, wlf_write_node
-from nuketools import abort_modified, utf8
-from wlf.path import get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.callback')
 
@@ -23,30 +18,44 @@ class AbortedError(Exception):
 
 class Callbacks(list):
     """Failsafe callbacks executor.  """
+    current = None
+
+    @contextlib.contextmanager
+    def set_current(self):
+        """Set current object during context.  """
+
+        Callbacks.current = self
+        try:
+            yield
+        finally:
+            if Callbacks.current is self:
+                Callbacks.current = None
 
     def execute(self, *args, **kwargs):
         """Execute callbacks.   """
-        ret = None
-        try:
-            for i in self:
-                try:
-                    ret = i(*args, **kwargs) or ret
-                except AbortedError:
-                    raise
-                except:
-                    import inspect
 
-                    LOGGER.error(
-                        'Error during execute callback: %s(%s,%s):'
-                        '\nfrom %s',
-                        i.__name__,
-                        args, kwargs,
-                        inspect.getsourcefile(i),
-                        exc_info=True)
+        with self.set_current():
+            ret = None
+            try:
+                for i in self:
+                    try:
+                        ret = i(*args, **kwargs) or ret
+                    except AbortedError:
+                        raise
+                    except:
+                        import inspect
 
-                    raise RuntimeError
-        except RuntimeError:
-            pass
+                        LOGGER.error(
+                            'Error during execute callback: %s(%s,%s):'
+                            '\nfrom %s',
+                            i.__name__,
+                            args, kwargs,
+                            inspect.getsourcefile(i),
+                            exc_info=True)
+
+                        raise RuntimeError
+            except RuntimeError:
+                pass
         return ret
 
 

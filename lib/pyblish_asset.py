@@ -11,6 +11,7 @@ import nuke
 import pendulum
 import pyblish.api
 
+import callback
 from node import wlf_write_node
 from wlf.files import copy
 
@@ -105,11 +106,9 @@ class ValidateMTime(pyblish.api.InstancePlugin):
     families = ['素材']
 
     def process(self, instance):
-        try:
-            filemtime = os.path.getmtime(instance.data['filename'])
-        except OSError:
-            # Maybe using `Save as`
+        if callback.Callbacks.current is callback.CALLBACKS_ON_SCRIPT_SAVE:
             return
+        filemtime = os.path.getmtime(instance.data['filename'])
         filemtime = pendulum.from_timestamp(filemtime)
         is_ok = True
         for i in instance:
