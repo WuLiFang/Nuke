@@ -83,7 +83,8 @@ class Task(cgtwq.Entry):
                 n = nuke.nodes.Read(name=utf8(node_name))
                 n['file'].fromUserText(unicode(video).encode('utf-8'))
                 break
-            raise ValueError('No matched upstream video.')
+            if not n:
+                raise ValueError('No matched upstream video.')
         n['frame_mode'].setValue(b'start_at')
         n['frame'].setValue(b'{:.0f}'.format(
             nuke.numvalue('root.first_frame')))
