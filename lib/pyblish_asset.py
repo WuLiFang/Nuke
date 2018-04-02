@@ -105,8 +105,12 @@ class ValidateMTime(pyblish.api.InstancePlugin):
     families = ['素材']
 
     def process(self, instance):
-        filemtime = pendulum.from_timestamp(
-            os.path.getmtime(instance.data['filename']))
+        try:
+            filemtime = os.path.getmtime(instance.data['filename'])
+        except OSError:
+            # Maybe using `Save as`
+            return
+        filemtime = pendulum.from_timestamp(filemtime)
         is_ok = True
         for i in instance:
             assert isinstance(i, FootageInfo)
