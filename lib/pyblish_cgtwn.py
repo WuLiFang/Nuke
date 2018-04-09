@@ -87,7 +87,7 @@ class CollectFX(TaskMixin, pyblish.api.ContextPlugin):
     def process(self, context):
         task = self.get_task(context)
         assert isinstance(task, Task)
-        filebox = task.get_filebox('fx')
+        filebox = task.filebox.get('fx')
         dir_ = filebox.path
         context.create_instance(
             '有特效素材' if os.listdir(dir_) else '无特效素材',
@@ -197,7 +197,7 @@ class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
         task = self.get_task(instance.context)
         assert isinstance(task, Task)
         try:
-            dest = task.get_filebox('workfile').path + '/'
+            dest = task.filebox.get('workfile').path + '/'
         except:
             self.log('找不到标识为workfile的文件框 请联系管理员进行设置')
             raise
@@ -219,7 +219,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
 
         n = wlf_write_node()
         path = nuke.filename(n.node('Write_JPG_1'))
-        dest = task.get_filebox('image').path + '/{}.jpg'.format(task.shot)
+        dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
         task.set_image(path)

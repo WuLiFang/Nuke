@@ -77,7 +77,7 @@ class Task(cgtwq.Entry):
         node_name = {'animation_videos': '动画视频'}.get(sign, sign)
         n = nuke.toNode(utf8(node_name))
         if n is None:
-            dir_ = self.get_filebox(sign).path
+            dir_ = self.filebox.get(sign).path
             videos = Path(dir_).glob('{}.*'.format(self.shot))
             for video in videos:
                 n = nuke.nodes.Read(name=utf8(node_name))
