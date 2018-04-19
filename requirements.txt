@@ -1,5 +1,5 @@
-https://github.com/WuLiFang/wlf/archive/0.3.3.tar.gz
-https://github.com/WuLiFang/uploader/archive/2.1.1.tar.gz
+https://github.com/WuLiFang/wlf/archive/0.3.4.tar.gz
+https://github.com/WuLiFang/uploader/archive/2.1.3.tar.gz
 https://github.com/WuLiFang/cgtwq/archive/1.2.0.tar.gz
 https://github.com/NateScarlet/pyblish-lite/archive/0.8.1.tar.gz
 Jinja2>=2.9.6
