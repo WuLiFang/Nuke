@@ -89,7 +89,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.53.3"}
+ addUserKnob {20 Write l "wlf_Write v1.53.4"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -257,6 +257,7 @@ clone $Cb149000 {
   file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
   proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
   file_type exr
+  checkHashOnRead false
   name Write_EXR_1
   xpos 0
   ypos -908
