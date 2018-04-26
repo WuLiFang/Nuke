@@ -222,4 +222,4 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
-        task.set_image(path)
+        task.set_image(dest)
