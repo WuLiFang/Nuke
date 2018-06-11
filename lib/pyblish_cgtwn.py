@@ -223,3 +223,5 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
         task.set_image(dest)
+        if task['leader_status'] == 'Wait':
+            task['leader_status'] = 'Check'
