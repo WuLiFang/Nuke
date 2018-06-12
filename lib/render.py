@@ -15,6 +15,8 @@ import nuke
 import callback
 from node import wlf_write_node
 from wlf.files import map_drivers
+from wlf.path import get_encoded as e
+from wlf.path import get_unicode as u
 
 LOGGER = logging.getLogger('wlf.render')
 
@@ -29,9 +31,9 @@ def create_out_dirs(node=None):
     except NameError:
         pass
 
-    filename = nuke.filename(n)
+    filename = u(nuke.filename(n))
     if filename:
-        target_dir = os.path.dirname(filename)
+        target_dir = e(os.path.dirname(filename))
         if not os.path.isdir(target_dir):
             LOGGER.debug('Create dir: %s', target_dir)
             os.makedirs(target_dir)
