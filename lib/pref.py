@@ -96,9 +96,8 @@ def add_preferences():
         (nuke.Boolean_Knob, ('wlf_jump_frame', '跳至_Write节点指定的帧', True)),
         (nuke.Text_Knob, ('wlf_on_script_close', '保存并退出时')),
         (nuke.Boolean_Knob, ('wlf_render_jpg', '渲染_Write节点单帧', True)),
-        (nuke.Boolean_Knob, ('wlf_send_to_dir', '发送至渲染文件夹(Nuke渲染不支持中文路径)')),
+        (nuke.Boolean_Knob, ('wlf_send_to_dir', '发送至渲染文件夹')),
         (nuke.File_Knob, ('wlf_render_dir', '')),
-        (nuke.Boolean_Knob, ('wlf_create_csheet', '为images文件夹生成色板', True)),
     ]
 
     for i in knob_list:

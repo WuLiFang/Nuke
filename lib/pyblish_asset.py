@@ -14,6 +14,7 @@ import pyblish.api
 import callback
 from node import wlf_write_node
 from wlf.files import copy
+from wlf.path import get_unicode as u
 
 FootageInfo = namedtuple('FootageInfo', ('filename', 'mtime'))
 
@@ -155,7 +156,7 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
     def process(self, instance):
         filename = instance.data['name']
         if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-            render_dir = nuke.value('preferences.wlf_render_dir')
+            render_dir = u(nuke.value('preferences.wlf_render_dir'))
             copy(filename, render_dir + '/')
         else:
             self.log.info('因为首选项设置而跳过')
