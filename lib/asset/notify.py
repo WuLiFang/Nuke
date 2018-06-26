@@ -52,12 +52,16 @@ def warn_missing_frames(assets=None, show_ok=False):
         webbrowser.open(name)
 
 
-def warn_mtime(show_dialog=False, show_ok=False):
+def warn_mtime(show_dialog=False, show_ok=False, since=None):
     """Show footage that mtime newer than script mtime. """
 
     LOGGER.debug('Check warn_mtime')
     msg = ''
     newer_footages = {}
+    if Last.name is None:
+        if show_ok:
+            nuke.message('文件未保存')
+        return
 
     @run_with_clock('检查素材修改日期')
     def _get_mtime_info():
