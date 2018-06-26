@@ -7,7 +7,3 @@
     :reversed:
 
     changelogs/*
-
-最近修改
----------
-.. git_changelog::
