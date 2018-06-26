@@ -10,7 +10,6 @@ import sys
 
 import nuke
 
-import filetools
 from edit import add_layer, copy_layer, replace_node
 from nuketools import undoable_func, utf8, utf8_dict
 from orgnize import autoplace
