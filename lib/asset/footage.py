@@ -90,7 +90,9 @@ class Footage(object):
         """Get missing frame ranges compare to frame_list.
 
         Args:
-            frame_list (Iterable[int] or nuke.Node or nuke.FrameRanges, optional): Defaults to None.
+            frame_list (Iterable[int]
+                or nuke.Node
+                or nuke.FrameRanges, optional): Defaults to None.
                 check file exsits with these frames,
                 None mean return whole missing frame ranges.
 
