@@ -16,7 +16,7 @@ from .dropdata import dropdata_handler
 LOGGER = logging.getLogger(__name__)
 
 
-def fix_error_read():
+def fix_read():
     """Try fix all read nodes that has error."""
 
     def _get_name(filename):

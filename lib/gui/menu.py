@@ -79,7 +79,7 @@ def add_menu():
             None,
             _("禁用所有稍后启用节点",
               lambda: enable_later.marked_nodes().disable(), 'CTRL+SHIFT+D'),
-            _("修正读取错误", asset.fix_error_read, 'F6'),
+            _("修正读取错误", asset.fix_read, 'F6'),
             _("Reload所有", edit.reload_all_read_node),
             _("检查缺帧", lambda: asset.warn_missing_frames(show_ok=True)),
             _("检查素材更新", lambda: asset.warn_mtime(
