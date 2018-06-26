@@ -32,7 +32,7 @@ class Comp(object):
     def __init__(self):
         self._errors = []
         self._bg_ch_end_nodes = []
-        self._task = get_default_progress_handler()
+        self._task = DefaultHandler()
         self._task.total = 20
         self._task.on_started()
 
