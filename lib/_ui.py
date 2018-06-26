@@ -14,7 +14,7 @@ from autolabel import autolabel
 
 import asset
 import callback
-import cgtwn
+import cgtwn_panels
 import comp
 import comp.panels
 import edit
@@ -115,8 +115,8 @@ def add_menu():
               icon='autocomp.png')
         ]},
         {cgtw_menu: [
-            _('登录', cgtwn.dialog_login),
-            _('创建项目文件夹', cgtwn.dialog_create_dirs)
+            _('登录', cgtwn_panels.dialog_login),
+            _('创建项目文件夹', cgtwn_panels.dialog_create_dirs)
         ]},
         {_('工具'): [
             _('批量自动合成', lambda: comp.panels.BatchCompPanel().showModalDialog(),
