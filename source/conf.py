@@ -16,8 +16,12 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+
+# pylint: skip-file
+
 import os
 import sys
+
 RESOURCE_DIR = os.path.dirname(__file__)
 sys.path.insert(0, os.path.abspath('./../../lib'))
 
@@ -51,7 +55,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'吾立方插件'
-copyright = u'2017, WuLiFang Studio'
+copyright = u'2017-2018, WuLiFang Studio'
 author = u'NateScarlet'
 
 # The version info for the project you're documenting, acts as replacement for
