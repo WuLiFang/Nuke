@@ -14,8 +14,10 @@ import filetools
 from edit import add_layer, copy_layer, replace_node
 from nuketools import undoable_func, utf8, utf8_dict
 from orgnize import autoplace
-from wlf.codectools import get_unicode as u, get_encoded as e
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
 from wlf.path import PurePath
+from wlf.pathtools import module_path as wlf_module_path
 
 LOGGER = logging.getLogger('com.wlf.precomp')
 
@@ -126,7 +128,7 @@ class Precomp(object):
         def _get_filename(n):
             return n.metadata('input/filename') or nuke.filename(n) or ''
 
-        config_file = filetools.path(
+        config_file = wlf_module_path(
             'data', 'precomp.{}.json'.format(renderer))
         with open(e(config_file)) as f:
             self._config = json.load(f)
