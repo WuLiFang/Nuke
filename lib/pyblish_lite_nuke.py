@@ -23,8 +23,8 @@ import panels
 import pyblish_asset
 import pyblish_cgtwn
 from nuketools import abort_modified, mainwindow
-from wlf.path import get_encoded as e
-from wlf.path import get_unicode as u
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
 
 ACTION_QUEUE = Queue()
 ACTION_LOCK = Lock()

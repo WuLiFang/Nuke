@@ -13,8 +13,8 @@ import pyblish.api
 
 import callback
 from node import wlf_write_node
-from wlf.files import copy
-from wlf.path import get_unicode as u
+from wlf.codectools import get_unicode as u
+from wlf.fileutil import copy
 
 FootageInfo = namedtuple('FootageInfo', ('filename', 'mtime'))
 

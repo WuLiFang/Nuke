@@ -6,7 +6,6 @@ import argparse
 import os
 import re
 import sys
-import threading
 import webbrowser
 from subprocess import Popen
 
@@ -16,9 +15,8 @@ try:
 
     from nuketools import utf8
     from wlf.decorators import run_async
-    from wlf.notify import progress
-    from wlf.path import get_encoded as e
-    from wlf.path import get_unicode as u
+    from wlf.progress import progress
+    from wlf.codectools import get_encoded as e
     from wlf.path import PurePath, Path
 except:
     raise

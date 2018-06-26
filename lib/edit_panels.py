@@ -9,7 +9,7 @@ import nukescripts  # pylint: disable=import-error
 from edit import (CurrentViewer, named_copy, replace_node, set_knobs,
                   transfer_flags)
 from nuketools import undoable_func
-from wlf.notify import CancelledError, progress
+from wlf.progress import CancelledError, progress
 
 
 class ChannelsRename(nukescripts.PythonPanel):

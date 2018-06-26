@@ -13,9 +13,9 @@ import nuke
 
 from node import wlf_write_node
 from nuketools import utf8
-from wlf.notify import get_default_progress_handler, progress
-from wlf.path import get_unicode as u
+from wlf.codectools import get_unicode as u
 from wlf.path import PurePath
+from wlf.progress import DefaultHandler, progress
 
 LOGGER = logging.getLogger('com.wlf.edit')
 
@@ -240,7 +240,7 @@ def get_min_max(src_node, channel='depth.Z'):
 
 
 def set_random_glcolor(n):
-    """Set glcolor of node to a hue random color. 
+    """Set glcolor of node to a hue random color.
 
     Args:
         n (nuke.Node): Node to manipulate.
@@ -285,7 +285,7 @@ def delete_unused_nodes(nodes=None, message=False):
     if nodes is None:
         nodes = nuke.allNodes()
     count = 0
-    handler = get_default_progress_handler()
+    handler = DefaultHandler()
     handler.message_factory = lambda n: n.name()
     while True:
         for n in progress(nodes, '清除无用节点', handler):
@@ -541,11 +541,11 @@ def copy_layer(input0, input1=None, layer='rgba', output=None):
 
     Args:
         input0 (nuke.Node): Source node
-        input1 (nuke.Node, optional): Defaults to None. 
+        input1 (nuke.Node, optional): Defaults to None.
             If given, use source layer from this node.
-        layer (str, optional): Defaults to 'rgba'. 
+        layer (str, optional): Defaults to 'rgba'.
             Source layer name.
-        output (str, optional): Defaults to None. 
+        output (str, optional): Defaults to None.
             Output layer name. If not given, use same with source layer.
 
     Returns:
@@ -557,7 +557,7 @@ def copy_layer(input0, input1=None, layer='rgba', output=None):
 
     # Skip case that has no effect.
     if (input0 is input1
-        and layer == output
+            and layer == output
             and layer in nuke.layers(input0)):
         return input0
 

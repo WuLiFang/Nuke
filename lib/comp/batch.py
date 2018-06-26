@@ -18,9 +18,9 @@ from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
 from wlf.decorators import run_with_memory_require
-from wlf.notify import CancelledError, progress
-from wlf.path import get_encoded as e
-from wlf.path import get_unicode as u
+from wlf.progress import CancelledError, progress
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 

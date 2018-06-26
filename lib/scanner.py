@@ -12,6 +12,7 @@ from Qt import QtCompat, QtCore, QtWidgets
 from Qt.QtWidgets import QFileDialog
 
 import wlf.config
+from __about__ import __version__
 
 
 class Config(wlf.config.Config):

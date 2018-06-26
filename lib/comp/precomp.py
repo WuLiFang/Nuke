@@ -5,7 +5,6 @@ from __future__ import absolute_import, unicode_literals
 import inspect
 import json
 import logging
-import os
 import re
 import sys
 
@@ -15,7 +14,7 @@ import filetools
 from edit import add_layer, copy_layer, replace_node
 from nuketools import undoable_func, utf8, utf8_dict
 from orgnize import autoplace
-from wlf.path import get_unicode as u, get_encoded as e
+from wlf.codectools import get_unicode as u, get_encoded as e
 from wlf.path import PurePath
 
 LOGGER = logging.getLogger('com.wlf.precomp')

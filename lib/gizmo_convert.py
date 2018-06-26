@@ -10,7 +10,7 @@ import nuke
 import callback
 import edit
 from nuketools import utf8
-from wlf.path import get_unicode as u
+from wlf.codectools import get_unicode as u
 
 
 def _gizmo_to_group_on_create():

@@ -13,17 +13,16 @@ import nuke
 
 import callback
 from edit import clear_selection
-from wlf.path import get_encoded as e
-from wlf.path import get_unicode as u
-from wlf.path import is_ascii
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
+from wlf.codectools import is_ascii
+from wlf.progress import CancelledError, progress
 
 LOGGER = logging.getLogger('com.wlf.callback')
 
 
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
-
-    from wlf.notify import progress, CancelledError
 
     LOGGER.debug('Handling dropdata: %s %s', mime_type, u(data))
     if mime_type != 'text/plain':

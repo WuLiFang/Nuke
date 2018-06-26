@@ -15,8 +15,9 @@ import callback
 import cgtwq
 from edit import CurrentViewer
 from nuketools import utf8
-from wlf.notify import CancelledError, progress, traytip
 from wlf.path import Path
+from wlf.progress import CancelledError, progress
+from wlf.uitools import Tray
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -130,7 +131,7 @@ def dialog_login():
 
     if cgtwq.DesktopClient.is_logged_in():
         cgtwq.update_setting()
-        traytip('CGTeamWork', '登录成功')
+        Tray.message('CGTeamWork', '登录成功')
         return
     account = '帐号'
     password = '密码'
@@ -145,9 +146,9 @@ def dialog_login():
                 cgtwq.server.setting.DEFAULT_TOKEN = cgtwq.login(
                     panel.value(account), panel.value(password))
             except ValueError:
-                traytip('CGTeamWork', '登录失败')
+                Tray.message('CGTeamWork', '登录失败')
                 continue
-            traytip('CGTeamWork', '登录成功')
+            Tray.message('CGTeamWork', '登录成功')
         break
 
 

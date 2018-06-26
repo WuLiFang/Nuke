@@ -8,7 +8,7 @@ import nuke
 
 import callback
 from nuketools import Nodes
-from wlf.path import get_unicode as u
+from wlf.codectools import get_unicode as u
 ENABLE_MARK = '_enable_'
 
 

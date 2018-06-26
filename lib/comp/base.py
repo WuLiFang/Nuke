@@ -13,11 +13,11 @@ import nuke
 from comp.config import CompConfig
 from comp.precomp import Precomp
 from node import ReadNode
-from nuketools import utf8, utf8_dict, undoable_func
+from nuketools import undoable_func, utf8, utf8_dict
 from orgnize import autoplace
-from wlf.path import get_encoded as e
-from wlf.path import get_unicode as u
-from wlf.notify import get_default_progress_handler
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
+from wlf.progress.core import DefaultHandler
 
 CONFIG = CompConfig()
 LOGGER = logging.getLogger('com.wlf.comp')
@@ -719,8 +719,9 @@ class Comp(object):
     @staticmethod
     def _add_zdefocus_control(input_node):
         # Use for one-node zdefocus control
-        n = nuke.nodes.ZDefocus2(inputs=[input_node], math='depth', output='focal plane setup',
-                                 center=0.00234567, blur_dof=False, label=utf8('** 虚焦总控制 **\n在此拖点定虚焦及设置'))
+        n = nuke.nodes.ZDefocus2(
+            inputs=[input_node], math='depth', output='focal plane setup',
+            center=0.00234567, blur_dof=False, label=utf8('** 虚焦总控制 **\n在此拖点定虚焦及设置'))
         n.setName('_ZDefocus')
         return n
 

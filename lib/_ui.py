@@ -25,7 +25,7 @@ import panels
 import scanner
 import splitexr
 from nuketools import utf8
-from wlf.path import get_unicode as u
+from wlf.codectools import get_unicode as u
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1

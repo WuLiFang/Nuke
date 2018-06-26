@@ -9,7 +9,7 @@ from functools import wraps
 import nuke
 
 from wlf.decorators import run_in_main_thread
-from wlf.path import get_encoded
+from wlf.codectools import get_encoded
 
 LOGGER = logging.getLogger('com.wlf.nuketools')
 

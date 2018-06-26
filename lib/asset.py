@@ -21,12 +21,14 @@ import callback
 from edit import clear_selection
 from node import Last
 from nuketools import utf8
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
+from wlf.codectools import is_ascii
 from wlf.decorators import run_with_clock
 from wlf.env import has_gui
-from wlf.files import Path, PurePath, copy
-from wlf.path import get_encoded as e
-from wlf.path import get_unicode as u
-from wlf.path import is_ascii
+from wlf.fileutil import copy
+from wlf.path import Path, PurePath
+from wlf.progress import CancelledError, progress
 
 LOGGER = logging.getLogger('com.wlf.asset')
 TEMPLATES_DIR = os.path.abspath(os.path.join(__file__, '../templates'))
@@ -122,7 +124,6 @@ class FrameRanges(object):
             if isinstance(obj, (list, str, unicode, PurePath)):
                 self._wrapped = ret
 
-            self._wrapped_result = ret
             return ret
         except TypeError:
             self._wrapped = None
@@ -194,7 +195,7 @@ class Assets(list):
                     list_ = list(Asset(i) for i in obj)
                 except TypeError:
                     if is_strict:
-                        raise TypeError('Not supported type: {}', type(obj))
+                        raise TypeError('Not supported type.', type(obj))
                     list_ = []
         super(Assets, self).__init__(set(list_))
 
@@ -466,8 +467,6 @@ def sent_to_dir(dir_):
 
 def dropdata_handler(mime_type, data, from_dir=False):
     """Handling dropdata."""
-
-    from wlf.notify import progress, CancelledError
 
     LOGGER.debug('Handling dropdata: %s %s', mime_type, data)
     if mime_type != 'text/plain':

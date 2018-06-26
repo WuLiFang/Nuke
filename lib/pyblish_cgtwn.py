@@ -14,7 +14,7 @@ import cgtwq
 import scripttools
 from cgtwn import Task
 from node import wlf_write_node
-from wlf.files import copy
+from wlf.fileutil import copy
 from wlf.path import PurePath
 
 # pylint: disable=no-init
