@@ -14,6 +14,7 @@ def main():
     import cgtwn
     import cgtwq
     import enable_later
+    import asset
 
     gui.setup()
     pref.setup()
@@ -24,6 +25,7 @@ def main():
     enable_later.setup()
     cgtwn.setup()
     cgtwq.DesktopClient.start()
+    asset.setup()
     if cgtwq.DesktopClient.is_logged_in():
         cgtwq.update_setting()
 

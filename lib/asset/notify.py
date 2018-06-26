@@ -12,11 +12,16 @@ import webbrowser
 from tempfile import mkstemp
 
 import nuke
+import pendulum
+from jinja2 import Environment, FileSystemLoader
 
-from node import Last
+import callback
 from nuketools import utf8
+from wlf.codectools import get_encoded as e
+from wlf.codectools import get_unicode as u
 from wlf.decorators import run_with_clock
 
+from . import core
 from .monitor import FootagesMonitor
 
 LOGGER = logging.getLogger(__name__)
@@ -52,48 +57,73 @@ def warn_missing_frames(assets=None, show_ok=False):
         webbrowser.open(name)
 
 
-def warn_mtime(show_dialog=False, show_ok=False, since=None):
+SHOWED_WARNING = []
+
+
+def throtted_warning(msg):
+    """Only show each warning message once.  """
+
+    msg = u(msg)
+    if msg not in SHOWED_WARNING:
+        nuke.warning(utf8(msg))
+        SHOWED_WARNING.append(msg)
+
+
+def reset_warning_history():
+    """Forget showed warning.  """
+
+    del SHOWED_WARNING[:]
+
+
+def warn_mtime(show_ok=False, since=None):
     """Show footage that mtime newer than script mtime. """
 
     LOGGER.debug('Check warn_mtime')
-    msg = ''
-    newer_footages = {}
-    if Last.name is None:
+
+    try:
+        script_name = nuke.scriptName()
+    except RuntimeError:
         if show_ok:
-            nuke.message('文件未保存')
+            nuke.message(utf8('文件未保存'))
         return
+    script_mtime = os.path.getmtime(e(script_name))
+    since = since or script_mtime
 
     @run_with_clock('检查素材修改日期')
     def _get_mtime_info():
+        ret = {}
         for n in nuke.allNodes('Read', nuke.Root()):
             try:
-                mtime = time.strptime(n.metadata(
-                    'input/mtime'), '%Y-%m-%d %H:%M:%S')
+                mtime = time.mktime(time.strptime(
+                    n.metadata('input/mtime'), '%Y-%m-%d %H:%M:%S'))
             except TypeError:
                 continue
-            if mtime > Last.mtime:
-                ftime = time.strftime('%m-%d %H:%M:%S', mtime)
-                newer_footages[nuke.filename(n)] = ftime
-                msg = '{}: [new footage]{}'.format(n.name(), ftime)
-                if msg not in Last.showed_warning:
-                    nuke.warning(msg)
-                    Last.showed_warning.append(msg)
+            if mtime > since:
+                ret[nuke.filename(n)] = mtime
+                ftime = time.strftime('%m-%d %H:%M:%S', time.localtime(mtime))
+                throtted_warning(
+                    '{}: [new footage]{}'.format(u(n.name()), ftime))
+        return ret
 
-    _get_mtime_info()
+    newer_footages = _get_mtime_info()
 
-    if show_dialog and (newer_footages or show_ok):
-        msg = '<style>td {padding:8px;}</style>'
-        msg += '<b>{}</b>'.format((os.path.basename(Last.name)))
-        msg += '<div>上次修改: {}</div><br><br>'.format(
-            time.strftime('%y-%m-%d %H:%M:%S', Last.mtime))
-        if newer_footages:
-            msg += '发现以下素材变更:<br>'
-            msg += '<tabel>'
-            msg += '<tr><th>修改日期</th><th>素材</th></tr>'
-            msg += '\n'.join(['<tr><td>{}</td><td>{}</td></tr>'.format(
-                newer_footages[i], i)
-                for i in newer_footages])
-            msg += '</tabel>'
-        elif show_ok:
-            msg += '没有发现更新的素材'
-        nuke.message(utf8(msg))
+    if not (show_ok or newer_footages):
+        return
+
+    env = Environment(loader=FileSystemLoader(core.TEMPLATES_DIR))
+    template = env.get_template('mtime.html')
+    data = [(k, pendulum.from_timestamp(v).diff_for_humans())
+            for k, v in newer_footages.items()]
+    msg = template.render(script_name=script_name,
+                          script_mtime=pendulum.from_timestamp(
+                              script_mtime).diff_for_humans(),
+                          data=data)
+    nuke.message(utf8(msg))
+
+
+def setup():
+    pendulum.set_locale('zh')
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(reset_warning_history)
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_missing_frames)
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_mtime)
+    callback.CALLBACKS_ON_SCRIPT_SAVE.append(warn_missing_frames)
