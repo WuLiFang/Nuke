@@ -7,8 +7,9 @@ from __future__ import (absolute_import, division, print_function,
 import nuke
 
 import callback
-from nuketools import Nodes
+from nodeutil import Nodes
 from wlf.codectools import get_unicode as u
+
 ENABLE_MARK = '_enable_'
 
 

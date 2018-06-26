@@ -11,7 +11,8 @@ from collections import Iterable, namedtuple
 import nuke
 
 import callback
-from nuketools import Nodes, get_upstream_nodes, undoable_func, utf8
+from nodeutil import Nodes, get_upstream_nodes
+from nuketools import undoable_func, utf8
 from wlf.decorators import run_async, run_in_main_thread, run_with_clock
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
