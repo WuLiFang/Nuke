@@ -58,7 +58,7 @@ class FrameRangesTestCase(TestCase):
         root = nuke.Root()
         root['first_frame'].setValue(1)
         root['last_frame'].setValue(100)
-        from_root = FrameRanges.from_root()
+        from_root = FrameRanges(root)
         self.assertIsInstance(from_root._wrapped, nuke.Root)
         self.assertEqual(str(from_root), '1-100')
         # Change root frame range.
