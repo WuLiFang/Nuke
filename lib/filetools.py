@@ -6,6 +6,7 @@ from __future__ import (absolute_import, division, print_function,
 import os
 
 from wlf.path import PurePath
+from wlf.pathtools import make_path_finder
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
 

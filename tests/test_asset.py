@@ -4,19 +4,23 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
-import sys
 from random import sample
 from tempfile import mkdtemp
-from unittest import TestCase, main, skip
+from unittest import TestCase, main
 
 import nuke
 
+import asset
 from wlf.path import Path
+
+FrameRanges = asset.FrameRanges
+Footage = asset.Footage
+FootagesMonitor = asset.FootagesMonitor
+# pylint: disable=protected-access,too-many-lines
 
 
 class FrameRangesTestCase(TestCase):
     def test_from_path(self):
-        from asset import FrameRanges
         first = FrameRanges('test测试')
         self.assertEqual(str(first), '1-1')
         last = FrameRanges('test测试.%04d.exr')
@@ -26,12 +30,10 @@ class FrameRangesTestCase(TestCase):
         self.assertEqual(str(last), str(root))
 
     def test_from_framerange(self):
-        from asset import FrameRanges
         first = FrameRanges(nuke.FrameRange('1-80'))
         self.assertEqual(str(first), '1-80')
 
     def test_from_node(self):
-        from asset import FrameRanges
         n = nuke.nodes.Read(file=b'test测试.###.png', first=5, last=80)
         first = FrameRanges(n)
         self.assertEqual(str(first), '5-80')
@@ -53,7 +55,6 @@ class FrameRangesTestCase(TestCase):
         nuke.delete(n)
 
     def test_dynamic_root(self):
-        from asset import FrameRanges
         root = nuke.Root()
         root['first_frame'].setValue(1)
         root['last_frame'].setValue(100)
@@ -74,7 +75,6 @@ class FrameRangesTestCase(TestCase):
         self.assertEqual(str(from_root), '1-100')
 
     def test_node_file_changed(self):
-        from asset import FrameRanges
         first_file = b'test测试.###.png'
         n = nuke.nodes.Read(file=first_file, first=5, last=80)
         first = FrameRanges(n)
@@ -90,7 +90,6 @@ class FrameRangesTestCase(TestCase):
         nuke.delete(n)
 
     def test_reversed(self):
-        from asset import FrameRanges
         first = FrameRanges('200-100')
         self.assertEqual(first.toFrameList(), range(200, 99, -1))
         n = nuke.nodes.Read(file=b'测试wfjm.###.exr', first=200, last=100)
@@ -99,75 +98,67 @@ class FrameRangesTestCase(TestCase):
         nuke.delete(n)
 
     def test_to_frame_list(self):
-        from asset import FrameRanges
         empty = nuke.FrameRanges([])
         self.assertIs(empty.toFrameList(), None)
         self.assertIsInstance(FrameRanges(empty).to_frame_list(), list)
 
     def test_bool(self):
-        from asset import FrameRanges
         empty = nuke.FrameRanges([])
         self.assertFalse(FrameRanges(empty))
         self.assert_(FrameRanges())
 
 
-class AssetTestCase(TestCase):
+class FootageTestCase(TestCase):
     def _pop(self):
-        from asset import Asset
-        return Asset('test测试')
+        return Footage('test测试')
 
     def test_nest(self):
-        from asset import Asset
         first = self._pop()
-        self.assertIs(first, Asset(first))
+        self.assertIs(first, Footage(first))
 
     def test_cache(self):
         first = self._pop()
         self.assertIs(first, self._pop())
 
     def test_auto_framerange(self):
-        from asset import Asset
-        first = Asset('test测试')
+        first = Footage('test测试')
         self.assertEqual(str(first.frame_ranges), '1-1')
-        last = Asset('test测试.%04d.exr')
+        last = Footage('test测试.%04d.exr')
         self.assertEqual(str(last.frame_ranges), '1-100')
 
     def test_expand_range(self):
-        from asset import Asset
 
-        first = Asset('test测试.%d.exr')
+        first = Footage('test测试.%d.exr')
         self.assertEqual(str(first.frame_ranges), '1-100')
-        last = Asset('test测试.%d.exr', '50-200')
+        last = Footage('test测试.%d.exr', '50-200')
         self.assertIs(last, first)
         self.assertEqual(str(first.frame_ranges), '1-200')
-        last = Asset('test测试.%d.exr', '300-400')
+        last = Footage('test测试.%d.exr', '300-400')
         self.assertEqual(str(first.frame_ranges), '1-200 300-400')
 
     def test_single_frame(self):
-        from asset import Asset
 
-        first = Asset('test测试.exr')
+        first = Footage('test测试.exr')
         self.assertEqual(str(first.frame_ranges), '1-1')
-        last = Asset('test测试.exr', '50-200')
+        last = Footage('test测试.exr', '50-200')
         self.assertEqual(str(last.frame_ranges), '1-1')
 
     def test_from_node(self):
-        from asset import Asset
         # Single frame.
         n = nuke.nodes.Read(file=b'test测试文件.exr', first=1, last=188)
-        first = Asset(n)
+        first = Footage(n)
         self.assert_(str(first.frame_ranges), '1-1')
         nuke.delete(n)
         # Multiple frame.
         n = nuke.nodes.Read(file=b'test测试文件.%d.exr', first=2, last=288)
-        last = Asset(n)
+        last = Footage(n)
         self.assert_(str(last.frame_ranges), '2-288')
         n['first'].setValue(3)
         self.assert_(str(last.frame_ranges), '3-288')
         nuke.delete(n)
 
 
-class AssetsTestCase(TestCase):
+class FootagesMonitorTestCase(TestCase):
 
     def setUp(self):
         self.nodes = [
@@ -188,20 +179,19 @@ class AssetsTestCase(TestCase):
         }
 
     def test_all(self):
-        from asset import Assets, MissingFramesDict
-        first = Assets.all()
+        first = FootagesMonitor.all()
         self.assertEqual(len(nuke.allNodes('Read')), len(self.nodes))
         self.assertEqual(len(first), 6)
         dict_ = first.missing_frames_dict()
         self.assertEqual(unicode(dict_),
-                         unicode(MissingFramesDict(self.expected_dict)))
+                         unicode(asset.MissingFramesDict(self.expected_dict)))
 
     def tearDown(self):
         for n in self.nodes:
             nuke.delete(n)
 
 
-class AssetMissingFrameTestCase(TestCase):
+class FootageMissingFrameTestCase(TestCase):
     def setUp(self):
         self.temp_dir = mkdtemp()
         self.addCleanup(os.removedirs, self.temp_dir)
@@ -212,15 +202,15 @@ class AssetMissingFrameTestCase(TestCase):
 
         # Create temp file.
         path = Path(Path(self.temp_dir) / 'test_seq.%04d.exr')
-        for i in set(xrange(1, 91)).difference(self.expected_missing_frames.toFrameList()):
+        for i in set(xrange(1, 91)).difference(
+                self.expected_missing_frames.toFrameList()):
             j = Path(path.with_frame(i))
             with j.open('w') as f:
                 f.write(unicode(i))
             self.addCleanup(j.unlink)
 
     def _test_missing_frame(self, filename):
-        from asset import Asset, CachedMissingFrames
-        asset_ = Asset(filename)
+        asset_ = Footage(filename)
 
         def _pop():
             ret = asset_.missing_frames()
@@ -233,7 +223,7 @@ class AssetMissingFrameTestCase(TestCase):
 
         # test cache
         cached = asset_._missing_frames
-        self.assertIsInstance(cached, CachedMissingFrames)
+        self.assertIsInstance(cached, asset.CachedMissingFrames)
         _pop()
         self.assertIs(cached, asset_._missing_frames)
         asset_.update_interval = -1
@@ -251,14 +241,12 @@ class AssetMissingFrameTestCase(TestCase):
         nuke.delete(n)
 
     def test_get_missing_frames(self):
-        from asset import Assets, MissingFramesDict
-        result = Assets.all().missing_frames_dict()
-        self.assertIsInstance(result, MissingFramesDict)
+        result = FootagesMonitor.all().missing_frames_dict()
+        self.assertIsInstance(result, asset.MissingFramesDict)
         self.assertIsInstance(result.as_html(), unicode)
 
     def test_warn_missing_frames(self):
-        from asset import warn_missing_frames
-        warn_missing_frames(show_ok=True)
+        asset.warn_missing_frames(show_ok=True)
 
 
 if __name__ == '__main__':
