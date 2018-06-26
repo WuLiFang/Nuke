@@ -83,7 +83,7 @@ class CollectMTime(pyblish.api.ContextPlugin):
             if n.hasError():
                 self.log.warning('读取节点出错: %s', n.name())
                 continue
-            filename = n.metadata('input/filename')
+            filename = nuke.filename(n)
             mtime = n.metadata('input/mtime')
             if not filename or not mtime:
                 continue
