@@ -5,24 +5,19 @@ from __future__ import absolute_import, print_function, unicode_literals
 import logging
 import os
 import re
-import time
 import traceback
 import webbrowser
-from multiprocessing.dummy import Pool, Process, cpu_count, Queue, Event
+from multiprocessing.dummy import Event, Pool, Process, Queue, cpu_count
 from subprocess import PIPE, Popen
 
 import nuke
-import nukescripts  # pylint: disable=import-error
-import psutil
 from jinja2 import Environment, PackageLoader
 
 import __about__
-import wlf.config
 from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
-from nuketools import iutf8, utf8
-from wlf.decorators import run_async, run_in_main_thread, run_with_memory_require
+from wlf.decorators import run_with_memory_require
 from wlf.notify import CancelledError, progress
 from wlf.path import get_encoded as e
 from wlf.path import get_unicode as u
