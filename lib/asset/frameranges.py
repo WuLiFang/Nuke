@@ -134,8 +134,13 @@ class FrameRanges(object):
             (static result, init if need dynamic link.)
         """
 
-        first = node.firstFrame()
-        last = node.lastFrame()
+        if isinstance(node, nuke.nodes.Read):
+            first = node['first'].value()
+            last = node['last'].value()
+        else:
+            first = node.firstFrame()
+            last = node.lastFrame()
+
         if first > last:
             first, last = last, first
         list_ = range(first, last + 1)
