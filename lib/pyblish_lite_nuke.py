@@ -33,7 +33,10 @@ ACTION_LOCK = Lock()
 def _do_actions():
     with ACTION_LOCK:
         while not ACTION_QUEUE.empty():
-            ACTION_QUEUE.get()()
+            try:
+                ACTION_QUEUE.get()()
+            except RuntimeError:
+                pass
 
 
 def _after_signal(signal, func):
