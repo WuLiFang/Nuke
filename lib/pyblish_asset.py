@@ -5,6 +5,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import os
+import sys
 from collections import namedtuple
 
 import nuke
@@ -88,9 +89,10 @@ class CollectMTime(pyblish.api.ContextPlugin):
                 continue
 
             footage = FootageInfo(filename=filename,
-                                  mtime=pendulum.from_format(mtime,
-                                                             '%Y-%m-%d %H:%M:%S',
-                                                             tz='Asia/Shanghai'))
+                                  mtime=pendulum.from_format(
+                                      mtime,
+                                      '%Y-%m-%d %H:%M:%S',
+                                      tz='Asia/Shanghai'))
             footages.add(footage)
         instance = context.create_instance(
             '{}个 素材'.format(len(footages)),
@@ -121,6 +123,25 @@ class ValidateMTime(pyblish.api.InstancePlugin):
                 is_ok = False
         if not is_ok:
             raise ValueError('Footage newer than comp.')
+
+
+class ValidateFootageStore(pyblish.api.InstancePlugin):
+    """检查素材文件是否保存于服务器.  """
+
+    order = pyblish.api.ValidatorOrder
+    label = '检查素材保存位置'
+    families = ['素材']
+    valid_dir = ('x:\\', 'y:\\', 'z:\\') if sys.platform == 'win32' else ('',)
+
+    def process(self, instance):
+        is_ok = True
+        for i in instance:
+            assert isinstance(i, FootageInfo)
+            if not os.path.normcase(u(i.filename)).startswith(self.valid_dir):
+                self.log.error('使用了本地素材: %s', i.filename)
+                is_ok = False
+        if not is_ok:
+            raise ValueError('Local file used.')
 
 
 class ExtractJPG(pyblish.api.InstancePlugin):
