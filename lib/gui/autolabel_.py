@@ -39,7 +39,7 @@ def custom_autolabel():
         return ret
 
     def _read():
-        missing_frames = asset.Asset(this).missing_frames(this)
+        missing_frames = asset.Footage(this).missing_frames(this)
         label = ('<style>* {font-family:微软雅黑} '
                  'span {color:red} b {color:#548DD4}</style>')
         label += '<b>帧范围: </b><span>{} - {}</span>'.format(
