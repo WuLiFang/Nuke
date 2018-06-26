@@ -7,13 +7,10 @@ import logging
 import os
 import webbrowser
 
-import cgtwq_uploader
 import nuke
 import nukescripts  # pylint: disable=import-error
-from autolabel import autolabel
 
 import asset
-import callback
 import cgtwn_panels
 import comp
 import comp.panels
@@ -21,11 +18,9 @@ import edit
 import edit_panels
 import enable_later
 import orgnize
-import panels
 import scanner
 import splitexr
 from nuketools import utf8
-from wlf.codectools import get_unicode as u
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -68,16 +63,19 @@ def add_menu():
             _("分离rgba",
               lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3'),
             _("重命名PuzzleMatte",
-              lambda: edit_panels.ChannelsRename(prefix='PuzzleMatte').show(), 'F4'),
+              lambda: edit_panels.ChannelsRename(
+                  prefix='PuzzleMatte').show(), 'F4'),
             _("标记为稍后启用",
-              lambda: enable_later.mark_enable(nuke.selectedNodes()), 'SHIFT+D'),
+              lambda: enable_later.mark_enable(
+                  nuke.selectedNodes()), 'SHIFT+D'),
             _('输出当前帧png',
               lambda: comp.render_png(nuke.selectedNodes(), show=True),
               'SHIFT+F7'),
             _("设置帧范围",
               edit.dialog_set_framerange),
             _('转换为相对路径',
-              lambda: edit.use_relative_path(nuke.selectedNodes()), icon="utilitiesfolder.png"),
+              lambda: edit.use_relative_path(
+                  nuke.selectedNodes()), icon="utilitiesfolder.png"),
             None,
             _("禁用所有稍后启用节点",
               lambda: enable_later.marked_nodes().disable(), 'CTRL+SHIFT+D'),
@@ -100,14 +98,17 @@ def add_menu():
                   orgnize.rename_all_nodes),
                 _("节点添加Dots变成90度",
                   lambda: orgnize.nodes_add_dots(nuke.selectedNodes())),
-                _("所有节点添加Dots变成90度", lambda: orgnize.nodes_add_dots(nuke.allNodes()))
+                _("所有节点添加Dots变成90度",
+                  lambda: orgnize.nodes_add_dots(nuke.allNodes()))
             ]
             }
         ]},
         {_('合成'): [
             _('自动合成', _autocomp, icon='autocomp.png'),
             _('自动合成设置',
-              lambda: comp.panels.CompConfigPanel().showModalDialog(), icon='autocomp.png'),
+              lambda: comp.panels.CompConfigPanel(
+
+              ).showModalDialog(), icon='autocomp.png'),
             _('redshift预合成',
               lambda: comp.Precomp.redshift(nuke.selectedNodes()),
               'F1',
@@ -186,27 +187,14 @@ def add_menu():
             '创建共享工具集'.encode('utf-8'), _create_shared_toolsets)
         m.addCommand(
             '打开共享工具集文件夹'.encode('utf-8'),
-            lambda: webbrowser.open(os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
+            lambda: webbrowser.open(
+                os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
 
     if not getattr(nukescripts.toolsets, '_refreshToolsetsMenu', None):
         setattr(nukescripts.toolsets, '_refreshToolsetsMenu',
                 nukescripts.toolsets.refreshToolsetsMenu)
     _refresh_toolsets_menu()
     nukescripts.toolsets.refreshToolsetsMenu = _refresh_toolsets_menu
-
-
-def add_panel():
-    """Add custom pannel. """
-
-    LOGGER.info('添加面板')
-    panels.register(cgtwq_uploader.Dialog, '上传mov', 'com.wlf.uploader')
-
-
-def add_autolabel():
-    """Add custom autolabel. """
-
-    LOGGER.info('增强节点标签')
-    nuke.addAutolabel(custom_autolabel)
 
 
 def create_menu_by_dir(parent, dir_):
@@ -217,7 +205,8 @@ def create_menu_by_dir(parent, dir_):
     _dir = os.path.abspath(dir_)
 
     def _order(name):
-        return ('_0_' if os.path.isdir(os.path.join(_dir, name)) else '_1_') + name
+        return ('_0_' if os.path.isdir(
+            os.path.join(_dir, name)) else '_1_') + name
 
     _listdir = sorted(os.listdir(_dir), key=_order)
     for i in _listdir:
@@ -237,83 +226,13 @@ def create_menu_by_dir(parent, dir_):
                     icon='{}.png'.format(_name))
 
 
-def custom_autolabel():
-    '''
-    add addition information on Node in Gui
-    '''
-
-    def _add_to_autolabel(text, center=False):
-
-        if not isinstance(text, (str, unicode)):
-            return
-        ret = u(autolabel()).split('\n')
-        ret.insert(1, text)
-        ret = '\n'.join(ret).rstrip('\n')
-        if center:
-            ret = '<div align="center" style="margin:0px;padding:0px">{}</div>'.format(
-                ret)
-        return ret
-
-    def _keyer():
-        label = '输入通道 : ' + u(nuke.value('this.input'))
-        ret = _add_to_autolabel(label)
-        return ret
-
-    def _read():
-        missing_frames = asset.Asset(this).missing_frames(this)
-        label = '<style>* {font-family:微软雅黑} span {color:red} b {color:#548DD4}</style>'
-        label += '<b>帧范围: </b><span>{} - {}</span>'.format(
-            this.firstFrame(), this.lastFrame())
-        if missing_frames:
-            label += '\n<span>缺帧: {}</span>'.format(missing_frames)
-        label += '\n<b>修改日期: </b>{}'.format(this.metadata('input/mtime'))
-        ret = _add_to_autolabel(label, True)
-        return ret
-
-    def _shuffle():
-        channels = dict.fromkeys(['in', 'in2', 'out', 'out2'], '')
-        for i in channels.keys():
-            channel_value = u(nuke.value('this.' + i))
-            if channel_value != 'none':
-                channels[i] = channel_value + ' '
-        label = (channels['in'] + channels['in2'] + '-> ' +
-                 channels['out'] + channels['out2']).rstrip(' ')
-        ret = _add_to_autolabel(label)
-        return ret
-
-    def _timeoffset():
-        return _add_to_autolabel('{:.0f}'.format(this['time_offset'].value()))
-
-    this = nuke.thisNode()
-    class_ = this.Class()
-    dict_ = {'Keyer': _keyer,
-             'Read': _read,
-             'Shuffle': _shuffle,
-             'TimeOffset': _timeoffset}
-
-    if class_ in dict_:
-        ret = dict_[class_]()
-        if isinstance(ret, unicode):
-            ret = utf8(ret)
-        return ret
-
-
 def panel_show(keyword):
     """Show control panel for matched nodes."""
 
     nodes = sorted((n for n in nuke.allNodes()
-                    if keyword in n.name() and not nuke.numvalue('{}.disable'.format(n.name()), 0)),
+                    if keyword in n.name()
+                    and not nuke.numvalue('{}.disable'.format(n.name()), 0)),
                    key=lambda n: n.name(),
                    reverse=True)
     for n in nodes:
         n.showControlPanel()
-
-
-def setup():
-    """Setup ui.   """
-
-    add_autolabel()
-    add_menu()
-    add_panel()
-    callback.CALLBACKS_ON_CREATE.append(
-        lambda: edit.set_random_glcolor(nuke.thisNode()))

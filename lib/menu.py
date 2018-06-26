@@ -5,7 +5,7 @@ from __future__ import absolute_import
 
 
 def main():
-    import _ui
+    import gui
     import dropdata_handler
     import gizmo_convert
     import pref
@@ -15,7 +15,7 @@ def main():
     import cgtwq
     import enable_later
 
-    _ui.setup()
+    gui.setup()
     pref.setup()
     dropdata_handler.setup()
     gizmo_convert.setup()
