@@ -3,7 +3,7 @@
 通道处理节点
 
 |ProjectionMP_icon| ProjectionMP
-----------------------------
+---------------------------------------
 
 .. image:: ProjectionMP_node.png
 

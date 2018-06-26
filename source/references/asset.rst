@@ -3,4 +3,56 @@ asset
 
 此模块用于 资产的使用和检查
 
-.. automodule:: asset
+autofix
+--------
+
+.. automodule:: asset.autofix
+
+comp
+--------
+
+.. automodule:: asset.comp
+
+core
+--------
+.. automodule:: asset.core
+
+dropdata
+------------
+
+.. automodule:: asset.dropdata
+
+footage
+-----------
+
+.. automodule:: asset.footage
+
+frameranges
+------------
+
+.. automodule:: asset.frameranges
+
+localization
+-------------
+
+.. automodule:: asset.localization
+
+model
+-----------
+
+.. automodule:: asset.model
+
+monitor
+-------------
+
+.. automodule:: asset.monitor
+
+notify
+------------
+
+.. automodule:: asset.notify
+
+util
+-------------
+
+.. automodule:: asset.util
