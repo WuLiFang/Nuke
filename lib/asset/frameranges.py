@@ -39,19 +39,20 @@ class FrameRanges(object):
         try:
             ret = nuke.FrameRanges(self._frame_list())
             # Save result for some case.
-            if isinstance(obj, (list, str, unicode, PurePath)):
-                self._wrapped = ret
-            return ret
         except (TypeError, ValueError, NotImplementedError):
-            self._wrapped = None
-            return self.from_root()
+            ret = nuke.FrameRanges(self.from_root().to_frame_list())
+
+        if isinstance(obj, (list, str, unicode, PurePath, nuke.FrameRanges)):
+            self._wrapped = ret
+
+        return ret
 
     def _frame_list(self):
         from .footage import Footage
 
         obj = self._wrapped
         if obj is None:
-            raise TypeError
+            list_ = []
         elif isinstance(obj, (list, nuke.FrameRange)):
             list_ = list(obj)
         elif isinstance(obj, nuke.Root):
@@ -134,7 +135,8 @@ class FrameRanges(object):
             (static result, init if need dynamic link.)
         """
 
-        if isinstance(node, nuke.nodes.Read):
+        assert isinstance(node, nuke.Node)
+        if node.Class() == 'Read':
             first = node['first'].value()
             last = node['last'].value()
         else:

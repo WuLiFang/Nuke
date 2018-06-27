@@ -105,7 +105,8 @@ class FrameRangesTestCase(TestCase):
     def test_bool(self):
         empty = nuke.FrameRanges([])
         self.assertFalse(FrameRanges(empty))
-        self.assert_(FrameRanges())
+        self.assertFalse(FrameRanges())
+        self.assert_(FrameRanges.from_root())
 
 
 class FootageTestCase(TestCase):
