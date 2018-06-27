@@ -159,7 +159,7 @@ def add_menu():
         print(ex)
 
     # create_node_menu
-    _plugin_path = '../../plugins'
+    _plugin_path = '../../../plugins'
 
     m = nuke.menu("Nodes")
     m = m.addMenu('吾立方'.encode('utf-8'), icon='Modify.png')
