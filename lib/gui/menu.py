@@ -82,8 +82,7 @@ def add_menu():
             _("修正读取错误", asset.fix_read, 'F6'),
             _("Reload所有", edit.reload_all_read_node),
             _("检查缺帧", lambda: asset.warn_missing_frames(show_ok=True)),
-            _("检查素材更新", lambda: asset.warn_mtime(
-                show_ok=True, show_dialog=True)),
+            _("检查素材更新", lambda: asset.warn_mtime(show_ok=True)),
             _("转换单帧为序列",
               edit.replace_sequence),
             {_('整理'): [
