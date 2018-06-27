@@ -28,7 +28,7 @@ DAG_CONTEXT = 2
 
 LOGGER = logging.getLogger('com.wlf.ui')
 
-RESOURCE_DIR = os.path.abspath(os.path.join(__file__, '../../'))
+RESOURCE_DIR = os.path.abspath(os.path.join(__file__, '../../../'))
 
 
 def add_menu():
