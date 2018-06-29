@@ -4,6 +4,7 @@ from __future__ import absolute_import, unicode_literals
 
 import logging
 import threading
+from contextlib import contextmanager
 from functools import wraps
 
 import nuke
@@ -149,3 +150,17 @@ def mainwindow():
         if isinstance(i, QtWidgets.QMainWindow):
             return i
     raise RuntimeError('Can not find main window')
+
+
+@contextmanager
+def keep_modifield_status():
+    """Restore modifield status after action finished.
+    """
+
+    root = nuke.Root()
+    assert isinstance(root, nuke.Root)
+    before = root.modified()
+    try:
+        yield
+    finally:
+        root.setModified(before)

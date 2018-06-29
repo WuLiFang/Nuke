@@ -14,6 +14,7 @@ import pyblish.api
 
 import callback
 from node import wlf_write_node
+from nuketools import keep_modifield_status
 from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
 
@@ -152,19 +153,20 @@ class ExtractJPG(pyblish.api.InstancePlugin):
     families = ['Nuke文件']
 
     def process(self, instance):
-        if not nuke.numvalue('preferences.wlf_render_jpg', 0.0):
-            self.log.info('因首选项而跳过生成JPG')
-            return
+        with keep_modifield_status():
+            if not nuke.numvalue('preferences.wlf_render_jpg', 0.0):
+                self.log.info('因首选项而跳过生成JPG')
+                return
 
-        n = wlf_write_node()
-        if n:
-            self.log.debug('render_jpg: %s', n.name())
-            try:
-                n['bt_render_JPG'].execute()
-            except RuntimeError as ex:
-                nuke.message(str(ex))
-        else:
-            self.log.warning('工程中缺少wlf_Write节点')
+            n = wlf_write_node()
+            if n:
+                self.log.debug('render_jpg: %s', n.name())
+                try:
+                    n['bt_render_JPG'].execute()
+                except RuntimeError as ex:
+                    nuke.message(str(ex))
+            else:
+                self.log.warning('工程中缺少wlf_Write节点')
 
 
 class SendToRenderDir(pyblish.api.InstancePlugin):
