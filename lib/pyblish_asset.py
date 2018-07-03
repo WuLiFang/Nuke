@@ -102,6 +102,22 @@ class CollectMTime(pyblish.api.ContextPlugin):
         instance.extend(footages)
 
 
+class CollectMemoryUsage(pyblish.api.ContextPlugin):
+    """获取当前工程内存占用.   """
+
+    order = pyblish.api.CollectorOrder
+    label = '获取内存占用'
+
+    def process(self, context):
+        assert isinstance(context, pyblish.api.Context)
+        number = nuke.memory('usage')
+
+        context.create_instance(
+            '内存占用: {}GB'.format(round(number / 2.0 ** 30, 2)),
+            number=number,
+            family='内存')
+
+
 class ValidateMTime(pyblish.api.InstancePlugin):
     """检查素材是否在文件保存之后更改过.   """
 
