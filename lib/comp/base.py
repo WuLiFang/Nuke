@@ -10,7 +10,7 @@ import webbrowser
 
 import nuke
 
-from comp.config import CompConfig
+from comp.config import BatchCompConfig, CompConfig
 from comp.precomp import Precomp
 from node import ReadNode
 from nuketools import undoable_func, utf8, utf8_dict
@@ -21,6 +21,7 @@ from wlf.progress.core import DefaultHandler
 
 CONFIG = CompConfig()
 LOGGER = logging.getLogger('com.wlf.comp')
+BATCH_CONFIG = BatchCompConfig()
 
 
 class Comp(object):
@@ -61,7 +62,7 @@ class Comp(object):
         for dir_ in dirs:
             # Get footage in subdir
             LOGGER.info('文件夹 %s:', dir_)
-            if not re.match(CONFIG['dir_pat'], os.path.basename(dir_.rstrip('\\/'))):
+            if not re.match(BATCH_CONFIG['dir_pat'], os.path.basename(dir_.rstrip('\\/'))):
                 LOGGER.info('\t不匹配文件夹正则, 跳过')
                 continue
 
