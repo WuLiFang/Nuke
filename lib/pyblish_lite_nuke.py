@@ -92,8 +92,15 @@ def _pyblish_action(name, is_reset=True):
 
 
 def _handle_result(result):
+    def _get_text():
+        records = result['records']
+        if records:
+            return '\n'.join(i.getMessage() for i in records)
+
+        return '请在pyblish窗口中查看详情'
+
     if not result['success']:
-        Tray.error('发布失败', '请在pyblish窗口中查看详情')
+        Tray.critical('发布失败', _get_text())
 
 
 class Window(window.Window):
