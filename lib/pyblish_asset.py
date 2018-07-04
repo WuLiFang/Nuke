@@ -118,30 +118,6 @@ class CollectMemoryUsage(pyblish.api.ContextPlugin):
             family='内存')
 
 
-class ValidateMTime(pyblish.api.InstancePlugin):
-    """检查素材是否在文件保存之后更改过.   """
-
-    order = pyblish.api.ValidatorOrder
-    label = '检查素材修改日期'
-    families = ['素材']
-
-    def process(self, instance):
-        if callback.Callbacks.current is callback.CALLBACKS_ON_SCRIPT_SAVE:
-            return
-        filemtime = os.path.getmtime(instance.data['filename'])
-        filemtime = pendulum.from_timestamp(filemtime)
-        is_ok = True
-        for i in instance:
-            assert isinstance(i, FootageInfo)
-            if i.mtime > filemtime:
-                self.log.debug('%s > %s', i.mtime, filemtime)
-                self.log.warning('新素材: %s: %s', i.filename,
-                                 i.mtime.diff_for_humans(locale='zh'))
-                is_ok = False
-        if not is_ok:
-            raise ValueError('Footage newer than comp.')
-
-
 class ValidateFootageStore(pyblish.api.InstancePlugin):
     """检查素材文件是否保存于服务器.  """
 
