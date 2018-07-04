@@ -25,6 +25,7 @@ import pyblish_cgtwn
 from nuketools import abort_modified, mainwindow
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
+from wlf.uitools import Tray
 
 ACTION_QUEUE = Queue()
 ACTION_LOCK = Lock()
@@ -90,6 +91,11 @@ def _pyblish_action(name, is_reset=True):
     return _func
 
 
+def _handle_result(result):
+    if not result['success']:
+        Tray.error('发布失败', '请在pyblish窗口中查看详情')
+
+
 class Window(window.Window):
     """Modified pyblish_lite window for nuke.
 
@@ -113,6 +119,7 @@ class Window(window.Window):
             return
 
         controller = control.Controller()
+        controller.was_processed.connect(_handle_result)
         super(Window, self).__init__(
             controller, parent)
 
