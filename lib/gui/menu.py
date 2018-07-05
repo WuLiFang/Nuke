@@ -63,8 +63,7 @@ def add_menu():
             _("分离rgba",
               lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3'),
             _("重命名PuzzleMatte",
-              lambda: edit_panels.ChannelsRename(
-                  prefix='PuzzleMatte').show(), 'F4'),
+              lambda: edit_panels.ChannelsRename().show(), 'F4'),
             _("标记为稍后启用",
               lambda: enable_later.mark_enable(
                   nuke.selectedNodes()), 'SHIFT+D'),

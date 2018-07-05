@@ -15,16 +15,16 @@ from wlf.progress import CancelledError, progress
 class ChannelsRename(nukescripts.PythonPanel):
     """Dialog UI of channel_rename."""
 
-    def __init__(self, prefix='PuzzleMatte', node=None):
+    def __init__(self, prefix=('PuzzleMatte', 'ID'), node=None):
         def _pannel_order(name):
-            ret = name.replace(prefix + '.', '!.')
-
-            repl = ('.red', '.0_'), ('.green', '.1_'), ('.blue', '.2_')
-            ret = reduce(lambda text, repl: text.replace(*repl), repl, ret)
-
-            if ret.endswith('.alpha'):
-                ret = '~{}'.format(ret)
-            return ret
+            return (
+                name.endswith('.alpha'),
+                name.startswith(prefix),
+                name.split('.')[0],
+                name.endswith('.blue'),
+                name.endswith('.green'),
+                name.endswith('.red'),
+            )
 
         def _stylize(text):
             ret = text
