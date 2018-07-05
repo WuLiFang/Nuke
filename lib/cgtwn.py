@@ -11,6 +11,7 @@ import nuke
 
 import callback
 import cgtwq
+from cgtwq.helper.wlf import CGTWQHelper
 from edit import CurrentViewer
 from nuketools import utf8
 from wlf.path import Path
@@ -96,29 +97,11 @@ class Task(cgtwq.Entry):
         shot (str): Shot name.
             pipeline (str, optional): Defaults to '合成'. Pipline name.
         """
-        database = Database.from_shot(shot)
-        LOGGER.debug('Database: %s', database.name)
-        module = database['shot_task']
-        id_list = module.filter(cgtwq.Filter('shot.shot', shot) &
-                                cgtwq.Filter('pipeline', pipeline))
-        if len(id_list) > 1:
-            LOGGER.warning('Duplicated task: %s', shot)
-            select = module.select(*id_list)
-            current_account_id = cgtwq.util.current_account_id()
-            data = select.get_fields('id', 'account_id')
-            data = {i[0]: i[1] for i in data}
 
-            def _by_artist(id_):
-                task_account_id = data[id_]
-                if not task_account_id:
-                    return 2
-                if current_account_id in task_account_id:
-                    return 0
-                return 1
-            id_list = sorted(id_list, key=_by_artist)
-
-        ret = cls(module, id_list[0])
+        entry = CGTWQHelper.get_entry(shot, pipeline)
+        ret = cls(entry.module, entry[0])
         ret.shot = shot
+
         return ret
 
 
