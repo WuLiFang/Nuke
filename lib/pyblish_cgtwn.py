@@ -199,7 +199,7 @@ class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
         try:
             dest = task.filebox.get('workfile').path + '/'
         except:
-            self.log('找不到标识为workfile的文件框 请联系管理员进行设置')
+            self.log.error('找不到标识为workfile的文件框 请联系管理员进行设置')
             raise
         # dest = 'E:/test_pyblish/'
 
