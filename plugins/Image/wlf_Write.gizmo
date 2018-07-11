@@ -92,7 +92,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.54.0"}
+ addUserKnob {20 Write l "wlf_Write v1.54.1"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -286,7 +286,7 @@ file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \
 proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
 file_type exr
 render_order 0
-reading {{"\[python -execlocal if\\ os.getenv('WLF_IS_DEADLINE'):\\n\\ \\ \\ \\ ret\\ =\\ True\\nelif\\ not\\ nuke.value('parent.reading_exr'):\\n\\ \\ \\ \\ ret\\ =\\ False\\nelse:\\n\\ \\ \\ \\ import\\ os\\n\\ \\ \\ \\ import\\ sys\\n\\ \\ \\ \\ filename\\ =\\ nuke.filename(nuke.thisNode(),\\ nuke.REPLACE).decode('utf-8')\\n\\ \\ \\ \\ ret\\ =\\ os.path.exists(filename.encode(sys.getfilesystemencoding()))]"}}
+reading {{"\[python -execlocal if\\ os.getenv('WLF_IS_DEADLINE'):\\n\\ \\ \\ \\ ret\\ =\\ True\\nelif\\ not\\ nuke.numvalue('parent.reading_exr'):\\n\\ \\ \\ \\ ret\\ =\\ False\\nelse:\\n\\ \\ \\ \\ import\\ os\\n\\ \\ \\ \\ import\\ sys\\n\\ \\ \\ \\ filename\\ =\\ nuke.filename(nuke.thisNode(),\\ nuke.REPLACE).decode('utf-8')\\n\\ \\ \\ \\ ret\\ =\\ os.path.exists(filename.encode(sys.getfilesystemencoding()))]"}}
 checkHashOnRead false
 name Write_EXR_1
 xpos 0
