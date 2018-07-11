@@ -8,7 +8,6 @@ if '__wlf_Write' not in locals():
         def on_create(cls):
             this = nuke.thisNode()
             this['custom_frame'].setEnabled(this['use_custom_frame'].value())
-            this['bt_render_MOV_from_EXR'].setEnabled(this['output_exr'].value())
 
             old = nuke.value('this.Text_Artist.message')
             new = nuke.value('root.wlf_artist', '')
@@ -40,7 +39,11 @@ if '__wlf_Write' not in locals():
                 nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
             elif nuke.thisKnob() is nuke.thisNode()['output_exr']:
                 nuke.thisNode()['bt_render_MOV_from_EXR'].setEnabled(nuke.thisKnob().value())
-
+        @staticmethod
+        def is_reading_exr():
+            if os.getenv('WLF_IS_DEADLINE'):
+                return True
+            
         class WriteJPG(object):
             blur_node_classes = (
                 'VectorBlur',
@@ -89,7 +92,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.53.5"}
+ addUserKnob {20 Write l "wlf_Write v1.54.0"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -113,7 +116,7 @@ except NameError:
  addUserKnob {26 ""}
  addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.reading none\nknob this.Write_JPG_1.disable 0\nknob this.Read_JPG_1.disable 1\nexecute this.Write_JPG_1 \[value this.knob.frame]\nknob this.Read_JPG_1.version \[expr \[value this.Read_JPG_1.version]+1]\nknob this.Read_JPG_1.disable 0\nknob this.reading jpg" +STARTLINE}
  addUserKnob {22 bt_render l 渲染视频 -STARTLINE T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)"}
- addUserKnob {32 bt_render_MOV_from_EXR l 用序列渲染视频 -STARTLINE T "set tar this.Write_EXR_1\nknob \$tar.reading 1\npython -exec \{nukescripts.showRenderDialog(\[nuke.thisNode()], False)\}\nknob \$tar.reading 0"}
+ addUserKnob {6 reading_exr l 读取序列 t "渲染视频时不再计算已经输出了序列的帧, 直接读取结果"}
  addUserKnob {20 group_folders l 打开输出文件夹 n 1}
  group_folders 0
  addUserKnob {22 bt_jpg_dir l 单帧 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
@@ -123,230 +126,239 @@ except NameError:
  addUserKnob {83 reading l 读取 M {none mov jpg}}
  addUserKnob {22 reload -STARTLINE T "for n in nuke.thisNode().nodes():\n    if n.Class() == 'Read':\n        n\['reload'].execute()"}
 }
- Read {
-  inputs 0
-  file "\[value Write_JPG_1.file]"
-  proxy "\[value Write_JPG_1.proxy]"
-  origset true
-  name Read_JPG_1
-  xpos 90
-  ypos -190
- }
- Read {
-  inputs 0
-  file "\[value Write_MOV_2.file]"
-  proxy "\[value Write_MOV_2.proxy]"
-  last {{"root.last_frame - root.first_frame + 1"}}
-  frame "frame - root.first_frame + 1"
-  origset true
+Read {
+inputs 0
+file "\[value Write_JPG_1.file]"
+proxy "\[value Write_JPG_1.proxy]"
+origset true
+name Read_JPG_1
+xpos 180
+ypos -182
+}
+Read {
+inputs 0
+file "\[value Write_MOV_2.file]"
+proxy "\[value Write_MOV_2.proxy]"
+last {{"root.last_frame - root.first_frame + 1"}}
+frame "frame - root.first_frame + 1"
+origset true
+name Read_MOV_2
+xpos 90
+ypos -312
+}
+Constant {
+inputs 0
+channels rgb
+format "1920 1080 0 0 1920 1080 1 HD_1080"
+name Constant1
+xpos 90
+ypos -718
+}
+Text2 {
+font_size_toolbar 100
+font_width_toolbar 100
+font_height_toolbar 100
+opacity 0.3
+message "\[lindex \[split \[basename \[value root.name]] .] 0]"
+old_message {{119 119}
+  }
+old_expression_markers {{0 1}
+  }
+box {20 20 1000 75}
+transforms {{0 2}
+  }
+cursor_position 50
+font {{ SimHei : Regular : simhei.ttf : 0 }}
+global_font_scale 0.65
+scale {1 1}
+cursor_initialised true
+autofit_bbox false
+initial_cursor_position {{24 122.5}
+  }
+animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+  }
+enable_background {{!root.proxy}}
+background_opacity 0.3
+background_border_x 20
+name Text_Shot
+label 镜头名称
+xpos 90
+ypos -642
+}
+Text2 {
+font_size_toolbar 100
+font_width_toolbar 100
+font_height_toolbar 100
+opacity 0.34
+message "\[x]"
+old_message {{53 54}
+  }
+old_expression_markers {{0 1}
+  }
+box {1700 20 1900 75}
+xjustify right
+transforms {{0 2}
+  }
+cursor_position 3
+font {{ SimHei : Regular : simhei.ttf : 0 }}
+global_font_scale 0.65
+scale {1 1}
+cursor_initialised true
+autofit_bbox false
+initial_cursor_position {{1778.5 128.5}
+  }
+animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+  }
+enable_background {{!root.proxy}}
+background_opacity 0.3
+background_border_x 20
+name Text_Frame
+label 帧编号
+xpos 90
+ypos -600
+}
+Text2 {
+font_size_toolbar 100
+font_width_toolbar 100
+font_height_toolbar 100
+opacity 0.34
+box {1098 1000.5 1900 1055.5}
+xjustify right
+transforms {{0 2}
+  }
+font {{ SimHei : Regular : simhei.ttf : 0 }}
+global_font_scale 0.5
+scale {1 1}
+cursor_initialised true
+autofit_bbox false
+initial_cursor_position {{1778.5 128.5}
+  }
+animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+  }
+enable_background {{!root.proxy}}
+background_opacity 0.3
+background_border_x 20
+name Text_Artist
+label 制作人
+xpos 90
+ypos -558
+}
+clone nodecdbc2400|Reformat|12040 Reformat {
+resize fit
+name Reformat1
+xpos 90
+ypos -516
+}
+set Ccdbc2400 [stack 0]
+Input {
+inputs 0
+name Input
+xpos 0
+ypos -988
+}
+clone $Ccdbc2400 {
+xpos 0
+ypos -956
+}
+Write {
+file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+proxy "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
+views {{{parent.views}}}
+file_type jpeg
+_jpeg_quality 1
+render_order 3
+first {{parent.knob.frame}}
+last {{first}}
+use_limit true
+checkHashOnRead false
+in_colorspace linear
+out_colorspace linear
+beforeRender __wlf_Write.WriteJPG.before_render()
+afterRender __wlf_Write.WriteJPG.after_render()
+name Write_JPG_1
+label "单帧\n会在退出脚本时自动输出"
+xpos 0
+ypos -924
+disable true
+}
+Write {
+file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
+proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
+file_type exr
+render_order 0
+reading {{"\[python -execlocal if\\ os.getenv('WLF_IS_DEADLINE'):\\n\\ \\ \\ \\ ret\\ =\\ True\\nelif\\ not\\ nuke.value('parent.reading_exr'):\\n\\ \\ \\ \\ ret\\ =\\ False\\nelse:\\n\\ \\ \\ \\ import\\ os\\n\\ \\ \\ \\ import\\ sys\\n\\ \\ \\ \\ filename\\ =\\ nuke.filename(nuke.thisNode(),\\ nuke.REPLACE).decode('utf-8')\\n\\ \\ \\ \\ ret\\ =\\ os.path.exists(filename.encode(sys.getfilesystemencoding()))]"}}
+checkHashOnRead false
+name Write_EXR_1
+xpos 0
+ypos -842
+disable {{"!(parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
+}
+Write {
+file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
+proxy "mov/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
+colorspace sRGB
+views {{{parent.views}}}
+file_type mov
+meta_codec apch
+mov32_codec "rle "
+mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
+mov64_codec apch
+mov64_fps {{root.fps}}
+beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
+name Write_MOV_1
+xpos 0
+ypos -774
+}
+Merge2 {
+inputs 2
+name Merge1
+label burn-in
+xpos 0
+ypos -484
+}
+Write {
+file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
+proxy "mov/proxy/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
+colorspace sRGB
+views {{{parent.views}}}
+file_type mov
+meta_codec apch
+mov32_codec "rle "
+mov64_codec apch
+mov64_fps {{root.fps}}
+render_order 2
+checkHashOnRead false
+beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
+name Write_MOV_2
+label 带帧编号的MOV
+xpos 0
+ypos -442
+}
+Assert {
+expression {{"\[python bool(nuke.value('root.project_directory'))]"}}
+message 工程目录未设置
+name Assert3
+xpos 0
+ypos -374
+}
+Assert {
+expression {{"\[python bool(nuke.value('root.name'))]"}}
+message 工程未保存
+name Assert1
+xpos 0
+ypos -342
+}
+Switch {
+inputs 3
+which {{parent.reading}}
+name Switch2
+xpos 0
+ypos -52
+}
+Output {
+name Output1
+xpos 0
+ypos -20
+}
 
-  name Read_MOV_2
-  xpos 90
-  ypos -320
- }
- Constant {
-  inputs 0
-  channels rgb
-  format "1920 1080 0 0 1920 1080 1 HD_1080"
-  name Constant1
-  xpos 90
-  ypos -722
- }
- Text2 {
-  font_size_toolbar 100
-  font_width_toolbar 100
-  font_height_toolbar 100
-  opacity 0.3
-  message "\[lindex \[split \[basename \[value root.name]] .] 0]"
-  box {20 20 1000 75}
-  transforms {{0 2}
-    }
-  cursor_position 50
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
-  global_font_scale 0.65
-  scale {1 1}
-  cursor_initialised true
-  autofit_bbox false
-  initial_cursor_position {{24 122.5}
-    }
-  group_animations {{0} imported: 0 selected: items: "root transform"}
-  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
-    }
-  enable_background {{!root.proxy}}
-  background_opacity 0.3
-  background_border_x 20
-  name Text_Shot
-  label 镜头名称
-  xpos 90
-  ypos -646
- }
- Text2 {
-  font_size_toolbar 100
-  font_width_toolbar 100
-  font_height_toolbar 100
-  opacity 0.34
-  message "\[x]"
-  box {1700 20 1900 75}
-  xjustify right
-  transforms {{0 2}
-    }
-  cursor_position 3
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
-  global_font_scale 0.65
-  scale {1 1}
-  cursor_initialised true
-  autofit_bbox false
-  initial_cursor_position {{1778.5 128.5}
-    }
-  group_animations {{0} imported: 0 selected: items: "root transform/"}
-  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
-    }
-  enable_background {{!root.proxy}}
-  background_opacity 0.3
-  background_border_x 20
-  name Text_Frame
-  label 帧编号
-  xpos 90
-  ypos -604
- }
- Text2 {
-  font_size_toolbar 100
-  font_width_toolbar 100
-  font_height_toolbar 100
-  opacity 0.34
-  box {1098 1000.5 1900 1055.5}
-  xjustify right
-  transforms {{0 2}
-    }
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
-  global_font_scale 0.5
-  scale {1 1}
-  cursor_initialised true
-  autofit_bbox false
-  initial_cursor_position {{1778.5 128.5}
-    }
-  group_animations {{0} imported: 0 selected: items: "root transform/"}
-  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
-    }
-  enable_background {{!root.proxy}}
-  background_opacity 0.3
-  background_border_x 20
-  name Text_Artist
-  label 制作人
-  xpos 90
-  ypos -562
- }
- Reformat {
-  resize fit
-  name Reformat1
-  xpos 90
-  ypos -520
- }
- set Cb149000 [stack 0]
- Input {
-  inputs 0
-  name Input
-  xpos 0
-  ypos -968
- }
-clone $Cb149000 {
-  xpos 0
-  ypos -938
- }
- Write {
-  file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
-  proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
-  file_type exr
-  checkHashOnRead false
-  name Write_EXR_1
-  render_order 0
-  xpos 0
-  ypos -908
-  disable {{"!(parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
- }
- Write {
-  file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
-  proxy "mov/proxy/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
-  colorspace sRGB
-  views {{{parent.views}}}
-  file_type mov
-  meta_codec apch
-  mov32_codec "rle "
-  mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
-  mov64_codec apch
-  mov64_fps {{root.fps}}
-  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
-  name Write_MOV_1
-  xpos 0
-  ypos -860
- }
- Write {
-  file "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
-  proxy "images/\[lindex \[split \[basename \[value root.name]] .] 0].jpg"
-  views {{{parent.views}}}
-  file_type jpeg
-  _jpeg_quality 1
-  render_order 3
-  first {{parent.knob.frame}}
-  last {{first}}
-  use_limit true
-  beforeRender __wlf_Write.WriteJPG.before_render()
-  afterRender __wlf_Write.WriteJPG.after_render()
-  name Write_JPG_1
-  label "单帧\n会在退出脚本时自动输出"
-  xpos 0
-  ypos -804
-  disable true
-   }
- Merge2 {
-  inputs 2
-  name Merge1
-  label burn-in
-  xpos 0
-  ypos -490
- }
- Write {
-  file "mov/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
-  proxy "mov/proxy/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
-  colorspace sRGB
-  views {{{parent.views}}}
-  file_type mov
-  meta_codec apch
-  mov32_codec "rle "
-  mov64_codec apch
-  mov64_fps {{root.fps}}
-  render_order 2
-  checkHashOnRead false
-  beforeRender "# Create output folder;\n_dir = os.path.abspath('\{\}/../'.format(nuke.filename(nuke.thisNode())));\n\nif not os.path.exists(_dir):\n    os.makedirs(_dir);"
-  name Write_MOV_2
-  label 带帧编号的MOV
-  xpos 0
-  ypos -448
- }
- Assert {
-  expression {{"\[python bool(nuke.value('root.project_directory'))]"}}
-  message 工程目录未设置
-  name Assert3
-  xpos 0
-  ypos -380
- }
- Assert {
-  expression {{"\[python bool(nuke.value('root.name'))]"}}
-  message 工程未保存
-  name Assert1
-  xpos 0
-  ypos -350
- }
- Switch {
-  inputs 3
-  which {{parent.reading}}
-  name Switch2
-  xpos 0
-  ypos -60
- }
- Output {
-  name Output1
-  xpos 0
-  ypos -30
- }
 end_group
