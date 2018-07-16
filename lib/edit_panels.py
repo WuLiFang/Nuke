@@ -4,46 +4,19 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import nuke
-import nukescripts  # pylint: disable=import-error
 
 from edit import (CurrentViewer, named_copy, replace_node, set_knobs,
                   transfer_flags)
 from nodeutil import is_node_deleted
 from nuketools import undoable_func
+from panels import PythonPanel
 from wlf.progress import CancelledError, progress
-
-
-class PythonPanel(nukescripts.PythonPanel):
-    """Customized python panel.  """
-
-    is_dialog = False
-    pane_name = None
-
-    def __getitem__(self, name):
-        return self.knobs()[name]
-
-    def show(self):
-        """Show panel.  """
-        pane = nuke.getPaneFor('Properties.1')
-        if pane:
-            self.addToPane(pane)
-        else:
-            self.is_dialog = True
-            super(PythonPanel, self).show()
-
-    def destroy(self):
-        """Destroy panel.  """
-
-        self.removeCallback()
-        if self.is_dialog:
-            nuke.thisPane().destroy()
-        super(PythonPanel, self).destroy()
 
 
 class ChannelsRename(PythonPanel):
     """Dialog UI of channel_rename."""
 
-    pane_name = 'com.wlf.channels_rename'
+    widget_id = 'com.wlf.channels_rename'
 
     def __init__(self, prefix=('PuzzleMatte', 'ID'), node=None):
         def _pannel_order(name):
@@ -65,7 +38,7 @@ class ChannelsRename(PythonPanel):
                 ret = ret.replace(k, v)
             return ret
 
-        super(ChannelsRename, self).__init__(b'重命名通道', self.pane_name)
+        super(ChannelsRename, self).__init__(b'重命名通道', self.widget_id)
 
         viewer = CurrentViewer()
         n = node or nuke.selectedNode()
@@ -145,10 +118,10 @@ class ChannelsRename(PythonPanel):
 class MultiEdit(PythonPanel):
     """Edit multiple same class node at once.  """
     nodes = None
-    pane_name = 'com.wlf.multiedit'
+    widget_id = 'com.wlf.multiedit'
 
     def __init__(self, nodes=None):
-        super(MultiEdit, self).__init__(b'多节点编辑', self.pane_name)
+        super(MultiEdit, self).__init__(b'多节点编辑', self.widget_id)
 
         nodes = nodes or nuke.selectedNodes()
         assert nodes, 'Nodes not given. '

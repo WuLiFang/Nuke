@@ -1,12 +1,39 @@
 # -*- coding=UTF-8 -*-
 """Wrap QWidget to nuke panel.  """
 
-from __future__ import unicode_literals, absolute_import
+from __future__ import absolute_import, unicode_literals
 
 import nuke
-from nukescripts.panels import PythonPanel, registerPanel, restorePanel  # pylint: disable=import-error
+import nukescripts  # pylint: disable=import-error
 
 from wlf.codectools import get_encoded
+
+
+class PythonPanel(nukescripts.PythonPanel):
+    """Customized python panel.  """
+
+    is_dialog = False
+    pane_name = None
+
+    def __getitem__(self, name):
+        return self.knobs()[name]
+
+    def show(self):
+        """Show panel.  """
+        pane = nuke.getPaneFor('Properties.1')
+        if pane:
+            self.addToPane(pane)
+        else:
+            self.is_dialog = True
+            super(PythonPanel, self).show()
+
+    def destroy(self):
+        """Destroy panel.  """
+
+        self.removeCallback()
+        if self.is_dialog:
+            nuke.thisPane().destroy()
+        super(PythonPanel, self).destroy()
 
 
 def register(widget, name, widget_id, create=False):
@@ -24,7 +51,7 @@ def register(widget, name, widget_id, create=False):
 
         def __init__(self, widget, name, widget_id):
             name_e = get_encoded(name, 'utf-8')
-            PythonPanel.__init__(self, name_e, widget_id)
+            super(_Panel, self).__init__(name_e, widget_id)
             self.custom_knob = nuke.PyCustom_Knob(
                 name_e, "",
                 "__import__('nukescripts').panels.WidgetKnob("
@@ -37,7 +64,7 @@ def register(widget, name, widget_id, create=False):
 
     menu = nuke.menu('Pane')
     menu.addCommand(get_encoded(name, 'utf-8'), _add)
-    registerPanel(widget_id, _add)
+    nukescripts.registerPanel(widget_id, _add)
 
-    if (create):
+    if create:
         return _Panel(widget, name, widget_id)
