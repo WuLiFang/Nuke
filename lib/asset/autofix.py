@@ -17,27 +17,56 @@ LOGGER = logging.getLogger(__name__)
 
 
 def fix_read():
-    """Try fix all read nodes that has error."""
+    """Try fix all nodes that has filename error."""
 
-    def _get_name(filename):
-        return PurePath(filename).name
+    def _current_basename(filename):
+        if not filename:
+            return None
+        return PurePath(filename).with_frame(nuke.frame()).name
 
-    filename_dict = {_get_name(nuke.filename(n)): nuke.filename(n)
-                     for n in nuke.allNodes('Read') if not n.hasError()}
-    for n in nuke.allNodes('Read'):
-        if not n.hasError() or n['disable'].value():
+    filename_dict = {}
+
+    def _update_map(filename):
+        if not filename:
+            return
+        filename_dict[_current_basename(filename)] = filename
+
+    _ = [_update_map(nuke.filename(n))
+         for n in nuke.allNodes() if not n.hasError()]
+
+    result = {'success': 0, 'fail': 0}
+    for n in nuke.allNodes():
+        try:
+            if not n.hasError() or n['disable'].value():
+                continue
+        except NameError:
             continue
-        fix_result = None
+
         filename = nuke.filename(n)
-        name = os.path.basename(nuke.filename(n))
-        new_path = filename_dict.get(_get_name(name))
+        if not filename:
+            continue
+
+        is_fixed = False
+        new_path = filename_dict.get(_current_basename(filename))
         if os.path.basename(filename).lower() == 'thumbs.db':
-            fix_result = True
-        elif new_path:
-            filename_knob = n['file'] if not n['proxy'].value() \
-                or nuke.value('root.proxy') == 'false' else n['proxy']
-            filename_knob.setValue(new_path)
-        else:
-            fix_result = dropdata_handler('text/plain', filename)
-        if fix_result:
             nuke.delete(n)
+            is_fixed = True
+        elif new_path:
+            _set_filename(n, new_path)
+            is_fixed = True
+        else:
+            is_fixed = dropdata_handler('text/plain', filename)
+
+        result['success' if is_fixed else 'fail'] += 1
+
+    nuke.message('成功修复 {success} 个节点, 失败 {fail} 个'.format(
+        **result).encode('utf-8'))
+
+
+def _set_filename(n, value):
+    try:
+        k = (n['file'] if not n['proxy'].value()
+             or nuke.value('root.proxy') == 'false' else n['proxy'])
+    except NameError:
+        k = n['file']
+    k.setValue(value)
