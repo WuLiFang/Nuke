@@ -8,6 +8,7 @@
     menu
     pref
     cgtw_integrate
+    guide
     spec
     reference
     changelog
