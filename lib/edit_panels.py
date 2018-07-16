@@ -8,12 +8,42 @@ import nukescripts  # pylint: disable=import-error
 
 from edit import (CurrentViewer, named_copy, replace_node, set_knobs,
                   transfer_flags)
+from nodeutil import is_node_deleted
 from nuketools import undoable_func
 from wlf.progress import CancelledError, progress
 
 
-class ChannelsRename(nukescripts.PythonPanel):
+class PythonPanel(nukescripts.PythonPanel):
+    """Customized python panel.  """
+
+    is_dialog = False
+    pane_name = None
+
+    def __getitem__(self, name):
+        return self.knobs()[name]
+
+    def show(self):
+        """Show panel.  """
+        pane = nuke.getPaneFor('Properties.1')
+        if pane:
+            self.addToPane(pane)
+        else:
+            self.is_dialog = True
+            super(PythonPanel, self).show()
+
+    def destroy(self):
+        """Destroy panel.  """
+
+        self.removeCallback()
+        if self.is_dialog:
+            nuke.thisPane().destroy()
+        super(PythonPanel, self).destroy()
+
+
+class ChannelsRename(PythonPanel):
     """Dialog UI of channel_rename."""
+
+    pane_name = 'com.wlf.channels_rename'
 
     def __init__(self, prefix=('PuzzleMatte', 'ID'), node=None):
         def _pannel_order(name):
@@ -35,16 +65,17 @@ class ChannelsRename(nukescripts.PythonPanel):
                 ret = ret.replace(k, v)
             return ret
 
+        super(ChannelsRename, self).__init__(b'重命名通道', self.pane_name)
+
         viewer = CurrentViewer()
         n = node or nuke.selectedNode()
         self._channels = sorted((channel for channel in n.channels()
-                                 if channel.startswith(prefix)), key=_pannel_order) + ['rgba.alpha']
+                                 if channel.startswith(prefix)),
+                                key=_pannel_order) + ['rgba.alpha']
         self._node = n
         self._viewer = viewer
 
         nuke.Undo.disable()
-        nukescripts.PythonPanel.__init__(
-            self, b'重命名通道', 'com.wlf.channels_rename')
 
         n = nuke.nodes.LayerContactSheet(inputs=[n], showLayerNames=1)
         self._layercontactsheet = n
@@ -61,59 +92,63 @@ class ChannelsRename(nukescripts.PythonPanel):
         k = nuke.Script_Knob('ok', 'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
-        self.addKnob(nuke.Script_Knob('cancel', 'Cancel'))
-        self._knobs = self.knobs()
+        k = nuke.Script_Knob('cancel', 'Cancel')
+        self.addKnob(k)
 
         nuke.Undo.enable()
 
-        nuke.addOnDestroy(ChannelsRename.destroy, args=(self))
-        nuke.addOnUserCreate(ChannelsRename.destroy, args=(self))
+        self.add_callbacks()
 
-    def __del__(self):
-        nuke.removeOnDestroy(ChannelsRename.destroy, args=(self))
-        nuke.removeOnUserCreate(ChannelsRename.destroy, args=(self))
+    def add_callbacks(self):
+        """Add nuke callbacks.  """
+
+        nuke.removeOnDestroy(ChannelsRename.hide, args=(self))
+        nuke.addOnUserCreate(ChannelsRename.hide, args=(self))
+
+    def remove_callbacks(self):
+        """Remove nuke callbacks.  """
+
+        nuke.removeOnDestroy(ChannelsRename.hide, args=(self))
+        nuke.removeOnUserCreate(ChannelsRename.hide, args=(self))
 
     def destroy(self):
         """Destroy the panel.  """
 
+        if not is_node_deleted(self._layercontactsheet):
+            nuke.Undo.disable()
+            self._layercontactsheet['label'].setValue('[delete this]')
+            nuke.Undo.enable()
+        self.remove_callbacks()
         super(ChannelsRename, self).destroy()
-        nuke.Undo.disable()
-        self._layercontactsheet['label'].setValue('[delete this]')
-        nuke.Undo.enable()
-        self.__del__()
 
     def knobChanged(self, knob):
         """Override. """
-        if knob in (self._knobs['ok'], self._knobs['cancel']):
+
+        if knob in (self['ok'], self['cancel']):
             self._viewer.recover()
-            if knob is self._knobs['ok']:
-                self.execute()
+            if knob is self['ok']:
+                self.accept()
+            else:
+                self.reject()
             self.destroy()
 
     @undoable_func('重命名通道')
-    def execute(self):
+    def accept(self):
         """Execute named copy.  """
+
         n = named_copy(self._node,
-                       {channel: self._knobs[channel].value()
+                       {channel: self[channel].value()
                         for channel in self._channels})
         replace_node(self._node, n)
 
-    def show(self):
-        """Show self to user.  """
-        pane = nuke.getPaneFor('Properties.1')
-        if pane:
-            self.addToPane(pane)
-        else:
-            self.addToPane(nuke.getPaneFor('Viewer.1'))
 
-
-class MultiEdit(nukescripts.PythonPanel):
+class MultiEdit(PythonPanel):
     """Edit multiple same class node at once.  """
     nodes = None
+    pane_name = 'com.wlf.multiedit'
 
     def __init__(self, nodes=None):
-        nukescripts.PythonPanel.__init__(
-            self, b'多节点编辑', 'com.wlf.multiedit')
+        super(MultiEdit, self).__init__(b'多节点编辑', self.pane_name)
 
         nodes = nodes or nuke.selectedNodes()
         assert nodes, 'Nodes not given. '
@@ -177,21 +212,6 @@ class MultiEdit(nukescripts.PythonPanel):
         self.addKnob(nuke.PyScript_Knob(
             'cancel', 'Cancel', 'nuke.tabClose()'))
 
-        self._knobs = self.knobs()
-
-        nuke.addOnDestroy(MultiEdit.destroy, args=(self))
-
-    def __del__(self):
-        nuke.removeOnDestroy(MultiEdit.destroy, args=(self))
-
-    def __getitem__(self, name):
-        return self._knobs[name]
-
-    def destroy(self):
-        """Destroy the panel.  """
-        super(MultiEdit, self).destroy()
-        self.__del__()
-
     def knobChanged(self, knob):
         """Override. """
         if knob is self['ok']:
@@ -213,15 +233,6 @@ class MultiEdit(nukescripts.PythonPanel):
                     n.setName(new_name)
                 except ValueError:
                     nuke.message(b'非法名称, 已忽略')
-
-    def show(self):
-        """Show self to user.  """
-
-        pane = nuke.getPaneFor('Properties.1')
-        if pane:
-            self.addToPane(pane)
-        else:
-            self.addToPane(nuke.getPaneFor('Viewer.1'))
 
 
 def same_class_filter(nodes, node_class=None):
