@@ -131,6 +131,14 @@ def add_menu():
             _("吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
         ]}
     ]
+    if getattr(nuke, 'startPerformanceTimers'):
+        all_menu.insert(
+            -1,
+            {_('性能监控'): [
+                _('开始', nuke.startPerformanceTimers),
+                _('结束', nuke.stopPerformanceTimers),
+                _('重置', nuke.resetPerformanceTimers),
+            ], })
 
     # Add all menu.
     def _add_menu(menu, parent=nuke.menu("Nuke")):
