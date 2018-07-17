@@ -17,10 +17,10 @@ import __about__
 from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
-from wlf.decorators import run_with_memory_require
-from wlf.progress import CancelledError, progress
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
+from wlf.decorators import run_with_memory_require
+from wlf.progress import CancelledError, progress
 
 LOGGER = logging.getLogger('com.wlf.batchcomp')
 
@@ -121,7 +121,8 @@ class BatchComp(Process):
         except (CancelledError, RuntimeError):
             pass
 
-        self.generate_report(shots_info)
+        webbrowser.open(self.generate_report(shots_info))
+        webbrowser.open(CONFIG['output_dir'])
 
     @classmethod
     def generate_report(cls, shots_info):
@@ -135,8 +136,8 @@ class BatchComp(Process):
         log_path = os.path.join(CONFIG['output_dir'], u'批量合成日志.html')
         with open(e(log_path), 'w') as f:
             f.write(data.encode('UTF-8'))
-        webbrowser.open(log_path)
-        webbrowser.open(CONFIG['output_dir'])
+
+        return log_path
 
     def get_shot_list(self):
         """Return shot_list generator from a config dict."""
