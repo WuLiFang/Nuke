@@ -10,9 +10,9 @@ def main():
     import gizmo_convert
     import pref
     import project_settings
-    import pyblish_lite_nuke
-    import cgtwn
-    import cgtwq
+    # import pyblish_lite_nuke
+    # import cgtwn
+    # import cgtwq
     import enable_later
     import asset
 
@@ -21,13 +21,13 @@ def main():
     dropdata_handler.setup()
     gizmo_convert.setup()
     project_settings.setup()
-    pyblish_lite_nuke.setup()
     enable_later.setup()
-    cgtwn.setup()
-    cgtwq.DesktopClient.start()
     asset.setup()
-    if cgtwq.DesktopClient.is_logged_in():
-        cgtwq.update_setting()
+    # cgtwn.setup()
+    # cgtwq.DesktopClient.start()
+    # if cgtwq.DesktopClient.is_logged_in():
+    #     cgtwq.update_setting()
+    # pyblish_lite_nuke.setup()
 
 
 if __name__ == '__main__':
