@@ -139,9 +139,10 @@ def remove_duplicated_read(is_show_result=True):
                 hide_input=True)
             dot.setXYpos(n.xpos() + 34, n.ypos() + 57)
             core.replace_node(n, dot)
-            removed_nodes.append(n.name())
+            n_name = u(n.name())
+            removed_nodes.append(n_name)
             u_print('用 {0} 代替 {1} , 删除 {1}。'.format(
-                same_node.name(), n.name()))
+                u(same_node.name()), n_name))
             nuke.delete(n)
         else:
             distinct_read.append(n)
