@@ -156,7 +156,8 @@ def remove_duplicated_read(is_show_result=True):
 
 
 def _find_same(node, nodes):
-    keys = ('file', 'proxy', 'first', 'last', 'frame_mode', 'frame')
+    keys = ('file', 'proxy', 'first', 'last',
+            'frame_mode', 'frame', 'disable')
     try:
         return next(n for n in nodes
                     if all(n[j].value() == node[j].value() for j in keys))
