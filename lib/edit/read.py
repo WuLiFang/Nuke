@@ -10,9 +10,12 @@ import re
 import nuke
 
 from node import wlf_write_node
-from nuketools import utf8
+from nuketools import undoable_func, utf8
 from wlf.codectools import get_unicode as u
+from wlf.codectools import u_print
 from wlf.path import PurePath
+
+from . import core
 
 
 def replace_sequence():
@@ -115,3 +118,47 @@ def dialog_set_framerange():
 
     if confirm:
         set_framerange(panel.value('first'), panel.value('last'))
+
+
+@undoable_func('合并重复读取节点')
+def remove_duplicated_read(is_show_result=True):
+    """Remove duplicated read to save memory.  """
+
+    nodes = nuke.allNodes('Read')
+    nodes.sort(key=lambda n: n.ypos())
+    distinct_read = []
+    removed_nodes = []
+
+    for n in nodes:
+        same_node = _find_same(n, distinct_read)
+        if same_node:
+            dot = nuke.nodes.Dot(
+                inputs=[same_node],
+                label='代替: {}\n{}'.format(u(n.name()), u(
+                    nuke.filename(n))).encode('utf-8'),
+                hide_input=True)
+            dot.setXYpos(n.xpos() + 34, n.ypos() + 57)
+            core.replace_node(n, dot)
+            removed_nodes.append(n.name())
+            u_print('用 {0} 代替 {1} , 删除 {1}。'.format(
+                same_node.name(), n.name()))
+            nuke.delete(n)
+        else:
+            distinct_read.append(n)
+
+    if not is_show_result:
+        return
+    if removed_nodes:
+        nuke.message('合并时删除了{}个节点: \n{}'.format(
+            len(removed_nodes), ', '.join(removed_nodes)).encode('utf-8'))
+    else:
+        nuke.message('没有发现重复读取节点。'.encode('utf-8'))
+
+
+def _find_same(node, nodes):
+    keys = ('file', 'proxy', 'first', 'last', 'frame_mode', 'frame')
+    try:
+        return next(n for n in nodes
+                    if all(n[j].value() == node[j].value() for j in keys))
+    except StopIteration:
+        return None

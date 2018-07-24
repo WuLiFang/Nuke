@@ -13,5 +13,6 @@ from .core import (all_flags, clear_selection, insert_node, replace_node,
                    set_knobs, transfer_flags)
 from .gizmo import all_gizmo_to_group, gizmo_to_group
 from .read import (dialog_set_framerange, reload_all_read_node,
-                   replace_sequence, set_framerange, use_relative_path)
+                   remove_duplicated_read, replace_sequence, set_framerange,
+                   use_relative_path)
 from .viewer import CurrentViewer

@@ -90,6 +90,8 @@ def add_menu():
                   "L", shortcutContext=DAG_CONTEXT),
                 _("清理无用节点",
                   lambda: edit.delete_unused_nodes(message=True)),
+                _("合并重复读取节点",
+                  edit.remove_duplicated_read),
                 _("所有Gizmo转Group",
                   edit.all_gizmo_to_group),
                 _("根据背板重命名所有节点",

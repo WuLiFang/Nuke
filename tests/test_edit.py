@@ -11,6 +11,8 @@ from unittest import TestCase, main
 
 import nuke
 
+import edit
+
 
 class EditTestCase(TestCase):
     def setUp(self):
@@ -291,6 +293,18 @@ class EditTestCase(TestCase):
 
     def tearDown(self):
         nuke.scriptClear(True)
+
+
+def test_remove_duplicated_read():
+    nodes = [nuke.nodes.Read(file=b'dummy file',) for _ in xrange(10)]
+    downstream_nodes = [nuke.nodes.NoOp(inputs=[n]) for n in nodes]
+    assert len(nuke.allNodes('Read')) == 10
+    assert not nuke.allNodes('Dot')
+    edit.remove_duplicated_read()
+    assert len(nuke.allNodes('Read')) == 1
+    assert len(nuke.allNodes('Dot')) == 9
+    for n in downstream_nodes:
+        assert n.input(0).Class() in ('Read', 'Dot')
 
 
 if __name__ == '__main__':
