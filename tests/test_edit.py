@@ -97,7 +97,7 @@ class EditTestCase(TestCase):
             self.assertIs(i.input(0), noop)
 
         self.assertRaises(TypeError, replace_node, noop, 1)
-        self.assertRaises(TypeError, replace_node, 1, noop)
+        self.assertRaises(AttributeError, replace_node, 1, noop)
 
     def test_get_min_max(self):
         from edit import get_min_max

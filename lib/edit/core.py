@@ -32,11 +32,6 @@ def replace_node(node, repl_node):
         repl_node (nuke.Node): Node to replace.
     """
 
-    if not (isinstance(node, nuke.Node)
-            and isinstance(repl_node, nuke.Node)):
-        raise TypeError('Expect two nuke.Node, got: {} and {}'.format(
-            type(node), type(repl_node)))
-
     nodes = node.dependent(nuke.INPUTS | nuke.HIDDEN_INPUTS, False)
     for n in nodes:
         for i in range(n.inputs()):
