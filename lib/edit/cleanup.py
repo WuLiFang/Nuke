@@ -18,28 +18,30 @@ def delete_unused_nodes(nodes=None, message=False):
 
     if nodes is None:
         nodes = nuke.allNodes()
-    count = 0
     handler = DefaultHandler()
     handler.message_factory = lambda n: n.name()
-    for n in progress(nodes, '清除无用节点', handler):
-        if _split_if_disabled(n) or not _is_used(n):
-            nuke.delete(n)
-            count += 1
-    u_print('删除了 {} 个无用节点.'.format(count))
+    unused_nodes = [n for n in progress(nodes, '清除无用节点', handler)
+                    if not _is_used(n)]
+    for n in unused_nodes:
+        node_name = u(n.name())
+        core.replace_node(n, n.input(0))
+        nuke.delete(n)
+        u_print('删除节点: {}'.format(node_name))
+    u_print('删除了 {} 个无用节点.'.format(len(unused_nodes)))
+
     if message:
         nuke.message(
             '<font size=5>删除了 {} 个未使用的节点。</font>\n'
             '<i>名称以"_"(下划线)开头的节点及其上游节点将不会被删除</i>'.format(
-                count).encode('utf-8'))
+                len(unused_nodes)).encode('utf-8'))
 
 
-def _split_if_disabled(n):
+def _is_disabled_and_no_expression(n):
     try:
         disable_knob = n['disable']
         if (disable_knob.value()
                 and not disable_knob.hasExpression()
                 and not n.dependent(nuke.EXPRESSIONS)):
-            core.replace_node(n, n.input(0))
             return True
     except NameError:
         pass
@@ -58,4 +60,5 @@ def _is_used(n):
                              'wlf_Write')):
         return True
 
-    return any(_is_used(n) for n in n.dependent())
+    return (not _is_disabled_and_no_expression(n)
+            and any(_is_used(n) for n in n.dependent()))
