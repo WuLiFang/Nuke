@@ -293,6 +293,7 @@ class EditTestCase(TestCase):
 
 
 def test_remove_duplicated_read():
+    nuke.scriptClear(True)
     nodes = [nuke.nodes.Read(file=b'dummy file',) for _ in xrange(10)]
     downstream_nodes = [nuke.nodes.NoOp(inputs=[n]) for n in nodes]
     assert len(nuke.allNodes('Read')) == 10
@@ -305,6 +306,7 @@ def test_remove_duplicated_read():
 
 
 def test_glow_no_mask():
+    nuke.scriptClear(True)
     mask_channel = 'red'
     width_channel = 'blue'
     temp_channel = 'mask.a'
@@ -324,6 +326,15 @@ def test_glow_no_mask():
     assert n.Class() == 'Copy'
     assert n['from0'].value() == mask_channel
     assert n['to0'].value() == temp_channel
+
+
+def test_delete_unused_node():
+    nuke.scriptClear(True)
+    _ = [nuke.nodes.NoOp() for _ in xrange(10)]
+    n = nuke.nodes.NoOp(name='_test')
+    assert len(nuke.allNodes()) == 11
+    edit.delete_unused_nodes()
+    assert nuke.allNodes() == [n]
 
 
 if __name__ == '__main__':
