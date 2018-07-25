@@ -1,5 +1,5 @@
 // PositionKeyerKernel
-// VERSION: 0.5.0
+// VERSION: 0.5.1
 kernel PositionKeyer : ImageComputationKernel<ePixelWise>
 {
   Image<eRead, eAccessPoint, eEdgeClamped> position;
@@ -58,6 +58,28 @@ local:
   {
     return float3(input.x, input.y, input.z);
   }
+
+  float3 ramp_result(float3 pos)
+  {
+    return float3(
+        linear(pos.x, p0.x, p1.x),
+        linear(pos.y, p0.y, p1.y),
+        linear(pos.z, p0.z, p1.z));
+  }
+
+  float3 distance_result(float3 pos)
+  {
+    return float3(
+        1 - fabs(pos.x - p1.x) / fabs(p1.x - p0.x) / scale.x,
+        1 - fabs(pos.y - p1.y) / fabs(p1.y - p0.y) / scale.y,
+        1 - fabs(pos.z - p1.z) / fabs(p1.z - p0.z) / scale.z);
+  }
+  float3 sphere_result(float3 pos)
+  {
+    float ret = 1 - length((pos - p1) / scale) / (length(p1 - p0));
+    return float3(ret, ret, ret);
+  }
+
   void init()
   {
     p0 = rotate3(p0_color, rotate);
@@ -67,33 +89,27 @@ local:
   void process()
   {
     float3 pos = rotate3(position(), rotate);
-    float4 result;
+    float3 result;
 
     if (mode == 0)
     {
-      result[0] = linear(pos.x, p0.x, p1.x);
-      result[1] = linear(pos.y, p0.y, p1.y);
-      result[2] = linear(pos.z, p0.z, p1.z);
+      result = ramp_result(pos);
     }
     else if (mode == 1)
     {
-      result[0] = 1 - fabs(pos.x - p1.x) / fabs(p1.x - p0.x) / scale.x;
-      result[1] = 1 - fabs(pos.y - p1.y) / fabs(p1.y - p0.y) / scale.y;
-      result[2] = 1 - fabs(pos.z - p1.z) / fabs(p1.z - p0.z) / scale.z;
+      result = distance_result(pos);
     }
     else if (mode == 2)
     {
-      float ret = 1 - length((pos - p1) / scale) / (length(p1 - p0));
-      result[0] = ret;
-      result[1] = ret;
-      result[2] = ret;
+      result = sphere_result(pos);
     }
-    result = clamp(result, float4(0.0f), float4(1.0f));
-    result[0] = invert_x ? (1 - result[0]) : result[0];
-    result[1] = invert_y ? (1 - result[1]) : result[1];
-    result[2] = invert_z ? (1 - result[2]) : result[2];
-    result[3] = (enable_x ? result[0] : 1) * (enable_y ? result[1] : 1) * (enable_z ? result[2] : 1);
 
-    dst() = result;
+    result = clamp(result, float3(0.0f), float3(1.0f));
+
+    dst() = float4(
+        invert_x ? (1 - result[0]) : result[0],
+        invert_y ? (1 - result[1]) : result[1],
+        invert_z ? (1 - result[2]) : result[2],
+        (enable_x ? result[0] : 1) * (enable_y ? result[1] : 1) * (enable_z ? result[2] : 1));
   }
 };
