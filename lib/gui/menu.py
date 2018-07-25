@@ -84,14 +84,18 @@ def add_menu():
             _("检查素材更新", lambda: asset.warn_mtime(show_ok=True)),
             _("转换单帧为序列",
               edit.replace_sequence),
-            {_('整理'): [
-                _("整理所选节点(竖式摆放)",
-                  lambda: orgnize.autoplace(nuke.selectedNodes()),
-                  "L", shortcutContext=DAG_CONTEXT),
+            {_('最佳实践'): [
                 _("清理无用节点",
                   lambda: edit.delete_unused_nodes(message=True)),
                 _("合并重复读取节点",
                   edit.remove_duplicated_read),
+                _("Glow节点不使用mask",
+                  edit.best_practice.glow_no_mask)
+            ]},
+            {_('整理'): [
+                _("整理所选节点(竖式摆放)",
+                  lambda: orgnize.autoplace(nuke.selectedNodes()),
+                  "L", shortcutContext=DAG_CONTEXT),
                 _("所有Gizmo转Group",
                   edit.all_gizmo_to_group),
                 _("根据背板重命名所有节点",
@@ -100,8 +104,7 @@ def add_menu():
                   lambda: orgnize.nodes_add_dots(nuke.selectedNodes())),
                 _("所有节点添加Dots变成90度",
                   lambda: orgnize.nodes_add_dots(nuke.allNodes()))
-            ]
-            }
+            ]}
         ]},
         {_('合成'): [
             _('自动合成', _autocomp, icon='autocomp.png'),

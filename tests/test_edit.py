@@ -3,10 +3,7 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-import os
 import random
-import sys
-import tempfile
 from unittest import TestCase, main
 
 import nuke
@@ -305,6 +302,28 @@ def test_remove_duplicated_read():
     assert len(nuke.allNodes('Dot')) == 9
     for n in downstream_nodes:
         assert n.input(0).Class() in ('Read', 'Dot')
+
+
+def test_glow_no_mask():
+    mask_channel = 'red'
+    width_channel = 'blue'
+    temp_channel = 'mask.a'
+    n = nuke.nodes.Glow2(
+        inputs=(None, nuke.nodes.Constant()),
+        W=width_channel, maskChannelMask=mask_channel)
+    edit.best_practice.glow_no_mask(temp_channel)
+    assert n['W'].value() == temp_channel
+    assert n['mask'].value() == 'none'
+    assert n.input(1) is None
+    n = n.input(0)
+    assert n.Class() == 'ChannelMerge'
+    assert n['A'].value() == temp_channel
+    assert n['operation'].value() == 'in'
+    assert n['B'].value() == width_channel
+    n = n.input(0)
+    assert n.Class() == 'Copy'
+    assert n['from0'].value() == mask_channel
+    assert n['to0'].value() == temp_channel
 
 
 if __name__ == '__main__':
