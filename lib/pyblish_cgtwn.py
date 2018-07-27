@@ -14,6 +14,7 @@ import cgtwq
 import scripttools
 from cgtwn import Task
 from node import wlf_write_node
+from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
 from wlf.path import PurePath
 
@@ -214,14 +215,41 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
     families = ['Nuke文件']
 
     def process(self, instance):
-        task = self.get_task(instance.context)
+        context = instance.context
+        task = self.get_task(context)
         assert isinstance(task, Task)
 
         n = wlf_write_node()
-        path = nuke.filename(n.node('Write_JPG_1'))
+        path = u(nuke.filename(n.node('Write_JPG_1')))
         dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
         task.set_image(dest)
-        if task['leader_status'] == 'Wait':
-            task['leader_status'] = 'Check'
+
+        if context.data.get('submitFilenames') is None:
+            context.data['submitFilenames'] = []
+        context.data['submitFilenames'].append(dest)
+
+
+class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
+    """在CGTeamWork上提交任务.   """
+
+    order = pyblish.api.IntegratorOrder + 0.1
+    label = '提交任务'
+
+    def process(self, context):
+        task = self.get_task(context)
+        assert isinstance(task, Task)
+
+        if task['leader_status'] == 'Check':
+            self.log.info('任务已经是检查状态, 无需提交。')
+            return
+
+        note = nuke.getInput(
+            'CGTeamWork任务提交备注(Cancel则不提交)'.encode('utf-8'), '')
+        if note is None:
+            self.log.info('用户选择不提交任务。')
+            return
+
+        task.submit(filenames=context.data.get('submitFilenames', ()),
+                    note=note)
