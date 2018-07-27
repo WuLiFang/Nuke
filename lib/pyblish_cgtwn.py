@@ -244,9 +244,12 @@ class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
 
         note = nuke.getInput(
             'CGTeamWork任务提交备注(Cancel则不提交)'.encode('utf-8'), '')
+
         if note is None:
             self.log.info('用户选择不提交任务。')
             return
+        note = u(note)
+
         message = cgtwq.Message(note)
         filenames = []
         submit_image = context.data.get('submitImage')
