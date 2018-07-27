@@ -224,11 +224,8 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
-        task.set_image(dest)
 
-        if context.data.get('submitFilenames') is None:
-            context.data['submitFilenames'] = []
-        context.data['submitFilenames'].append(dest)
+        context.data['submitImage'] = task.set_image(dest)
 
 
 class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
@@ -250,6 +247,13 @@ class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
         if note is None:
             self.log.info('用户选择不提交任务。')
             return
+        message = cgtwq.Message(note)
+        filenames = []
+        submit_image = context.data.get('submitImage')
+        if submit_image:
+            filenames.append(submit_image.path)
+            message.images.append(submit_image._asdict())
 
-        task.submit(filenames=context.data.get('submitFilenames', ()),
-                    note=note)
+        task.flow.submit(
+            filenames=filenames,
+            message=message)
