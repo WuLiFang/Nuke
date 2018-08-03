@@ -58,6 +58,9 @@ def _after_signal(signal, func):
 def pyblish_action(name, is_block=True, is_reset=False):
     """Control pyblish. """
 
+    if Window.instance and Window.instance.controller.is_running:
+        return
+
     if ACTION_LOCK.acquire(block=is_block):
         ACTION_LOCK.release()
     elif not is_block:
