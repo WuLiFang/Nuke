@@ -7,3 +7,4 @@
     :caption: 分节:
 
     guide/grade
+    guide/precomp
