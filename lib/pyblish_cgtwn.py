@@ -58,6 +58,13 @@ class CollectTask(pyblish.api.InstancePlugin):
             raise
         self.log.info('任务 %s', task)
 
+        try:
+            instance.context.data['workfileFileboxInfo'] = \
+                task.filebox.get('workfile')
+        except:
+            self.log.error('找不到标识为workfile的文件框 请联系管理员进行设置')
+            raise
+
 
 class CollectUser(pyblish.api.ContextPlugin):
     """获取当前登录的用户帐号.   """
@@ -185,24 +192,36 @@ class VadiateFPS(TaskMixin, pyblish.api.InstancePlugin):
                 raise ValueError('Not same fps', fps, current_fps)
 
 
+class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):
+    """上传相关预合成文件至CGTeamWork.   """
+
+    order = pyblish.api.IntegratorOrder
+    label = '上传预合成文件'
+    families = ['Nuke文件']
+
+    def process(self, instance):
+        assert isinstance(instance, pyblish.api.Instance)
+        dest = instance.context.data['workfileFileboxInfo'].path + '/'
+
+        for n in nuke.allNodes('Precomp'):
+            src = u(nuke.filename(n))
+            if src.startswith(dest.replace('\\', '/')):
+                continue
+            n['file'].setValue(copy(src, dest))
+        nuke.scriptSave()
+
+
 class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
     """上传工作文件至CGTeamWork.   """
 
-    order = pyblish.api.IntegratorOrder
+    order = pyblish.api.IntegratorOrder + 0.1
     label = '上传工作文件'
     families = ['Nuke文件']
 
     def process(self, instance):
         assert isinstance(instance, pyblish.api.Instance)
+        dest = instance.context.data['workfileFileboxInfo'].path + '/'
         workfile = instance.data['name']
-        task = self.get_task(instance.context)
-        assert isinstance(task, Task)
-        try:
-            dest = task.filebox.get('workfile').path + '/'
-        except:
-            self.log.error('找不到标识为workfile的文件框 请联系管理员进行设置')
-            raise
-        # dest = 'E:/test_pyblish/'
 
         copy(workfile, dest)
 
@@ -210,7 +229,7 @@ class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
 class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
     """上传单帧至CGTeamWork.   """
 
-    order = pyblish.api.IntegratorOrder
+    order = pyblish.api.IntegratorOrder + 0.2
     label = '上传单帧'
     families = ['Nuke文件']
 
@@ -231,7 +250,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
 class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
     """在CGTeamWork上提交任务.   """
 
-    order = pyblish.api.IntegratorOrder + 0.1
+    order = pyblish.api.IntegratorOrder + 0.2
     label = '提交任务'
 
     def process(self, context):

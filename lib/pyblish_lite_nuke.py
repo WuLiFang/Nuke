@@ -5,8 +5,9 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import logging
+import multiprocessing
 import os
-from multiprocessing.dummy import Event, Lock, Queue
+import Queue
 
 import nuke
 import pyblish.plugin
@@ -27,15 +28,20 @@ from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.uitools import Tray
 
-ACTION_QUEUE = Queue()
-ACTION_LOCK = Lock()
+ACTION_QUEUE = multiprocessing.Queue()
+ACTION_LOCK = multiprocessing.Lock()
 
 
 def _do_actions():
     with ACTION_LOCK:
-        while not ACTION_QUEUE.empty():
+        while True:
             try:
-                ACTION_QUEUE.get()()
+                args = ACTION_QUEUE.get(False)
+            except Queue.Empty:
+                break
+
+            try:
+                _pyblish_action(*args)
             except RuntimeError:
                 pass
 
@@ -47,48 +53,47 @@ def _after_signal(signal, func):
     signal.connect(_func)
 
 
-def _validate():
-    ACTION_QUEUE.put(_pyblish_action('validate', True))
-    _do_actions()
+def pyblish_action(name, is_queue=True, is_reset=False):
+    """Control pyblish. """
 
+    if ACTION_LOCK.acquire(block=False):
+        ACTION_LOCK.release()
+    elif not is_queue:
+        return
 
-def _publish():
-    ACTION_QUEUE.put(_pyblish_action('publish', False))
+    ACTION_QUEUE.put((name, is_reset))
     _do_actions()
 
 
 def _pyblish_action(name, is_reset=True):
-    def _func():
-        if nuke.value('root.name', None):
-            Window.dock()
 
-        window_ = Window.instance
-        assert isinstance(window_, Window)
-        controller = window_.controller
-        assert isinstance(controller, control.Controller)
+    if nuke.value('root.name', None):
+        Window.dock()
 
-        start = getattr(window_, name)
-        signal = {'publish': controller.was_published,
-                  'validate': controller.was_validated}[name]
+    window_ = Window.instance
+    assert isinstance(window_, Window)
+    controller = window_.controller
+    assert isinstance(controller, control.Controller)
 
-        finish_event = Event()
-        _after_signal(signal, finish_event.set)
+    start = getattr(window_, name)
+    signal = {'publish': controller.was_published,
+              'validate': controller.was_validated}[name]
 
-        if is_reset:
-            # Run after reset finish.
-            _after_signal(controller.was_reset, start)
-            window_.reset()
-        else:
-            # Run directly.
-            start()
+    finish_event = multiprocessing.Event()
+    _after_signal(signal, finish_event.set)
 
-        # Wait finish.
-        while (not finish_event.is_set()
-               or controller.is_running):
-            QApplication.processEvents()
+    if is_reset:
+        # Run after reset finish.
+        _after_signal(controller.was_reset, start)
+        window_.reset()
+    else:
+        # Run directly.
+        start()
 
-    _func.__name__ = name.encode('utf-8', 'replace')
-    return _func
+    # Wait finish.
+    while (not finish_event.is_set()
+            or controller.is_running):
+        QApplication.processEvents()
 
 
 def _handle_result(result):
@@ -229,9 +234,12 @@ def set_preferred_fonts(font, scale_factor=None):
 def setup():
     panels.register(Window, '发布', 'com.wlf.pyblish')
 
-    callback.CALLBACKS_ON_SCRIPT_LOAD.append(_validate)
-    callback.CALLBACKS_ON_SCRIPT_SAVE.append(_validate)
-    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(abort_modified(_publish))
+    callback.CALLBACKS_ON_SCRIPT_LOAD.append(
+        lambda: pyblish_action('validate', is_queue=False, is_reset=True))
+    callback.CALLBACKS_ON_SCRIPT_SAVE.append(
+        lambda: pyblish_action('validate', is_queue=False, is_reset=True))
+    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(abort_modified(
+        lambda: pyblish_action('publish', is_queue=True, is_reset=False)))
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
