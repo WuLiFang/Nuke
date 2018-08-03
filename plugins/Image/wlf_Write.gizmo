@@ -51,6 +51,19 @@ if '__wlf_Write' not in locals():
             if not os.path.exists(_dir):
                 os.makedirs(_dir)
 
+        @staticmethod
+        def is_reading_exr():
+            import os
+            import sys
+            if os.getenv('WLF_IS_DEADLINE') or nuke.numvalue('parent.reading_exr'):
+                filename = nuke.filename(nuke.thisNode(), nuke.REPLACE).decode('utf-8')
+                ret = os.path.exists(filename.encode(sys.getfilesystemencoding()))
+                if not ret:
+                    nuke.tprint('EXR file not exists, will read input: {}'.format(filename))
+            else:
+                ret = False
+            return ret
+
         class WriteMOV(object):
             @classmethod
             def before_render(cls):
@@ -101,7 +114,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.55.1"}
+ addUserKnob {20 Write l "wlf_Write v1.55.3"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -295,12 +308,12 @@ file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \
 proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
 file_type exr
 render_order 0
-reading {{"\[python -execlocal if\\ os.getenv('WLF_IS_DEADLINE')\\ or\\ nuke.numvalue('parent.reading_exr'):\\n\\ \\ \\ \\ import\\ os\\n\\ \\ \\ \\ import\\ sys\\n\\ \\ \\ \\ filename\\ =\\ nuke.filename(nuke.thisNode(),\\ nuke.REPLACE).decode('utf-8')\\n\\ \\ \\ \\ ret\\ =\\ os.path.exists(filename.encode(sys.getfilesystemencoding()))\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ False]"}}
+reading {{"\[python __wlf_Write.is_reading_exr()]"}}
 checkHashOnRead false
 name Write_EXR_1
 xpos 0
 ypos -842
-disable {{"!(\[python bool(os.getenv('WLF_IS_SEPARATE_JOBS'))] | parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
+disable {{"!(reading | \[python bool(os.getenv('WLF_IS_SEPARATE_JOBS'))] | parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
 }
 Write {
 file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
