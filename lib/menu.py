@@ -15,6 +15,7 @@ def main():
     import cgtwq
     import enable_later
     import asset
+    import patch.precomp
 
     gui.setup()
     pref.setup()
@@ -28,6 +29,7 @@ def main():
     if cgtwq.DesktopClient.is_logged_in():
         cgtwq.update_setting()
     pyblish_lite_nuke.setup()
+    patch.precomp.enable()
 
 
 if __name__ == '__main__':

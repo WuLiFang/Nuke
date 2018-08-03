@@ -39,6 +39,17 @@ def create_out_dirs(node=None):
             os.makedirs(target_dir)
 
 
+def disable_precomp_hashcheck():
+    """Disable annoying hashcheck that can not disable by panel.  """
+
+    precomp_write_nodes = [
+        n for i in nuke.allNodes('Precomp', group=nuke.Root())
+        for n in nuke.allNodes('Write', group=i)]
+    nuke.tprint('testiing: precomp: {}'.format(len(precomp_write_nodes)))
+    for n in precomp_write_nodes:
+        n['checkHashOnRead'].setValue(False)
+
+
 def _jump_frame():
     if nuke.numvalue('preferences.wlf_jump_frame', 0.0):
         LOGGER.debug('Jump frame')
@@ -59,3 +70,4 @@ def setup():
 
     callback.CALLBACKS_ON_SCRIPT_SAVE.append(_jump_frame)
     callback.CALLBACKS_BEFORE_RENDER.append(create_out_dirs)
+    callback.CALLBACKS_BEFORE_RENDER.append(disable_precomp_hashcheck)
