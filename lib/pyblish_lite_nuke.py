@@ -38,7 +38,7 @@ def _do_actions():
     with ACTION_LOCK:
         while True:
             try:
-                args = ACTION_QUEUE.get(block=False, timeout=3)
+                args = ACTION_QUEUE.get(block=False)
             except Queue.Empty:
                 break
 
