@@ -6,6 +6,7 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 import multiprocessing
+import multiprocessing.dummy
 import os
 import Queue
 
@@ -16,7 +17,7 @@ from nukescripts.panels import restorePanel  # pylint: disable=import-error
 from pyblish_lite import app, control, settings, util, window
 from Qt import QtGui
 from Qt.QtCore import Qt
-from Qt.QtWidgets import QApplication, QDialog, QMainWindow, QStackedWidget
+from Qt.QtWidgets import QApplication, QDialog, QStackedWidget
 
 import callback
 import filetools
@@ -28,15 +29,16 @@ from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.uitools import Tray
 
-ACTION_QUEUE = multiprocessing.Queue()
+ACTION_QUEUE = multiprocessing.dummy.Queue()
 ACTION_LOCK = multiprocessing.Lock()
+LOGGER = logging.getLogger(__name__)
 
 
 def _do_actions():
     with ACTION_LOCK:
         while True:
             try:
-                args = ACTION_QUEUE.get(False)
+                args = ACTION_QUEUE.get(block=False, timeout=3)
             except Queue.Empty:
                 break
 
@@ -53,12 +55,12 @@ def _after_signal(signal, func):
     signal.connect(_func)
 
 
-def pyblish_action(name, is_queue=True, is_reset=False):
+def pyblish_action(name, is_block=True, is_reset=False):
     """Control pyblish. """
 
-    if ACTION_LOCK.acquire(block=False):
+    if ACTION_LOCK.acquire(block=is_block):
         ACTION_LOCK.release()
-    elif not is_queue:
+    elif not is_block:
         return
 
     ACTION_QUEUE.put((name, is_reset))
@@ -92,7 +94,7 @@ def _pyblish_action(name, is_reset=True):
 
     # Wait finish.
     while (not finish_event.is_set()
-            or controller.is_running):
+           or controller.is_running):
         QApplication.processEvents()
 
 
@@ -154,14 +156,14 @@ class Window(window.Window):
     def activate(self):
         """Active pyblish window.   """
 
-        if isinstance(self.parent(), QMainWindow):
-            # Show as a standalone dialog.
-            self.raise_()
-        else:
+        try:
             # Show in panel.
             panel = self.get_parent(QStackedWidget)
             dialog = self.get_parent(QDialog)
             panel.setCurrentWidget(dialog)
+        except ValueError:
+            # Show as a standalone dialog.
+            self.raise_()
 
     @classmethod
     def dock(cls):
@@ -186,14 +188,8 @@ class Window(window.Window):
         else:
             try:
                 window_.activate()
-            except ValueError:
-                # Window already closed.
-                cls.instance = None
-                window_.close()
-                window_.deleteLater()
-                cls.dock()
             except RuntimeError:
-                # Window already deleted.
+                LOGGER.error('Window already deleted.')
                 cls.instance = None
                 cls.dock()
 
@@ -235,11 +231,11 @@ def setup():
     panels.register(Window, '发布', 'com.wlf.pyblish')
 
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(
-        lambda: pyblish_action('validate', is_queue=False, is_reset=True))
+        lambda: pyblish_action('validate', is_block=True, is_reset=True))
     callback.CALLBACKS_ON_SCRIPT_SAVE.append(
-        lambda: pyblish_action('validate', is_queue=False, is_reset=True))
+        lambda: pyblish_action('validate', is_block=False, is_reset=True))
     callback.CALLBACKS_ON_SCRIPT_CLOSE.append(abort_modified(
-        lambda: pyblish_action('publish', is_queue=True, is_reset=False)))
+        lambda: pyblish_action('publish', is_block=True, is_reset=False)))
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
