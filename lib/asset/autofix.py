@@ -34,7 +34,7 @@ def fix_read():
 
 
 def _fix_one(n, **context):
-    filename = nuke.filename(n)
+    filename = _u_nuke_filename(n)
     if not filename:
         return None
     context['filename'] = filename
@@ -49,10 +49,17 @@ def _fix_one(n, **context):
 
 
 def _filename_dict():
-    filenames = set(nuke.filename(n)
+    filenames = set(_u_nuke_filename(n)
                     for n in nuke.allNodes()
                     if not n.hasError())
     return {_current_basename(i): i for i in filenames}
+
+
+def _u_nuke_filename(node):
+    value = nuke.filename(node)
+    if value is None:
+        return None
+    return value.decode('utf-8')
 
 
 def _set_filename(n, value):
@@ -61,7 +68,7 @@ def _set_filename(n, value):
              or nuke.value('root.proxy') == 'false' else n['proxy'])
     except NameError:
         k = n['file']
-    k.setValue(value)
+    k.setValue(value.encode('utf-8'))
 
 
 def _errored_nodes():
