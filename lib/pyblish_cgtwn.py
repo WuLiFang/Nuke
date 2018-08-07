@@ -229,7 +229,7 @@ class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
 class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
     """上传单帧至CGTeamWork.   """
 
-    order = pyblish.api.IntegratorOrder + 0.2
+    order = pyblish.api.IntegratorOrder
     label = '上传单帧'
     families = ['Nuke文件']
 
@@ -250,7 +250,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
 class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
     """在CGTeamWork上提交任务.   """
 
-    order = pyblish.api.IntegratorOrder + 0.2
+    order = pyblish.api.IntegratorOrder + 0.1
     label = '提交任务'
 
     def process(self, context):
