@@ -1,6 +1,6 @@
 https://github.com/WuLiFang/wlf/archive/0.4.1.tar.gz#egg=wlf
-https://github.com/WuLiFang/uploader/archive/3.1.1.tar.gz#egg=cgtwq-uploader
-https://github.com/WuLiFang/cgtwq/archive/2.4.0.tar.gz#egg=cgtwq
+https://github.com/WuLiFang/uploader/archive/3.2.0.tar.gz#egg=cgtwq-uploader
+https://github.com/WuLiFang/cgtwq/archive/2.4.1.tar.gz#egg=cgtwq
 https://github.com/NateScarlet/pyblish-lite/archive/0.8.1.tar.gz#egg=pyblish-lite
 Jinja2~=2.9
 pendulum~=1.4
