@@ -7,7 +7,7 @@
     plug-ins
     menu
     pref
-    cgtw_integrate
+    pyblish
     guide
     spec
     reference
