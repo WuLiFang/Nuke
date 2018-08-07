@@ -274,7 +274,7 @@ class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
         submit_image = context.data.get('submitImage')
         if submit_image:
             filenames.append(submit_image.path)
-            message.images.append(submit_image._asdict())
+            message.images.append(submit_image)
 
         task.flow.submit(
             filenames=filenames,
