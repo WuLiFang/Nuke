@@ -13,8 +13,9 @@ artifacts:
   - path: build\WuLiFang-Nuke-*.zip
     name: Prebuild package
 before_deploy:
-  - ps: "&$env:PYTHON\\python.exe Documentation/get_changelog.py $env:APPVEYOR_REPO_TAG_NAME build/release_note.md"
-  - ps: "$env:APPVEYOR_RELEASE_DESCRIPTION=Get-Content -Encoding utf8 build/release_note.md"
+  - ps: >-
+      & $env:PYTHON\\python.exe Documentation/get_changelog.py $env:APPVEYOR_REPO_TAG_NAME build/release_note.md;
+      ${env:APPVEYOR_RELEASE_DESCRIPTION} = (Get-Content -Encoding utf8 build/release_note.md) -join "`n";
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
   release: 吾立方Nuke插件 $(APPVEYOR_REPO_TAG_NAME)
