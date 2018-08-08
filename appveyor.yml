@@ -18,7 +18,7 @@ before_deploy:
       ${env:APPVEYOR_RELEASE_DESCRIPTION} = (Get-Content -Encoding utf8 build/release_note.md) -join "`n";
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
-  release: 吾立方Nuke插件 $(APPVEYOR_REPO_TAG_NAME)
+  release: $(APPVEYOR_REPO_TAG_NAME)
   description: $(APPVEYOR_RELEASE_DESCRIPTION)
   provider: GitHub
   auth_token:
