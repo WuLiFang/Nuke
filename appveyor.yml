@@ -1,0 +1,22 @@
+environment:
+  matrix:
+    - PYTHON: "C:\\Python27"
+build_script:
+  - "%PYTHON%\\python.exe -m pip install --target lib/site-packages --process-dependency-links -r requirements.txt"
+after_build:
+  - 7z a -tzip -r -x!.* -x!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
+artifacts:
+  - path: build\\WuLiFang-Nuke-$(APPVEYOR_REPO_TAG_NAME)-win.zip
+    name: Prebuild package
+deploy:
+  release: 吾立方Nuke插件 $(APPVEYOR_REPO_TAG_NAME)
+  description: $(APPVEYOR_REPO_TAG_NAME)
+  provider: GitHub
+  auth_token:
+    secure: F3Yyeg/9CKfhBQ6baTP5XsOqnquey/5hXl1EtPqmk0WptSzV6STE7M4Pa+BJnTZ2
+  artifact: /.*\.zip/            
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    appveyor_repo_tag: true
