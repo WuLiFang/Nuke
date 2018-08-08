@@ -12,9 +12,11 @@ after_build:
 artifacts:
   - path: build\WuLiFang-Nuke-$(APPVEYOR_REPO_TAG_NAME)-win.zip
     name: Prebuild package
+before_deploy:
+  - ps: "$env:APPVEYOR_RELEASE_DESCRIPTION=&$env:PYTHON Documentation/get_changelog.py $env:APPVEYOR_REPO_TAG_NAME)"
 deploy:
   release: 吾立方Nuke插件 $(APPVEYOR_REPO_TAG_NAME)
-  description: $(APPVEYOR_REPO_TAG_NAME)
+  description: $(APPVEYOR_RELEASE_DESCRIPTION)
   provider: GitHub
   auth_token:
     secure: F3Yyeg/9CKfhBQ6baTP5XsOqnquey/5hXl1EtPqmk0WptSzV6STE7M4Pa+BJnTZ2
