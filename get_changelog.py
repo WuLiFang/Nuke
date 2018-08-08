@@ -8,6 +8,7 @@ import argparse
 import codecs
 import os
 import re
+import sys
 from collections import namedtuple
 
 __dirname__ = os.path.abspath(os.path.dirname(__file__))
@@ -77,7 +78,7 @@ def main():
 
     filename = get_file(version)
     result = get_changelog(filename, version)
-    print(''.join(result))
+    print(''.join(result).encode(getattr(sys.stdout, 'encoding', None) or 'utf-8'))
 
 
 if __name__ == '__main__':
