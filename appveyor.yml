@@ -8,7 +8,7 @@ build_script:
   - "%PYTHON%\\python.exe -m pip install --target lib/site-packages --process-dependency-links -r requirements.txt"
   - "Documentation/make.bat html"
 after_build:
-  - 7z a -tzip -r -x!.* -x!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
+  - 7z a -tzip -xr!.* -xr0!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
 artifacts:
   - path: build\WuLiFang-Nuke-*.zip
     name: Prebuild package
