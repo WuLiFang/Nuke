@@ -79,7 +79,7 @@ def main():
 
     filename = get_file(version)
     result = get_changelog(filename, version)
-    with codecs.open(args.destination, 'w', sys.getfilesystemencoding()) as f:
+    with codecs.open(args.destination, 'w', 'utf-8') as f:
         f.writelines(result)
 
 
