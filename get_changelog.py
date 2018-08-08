@@ -69,6 +69,11 @@ class Version(namedtuple('Version', ('major', 'minor', 'patch'))):
 
 
 def main():
+    try:
+        import win_unicode_console
+        win_unicode_console.enable()
+    except ImportError:
+        pass
     parser = argparse.ArgumentParser()
     parser.add_argument('version')
 
@@ -78,7 +83,7 @@ def main():
 
     filename = get_file(version)
     result = get_changelog(filename, version)
-    print(''.join(result).encode(getattr(sys.stdout, 'encoding', None) or 'utf-8'))
+    print(''.join(result))
 
 
 if __name__ == '__main__':
