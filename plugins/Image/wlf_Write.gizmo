@@ -37,8 +37,6 @@ if '__wlf_Write' not in locals():
         def knob_changed():
             if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
                 nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
-            elif nuke.thisKnob() is nuke.thisNode()['output_exr']:
-                nuke.thisNode()['bt_render_MOV_from_EXR'].setEnabled(nuke.thisKnob().value())
 
         @staticmethod
         def create_output_dir(node):
@@ -110,7 +108,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.55.4"}
+ addUserKnob {20 Write l "wlf_Write v1.55.5"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
