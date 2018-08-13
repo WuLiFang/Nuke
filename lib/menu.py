@@ -6,7 +6,7 @@ from __future__ import absolute_import
 
 def main():
     import gui
-    import dropdata_handler
+    import dropdata
     import gizmo_convert
     import pref
     import project_settings
@@ -19,7 +19,7 @@ def main():
 
     gui.setup()
     pref.setup()
-    dropdata_handler.setup()
+    dropdata.setup()
     gizmo_convert.setup()
     project_settings.setup()
     enable_later.setup()

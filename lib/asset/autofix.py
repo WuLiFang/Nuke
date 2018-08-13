@@ -9,11 +9,10 @@ import os
 
 import nuke
 
+import dropdata
 from wlf.codectools import get_encoded as e
 from wlf.codectools import u_print
 from wlf.path import PurePath
-
-from .dropdata import dropdata_handler
 
 LOGGER = logging.getLogger(__name__)
 IS_TESTING = False
@@ -119,7 +118,7 @@ def _fix_dir(context):
     if not os.path.isdir(e(filename)):
         return False
 
-    is_dropped = dropdata_handler('text/plain', filename) or False
+    is_dropped = dropdata.drop('text/plain', filename)
     if is_dropped:
         u_print('修复读取: 文件夹展开: {name}: {filename}'.format(**context))
         nuke.delete(n)
