@@ -25,10 +25,10 @@ def dropdata_handler(mime_type, data, hook):
     if mime_type != 'text/plain':
         return None
     data = u(data)
-    LOGGER.debug('Handling dropdata: %s %s', mime_type, data)
-
     if hook.is_ignore_data(data=data):
-        return True
+        return None
+
+    LOGGER.debug('Handling dropdata: %s %s', mime_type, data)
     urls = chain([data], *hook.get_url(data=data))
     filenames = chain(
         *(chain([i], *hook.get_filenames(url=i)) for i in urls))
