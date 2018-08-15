@@ -143,7 +143,7 @@ class Window(window.Window):
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
 
-        with open(e(filetools.path("pyblish_lite.css"))) as f:
+        with open(e(filetools.module_path("pyblish_lite.css"))) as f:
             css = u(f.read())
 
             # Make relative paths absolute
