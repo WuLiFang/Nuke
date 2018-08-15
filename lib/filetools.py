@@ -9,6 +9,9 @@ from wlf.path import PurePath
 from wlf.pathtools import make_path_finder
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
+module_path = make_path_finder(__file__)  # pylint: disable = invalid-name
+plugin_folder_path = make_path_finder(  # pylint: disable = invalid-name
+    module_path())
 
 
 def path(*other):

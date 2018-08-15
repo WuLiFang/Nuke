@@ -182,36 +182,6 @@ def add_menu():
     create_menu_by_dir(m, os.path.abspath(
         os.path.join(__file__, _plugin_path)))
 
-    # Enhance 'ToolSets' menu.
-    def _create_shared_toolsets():
-        if not nuke.selectedNodes():
-            nuke.message(utf8('未选中任何节点,不能创建工具集'))
-            return
-        filename = nuke.getInput('ToolSet name')
-        if filename:
-            nuke.createToolset(filename=os.path.join(
-                'Shared', filename), rootPath=RESOURCE_DIR)
-        _refresh_toolsets_menu()
-
-    def _refresh_toolsets_menu():
-        """Extended nuke function.  """
-
-        nukescripts.toolsets._refreshToolsetsMenu()  # pylint: disable=protected-access
-        m = nuke.menu('Nodes').addMenu('ToolSets')
-        m.addCommand('刷新'.encode('utf-8'), _refresh_toolsets_menu)
-        m.addCommand(
-            '创建共享工具集'.encode('utf-8'), _create_shared_toolsets)
-        m.addCommand(
-            '打开共享工具集文件夹'.encode('utf-8'),
-            lambda: webbrowser.open(
-                os.path.join(RESOURCE_DIR, 'ToolSets/Shared')))
-
-    if not getattr(nukescripts.toolsets, '_refreshToolsetsMenu', None):
-        setattr(nukescripts.toolsets, '_refreshToolsetsMenu',
-                nukescripts.toolsets.refreshToolsetsMenu)
-    _refresh_toolsets_menu()
-    nukescripts.toolsets.refreshToolsetsMenu = _refresh_toolsets_menu
-
 
 def create_menu_by_dir(parent, dir_):
     """Create menus by given folder structrue."""

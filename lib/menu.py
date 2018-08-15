@@ -14,6 +14,7 @@ def main():
     import enable_later
     import asset
     import patch.precomp
+    import patch.toolsets
 
     def _setup_cgtw():
         import cgtwn
@@ -36,6 +37,7 @@ def main():
         _setup_cgtw()
 
     patch.precomp.enable()
+    patch.toolsets.enable()
 
 
 if __name__ == '__main__':
