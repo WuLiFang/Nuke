@@ -10,12 +10,20 @@ def main():
     import gizmo_convert
     import pref
     import project_settings
-    import pyblish_lite_nuke
-    import cgtwn
     import cgtwq
     import enable_later
     import asset
     import patch.precomp
+
+    def _setup_cgtw():
+        import cgtwn
+        import pyblish_lite_nuke
+
+        cgtwq.DesktopClient.start()
+        pyblish_lite_nuke.setup()
+        cgtwn.setup()
+        if cgtwq.DesktopClient.is_logged_in():
+            cgtwq.update_setting()
 
     gui.setup()
     pref.setup()
@@ -24,11 +32,9 @@ def main():
     project_settings.setup()
     enable_later.setup()
     asset.setup()
-    cgtwn.setup()
-    cgtwq.DesktopClient.start()
-    if cgtwq.DesktopClient.is_logged_in():
-        cgtwq.update_setting()
-    pyblish_lite_nuke.setup()
+    if cgtwq.DesktopClient.executable():
+        _setup_cgtw()
+
     patch.precomp.enable()
 
 

@@ -12,6 +12,7 @@ import nukescripts  # pylint: disable=import-error
 
 import asset
 import cgtwn_panels
+import cgtwq
 import comp
 import comp.panels
 import edit
@@ -54,7 +55,6 @@ def add_menu():
             RESOURCE_DIR, 'Documentation/build/html/index.html')
         webbrowser.open(help_page)
 
-    cgtw_menu = _('CGTeamWork', icon='cgteamwork.png')
     all_menu = [
         {_('编辑'): [
             _('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2'),
@@ -118,15 +118,9 @@ def add_menu():
               shortcutContext=DAG_CONTEXT,
               icon='autocomp.png')
         ]},
-        {cgtw_menu: [
-            _('登录', cgtwn_panels.dialog_login),
-            _('创建项目文件夹', cgtwn_panels.dialog_create_dirs)
-        ]},
         {_('工具'): [
             _('批量自动合成', lambda: comp.panels.BatchCompPanel().showModalDialog(),
               icon='autocomp.png'),
-            _('上传mov', lambda: nukescripts.panels.restorePanel(
-                'com.wlf.uploader')),
             _('扫描空文件夹', scanner.call_from_nuke),
             _('分离exr', splitexr.Dialog.show),
             _("分割当前文件(根据背板)", orgnize.split_by_backdrop)
@@ -136,6 +130,17 @@ def add_menu():
             _("吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
         ]}
     ]
+    if cgtwq.DesktopClient.executable():
+        all_menu.insert(
+            -2,
+            {_('CGTeamWork', icon='cgteamwork.png'): [
+                _('登录', cgtwn_panels.dialog_login),
+                _('创建项目文件夹', cgtwn_panels.dialog_create_dirs),
+                _('上传工具', lambda: nukescripts.panels.restorePanel(
+                    'com.wlf.uploader')),
+            ]}
+        )
+
     if getattr(nuke, 'startPerformanceTimers'):
         all_menu.insert(
             -1,

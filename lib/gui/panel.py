@@ -6,8 +6,7 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 
-import cgtwq_uploader
-
+import cgtwq
 import panels
 
 LOGGER = logging.getLogger(__name__)
@@ -17,4 +16,6 @@ def add_panel():
     """Add custom pannel. """
 
     LOGGER.info('添加面板')
-    panels.register(cgtwq_uploader.Dialog, '上传mov', 'com.wlf.uploader')
+    if cgtwq.DesktopClient.executable():
+        import cgtwq_uploader
+        panels.register(cgtwq_uploader.Dialog, '上传mov', 'com.wlf.uploader')
