@@ -35,17 +35,19 @@ def dropdata_handler(mime_type, data, hook):
 
     try:
         ret = None
-        for filename in progress(list(filenames)):
+        for filename in progress(tuple(filenames)):
             if hook.is_ignore_filename(filename=filename):
                 LOGGER.debug('Ignore filename: %s', filename)
                 ret = True
                 continue
             LOGGER.debug('Handling filename: %s', filename)
             context = {'is_created': False}
-            nodes = chain(
-                *hook.create_node(filename=filename, context=context))
+            nodes = tuple(chain(
+                *hook.create_node(filename=filename, context=context)))
             if any(nodes):
                 ret = True
+                LOGGER.debug('Created nodes: %s', nodes)
+                hook.after_created(nodes=nodes)
         return ret
     except CancelledError:
         return True

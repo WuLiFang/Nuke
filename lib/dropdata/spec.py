@@ -64,3 +64,12 @@ def create_node(filename, context):
         Returns:
             list[nuke.Node]: Created nodes.
     """
+
+
+@HOOKSPEC
+def after_created(nodes):
+    """Modify created nodes.
+
+    Args:
+        nodes (list[nuke.Node]): Created nodes.
+    """
