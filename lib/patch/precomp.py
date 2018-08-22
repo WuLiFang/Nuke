@@ -80,6 +80,9 @@ class PatchPrecompSelected(BasePatch):
         with group:
             nuke.scriptReadFile(cls.current_options['script'].encode('utf-8'))
             write_nodes = nuke.allNodes('Write')
+            assert write_nodes
+            if len(write_nodes) != 1:
+                nuke.message('注意: 预合成中发现了多个输出节点, 可能导致渲染出错'.encode('utf-8'))
             name = '_'.join(
                 i for i in ('Write',
                             cls.current_options['precomp_name'].upper(),
