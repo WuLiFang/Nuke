@@ -1,0 +1,5 @@
+pylint~=1.9
+rope
+autopep8 
+pyside
+pytest
