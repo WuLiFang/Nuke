@@ -93,9 +93,10 @@ class PatchPrecompSelected(BasePatch):
             assert write_nodes
             if len(write_nodes) != 1:
                 nuke.message('注意: 预合成中发现了多个输出节点, 可能导致渲染出错'.encode('utf-8'))
+            precomp_name = cls.current_options['precomp_name']
             name = '_'.join(
                 i for i in ('Write',
-                            cls.current_options['precomp_name'].upper(),
+                            precomp_name.upper().replace(' ', '_'),
                             '1') if i)
             for n in write_nodes:
                 n.setName(name.encode('utf-8'))
