@@ -4,6 +4,8 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import logging
+
 import nuke
 import six
 
@@ -11,6 +13,8 @@ from wlf.codectools import get_unicode as u
 from wlf.path import PurePath
 
 from .core import BasePatch
+
+LOGGER = logging.getLogger(__name__)
 
 
 class PatchPrecompDialog(BasePatch):
@@ -64,17 +68,22 @@ def _knob_changed(self, knob):
     options = {k: u(v) if isinstance(v, six.binary_type) else v
                for k, v in options.items()}
     PatchPrecompSelected.current_options = options
+    assert PatchPrecompSelected.current_options
 
 
 class PatchPrecompSelected(BasePatch):
     """Enhance precomp creation.  """
 
     target = 'nukescripts.precomp_selected'
-    current_options = {}
+    current_options = None
+    current_precomp_node = None
 
     @classmethod
     def func(cls, *args, **kwargs):
         ret = cls.orig(*args, **kwargs)
+
+        if ret is None or not cls.current_options:
+            return ret
 
         group = nuke.nodes.Group()
         with group:
@@ -90,7 +99,15 @@ class PatchPrecompSelected(BasePatch):
             _ = [n.setName(name.encode('utf-8')) for n in write_nodes]
             nuke.tcl(b"export_as_precomp",
                      cls.current_options['script'].encode('utf-8'))
+            if cls.current_precomp_node:
+                cls.current_precomp_node.reload()
+            else:
+                LOGGER.warning(
+                    'Not found precomp node after `precomp_selected`')
+
         nuke.delete(group)
+        cls.current_options = None
+        cls.current_precomp_node = None
 
         return ret
 
@@ -101,6 +118,10 @@ def _on_precomp_knob_changed():
     if (knob in (node['reading'], node['reload_script'], node['file'])
             and node['reading'].value()):
         _disable_precomp_hash_check(node)
+
+
+def _on_precomp_create():
+    PatchPrecompSelected.current_precomp_node = nuke.thisNode()
 
 
 def _disable_precomp_hash_check(precomp_node=None):
@@ -121,6 +142,7 @@ def enable():
     PatchPrecompDialog.enable()
     PatchPrecompSelected.enable()
     nuke.addKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
+    nuke.addOnCreate(_on_precomp_create, nodeClass='Precomp')
     nuke.addOnScriptLoad(_disable_hash_check)
 
 
@@ -130,4 +152,5 @@ def disable():
     PatchPrecompDialog.disable()
     PatchPrecompSelected.disable()
     nuke.removeKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
+    nuke.removeOnCreate(_on_precomp_create, nodeClass='Precomp')
     nuke.removeOnScriptLoad(_disable_hash_check)
