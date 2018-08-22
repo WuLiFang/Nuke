@@ -736,6 +736,8 @@ def render_png(nodes, frame=None, show=False):
         nodes = (nodes,)
     script_name = os.path.join(os.path.splitext(
         os.path.basename(nuke.value('root.name')))[0])
+    if frame is None:
+        frame = nuke.frame()
     for read_node in nodes:
         if read_node.hasError() or read_node['disable'].value():
             continue
@@ -744,9 +746,7 @@ def render_png(nodes, frame=None, show=False):
         n = nuke.nodes.Write(
             inputs=[read_node], channels='rgba')
         n['file'].fromUserText(os.path.join(
-            script_name, '{}.png'.format(name)))
-        if not frame:
-            frame = nuke.frame()
+            script_name, '{}.{}.png'.format(name, frame)))
         nuke.execute(n, frame, frame)
 
         nuke.delete(n)
