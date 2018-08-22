@@ -34,6 +34,7 @@ def main():
     import callback
     import render
     import wlf.mp_logging
+    import patch.precomp
 
     try:
         import validation
@@ -47,6 +48,7 @@ def main():
     validation.setup()
     callback.setup()
     render.setup()
+    patch.precomp.enable()
 
     # Recover outter scope env.
     globals().update(_GLOBAL_BEFORE_INIT)

@@ -13,7 +13,6 @@ def main():
     import cgtwq
     import enable_later
     import asset
-    import patch.precomp
     import patch.toolsets
 
     def _setup_cgtw():
@@ -36,7 +35,6 @@ def main():
     if cgtwq.DesktopClient.executable():
         _setup_cgtw()
 
-    patch.precomp.enable()
     patch.toolsets.enable()
 
 

@@ -87,7 +87,6 @@ class PatchPrecompSelected(BasePatch):
                 i for i in ('Write',
                             cls.current_options['precomp_name'].upper(),
                             '1') if i)
-            _ = [n['checkHashOnRead'].setValue(False) for n in write_nodes]
             _ = [n.setName(name.encode('utf-8')) for n in write_nodes]
             nuke.tcl(b"export_as_precomp",
                      cls.current_options['script'].encode('utf-8'))
@@ -99,10 +98,21 @@ class PatchPrecompSelected(BasePatch):
 def _on_precomp_knob_changed():
     node = nuke.thisNode()
     knob = nuke.thisKnob()
-    if knob is node['reading'] and knob.value():
-        with node:
-            write_nodes = nuke.allNodes('Write')
-            _ = [n['checkHashOnRead'].setValue(False) for n in write_nodes]
+    if (knob in (node['reading'], node['reload_script'], node['file'])
+            and node['reading'].value()):
+        _disable_precomp_hash_check(node)
+
+
+def _disable_precomp_hash_check(precomp_node=None):
+    precomp_node = precomp_node or nuke.thisNode()
+    assert isinstance(precomp_node, nuke.Precomp), type(precomp_node)
+    with precomp_node:
+        write_nodes = nuke.allNodes('Write')
+        _ = [n['checkHashOnRead'].setValue(False) for n in write_nodes]
+
+
+def _disable_hash_check():
+    _ = [_disable_precomp_hash_check(n) for n in nuke.allNodes('Precomp')]
 
 
 def enable():
@@ -111,6 +121,7 @@ def enable():
     PatchPrecompDialog.enable()
     PatchPrecompSelected.enable()
     nuke.addKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
+    nuke.addOnScriptLoad(_disable_hash_check)
 
 
 def disable():
@@ -119,3 +130,4 @@ def disable():
     PatchPrecompDialog.disable()
     PatchPrecompSelected.disable()
     nuke.removeKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
+    nuke.removeOnScriptLoad(_disable_hash_check)
