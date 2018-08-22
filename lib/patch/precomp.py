@@ -96,7 +96,10 @@ class PatchPrecompSelected(BasePatch):
                 i for i in ('Write',
                             cls.current_options['precomp_name'].upper(),
                             '1') if i)
-            _ = [n.setName(name.encode('utf-8')) for n in write_nodes]
+            for n in write_nodes:
+                n.setName(name.encode('utf-8'))
+                # Disable exr hash check.
+                n['metadata'].setValue('no metadata'.encode('utf-8'))
             nuke.tcl(b"export_as_precomp",
                      cls.current_options['script'].encode('utf-8'))
             if cls.current_precomp_node:
@@ -112,38 +115,11 @@ class PatchPrecompSelected(BasePatch):
         return ret
 
 
-def _on_precomp_knob_changed():
-    node = nuke.thisNode()
-    knob = nuke.thisKnob()
-    if (knob in (node['reading'], node['reload_script'], node['file'])
-            and node['reading'].value()):
-        _disable_precomp_hash_check(node)
-
-
-def _on_precomp_create():
-    PatchPrecompSelected.current_precomp_node = nuke.thisNode()
-
-
-def _disable_precomp_hash_check(precomp_node=None):
-    precomp_node = precomp_node or nuke.thisNode()
-    assert isinstance(precomp_node, nuke.Precomp), type(precomp_node)
-    with precomp_node:
-        write_nodes = nuke.allNodes('Write')
-        _ = [n['checkHashOnRead'].setValue(False) for n in write_nodes]
-
-
-def _disable_hash_check():
-    _ = [_disable_precomp_hash_check(n) for n in nuke.allNodes('Precomp')]
-
-
 def enable():
     """Enable patch.  """
 
     PatchPrecompDialog.enable()
     PatchPrecompSelected.enable()
-    nuke.addKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
-    nuke.addOnCreate(_on_precomp_create, nodeClass='Precomp')
-    nuke.addOnScriptLoad(_disable_hash_check)
 
 
 def disable():
@@ -151,6 +127,3 @@ def disable():
 
     PatchPrecompDialog.disable()
     PatchPrecompSelected.disable()
-    nuke.removeKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
-    nuke.removeOnCreate(_on_precomp_create, nodeClass='Precomp')
-    nuke.removeOnScriptLoad(_disable_hash_check)
