@@ -148,6 +148,7 @@ file "\[value Write_JPG_1.file]"
 proxy "\[value Write_JPG_1.proxy]"
 origset true
 name Read_JPG_1
+disable {{"parent.reading != 2"}}
 xpos 180
 ypos -182
 }
@@ -159,6 +160,7 @@ last {{"root.last_frame - root.first_frame + 1"}}
 frame "frame - root.first_frame + 1"
 origset true
 name Read_MOV_2
+disable {{"parent.reading != 1"}}
 xpos 90
 ypos -312
 }
