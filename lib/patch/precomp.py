@@ -5,6 +5,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import nuke
+import six
 
 from wlf.codectools import get_unicode as u
 from wlf.path import PurePath
@@ -12,7 +13,7 @@ from wlf.path import PurePath
 from .core import BasePatch
 
 
-class Patch(BasePatch):
+class PatchPrecompDialog(BasePatch):
     """Enhance precomp creation """
     target = 'nukescripts.PrecompOptionsDialog.__init__'
 
@@ -40,26 +41,66 @@ class Patch(BasePatch):
             node=self._PythonPanel__node)  # pylint: disable=protected-access
 
 
-def _knob_changed(self, knob):
-    if knob is not self.precompName:
-        return
-
+def _on_precomp_name_changed(self, knob):
     rootpath = PurePath(u(nuke.value('root.name')))
     name = u(knob.value()) or 'precomp1'
-    self.scriptPath.setValue(
-        (
-            rootpath.parent /
-            ''.join([rootpath.stem]
-                    + ['.{}'.format(name)]
-                    + rootpath.suffixes)
-        ).as_posix().encode('utf-8'))
-    self.renderPath.setValue(
-        'precomp/{0}/{0}.%04d.exr'.format(
-            ''.join([rootpath.stem]
-                    + ['.{}'.format(name)]
-                    + [i for i in rootpath.suffixes if i != '.nk'])
-        ).encode('utf-8'))
+    script_path = (rootpath.parent /
+                   ''.join([rootpath.stem]
+                           + ['.{}'.format(name)]
+                           + rootpath.suffixes)).as_posix()
+    render_path = 'precomp/{0}/{0}.%04d.exr'.format(
+        ''.join([rootpath.stem]
+                + ['.{}'.format(name)]
+                + [i for i in rootpath.suffixes if i != '.nk']))
+    self.scriptPath.setValue(script_path.encode('utf-8'))
+    self.renderPath.setValue(render_path.encode('utf-8'))
 
 
-enable = Patch.enable  # pylint: disable=invalid-name
-disable = Patch.disable  # pylint: disable=invalid-name
+def _knob_changed(self, knob):
+    {
+        self.precompName: _on_precomp_name_changed,
+    }.get(knob, lambda *_: None)(self, knob)
+    options = {name: k.value() for name, k in self.knobs().items()}
+    options = {k: u(v) if isinstance(v, six.binary_type) else v
+               for k, v in options.items()}
+    PatchPrecompSelected.current_options = options
+
+
+class PatchPrecompSelected(BasePatch):
+    """Enhance precomp creation.  """
+
+    target = 'nukescripts.precomp_selected'
+    current_options = {}
+
+    @classmethod
+    def func(cls, *args, **kwargs):
+        ret = cls.orig(*args, **kwargs)
+
+        group = nuke.nodes.Group()
+        with group:
+            nuke.scriptReadFile(cls.current_options['script'].encode('utf-8'))
+            write_nodes = nuke.allNodes('Write')
+            name = '_'.join(
+                i for i in ('Write',
+                            cls.current_options['precomp_name'].upper(),
+                            '1') if i)
+            _ = [n.setName(name.encode('utf-8')) for n in write_nodes]
+            nuke.tcl(b"export_as_precomp",
+                     cls.current_options['script'].encode('utf-8'))
+        nuke.delete(group)
+
+        return ret
+
+
+def enable():
+    """Enable patch.  """
+
+    PatchPrecompDialog.enable()
+    PatchPrecompSelected.enable()
+
+
+def disable():
+    """Disable patch.  """
+
+    PatchPrecompDialog.disable()
+    PatchPrecompSelected.disable()
