@@ -96,11 +96,21 @@ class PatchPrecompSelected(BasePatch):
         return ret
 
 
+def _on_precomp_knob_changed():
+    node = nuke.thisNode()
+    knob = nuke.thisKnob()
+    if knob is node['reading'] and knob.value():
+        with node:
+            write_nodes = nuke.allNodes('Write')
+            _ = [n['checkHashOnRead'].setValue(False) for n in write_nodes]
+
+
 def enable():
     """Enable patch.  """
 
     PatchPrecompDialog.enable()
     PatchPrecompSelected.enable()
+    nuke.addKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
 
 
 def disable():
@@ -108,3 +118,4 @@ def disable():
 
     PatchPrecompDialog.disable()
     PatchPrecompSelected.disable()
+    nuke.removeKnobChanged(_on_precomp_knob_changed, nodeClass='Precomp')
