@@ -87,6 +87,7 @@ class PatchPrecompSelected(BasePatch):
                 i for i in ('Write',
                             cls.current_options['precomp_name'].upper(),
                             '1') if i)
+            _ = [n['checkHashOnRead'].setValue(False) for n in write_nodes]
             _ = [n.setName(name.encode('utf-8')) for n in write_nodes]
             nuke.tcl(b"export_as_precomp",
                      cls.current_options['script'].encode('utf-8'))
