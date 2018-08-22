@@ -9,6 +9,7 @@ import logging
 import nuke
 import six
 
+import edit
 from wlf.codectools import get_unicode as u
 from wlf.path import PurePath
 
@@ -98,8 +99,14 @@ class PatchPrecompSelected(BasePatch):
                             '1') if i)
             for n in write_nodes:
                 n.setName(name.encode('utf-8'))
-                # Disable exr hash check.
-                n['metadata'].setValue('no metadata'.encode('utf-8'))
+                # Disable exr hash check
+                # precomp node will change the value
+                # so we need a assert node.
+                assert_node = nuke.nodes.Assert()
+                assert_node['expression'].setExpression(
+                    '[knob {}.checkHashOnRead 0]\n'
+                    '[return 1]'.format(n.name()).encode('utf-8'))
+                edit.insert_node(assert_node, n.input(0))
             nuke.tcl(b"export_as_precomp",
                      cls.current_options['script'].encode('utf-8'))
             if cls.current_precomp_node:
