@@ -123,11 +123,16 @@ class PatchPrecompSelected(BasePatch):
         return ret
 
 
+def _on_precomp_create():
+    PatchPrecompSelected.current_precomp_node = nuke.thisNode()
+
+
 def enable():
     """Enable patch.  """
 
     PatchPrecompDialog.enable()
     PatchPrecompSelected.enable()
+    nuke.addOnCreate(_on_precomp_create, nodeClass='Precomp')
 
 
 def disable():
@@ -135,3 +140,4 @@ def disable():
 
     PatchPrecompDialog.disable()
     PatchPrecompSelected.disable()
+    nuke.removeOnCreate(_on_precomp_create, nodeClass='Precomp')
