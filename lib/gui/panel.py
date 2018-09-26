@@ -16,6 +16,6 @@ def add_panel():
     """Add custom pannel. """
 
     LOGGER.info('添加面板')
-    if cgtwq.DesktopClient.executable():
+    if cgtwq.DesktopClient().executable():
         import cgtwq_uploader
         panels.register(cgtwq_uploader.Dialog, '上传mov', 'com.wlf.uploader')

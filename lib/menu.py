@@ -19,10 +19,10 @@ def main():
         import cgtwn
         import pyblish_lite_nuke
 
-        cgtwq.DesktopClient.start()
+        cgtwq.DesktopClient().start()
         pyblish_lite_nuke.setup()
         cgtwn.setup()
-        if cgtwq.DesktopClient.is_logged_in():
+        if cgtwq.DesktopClient().is_logged_in():
             cgtwq.update_setting()
 
     gui.setup()
@@ -32,7 +32,7 @@ def main():
     project_settings.setup()
     enable_later.setup()
     asset.setup()
-    if cgtwq.DesktopClient.executable():
+    if cgtwq.DesktopClient().executable():
         _setup_cgtw()
 
     patch.toolsets.enable()

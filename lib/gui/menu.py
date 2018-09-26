@@ -130,7 +130,7 @@ def add_menu():
             _("吾立方网站", lambda: webbrowser.open('http://www.wlf-studio.com/'))
         ]}
     ]
-    if cgtwq.DesktopClient.executable():
+    if cgtwq.DesktopClient().executable():
         all_menu.insert(
             -2,
             {_('CGTeamWork', icon='cgteamwork.png'): [

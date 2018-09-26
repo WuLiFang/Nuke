@@ -8,7 +8,7 @@ from unittest import TestCase, main, skipUnless
 import cgtwq
 
 
-@skipUnless(cgtwq.DesktopClient.is_logged_in(), 'not logged in')
+@skipUnless(cgtwq.DesktopClient().is_logged_in(), 'not logged in')
 class TaskTestCase(TestCase):
     def test_init(self):
         from cgtwn import Task

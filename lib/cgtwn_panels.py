@@ -21,7 +21,7 @@ LOGGER = logging.getLogger(__name__)
 def dialog_login():
     """Login teamwork.  """
 
-    if cgtwq.DesktopClient.is_logged_in():
+    if cgtwq.DesktopClient().is_logged_in():
         cgtwq.update_setting()
         Tray.message('CGTeamWork', '登录成功')
         return
@@ -35,7 +35,7 @@ def dialog_login():
         confirm = panel.show()
         if confirm:
             try:
-                cgtwq.server.setting.DEFAULT_TOKEN = cgtwq.login(
+                cgtwq.core.CONFIG['DEFAULT_TOKEN'] = cgtwq.login(
                     panel.value(account), panel.value(password))
             except ValueError:
                 Tray.message('CGTeamWork', '登录失败')

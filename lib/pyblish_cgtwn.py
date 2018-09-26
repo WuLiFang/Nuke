@@ -46,8 +46,9 @@ class CollectTask(pyblish.api.InstancePlugin):
 
         assert isinstance(instance, pyblish.api.Instance)
 
-        if cgtwq.DesktopClient.is_logged_in():
-            cgtwq.update_setting()
+        client = cgtwq.DesktopClient()
+        if client.is_logged_in():
+            client.connect()
 
         shot = PurePath(instance.name).shot
         try:
