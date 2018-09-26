@@ -39,7 +39,7 @@ class Database(cgtwq.Database):
             Database: Filename related database.
         """
 
-        data = cgtwq.PROJECT.all().get_fields('code', 'database')
+        data = cgtwq.PROJECT.select_all().get_fields('code', 'database')
         for i in data:
             code, database = i
             if unicode(shot).startswith(code):

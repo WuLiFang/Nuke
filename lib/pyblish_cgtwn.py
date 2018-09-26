@@ -77,10 +77,10 @@ class CollectUser(pyblish.api.ContextPlugin):
         assert isinstance(context, pyblish.api.Context)
 
         name = cgtwq.ACCOUNT.select(
-            cgtwq.current_account_id()).to_entry()['name']
+            cgtwq.get_account_id()).to_entry()['name']
 
         context.data['artist'] = name
-        context.data['accountID'] = cgtwq.current_account_id()
+        context.data['accountID'] = cgtwq.get_account_id()
         context.create_instance(
             '制作者: {}'.format(name),
             family='制作者'

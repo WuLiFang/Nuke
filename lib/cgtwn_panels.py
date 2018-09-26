@@ -21,8 +21,9 @@ LOGGER = logging.getLogger(__name__)
 def dialog_login():
     """Login teamwork.  """
 
-    if cgtwq.DesktopClient().is_logged_in():
-        cgtwq.update_setting()
+    client = cgtwq.DesktopClient()
+    if client.is_logged_in():
+        client.connect()
         Tray.message('CGTeamWork', '登录成功')
         return
     account = '帐号'
