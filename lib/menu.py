@@ -30,6 +30,7 @@ def main():
         if client.is_logged_in():
             client.connect()
 
+    _setup_cgtw()
     gui.setup()
     pref.setup()
     dropdata.setup()
