@@ -110,7 +110,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.56.0"}
+ addUserKnob {20 Write l "wlf_Write v1.56.1"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -308,6 +308,7 @@ channels {rgba.red rgba.green rgba.blue rgba.alpha}
 file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.png"
 proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.png"
 file_type png
+datatype "16 bit"
 render_order 0
 reading {{"\[python __wlf_Write.is_reading_exr()]"}}
 checkHashOnRead false
