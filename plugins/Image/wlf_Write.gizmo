@@ -110,7 +110,7 @@ except NameError:
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.56.1"}
+ addUserKnob {20 Write l "wlf_Write v1.56.2"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -304,6 +304,18 @@ ypos -1000
 disable true
 }
 Write {
+file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
+proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
+file_type exr
+render_order 0
+reading {{"\[python __wlf_Write.is_reading_exr()]"}}
+checkHashOnRead false
+name Write_EXR_1
+xpos 0
+ypos -918
+disable {{"!(reading | \[python bool(os.getenv('WLF_IS_SEPARATE_JOBS'))] | parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
+}
+Write {
 channels {rgba.red rgba.green rgba.blue rgba.alpha}
 file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.png"
 proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.png"
@@ -315,20 +327,8 @@ checkHashOnRead false
 name Write_PNG_1
 selected true
 xpos 0
-ypos -918
-disable {{"!(reading | \[python bool(os.getenv('WLF_IS_SEPARATE_JOBS'))] | parent.output_png & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
-}
-Write {
-file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
-proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
-file_type exr
-render_order 0
-reading {{"\[python __wlf_Write.is_reading_exr()]"}}
-checkHashOnRead false
-name Write_EXR_1
-xpos 0
 ypos -862
-disable {{"!(reading | \[python bool(os.getenv('WLF_IS_SEPARATE_JOBS'))] | parent.output_exr & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
+disable {{"!(reading | \[python bool(os.getenv('WLF_IS_SEPARATE_JOBS'))] | parent.output_png & ((abs(root.last_frame - root.first_frame) + 1) >= parent.exr_threshold))"}}
 }
 Write {
 file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
