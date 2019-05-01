@@ -4,6 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+pylint = "~=1.9.4"
+"autopep8" = "~=1.4.4"
+rope = "*"
+pyside = "*"
+pytest = "*"
 
 [packages]
 
