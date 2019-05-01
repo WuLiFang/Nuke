@@ -2,11 +2,12 @@ environment:
   matrix:
     - PYTHON: "C:\\Python27"
 install:
-  - "git submodule update --init --recursive"
+  - 'git submodule update --init --recursive'
+  - "%PYTHON%\\python.exe -m pip install -U pip"
   - "%PYTHON%\\python.exe -m pip install -r Documentation/requirements.txt"
 build_script:
-  - "%PYTHON%\\python.exe -m pip install --target lib/site-packages --process-dependency-links -r requirements.txt"
-  - "Documentation/make.bat html"
+  - "%PYTHON%\\python.exe -m pip install --target lib/site-packages -r requirements.txt"
+  - 'Documentation/make.bat html'
 after_build:
   - 7z a -tzip -xr!.* -xr0!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
 artifacts:
@@ -23,7 +24,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: F3Yyeg/9CKfhBQ6baTP5XsOqnquey/5hXl1EtPqmk0WptSzV6STE7M4Pa+BJnTZ2
-  artifact: /.*\.zip/            
+  artifact: /.*\.zip/
   draft: false
   prerelease: false
   on:
