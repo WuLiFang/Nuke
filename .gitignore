@@ -54,7 +54,8 @@ Temporary Items
 !lib/validation.pyc
 
 # Build file
-build/
+build/*
+!build/html
 *.spec
 !scenetools.exe
 
