@@ -9,6 +9,7 @@ pylint = "~=1.9.4"
 rope = "*"
 pyside = "*"
 pytest = "*"
+typing = "*"
 
 [packages]
 

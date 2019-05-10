@@ -160,7 +160,7 @@ class Comp(object):
             operation='soft-light',
             output='rgb',
             mix='0.6',
-            label=b'衰减调整',
+            label='衰减调整'.encode('utf-8'),
             disable=True)
 
         return n
