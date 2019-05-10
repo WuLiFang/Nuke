@@ -7,9 +7,14 @@ REM Command file for Sphinx documentation
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=python -m sphinx
 )
-set SOURCEDIR=source
+if "%NUKE_PATH%" == "" (
+	set "NUKE_PATH=C:\Program Files\Nuke11.3v3"
+)
+set SOURCEDIR=.
 set BUILDDIR=build
 set SPHINXPROJ=WuLiFangNuke
+set "PATH=%NUKE_PATH%;%PATH%"
+set "PYTHONPATH=../lib;../lib/site-packages;../.venv/Lib/site-packages;%NUKE_PATH%\lib\site-packages"
 
 if "%1" == "" goto help
 
