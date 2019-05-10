@@ -12,7 +12,7 @@ import sys
 from collections import namedtuple
 
 __dirname__ = os.path.abspath(os.path.dirname(__file__))
-CHANGELOG_DIR = os.path.join(__dirname__, 'source', 'changelogs')
+CHANGELOG_DIR = os.path.join(__dirname__, 'changelogs')
 
 
 def _changelogs():
