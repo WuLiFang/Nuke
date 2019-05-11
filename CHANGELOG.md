@@ -1,5 +1,16 @@
 # 更新日志
 
+## 0.20.1 (2019-05-11)
+
+### 修复
+
+- **wlf_Write:** 从 exr 渲染 png ([e79c85b](https://github.com/NateScarlet/Nuke/commit/e79c85b))
+- Windows 10 启动时出现 IOError[0] 错误 ([1ac29c3](https://github.com/NateScarlet/Nuke/commit/1ac29c3))
+
+### 构建系统
+
+- 修正文档构建 ([5fe318f](https://github.com/NateScarlet/Nuke/commit/5fe318f))
+
 ## 0.20.0 (2019-02-20)
 
 - `WlfWrite` 1.56.1:
