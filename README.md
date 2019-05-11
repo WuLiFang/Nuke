@@ -14,6 +14,8 @@
 
 ### 安装依赖
 
+为保证兼容 Nuke, 使用 Nuke 附带的 python 来创建虚拟环境:
+
 ```shell
 export PIPENV_VENV_IN_PROJECT=1
 pipenv install -d --python "C:\Program Files\Nuke11.3v3\python.exe"
