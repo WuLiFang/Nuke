@@ -1,6 +1,6 @@
 # Changelog
 
-[中文版本](https://wulifang.github.io/Nuke/CHANGELOG.html)
+[中文版本](https://wulifang.github.io/Nuke/changelog.html)
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
