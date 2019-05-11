@@ -76,3 +76,6 @@ build/
 .pytest_cache
 
 /lib/validation.py
+
+#worktree
+/docs
