@@ -52,7 +52,7 @@ def add_menu():
 
     def _open_help():
         help_page = os.path.join(
-            RESOURCE_DIR, 'Documentation/build/html/index.html')
+            RESOURCE_DIR, 'docs/build/html/index.html')
         webbrowser.open(help_page)
 
     all_menu = [

@@ -2,20 +2,18 @@ environment:
   matrix:
     - PYTHON: "C:\\Python27"
 install:
-  - 'git submodule update --init --recursive'
+  - './scripts/setup-worktree.cmd'
   - "%PYTHON%\\python.exe -m pip install -U pip"
-  - "%PYTHON%\\python.exe -m pip install -r Documentation/requirements.txt"
 build_script:
   - "%PYTHON%\\python.exe -m pip install --target lib/site-packages -r requirements.txt"
-  - 'Documentation/make.bat html'
 after_build:
   - 7z a -tzip -xr!.* -xr0!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
 artifacts:
   - path: build\WuLiFang-Nuke-*.zip
-    name: Prebuild package
+    name: Built package
 before_deploy:
   - ps: >-
-      & $env:PYTHON\\python.exe Documentation/get_changelog.py $env:APPVEYOR_REPO_TAG_NAME build/release_note.md;
+      & $env:PYTHON\\python.exe docs/get_changelog.py $env:APPVEYOR_REPO_TAG_NAME build/release_note.md;
       ${env:APPVEYOR_RELEASE_DESCRIPTION} = (Get-Content -Encoding utf8 build/release_note.md) -join "`n";
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
