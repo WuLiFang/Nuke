@@ -8,12 +8,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-- **wlf_Write:** render png from exr ([e79c85b](https://github.com/NateScarlet/Nuke/commit/e79c85b))
-- IOError[0] on windows 10 when launch ([1ac29c3](https://github.com/NateScarlet/Nuke/commit/1ac29c3))
+- **wlf_Write:** render png from exr ([e79c85b](https://github.com/WuLiFang/Nuke/commit/e79c85b))
+- IOError[0] on windows 10 when launch ([1ac29c3](https://github.com/WuLiFang/Nuke/commit/1ac29c3))
 
 ### Build System
 
-- correct docs build ([5fe318f](https://github.com/NateScarlet/Nuke/commit/5fe318f))
+- correct docs build ([5fe318f](https://github.com/WuLiFang/Nuke/commit/5fe318f))
 
 ## 0.20.0 (2019-02-20)
 
