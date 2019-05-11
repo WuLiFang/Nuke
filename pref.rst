@@ -2,7 +2,7 @@
 ==========
 使用快捷键\ **Shift**\ +\ **S**\ 打开首选项设置
 
-.. image:: pref_panel.png
+.. image:: /_images/pref_panel.png
 
 通用
 -------
@@ -12,7 +12,7 @@
 
 制作人名称 会自动添加至工程设置
 
-.. figure:: plug-ins/wlf_Write_after.png
+.. figure:: /_images/plug-ins/wlf_Write_after.png
 
   并且\ :ref:`wlf_Write`\ 使用这个值生成带辅助信息版本的mov
 
@@ -31,11 +31,11 @@ Group的优势在于脱离插件一样可以使用
 
 自动转换工程目录
 
-.. figure:: eval_proj_dir_before.png
+.. figure:: /_images/eval_proj_dir_before.png
 
   保存时使用的是相对路径
 
-.. figure:: eval_proj_dir_after.png
+.. figure:: /_images/eval_proj_dir_after.png
 
   再次打开变为绝对路径
 
@@ -54,7 +54,7 @@ Group的优势在于脱离插件一样可以使用
 
 锁定节点连接, 防止误操作
 
-.. image:: lock_all_connections.png
+.. image:: /_images/lock_all_connections.png
 
 要取消锁定, 按S打开工程设置然后取消 :guilabel:`lock all connections` 的勾选
 
@@ -64,7 +64,7 @@ Group的优势在于脱离插件一样可以使用
 
 启用被标记为稍后启用的节点
 
-参见\ :ref:`标记为稍后启用`\ 
+参见\ :ref:`标记为稍后启用`\
 
 跳至_Write节点指定的帧
 *****************************

@@ -4,45 +4,45 @@
 编辑
 ----
 
-.. image:: edit_menu.png
+.. image:: /_images/edit_menu.png
 
 .. _同时编辑多个节点:
 
 同时编辑多个节点
 ****************
 
-.. image:: multi_edit.png
+.. image:: /_images/multi_edit.png
 
 同时设置多个同类型节点
 常用于设置Read节点帧范围
 
-.. figure:: multi_edit_choose.png
+.. figure:: /_images/multi_edit_choose.png
 
   如果选中的节点包含多个类型会要求用户选择
 
 分离图层
 ********
 
-.. image:: shuffle_layer.png
+.. image:: /_images/shuffle_layer.png
 
 为选中节点的每个图层(Layer)创建一个Shuffle
 
 分离rgba
 ********
 
-.. image:: shuffle_rgba.png
+.. image:: /_images/shuffle_rgba.png
 
 为选中节点的rgba通道各创建一个shuffle
 
 重命名PuzzleMatte
 ******************
 
-.. image:: rename_channels.png
+.. image:: /_images/rename_channels.png
 
 为选中节点中的PuzzleMatte通道指定新的名称
 提升节点可读性
 
-.. figure:: rename_channels_result.png
+.. figure:: /_images/rename_channels_result.png
 
   效果
 
@@ -65,7 +65,7 @@
 设置帧范围
 **********
 
-.. image:: set_framerange.png
+.. image:: /_images/set_framerange.png
 
 为选中读取节点设置帧范围
 
@@ -92,11 +92,11 @@
 修正读取错误
 **************
 
-.. figure:: fix_error_read_before.png
+.. figure:: /_images/fix_error_read_before.png
 
   在有读取节点错误时先拖入正确的素材
 
-.. figure:: fix_error_read_after.png
+.. figure:: /_images/fix_error_read_after.png
 
   会比较文件名将报错的素材替换为同名正确的素材
 
@@ -112,19 +112,19 @@ Reload所有
 
 在Nuke打开和保存文件时会自动执行此命令
 
-.. figure:: check_dropframes_normal.png
+.. figure:: /_images/check_dropframes_normal.png
 
   无素材缺帧的正常情况
 
-.. figure:: check_dropframes.png
+.. figure:: /_images/check_dropframes.png
 
   如果有缺帧
 
-.. figure:: check_dropframes_node.png
+.. figure:: /_images/check_dropframes_node.png
 
   节点上会显示
 
-.. figure:: check_dropframes_console.png
+.. figure:: /_images/check_dropframes_console.png
 
   错误控制台上也会显示
 
@@ -135,11 +135,11 @@ Reload所有
 
 在Nuke打开文件时会自动执行此命令
 
-.. figure:: check_mtime_normal.png
+.. figure:: /_images/check_mtime_normal.png
 
   无素材更新的正常情况
 
-.. figure:: check_mtime.png
+.. figure:: /_images/check_mtime.png
 
   如果有素材更新
 
@@ -149,13 +149,13 @@ Reload所有
 
 将所有单帧的读取节点转换为序列
 
-.. image:: frame2sequence.png
+.. image:: /_images/frame2sequence.png
 
-.. figure:: frame2sequence_before.png
+.. figure:: /_images/frame2sequence_before.png
 
   工程中需要替换成序列的单帧节点
 
-.. figure:: frame2sequence_after.png
+.. figure:: /_images/frame2sequence_after.png
 
   所有符合条件的节点都会被替换
 
@@ -171,11 +171,11 @@ Reload所有
 
 比原生自动摆放方法效果更好的竖式自动摆放
 
-.. figure:: orgnize_before.png
+.. figure:: /_images/orgnize_before.png
 
   整理前
 
-.. figure:: orgnize_after.png
+.. figure:: /_images/orgnize_after.png
 
   整理后
 
@@ -184,13 +184,13 @@ Reload所有
 
 删除未被写入节点使用的节点
 
-.. figure:: delete_unused_before.png
+.. figure:: /_images/delete_unused_before.png
 
   清理前
 
-.. image:: delete_unused_after.png
+.. image:: /_images/delete_unused_after.png
 
-.. figure:: delete_unused_after_2.png
+.. figure:: /_images/delete_unused_after_2.png
 
   清理后
 
@@ -204,11 +204,11 @@ Reload所有
 
 通过背板对节点批量命名
 
-.. figure:: rename_by_backdrop_before.png
+.. figure:: /_images/rename_by_backdrop_before.png
 
   命名前
 
-.. figure:: rename_by_backdrop_after.png
+.. figure:: /_images/rename_by_backdrop_after.png
 
   命名后
 
@@ -217,11 +217,11 @@ Reload所有
 节点添加Dots变成90度
 **********************
 
-.. figure:: add_dot_to_90_before.png
+.. figure:: /_images/add_dot_to_90_before.png
 
   执行前
 
-.. figure:: add_dot_to_90_after.png
+.. figure:: /_images/add_dot_to_90_after.png
 
   执行后
 
@@ -237,34 +237,34 @@ Reload所有
 合成
 ----
 
-.. _自动合成: 
+.. _自动合成:
 
 |comp_icon| 自动合成
 *******************************
 
 自动合成当前导入的素材
 
-1. 
-  .. figure:: comp_prepare.png
+1.
+  .. figure:: /_images/comp_prepare.png
 
     导入素材
 
-2. 
-  .. figure:: comp_run.png
+2.
+  .. figure:: /_images/comp_run.png
 
     执行
 
 3.
-  .. figure:: comp_result.png
+  .. figure:: /_images/comp_result.png
 
     结果
 
-.. _自动合成设置: 
+.. _自动合成设置:
 
 |comp_icon| 自动合成设置
 *******************************************
 
-.. image:: comp_setting.png
+.. image:: /_images/comp_setting.png
 
 对 :ref:`自动合成` 进行设置。
 
@@ -274,28 +274,28 @@ Redshift预合成
 
 将选中的Redshift素材节点进行分层预合成
 
-.. figure:: precomp_redshift.png
+.. figure:: /_images/precomp_redshift.png
 
   一键搭建所需框架
 
 |cgteamwork_icon| CGTeamWork
 ---------------------------------
 
-.. image:: cgtw_menu.png
+.. image:: /_images/cgtw_menu.png
 
 此菜单只在安装了CGTeamWork之后才会出现
 
 登录
 ****
 
-.. image:: cgtw_login.png
+.. image:: /_images/cgtw_login.png
 
 用于自动登录失效时临时进行手动登录, 推荐之后重开Nuke和CGTeamWork使用自动登录
 
 添加note
 *********
 
-.. image:: cgtw_note.png
+.. image:: /_images/cgtw_note.png
 
 为CGTeamWork上的对应镜头添加备注
 
@@ -317,7 +317,7 @@ Redshift预合成
 创建项目色板
 ****************
 
-.. image:: cgtw_csheet.png
+.. image:: /_images/cgtw_csheet.png
 
 为项目创建色板
 
@@ -326,14 +326,14 @@ Redshift预合成
 创建项目文件夹
 ******************
 
-.. image:: cgtw_dir_creation.png
+.. image:: /_images/cgtw_dir_creation.png
 
 为项目中的每个匹配镜头建立一个空文件夹
 
 帮助
 ----
 
-.. image:: help_menu.png
+.. image:: /_images/help_menu.png
 
 吾立方插件 文档
 ***************
@@ -348,25 +348,25 @@ Redshift预合成
 工具
 ----
 
-.. image:: tool_menu.png
+.. image:: /_images/tool_menu.png
 
 每次使用前带需要设置的操作
 
-.. _批量自动合成: 
+.. _批量自动合成:
 
 |comp_icon| 批量自动合成
 **************************
 
-.. image:: batchcomp.png
+.. image:: /_images/batchcomp.png
 
 合成/自动合成的批量版本
 直接自动合成大量镜头
 
-.. image:: batchcomp_run.png
+.. image:: /_images/batchcomp_run.png
 
 使用多线程, 内存不足时会等待足够的空闲内存再继续。
 
-.. figure:: batchcomp_result.png
+.. figure:: /_images/batchcomp_result.png
 
   批量合成日志
 
@@ -382,31 +382,31 @@ Redshift预合成
 上传mov
 ********
 
-.. image:: uploader.png
+.. image:: /_images/uploader.png
 
 上传工作成果至服务器或CGTeamWork
 
 扫描空文件夹
 ************
 
-.. image:: scanner.png
+.. image:: /_images/scanner.png
 
 用于快速找出无素材的镜头
 
 分离exr
 *******
 
-.. image:: split_exr.png
+.. image:: /_images/split_exr.png
 
 把多层的exr文件分成多个单层的exr文件
 
 分割当前文件(根据背板)
 **********************
 
-.. image:: split_by_backdrop.png
+.. image:: /_images/split_by_backdrop.png
 
 把多包含多个镜头的文件根据背板(Backdrop)分离成多个单镜头的文件
 
-.. |comp_icon| image:: comp_icon.png
+.. |comp_icon| image:: /_images/comp_icon.png
 
-.. |cgteamwork_icon| image:: cgteamwork_icon.png
+.. |cgteamwork_icon| image:: /_images/cgteamwork_icon.png

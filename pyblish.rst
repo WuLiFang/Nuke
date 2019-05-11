@@ -9,7 +9,7 @@
 界面
 ----------
 
-.. figure:: pyblish_ui.png
+.. figure:: /_images/pyblish_ui.png
 
   界面分为三个标签页: ``概览``, ``详细``, ``日志``, 在顶部可以切换
 
@@ -24,21 +24,21 @@
   - |stop| : 终止当前操作
 
 
-.. |reset| image:: pyblish_button_reset.png
+.. |reset| image:: /_images/pyblish_button_reset.png
     :align: middle
 
-.. |validate| image:: pyblish_button_validate.png
+.. |validate| image:: /_images/pyblish_button_validate.png
     :align: middle
 
-.. |publish| image:: pyblish_button_publish.png
+.. |publish| image:: /_images/pyblish_button_publish.png
     :align: middle
 
-.. |stop| image:: pyblish_button_stop.png
+.. |stop| image:: /_images/pyblish_button_stop.png
     :align: middle
 
 在初始状态下发布面板使用浮动窗口, 但也可以手动设置固定位置并保存在工作区中
 
-.. figure:: pyblish_menu.png
+.. figure:: /_images/pyblish_menu.png
 
   在Nuke面板空白处选择 ``Windows`` - ``Custom`` - ``发布`` 即可创建固定面板
 
@@ -58,11 +58,10 @@
 错误处理
 ----------
 
-.. figure:: pyblish_traytip.png
+.. figure:: /_images/pyblish_traytip.png
 
   在发布过程中失败会有气泡提示原因
 
-.. figure:: pyblish_panel_log.png
+.. figure:: /_images/pyblish_panel_log.png
 
   气泡提示只显示简略信息, 详细信息在 ``日志`` 标签页中查看(在上方切换)
-

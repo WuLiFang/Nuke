@@ -5,25 +5,25 @@
 |ProjectionMP_icon| ProjectionMP
 ---------------------------------------
 
-.. image:: ProjectionMP_node.png
+.. image:: /_images/ProjectionMP_node.png
 
 快速投射MattePainting
 
 控制
 ****************
 
-.. image:: ProjectionMP_panel.png
+.. image:: /_images/ProjectionMP_panel.png
 
 SphereMP
 --------------------------------------
 
-.. image:: SphereMP_node.png
+.. image:: /_images/SphereMP_node.png
 
 快速球体MattePainting
 
 控制
 ****************
 
-.. image:: SphereMP_panel.png
+.. image:: /_images/SphereMP_panel.png
 
-.. |ProjectionMP_icon| image:: ProjectionMP_icon.png
+.. |ProjectionMP_icon| image:: /_images/ProjectionMP_icon.png
