@@ -1,7 +1,7 @@
 https://github.com/WuLiFang/wlf/archive/0.5.0.tar.gz#egg=wlf
 https://github.com/WuLiFang/uploader/archive/3.3.0.tar.gz#egg=cgtwq-uploader
 https://github.com/WuLiFang/cgtwq/archive/3.0.0-alpha.0.tar.gz#egg=cgtwq
-Jinja2~=2.9
-pendulum~=2.0
-pyblish-lite~=0.8.3
-pluggy~=0.7
+Jinja2==2.10.1
+pendulum==2.0.4
+pyblish-lite==0.8.4
+pluggy==0.11.0
