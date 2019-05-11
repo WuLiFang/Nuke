@@ -11,4 +11,4 @@
     guide
     spec
     reference
-    CHANGELOG
+    changelog

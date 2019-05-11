@@ -11,7 +11,7 @@ import os
 import re
 
 __dirname__ = os.path.abspath(os.path.dirname(__file__))
-CHANGELOG_FILENAME = os.path.join(__dirname__, 'CHANGELOG.md')
+CHANGELOG_FILENAME = os.path.join(__dirname__, 'changelog.md')
 
 
 def get_changelog(reader, version):
