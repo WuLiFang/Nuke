@@ -13,7 +13,7 @@ artifacts:
     name: Built package
 before_deploy:
   - ps: >-
-      & $env:PYTHON\\python.exe docs/get_changelog.py $env:APPVEYOR_REPO_TAG_NAME build/release_note.md;
+      & $env:PYTHON\\python.exe docs/get_changelog.py ($env:APPVEYOR_REPO_TAG_NAME -replace '^v', '') build/release_note.md;
       ${env:APPVEYOR_RELEASE_DESCRIPTION} = (Get-Content -Encoding utf8 build/release_note.md) -join "`n";
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
