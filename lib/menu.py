@@ -23,12 +23,21 @@ def main():
 
         import cgtwn
         import pyblish_lite_nuke
+        import time
 
-        client.start()
-        pyblish_lite_nuke.setup()
-        cgtwn.setup()
-        if client.is_logged_in():
-            client.connect()
+        started = time.clock()
+        while time.clock() - started < 10:
+            try:
+                client.start()
+                pyblish_lite_nuke.setup()
+                cgtwn.setup()
+                if client.is_logged_in():
+                    client.connect()
+                break
+            # pylint: disable=bare-except
+            except:
+                import traceback
+                traceback.print_exc()
 
     _setup_cgtw()
     gui.setup()
