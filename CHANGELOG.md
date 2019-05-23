@@ -1,8 +1,16 @@
 # Changelog
 
-[中文版本](https://wulifang.github.io/Nuke/changelog.html)
-
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [0.20.2](https://github.com/WuLiFang/Nuke/compare/v0.20.1...v0.20.2) (2019-05-23)
+
+### Bug Fixes
+
+- cgtw ws connection issue ([863625e](https://github.com/WuLiFang/Nuke/commit/863625e))
+
+### Build System
+
+- add Makefile ([ae065b9](https://github.com/WuLiFang/Nuke/commit/ae065b9))
 
 ## 0.20.1 (2019-05-11)
 
