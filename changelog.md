@@ -1,5 +1,15 @@
 # 更新日志
 
+## [0.20.2](https://github.com/WuLiFang/Nuke/compare/v0.20.1...v0.20.2) (2019-05-23)
+
+### 修复
+
+- cgtw websocket 连接失败导致无法启动 ([863625e](https://github.com/WuLiFang/Nuke/commit/863625e))
+
+### 构建系统
+
+- 添加 Makefile ([ae065b9](https://github.com/WuLiFang/Nuke/commit/ae065b9))
+
 ## 0.20.1 (2019-05-11)
 
 ### 修复
