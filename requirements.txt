@@ -4,4 +4,4 @@ https://github.com/WuLiFang/cgtwq/archive/3.0.0-alpha.0.tar.gz#egg=cgtwq
 Jinja2==2.10.1
 pendulum==2.0.4
 pyblish-lite==0.8.4
-pluggy==0.11.0
+pluggy==0.12.0
