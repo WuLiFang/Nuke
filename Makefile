@@ -10,6 +10,7 @@ endif
 
 
 lib/site-packages: .venv/lib/site-packages/.make_sucess requirements.txt
+	rm -rf lib/site-packages
 	. ./scripts/activate-venv.sh &&\
 		python -m pip install -U pip urllib3[secure] &&\
 		pip install --target="lib/site-packages" --upgrade -r "requirements.txt"
