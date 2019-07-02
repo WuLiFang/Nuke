@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.3](https://github.com/WuLiFang/Nuke/compare/v0.20.2...v0.20.3) (2019-07-02)
+
+### 杂项
+
+- 延长许可日期到 2020 年 1 月 1 日
+
 ## [0.20.2](https://github.com/WuLiFang/Nuke/compare/v0.20.1...v0.20.2) (2019-05-23)
 
 ### 修复

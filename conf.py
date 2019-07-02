@@ -36,8 +36,9 @@ sys.path.insert(0, os.path.abspath('./../../lib'))
 # ones.
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.viewcode',
-               'sphinx_git',
-               'sphinx.ext.githubpages']
+              'sphinx.ext.napoleon'
+              'sphinx_git',
+              'sphinx.ext.githubpages']
 
 
 # Add any paths that contain templates here, relative to this directory.
