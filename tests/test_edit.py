@@ -4,6 +4,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import random
+import sys
 from unittest import TestCase, main
 
 import nuke
@@ -170,11 +171,13 @@ class EditTestCase(TestCase):
 
     def test_use_relative_path(self):
         from edit import use_relative_path
-
-        nuke.knob('root.project_directory', 'A:/test/')
-        n = nuke.nodes.Read(file=b'A:/test/sc01/testfile测试.mov')
+        root = 'A:/test/' if sys.platform == 'win32' else '/tmp/test'
+        nuke.knob('root.project_directory', root)
+        n = nuke.nodes.Read(
+            file=(root + '/sc01/testfile测试.mov').encode('utf-8'))
         use_relative_path(n)
-        self.assertEqual(n['file'].value(), b'sc01/testfile测试.mov')
+        self.assertEqual(n['file'].value(),
+                         'sc01/testfile测试.mov'.encode('utf-8'))
 
     def test_gizmo_to_group(self):
         from edit import gizmo_to_group

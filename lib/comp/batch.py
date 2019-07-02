@@ -11,7 +11,7 @@ from multiprocessing.dummy import Event, Pool, Process, Queue, cpu_count
 from subprocess import PIPE, Popen
 
 import nuke
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, FileSystemLoader
 
 import __about__
 from comp.__main__ import __path__
@@ -129,7 +129,8 @@ class BatchComp(Process):
         """Generate batchcomp report.  """
 
         assert isinstance(shots_info, dict)
-        env = Environment(loader=PackageLoader(__about__.__name__))
+        env = Environment(loader=FileSystemLoader(
+            os.path.abspath(__file__ + '/../../templates')))
         template = env.get_template('batchcomp.html')
         data = template.render(shots_info=sorted(shots_info.items()))
 

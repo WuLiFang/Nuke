@@ -9,6 +9,11 @@ import sys
 import tempfile
 from unittest import TestCase, main, skip
 
+import pytest
+
+pytestmark = [pytest.mark.skipif(
+    sys.platform != 'win32', reason='Only support windows for now.')]
+
 
 @skip('TODO')
 class CompTestCase(TestCase):

@@ -1,0 +1,76 @@
+---
+kind: pipeline
+name: nuke10.0v4
+
+steps:
+  - name: test
+    image: natescarlet/nuke:10.0v4
+    environment:
+      PIP_INDEX_URL: https://mirrors.huaweicloud.com/repository/pypi/simple
+      foundry_LICENSE:
+        from_secret: foundry_LICENSE
+      LC_ALL: C.UTF-8
+    commands:
+      - sudo chown -R nuke:nuke  .
+      - pip install --user virtualenv
+      - make test
+---
+kind: pipeline
+name: nuke10.5v7
+
+steps:
+  - name: test
+    image: natescarlet/nuke:10.5v7
+    environment:
+      PIP_INDEX_URL: https://mirrors.huaweicloud.com/repository/pypi/simple
+      foundry_LICENSE:
+        from_secret: foundry_LICENSE
+      LC_ALL: C.UTF-8
+    commands:
+      - sudo chown -R nuke:nuke  .
+      - pip install --user virtualenv
+      - make test
+---
+kind: pipeline
+name: latest-nuke
+
+steps:
+  - name: test
+    image: natescarlet/nuke:latest
+    environment:
+      PIP_INDEX_URL: https://mirrors.huaweicloud.com/repository/pypi/simple
+      foundry_LICENSE:
+        from_secret: foundry_LICENSE
+      LC_ALL: C.UTF-8
+    commands:
+      - sudo chown -R nuke:nuke  .
+      - pip install --user virtualenv
+      - make test
+---
+kind: pipeline
+name: notification
+
+clone:
+  disable: true
+
+steps:
+  - name: rocket-chat
+    image: mike1pol/drone-rocket
+    settings:
+      url:
+        from_secret: ROCKETCHAT_URL
+      user_id:
+        from_secret: ROCKETCHAT_USER_ID
+      token:
+        from_secret: ROCKETCHAT_TOKEN
+      channel:
+        from_secret: ROCKETCHAT_CHANNEL
+
+depends_on:
+  - nuke10.0v4
+  - nuke10.5v7
+  - latest-nuke
+trigger:
+  status:
+    - success
+    - failure

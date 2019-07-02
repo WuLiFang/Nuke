@@ -68,6 +68,7 @@ build/
 /Toolsets/Shared/
 
 # venv
+.env
 .venv/
 
 # Site-pacakages
