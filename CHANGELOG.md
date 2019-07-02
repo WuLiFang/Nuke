@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.3](https://github.com/WuLiFang/Nuke/compare/v0.20.2...v0.20.3) (2019-07-02)
+
+### Chore
+
+- update expire date to 2020-01-01
+
 ## [0.20.2](https://github.com/WuLiFang/Nuke/compare/v0.20.1...v0.20.2) (2019-05-23)
 
 ### Bug Fixes
