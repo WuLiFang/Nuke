@@ -10,5 +10,7 @@
     pyblish
     guide
     spec
+    development
     reference
     changelog
+  
