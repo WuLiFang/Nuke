@@ -13,16 +13,18 @@ endif
 
 lib/site-packages/.make_sucess: .venv/.make_sucess requirements.txt
 	rm -rf lib/site-packages
-	$(PYTHON27) -m pip install --target="lib/site-packages" --upgrade -r "requirements.txt"
+	$(PYTHON27) -m pip install --target="lib/site-packages" -r "requirements.txt"
 	./scripts/add-lib-path.sh
 	echo > lib/site-packages/.make_sucess
 
 docs/.git:
-	git worktree add -f --checkout docs docs
+	git fetch -fn origin docs:docs
+	git worktree add -f docs docs
 
-docs/build/html/.git: docs/.git
+docs/build/html/.git: docs/.git lib/site-packages/.make_sucess
+	git fetch -fn origin gh-pages:gh-pages
 	rm -rf docs/build/html
-	git worktree add -f --checkout docs/build/html gh-pages
+	git worktree add -f docs/build/html gh-pages
 
 docs: docs/* docs/build/html/.git
 	. ./scripts/activate-venv.sh &&\
@@ -42,3 +44,5 @@ release:
 	echo > .venv/.make_sucess
 
 docs/requirements.txt: docs/.git
+
+docs/*: docs/.git
