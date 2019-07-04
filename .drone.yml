@@ -6,13 +6,12 @@ steps:
   - name: test
     image: natescarlet/nuke:10.0v4
     environment:
-      PIP_INDEX_URL: https://mirrors.huaweicloud.com/repository/pypi/simple
+      PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+      PYTHON_PATH: '/drone/src/lib'
       foundry_LICENSE:
         from_secret: foundry_LICENSE
-      LC_ALL: C.UTF-8
     commands:
       - sudo chown -R nuke:nuke  .
-      - pip install --user virtualenv
       - make test
 ---
 kind: pipeline
@@ -22,30 +21,82 @@ steps:
   - name: test
     image: natescarlet/nuke:10.5v7
     environment:
-      PIP_INDEX_URL: https://mirrors.huaweicloud.com/repository/pypi/simple
+      PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
       foundry_LICENSE:
         from_secret: foundry_LICENSE
-      LC_ALL: C.UTF-8
     commands:
       - sudo chown -R nuke:nuke  .
-      - pip install --user virtualenv
       - make test
 ---
 kind: pipeline
-name: latest-nuke
+name: nuke:latest
 
 steps:
   - name: test
     image: natescarlet/nuke:latest
     environment:
-      PIP_INDEX_URL: https://mirrors.huaweicloud.com/repository/pypi/simple
+      PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
       foundry_LICENSE:
         from_secret: foundry_LICENSE
-      LC_ALL: C.UTF-8
     commands:
       - sudo chown -R nuke:nuke  .
-      - pip install --user virtualenv
       - make test
+
+---
+kind: pipeline
+name: docs
+
+steps:
+  - name: build
+    image: natescarlet/nuke:10.5v7
+    environment:
+      PIP_INDEX_URL: https://pypi.tuna.tsinghua.edu.cn/simple
+      foundry_LICENSE:
+        from_secret: foundry_LICENSE
+    commands:
+      - sudo chown -R nuke:nuke  .
+      - make docs
+  - name: deploy to github
+    image: natescarlet/nuke:10.5v7
+    environment:
+      GITHUB_DEPLOY_KEY:
+        from_secret: GITHUB_DEPLOY_KEY
+      SSH_PROXY:
+        from_secret: SSH_PROXY
+    commands:
+      - mkdir ~/.ssh/
+      - echo "$${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
+      - |-
+        if [ -n "$SSH_PROXY" ]; then
+          sudo sed -i "s@http://.\+\.debian\.org/debian@http://mirrors.huaweicloud.com/debian@g" /etc/apt/sources.list
+          sudo apt-get update
+          sudo apt-get -y install connect-proxy
+          echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
+        fi
+      - chmod 600 ~/.ssh/id_rsa
+      - "echo 'github.com ssh-rsa \
+        AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrT\
+        tw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUj\
+        vSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSC\
+        ZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3\
+        RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJi\
+        S5ap43JXiUFFAaQ==' \
+        > ~/.ssh/known_hosts"
+      - git config --global user.name 'CI User'
+      - git config --global user.email '<>'
+      - cd docs/build/html
+      - git add --all
+      - "git commit -m 'docs: build' -m '[skip ci]'"
+      - git push -f origin gh-pages
+      - git push -f git@github.com:WuLiFang/Nuke.git gh-pages
+    when:
+      branch:
+        - master
+
+depends_on:
+  - nuke10.0v4
+  - nuke10.5v7
+  - nuke:latest
 ---
 kind: pipeline
 name: notification
@@ -69,7 +120,8 @@ steps:
 depends_on:
   - nuke10.0v4
   - nuke10.5v7
-  - latest-nuke
+  - nuke:latest
+  - docs
 trigger:
   status:
     - success
