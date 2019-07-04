@@ -12,7 +12,7 @@
 
 制作人名称 会自动添加至工程设置
 
-.. figure:: /_images/plug-ins/wlf_Write_after.png
+.. figure:: /_images/wlf_Write_after.png
 
   并且\ :ref:`wlf_Write`\ 使用这个值生成带辅助信息版本的mov
 

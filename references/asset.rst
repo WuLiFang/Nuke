@@ -17,10 +17,6 @@ core
 --------
 .. automodule:: asset.core
 
-dropdata
-------------
-
-.. automodule:: asset.dropdata
 
 footage
 -----------
