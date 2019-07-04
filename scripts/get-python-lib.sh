@@ -1,3 +1,3 @@
 #!/bin/sh
-. ./scripts/activate-venv.sh
-echo ${PYTHON_LIB}
+
+python -c 'from distutils import sysconfig;print(sysconfig.get_python_lib())'

@@ -29,9 +29,10 @@ LOGGER = logging.getLogger(__name__)
 
 def warn_missing_frames(assets=None, show_ok=False):
     """Show missing frames to user
-        assets (any, optional): Defaults to None.
+        Args:
+            assets (any, optional): Defaults to None.
             object contains assets, None mean all Assets.
-        show_ok (bool, optional): Defaults to False.
+            show_ok (bool, optional): Defaults to False.
             If show message for no missing frames.
     """
 

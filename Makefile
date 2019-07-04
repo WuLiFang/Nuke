@@ -17,11 +17,16 @@ lib/site-packages/.make_sucess: .venv/.make_sucess requirements.txt
 	./scripts/add-lib-path.sh
 	echo > lib/site-packages/.make_sucess
 
-docs:
+docs/.git:
 	git worktree add -f --checkout docs docs
 
-docs/build/html:
+docs/build/html/.git: docs/.git
+	rm -rf docs/build/html
 	git worktree add -f --checkout docs/build/html gh-pages
+
+docs: docs/* docs/build/html/.git
+	. ./scripts/activate-venv.sh &&\
+		$(MAKE) -C docs html
 
 test: lib/site-packages/.make_sucess
 	. ./scripts/activate-venv.sh && echo $${PYTHONPATH}
@@ -30,11 +35,10 @@ test: lib/site-packages/.make_sucess
 release:
 	standard-version
 
-.venv/.make_sucess: dev-requirements.txt 
+.venv/.make_sucess: dev-requirements.txt docs/requirements.txt
 	virtualenv --python $(NUKE_PYTHON) .venv
-	$(PYTHON27) -m pip install --target "$$(./scripts/get-python-lib.sh)" -r dev-requirements.txt
-	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-python-lib.sh)/nuke.pth
+	$(PYTHON27) -m pip install --target "$$(./scripts/get-venv-python-lib.sh)" -r dev-requirements.txt -r docs/requirements.txt
+	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-venv-python-lib.sh)/nuke.pth
 	echo > .venv/.make_sucess
 
-temp:
-
+docs/requirements.txt: docs/.git
