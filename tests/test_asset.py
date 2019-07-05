@@ -180,6 +180,7 @@ class FootagesMonitorTestCase(TestCase):
         }
 
     def test_all(self):
+        # FIXME: randomly fail on Nuke10.0v4
         first = FootagesMonitor.all()
         self.assertEqual(len(nuke.allNodes('Read')), len(self.nodes))
         self.assertEqual(len(first), 6)
