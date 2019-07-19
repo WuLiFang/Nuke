@@ -88,10 +88,7 @@ class FootagesMonitor(list):
                 import traceback
                 raise RuntimeError(traceback.format_exc())
 
-        if self:
-            pool = Pool()
-            pool.map(_run, self)
-            pool.close()
-            pool.join()
+        for i in self:
+            _run(i)
 
         return ret
