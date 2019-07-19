@@ -7,8 +7,6 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 import os
-import re
-import sys
 
 import nuke
 
@@ -16,7 +14,6 @@ import callback
 from node import wlf_write_node
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
-from wlf.fileutil import map_drivers
 
 LOGGER = logging.getLogger('wlf.render')
 
@@ -53,9 +50,5 @@ def _jump_frame():
 
 
 def setup():
-    if sys.platform == 'win32':
-        if re.match(r'(?i)wlf(\d+|\b)', os.getenv('ComputerName')):
-            map_drivers()
-
     callback.CALLBACKS_ON_SCRIPT_SAVE.append(_jump_frame)
     callback.CALLBACKS_BEFORE_RENDER.append(create_out_dirs)
