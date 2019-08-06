@@ -77,7 +77,7 @@ class FootagesMonitor(list):
         def _run(asset):
             assert isinstance(asset, Footage)
             try:
-                missing_frames = asset.missing_frames()
+                missing_frames = asset.missing_frames(timeout=1)
                 if missing_frames:
                     key = u(asset.filename.as_posix())
                     if key in ret:

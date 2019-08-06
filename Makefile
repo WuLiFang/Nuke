@@ -37,8 +37,10 @@ test: lib/site-packages/.make_sucess
 release:
 	standard-version
 
-.venv/.make_sucess: dev-requirements.txt docs/requirements.txt
+.venv:
 	virtualenv --python $(NUKE_PYTHON) .venv
+
+.venv/.make_sucess: .venv dev-requirements.txt docs/requirements.txt
 	$(PYTHON27) -m pip install --target "$$(./scripts/get-venv-python-lib.sh)" -r dev-requirements.txt -r docs/requirements.txt
 	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-venv-python-lib.sh)/nuke.pth
 	echo > .venv/.make_sucess

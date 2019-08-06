@@ -4,6 +4,7 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import functools
 import io
 import logging
 import os
@@ -16,6 +17,7 @@ import pendulum
 from jinja2 import Environment, FileSystemLoader
 
 import callback
+from executor import EXECUTOR
 from nuketools import utf8
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
@@ -56,7 +58,6 @@ def warn_missing_frames(assets=None, show_ok=False):
         with io.open(fd, 'w') as f:
             f.write(result.as_html())
         webbrowser.open(name)
-
 
 SHOWED_WARNING = []
 
@@ -120,7 +121,6 @@ def warn_mtime(show_ok=False, since=None):
                               script_mtime).diff_for_humans(),
                           data=data)
     nuke.message(utf8(msg))
-
 
 def setup():
     pendulum.set_locale('zh')

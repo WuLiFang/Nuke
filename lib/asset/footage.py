@@ -5,19 +5,15 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import logging
-import multiprocessing.dummy as multiprocessing
-import os
-import time
 
 import nuke
 
-from nuketools import utf8
+import nuketools
 from wlf.codectools import get_unicode as u
 from wlf.path import Path
 
-from . import core
+from . import cache, core
 from .frameranges import FrameRanges
-from .model import CachedMissingFrames
 
 LOGGER = logging.getLogger(__name__)
 
@@ -53,7 +49,6 @@ class Footage(object):
         filename = self.filename_factory(filename)
         self.filename = filename
         self.frame_ranges = FrameRanges(frame_ranges)
-        self._missing_frames = None
 
         core.CACHED_ASSET.add(self)
 
@@ -85,8 +80,9 @@ class Footage(object):
             raise TypeError('can not use as filename: {}'.format(type(obj)))
         path = Path(u(filename))
         return path
+    _last_missing_frame_warn_msg = None
 
-    def missing_frames(self, frame_ranges=None):
+    def missing_frames(self, frame_ranges=None, timeout=-1):
         """Get missing frame ranges compare to frame_list.
 
         Args:
@@ -97,7 +93,8 @@ class Footage(object):
                 None mean return whole missing frame ranges.
 
         Returns:
-            FrameRanges: missing frame ranges.
+            Optional[FrameRanges] : missing frame ranges,
+                None means result not ready.
         """
 
         if frame_ranges is None:
@@ -106,43 +103,23 @@ class Footage(object):
             frame_ranges = FrameRanges(frame_ranges)
 
         # Update if need.
-        if (not isinstance(self._missing_frames, CachedMissingFrames)
-                or time.time() - self._missing_frames.timestamp
-                > self.update_interval):
-            self._update_missing_frame()
+        missing_frames = []
+        is_processing = False
+        for f in frame_ranges.toFrameList():
+            path = self.filename.with_frame(f)
+            result = cache.is_file_exist(path, timeout=timeout)
+            if result is None:
+                is_processing = True
+                continue
+            if result is False:
+                missing_frames.append(f)
+        if is_processing:
+            return None
 
-        assert isinstance(self._missing_frames, CachedMissingFrames)
-        cached = self._missing_frames.frame_ranges
-
-        ret = FrameRanges([i for i in cached.to_frame_list()
-                           if i in frame_ranges.to_frame_list()])
+        ret = FrameRanges(missing_frames)
         ret.compact()
-        return ret
-
-    def _update_missing_frame(self):
-        ret = FrameRanges([])
-        checked = set()
-        frames = self.frame_ranges.toFrameList()
-
-        def _check(frame):
-            try:
-                path = Path(self.filename.with_frame(frame))
-                if path in checked:
-                    return
-                if not path.is_file():
-                    ret.add([frame])
-                checked.add(path)
-            except OSError as ex:
-                LOGGER.error(os.strerror(ex.errno), exc_info=True)
-
-        pool = multiprocessing.Pool()
-        pool.map(_check, frames)
-        pool.close()
-        pool.join()
-
-        ret.compact()
-        self._missing_frames = CachedMissingFrames(ret, time.time())
-        if ret:
-            msg = '{} 缺帧: {}'.format(self, ret)
-            nuke.warning(utf8(msg))
+        msg = '{} 缺帧: {}'.format(self, ret)
+        if ret and msg != self._last_missing_frame_warn_msg:
+            nuke.warning(nuketools.utf8(msg))
+            self._last_missing_frame_warn_msg = msg
         return ret

@@ -8,3 +8,4 @@ pluggy==0.12.0
 websocket-client==0.56.0
 urllib3[secure]==1.23
 win-unicode-console==0.5; sys_platform == 'win32'
+futures; python_version == "2.7"

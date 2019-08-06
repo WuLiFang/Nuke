@@ -4,6 +4,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
+import time
 from random import sample
 from tempfile import mkdtemp
 from unittest import TestCase, main
@@ -211,37 +212,6 @@ class FootageMissingFrameTestCase(TestCase):
                 f.write(unicode(i))
             self.addCleanup(j.unlink)
 
-    def _test_missing_frame(self, filename):
-        asset_ = Footage(filename)
-
-        def _pop():
-            ret = asset_.missing_frames()
-            self.assertEqual(ret.toFrameList(),
-                             self.expected_missing_frames.toFrameList())
-            self.assertEqual(str(asset_.missing_frames('91-120')), '91-100')
-            return ret
-
-        _pop()
-
-        # test cache
-        cached = asset_._missing_frames
-        self.assertIsInstance(cached, asset.CachedMissingFrames)
-        _pop()
-        self.assertIs(cached, asset_._missing_frames)
-        asset_.update_interval = -1
-        _pop()
-        self.assertIsNot(cached, asset_._missing_frames)
-
-    def test_missing_frame_dry(self):
-        self._test_missing_frame(self.test_file)
-
-    def test_missing_frame_with_node(self):
-        n = nuke.nodes.Read(file=self.test_file.replace('\\', '/'),
-                            first=1,
-                            last=100)
-        self._test_missing_frame(n)
-        nuke.delete(n)
-
     def test_get_missing_frames(self):
         result = FootagesMonitor.all().missing_frames_dict()
         self.assertIsInstance(result, asset.MissingFramesDict)
@@ -249,6 +219,19 @@ class FootageMissingFrameTestCase(TestCase):
 
     def test_warn_missing_frames(self):
         asset.warn_missing_frames(show_ok=True)
+
+
+def test_asset_cache_is_file_exists():
+    asset.cache.clear()
+    assert not asset.cache._EXIST_CACHE
+    assert asset.cache.is_file_exist(__file__) is None
+    assert asset.cache.is_file_exist(__file__ + '.NOT_EXIST') is None
+    time.sleep(0.5)
+    assert asset.cache.is_file_exist(__file__) is True
+    assert asset.cache.is_file_exist(__file__ + '.NOT_EXIST') is False
+    asset.cache.clear()
+    assert asset.cache.is_file_exist(__file__) is None
+    assert asset.cache.is_file_exist(__file__ + '.NOT_EXIST') is None
 
 
 if __name__ == '__main__':

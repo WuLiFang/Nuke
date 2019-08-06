@@ -28,7 +28,3 @@ class MissingFramesDict(dict):
         env = Environment(loader=FileSystemLoader(core.TEMPLATES_DIR))
         template = env.get_template('dropframes.html')
         return template.render(data=self.items())
-
-
-CachedMissingFrames = namedtuple('CachedMissingFrames',
-                                 ['frame_ranges', 'timestamp'])
