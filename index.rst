@@ -5,6 +5,7 @@
     :maxdepth: 3
 
     plug-ins
+    features
     menu
     pref
     pyblish
