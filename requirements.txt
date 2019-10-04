@@ -1,7 +1,7 @@
 ./vendor/wlf-0.6.0-py2.py3-none-any.whl
 ./vendor/cgtwq-3.0.0b0-py2.py3-none-any.whl
 ./vendor/cgtwq_uploader-3.4.0-py2.py3-none-any.whl
-Jinja2==2.10.1
+Jinja2==2.10.3
 pendulum==2.0.5
 pyblish-lite==0.8.5
 pluggy==0.13.0
