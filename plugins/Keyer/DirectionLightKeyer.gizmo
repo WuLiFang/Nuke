@@ -3,9 +3,10 @@ version 10.0 v4
 add_layer {BumpNormals BumpNormals.red BumpNormals.green BumpNormals.blue BumpNormals.alpha}
 add_layer {P P.red P.green P.blue}
 Gizmo {
+ inputs 2
  tile_color 0xff00ff
  note_font 微软雅黑
- addUserKnob {20 tab1 l DirectionLightKeyer_v0.4}
+ addUserKnob {20 tab1 l DirectionLightKeyer_v0.5}
  addUserKnob {26 dev2 l Input}
  addUserKnob {41 normal l "normal vectors" T ReLight1.normal}
  addUserKnob {41 position l "point positions" T ReLight1.position}
@@ -29,8 +30,16 @@ Gizmo {
   ypos -34
  }
 push 0
- Light2 {
+ Input {
   inputs 0
+  name axis
+  gl_color 0xff32b500
+  note_font 微软雅黑
+  xpos 297
+  ypos -34
+  number 1
+ }
+ Light2 {
   light_type directional
   intensity 3.3
   rotate {{parent.rx} {parent.ry} 0}
