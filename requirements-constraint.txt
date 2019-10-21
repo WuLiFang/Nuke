@@ -1,2 +1,0 @@
-marshmallow==2.20.5; python_version >= "2" and python_version < "3.4"
-more-itertools==5.0.0; python_version >= "2" and python_version < "3.4"
