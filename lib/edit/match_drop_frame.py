@@ -44,6 +44,7 @@ def get_time_wrap_data(n, start, end, tolerance=0.001):
         nodes.append(n_merge)
         n_curve_tool = nuke.nodes.CurveTool(
             inputs=[n_merge],
+            avgframes=0,
             ROI='{} {} {} {}'.format(0, 0, n.width(), n.height())
         )  # type: nuke.Node
         nodes.append(n_curve_tool)
