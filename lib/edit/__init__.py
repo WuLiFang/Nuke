@@ -4,7 +4,7 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-from . import best_practice
+from . import best_practice, match_drop_frame
 from .caculate import get_max, get_min_max
 from .channel import (add_channel, add_layer, copy_layer, escape_for_channel,
                       named_copy, shuffle_rgba, split_layers)

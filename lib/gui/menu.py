@@ -84,6 +84,8 @@ def add_menu():
             _("检查素材更新", lambda: asset.warn_mtime(show_ok=True)),
             _("转换单帧为序列",
               edit.replace_sequence),
+            _("匹配抽帧",
+              edit.match_drop_frame.show_dialog),
             {_('最佳实践'): [
                 _("清理无用节点",
                   lambda: edit.delete_unused_nodes(message=True)),
