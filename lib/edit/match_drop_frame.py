@@ -14,6 +14,7 @@ from nuketools import utf8 as _
 
 
 def get_time_wrap_data(n, start, end, tolerance=0.001):
+    # type: (nuke.Node, int, int, float) -> typing.List[int]
     """Get timewrap data from a node
 
     Args:
@@ -25,7 +26,6 @@ def get_time_wrap_data(n, start, end, tolerance=0.001):
     Returns:
         typing.List[int]: Data for timewrap.
     """
-    # type: (nuke.Node, int, int, int) -> typing.List[int]
 
     assert isinstance(n, nuke.Node)
 
@@ -64,6 +64,7 @@ def get_time_wrap_data(n, start, end, tolerance=0.001):
 
 
 def create_time_wrap(data, start=1):
+    # type: (typing.List[int],) -> nuke.nodes.TimeWrap
     """Create time wrap from time wrap data.
 
     Args:
@@ -73,7 +74,6 @@ def create_time_wrap(data, start=1):
     Returns:
         nuke.nodes.TimeWrap: Created node.
     """
-    # type: typing.List[int] -> nuke.nodes.TimeWrap
     curve_points = [(start, data[0])]  # type.List[type.Tuple[int, int]]
     end = start + len(data)
     for index, i in enumerate(data):
@@ -94,13 +94,14 @@ def create_time_wrap(data, start=1):
 
 @nuketools.undoable_func('匹配抽帧')
 def show_dialog():
+    # type: () => typing.Optional[nuke.nodes.TimeWrap]
     """GUI dialog for `get_timewrap_data`
 
     Returns:
         type.Optional[nuke.node.TimeWrap]: created node
     """
     try:
-        n = nuke.selectedNode()
+        n = nuke.selectedNode()  # type: nuke.Node
     except ValueError:
         nuke.message(_('请先选择节点'))
         return
@@ -112,9 +113,10 @@ def show_dialog():
             'tolerance': '阈值',
         }.get(key, key))
 
-    panel = nuke.Panel(_('匹配抽帧'))
-    panel.addExpressionInput(_tr('start'), nuke.numvalue('root.first_frame'))
-    panel.addExpressionInput(_tr('end'), nuke.numvalue('root.last_frame'))
+    title = '抽帧匹配: {}'.format(n.name())
+    panel = nuke.Panel(_(title))
+    panel.addExpressionInput(_tr('start'), n.firstFrame())
+    panel.addExpressionInput(_tr('end'), n.lastFrame())
     panel.addExpressionInput(_tr('tolerance'), 0.001)
 
     if not panel.show():
@@ -131,6 +133,6 @@ def show_dialog():
         return
 
     n_time_wrap = create_time_wrap(data, start)
-    n_time_wrap['label'].setValue(_('抽帧匹配: {}'.format(n.name())))
+    n_time_wrap['label'].setValue(_(title))
     nuke.zoom(nuke.zoom(), (n_time_wrap.xpos(), n_time_wrap.ypos()))
     return n_time_wrap
