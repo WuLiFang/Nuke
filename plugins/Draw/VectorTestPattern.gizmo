@@ -1,0 +1,30 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Gizmo {
+  name VectorTestPattern1
+  addUserKnob {20 tab_1 l "VectorTestPattern v0.1.0"}
+  postage_stamp true
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -503
+  ypos 23
+ }
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  expr0 x
+  channel1 {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  expr1 y
+  channel2 none
+  channel3 none
+  name Expression5
+  xpos -503
+  ypos 63
+ }
+ Output {
+  name Output1
+  xpos -503
+  ypos 163
+ }
+end_group

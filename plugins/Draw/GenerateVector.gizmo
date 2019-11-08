@@ -1,0 +1,60 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Gizmo {
+ name GenerateVector1
+ inputs 3
+ addUserKnob {20 tab_1 l "GenerateVector v0.1.0"}
+ addUserKnob {41 output T Merge2.output}
+}
+ Input {
+  inputs 0
+  name before
+  xpos 180
+  ypos -164
+  number 1
+ }
+ Input {
+  inputs 0
+  name after
+  xpos 90
+  ypos -196
+  number 2
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  Achannels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  Bchannels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  name Merge1
+  xpos 90
+  ypos -132
+ }
+ Shuffle {
+  blue red
+  alpha green
+  name Shuffle1
+  xpos 90
+  ypos -100
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 0
+  ypos -228
+ }
+ Merge2 {
+  inputs 2
+  operation copy
+  bbox B
+  Bchannels none
+  output motion
+  name Merge2
+  xpos 0
+  ypos -52
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos -20
+ }
+end_group
