@@ -7,11 +7,12 @@ steps:
     image: natescarlet/nuke:10.0v4
     environment:
       PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple
-      PYTHON_PATH: '/drone/src/lib'
+      PYTHON_PATH: "/drone/src/lib"
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
       - sudo chown -R nuke:nuke  .
+      - sudo pip install -U pip poetry
       - make test
 ---
 kind: pipeline
@@ -26,6 +27,7 @@ steps:
         from_secret: foundry_LICENSE
     commands:
       - sudo chown -R nuke:nuke  .
+      - sudo pip install -U pip poetry
       - make test
 ---
 kind: pipeline
@@ -40,6 +42,7 @@ steps:
         from_secret: foundry_LICENSE
     commands:
       - sudo chown -R nuke:nuke  .
+      - sudo pip install -U pip poetry
       - make test
 
 ---
@@ -55,6 +58,7 @@ steps:
         from_secret: foundry_LICENSE
     commands:
       - sudo chown -R nuke:nuke  .
+      - sudo pip install -U pip poetry
       - make docs
   - name: deploy to github
     image: natescarlet/nuke:10.5v7
