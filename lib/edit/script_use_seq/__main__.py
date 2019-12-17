@@ -33,7 +33,6 @@ def main():
         with io.open(args.footage_list, encoding='utf8') as f:
             footages = f.read().splitlines()
             assert footages
-            print(dict(footages=footages))
 
     nuke.scriptOpen(args.input)
     _script_use_seq.execute(footages=footages)
