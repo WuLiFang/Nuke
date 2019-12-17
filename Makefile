@@ -1,6 +1,6 @@
-.PHONY: all test release build nuke.pth
+.PHONY: all test release build
 
-all: .venv build nuke.pth docs/build/html/*
+all: .venv build docs/build/html
 
 build: docs/build/html/.git lib/site-packages
 
@@ -26,16 +26,15 @@ docs/.git:
 	git fetch -fn origin docs:docs
 	git worktree add -f docs docs
 
-docs/build/html/.git:
+docs/build/html/.git: docs/.git
 	git fetch -fn origin gh-pages:gh-pages
 	rm -rf docs/build/html
 	git worktree add -f docs/build/html gh-pages
 
-docs/*: docs/.git
-
-docs/build/html/*: docs/build/html/.git .venv docs/*
+docs/build/html: .venv docs/build/html/.git docs/*
 	. ./scripts/activate-venv.sh &&\
 		$(MAKE) -C docs html
+	touch docs/build/html
 
 test: build
 	. ./scripts/activate-venv.sh && python -m pytest tests
@@ -43,11 +42,9 @@ test: build
 release:
 	standard-version
 
-nuke.pth: .venv
-	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-venv-python-lib.sh)/nuke.pth
-
 .venv: pyproject.toml
 	poetry install
-	touch .venv/.make_success
+	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-venv-python-lib.sh)/nuke.pth
+	touch .venv
 
 
