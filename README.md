@@ -14,12 +14,11 @@
 
 ### 安装依赖
 
-为保证兼容 Nuke, 使用 Nuke 附带的 python 来创建虚拟环境:
+为使用 Nuke 的库, 需添加 nuke.pth 到 .venv/lib/site-packages 下:
 
 ```shell
-export PIPENV_VENV_IN_PROJECT=1
-pipenv install -d --python "C:\Program Files\Nuke11.3v3\python.exe"
-. ./scripts/setup.cmd
+export NUKE_PYTHON="C:\Program Files\Nuke11.3v3\python.exe"
+make
 ```
 
 替换 `"C:\Program Files\Nuke11.3v3\python.exe"` 路径为你 Nuke 附带 python 的路径
@@ -29,7 +28,7 @@ pipenv install -d --python "C:\Program Files\Nuke11.3v3\python.exe"
 文档位于 [docs](https://github.com/WuLiFang/Nuke/tree/docs) 分支, 使用 git worktree 来管理:
 
 ```shell
-. ./scripts/setup-worktree.cmd
+make docs
 ```
 
 ## NO LICENSE 版权保留

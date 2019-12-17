@@ -1,8 +1,8 @@
 .PHONY: all test release build nuke.pth
 
-all: .venv build nuke.pth
+all: .venv build nuke.pth docs/build/html/*
 
-build: docs/build/html lib/site-packages
+build: docs/build/html/.git lib/site-packages
 
 ifeq ($(OS), Windows_NT)
 PYTHON27?=py -2.7

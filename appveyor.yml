@@ -2,7 +2,7 @@ environment:
   matrix:
     - PYTHON: "C:\\Python27"
 install:
-  - "./scripts/setup-worktree.cmd"
+  - cinst make sed
   - "%PYTHON%\\python.exe -m pip install -U pip poetry"
 build_script:
   - "make build"
