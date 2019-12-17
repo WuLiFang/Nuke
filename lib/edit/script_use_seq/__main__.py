@@ -10,6 +10,7 @@ import os
 import sys
 
 import nuke
+from nuketools import utf8
 
 from wlf.path import Path
 
@@ -33,12 +34,11 @@ def main():
         with io.open(args.footage_list, encoding='utf8') as f:
             footages = f.read().splitlines()
             assert footages
-
-    nuke.scriptOpen(args.input)
+    nuke.scriptOpen(utf8(args.input))
     _script_use_seq.execute(footages=footages)
     nuke.Root()['name'].setValue(args.output)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
-    nuke.scriptSave(args.output)
+    nuke.scriptSave(utf8(args.output))
 
 
 if __name__ == '__main__':
