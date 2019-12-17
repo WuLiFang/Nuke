@@ -36,7 +36,7 @@ docs/build/html: .venv docs/build/html/.git docs/*
 		$(MAKE) -C docs html
 	touch docs/build/html
 
-test: build
+test: .venv build
 	. ./scripts/activate-venv.sh && python -m pytest tests
 
 release:
