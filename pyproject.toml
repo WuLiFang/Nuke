@@ -25,7 +25,7 @@ futures = "^3.3.0"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.4.4"
-pylint = "^1"
+pylint = "^2"
 pytest = "^4"
 rope = "^0.14.0"
 doc8 = "^0.8.0"
