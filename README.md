@@ -28,7 +28,7 @@ make
 文档位于 [docs](https://github.com/WuLiFang/Nuke/tree/docs) 分支, 使用 git worktree 来管理:
 
 ```shell
-make docs
+make docs/build/html
 ```
 
 ## NO LICENSE 版权保留
