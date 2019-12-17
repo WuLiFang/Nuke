@@ -31,7 +31,7 @@ def run(input_dir, output_dir):
                 exclude=cfg['seq_exclude'].splitlines())
         with io.open(temp_fd, 'w', encoding='utf8') as f:
             f.write("\n".join(six.text_type(i) for i in footages))
-        for i in progress(list(Path(input_dir).glob("*.nk")), "转换Nuke文件为序列工程"):
+        for i in progress(list(Path(input_dir).glob("**/*.nk")), "转换Nuke文件为序列工程"):
             proc = subprocess.Popen(
                 [nuke.EXE_PATH,
                  '-t',
