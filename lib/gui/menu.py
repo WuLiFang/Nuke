@@ -16,6 +16,8 @@ import cgtwq
 import comp
 import comp.panels
 import edit
+import edit.script_use_seq
+import edit.script_use_seq.panels
 import edit_panels
 import enable_later
 import orgnize
@@ -86,6 +88,15 @@ def add_menu():
               edit.replace_sequence),
             _("匹配抽帧",
               edit.match_drop_frame.show_dialog),
+            {
+                _('转换为序列工程'): [
+                    _('对当前工程执行', edit.script_use_seq.execute),
+                    _('对文件夹执行',
+                      lambda: edit.script_use_seq.panels.BatchPanel().showModalDialog()),
+                    _('设置',
+                      lambda: edit.script_use_seq.panels.ConfigPanel().showModalDialog()),
+                ]
+            },
             {_('最佳实践'): [
                 _("清理无用节点",
                   lambda: edit.delete_unused_nodes(message=True)),
