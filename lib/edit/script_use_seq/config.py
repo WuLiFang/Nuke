@@ -3,6 +3,9 @@ import os
 import wlf.config
 
 
+START_MESSAGE = '{:-^50s}'.format('SCRIPT USE SEQUENCE CONVERT START')
+
+
 class Config(wlf.config.Config):
     default = {
         "seq_include": "Z:/CGteamwork_Test/MT2/shot_work/Render/EP00/*/eps/*/*.exr",

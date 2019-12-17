@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    table {
+      width: 75%;
+      margin: auto;
+    }
+
+    td {
+      padding: 8px;
+    }
+
+    tr {
+      background: #fff;
+    }
+    tr:nth-child(2n) {
+      background: #eee;
+    }
+
+    tr:hover {
+      background: #eee;
+    }
+
+    th {
+      font-family: "Microsoft YaHei", SimHei, sans-serif;
+    }
+
+    img.preview {
+      height: 200px;
+    }
+
+    .stdout {
+      color: gray;
+    }
+    .stderr {
+      color: darkred;
+    }
+  </style>
+</head>
+
+<body>
+  <table id="report">
+    <tr>
+      <th>退出码</th>
+      <th>日志</th>
+    </tr>
+    {% for i in result %}
+    <tr>
+      <data value="{{ i | tojson | safe }}"></data>
+      <td class="return-code">{{ i['returncode'] | e }}</td>
+      <td class="log">
+        <details>
+          <summary>{{ i['input'] | e }}</summary>
+          <div class="cmd">{{ i['cmd'] | e}}</div>
+          <div class="stdout">
+            <pre>{{ i['stdout' | e ]}} </pre>
+          </div>
+          <div class="stderr">
+            <pre>{{ i['stderr' | e ]}} </pre>
+          </div>
+        </details>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
