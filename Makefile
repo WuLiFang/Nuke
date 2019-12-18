@@ -48,7 +48,7 @@ release:
 
 .venv: export POETRY_VIRTUALENVS_IN_PROJECT=true
 .venv: pyproject.toml
-	poetry env use $(PYTHON27)
+	poetry env use "$(PYTHON27)"
 	poetry run python -m pip install -U pip
 	poetry run python -m pip install -U more-itertools==5.0.0 poetry
 	poetry install

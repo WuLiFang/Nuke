@@ -1,11 +1,9 @@
-environment:
-  matrix:
-    - PYTHON: "C:\\Python27"
 install:
-  - cinst make sed
-  - "%PYTHON%\\python.exe -m pip install -U pip poetry"
+  - set "PATH=%PATH%;C:\\msys64\\usr\\bin"
+  - set "PYTHON27=C:\\Python27\\python.exe"
+  - "%PYTHON27% -m pip install -U pip poetry"
 build_script:
-  - "make build"
+  - C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin\mingw32-make.exe build
 after_build:
   - 7z a -tzip -xr!.* -xr0!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
 artifacts:
@@ -13,7 +11,7 @@ artifacts:
     name: Built package
 before_deploy:
   - ps: >-
-      & $env:PYTHON\\python.exe docs/get_changelog.py ($env:APPVEYOR_REPO_TAG_NAME -replace '^v', '') build/release_note.md;
+      & $env:PYTHON27 docs/get_changelog.py ($env:APPVEYOR_REPO_TAG_NAME -replace '^v', '') build/release_note.md;
       ${env:APPVEYOR_RELEASE_DESCRIPTION} = (Get-Content -Encoding utf8 build/release_note.md) -join "`n";
 deploy:
   tag: $(APPVEYOR_REPO_TAG_NAME)
