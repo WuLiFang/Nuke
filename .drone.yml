@@ -126,7 +126,12 @@ steps:
         from_secret: ROCKETCHAT_TOKEN
       channel:
         from_secret: ROCKETCHAT_CHANNEL
+      message:
+        "**{{ build.status }}** {{ repo.fullName }}[#{{ build.number }}]({{ build.link }}) ({{ build.event }})
 
+        [{{ truncate build.commit 8 }}](${DRONE_COMMIT_LINK}) on `{{ build.branch }}` by _{{ build.author }}_
+
+        {{build.message}}"
 depends_on:
   - nuke10.0v4
   - nuke10.5v7
