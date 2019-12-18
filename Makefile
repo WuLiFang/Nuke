@@ -33,6 +33,8 @@ docs/build/html/.git: docs/.git
 	rm -rf docs/build/html
 	git worktree add -f docs/build/html gh-pages
 
+docs/*: docs/.git
+
 docs/build/html: .venv docs/build/html/.git docs/*
 	. ./scripts/activate-venv.sh &&\
 		"$(MAKE)" -C docs html

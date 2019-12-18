@@ -62,7 +62,7 @@ steps:
     commands:
       - sudo chown -R nuke:nuke  .
       - sudo -EH pip install -U pip more-itertools==5.0.0 poetry
-      - make docs
+      - make docs/build/html
   - name: deploy to github
     image: natescarlet/nuke:10.5v7
     environment:
@@ -77,8 +77,8 @@ steps:
         if [ -n "$SSH_PROXY" ]; then
           sudo sed -i "s@http://.\+\.debian\.org/debian@http://mirrors.huaweicloud.com/debian@g" /etc/apt/sources.list
           sudo apt-get update
-          sudo ap -y install --user connect-proxy
-          echo "ProxyCommand connect -EH $SSH_PROXY %h %p" > ~/.ssh/config
+          sudo apt-get -y install connect-proxy
+          echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
         fi
       - chmod 600 ~/.ssh/id_rsa
       - "echo 'github.com ssh-rsa \
