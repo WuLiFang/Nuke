@@ -7,6 +7,7 @@ steps:
     image: natescarlet/nuke:10.0v4
     environment:
       PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple
+      PIP_NO_BUILD_ISOLATION: false
       PYTHON_PATH: "/drone/src/lib"
       foundry_LICENSE:
         from_secret: foundry_LICENSE
@@ -23,6 +24,7 @@ steps:
     image: natescarlet/nuke:10.5v7
     environment:
       PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple
+      PIP_NO_BUILD_ISOLATION: false
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
@@ -38,6 +40,7 @@ steps:
     image: natescarlet/nuke:latest
     environment:
       PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple
+      PIP_NO_BUILD_ISOLATION: false
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
@@ -54,6 +57,7 @@ steps:
     image: natescarlet/nuke:10.5v7
     environment:
       PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple
+      PIP_NO_BUILD_ISOLATION: false
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
