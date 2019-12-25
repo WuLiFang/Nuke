@@ -6,7 +6,7 @@ build: docs/build/html/.git lib/site-packages
 
 ifeq ($(OS), Windows_NT)
 PYTHON27?=py -2.7
-NUKE_PYTHON?="C:/Program Files/Nuke10.5v7/python.exe
+NUKE_PYTHON?="C:/Program Files/Nuke10.5v7/python.exe"
 else
 PYTHON27?=/usr/bin/python
 NUKE_PYTHON?=python
