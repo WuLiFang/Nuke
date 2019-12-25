@@ -13,11 +13,11 @@ kernel WeightedErode: ImageComputationKernel<ePixelWise>{
     local:
     
     inline float triangle_interpolate(float v){
-        return v == 1 ? 0 : pow(1 - v, 3);
+        return pow(1 - v, 3);
     }
 
     inline float quadratic_interpolate(float v){
-        return v == 1 ? 0 : pow(1 - v, 4);
+        return pow(1 - v, 4);
     }
 
     inline float gaussian_interpolate(float v, float a, float b, float c){
