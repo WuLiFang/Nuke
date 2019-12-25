@@ -1,0 +1,98 @@
+set cut_paste_input [stack 0]
+version 10.5 v7
+push 0
+push $cut_paste_input
+Gizmo {
+ inputs 2
+ addUserKnob {20 weightederode l "WeightedErode v1.0.0"}
+ addUserKnob {41 channel T Merge3.Achannels}
+ addUserKnob {4 mode l mode(模式) M {erode(收边) dilate(扩边)}}
+ addUserKnob {41 multiply T Multiply1.value}
+ addUserKnob {4 shape l shape(形状) M {rectangle(矩形) circle(圆) ""}}
+ addUserKnob {4 filter l filter(过滤器) M {box(无) triangle(三次) quadratic(四次) gaussian(高斯)}}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T BlinkScript1.useGPUIfAvailable}
+ addUserKnob {41 vectorize l "Vectorize on CPU" T BlinkScript1.vectorize}
+}
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  xpos 287
+  ypos -385
+ }
+ Input {
+  inputs 0
+  name weight
+  xpos 173
+  ypos -361
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{"\[input parent 1] == 0"}}
+  name Switch1
+  xpos 173
+  ypos -322
+ }
+ Clamp {
+  maximum_enable false
+  name Clamp1
+  xpos 173
+  ypos -289
+ }
+ Multiply {
+  channels rgba
+  value 10
+  name Multiply1
+  xpos 173
+  ypos -245
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos -2
+  ypos -359
+ }
+set N5988ec00 [stack 0]
+push 0
+ Merge2 {
+  inputs 2
+  operation copy
+  Bchannels none
+  name Merge3
+  xpos 82
+  ypos -245
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 1
+  ProgramGroup 1
+  KernelDescription "2 \"WeightedErode\" iterate pixelWise fbdeb907911187b570e5cde0985aa16418c13639c8fba116af423d48cc539437 3 \"src\" Read Random \"weight\" Read Point \"dst\" Write Point 3 \"mode\" Int 1 AAAAAA== \"filter\" Int 1 AAAAAA== \"shape\" Int 1 AAAAAA== 3 \"mode\" 1 1 \"filter\" 1 1 \"shape\" 1 1 1 \"weightconstEdgeColor\" Float 4 1 AAAAAAAAAAAAAAAAAAAAAA=="
+  kernelSource "// WeightedErodeKernel\n// VERSION: 1.0.0\n\nkernel WeightedErode: ImageComputationKernel<ePixelWise>\{\n    Image<eRead, eAccessRandom, eEdgeClamped> src;\n    Image<eRead, eAccessPoint, eEdgeConstant> weight;\n    Image<eWrite> dst;\n\n    param:\n        int mode;\n        int filter;\n        int shape;\n    local:\n    \n    inline float triangle_interpolate(float v)\{\n        return v == 1 ? 0 : pow(1 - v, 3);\n    \}\n    inline float quadratic_interpolate(float v)\{\n        return v == 1 ? 0 : pow(1 - v, 4);\n    \}\n    inline float gaussian_interpolate(float v, float a, float b, float c)\{\n        // https://en.wikipedia.org/wiki/Gaussian_function\n        return a * exp(-pow(v - b, 2) / 2 * pow(c, 2));\n    \}\n\n\n    inline float get_max_distance(int2 pos, int2 center)\{\n        float4 size = weight();\n        \n        if (shape == 0)\{\n            float x_max = pos.x < center.x ? size\[3] : size\[1];\n            float y_max = pos.y < center.y ? size\[0] : size\[2];\n            return length(float2(x_max, y_max));\n        \} else if (shape == 1)\{\n            return round(size\[0]);\n        \}\n    \}\n\n    float4 filtered_value(int2 pos, int2 center)\{\n        float4 raw = src(pos.x, pos.y);\n        if (filter == 0) \{\n            // Box\n            return raw;\n        \}\n\n        float mix = 1;\n        float distance = length(float2(pos.x -center.x, pos.y -center.y)) / get_max_distance(pos, center);\n        if (filter == 1)\{\n            // triangle\n            mix = triangle_interpolate(distance);\n        \}\n        else if (filter == 2)\{\n            // quadratic\n            mix = quadratic_interpolate(distance);\n        \}\n        else if (filter == 3)\{\n            // gaussian\n            mix = gaussian_interpolate(distance, 1, 0, 5);\n        \}\n        mix = clamp(mix, float(0), float(1));\n    \n        float4 p0 = src(center.x, center.y);\n        return float4(\n             raw\[0] * mix + p0\[0] * (1-mix),\n             raw\[1] * mix + p0\[1] * (1-mix),\n             raw\[2] * mix + p0\[2] * (1-mix),\n             raw\[3] * mix + p0\[3] * (1-mix)\n        );\n    \}\n\n    inline float get_luminance(float4 v)\{\n        // https://en.wikipedia.org/wiki/Relative_luminance\n        return (0.226 * v\[0] + 0.7152 * v\[1] + 0.0722 * v\[2]) * v\[3];\n    \}\n\n    void update_value(float4* ret, int2 pos, int2 center)\{\n        if (!src.bounds.inside(pos))\{\n            return;\n        \}\n        float4 update = filtered_value(pos, center);\n        float current_lum = get_luminance(*ret);\n        float update_lum = get_luminance(update);\n        if ((mode == 0 && update_lum < current_lum) // Erode\n            || (mode == 1 && update_lum > current_lum) // Dilate\n        )\{\n            *ret = update;\n        \}\n    \}\n\n    void rectangle_shape(float4* ret, int2 center)\{\n        float4 size = weight();\n        for (int x = center.x - size\[3]; x <= center.x + size\[1]; x++ )\{\n            for (int y = center.y - size\[2]; y <= center.y + size\[0]; y++)\{\n                update_value(ret, int2(x, y), center);\n            \}\n        \}\n    \}\n\n    void circle_shape(float4* ret, int2 center)\{\n        int r = weight()\[0];\n        for (int x = center.x - r; x <= center.x + r; x++ )\{\n            for (int y = center.y - r; y <= center.y + r; y++)\{\n                if (length(float2(x - center.x, y - center.y)) > r)\{\n                    continue;\n                \}\n                update_value(ret, int2(x, y), center);\n            \}\n        \}\n    \}\n\n    //In define(), parameters can be given labels and default values.\n    void define()\{\n        \n    \}\n\n    //The init() function is run before any calls to process()\n    void init()\{\n        \n    \}\n\n\n    //The process function is run at every pixel to produce the output\n    void process(int2 pos)\{\n        float4 ret = src(pos.x, pos.y);\n        if (shape == 0)\{\n            rectangle_shape(&ret, pos);\n        \} else if (shape == 1)\{\n            circle_shape(&ret, pos);\n        \}\n        dst() = ret;\n    \}\n\};\n"
+  rebuild ""
+  WeightedErode_mode {{parent.mode}}
+  WeightedErode_filter {{parent.filter}}
+  WeightedErode_shape {{parent.shape}}
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos 82
+  ypos -174
+ }
+push $N5988ec00
+ Merge2 {
+  inputs 2
+  operation copy
+  bbox B
+  Achannels {{{parent.Merge3.Achannels}}}
+  output {{{Achannels}}}
+  name Merge1
+  xpos -2
+  ypos -78
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos -20
+ }
+end_group

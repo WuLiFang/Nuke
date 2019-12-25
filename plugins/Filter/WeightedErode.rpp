@@ -1,0 +1,133 @@
+// WeightedErodeKernel
+// VERSION: 1.0.0
+
+kernel WeightedErode: ImageComputationKernel<ePixelWise>{
+    Image<eRead, eAccessRandom, eEdgeClamped> src;
+    Image<eRead, eAccessPoint, eEdgeConstant> weight;
+    Image<eWrite> dst;
+
+    param:
+        int mode;
+        int filter;
+        int shape;
+    local:
+    
+    inline float triangle_interpolate(float v){
+        return v == 1 ? 0 : pow(1 - v, 3);
+    }
+
+    inline float quadratic_interpolate(float v){
+        return v == 1 ? 0 : pow(1 - v, 4);
+    }
+
+    inline float gaussian_interpolate(float v, float a, float b, float c){
+        // https://en.wikipedia.org/wiki/Gaussian_function
+        return a * exp(-pow(v - b, 2) / 2 * pow(c, 2));
+    }
+
+    inline float get_max_distance(int2 pos, int2 center){
+        float4 size = weight();
+        
+        if (shape == 0){
+            float x_max = pos.x < center.x ? size[3] : size[1];
+            float y_max = pos.y < center.y ? size[0] : size[2];
+            return length(float2(x_max, y_max));
+        } else if (shape == 1){
+            return round(size[0]);
+        }
+    }
+
+    float4 filtered_value(int2 pos, int2 center){
+        float4 raw = src(pos.x, pos.y);
+        if (filter == 0) {
+            // Box
+            return raw;
+        }
+
+        float mix = 1;
+        float distance = length(float2(pos.x -center.x, pos.y -center.y)) / get_max_distance(pos, center);
+        if (filter == 1){
+            // triangle
+            mix = triangle_interpolate(distance);
+        }
+        else if (filter == 2){
+            // quadratic
+            mix = quadratic_interpolate(distance);
+        }
+        else if (filter == 3){
+            // gaussian
+            mix = gaussian_interpolate(distance, 1, 0, 5);
+        }
+        mix = clamp(mix, float(0), float(1));
+    
+        float4 p0 = src(center.x, center.y);
+        return float4(
+             raw[0] * mix + p0[0] * (1-mix),
+             raw[1] * mix + p0[1] * (1-mix),
+             raw[2] * mix + p0[2] * (1-mix),
+             raw[3] * mix + p0[3] * (1-mix)
+        );
+    }
+
+    inline float get_luminance(float4 v){
+        // https://en.wikipedia.org/wiki/Relative_luminance
+        return (0.226 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]) * v[3];
+    }
+
+    void update_value(float4* ret, int2 pos, int2 center){
+        if (!src.bounds.inside(pos)){
+            return;
+        }
+        float4 update = filtered_value(pos, center);
+        float current_lum = get_luminance(*ret);
+        float update_lum = get_luminance(update);
+        if ((mode == 0 && update_lum < current_lum) // Erode
+            || (mode == 1 && update_lum > current_lum) // Dilate
+        ){
+            *ret = update;
+        }
+    }
+
+    void rectangle_shape(float4* ret, int2 center){
+        float4 size = weight();
+        for (int x = center.x - size[3]; x <= center.x + size[1]; x++ ){
+            for (int y = center.y - size[2]; y <= center.y + size[0]; y++){
+                update_value(ret, int2(x, y), center);
+            }
+        }
+    }
+
+    void circle_shape(float4* ret, int2 center){
+        int r = weight()[0];
+        for (int x = center.x - r; x <= center.x + r; x++ ){
+            for (int y = center.y - r; y <= center.y + r; y++){
+                if (length(float2(x - center.x, y - center.y)) > r){
+                    continue;
+                }
+                update_value(ret, int2(x, y), center);
+            }
+        }
+    }
+
+    //In define(), parameters can be given labels and default values.
+    void define(){
+        
+    }
+
+    //The init() function is run before any calls to process()
+    void init(){
+        
+    }
+
+
+    //The process function is run at every pixel to produce the output
+    void process(int2 pos){
+        float4 ret = src(pos.x, pos.y);
+        if (shape == 0){
+            rectangle_shape(&ret, pos);
+        } else if (shape == 1){
+            circle_shape(&ret, pos);
+        }
+        dst() = ret;
+    }
+};
