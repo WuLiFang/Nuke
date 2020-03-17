@@ -22,6 +22,10 @@ def setup_prefix_filter():
     import cgtwq.helper.wlf
     cgtwq.helper.wlf.CGTWQHelper.prefix_filters.append(
         lambda x: x.replace('XJCG', 'XJ'))
+    cgtwq.helper.wlf.CGTWQHelper.prefix_filters.append(
+        lambda x: x.replace('QNPV', 'QNYH'))
+    cgtwq.helper.wlf.CGTWQHelper.prefix_filters.append(
+        lambda x: x.replace('YLDE', 'YLDL'))
 
 
 setup_site()
