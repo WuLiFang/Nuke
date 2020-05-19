@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
+
+
+### Features
+
+* add more prefix filter ([c8bc545](https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f))
+* update expire time to 2021-01-01 ([d79a95c](https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1))
+* **wlf_Lightwrap:** add channels control ([7f5a71d](https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb))
+
+
+### Bug Fixes
+
+* **deps:** update dependency jinja2 to v2.11.0 ([6f3ff93](https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf))
+* **wlf_Lightwrap:** blur on rgba channel instead of rgb channel ([a336040](https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30))
+
 ### [0.20.4](https://github.com/WuLiFang/Nuke/compare/v0.20.3...v0.20.4) (2020-01-10)
 
 ### Features

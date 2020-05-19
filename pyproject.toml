@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nuke"
-version = "0.20.4"
+version = "0.20.5"
 description = "Nuke plugins for WuLiFang Studio"
 authors = ["NateScarlet <NateScarlet@Gmail.com>"]
 repository="https://github.com/WuLiFang/Nuke"
