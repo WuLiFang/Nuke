@@ -152,6 +152,35 @@ def mainwindow():
     raise RuntimeError('Can not find main window')
 
 
+def raise_panel(name):
+    # type: (str,) -> None
+    """raise panel by name.
+
+    Args:
+        name (str): panel name, (e.g. DopeSheet.1)
+    """
+
+    from Qt import QtWidgets
+    for i in QtWidgets.QApplication.topLevelWidgets():
+        panel = i.findChild(QtWidgets.QWidget, name)
+        if not panel:
+            continue
+
+        parent = panel.parentWidget()
+        if not isinstance(parent, QtWidgets.QStackedWidget):
+            continue
+        index = parent.indexOf(panel)
+        parent = parent.parentWidget()
+        if not isinstance(parent, QtWidgets.QWidget):
+            continue
+        tabs = parent.findChildren(QtWidgets.QTabBar)
+        if len(tabs) != 1:
+            continue
+        tabs[0].setCurrentIndex(index)
+        panel.window().raise_()
+        return
+
+
 @contextmanager
 def keep_modifield_status():
     """Restore modifield status after action finished.
