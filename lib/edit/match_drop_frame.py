@@ -13,9 +13,9 @@ import nuketools
 from nuketools import utf8 as _
 
 
-def get_time_wrap_data(n, start, end, tolerance=0.001):
+def get_timewarp_data(n, start, end, tolerance=0.001):
     # type: (nuke.Node, int, int, float) -> typing.List[int]
-    """Get timewrap data from a node
+    """Get timewarp data from a node
 
     Args:
         n (nuke.Node): Node
@@ -24,7 +24,7 @@ def get_time_wrap_data(n, start, end, tolerance=0.001):
         tolerance (float, optional): Match tolerance. Defaults to 0.001.
 
     Returns:
-        typing.List[int]: Data for timewrap.
+        typing.List[int]: Data for timewarp.
     """
 
     assert isinstance(n, nuke.Node)
@@ -63,8 +63,8 @@ def get_time_wrap_data(n, start, end, tolerance=0.001):
     return ret
 
 
-def create_time_wrap(data, start=1):
-    # type: (typing.List[int],) -> nuke.nodes.TimeWrap
+def create_timewarp(data, start=1):
+    # type: (typing.List[int],) -> nuke.nodes.TimeWarp
     """Create time wrap from time wrap data.
 
     Args:
@@ -72,7 +72,7 @@ def create_time_wrap(data, start=1):
         start (int, optional): Start frame. Defaults to 1.
 
     Returns:
-        nuke.nodes.TimeWrap: Created node.
+        nuke.nodes.TimeWarp: Created node.
     """
     curve_points = [(start, data[0])]  # type.List[type.Tuple[int, int]]
     end = start + len(data)
@@ -94,11 +94,11 @@ def create_time_wrap(data, start=1):
 
 @nuketools.undoable_func('匹配抽帧')
 def show_dialog():
-    # type: () => typing.Optional[nuke.nodes.TimeWrap]
-    """GUI dialog for `get_timewrap_data`
+    # type: () => typing.Optional[nuke.nodes.TimeWarp]
+    """GUI dialog for `get_timewarp_data`
 
     Returns:
-        type.Optional[nuke.node.TimeWrap]: created node
+        type.Optional[nuke.node.TimeWarp]: created node
     """
     try:
         n = nuke.selectedNode()  # type: nuke.Node
@@ -126,13 +126,13 @@ def show_dialog():
     end = int(panel.value(_tr('end')))
     tolerance = float(panel.value(_tr('tolerance')))
 
-    data = get_time_wrap_data(n, start, end, tolerance)
+    data = get_timewarp_data(n, start, end, tolerance)
 
     if len(set(data)) == len(data):
         nuke.message(_('未检测到抽帧'))
         return
 
-    n_time_wrap = create_time_wrap(data, start)
-    n_time_wrap['label'].setValue(_(title))
-    nuke.zoom(nuke.zoom(), (n_time_wrap.xpos(), n_time_wrap.ypos()))
-    return n_time_wrap
+    n_timewarp = create_timewarp(data, start)
+    n_timewarp['label'].setValue(_(title))
+    nuke.zoom(nuke.zoom(), (n_timewarp.xpos(), n_timewarp.ypos()))
+    return n_timewarp
