@@ -5,7 +5,8 @@ all: .venv build docs/build/html
 build: docs/build/html/.git lib/site-packages
 
 ifeq ($(OS), Windows_NT)
-PYTHON27?=py -2.7
+export PY_PYTHON=2.7
+PYTHON27?=py
 NUKE_PYTHON?="C:/Program Files/Nuke10.5v7/python.exe"
 else
 PYTHON27?=/usr/bin/python
