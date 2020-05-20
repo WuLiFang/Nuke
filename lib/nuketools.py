@@ -173,10 +173,10 @@ def raise_panel(name):
         parent = parent.parentWidget()
         if not isinstance(parent, QtWidgets.QWidget):
             continue
-        tabs = parent.findChildren(QtWidgets.QTabBar)
-        if len(tabs) != 1:
+        tab = parent.findChild(QtWidgets.QTabBar)
+        if not tab:
             continue
-        tabs[0].setCurrentIndex(index)
+        tab.setCurrentIndex(index)
         panel.window().raise_()
         return
 

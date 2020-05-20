@@ -1,0 +1,140 @@
+# -*- coding=UTF-8 -*-
+"""Rotopaint dope sheet.  """
+
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
+import nuke
+import nuke.rotopaint
+
+import nuketools
+from panels import PythonPanel
+
+LIFETIME_TYPE_ALL = 0
+LIFETIME_TYPE_START_TO_FRAME = 1
+LIFETIME_TYPE_SINGLE_FRAME = 2
+LIFETIME_TYPE_FRAME_TO_END = 3
+LIFETIME_TYPE_RANGE = 4
+
+
+def _rotopaint_keyframes(n):
+    key_frames = set([n.firstFrame(), n.lastFrame()])
+    for i in _iter_layer(n["curves"].rootLayer):
+        if isinstance(i, nuke.rotopaint.Layer):
+            continue
+        attrs = i.getAttributes()
+        lifetime_type = attrs.getValue(0, attrs.kLifeTimeTypeAttribute)
+        if lifetime_type == LIFETIME_TYPE_ALL:
+            continue
+        key_frames.add(int(attrs.getValue(0, attrs.kLifeTimeMAttribute)))
+        key_frames.add(int(attrs.getValue(0, attrs.kLifeTimeNAttribute)))
+    return sorted(key_frames)
+
+
+def apply_timewarp(rotopaint, timewarp, all_stroke=False):
+    """Apply timewarp to rotopaint node
+
+    Args:
+        rotopaint (nuke.Node): RotoPaint node
+        timewarp (nuke.Node): TimeWarp node
+        all_stroke (bool, optional): whether apply to invisible stroke.
+            Defaults to False.
+    """
+
+    root_layer = rotopaint["curves"].rootLayer
+    lookup = timewarp["lookup"]
+    key_before = _rotopaint_keyframes(rotopaint)
+    key_after = lookup.getKeyList()
+
+    def apply_lookup(attrs, key):
+        input_time = attrs.getValue(0, key)
+        if input_time not in key_before:
+            index = -1
+        else:
+            index = key_before.index(input_time)
+        output_time = key_after[index]
+        attrs.set(key, output_time)
+
+    for i in _iter_layer(root_layer):
+        if isinstance(i, nuke.rotopaint.Layer):
+            continue
+        attrs = i.getAttributes()
+        lifetime_type = attrs.getValue(0, attrs.kLifeTimeTypeAttribute)
+        if lifetime_type == LIFETIME_TYPE_ALL:
+            continue
+
+        if (not all_stroke and
+                not attrs.getValue(nuke.frame(), attrs.kVisibleAttribute)):
+            continue
+        apply_lookup(attrs, attrs.kLifeTimeNAttribute)
+        apply_lookup(attrs, attrs.kLifeTimeMAttribute)
+
+
+class Panel(PythonPanel):
+    """Panel for rotopaint dopesheet command.  """
+    widget_id = 'com.wlf.rotopaint_dopesheet'
+
+    def __init__(self, rotopaint):
+        super(Panel, self).__init__(
+            'RotoPaint摄影表'.encode("utf-8"), self.widget_id)
+        if rotopaint.Class() != "RotoPaint":
+            nuke.message("请选中RotoPaint节点".encode("utf-8"))
+            raise ValueError("require roto paint node")
+        self.rotopaint = rotopaint
+        self.timewarp = nuke.nodes.TimeWarp(
+            inputs=[rotopaint],
+            lookup='{{ curve L l {}}}'.format(
+                ' '.join('x{} {}'.format(i, i)
+                         for i in _rotopaint_keyframes(rotopaint))
+            ),
+        )
+        for i in nuke.openPanels():
+            nuke.toNode(i).hideControlPanel()
+        self.timewarp.showControlPanel()
+        viewer = nuke.activeViewer()
+        viewer.node().setInput(viewer.activeInput(), self.timewarp)
+
+        k = nuke.Text_Knob(
+            "",
+            "说明".encode("utf-8"),
+            ("请在摄影表中编辑 {} 然后选择以下操作"
+             .format(self.timewarp.name())
+             .encode("utf-8")))
+        self.addKnob(k)
+        k = nuke.Script_Knob("apply", "应用至可见笔画".encode("utf-8"))
+        self.addKnob(k)
+        k = nuke.Script_Knob("apply_all", "应用至所有笔画".encode("utf-8"))
+        self.addKnob(k)
+        k = nuke.Script_Knob('cancel', 'Cancel'.encode("utf-8"))
+        self.addKnob(k)
+
+    def show(self):
+        super(Panel, self).show()
+        nuketools.raise_panel("DopeSheet.1")
+
+    def knobChanged(self, knob):
+        """Override. """
+        is_finished = False
+        if knob is self['apply']:
+            apply_timewarp(self.rotopaint, self.timewarp)
+            is_finished = True
+        elif knob is self["apply_all"]:
+            apply_timewarp(self.rotopaint, self.timewarp, True)
+            is_finished = True
+        elif knob is self["cancel"]:
+            is_finished = True
+
+        if is_finished:
+            nuke.delete(self.timewarp)
+            self.rotopaint.showControlPanel()
+            self.destroy()
+            nuketools.raise_panel("DAG.1")
+
+
+def _iter_layer(l):
+    # type: (nuke.rotopaint.Layer,) -> Iterator[nuke.rotopaint.Element]
+    for i in l:
+        yield i
+        if isinstance(i, nuke.rotopaint.Layer):
+            for j in _iter_layer(i):
+                yield j

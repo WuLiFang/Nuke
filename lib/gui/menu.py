@@ -16,6 +16,7 @@ import cgtwq
 import comp
 import comp.panels
 import edit
+import edit.rotopaint_dopesheet
 import edit.script_use_seq
 import edit.script_use_seq.panels
 import edit_panels
@@ -60,6 +61,8 @@ def add_menu():
     all_menu = [
         {_('编辑'): [
             _('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2'),
+            _('RotoPaint摄影表', lambda: edit.rotopaint_dopesheet.Panel(
+                nuke.selectedNode()).show(), 'SHIFT+R'),
             _('分离图层', lambda: edit.split_layers(nuke.selectedNode()),
               'F3', icon="SplitLayers.png"),
             _("分离rgba",
