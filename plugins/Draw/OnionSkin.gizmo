@@ -4,8 +4,8 @@ push $cut_paste_input
 Group {
  name OnionSkin1
  onCreate {
-if '__wlf_OnionSkin_0_1_0' not in locals():
-    class __wlf_OnionSkin_0_1_0(object):
+if '__wlf_OnionSkin_0_1_1' not in locals():
+    class __wlf_OnionSkin_0_1_1(object):
 
         @classmethod
         def _iter_layer(cls, l):
@@ -90,17 +90,17 @@ if '__wlf_OnionSkin_0_1_0' not in locals():
                     break
             if offset < 0:
                 if left > 0 and right < 0 :
-                    return keyframe_at(left + offset)
+                    return keyframe_at(left + 1 + offset)
                 return keyframe_at(right + offset)
             else:
                 if left < 0 and right > 0 :
-                    return keyframe_at(right + offset)
+                    return keyframe_at(right - 1 + offset)
                 return keyframe_at(left + offset)
 }
- autolabel __wlf_OnionSkin_0_1_0(nuke.thisNode()).autolabel()
+ autolabel __wlf_OnionSkin_0_1_1(nuke.thisNode()).autolabel()
  xpos -207
  ypos -160
- addUserKnob {20 OnionSkin l "OnionSkin v0.1.0"}
+ addUserKnob {20 OnionSkin l "OnionSkin v0.1.1"}
  addUserKnob {1 knob_name l "knob name(节点属性名称)" t 用于获取关键帧的节点属性}
  addUserKnob {3 knob_hash +INVISIBLE}
  knob_name curves
@@ -109,7 +109,7 @@ if '__wlf_OnionSkin_0_1_0' not in locals():
  addUserKnob {41 mix T Merge1.mix}
  addUserKnob {26 "" +STARTLINE}
  addUserKnob {3 output l output(输出) t 偏移关键帧后的帧数}
- output {{"\[python __wlf_OnionSkin_0_1_0(nuke.thisNode()).output()]"}}
+ output {{"\[python __wlf_OnionSkin_0_1_1(nuke.thisNode()).output()]"}}
 }
  Input {
   inputs 0
