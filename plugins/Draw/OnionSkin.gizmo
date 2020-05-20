@@ -1,0 +1,141 @@
+set cut_paste_input [stack 0]
+version 10.5 v7
+push $cut_paste_input
+Group {
+ name OnionSkin1
+ onCreate {
+if '__wlf_OnionSkin_0_1_0' not in locals():
+    class __wlf_OnionSkin_0_1_0(object):
+
+        @classmethod
+        def _iter_layer(cls, l):
+            # type: (nuke.rotopaint.Layer,) -> Iterator[nuke.rotopaint.Element]
+            import nuke.rotopaint
+            for i in l:
+                yield i
+                if isinstance(i, nuke.rotopaint.Layer):
+                    for j in _iter_layer(i):
+                        yield j
+
+        @classmethod
+        def _curveknob_keyframes(cls, k):
+            import nuke.rotopaint
+            key_frames = set()
+            for i in cls._iter_layer(k.rootLayer):
+                if isinstance(i, nuke.rotopaint.Layer):
+                    continue
+                attrs = i.getAttributes()
+                lifetime_type = attrs.getValue(0, attrs.kLifeTimeTypeAttribute)
+                if lifetime_type == 0: # All
+                    continue
+                key_frames.add(int(attrs.getValue(0, attrs.kLifeTimeMAttribute)))
+                key_frames.add(int(attrs.getValue(0, attrs.kLifeTimeNAttribute)))
+            return sorted(key_frames)
+        
+        @classmethod
+        def _knob_keyframes(cls, k):
+            import nuke.rotopaint
+            if isinstance(k, nuke.rotopaint.CurveKnob):
+                return cls._curveknob_keyframes(k)
+            return [int(i) for i in k.getKeyList()]
+    
+        def __init__(self, n):
+            self.n = n
+
+        def autolabel(self):
+            n = self.n
+            ret = [
+                n.name(),
+                n["knob_name"].value(),
+                "{} ({})".format(
+                    int(n["offset"].value()),
+                    int(n["output"].value()),
+                ),
+            ]
+            ret = '\n'.join([i for i in ret if i])
+            ret = ret or autolabel()
+            return ret
+    
+        def get_keyframes(self):
+            import nuke.rotopaint as rp
+            input0 = self.n.input(0)
+            if not input0:
+                return []
+            knob_name = self.n["knob_name"].value()
+            k = input0.knob(knob_name)
+            if not k:
+                self.n.error("no such knob: name={}".format(knob_name))
+                return []
+
+            return self._knob_keyframes(k)
+
+        def output(self):
+            f = nuke.frame()
+            keyframes = self.get_keyframes()
+            offset = int(self.n["offset"].value())
+
+            def keyframe_at(index):
+                if index < 0 or index > len(keyframes) -1:
+                    return f
+                return keyframes[index]
+            if f in keyframes:
+                return keyframe_at(keyframes.index(f)+offset)
+
+            left, right = -1, -1
+            for index, i in enumerate(keyframes):
+                if i < f:
+                    left = index
+                if i > f:
+                    right = index
+                    break
+            if offset < 0:
+                if left > 0 and right < 0 :
+                    return keyframe_at(left + offset)
+                return keyframe_at(right + offset)
+            else:
+                if left < 0 and right > 0 :
+                    return keyframe_at(right + offset)
+                return keyframe_at(left + offset)
+}
+ autolabel __wlf_OnionSkin_0_1_0(nuke.thisNode()).autolabel()
+ xpos -207
+ ypos -160
+ addUserKnob {20 OnionSkin l "OnionSkin v0.1.0"}
+ addUserKnob {1 knob_name l "knob name(节点属性名称)" t 用于获取关键帧的节点属性}
+ knob_name curves
+ addUserKnob {3 offset l offset(偏移) t 要偏移的关键帧数}
+ offset -1
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {3 output l output(输出) t 偏移关键帧后的帧数}
+ output {{"\[python __wlf_OnionSkin_0_1_0(nuke.thisNode()).output()]"}}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+set Na8903c00 [stack 0]
+ TimeWarp {
+  lookup {{parent.output C x1 1 x100 100}}
+  time ""
+  name TimeWarp1
+  xpos 99
+  ypos 63
+ }
+push $Na8903c00
+ Merge2 {
+  inputs 2
+  operation under
+  mix 0.2
+  name Merge1
+  xpos -1
+  ypos 149
+  disable {{"x == parent.output"}}
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group
