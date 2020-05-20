@@ -21,6 +21,7 @@ import edit.script_use_seq
 import edit.script_use_seq.panels
 import edit_panels
 import enable_later
+import nuketools
 import orgnize
 import scanner
 import splitexr
@@ -62,11 +63,11 @@ def add_menu():
         {_('编辑'): [
             _('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2'),
             _('RotoPaint摄影表', lambda: edit.rotopaint_dopesheet.Panel(
-                nuke.selectedNode()).show(), 'SHIFT+R'),
-            _('分离图层', lambda: edit.split_layers(nuke.selectedNode()),
+                nuketools.selected_node()).show(), 'SHIFT+R'),
+            _('分离图层', lambda: edit.split_layers(nuketools.selected_node()),
               'F3', icon="SplitLayers.png"),
             _("分离rgba",
-              lambda: edit.shuffle_rgba(nuke.selectedNode()), 'SHIFT+F3'),
+              lambda: edit.shuffle_rgba(nuketools.selected_node()), 'SHIFT+F3'),
             _("重命名PuzzleMatte",
               lambda: edit_panels.ChannelsRename().show(), 'F4'),
             _("标记为稍后启用",

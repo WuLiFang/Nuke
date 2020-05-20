@@ -193,3 +193,19 @@ def keep_modifield_status():
         yield
     finally:
         root.setModified(before)
+
+
+def selected_node():
+    """nuke.selectedNode with a error message.
+
+    Raises:
+        ValueError: when no node selected
+
+    Returns:
+        nuke.Node: selected node.
+    """
+    try:
+        return nuke.selectedNode()
+    except ValueError as ex:
+        nuke.message("请选择节点".encode("utf-8"))
+        raise ex
