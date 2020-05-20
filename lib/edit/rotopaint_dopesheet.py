@@ -4,6 +4,8 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import re
+
 import nuke
 import nuke.rotopaint
 
@@ -43,16 +45,21 @@ def apply_timewarp(rotopaint, timewarp, all_stroke=False):
 
     root_layer = rotopaint["curves"].rootLayer
     lookup = timewarp["lookup"]
-    key_before = _rotopaint_keyframes(rotopaint)
-    key_after = lookup.getKeyList()
+    time_map = {
+        int(match[1]): int(match[0])
+        for match in re.findall(r"x(\d+) (\d+)", lookup.toScript())
+    }
 
     def apply_lookup(attrs, key):
-        input_time = attrs.getValue(0, key)
-        if input_time not in key_before:
-            index = -1
-        else:
-            index = key_before.index(input_time)
-        output_time = key_after[index]
+        input_time = int(attrs.getValue(0, key))
+        if input_time not in time_map:
+            nuke.message(
+                "在 {}.input 中找不到值为 {} 的关键帧"
+                .format(timewarp.name(), input_time)
+                .encode("utf-8")
+            )
+            raise ValueError("timewarp lookup failed")
+        output_time = time_map[int(input_time)]
         attrs.set(key, output_time)
 
     for i in _iter_layer(root_layer):
