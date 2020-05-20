@@ -99,7 +99,7 @@ class Panel(PythonPanel):
             nuke.toNode(i).hideControlPanel()
         self.timewarp.showControlPanel()
         viewer = nuke.activeViewer()
-        viewer.node().setInput(viewer.activeInput(), self.timewarp)
+        viewer.node().setInput(viewer.activeInput() or 0, self.timewarp)
 
         k = nuke.Text_Knob(
             "",
