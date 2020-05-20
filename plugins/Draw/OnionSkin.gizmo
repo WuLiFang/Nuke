@@ -66,7 +66,7 @@ if '__wlf_OnionSkin_0_1_0' not in locals():
             if not k:
                 self.n.error("no such knob: name={}".format(knob_name))
                 return []
-
+            self.n["knob_hash"].setValue(hash(k.toScript()))
             return self._knob_keyframes(k)
 
         def output(self):
@@ -102,6 +102,7 @@ if '__wlf_OnionSkin_0_1_0' not in locals():
  ypos -160
  addUserKnob {20 OnionSkin l "OnionSkin v0.1.0"}
  addUserKnob {1 knob_name l "knob name(节点属性名称)" t 用于获取关键帧的节点属性}
+ addUserKnob {3 knob_hash +INVISIBLE}
  knob_name curves
  addUserKnob {3 offset l offset(偏移) t 要偏移的关键帧数}
  offset -1
