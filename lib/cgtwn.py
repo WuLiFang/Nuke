@@ -11,7 +11,7 @@ import nuke
 
 import callback
 import cgtwq
-from cgtwq.helper.wlf import CGTWQHelper
+from cgtwq.helper.wlf import get_entry_by_file
 from edit import CurrentViewer
 from nuketools import utf8
 from wlf.path import Path
@@ -98,7 +98,7 @@ class Task(cgtwq.Entry):
             pipeline (str, optional): Defaults to '合成'. Pipline name.
         """
 
-        entry = CGTWQHelper.get_entry(shot, pipeline)
+        entry = get_entry_by_file(shot, pipeline)
         ret = cls(entry.module, entry[0])
         ret.shot = shot
 

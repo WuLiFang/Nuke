@@ -8,6 +8,7 @@ version = "0.7.12"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -37,6 +38,7 @@ version = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -45,10 +47,11 @@ description = "Atomic file writes."
 name = "atomicwrites"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.3.0"
+version = "1.4.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -67,6 +70,7 @@ tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.i
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -75,13 +79,15 @@ description = "A tool that automatically formats Python code to conform to the P
 name = "autopep8"
 optional = false
 python-versions = "*"
-version = "1.5"
+version = "1.5.3"
 
 [package.dependencies]
-pycodestyle = ">=2.5.0"
+pycodestyle = ">=2.6.0"
+toml = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -97,6 +103,7 @@ pytz = ">=2015.7"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -114,6 +121,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pyt
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -122,49 +130,50 @@ description = "Python package for providing Mozilla's CA Bundle."
 name = "certifi"
 optional = false
 python-versions = "*"
-version = "2019.11.28"
+version = "2020.6.20"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
 category = "main"
-description = ""
+description = "CGTeamWork python client for humans."
 name = "cgtwq"
 optional = false
-python-versions = "*"
-version = "3.0.0b0"
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+version = "3.0.0b1"
 
 [package.dependencies]
 "Qt.py" = ">=1.1,<2.0"
 environs = ">=4.2.0,<4.3.0"
 requests = ">=2.19,<3.0"
 websocket-client = ">=0.47,<1.0"
-wlf = "rev 0.5.3"
+wlf = "rev v0.6.0"
 
 [package.source]
 reference = ""
 type = "file"
-url = "vendor/cgtwq-3.0.0b0-py2.py3-none-any.whl"
+url = "vendor/cgtwq-3.0.0b1-py2.py3-none-any.whl"
 
 [[package]]
 category = "main"
-description = ""
+description = "Uploader application for CGTeamwork."
 name = "cgtwq-uploader"
 optional = false
-python-versions = "*"
-version = "3.4.0"
+python-versions = ">=2.7,<3.0"
+version = "3.6.0"
 
 [package.dependencies]
-"Qt.py" = ">=1.1,<2.0"
-cgtwq = "*"
-wlf = "*"
+"Qt.py" = ">=1.1,<1.2"
+cgtwq = "rev v3.0.0-beta.2"
+wlf = "rev v0.6.0"
 
 [package.source]
 reference = ""
 type = "file"
-url = "vendor/cgtwq_uploader-3.4.0-py2.py3-none-any.whl"
+url = "vendor/cgtwq_uploader-3.6.0-py2.py3-none-any.whl"
 
 [[package]]
 category = "main"
@@ -176,6 +185,7 @@ version = "3.0.4"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -189,6 +199,7 @@ version = "0.4.3"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -209,6 +220,7 @@ test = ["flake8 (3.7.8)", "hypothesis (3.55.3)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -226,6 +238,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2)", "pytes
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -239,6 +252,7 @@ version = "0.6.0.post1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -247,9 +261,10 @@ description = "Style checker for Sphinx (or other) RST documentation"
 name = "doc8"
 optional = false
 python-versions = "*"
-version = "0.8.0"
+version = "0.8.1"
 
 [package.dependencies]
+Pygments = "*"
 chardet = "*"
 docutils = "*"
 restructuredtext-lint = ">=0.7"
@@ -258,6 +273,7 @@ stevedore = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -270,6 +286,7 @@ version = "0.16"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -283,6 +300,7 @@ version = "1.1.10"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -305,6 +323,7 @@ tests = ["pytest", "mock", "webtest (2.0.33)", "dj-database-url", "dj-email-url"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -318,6 +337,7 @@ version = "1.0.2"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -331,6 +351,7 @@ version = "0.18.2"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -343,6 +364,7 @@ version = "3.3.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -358,6 +380,7 @@ smmap2 = ">=2.0.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -373,6 +396,7 @@ gitdb2 = ">=2,<3"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -385,6 +409,7 @@ version = "2.9"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -397,6 +422,7 @@ version = "1.2.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -405,7 +431,7 @@ description = "Read metadata from Python packages"
 name = "importlib-metadata"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
-version = "1.5.2"
+version = "1.6.1"
 
 [package.dependencies]
 zipp = ">=0.5"
@@ -424,10 +450,11 @@ version = "*"
 
 [package.extras]
 docs = ["sphinx", "rst.linker"]
-testing = ["packaging", "importlib-resources"]
+testing = ["packaging", "pep517", "importlib-resources (>=1.3)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -455,6 +482,7 @@ xdg_home = ["appdirs (>=1.4.0)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -473,6 +501,7 @@ i18n = ["Babel (>=0.8)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -481,10 +510,11 @@ description = "A fast and thorough lazy object proxy."
 name = "lazy-object-proxy"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.4.3"
+version = "1.5.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -497,6 +527,7 @@ version = "1.1.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -516,6 +547,7 @@ tests = ["pytest", "pytz"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -528,6 +560,7 @@ version = "0.6.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -544,6 +577,7 @@ six = ">=1.0.0,<2.0.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -552,7 +586,7 @@ description = "Core utilities for Python packages"
 name = "packaging"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.3"
+version = "20.4"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
@@ -560,6 +594,7 @@ six = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -580,6 +615,7 @@ version = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -588,10 +624,11 @@ description = "Python Build Reasonableness"
 name = "pbr"
 optional = false
 python-versions = "*"
-version = "5.4.4"
+version = "5.4.5"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -612,6 +649,7 @@ version = ">=3.6,<4.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -630,6 +668,7 @@ dev = ["pre-commit", "tox"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -645,6 +684,7 @@ enum = ["enum34"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -653,10 +693,11 @@ description = "library with cross-python path, ini-parsing, io, code, log facili
 name = "py"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.8.1"
+version = "1.8.2"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -665,10 +706,11 @@ description = "Plug-in driven automation framework for content"
 name = "pyblish-base"
 optional = false
 python-versions = "*"
-version = "1.8.6"
+version = "1.8.7"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -684,6 +726,7 @@ pyblish-base = ">=1.4"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -692,10 +735,11 @@ description = "Python style guide checker"
 name = "pycodestyle"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.5.0"
+version = "2.6.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -708,6 +752,7 @@ version = "2.5.2"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -731,6 +776,7 @@ version = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -739,10 +785,11 @@ description = "Python parsing module"
 name = "pyparsing"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "2.4.6"
+version = "2.4.7"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -751,7 +798,7 @@ description = "pytest: simple powerful testing with Python"
 name = "pytest"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,>=2.7"
-version = "4.6.9"
+version = "4.6.11"
 
 [package.dependencies]
 atomicwrites = ">=1.0"
@@ -783,6 +830,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "nose", "requests", "mock"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -798,6 +846,7 @@ six = ">=1.5"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -806,7 +855,7 @@ description = "Add .env support to your django/flask apps in development and dep
 name = "python-dotenv"
 optional = false
 python-versions = "*"
-version = "0.12.0"
+version = "0.13.0"
 
 [package.dependencies]
 [package.dependencies.typing]
@@ -818,6 +867,7 @@ cli = ["click (>=5.0)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -826,10 +876,11 @@ description = "World timezone definitions, modern and historical"
 name = "pytz"
 optional = false
 python-versions = "*"
-version = "2019.3"
+version = "2020.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -842,6 +893,7 @@ version = "2019.3"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -854,6 +906,7 @@ version = "1.1.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -871,6 +924,7 @@ sphinx = ">=1.3.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -879,7 +933,7 @@ description = "Python HTTP for Humans."
 name = "requests"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "2.23.0"
+version = "2.24.0"
 
 [package.dependencies]
 certifi = ">=2017.4.17"
@@ -893,6 +947,7 @@ socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -901,13 +956,14 @@ description = "reStructuredText linter"
 name = "restructuredtext-lint"
 optional = false
 python-versions = "*"
-version = "1.3.0"
+version = "1.3.1"
 
 [package.dependencies]
 docutils = ">=0.11,<1.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -920,12 +976,13 @@ version = "0.14.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
 category = "main"
 description = "scandir, a better directory iterator and faster os.walk()"
-marker = "python_version < \"3\""
+marker = "python_version < \"3.5\""
 name = "scandir"
 optional = false
 python-versions = "*"
@@ -933,6 +990,7 @@ version = "1.10.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -949,6 +1007,7 @@ six = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -961,6 +1020,7 @@ version = "1.12.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -969,10 +1029,11 @@ description = "A pure Python implementation of a sliding window memory map manag
 name = "smmap"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.0.1"
+version = "3.0.4"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -988,6 +1049,7 @@ smmap = ">=3.0.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1000,6 +1062,7 @@ version = "2.0.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1035,6 +1098,7 @@ websupport = ["sqlalchemy (>=0.9)", "whoosh (>=2.0)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1052,6 +1116,7 @@ sphinx = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1067,6 +1132,7 @@ test = ["pytest", "mock"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1083,6 +1149,20 @@ six = ">=1.10.0"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
+url = "https://mirrors.aliyun.com/pypi/simple"
+
+[[package]]
+category = "dev"
+description = "Python Library for Tom's Obvious, Minimal Language"
+name = "toml"
+optional = false
+python-versions = "*"
+version = "0.10.1"
+
+[package.source]
+reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1096,6 +1176,7 @@ version = "3.7.4.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1112,18 +1193,25 @@ socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
 category = "dev"
-description = "Measures number of Terminal column cells of wide-character codes"
+description = "Measures the displayed width of unicode strings in a terminal"
 name = "wcwidth"
 optional = false
 python-versions = "*"
-version = "0.1.9"
+version = "0.2.5"
+
+[package.dependencies]
+[package.dependencies."backports.functools-lru-cache"]
+python = "<3.2"
+version = ">=1.2.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1139,6 +1227,7 @@ six = "*"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1152,6 +1241,7 @@ version = "0.5"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
@@ -1186,11 +1276,13 @@ version = "1.12.1"
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [[package]]
 category = "main"
 description = "Backport of pathlib-compatible object wrapper for zip files"
+marker = "python_version < \"3.8\""
 name = "zipp"
 optional = false
 python-versions = ">=2.7"
@@ -1207,10 +1299,11 @@ testing = ["pathlib2", "unittest2", "jaraco.itertools", "func-timeout"]
 
 [package.source]
 reference = "aliyun"
+type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [metadata]
-content-hash = "7890869fba90ddcf72bf8ddbd29ca1dcc3321573abc64e9845d2db735667e076"
+content-hash = "50c4953a420732a8244b26fea698451275da361adc164340bb8cb583d35ddf0a"
 python-versions = "^2.7"
 
 [metadata.files]
@@ -1223,15 +1316,15 @@ astroid = [
     {file = "astroid-1.6.6.tar.gz", hash = "sha256:d25869fc7f44f1d9fb7d24fd7ea0639656f5355fc3089cd1f3d18c6ec6b124c7"},
 ]
 atomicwrites = [
-    {file = "atomicwrites-1.3.0-py2.py3-none-any.whl", hash = "sha256:03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4"},
-    {file = "atomicwrites-1.3.0.tar.gz", hash = "sha256:75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"},
+    {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
+    {file = "atomicwrites-1.4.0.tar.gz", hash = "sha256:ae70396ad1a434f9c7046fd2dd196fc04b12f9e91ffb859164193be8b6168a7a"},
 ]
 attrs = [
     {file = "attrs-19.3.0-py2.py3-none-any.whl", hash = "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"},
     {file = "attrs-19.3.0.tar.gz", hash = "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"},
 ]
 autopep8 = [
-    {file = "autopep8-1.5.tar.gz", hash = "sha256:0f592a0447acea0c2b0a9602be1e4e3d86db52badd2e3c84f0193bfd89fd3a43"},
+    {file = "autopep8-1.5.3.tar.gz", hash = "sha256:60fd8c4341bab59963dafd5d2a566e94f547e660b9b396f772afe67d8481dbf0"},
 ]
 babel = [
     {file = "Babel-2.8.0-py2.py3-none-any.whl", hash = "sha256:d670ea0b10f8b723672d3a6abeb87b565b244da220d76b4dba1b66269ec152d4"},
@@ -1242,14 +1335,14 @@ babel = [
     {file = "backports.functools_lru_cache-1.6.1.tar.gz", hash = "sha256:8fde5f188da2d593bd5bc0be98d9abc46c95bb8a9dde93429570192ee6cc2d4a"},
 ]
 certifi = [
-    {file = "certifi-2019.11.28-py2.py3-none-any.whl", hash = "sha256:017c25db2a153ce562900032d5bc68e9f191e44e9a0f762f373977de9df1fbb3"},
-    {file = "certifi-2019.11.28.tar.gz", hash = "sha256:25b64c7da4cd7479594d035c08c2d809eb4aab3a26e5a990ea98cc450c320f1f"},
+    {file = "certifi-2020.6.20-py2.py3-none-any.whl", hash = "sha256:8fc0819f1f30ba15bdb34cceffb9ef04d99f420f68eb75d901e9560b8749fc41"},
+    {file = "certifi-2020.6.20.tar.gz", hash = "sha256:5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3"},
 ]
 cgtwq = [
-    {file = "cgtwq-3.0.0b0-py2.py3-none-any.whl", hash = "sha256:792dc1d0a60420987ba836c98f5101bc21c664c8aa79e0fcddd07cb9d2e97dbd"},
+    {file = "cgtwq-3.0.0b1-py2.py3-none-any.whl", hash = "sha256:01fa75498bda07afb01af774379853ebda30f5d2602b9155db6d739305a8d8fe"},
 ]
 cgtwq-uploader = [
-    {file = "cgtwq_uploader-3.4.0-py2.py3-none-any.whl", hash = "sha256:c5bf1c84140d17f4b05605dcf1e75d10e16e8bde934940dcb665d9f329d5008b"},
+    {file = "cgtwq_uploader-3.6.0-py2.py3-none-any.whl", hash = "sha256:0bb1097b798e60d5266566fd75d61e95580762563c8ed6f8b693b8467ede09b4"},
 ]
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "md5:0004b00caff7bb543a1d0d0bd0185a03"},
@@ -1272,8 +1365,8 @@ contextlib2 = [
     {file = "contextlib2-0.6.0.post1.tar.gz", hash = "sha256:01f490098c18b19d2bd5bb5dc445b2054d2fa97f09a4280ba2c5f3c394c8162e"},
 ]
 doc8 = [
-    {file = "doc8-0.8.0-py2.py3-none-any.whl", hash = "sha256:d12f08aa77a4a65eb28752f4bc78f41f611f9412c4155e2b03f1f5d4a45efe04"},
-    {file = "doc8-0.8.0.tar.gz", hash = "sha256:2df89f9c1a5abfb98ab55d0175fed633cae0cf45025b8b1e0ee5ea772be28543"},
+    {file = "doc8-0.8.1-py2.py3-none-any.whl", hash = "sha256:4d58a5c8c56cedd2b2c9d6e3153be5d956cf72f6051128f0f2255c66227df721"},
+    {file = "doc8-0.8.1.tar.gz", hash = "sha256:4d1df12598807cf08ffa9a1d5ef42d229ee0de42519da01b768ff27211082c12"},
 ]
 docutils = [
     {file = "docutils-0.16-py2.py3-none-any.whl", hash = "sha256:0c5b78adfbf7762415433f5515cd5c9e762339e23369dbe8000d84a4bf4ab3af"},
@@ -1316,8 +1409,8 @@ imagesize = [
     {file = "imagesize-1.2.0.tar.gz", hash = "sha256:b1f6b5a4eab1f73479a50fb79fcf729514a900c341d8503d62a62dbc4127a2b1"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-1.5.2-py2.py3-none-any.whl", hash = "sha256:298a914c82144c6b3b06c568a8973b89ad2176685f43cd1ea9ba968307300fa9"},
-    {file = "importlib_metadata-1.5.2.tar.gz", hash = "sha256:dfc83688553a91a786c6c91eeb5f3b1d31f24d71877bbd94ecbf5484e57690a2"},
+    {file = "importlib_metadata-1.6.1-py2.py3-none-any.whl", hash = "sha256:15ec6c0fd909e893e3a08b3a7c76ecb149122fb14b7efe1199ddd4c7c57ea958"},
+    {file = "importlib_metadata-1.6.1.tar.gz", hash = "sha256:0505dd08068cfec00f53a74a0ad927676d7757da81b7436a6eefe4c7cf75c545"},
 ]
 isort = [
     {file = "isort-4.3.21-py2.py3-none-any.whl", hash = "sha256:6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"},
@@ -1328,27 +1421,24 @@ jinja2 = [
     {file = "Jinja2-2.11.0.tar.gz", hash = "sha256:d6609ae5ec3d56212ca7d802eda654eaf2310000816ce815361041465b108be4"},
 ]
 lazy-object-proxy = [
-    {file = "lazy-object-proxy-1.4.3.tar.gz", hash = "sha256:f3900e8a5de27447acbf900b4750b0ddfd7ec1ea7fbaf11dfa911141bc522af0"},
-    {file = "lazy_object_proxy-1.4.3-cp27-cp27m-macosx_10_13_x86_64.whl", hash = "sha256:a2238e9d1bb71a56cd710611a1614d1194dc10a175c1e08d75e1a7bcc250d442"},
-    {file = "lazy_object_proxy-1.4.3-cp27-cp27m-win32.whl", hash = "sha256:efa1909120ce98bbb3777e8b6f92237f5d5c8ea6758efea36a473e1d38f7d3e4"},
-    {file = "lazy_object_proxy-1.4.3-cp27-cp27m-win_amd64.whl", hash = "sha256:4677f594e474c91da97f489fea5b7daa17b5517190899cf213697e48d3902f5a"},
-    {file = "lazy_object_proxy-1.4.3-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:0c4b206227a8097f05c4dbdd323c50edf81f15db3b8dc064d08c62d37e1a504d"},
-    {file = "lazy_object_proxy-1.4.3-cp34-cp34m-manylinux1_x86_64.whl", hash = "sha256:d945239a5639b3ff35b70a88c5f2f491913eb94871780ebfabb2568bd58afc5a"},
-    {file = "lazy_object_proxy-1.4.3-cp34-cp34m-win32.whl", hash = "sha256:9651375199045a358eb6741df3e02a651e0330be090b3bc79f6d0de31a80ec3e"},
-    {file = "lazy_object_proxy-1.4.3-cp34-cp34m-win_amd64.whl", hash = "sha256:eba7011090323c1dadf18b3b689845fd96a61ba0a1dfbd7f24b921398affc357"},
-    {file = "lazy_object_proxy-1.4.3-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:48dab84ebd4831077b150572aec802f303117c8cc5c871e182447281ebf3ac50"},
-    {file = "lazy_object_proxy-1.4.3-cp35-cp35m-win32.whl", hash = "sha256:ca0a928a3ddbc5725be2dd1cf895ec0a254798915fb3a36af0964a0a4149e3db"},
-    {file = "lazy_object_proxy-1.4.3-cp35-cp35m-win_amd64.whl", hash = "sha256:194d092e6f246b906e8f70884e620e459fc54db3259e60cf69a4d66c3fda3449"},
-    {file = "lazy_object_proxy-1.4.3-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:97bb5884f6f1cdce0099f86b907aa41c970c3c672ac8b9c8352789e103cf3156"},
-    {file = "lazy_object_proxy-1.4.3-cp36-cp36m-win32.whl", hash = "sha256:cb2c7c57005a6804ab66f106ceb8482da55f5314b7fcb06551db1edae4ad1531"},
-    {file = "lazy_object_proxy-1.4.3-cp36-cp36m-win_amd64.whl", hash = "sha256:8d859b89baf8ef7f8bc6b00aa20316483d67f0b1cbf422f5b4dc56701c8f2ffb"},
-    {file = "lazy_object_proxy-1.4.3-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:1be7e4c9f96948003609aa6c974ae59830a6baecc5376c25c92d7d697e684c08"},
-    {file = "lazy_object_proxy-1.4.3-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:d74bb8693bf9cf75ac3b47a54d716bbb1a92648d5f781fc799347cfc95952383"},
-    {file = "lazy_object_proxy-1.4.3-cp37-cp37m-win32.whl", hash = "sha256:9b15f3f4c0f35727d3a0fba4b770b3c4ebbb1fa907dbcc046a1d2799f3edd142"},
-    {file = "lazy_object_proxy-1.4.3-cp37-cp37m-win_amd64.whl", hash = "sha256:9254f4358b9b541e3441b007a0ea0764b9d056afdeafc1a5569eee1cc6c1b9ea"},
-    {file = "lazy_object_proxy-1.4.3-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:a6ae12d08c0bf9909ce12385803a543bfe99b95fe01e752536a60af2b7797c62"},
-    {file = "lazy_object_proxy-1.4.3-cp38-cp38-win32.whl", hash = "sha256:5541cada25cd173702dbd99f8e22434105456314462326f06dba3e180f203dfd"},
-    {file = "lazy_object_proxy-1.4.3-cp38-cp38-win_amd64.whl", hash = "sha256:59f79fef100b09564bc2df42ea2d8d21a64fdcda64979c0fa3db7bdaabaf6239"},
+    {file = "lazy-object-proxy-1.5.0.tar.gz", hash = "sha256:a0aed261060cd0372abf08d16399b1224dbb5b400312e6b00f2b23eabe1d4e96"},
+    {file = "lazy_object_proxy-1.5.0-cp27-cp27m-macosx_10_13_x86_64.whl", hash = "sha256:ec6aba217d0c4f71cbe48aea962a382dedcd111f47b55e8b58d4aaca519bd360"},
+    {file = "lazy_object_proxy-1.5.0-cp27-cp27m-win32.whl", hash = "sha256:e9a571e7168076a0d5ecaabd91e9032e86d815cca3a4bf0dafead539ef071aa5"},
+    {file = "lazy_object_proxy-1.5.0-cp27-cp27m-win_amd64.whl", hash = "sha256:e3183fbeb452ec11670c2d9bfd08a57bc87e46856b24d1c335f995239bedd0e1"},
+    {file = "lazy_object_proxy-1.5.0-cp27-cp27mu-manylinux1_x86_64.whl", hash = "sha256:96f2cdb35bdfda10e075f12892a42cff5179bbda698992b845f36c5e92755d33"},
+    {file = "lazy_object_proxy-1.5.0-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:51035b175740c44707694c521560b55b66da9d5a7c545cf22582bc02deb61664"},
+    {file = "lazy_object_proxy-1.5.0-cp35-cp35m-win32.whl", hash = "sha256:2d58f0e6395bf41087a383a48b06b42165f3b699f1aa41ba201db84ab77be63d"},
+    {file = "lazy_object_proxy-1.5.0-cp35-cp35m-win_amd64.whl", hash = "sha256:cbf1354292a4f7abb6a0188f74f5e902e4510ebad105be1dbc4809d1ed92f77e"},
+    {file = "lazy_object_proxy-1.5.0-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:459ef557e669d0046fe2b92eb4822c097c00b5ef9d11df0f9bd7d4267acdfc52"},
+    {file = "lazy_object_proxy-1.5.0-cp36-cp36m-win32.whl", hash = "sha256:dd89f466c930d7cfe84c94b5cbe862867c88b269f23e5aa61d40945e0d746f54"},
+    {file = "lazy_object_proxy-1.5.0-cp36-cp36m-win_amd64.whl", hash = "sha256:4a50513b6be001b9b7be2c435478fe9669249c77c241813907a44cda1fcd03f4"},
+    {file = "lazy_object_proxy-1.5.0-cp37-cp37m-macosx_10_13_x86_64.whl", hash = "sha256:159ae2bbb4dc3ba506aeba868d14e56a754c0be402d1f0d7fdb264e0bdf2b095"},
+    {file = "lazy_object_proxy-1.5.0-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:161a68a427022bf13e249458be2cb8da56b055988c584d372a917c665825ae9a"},
+    {file = "lazy_object_proxy-1.5.0-cp37-cp37m-win32.whl", hash = "sha256:311c9d1840042fc8e2dd80fc80272a7ea73e7646745556153c9cda85a4628b18"},
+    {file = "lazy_object_proxy-1.5.0-cp37-cp37m-win_amd64.whl", hash = "sha256:0aef3fa29f7d1194d6f8a99382b1b844e5a14d3bc1ef82c3b1c4fb7e7e2019bc"},
+    {file = "lazy_object_proxy-1.5.0-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:a6052c4c7d95de2345d9c58fc0fe34fff6c27a8ed8550dafeb18ada84406cc99"},
+    {file = "lazy_object_proxy-1.5.0-cp38-cp38-win32.whl", hash = "sha256:da82b2372f5ded8806eaac95b19af89a7174efdb418d4e7beb0c6ab09cee7d95"},
+    {file = "lazy_object_proxy-1.5.0-cp38-cp38-win_amd64.whl", hash = "sha256:35c3ad7b7f7d5d4a54a80f0ff5a41ab186237d6486843f8dde00c42cfab33905"},
 ]
 markupsafe = [
     {file = "MarkupSafe-1.1.1-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:09027a7803a62ca78792ad89403b1b7a73a01c8cb65909cd876f7fcebd79b161"},
@@ -1399,16 +1489,16 @@ more-itertools = [
     {file = "more_itertools-5.0.0-py3-none-any.whl", hash = "sha256:fe7a7cae1ccb57d33952113ff4fa1bc5f879963600ed74918f1236e212ee50b9"},
 ]
 packaging = [
-    {file = "packaging-20.3-py2.py3-none-any.whl", hash = "sha256:82f77b9bee21c1bafbf35a84905d604d5d1223801d639cf3ed140bd651c08752"},
-    {file = "packaging-20.3.tar.gz", hash = "sha256:3c292b474fda1671ec57d46d739d072bfd495a4f51ad01a055121d81e952b7a3"},
+    {file = "packaging-20.4-py2.py3-none-any.whl", hash = "sha256:998416ba6962ae7fbd6596850b80e17859a5753ba17c32284f67bfff33784181"},
+    {file = "packaging-20.4.tar.gz", hash = "sha256:4357f74f47b9c12db93624a82154e9b120fa8293699949152b22065d556079f8"},
 ]
 pathlib2 = [
     {file = "pathlib2-2.3.5-py2.py3-none-any.whl", hash = "sha256:0ec8205a157c80d7acc301c0b18fbd5d44fe655968f5d947b6ecef5290fc35db"},
     {file = "pathlib2-2.3.5.tar.gz", hash = "sha256:6cd9a47b597b37cc57de1c05e56fb1a1c9cc9fab04fe78c29acd090418529868"},
 ]
 pbr = [
-    {file = "pbr-5.4.4-py2.py3-none-any.whl", hash = "sha256:61aa52a0f18b71c5cc58232d2cf8f8d09cd67fcad60b742a60124cb8d6951488"},
-    {file = "pbr-5.4.4.tar.gz", hash = "sha256:139d2625547dbfa5fb0b81daebb39601c478c21956dc57e2e07b74450a8c506b"},
+    {file = "pbr-5.4.5-py2.py3-none-any.whl", hash = "sha256:579170e23f8e0c2f24b0de612f71f648eccb79fb1322c814ae6b3c07b5ba23e8"},
+    {file = "pbr-5.4.5.tar.gz", hash = "sha256:07f558fece33b05caf857474a366dfcc00562bca13dd8b47b2b3e22d9f9bf55c"},
 ]
 pendulum = [
     {file = "pendulum-2.0.5-cp34-cp34m-manylinux1_x86_64.whl", hash = "sha256:c460f4d8dc41ec3c4377ac1807678cd72fe5e973cc2943c104ffdeaac32dacb7"},
@@ -1434,20 +1524,20 @@ psutil = [
     {file = "psutil-5.4.8.tar.gz", hash = "sha256:6e265c8f3da00b015d24b842bfeb111f856b13d24f2c57036582568dc650d6c3"},
 ]
 py = [
-    {file = "py-1.8.1-py2.py3-none-any.whl", hash = "sha256:c20fdd83a5dbc0af9efd622bee9a5564e278f6380fffcacc43ba6f43db2813b0"},
-    {file = "py-1.8.1.tar.gz", hash = "sha256:5e27081401262157467ad6e7f851b7aa402c5852dbcb3dae06768434de5752aa"},
+    {file = "py-1.8.2-py2.py3-none-any.whl", hash = "sha256:a673fa23d7000440cc885c17dbd34fafcb7d7a6e230b29f6766400de36a33c44"},
+    {file = "py-1.8.2.tar.gz", hash = "sha256:f3b3a4c36512a4c4f024041ab51866f11761cc169670204b235f6b20523d4e6b"},
 ]
 pyblish-base = [
-    {file = "pyblish-base-1.8.6.tar.gz", hash = "sha256:b786b362c899ea226fa0c0461267aac0c6ec15ce809f30b5531e25e3e4b6c32c"},
-    {file = "pyblish_base-1.8.6-py2.py3-none-any.whl", hash = "sha256:74ac0186a476168d488d555be6757e878d15cfd520e3f4164ee2c42b4414c8bd"},
+    {file = "pyblish-base-1.8.7.tar.gz", hash = "sha256:4a7a9e5f1360abcc7e92113a72a46b502a6338230b9ee53877cd53a84e50da37"},
+    {file = "pyblish_base-1.8.7-py2.py3-none-any.whl", hash = "sha256:394d419c4aabb5317c567bc69770a006eb6b6175ae02c273a1aceaed3c435fde"},
 ]
 pyblish-lite = [
     {file = "pyblish-lite-0.8.4.tar.gz", hash = "sha256:3c2b4e34f87ba3cd71d19d720420dc1c58ad8d943068a1fa7331f4b130e6f568"},
     {file = "pyblish_lite-0.8.4-py2.py3-none-any.whl", hash = "sha256:f831caa31a917c1df048cab77d46b1435703134eab5679b3e28dc2e58fc44759"},
 ]
 pycodestyle = [
-    {file = "pycodestyle-2.5.0-py2.py3-none-any.whl", hash = "sha256:95a2219d12372f05704562a14ec30bc76b05a5b297b21a5dfe3f6fac3491ae56"},
-    {file = "pycodestyle-2.5.0.tar.gz", hash = "sha256:e40a936c9a450ad81df37f549d676d127b1b66000a6c500caa2b085bc0ca976c"},
+    {file = "pycodestyle-2.6.0-py2.py3-none-any.whl", hash = "sha256:2295e7b2f6b5bd100585ebcb1f616591b652db8a741695b3d8f5d28bdc934367"},
+    {file = "pycodestyle-2.6.0.tar.gz", hash = "sha256:c58a7d2815e0e8d7972bf1803331fb0152f867bd89adf8a01dfd55085434192e"},
 ]
 pygments = [
     {file = "Pygments-2.5.2-py2.py3-none-any.whl", hash = "sha256:2a3fe295e54a20164a9df49c75fa58526d3be48e14aceba6d6b1e8ac0bfd6f1b"},
@@ -1458,24 +1548,24 @@ pylint = [
     {file = "pylint-1.9.5.tar.gz", hash = "sha256:97a42df23d436c70132971d1dcb9efad2fe5c0c6add55b90161e773caf729300"},
 ]
 pyparsing = [
-    {file = "pyparsing-2.4.6-py2.py3-none-any.whl", hash = "sha256:c342dccb5250c08d45fd6f8b4a559613ca603b57498511740e65cd11a2e7dcec"},
-    {file = "pyparsing-2.4.6.tar.gz", hash = "sha256:4c830582a84fb022400b85429791bc551f1f4871c33f23e44f353119e92f969f"},
+    {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
+    {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 pytest = [
-    {file = "pytest-4.6.9-py2.py3-none-any.whl", hash = "sha256:c77a5f30a90e0ce24db9eaa14ddfd38d4afb5ea159309bdd2dae55b931bc9324"},
-    {file = "pytest-4.6.9.tar.gz", hash = "sha256:19e8f75eac01dd3f211edd465b39efbcbdc8fc5f7866d7dd49fedb30d8adf339"},
+    {file = "pytest-4.6.11-py2.py3-none-any.whl", hash = "sha256:a00a7d79cbbdfa9d21e7d0298392a8dd4123316bfac545075e6f8f24c94d8c97"},
+    {file = "pytest-4.6.11.tar.gz", hash = "sha256:50fa82392f2120cc3ec2ca0a75ee615be4c479e66669789771f1758332be4353"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 python-dotenv = [
-    {file = "python-dotenv-0.12.0.tar.gz", hash = "sha256:92b3123fb2d58a284f76cc92bfe4ee6c502c32ded73e8b051c4f6afc8b6751ed"},
-    {file = "python_dotenv-0.12.0-py2.py3-none-any.whl", hash = "sha256:81822227f771e0cab235a2939f0f265954ac4763cafd806d845801c863bf372f"},
+    {file = "python-dotenv-0.13.0.tar.gz", hash = "sha256:3b9909bc96b0edc6b01586e1eed05e71174ef4e04c71da5786370cebea53ad74"},
+    {file = "python_dotenv-0.13.0-py2.py3-none-any.whl", hash = "sha256:25c0ff1a3e12f4bde8d592cc254ab075cfe734fc5dd989036716fd17ee7e5ec7"},
 ]
 pytz = [
-    {file = "pytz-2019.3-py2.py3-none-any.whl", hash = "sha256:1c557d7d0e871de1f5ccd5833f60fb2550652da6be2693c1e02300743d21500d"},
-    {file = "pytz-2019.3.tar.gz", hash = "sha256:b02c06db6cf09c12dd25137e563b31700d3b80fcc4ad23abb7a315f2789819be"},
+    {file = "pytz-2020.1-py2.py3-none-any.whl", hash = "sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed"},
+    {file = "pytz-2020.1.tar.gz", hash = "sha256:c35965d010ce31b23eeb663ed3cc8c906275d6be1a34393a1d73a41febf4a048"},
 ]
 pytzdata = [
     {file = "pytzdata-2019.3-py2.py3-none-any.whl", hash = "sha256:84c52b9a47d097fcd483f047a544979de6c3a86e94c845e3569e9f8acd0fa071"},
@@ -1490,11 +1580,11 @@ recommonmark = [
     {file = "recommonmark-0.6.0.tar.gz", hash = "sha256:29cd4faeb6c5268c633634f2d69aef9431e0f4d347f90659fd0aab20e541efeb"},
 ]
 requests = [
-    {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
-    {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
+    {file = "requests-2.24.0-py2.py3-none-any.whl", hash = "sha256:fe75cc94a9443b9246fc7049224f75604b113c36acb93f87b80ed42c44cbb898"},
+    {file = "requests-2.24.0.tar.gz", hash = "sha256:b3559a131db72c33ee969480840fff4bb6dd111de7dd27c8ee1f820f4f00231b"},
 ]
 restructuredtext-lint = [
-    {file = "restructuredtext_lint-1.3.0.tar.gz", hash = "sha256:97b3da356d5b3a8514d8f1f9098febd8b41463bed6a1d9f126cf0a048b6fd908"},
+    {file = "restructuredtext_lint-1.3.1.tar.gz", hash = "sha256:470e53b64817211a42805c3a104d2216f6f5834b22fe7adb637d1de4d6501fb8"},
 ]
 rope = [
     {file = "rope-0.14.0-py2-none-any.whl", hash = "sha256:6b728fdc3e98a83446c27a91fc5d56808a004f8beab7a31ab1d7224cecc7d969"},
@@ -1523,8 +1613,8 @@ six = [
     {file = "six-1.12.0.tar.gz", hash = "sha256:d16a0141ec1a18405cd4ce8b4613101da75da0e9a7aec5bdd4fa804d0e0eba73"},
 ]
 smmap = [
-    {file = "smmap-3.0.1-py2.py3-none-any.whl", hash = "sha256:5fead614cf2de17ee0707a8c6a5f2aa5a2fc6c698c70993ba42f515485ffda78"},
-    {file = "smmap-3.0.1.tar.gz", hash = "sha256:171484fe62793e3626c8b05dd752eb2ca01854b0c55a1efc0dc4210fccb65446"},
+    {file = "smmap-3.0.4-py2.py3-none-any.whl", hash = "sha256:54c44c197c819d5ef1991799a7e30b662d1e520f2ac75c9efbeb54a742214cf4"},
+    {file = "smmap-3.0.4.tar.gz", hash = "sha256:9c98bbd1f9786d22f14b3d4126894d56befb835ec90cef151af566c7e19b5d24"},
 ]
 smmap2 = [
     {file = "smmap2-3.0.1-py3-none-any.whl", hash = "sha256:0cb6ea470b1ad9a65a02ca7f4c7ae601861f7dd24a43812ca51cfca2892bb524"},
@@ -1549,6 +1639,10 @@ stevedore = [
     {file = "stevedore-1.32.0-py2.py3-none-any.whl", hash = "sha256:a4e7dc759fb0f2e3e2f7d8ffe2358c19d45b9b8297f393ef1256858d82f69c9b"},
     {file = "stevedore-1.32.0.tar.gz", hash = "sha256:18afaf1d623af5950cc0f7e75e70f917784c73b652a34a12d90b309451b5500b"},
 ]
+toml = [
+    {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
+    {file = "toml-0.10.1.tar.gz", hash = "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f"},
+]
 typing = [
     {file = "typing-3.7.4.1-py2-none-any.whl", hash = "sha256:c8cabb5ab8945cd2f54917be357d134db9cc1eb039e59d1606dc1e60cb1d9d36"},
     {file = "typing-3.7.4.1-py3-none-any.whl", hash = "sha256:f38d83c5a7a7086543a0f649564d661859c5146a85775ab90c0d2f93ffaa9714"},
@@ -1559,8 +1653,8 @@ urllib3 = [
     {file = "urllib3-1.23.tar.gz", hash = "sha256:a68ac5e15e76e7e5dd2b8f94007233e01effe3e50e8daddf69acfd81cb686baf"},
 ]
 wcwidth = [
-    {file = "wcwidth-0.1.9-py2.py3-none-any.whl", hash = "sha256:cafe2186b3c009a04067022ce1dcd79cb38d8d65ee4f4791b8888d6599d1bbe1"},
-    {file = "wcwidth-0.1.9.tar.gz", hash = "sha256:ee73862862a156bf77ff92b09034fc4825dd3af9cf81bc5b360668d425f3c5f1"},
+    {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
+    {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
 ]
 websocket-client = [
     {file = "websocket_client-0.57.0-py2.py3-none-any.whl", hash = "sha256:0fc45c961324d79c781bab301359d5a1b00b13ad1b10415a4780229ef71a5549"},

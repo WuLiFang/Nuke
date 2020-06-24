@@ -14,8 +14,8 @@ classifiers = [
 python = "^2.7"
 Jinja2 = "2.11.0"
 wlf = {path = "vendor/wlf-0.6.0-py2.py3-none-any.whl"}
-cgtwq = {path = "vendor/cgtwq-3.0.0b0-py2.py3-none-any.whl"}
-cgtwq-uploader = {path = "vendor/cgtwq_uploader-3.4.0-py2.py3-none-any.whl"}
+cgtwq = {path = "vendor/cgtwq-3.0.0b1-py2.py3-none-any.whl"}
+cgtwq-uploader = {path = "vendor/cgtwq_uploader-3.6.0-py2.py3-none-any.whl"}
 pendulum = "2.0.5"
 pyblish-lite = "0.8.4"
 pluggy = "0.12.0"

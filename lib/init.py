@@ -15,22 +15,7 @@ def setup_site():
     site.addsitedir(os.path.abspath(
         os.path.join(__file__, '../site-packages')))
 
-
-def setup_prefix_filter():
-    """Add custom prefix filter for wrong naming.  """
-
-    import cgtwq.helper.wlf
-    cgtwq.helper.wlf.CGTWQHelper.prefix_filters.append(
-        lambda x: x.replace('XJCG', 'XJ'))
-    cgtwq.helper.wlf.CGTWQHelper.prefix_filters.append(
-        lambda x: x.replace('QNPV', 'QNYH'))
-    cgtwq.helper.wlf.CGTWQHelper.prefix_filters.append(
-        lambda x: x.replace('YLDL', 'YLDE'))
-
-
 setup_site()
-setup_prefix_filter()
-
 
 def _enable_windows_unicode_console():
     import sys
