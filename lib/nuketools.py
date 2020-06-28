@@ -158,6 +158,9 @@ def raise_panel(name):
 
     Args:
         name (str): panel name, (e.g. DopeSheet.1)
+
+    Raises:
+        RuntimeError: when panel not found.
     """
 
     from Qt import QtWidgets
@@ -179,6 +182,8 @@ def raise_panel(name):
         tab.setCurrentIndex(index)
         panel.window().raise_()
         return
+    else:
+        raise RuntimeError("Not found panel: {}".format(name))
 
 
 @contextmanager

@@ -161,7 +161,6 @@ class Window(window.Window):
         """Active pyblish window.   """
 
         nuketools.raise_panel("com.wlf.pyblish")
-        window.raise_()  # RuntimeError if deleted
 
     @classmethod
     def dock(cls):
@@ -187,7 +186,7 @@ class Window(window.Window):
             try:
                 window_.activate()
             except RuntimeError:
-                LOGGER.error('Window already deleted.')
+                # window already deleted.
                 cls.instance = None
                 cls.dock()
 
