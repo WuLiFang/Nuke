@@ -96,8 +96,6 @@ class Panel(PythonPanel):
             ),
         )
         self.timewarp["lookup"].setExpression("floor(curve)")
-        for i in nuke.openPanels():
-            nuke.toNode(i).hideControlPanel()
         self.timewarp.showControlPanel()
         viewer = nuke.activeViewer()
         viewer.node().setInput(viewer.activeInput() or 0, self.timewarp)
