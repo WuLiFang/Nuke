@@ -1,5 +1,21 @@
 # 更新日志
 
+
+## [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
+
+
+### 功能
+
+* 添加更多文件前缀项目匹配规则 ([c8bc545](https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f))
+* 延长许可日期至 2021-01-01 ([d79a95c](https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1))
+* **wlf_Lightwrap:** 添加通道控制 ([7f5a71d](https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb))
+
+
+### 修复
+
+* **依赖:** 更新依赖 jinja2 至 v2.11.0 ([6f3ff93](https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf))
+* **wlf_Lightwrap:** 应该在 rgba 通道上模糊而不是 rgb 通道 ([a336040](https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30))
+
 ## [0.20.4](https://github.com/WuLiFang/Nuke/compare/v0.20.3...v0.20.4) (2020-01-10)
 
 ### 功能
