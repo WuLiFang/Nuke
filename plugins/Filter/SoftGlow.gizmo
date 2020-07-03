@@ -6,11 +6,14 @@ nuke.thisNode()["operation"].setEnabled(not nuke.thisNode()["effect_only"].value
  }
  tile_color 0xcc804eff
  name SoftGlow1
- addUserKnob {20 SoftGlow l "SoftGlow v0.1.0"}
- addUserKnob {7 size R 0 100 l "size(尺寸)"}
+ addUserKnob {20 SoftGlow l "SoftGlow v0.1.1"}
+ addUserKnob {41 tint T Glow1.tint l "tint(染色)" t "辉光染色"}
+ addUserKnob {41 tolerance T Glow1.tolerance l "tolerance(阈值)" t "辉光阈值，低于此值的像素不影响辉光。"}
+ addUserKnob {41 brightness T Glow1.brightness l "brightness(亮度)"}
+ addUserKnob {41 saturation T Glow1.saturation l "saturation(饱和度)" t "辉光饱和度"}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {7 size R 0 200 l "size(尺寸)"}
  size 100
- addUserKnob {7 brightness l "brightness(亮度)"}
- brightness 1
  addUserKnob {3 level l "level(级数)" t "辉光级数，越高渲染越慢。最大为 10，为 1 时效果同原生 Glow。"}
  level 5
  addUserKnob {7 ratio l "ratio(比例)" t "下一级辉光相对于上一级辉光的比例, 1 代表 100% "}
@@ -30,6 +33,9 @@ nuke.thisNode()["operation"].setEnabled(not nuke.thisNode()["effect_only"].value
  }
 set N50efe400 [stack 0]
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -45,6 +51,9 @@ set N50efe400 [stack 0]
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -60,6 +69,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -75,6 +87,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -90,6 +105,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -105,6 +123,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -120,6 +141,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -135,6 +159,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -150,6 +177,9 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
+  tint {{parent.Glow1.tint}}
+  tolerance {{parent.Glow1.tolerance}}
+  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
@@ -165,7 +195,6 @@ push $N50efe400
  }
 push $N50efe400
  Glow2 {
-  brightness {{parent.brightness}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   name Glow1
