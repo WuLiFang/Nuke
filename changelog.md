@@ -1,20 +1,40 @@
 # 更新日志
 
-
-## [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
-
+## [0.20.6](https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6) (2020-07-05)
 
 ### 功能
 
-* 添加更多文件前缀项目匹配规则 ([c8bc545](https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f))
-* 延长许可日期至 2021-01-01 ([d79a95c](https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1))
-* **wlf_Lightwrap:** 添加通道控制 ([7f5a71d](https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb))
-
+- 延长许可日期至 2021-07-01 ([c56d413](https://github.com/WuLiFang/Nuke/commit/c56d413470211686c5ead85019ace23fcf301db0))
+- 添加 OnionSkin 节点 ([f47a6ef](https://github.com/WuLiFang/Nuke/commit/f47a6efeffb0c3fd457c198cad71d360bed219a8))
+- 添加 SoftGlow 节点 ([c1e8643](https://github.com/WuLiFang/Nuke/commit/c1e8643d447f7b0d90acf92bce3f8174a3d9c188))
+- **SoftGlow:** v0.1.1 添加更多控制 ([bf249b6](https://github.com/WuLiFang/Nuke/commit/bf249b63f6d23ba42aa8a74a5f0957c26ef97c7c))
+- 在需要选择节点单未选择时弹出消息提示 ([c4c8002](https://github.com/WuLiFang/Nuke/commit/c4c80023a35339a558542641a71763a7fca35760))
+- **OnionSkin:** 0.1.2 添加 effect_only 控制 ([09ccb1b](https://github.com/WuLiFang/Nuke/commit/09ccb1bca0c53c49d857249ccf541c1862779573))
+- 添加 OnionSkin.knob_hash 以使过期缓存失效 ([979614d](https://github.com/WuLiFang/Nuke/commit/979614dacef9e97ab96803a2decca3b6ee826882))
+- 添加 rotopaint 摄影表 ([0e8dc18](https://github.com/WuLiFang/Nuke/commit/0e8dc1836bea1e5ac567d5fcc8a7ac6526e3d12a))
 
 ### 修复
 
-* **依赖:** 更新依赖 jinja2 至 v2.11.0 ([6f3ff93](https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf))
-* **wlf_Lightwrap:** 应该在 rgba 通道上模糊而不是 rgb 通道 ([a336040](https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30))
+- 激活发布面板时应变更选中的标签页 ([012b652](https://github.com/WuLiFang/Nuke/commit/012b652945060a765bb55edad3e26f5e01213af6))
+- 避免使用 nuke.openPanels() ([b9604bf](https://github.com/WuLiFang/Nuke/commit/b9604bf853573b9e9cbeb8cb5eba1248f1fa9372))
+- 发布面板在关闭后再次激活无效 ([bd2c950](https://github.com/WuLiFang/Nuke/commit/bd2c950182b1add1f3a9045f53ee6cb5061c2e47))
+- **OnionSkin:** 0.1.1 帧超出范围时的结果错误 ([f88e9e9](https://github.com/WuLiFang/Nuke/commit/f88e9e98a28defd835de5ad4f59fcefa343b402d))
+- 在没有输入时尝试激活当前查看器输入 ([eed6775](https://github.com/WuLiFang/Nuke/commit/eed6775b0686717743d92c45501793e57d90c959))
+- rotopaint 摄影表应处理两个关键帧在同一帧上的情况 ([fc3439f](https://github.com/WuLiFang/Nuke/commit/fc3439fbe91069441a558ded9fc733650cb64f76))
+- rotopaint 摄影表产生未预期的过渡 ([2d58e21](https://github.com/WuLiFang/Nuke/commit/2d58e212233cc505955bb2f89ae7e1a9a77ce45e))
+
+## [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
+
+### 功能
+
+- 添加更多文件前缀项目匹配规则 ([c8bc545](https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f))
+- 延长许可日期至 2021-01-01 ([d79a95c](https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1))
+- **wlf_Lightwrap:** 添加通道控制 ([7f5a71d](https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb))
+
+### 修复
+
+- **依赖:** 更新依赖 jinja2 至 v2.11.0 ([6f3ff93](https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf))
+- **wlf_Lightwrap:** 应该在 rgba 通道上模糊而不是 rgb 通道 ([a336040](https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30))
 
 ## [0.20.4](https://github.com/WuLiFang/Nuke/compare/v0.20.3...v0.20.4) (2020-01-10)
 
@@ -196,13 +216,13 @@
 
 ### 修复
 
-- ** `wlf_Write` 节点 1.55.3 **: Deadline 上低于`exr阈值`的分别渲染任务渲染 MOV 时不读取之前渲染好的 EXR
+- **`wlf_Write` 节点 1.55.3**: Deadline 上低于`exr阈值`的分别渲染任务渲染 MOV 时不读取之前渲染好的 EXR
 
 ## 0.14.2 (2018-08-02)
 
 ### 修复
 
-- ** `wlf_Write` 节点 1.55.1 **: 在中途取消渲染单帧之后渲染视频会出错的问题
+- **`wlf_Write` 节点 1.55.1**: 在中途取消渲染单帧之后渲染视频会出错的问题
 
 ## 0.14.1 (2018-07-27)
 
