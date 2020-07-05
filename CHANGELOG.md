@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.6](https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6) (2020-07-05)
+
+
+### Features
+
+* update expire time to 2021-07-01 ([c56d413](https://github.com/WuLiFang/Nuke/commit/c56d413470211686c5ead85019ace23fcf301db0))
+* **SoftGlow:** v0.1.1 add more knobs ([bf249b6](https://github.com/WuLiFang/Nuke/commit/bf249b63f6d23ba42aa8a74a5f0957c26ef97c7c))
+* add message for no selected node ([c4c8002](https://github.com/WuLiFang/Nuke/commit/c4c80023a35339a558542641a71763a7fca35760))
+* add OnionSkin node ([f47a6ef](https://github.com/WuLiFang/Nuke/commit/f47a6efeffb0c3fd457c198cad71d360bed219a8))
+* add SoftGlow node ([c1e8643](https://github.com/WuLiFang/Nuke/commit/c1e8643d447f7b0d90acf92bce3f8174a3d9c188))
+* **OnionSkin:** 0.1.2 add effect_only knob ([09ccb1b](https://github.com/WuLiFang/Nuke/commit/09ccb1bca0c53c49d857249ccf541c1862779573))
+* add OnionSkin.knob_hash to invalidate viewer cache ([979614d](https://github.com/WuLiFang/Nuke/commit/979614dacef9e97ab96803a2decca3b6ee826882))
+* add rotopaint dopesheet ([0e8dc18](https://github.com/WuLiFang/Nuke/commit/0e8dc1836bea1e5ac567d5fcc8a7ac6526e3d12a))
+
+
+### Bug Fixes
+
+* active pyblish panel remains tab unchanged ([012b652](https://github.com/WuLiFang/Nuke/commit/012b652945060a765bb55edad3e26f5e01213af6))
+* avoid use nuke.openPanels() ([b9604bf](https://github.com/WuLiFang/Nuke/commit/b9604bf853573b9e9cbeb8cb5eba1248f1fa9372))
+* pyblish window can not active if window deleted ([bd2c950](https://github.com/WuLiFang/Nuke/commit/bd2c950182b1add1f3a9045f53ee6cb5061c2e47))
+* **OnionSkin:** 0.1.1 wrong result when frame out of range ([f88e9e9](https://github.com/WuLiFang/Nuke/commit/f88e9e98a28defd835de5ad4f59fcefa343b402d))
+* active viewer input when no input ([eed6775](https://github.com/WuLiFang/Nuke/commit/eed6775b0686717743d92c45501793e57d90c959))
+* handle overlap frame for rotopaint dopesheet ([fc3439f](https://github.com/WuLiFang/Nuke/commit/fc3439fbe91069441a558ded9fc733650cb64f76))
+* unexpected transition when using rotopaint dopesheet ([2d58e21](https://github.com/WuLiFang/Nuke/commit/2d58e212233cc505955bb2f89ae7e1a9a77ce45e))
+
 ### [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
 
 
