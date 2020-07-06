@@ -7,9 +7,9 @@ python-versions = "*"
 version = "0.7.12"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -37,9 +37,9 @@ python = "<3.4"
 version = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -50,9 +50,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.4.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -69,9 +69,9 @@ docs = ["sphinx", "zope.interface"]
 tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -86,9 +86,9 @@ pycodestyle = ">=2.6.0"
 toml = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -102,9 +102,9 @@ version = "2.8.0"
 pytz = ">=2015.7"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -120,9 +120,9 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pytest-black-multipy", "pytest-cov"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -133,9 +133,9 @@ python-versions = "*"
 version = "2020.6.20"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -184,9 +184,9 @@ python-versions = "*"
 version = "3.0.4"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -198,9 +198,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.4.3"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -219,9 +219,9 @@ version = ">=0.14.0"
 test = ["flake8 (3.7.8)", "hypothesis (3.55.3)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -237,9 +237,9 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2)", "pytest-flake8", "pytest-black-multipy"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -251,9 +251,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "0.6.0.post1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -272,9 +272,9 @@ six = "*"
 stevedore = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -285,9 +285,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "0.16"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -299,9 +299,9 @@ python-versions = "*"
 version = "1.1.10"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -322,9 +322,9 @@ lint = ["flake8 (3.7.7)", "pre-commit (1.16.1)", "flake8-bugbear (19.3.0)"]
 tests = ["pytest", "mock", "webtest (2.0.33)", "dj-database-url", "dj-email-url", "webtest-aiohttp (2.0.0)", "pytest-aiohttp (>=0.3.0)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -336,9 +336,9 @@ python-versions = "*"
 version = "1.0.2"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -350,9 +350,9 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "0.18.2"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -363,9 +363,9 @@ python-versions = ">=2.6, <3"
 version = "3.3.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -379,9 +379,9 @@ version = "2.0.6"
 smmap2 = ">=2.0.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -395,9 +395,9 @@ version = "2.1.15"
 gitdb2 = ">=2,<3"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -405,12 +405,12 @@ description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.9"
+version = "2.10"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -421,9 +421,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.2.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -431,7 +431,7 @@ description = "Read metadata from Python packages"
 name = "importlib-metadata"
 optional = false
 python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
-version = "1.6.1"
+version = "1.7.0"
 
 [package.dependencies]
 zipp = ">=0.5"
@@ -453,9 +453,9 @@ docs = ["sphinx", "rst.linker"]
 testing = ["packaging", "pep517", "importlib-resources (>=1.3)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -481,9 +481,9 @@ requirements = ["pipreqs", "pip-api"]
 xdg_home = ["appdirs (>=1.4.0)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -500,9 +500,9 @@ MarkupSafe = ">=0.23"
 i18n = ["Babel (>=0.8)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -513,9 +513,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.5.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -526,9 +526,9 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
 version = "1.1.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -546,9 +546,9 @@ reco = ["python-dateutil", "simplejson"]
 tests = ["pytest", "pytz"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -559,9 +559,9 @@ python-versions = "*"
 version = "0.6.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -576,9 +576,9 @@ version = "5.0.0"
 six = ">=1.0.0,<2.0.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -593,9 +593,9 @@ pyparsing = ">=2.0.2"
 six = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -614,9 +614,9 @@ python = "<3.5"
 version = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -627,9 +627,9 @@ python-versions = "*"
 version = "5.4.5"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -648,9 +648,9 @@ python = "<3.5"
 version = ">=3.6,<4.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -667,9 +667,9 @@ importlib-metadata = ">=0.12"
 dev = ["pre-commit", "tox"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -683,9 +683,9 @@ version = "5.4.8"
 enum = ["enum34"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -693,12 +693,12 @@ description = "library with cross-python path, ini-parsing, io, code, log facili
 name = "py"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.8.2"
+version = "1.9.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -709,9 +709,9 @@ python-versions = "*"
 version = "1.8.7"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -725,9 +725,9 @@ version = "0.8.4"
 pyblish-base = ">=1.4"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -738,9 +738,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2.6.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -751,9 +751,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 version = "2.5.2"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -775,9 +775,9 @@ python = "<3.4"
 version = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -788,9 +788,9 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "2.4.7"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -829,9 +829,9 @@ version = ">=2.2.0"
 testing = ["argcomplete", "hypothesis (>=3.56)", "nose", "requests", "mock"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -845,9 +845,9 @@ version = "2.8.1"
 six = ">=1.5"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -855,7 +855,7 @@ description = "Add .env support to your django/flask apps in development and dep
 name = "python-dotenv"
 optional = false
 python-versions = "*"
-version = "0.13.0"
+version = "0.14.0"
 
 [package.dependencies]
 [package.dependencies.typing]
@@ -866,9 +866,9 @@ version = "*"
 cli = ["click (>=5.0)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -879,9 +879,9 @@ python-versions = "*"
 version = "2020.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -892,9 +892,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "2019.3"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -905,9 +905,9 @@ python-versions = "*"
 version = "1.1.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -923,9 +923,9 @@ docutils = ">=0.11"
 sphinx = ">=1.3.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -946,9 +946,9 @@ security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)"]
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -962,9 +962,9 @@ version = "1.3.1"
 docutils = ">=0.11,<1.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -975,23 +975,23 @@ python-versions = "*"
 version = "0.14.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
 description = "scandir, a better directory iterator and faster os.walk()"
-marker = "python_version < \"3.5\""
+marker = "python_version < \"3\""
 name = "scandir"
 optional = false
 python-versions = "*"
 version = "1.10.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1006,9 +1006,9 @@ version = "3.4.0.3"
 six = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -1019,9 +1019,9 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*"
 version = "1.12.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1032,9 +1032,9 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "3.0.4"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1048,9 +1048,9 @@ version = "3.0.1"
 smmap = ">=3.0.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1061,9 +1061,9 @@ python-versions = "*"
 version = "2.0.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1097,9 +1097,9 @@ test = ["mock", "pytest", "pytest-cov", "html5lib", "flake8 (>=3.5.0)", "flake8-
 websupport = ["sqlalchemy (>=0.9)", "whoosh (>=2.0)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1115,9 +1115,9 @@ six = "*"
 sphinx = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1131,9 +1131,9 @@ version = "1.1.2"
 test = ["pytest", "mock"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1148,9 +1148,9 @@ pbr = ">=2.0.0,<2.1.0 || >2.1.0"
 six = ">=1.10.0"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1161,9 +1161,9 @@ python-versions = "*"
 version = "0.10.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -1175,9 +1175,9 @@ python-versions = "*"
 version = "3.7.4.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -1192,9 +1192,9 @@ secure = ["pyOpenSSL (>=0.14,<18.0.0)", "pyOpenSSL (>=0.14)", "cryptography (>=1
 socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "dev"
@@ -1210,9 +1210,9 @@ python = "<3.2"
 version = ">=1.2.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -1226,9 +1226,9 @@ version = "0.57.0"
 six = "*"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -1240,9 +1240,9 @@ python-versions = "*"
 version = "0.5"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
@@ -1275,14 +1275,13 @@ python-versions = "*"
 version = "1.12.1"
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [[package]]
 category = "main"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-marker = "python_version < \"3.8\""
 name = "zipp"
 optional = false
 python-versions = ">=2.7"
@@ -1298,12 +1297,12 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["pathlib2", "unittest2", "jaraco.itertools", "func-timeout"]
 
 [package.source]
-reference = "aliyun"
+reference = "tsinghua"
 type = "legacy"
-url = "https://mirrors.aliyun.com/pypi/simple"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 
 [metadata]
-content-hash = "50c4953a420732a8244b26fea698451275da361adc164340bb8cb583d35ddf0a"
+content-hash = "a83d3b64546c48473d6a088c9bf305b4045fe9e6e80b9919b5ce7cc56498f058"
 python-versions = "^2.7"
 
 [metadata.files]
@@ -1345,8 +1344,8 @@ cgtwq-uploader = [
     {file = "cgtwq_uploader-3.6.0-py2.py3-none-any.whl", hash = "sha256:0bb1097b798e60d5266566fd75d61e95580762563c8ed6f8b693b8467ede09b4"},
 ]
 chardet = [
-    {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "md5:0004b00caff7bb543a1d0d0bd0185a03"},
-    {file = "chardet-3.0.4.tar.gz", hash = "md5:7dd1ba7f9c77e32351b0a0cfacf4055c"},
+    {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
+    {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
 ]
 colorama = [
     {file = "colorama-0.4.3-py2.py3-none-any.whl", hash = "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff"},
@@ -1382,8 +1381,8 @@ environs = [
     {file = "environs-4.2.0.tar.gz", hash = "sha256:9d83321a32e29c963f199bf118d9dae199b42ab22b247b11d909b0d203e068bf"},
 ]
 funcsigs = [
-    {file = "funcsigs-1.0.2-py2.py3-none-any.whl", hash = "md5:701d58358171f34b6d1197de2923a35a"},
-    {file = "funcsigs-1.0.2.tar.gz", hash = "md5:7e583285b1fb8a76305d6d68f4ccc14e"},
+    {file = "funcsigs-1.0.2-py2.py3-none-any.whl", hash = "sha256:330cc27ccbf7f1e992e69fef78261dc7c6569012cf397db8d3de0234e6c937ca"},
+    {file = "funcsigs-1.0.2.tar.gz", hash = "sha256:a7bb0f2cf3a3fd1ab2732cb49eba4252c2af4240442415b4abce3b87022a8f50"},
 ]
 future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
@@ -1401,16 +1400,16 @@ gitpython = [
     {file = "GitPython-2.1.15.tar.gz", hash = "sha256:838c38d882a97b2fd146dbd4eb9baaf857cb65ebaa64e4c06fca48aaa491e1c6"},
 ]
 idna = [
-    {file = "idna-2.9-py2.py3-none-any.whl", hash = "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"},
-    {file = "idna-2.9.tar.gz", hash = "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb"},
+    {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
+    {file = "idna-2.10.tar.gz", hash = "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"},
 ]
 imagesize = [
     {file = "imagesize-1.2.0-py2.py3-none-any.whl", hash = "sha256:6965f19a6a2039c7d48bca7dba2473069ff854c36ae6f19d2cde309d998228a1"},
     {file = "imagesize-1.2.0.tar.gz", hash = "sha256:b1f6b5a4eab1f73479a50fb79fcf729514a900c341d8503d62a62dbc4127a2b1"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-1.6.1-py2.py3-none-any.whl", hash = "sha256:15ec6c0fd909e893e3a08b3a7c76ecb149122fb14b7efe1199ddd4c7c57ea958"},
-    {file = "importlib_metadata-1.6.1.tar.gz", hash = "sha256:0505dd08068cfec00f53a74a0ad927676d7757da81b7436a6eefe4c7cf75c545"},
+    {file = "importlib_metadata-1.7.0-py2.py3-none-any.whl", hash = "sha256:dc15b2969b4ce36305c51eebe62d418ac7791e9a157911d58bfb1f9ccd8e2070"},
+    {file = "importlib_metadata-1.7.0.tar.gz", hash = "sha256:90bb658cdbbf6d1735b6341ce708fc7024a3e14e99ffdc5783edea9f9b077f83"},
 ]
 isort = [
     {file = "isort-4.3.21-py2.py3-none-any.whl", hash = "sha256:6e811fcb295968434526407adb8796944f1988c5b65e8139058f2014cbe100fd"},
@@ -1480,8 +1479,8 @@ marshmallow = [
     {file = "marshmallow-2.21.0.tar.gz", hash = "sha256:e9390c0c80437d7a02d84e3d1635dc20f37a8bcb149ca443d93791bdc683f28d"},
 ]
 mccabe = [
-    {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "md5:6afffd590703262843327af8c4051928"},
-    {file = "mccabe-0.6.1.tar.gz", hash = "md5:723df2f7b1737b8887475bac4c763e1e"},
+    {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
+    {file = "mccabe-0.6.1.tar.gz", hash = "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"},
 ]
 more-itertools = [
     {file = "more-itertools-5.0.0.tar.gz", hash = "sha256:38a936c0a6d98a38bcc2d03fdaaedaba9f412879461dd2ceff8d37564d6522e4"},
@@ -1524,8 +1523,8 @@ psutil = [
     {file = "psutil-5.4.8.tar.gz", hash = "sha256:6e265c8f3da00b015d24b842bfeb111f856b13d24f2c57036582568dc650d6c3"},
 ]
 py = [
-    {file = "py-1.8.2-py2.py3-none-any.whl", hash = "sha256:a673fa23d7000440cc885c17dbd34fafcb7d7a6e230b29f6766400de36a33c44"},
-    {file = "py-1.8.2.tar.gz", hash = "sha256:f3b3a4c36512a4c4f024041ab51866f11761cc169670204b235f6b20523d4e6b"},
+    {file = "py-1.9.0-py2.py3-none-any.whl", hash = "sha256:366389d1db726cd2fcfc79732e75410e5fe4d31db13692115529d34069a043c2"},
+    {file = "py-1.9.0.tar.gz", hash = "sha256:9ca6883ce56b4e8da7e79ac18787889fa5206c79dcc67fb065376cd2fe03f342"},
 ]
 pyblish-base = [
     {file = "pyblish-base-1.8.7.tar.gz", hash = "sha256:4a7a9e5f1360abcc7e92113a72a46b502a6338230b9ee53877cd53a84e50da37"},
@@ -1560,8 +1559,8 @@ python-dateutil = [
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
 python-dotenv = [
-    {file = "python-dotenv-0.13.0.tar.gz", hash = "sha256:3b9909bc96b0edc6b01586e1eed05e71174ef4e04c71da5786370cebea53ad74"},
-    {file = "python_dotenv-0.13.0-py2.py3-none-any.whl", hash = "sha256:25c0ff1a3e12f4bde8d592cc254ab075cfe734fc5dd989036716fd17ee7e5ec7"},
+    {file = "python-dotenv-0.14.0.tar.gz", hash = "sha256:8c10c99a1b25d9a68058a1ad6f90381a62ba68230ca93966882a4dbc3bc9c33d"},
+    {file = "python_dotenv-0.14.0-py2.py3-none-any.whl", hash = "sha256:c10863aee750ad720f4f43436565e4c1698798d763b63234fb5021b6c616e423"},
 ]
 pytz = [
     {file = "pytz-2020.1-py2.py3-none-any.whl", hash = "sha256:a494d53b6d39c3c6e44c3bec237336e14305e4f29bbf800b599253057fbb79ed"},
@@ -1605,8 +1604,8 @@ scandir = [
     {file = "scandir-1.10.0.tar.gz", hash = "sha256:4d4631f6062e658e9007ab3149a9b914f3548cb38bfb021c64f39a025ce578ae"},
 ]
 singledispatch = [
-    {file = "singledispatch-3.4.0.3-py2.py3-none-any.whl", hash = "md5:d633bac187d681455ab065c645be845d"},
-    {file = "singledispatch-3.4.0.3.tar.gz", hash = "md5:af2fc6a3d6cc5a02d0bf54d909785fcb"},
+    {file = "singledispatch-3.4.0.3-py2.py3-none-any.whl", hash = "sha256:833b46966687b3de7f438c761ac475213e53b306740f1abfaa86e1d1aae56aa8"},
+    {file = "singledispatch-3.4.0.3.tar.gz", hash = "sha256:5b06af87df13818d14f08a028e42f566640aef80805c3b50c5056b086e3c2b9c"},
 ]
 six = [
     {file = "six-1.12.0-py2.py3-none-any.whl", hash = "sha256:3350809f0555b11f552448330d0b52d5f24c91a322ea4a15ef22629740f3761c"},
@@ -1661,7 +1660,7 @@ websocket-client = [
     {file = "websocket_client-0.57.0.tar.gz", hash = "sha256:d735b91d6d1692a6a181f2a8c9e0238e5f6373356f561bb9dc4c7af36f452010"},
 ]
 win-unicode-console = [
-    {file = "win_unicode_console-0.5.zip", hash = "md5:535f9eb4cac37679cfa5b0b4da0b624d"},
+    {file = "win_unicode_console-0.5.zip", hash = "sha256:d4142d4d56d46f449d6f00536a73625a871cba040f0bc1a2e305a04578f07d1e"},
 ]
 wlf = [
     {file = "wlf-0.6.0-py2.py3-none-any.whl", hash = "sha256:ff1c81ffa1ae08f59a931a240dffcce093ce8fc593adfadcf9fd21b2e85c0f3e"},
