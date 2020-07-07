@@ -1,47 +1,79 @@
 #! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
 Group {
- knobChanged {
-nuke.thisNode()["operation"].setEnabled(not nuke.thisNode()["effect_only"].value())
- }
- tile_color 0xcc804eff
+ onCreate {
+if '__wlf_SoftGlow_0_1_2' not in locals():
+    class __wlf_SoftGlow_0_1_2(object):
+
+        @classmethod
+        def knob_changed(cls):
+            k = nuke.thisKnob()
+            n = nuke.thisNode()
+            if k.name() == "effect_only":
+                n["operation"].setEnabled(not k.value())
+            elif (k.name() == "inputChange" 
+                and n["W"].value() == "none" 
+                and n.input(1)
+                and "rgba.alpha" in n.input(1).channels()
+            ):
+                n["W"].setValue("rgba.alpha")
+}
+ knobChanged __wlf_SoftGlow_0_1_2.knob_changed()
  name SoftGlow1
- addUserKnob {20 SoftGlow l "SoftGlow v0.1.1"}
- addUserKnob {41 tint T Glow1.tint l "tint(染色)" t "辉光染色"}
- addUserKnob {41 tolerance T Glow1.tolerance l "tolerance(阈值)" t "辉光阈值，低于此值的像素不影响辉光。"}
- addUserKnob {41 brightness T Glow1.brightness l "brightness(亮度)"}
- addUserKnob {41 saturation T Glow1.saturation l "saturation(饱和度)" t "辉光饱和度"}
- addUserKnob {26 "" +STARTLINE}
- addUserKnob {7 size R 0 200 l "size(尺寸)"}
+ tile_color 0xcc804eff
+ xpos 87
+ ypos 130
+ addUserKnob {20 SoftGlow l "SoftGlow v0.1.2"}
+ addUserKnob {41 tint l tint(染色) t 辉光染色 T Glow1.tint}
+ addUserKnob {41 tolerance l tolerance(阈值) t 辉光阈值，低于此值的像素不影响辉光。 T Glow1.tolerance}
+ addUserKnob {41 brightness l brightness(亮度) T Glow1.brightness}
+ addUserKnob {41 saturation l saturation(饱和度) t 辉光饱和度 T Glow1.saturation}
+ addUserKnob {41 W l "width channel(宽度通道)" t "宽度通道，为每个像素单独指定尺寸百分比， 1 代表 100%。\n连接 width 输入时从 width 输入取，否则从默认输入取。" T Glow1.W}
+ addUserKnob {26 ""}
+ addUserKnob {7 size l size(尺寸) R 0 200}
  size 100
- addUserKnob {3 level l "level(级数)" t "辉光级数，越高渲染越慢。最大为 10，为 1 时效果同原生 Glow。"}
+ addUserKnob {3 level l level(级数) t "辉光级数，越高渲染越慢。最大为 10，为 1 时效果同原生 Glow。"}
  level 5
- addUserKnob {7 ratio l "ratio(比例)" t "下一级辉光相对于上一级辉光的比例, 1 代表 100% "}
+ addUserKnob {7 ratio l ratio(比例) t "下一级辉光相对于上一级辉光的比例, 1 代表 100% "}
  ratio 0.5
- addUserKnob {41 operation T MergeOperation.operation t "效果的叠加模式"}
- addUserKnob {6 effect_only l "effect only" -STARTLINE t "是否只输出显示效果，不输出原图。"}
- addUserKnob {41 filter T Glow1.filter t "辉光模糊算法"}
- addUserKnob {7 mix t "计算后的结果和计算前的结果进行混合"}
+ addUserKnob {41 operation t 效果的叠加模式 T MergeOperation.operation}
+ addUserKnob {6 effect_only l "effect only" t 是否只输出显示效果，不输出原图。 -STARTLINE}
+ addUserKnob {41 filter t 辉光模糊算法 T Glow1.filter}
+ addUserKnob {7 mix t 计算后的结果和计算前的结果进行混合}
  mix 1
 }
  Input {
   inputs 0
-  name Input1
-  gl_color 0x32ff5700
-  xpos 0
-  ypos -1106
+  name width
+  xpos 178
+  ypos -1149
+  number 1
  }
-set N50efe400 [stack 0]
+ Input {
+  inputs 0
+  name Input
+  xpos -61
+  ypos -1215
+ }
+set Na51eb800 [stack 0]
+ Switch {
+  inputs 2
+  which {{"!\[string is false \[input parent 1]]"}}
+  name Switch2
+  xpos 141
+  ypos -1099
+ }
+set Nac08bb00 [stack 0]
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow10
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -276
@@ -49,17 +81,17 @@ set N50efe400 [stack 0]
   addUserKnob {3 level}
   level 9
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow9
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -356
@@ -67,17 +99,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 8
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow8
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -436
@@ -85,17 +117,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 7
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow7
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -516
@@ -103,17 +135,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 6
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow6
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -596
@@ -121,17 +153,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 5
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow5
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -676
@@ -139,17 +171,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 4
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow4
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -756
@@ -157,17 +189,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 3
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow3
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -836
@@ -175,17 +207,17 @@ push $N50efe400
   addUserKnob {3 level}
   level 2
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
-  saturation {{parent.Glow1.saturation}}
   brightness {{parent.Glow1.brightness}}
+  saturation {{parent.Glow1.saturation}}
+  W {{{parent.Glow1.W}}}
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   filter {{parent.Glow1.filter}}
   name Glow2
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -916
@@ -193,12 +225,11 @@ push $N50efe400
   addUserKnob {3 level}
   level 1
  }
-push $N50efe400
+push $Nac08bb00
  Glow2 {
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   name Glow1
-  gl_color 0x32ffe800
   label "level \[ value level ]"
   xpos 1250
   ypos -996
@@ -209,7 +240,6 @@ push $N50efe400
   inputs 0
   channels rgb
   name Constant1
-  gl_color 0x5f32ff00
   xpos 1160
   ypos -1076
  }
@@ -217,7 +247,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel0
-  gl_color 0xff463200
   xpos 1160
   ypos -948
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -226,7 +255,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel1
-  gl_color 0xff463200
   xpos 1160
   ypos -868
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -235,7 +263,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel2
-  gl_color 0xff463200
   xpos 1160
   ypos -788
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -244,7 +271,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel3
-  gl_color 0xff463200
   xpos 1160
   ypos -708
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -253,7 +279,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel4
-  gl_color 0xff463200
   xpos 1160
   ypos -628
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -262,7 +287,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel5
-  gl_color 0xff463200
   xpos 1160
   ypos -548
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -271,7 +295,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel6
-  gl_color 0xff463200
   xpos 1160
   ypos -468
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -280,7 +303,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel7
-  gl_color 0xff463200
   xpos 1160
   ypos -388
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -289,7 +311,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel8
-  gl_color 0xff463200
   xpos 1160
   ypos -308
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -298,7 +319,6 @@ push $N50efe400
   inputs 2
   operation plus
   name MergeLevel9
-  gl_color 0xff463200
   xpos 1160
   ypos -228
   disable {{"parent.level - 1 < \[input this 1].level"}}
@@ -307,29 +327,25 @@ push $N50efe400
   expression {{"parent.level >= 0 && parent.level <= 10"}}
   message "level should be 0-10, got \[value parent.level]"
   name Assert1
-  gl_color 0xff325500
   xpos 1160
   ypos -196
  }
-set N7ef69800 [stack 0]
  Multiply {
   channels rgb
   value {{"1 / max(parent.level, 1)"}}
   name Multiply1
-  gl_color 0xe332ff00
   label "divide by level count"
   xpos 1160
   ypos -164
  }
-set N50faa000 [stack 0]
-push $N50faa000
-push $N50efe400
+set N8baa3800 [stack 0]
+push $N8baa3800
+push $Na51eb800
  Merge2 {
   inputs 2
   operation screen
   bbox B
   name MergeOperation
-  gl_color 0x32ff6400
   xpos 580
   ypos -116
  }
@@ -337,35 +353,22 @@ push $N50efe400
   inputs 2
   which {{parent.effect_only}}
   name Switch1
-  gl_color 0x3278ff00
   xpos 580
   ypos -84
  }
-push $N50efe400
+push $Na51eb800
  Merge2 {
   inputs 2
   operation copy
   bbox B
   mix {{parent.mix}}
   name Merge4
-  gl_color 0xff325700
   xpos 0
   ypos -52
  }
  Output {
   name Output1
-  gl_color 0x3f32ff00
   xpos 0
   ypos -20
- }
-push $N7ef69800
- Viewer {
-  frame_range 1-100
-  fps 25
-  input_process false
-  name Viewer1
-  gl_color 0xff32b500
-  xpos 1430
-  ypos -22
  }
 end_group
