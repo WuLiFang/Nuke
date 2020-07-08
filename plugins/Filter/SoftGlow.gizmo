@@ -2,8 +2,8 @@
 version 10.0 v4
 Group {
  onCreate {
-if '__wlf_SoftGlow_0_1_2' not in locals():
-    class __wlf_SoftGlow_0_1_2(object):
+if '__wlf_SoftGlow_0_1_3' not in locals():
+    class __wlf_SoftGlow_0_1_3(object):
 
         @classmethod
         def knob_changed(cls):
@@ -18,12 +18,17 @@ if '__wlf_SoftGlow_0_1_2' not in locals():
             ):
                 n["W"].setValue("rgba.alpha")
 }
- knobChanged __wlf_SoftGlow_0_1_2.knob_changed()
+ knobChanged {
+try:
+    __wlf_SoftGlow_0_1_3.knob_changed()
+except NameError:
+    pass
+}
  name SoftGlow1
  tile_color 0xcc804eff
  xpos 87
  ypos 130
- addUserKnob {20 SoftGlow l "SoftGlow v0.1.2"}
+ addUserKnob {20 SoftGlow l "SoftGlow v0.1.3"}
  addUserKnob {41 tint l tint(染色) t 辉光染色 T Glow1.tint}
  addUserKnob {41 tolerance l tolerance(阈值) t 辉光阈值，低于此值的像素不影响辉光。 T Glow1.tolerance}
  addUserKnob {41 brightness l brightness(亮度) T Glow1.brightness}
@@ -249,7 +254,7 @@ push $Nac08bb00
   name MergeLevel0
   xpos 1160
   ypos -948
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -257,7 +262,7 @@ push $Nac08bb00
   name MergeLevel1
   xpos 1160
   ypos -868
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -265,7 +270,7 @@ push $Nac08bb00
   name MergeLevel2
   xpos 1160
   ypos -788
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -273,7 +278,7 @@ push $Nac08bb00
   name MergeLevel3
   xpos 1160
   ypos -708
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -281,7 +286,7 @@ push $Nac08bb00
   name MergeLevel4
   xpos 1160
   ypos -628
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -289,7 +294,7 @@ push $Nac08bb00
   name MergeLevel5
   xpos 1160
   ypos -548
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -297,7 +302,7 @@ push $Nac08bb00
   name MergeLevel6
   xpos 1160
   ypos -468
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -305,7 +310,7 @@ push $Nac08bb00
   name MergeLevel7
   xpos 1160
   ypos -388
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -313,7 +318,7 @@ push $Nac08bb00
   name MergeLevel8
   xpos 1160
   ypos -308
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Merge2 {
   inputs 2
@@ -321,7 +326,7 @@ push $Nac08bb00
   name MergeLevel9
   xpos 1160
   ypos -228
-  disable {{"parent.level - 1 < \[input this 1].level"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
  }
  Assert {
   expression {{"parent.level >= 0 && parent.level <= 10"}}
