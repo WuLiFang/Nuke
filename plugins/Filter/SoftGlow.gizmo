@@ -2,8 +2,8 @@
 version 10.0 v4
 Group {
  onCreate {
-if '__wlf_SoftGlow_0_1_3' not in locals():
-    class __wlf_SoftGlow_0_1_3(object):
+if '__wlf_SoftGlow_0_1_4' not in locals():
+    class __wlf_SoftGlow_0_1_4(object):
 
         @classmethod
         def knob_changed(cls):
@@ -20,20 +20,18 @@ if '__wlf_SoftGlow_0_1_3' not in locals():
 }
  knobChanged {
 try:
-    __wlf_SoftGlow_0_1_3.knob_changed()
+    __wlf_SoftGlow_0_1_4.knob_changed()
 except NameError:
     pass
 }
  name SoftGlow1
  tile_color 0xcc804eff
- xpos 87
- ypos 130
- addUserKnob {20 SoftGlow l "SoftGlow v0.1.3"}
+ addUserKnob {20 SoftGlow l "SoftGlow v0.1.4"}
  addUserKnob {41 tint l tint(染色) t 辉光染色 T Glow1.tint}
  addUserKnob {41 tolerance l tolerance(阈值) t 辉光阈值，低于此值的像素不影响辉光。 T Glow1.tolerance}
  addUserKnob {41 brightness l brightness(亮度) T Glow1.brightness}
  addUserKnob {41 saturation l saturation(饱和度) t 辉光饱和度 T Glow1.saturation}
- addUserKnob {41 W l "width channel(宽度通道)" t "宽度通道，为每个像素单独指定尺寸百分比， 1 代表 100%。\n连接 width 输入时从 width 输入取，否则从默认输入取。" T Glow1.W}
+ addUserKnob {41 W l "width channel(宽度通道)" t "宽度通道，为每个像素单独指定尺寸百分比， 1 代表 100%。\n连接 width 输入时从 width 输入取，否则从默认输入取。" T CopyWidth.from0}
  addUserKnob {26 ""}
  addUserKnob {7 size l size(尺寸) R 0 200}
  size 100
@@ -47,11 +45,19 @@ except NameError:
  addUserKnob {7 mix t 计算后的结果和计算前的结果进行混合}
  mix 1
 }
+ Constant {
+  inputs 0
+  channels mask
+  color 1
+  name Constant2
+  xpos 257
+  ypos -1196
+ }
  Input {
   inputs 0
   name width
-  xpos 178
-  ypos -1149
+  xpos 141
+  ypos -1228
   number 1
  }
  Input {
@@ -60,15 +66,33 @@ except NameError:
   xpos -61
   ypos -1215
  }
-set Na51eb800 [stack 0]
+set N9576c00 [stack 0]
  Switch {
   inputs 2
   which {{"!\[string is false \[input parent 1]]"}}
-  name Switch2
+  name Switch3
   xpos 141
-  ypos -1099
+  ypos -1193
  }
-set Nac08bb00 [stack 0]
+push $N9576c00
+ Copy {
+  inputs 2
+  from0 none
+  to0 mask.a
+  name CopyWidth
+  xpos 141
+  ypos -1148
+ }
+ Copy {
+  inputs 2
+  from0 mask.a
+  to0 mask.a
+  name Copy1
+  xpos 141
+  ypos -1086
+  disable {{"\[input this 0].from0 != 0"}}
+ }
+set Nc4d04800 [stack 0]
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -86,7 +110,7 @@ set Nac08bb00 [stack 0]
   addUserKnob {3 level}
   level 9
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -104,7 +128,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 8
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -122,7 +146,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 7
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -140,7 +164,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 6
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -158,7 +182,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 5
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -176,7 +200,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 4
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -194,7 +218,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 3
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -212,7 +236,7 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 2
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
   tint {{parent.Glow1.tint}}
   tolerance {{parent.Glow1.tolerance}}
@@ -230,8 +254,9 @@ push $Nac08bb00
   addUserKnob {3 level}
   level 1
  }
-push $Nac08bb00
+push $Nc4d04800
  Glow2 {
+  W mask.a
   effect_only true
   size {{"parent.size * parent.ratio ** level"}}
   name Glow1
@@ -254,7 +279,7 @@ push $Nac08bb00
   name MergeLevel0
   xpos 1160
   ypos -948
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -262,7 +287,7 @@ push $Nac08bb00
   name MergeLevel1
   xpos 1160
   ypos -868
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -270,7 +295,7 @@ push $Nac08bb00
   name MergeLevel2
   xpos 1160
   ypos -788
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -278,7 +303,7 @@ push $Nac08bb00
   name MergeLevel3
   xpos 1160
   ypos -708
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -286,7 +311,7 @@ push $Nac08bb00
   name MergeLevel4
   xpos 1160
   ypos -628
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -294,7 +319,7 @@ push $Nac08bb00
   name MergeLevel5
   xpos 1160
   ypos -548
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -302,7 +327,7 @@ push $Nac08bb00
   name MergeLevel6
   xpos 1160
   ypos -468
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -310,7 +335,7 @@ push $Nac08bb00
   name MergeLevel7
   xpos 1160
   ypos -388
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -318,7 +343,7 @@ push $Nac08bb00
   name MergeLevel8
   xpos 1160
   ypos -308
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Merge2 {
   inputs 2
@@ -326,7 +351,7 @@ push $Nac08bb00
   name MergeLevel9
   xpos 1160
   ypos -228
-  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 1))"}}
+  disable {{"!((parent.level > \[input this 1].level) && (\[input this 1].size >= 2))"}}
  }
  Assert {
   expression {{"parent.level >= 0 && parent.level <= 10"}}
@@ -343,9 +368,9 @@ push $Nac08bb00
   xpos 1160
   ypos -164
  }
-set N8baa3800 [stack 0]
-push $N8baa3800
-push $Na51eb800
+set Nafc22800 [stack 0]
+push $Nafc22800
+push $N9576c00
  Merge2 {
   inputs 2
   operation screen
@@ -361,7 +386,7 @@ push $Na51eb800
   xpos 580
   ypos -84
  }
-push $Na51eb800
+push $N9576c00
  Merge2 {
   inputs 2
   operation copy
