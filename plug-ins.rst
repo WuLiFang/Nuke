@@ -13,3 +13,4 @@
     plug-ins/Filter
     plug-ins/Keyer
     plug-ins/3D
+    plug-ins/Transform
