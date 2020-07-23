@@ -1,0 +1,56 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Group {
+ name RotateCrop
+ xpos -134
+ ypos -135
+ tile_color 0xa57aaaff
+ addUserKnob {20 RotateCrop "RotateCrop v0.1.0" }
+ addUserKnob {41 preset T Crop1.preset}
+ addUserKnob {41 reset l Reset -STARTLINE T Crop1.reset}
+ addUserKnob {41 box T Crop1.box}
+ addUserKnob {41 softness T Crop1.softness}
+ addUserKnob {26 "" l "  "}
+ addUserKnob {6 reformat +STARTLINE}
+ addUserKnob {41 intersect -STARTLINE T Crop1.intersect}
+ addUserKnob {41 crop l "black outside" -STARTLINE T Crop1.crop}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 rotate T Transform1.rotate}
+ addUserKnob {26 help_1 l "" +STARTLINE T 禁用此节点以查看旋转预览}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 0
+  ypos -148
+ }
+ Transform {
+  center {{"(Crop1.box.0 + Crop1.box.2) / 2"} {"(Crop1.box.1 + Crop1.box.3) / 2"}}
+  invert_matrix true
+  name Transform1
+  xpos 0
+  ypos -116
+  disable {{parent.disable}}
+ }
+ Crop {
+  reformat {{"parent.disable ? 0 : parent.reformat"}}
+  box {0 0 1920 1080}
+  name Crop1
+  gl_color 0xff0000ff
+  xpos 0
+  ypos -84
+ }
+ Transform {
+  rotate {{parent.Transform1.rotate}}
+  center {{"(Crop1.box.0 + Crop1.box.2) / 2"} {"(Crop1.box.1 + Crop1.box.3) / 2"}}
+  name Transform2
+  xpos 0
+  ypos -52
+  disable {{!parent.disable}}
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos -20
+ }
+end_group
