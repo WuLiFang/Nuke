@@ -1,0 +1,119 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Group {
+ name FilmicTonemappingOperator1
+ tile_color 0x7aa9ffff
+ xpos 2557
+ ypos 529
+ addUserKnob {20 filmic_tonemapping_operator_Tab l "Filmic Tonemapping Operator"}
+ addUserKnob {20 tone_parameters_Group l "Tone Parameters" n 1}
+ addUserKnob {7 A_Floating_Point_Slider l "Shoulder Strength"}
+ A_Floating_Point_Slider 0.22
+ addUserKnob {7 B_Floating_Point_Slider l "Linear Strength"}
+ B_Floating_Point_Slider 0.3
+ addUserKnob {7 C_Floating_Point_Slider l "Linear Angle"}
+ C_Floating_Point_Slider 0.1
+ addUserKnob {7 D_Floating_Point_Slider l "Toe Strength"}
+ D_Floating_Point_Slider 0.2
+ addUserKnob {7 E_Floating_Point_Slider l "Toe Numerator"}
+ E_Floating_Point_Slider 0.01
+ addUserKnob {7 F_Floating_Point_Slider l "Toe Denominator"}
+ F_Floating_Point_Slider 0.3
+ addUserKnob {20 tone_parameters_endGroup l endGroup n -1}
+ addUserKnob {20 miscellaneous_parameters_Group l "Miscellaneous Parameters" n 1}
+ addUserKnob {7 mix_Floating_Point_Slider l Mix t "Dissolve between the original image at 0 and the full effect at 1."}
+ mix_Floating_Point_Slider 1
+ addUserKnob {7 exposure_bias_Floating_Point_Slider l "Exposure Bias"}
+ exposure_bias_Floating_Point_Slider 1
+ addUserKnob {6 clamp_output_Check_Box l "Clamp Output" t "Output values are clamped within \[0, 1] domain." +STARTLINE}
+ addUserKnob {20 miscellaneous_parameters_endGroup l endGroup n -1}
+ addUserKnob {20 about_Tab l About}
+ addUserKnob {26 description_Text l "" +STARTLINE T "Filming Tonemapping Operator v0.1.0\n\ncolour-science.org - March 17, 2015\n\nThis Gizmo / Group implements the Filming Tonemapping Operator from Uncharted 2 by John Habble which is based on Haarm-Peter Duiker curve.\n\n\[1] Habble, J. (2010). Filmic Tonemapping Operators. Retrieved March 15, 2015, from http://filmicgames.com/archives/75\n\[2] Habble, J. (2010). Uncharted 2: HDR Lighting. Retrieved March 15, 2015, from http://www.slideshare.net/ozlael/hable-john-uncharted2-hdr-lighting"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 13
+  ypos -125
+ }
+set N2357400 [stack 0]
+ Dot {
+  name Dot1
+  xpos 123
+  ypos -122
+ }
+ Dot {
+  name Dot2
+  xpos 123
+  ypos 22
+ }
+push $N2357400
+ Multiply {
+  value {{parent.filmic_tonemapping_operator_Expression.exposure_bias_Floating_Point_Slider}}
+  name exposure_bias_Multiply
+  xpos 13
+  ypos -101
+ }
+ Expression {
+  temp_name0 toe_angle
+  temp_expr0 E_Floating_Point_Slider/F_Floating_Point_Slider
+  expr0 ((r*(A_Floating_Point_Slider*r+C_Floating_Point_Slider*B_Floating_Point_Slider)+D_Floating_Point_Slider*E_Floating_Point_Slider)/(r*(A_Floating_Point_Slider*r+B_Floating_Point_Slider)+D_Floating_Point_Slider*F_Floating_Point_Slider))-toe_angle
+  expr1 ((g*(A_Floating_Point_Slider*g+C_Floating_Point_Slider*B_Floating_Point_Slider)+D_Floating_Point_Slider*E_Floating_Point_Slider)/(g*(A_Floating_Point_Slider*g+B_Floating_Point_Slider)+D_Floating_Point_Slider*F_Floating_Point_Slider))-toe_angle
+  expr2 ((b*(A_Floating_Point_Slider*b+C_Floating_Point_Slider*B_Floating_Point_Slider)+D_Floating_Point_Slider*E_Floating_Point_Slider)/(b*(A_Floating_Point_Slider*b+B_Floating_Point_Slider)+D_Floating_Point_Slider*F_Floating_Point_Slider))-toe_angle
+  expr3 a
+  name filmic_tonemapping_operator_Expression
+  xpos 13
+  ypos -69
+  addUserKnob {20 User}
+  addUserKnob {7 exposure_bias_Floating_Point_Slider l "Exposure Bias"}
+  exposure_bias_Floating_Point_Slider {{parent.exposure_bias_Floating_Point_Slider}}
+  addUserKnob {7 A_Floating_Point_Slider l "Shoulder Strength"}
+  A_Floating_Point_Slider {{parent.A_Floating_Point_Slider}}
+  addUserKnob {7 B_Floating_Point_Slider l "Linear Strength"}
+  B_Floating_Point_Slider {{parent.B_Floating_Point_Slider}}
+  addUserKnob {7 C_Floating_Point_Slider l "Linear Angle"}
+  C_Floating_Point_Slider {{parent.C_Floating_Point_Slider}}
+  addUserKnob {7 D_Floating_Point_Slider l "Toe Strength"}
+  D_Floating_Point_Slider {{parent.D_Floating_Point_Slider}}
+  addUserKnob {7 E_Floating_Point_Slider l "Toe Numerator"}
+  E_Floating_Point_Slider {{parent.E_Floating_Point_Slider}}
+  addUserKnob {7 F_Floating_Point_Slider l "Toe Denominator"}
+  F_Floating_Point_Slider {{parent.F_Floating_Point_Slider}}
+  addUserKnob {7 linear_whitepoint_Floating_Point_Slider l "Linear Whitepoint"}
+  linear_whitepoint_Floating_Point_Slider 11.2
+  addUserKnob {7 linear_white_Floating_Point_Slider l "Linear White"}
+  linear_white_Floating_Point_Slider {{((linear_whitepoint_Floating_Point_Slider*(A_Floating_Point_Slider*linear_whitepoint_Floating_Point_Slider+C_Floating_Point_Slider*B_Floating_Point_Slider)+D_Floating_Point_Slider*E_Floating_Point_Slider)/(linear_whitepoint_Floating_Point_Slider*(A_Floating_Point_Slider*linear_whitepoint_Floating_Point_Slider+B_Floating_Point_Slider)+D_Floating_Point_Slider*F_Floating_Point_Slider))-E_Floating_Point_Slider/F_Floating_Point_Slider}}
+ }
+ Multiply {
+  value {{1/parent.filmic_tonemapping_operator_Expression.linear_white_Floating_Point_Slider}}
+  name linear_white_Multiply
+  xpos 13
+  ypos -45
+ }
+set N551a0000 [stack 0]
+ Clamp {
+  name Clamp
+  xpos -97
+  ypos -13
+ }
+push $N551a0000
+ Switch {
+  inputs 2
+  which {{parent.clamp_output_Check_Box}}
+  name clamp_Switch
+  xpos 13
+  ypos -9
+ }
+ Dissolve {
+  inputs 2
+  which {{1-parent.mix_Floating_Point_Slider}}
+  name Dissolve
+  xpos 13
+  ypos 15
+ }
+ Output {
+  name Output
+  xpos 13
+  ypos 43
+ }
+end_group
