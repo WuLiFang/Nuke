@@ -1,10 +1,9 @@
 # -*- coding=UTF-8 -*-
 """WuLiFang Comp package.  """
 
-from __future__ import absolute_import, unicode_literals, print_function
+from __future__ import absolute_import, print_function, unicode_literals
 
-_argv = __import__('sys').argv  # Backup argv
-
+from ._argv import _argv
 from .base import Comp, FootageError, RenderError, render_png
-from .precomp import Precomp
 from .batch import BatchComp
+from .precomp import Precomp

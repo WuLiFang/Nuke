@@ -1,0 +1,44 @@
+{
+  "name": "Arnold",
+  "layers": [
+    "diffuse",
+    "diffuse_indirect",
+    "specular",
+    "specular_direct",
+    "specular_indirect",
+    "reflection",
+    "refraction",
+    "emission",
+    "transmission",
+    "transmission_albedo",
+    "sss"
+  ],
+  "combine": {
+    "specular": ["specular_indirect", "specular_direct"]
+  },
+  "combineMode": {
+    "specular": "plus"
+  },
+  "plus": [
+    "diffuse",
+    "specular",
+    "reflection",
+    "refraction",
+    "sss",
+    "transmission",
+    "emission"
+  ],
+  "translate": {
+    "diffuse$": "漫反射",
+    "indirect_diffuse$": "间接漫反射",
+    "direct_diffuse$": "直接漫反射",
+    "specular$": "高光",
+    "indirect_specular$": "间接高光",
+    "direct_specular$": "直接高光",
+    "reflections$": "反射",
+    "refractions$": "折射",
+    "sss$": "次表面散射",
+    "emission$": "自发光",
+    "transmission$": "透射"
+  }
+}

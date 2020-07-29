@@ -7,11 +7,11 @@ import argparse
 import logging
 import logging.config
 import os
-import sys
 
+import wlf.path
 from comp import Comp, FootageError, RenderError, _argv
 from comp.config import START_MESSAGE, CompConfig
-import wlf.path
+
 __path__ = os.path.abspath(__file__).rstrip('c')
 
 LOGGER = logging.getLogger('com.wlf.comp')

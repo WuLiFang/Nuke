@@ -6,9 +6,11 @@ from __future__ import absolute_import, print_function, unicode_literals
 import logging
 import os
 import webbrowser
+from itertools import chain
 
 import nuke
-import nukescripts  # pylint: disable=import-error
+import nukescripts  # type: ignore
+import six
 
 import asset
 import cgtwn_panels
@@ -32,7 +34,6 @@ APPLICATION_CONTEXT = 1
 DAG_CONTEXT = 2
 
 LOGGER = logging.getLogger('com.wlf.ui')
-
 RESOURCE_DIR = os.path.abspath(os.path.join(__file__, '../../../'))
 
 
@@ -42,9 +43,9 @@ def add_menu():
     LOGGER.info('添加菜单')
 
     def _(*args, **kwargs):
-        args = (i.encode('utf-8') if isinstance(i, unicode) else i
+        args = (i.encode('utf-8') if isinstance(i, six.text_type) else i
                 for i in args)
-        kwargs = tuple({k: v.encode('utf-8') if isinstance(v, unicode) else v
+        kwargs = tuple({k: v.encode('utf-8') if isinstance(v, six.text_type) else v
                         for k, v in kwargs.items()}.items())
         return (args, kwargs)
 
@@ -58,6 +59,12 @@ def add_menu():
         help_page = os.path.join(
             RESOURCE_DIR, 'docs/build/html/index.html')
         webbrowser.open(help_page)
+
+    def concat_list(a, b):
+        ret = []
+        ret.extend(a)
+        ret.extend(b)
+        return ret
 
     all_menu = [
         {_('编辑'): [
@@ -123,18 +130,25 @@ def add_menu():
                   lambda: orgnize.nodes_add_dots(nuke.allNodes()))
             ]}
         ]},
-        {_('合成'): [
-            _('自动合成', _autocomp, icon='autocomp.png'),
-            _('自动合成设置',
-              lambda: comp.panels.CompConfigPanel(
+        {_('合成'): chain(
+            [
+                _('自动合成', _autocomp, icon='autocomp.png'),
+                _('自动合成设置',
+                  lambda: comp.panels.CompConfigPanel(
 
-              ).showModalDialog(), icon='autocomp.png'),
-            _('redshift预合成',
-              lambda: comp.Precomp.redshift(nuke.selectedNodes()),
-              'F1',
-              shortcutContext=DAG_CONTEXT,
-              icon='autocomp.png')
-        ]},
+                  ).showModalDialog(), icon='autocomp.png'),
+                _('自动预合成',
+                  nuketools.undoable_func('自动预合成')(
+                      lambda: comp.Precomp(nuke.selectedNodes())),
+                  'F1',
+                  shortcutContext=DAG_CONTEXT,
+                  icon='autocomp.png'),
+            ],
+            (_('{} 预合成'.format(v.name),
+               nuketools.undoable_func('{} 预合成'.format(v.name))(
+                   lambda: comp.Precomp(nuke.selectedNodes(), renderer=k)),
+               icon='autocomp.png') for k, v in comp.precomp.RENDERER_REGISTRY.items()),
+        )},
         {_('工具'): [
             _('批量自动合成', lambda: comp.panels.BatchCompPanel().showModalDialog(),
               icon='autocomp.png'),
