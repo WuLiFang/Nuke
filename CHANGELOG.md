@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.7](https://github.com/WuLiFang/Nuke/compare/v0.20.6...v0.20.7) (2020-07-29)
+
+
+### Features
+
+* add third party node FilmicTonemappingOperator ([b83f142](https://github.com/WuLiFang/Nuke/commit/b83f142c46c2376286d4657f62788dbb003dbae0))
+* arnold precomp ([5edd665](https://github.com/WuLiFang/Nuke/commit/5edd665c041d3c4e6d35e7242cae87691b1fd3e3))
+* **RoateCrop:** v0.1.0 add new node ([54cec0f](https://github.com/WuLiFang/Nuke/commit/54cec0f0f5b0a281ebc470ad3135ae8dc11232cc))
+* **SoftGlow:** v0.1.2 add width channel knob ([4194084](https://github.com/WuLiFang/Nuke/commit/4194084f5757993d413b699b4abe367e702b0507))
+* **SoftGlow:** v0.1.3 skip glow that size less than 1 ([0303209](https://github.com/WuLiFang/Nuke/commit/03032095aca1af311a9015b6c86a77016e656fdd))
+
+
+### Bug Fixes
+
+* **SoftGlow:** v0.1.4 should always use default input ([cb61203](https://github.com/WuLiFang/Nuke/commit/cb612037bff924d399e02df770f945504dc0dcb4))
+
 ### [0.20.6](https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6) (2020-07-05)
 
 
