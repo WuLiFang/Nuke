@@ -1,5 +1,19 @@
 # 更新日志
 
+## [0.20.7](https://github.com/WuLiFang/Nuke/compare/v0.20.6...v0.20.7) (2020-07-29)
+
+### 功能
+
+- 添加第三方节点 FilmicTonemappingOperator ([b83f142](https://github.com/WuLiFang/Nuke/commit/b83f142c46c2376286d4657f62788dbb003dbae0))
+- arnold 预合成 ([5edd665](https://github.com/WuLiFang/Nuke/commit/5edd665c041d3c4e6d35e7242cae87691b1fd3e3))
+- **RotateCrop:** v0.1.0 新节点 ([54cec0f](https://github.com/WuLiFang/Nuke/commit/54cec0f0f5b0a281ebc470ad3135ae8dc11232cc))
+- **SoftGlow:** v0.1.2 添加宽度通道控制 ([4194084](https://github.com/WuLiFang/Nuke/commit/4194084f5757993d413b699b4abe367e702b0507))
+- **SoftGlow:** v0.1.3 跳过尺寸小于 1 的辉光 ([0303209](https://github.com/WuLiFang/Nuke/commit/03032095aca1af311a9015b6c86a77016e656fdd))
+
+### 修复
+
+- **SoftGlow:** v0.1.4 应该总是使用默认输入 ([cb61203](https://github.com/WuLiFang/Nuke/commit/cb612037bff924d399e02df770f945504dc0dcb4))
+
 ## [0.20.6](https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6) (2020-07-05)
 
 ### 功能
