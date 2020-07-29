@@ -1,6 +1,6 @@
-.PHONY: all test release build
+.PHONY: default test release build
 
-all: .venv build docs/build/html
+default: .venv build docs/build/html
 
 build: docs/build/html/.git lib/site-packages
 
@@ -23,8 +23,7 @@ requirements.txt: pyproject.toml
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
-	$(PYTHON27) -m pip install -U pip poetry
-	$(PYTHON27) -m pip install -r requirements.txt --target lib/site-packages
+	poetry run python -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
 	git fetch -fn origin docs:docs
@@ -42,7 +41,7 @@ docs/build/html: .venv docs/build/html/.git docs/*
 		"$(MAKE)" -C docs html
 	touch docs/build/html
 
-test: .venv lib/site-packages
+test: .venv
 	. ./scripts/activate-venv.sh && python -m pytest tests
 
 release:
@@ -51,9 +50,9 @@ release:
 .venv: export POETRY_VIRTUALENVS_IN_PROJECT=true
 .venv: pyproject.toml
 	poetry env use "$(PYTHON27)"
-	poetry run python -m pip install -U pip
-	poetry run python -m pip install -U more-itertools==5.0.0 poetry
-	poetry install
+	# pendulum require poetry to install
+	poetry run python -m pip install -U pip poetry==1.1.0b2
+	poetry install -vv
 	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-venv-python-lib.sh)/nuke.pth
 	touch .venv
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nuke"
-version = "0.20.5"
+version = "0.20.7"
 description = "Nuke plugins for WuLiFang Studio"
 authors = ["NateScarlet <NateScarlet@Gmail.com>"]
 repository="https://github.com/WuLiFang/Nuke"
@@ -12,15 +12,15 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^2.7"
-Jinja2 = "2.11.0"
+jinja2 = "^2.11"
 wlf = {path = "vendor/wlf-0.6.0-py2.py3-none-any.whl"}
 cgtwq = {path = "vendor/cgtwq-3.0.0b1-py2.py3-none-any.whl"}
 cgtwq-uploader = {path = "vendor/cgtwq_uploader-3.6.0-py2.py3-none-any.whl"}
-pendulum = "2.0.5"
-pyblish-lite = "0.8.4"
-pluggy = "0.12.0"
-urllib3 = "1.23"
-win-unicode-console = {version = "0.5", platform = "win32"}
+pendulum = "^2.0"
+pyblish-lite = "^0.8.4"
+pluggy = "^0.12.0"
+urllib3 = "^1.23"
+win-unicode-console = {version = "^0.5", platform = "win32"}
 futures = "^3.3.0"
 
 [tool.poetry.dev-dependencies]
@@ -32,12 +32,7 @@ doc8 = "^0.8.0"
 sphinx = "^1"
 sphinx-git = "^11.0.0"
 recommonmark = "^0.6.0"
-
-[[tool.poetry.source]]
-# Required for use mirror, see https://github.com/python-poetry/poetry/issues/1632
-name = "tsinghua"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple"
-default = true
+more-itertools = "^5.0.0"
 
 [build-system]
 requires = ["poetry>=0.12"]
