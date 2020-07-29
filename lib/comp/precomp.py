@@ -121,13 +121,6 @@ class __PrecompSwitch(object):
 PrecompSwitch = __PrecompSwitch
 
 
-def list_renderers():
-    for i in os.listdir(wlf_module_path("data")):
-        match = re.match(r"^precomp\.(.+).json$", i)
-        if match:
-            yield match[1]
-
-
 class RendererConfig():
     def __init__(self):
         self.name = ""
