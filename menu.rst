@@ -296,7 +296,7 @@ Reload所有
 对 :ref:`自动合成` 进行设置。
 
 
-Redshift预合成
+Redshift 预合成
 ***************
 
 将选中的Redshift素材节点进行分层预合成
@@ -304,6 +304,26 @@ Redshift预合成
 .. figure:: /_images/precomp_redshift.png
 
   一键搭建所需框架
+
+Arnold 预合成
+***************
+
+将选中的 Arnold 素材节点进行分层预合成
+
+.. figure:: /_images/precomp_arnold.png
+
+  一键搭建所需框架
+
+自动预合成
+**********************
+
+根据分层检测使用的素材类型，并使用对应的预合成。
+
+支持：
+
+- RedShift
+- Arnold
+
 
 |cgteamwork_icon| CGTeamWork
 ---------------------------------
