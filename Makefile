@@ -7,12 +7,18 @@ build: docs/build/html/.git lib/site-packages
 ifeq ($(OS), Windows_NT)
 export PY_PYTHON=2.7
 PYTHON27?=py
-NUKE_PYTHON?="C:/Program Files/Nuke10.5v7/python.exe"
+NUKE_PYTHON?=C:/Program Files/Nuke10.5v7/python.exe
+# abspath not work on windows
+PYTHON_LIB=.venv/Lib/site-packages/
+PYTHONPATH:=$(PYTHONPATH);lib/site-packages;lib;../lib/site-packages;../lib
 else
 PYTHON27?=/usr/bin/python
 NUKE_PYTHON?=python
+PYTHON_LIB=$(abspath .venv/lib/python2.7/site-packages/)
+PYTHONPATH:=$(PYTHONPATH):$(abspath lib/site-packages):$(abspath lib)
 endif
 
+export PYTHONPATH
 
 requirements.txt: pyproject.toml
 	poetry export -f requirements.txt --output requirements.txt
@@ -37,12 +43,11 @@ docs/build/html/.git: docs/.git
 docs/*: docs/.git
 
 docs/build/html: .venv docs/build/html/.git docs/*
-	. ./scripts/activate-venv.sh &&\
-		"$(MAKE)" -C docs html
+	poetry run "$(MAKE)" -C docs html
 	touch docs/build/html
 
-test: .venv
-	. ./scripts/activate-venv.sh && python -m pytest tests
+test: .venv lib/site-packages
+	poetry run pytest tests
 
 release:
 	standard-version
@@ -53,7 +58,7 @@ release:
 	# pendulum require poetry to install
 	poetry run python -m pip install -U pip poetry==1.1.0b2
 	poetry install -vv
-	$(NUKE_PYTHON) -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $$(./scripts/get-venv-python-lib.sh)/nuke.pth
+	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > "$(PYTHON_LIB)/nuke.pth"
 	touch .venv
 
 

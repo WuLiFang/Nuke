@@ -94,8 +94,8 @@ class Task(cgtwq.Entry):
         """Get task entry from shot name.
 
         Args:
-        shot (str): Shot name.
-            pipeline (str, optional): Defaults to '合成'. Pipline name.
+            shot (str): Shot name.
+                pipeline (str, optional): Defaults to '合成'. Pipline name.
         """
 
         entry = get_entry_by_file(shot, pipeline)

@@ -1,0 +1,11 @@
+.venv/
+.vscode/
+.pytest_cache/
+/.git
+node_modules/
+**/__pycache__/
+/renovate.json
+/test.Dockerfile
+/docs.Dockerfile
+/.drone.yml
+/appveyor.yml

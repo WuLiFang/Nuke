@@ -4,76 +4,135 @@ name: nuke10.0v4
 
 steps:
   - name: test
-    image: natescarlet/nuke:10.0v4
+    image: docker:stable-git
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
     environment:
-      PIP_NO_BUILD_ISOLATION: false
-      PYTHON_PATH: "/drone/src/lib"
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
-      - sudo chown -R nuke:nuke  .
-      # https://github.com/python-poetry/poetry/issues/2600
-      # https://github.com/python-poetry/poetry/issues/2711
-      - sudo -EH pip install -U pip poetry==1.1.0b2
-      - make test
+      - >-
+        docker build
+        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
+        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
+        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg "VERSION=10.0v4"
+        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --file test.Dockerfile
+        .
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
 ---
 kind: pipeline
 name: nuke10.5v7
 
 steps:
   - name: test
-    image: natescarlet/nuke:10.5v7
+    image: docker:stable-git
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
     environment:
       PIP_NO_BUILD_ISOLATION: false
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
-      - sudo chown -R nuke:nuke  .
-      - sudo -EH pip install -U pip poetry==1.1.0b2
-      - make test
+      - >-
+        docker build
+        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
+        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
+        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg "VERSION=10.5v7"
+        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --file test.Dockerfile
+        .
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
 ---
 kind: pipeline
 name: nuke:latest
 
 steps:
   - name: test
-    image: natescarlet/nuke:latest
+    image: docker:stable-git
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
     environment:
       PIP_NO_BUILD_ISOLATION: false
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
-      - sudo chown -R nuke:nuke  .
-      - sudo -EH pip install -U pip poetry==1.1.0b2
-      - make test
+      - >-
+        docker build
+        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
+        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
+        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg "VERSION=latest"
+        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --file test.Dockerfile
+        .
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
 ---
 kind: pipeline
 name: docs
 
 steps:
   - name: build
-    image: natescarlet/nuke:10.5v7
+    image: docker:stable-git
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
     environment:
       PIP_NO_BUILD_ISOLATION: false
       foundry_LICENSE:
         from_secret: foundry_LICENSE
     commands:
-      - sudo chown -R nuke:nuke  .
-      - sudo -EH pip install -U pip poetry==1.1.0b2
-      - make docs/build/html
+      - git fetch -fn origin docs:docs
+      - git worktree add -f docs docs
+      - git fetch -fn origin gh-pages:gh-pages
+      - git worktree add -f docs/build/html gh-pages
+      - >-
+        docker build
+        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
+        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
+        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg "VERSION=latest"
+        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --file docs.Dockerfile
+        --tag "temp:${DRONE_COMMIT_SHA}"
+        .
+      - >-
+        docker run 
+        --rm 
+        -v $(pwd):/mnt/workspace
+        temp:${DRONE_COMMIT_SHA}
+        sudo cp -rf docs/build/ /mnt/workspace/docs/
+      - docker image rm temp:${DRONE_COMMIT_SHA}
+      - git -C docs/build/html status
   - name: deploy to github
-    image: natescarlet/nuke:10.5v7
+    image: node:lts
     environment:
       GITHUB_DEPLOY_KEY:
         from_secret: GITHUB_DEPLOY_KEY
     commands:
+      - cd docs/build/html
+      - if [ -z "$(git status -s)" ];then exit 0; fi
       - mkdir ~/.ssh/
       - echo "$${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
       - |-
         if [ -n "$SSH_PROXY" ]; then
-          sudo sed -i "s@http://.\+\.debian\.org/debian@http://mirrors.huaweicloud.com/debian@g" /etc/apt/sources.list
-          sudo apt-get update
-          sudo apt-get -y install connect-proxy
+          sed -i "s@http://.\+\.debian\.org/debian@http://mirrors.huaweicloud.com/debian@g" /etc/apt/sources.list
+          apt-get update
+          apt-get -y install connect-proxy
           echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
         fi
       - chmod 600 ~/.ssh/id_rsa
@@ -81,8 +140,6 @@ steps:
       - chmod 644 ~/.ssh/known_hosts
       - git config --global user.name 'CI User'
       - git config --global user.email '<>'
-      - cd docs/build/html
-      - if [ -z "$(git status -s)" ];then exit 0; fi
       - git checkout --orphan temp-${DRONE_COMMIT_SHA}
       - git add --all
       - "git commit -m 'docs: build' -m '[skip ci]'"
@@ -91,6 +148,14 @@ steps:
     when:
       branch:
         - master
+depends_on:
+  - nuke10.0v4
+  - nuke10.5v7
+  - nuke:latest
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
 ---
 kind: pipeline
 name: notification
