@@ -2,8 +2,8 @@
 #
 
 # You can set these variables from the command line.
-SPHINXOPTS    =
-SPHINXBUILD   ?= python -msphinx
+SPHINXOPTS    ?=
+SPHINXBUILD   ?= poetry run sphinx-build
 SPHINXPROJ    = WuLiFangNuke
 SOURCEDIR     = .
 BUILDDIR      = build
