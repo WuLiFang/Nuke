@@ -17,7 +17,7 @@ from nukescripts.panels import restorePanel  # pylint: disable=import-error
 from pyblish_lite import app, control, settings, util, window
 from Qt import QtGui
 from Qt.QtCore import Qt
-from Qt.QtWidgets import QApplication
+from Qt.QtWidgets import QApplication, QMainWindow
 
 import callback
 import filetools
@@ -160,7 +160,11 @@ class Window(window.Window):
     def activate(self):
         """Active pyblish window.   """
 
-        nuketools.raise_panel("com.wlf.pyblish")
+        if isinstance(self.parent(), QMainWindow):
+            # Show as a standalone dialog.
+            self.raise_()
+        else:
+            nuketools.raise_panel("com.wlf.pyblish")
 
     @classmethod
     def dock(cls):
