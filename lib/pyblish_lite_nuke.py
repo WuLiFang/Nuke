@@ -17,7 +17,7 @@ from nukescripts.panels import restorePanel  # pylint: disable=import-error
 from pyblish_lite import app, control, settings, util, window
 from Qt import QtGui
 from Qt.QtCore import Qt
-from Qt.QtWidgets import QApplication, QStackedWidget
+from Qt.QtWidgets import QApplication
 
 import callback
 import filetools
@@ -77,6 +77,9 @@ def _pyblish_action(name, is_reset=True):
         Window.dock()
 
     window_ = Window.instance
+    if not window_:
+        # closed
+        return
     assert isinstance(window_, Window)
     controller = window_.controller
     assert isinstance(controller, control.Controller)
@@ -127,8 +130,9 @@ class Window(window.Window):
     _is_initiated = False
     instance = None
 
-    def __new__(cls, parent=None):
+    def __new__(cls, parent=None,):
         if not cls.instance:
+            LOGGER.debug("create new pyblish window")
             cls.instance = super(Window, cls).__new__(cls, parent)
         return cls.instance
 
@@ -157,12 +161,17 @@ class Window(window.Window):
 
         self._is_initiated = True
 
+        def _unset():
+            Window.instance = None
+        self.destroyed.connect(_unset)
+
     def activate(self):
         """Active pyblish window.   """
 
-        if not isinstance(self.parent(), QStackedWidget):
-            # Show as a standalone dialog.
-            self.raise_()
+        LOGGER.debug("activate pyblish window: is_panel=%s",
+                     not self.isWindow())
+        if self.isWindow():
+            self.showNormal()
         else:
             nuketools.raise_panel("com.wlf.pyblish")
 
@@ -172,27 +181,23 @@ class Window(window.Window):
             or pop it out.
         """
 
-        window_ = cls.instance
-        if not window_:
-            try:
-                mainwindow_ = mainwindow()
+        try:
+            window_ = cls.instance
+            if not cls.instance:
                 pane = nuke.getPaneFor('Properties.1')
                 if pane:
                     panel = restorePanel('com.wlf.pyblish')
                     panel.addToPane(pane)
                 else:
-                    window_ = Window(mainwindow_)
-                    window_.show()
-            except RuntimeError:
-                window_ = Window()
-                window_.show()
-        else:
+                    Window(mainwindow() or QApplication.activeWindow())
             try:
-                window_.activate()
+                cls.instance.activate()
             except RuntimeError:
-                # window already deleted.
                 cls.instance = None
                 cls.dock()
+        except:
+            LOGGER.exception()
+            raise
 
     def get_parent(self, parent_class):
         """Get parent for window.
@@ -240,11 +245,8 @@ def setup():
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
-    try:
-        settings.TerminalLoglevel = int(
-            logging.getLevelName(os.getenv('LOGLEVEL')))
-    except (TypeError, ValueError):
-        settings.TerminalLoglevel = 20
+    if os.getenv("DEBUG") != "pyblish":
+        settings.TerminalLoglevel = logging.CRITICAL
 
     app.install_fonts()
     app.install_translator(QApplication.instance())
