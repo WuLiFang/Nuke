@@ -15,7 +15,9 @@ def setup_site():
     site.addsitedir(os.path.abspath(
         os.path.join(__file__, '../site-packages')))
 
+
 setup_site()
+
 
 def _enable_windows_unicode_console():
     import sys
@@ -34,6 +36,7 @@ def main():
     import render
     import wlf.mp_logging
     import patch.precomp
+    import logging
 
     try:
         import validation
@@ -43,6 +46,9 @@ def main():
         sys.exit(1)
 
     wlf.mp_logging.basic_config()
+    pyblish_logger = logging.getLogger("pyblish")
+    if pyblish_logger.getEffectiveLevel() > logging.DEBUG:
+        pyblish_logger.setLevel(logging.CRITICAL)
 
     validation.setup()
     callback.setup()
