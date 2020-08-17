@@ -18,6 +18,7 @@ import cgtwq
 import comp
 import comp.panels
 import edit
+import edit.motion_distort
 import edit.rotopaint_dopesheet
 import edit.script_use_seq
 import edit.script_use_seq.panels
@@ -108,6 +109,8 @@ def add_menu():
                       lambda: edit.script_use_seq.panels.ConfigPanel().showModalDialog()),
                 ]
             },
+            _("创建 MotionDistort",
+              edit.motion_distort.show_motion_distort_dialog),
             {_('最佳实践'): [
                 _("清理无用节点",
                   lambda: edit.delete_unused_nodes(message=True)),

@@ -42,7 +42,7 @@ docs/build/html/.git: docs/.git
 
 docs/*: docs/.git
 
-docs/build/html: .venv docs/build/html/.git docs/*
+docs/build/html: .venv docs/build/html/.git docs/* docs/*/*
 	poetry run "$(MAKE)" -C docs html
 	touch docs/build/html
 

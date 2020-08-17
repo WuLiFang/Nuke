@@ -11,6 +11,9 @@
     "files.associations": {
       "*.spec": "python",
       "cmath": "cpp"
-    }
+    },
+    "cSpell.words": [
+      "rgba"
+    ]
   }
 }
