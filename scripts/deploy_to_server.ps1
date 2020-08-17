@@ -10,3 +10,7 @@ Robocopy.exe lib\site-packages "$(git remote get-url server)\lib\site-packages" 
 if (!$?) {
     exit 1
 }
+git.exe -C "$(git remote get-url server)/docs/build/html" checkout $(git rev-parse gh-pages)
+if (!$?) {
+    exit 1
+}

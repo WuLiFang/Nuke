@@ -1,4 +1,4 @@
-.PHONY: default test release build
+.PHONY: default test release build docs/build/html
 
 default: .venv build docs/build/html
 
@@ -42,9 +42,8 @@ docs/build/html/.git: docs/.git
 
 docs/*: docs/.git
 
-docs/build/html: .venv docs/build/html/.git docs/* docs/*/*
+docs/build/html: .venv docs/build/html/.git
 	poetry run "$(MAKE)" -C docs html
-	touch docs/build/html
 
 test: .venv lib/site-packages
 	poetry run pytest tests
