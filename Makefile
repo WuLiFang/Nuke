@@ -3,7 +3,7 @@
 
 # You can set these variables from the command line.
 SPHINXOPTS    ?=
-SPHINXBUILD   ?= poetry run sphinx-build
+SPHINXBUILD   ?= python -msphinx
 SPHINXPROJ    = WuLiFangNuke
 SOURCEDIR     = .
 BUILDDIR      = build
