@@ -30,11 +30,10 @@ motion 输入应包含名为 motion 的层用于 IDistort 节点 UV 输入。
 
   - 如果有帧使图像完全消失，后续帧将不会有图像重新出现。
 
-
-.. image:: /_images/Nuke10.5_2020-08-17_14-42-53.png
-
 控制
 --------------
+
+.. image:: /_images/Nuke10.5_2020-08-17_14-42-53.png
 
 disable_motion_mask
 
