@@ -28,7 +28,6 @@ def _create_motion_distort_frame(target, source, frame, direction):
         operation="copy",
         Achannels="motion",
         Bchannels="motion",
-        bbox="intersection",
         rangeinput="All",
         output="motion",
         inputs=[hold_base, hold_current],
@@ -39,16 +38,11 @@ def _create_motion_distort_frame(target, source, frame, direction):
         uv_scale=direction,
         inputs=[copy]
     )
-    distort = nuke.nodes.BlackOutside(
-        inputs=[distort],
-    )
     mask = nuke.nodes.Merge2(
         operation="mask",
+        bbox="intersection",
         inputs=[distort, hold_current],
         disable="{{parent.disable_motion_mask}}",
-    )
-    mask = nuke.nodes.BlackOutside(
-        inputs=[mask],
     )
     cache = nuke.nodes.DiskCache(channels="rgba", inputs=[mask])
     switch = nuke.nodes.Switch(
@@ -75,7 +69,7 @@ def create_motion_distrot(base_frame, frame_gte, frame_lte):
     assert isinstance(frame_lte, int)
     group = nuke.nodes.Group(tile_color="0xa57aaaff")
     group.setName("MotionDistort1")
-    group.addKnob(nuke.Tab_Knob("", "MotionDistort v0.2.0"))
+    group.addKnob(nuke.Tab_Knob("", "MotionDistort v0.2.1"))
     group.addKnob(nuke.Boolean_Knob("disable_motion_mask"))
     group.addKnob(nuke.EndTabGroup_Knob(""))
     with group:
