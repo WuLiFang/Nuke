@@ -53,7 +53,7 @@ def _create_motion_distort_frame(target, source, frame, direction):
     return switch
 
 
-@nuketools.undoable_func('MotionDistort')
+@nuketools.undoable_func('运动扭曲')
 def create_motion_distrot(base_frame, frame_gte, frame_lte):
     """Create a motion distort group node for given frame range,
 
@@ -100,7 +100,7 @@ def show_motion_distort_dialog():
             'base': '基准帧',
         }.get(key, key))
 
-    panel = nuke.Panel("创建 MotionDistort".encode("utf8"))
+    panel = nuke.Panel("创建运动扭曲".encode("utf8"))
     panel.addExpressionInput(_tr('base'), nuke.frame())
     panel.addExpressionInput(_tr('start'), nuke.numvalue("root.first_frame"))
     panel.addExpressionInput(_tr('end'), nuke.numvalue("root.last_frame"))

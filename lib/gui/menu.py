@@ -20,6 +20,7 @@ import comp.panels
 import edit
 import edit.motion_distort
 import edit.rotopaint_dopesheet
+import edit.rotopaint_motion_distort
 import edit.script_use_seq
 import edit.script_use_seq.panels
 import edit_panels
@@ -72,10 +73,16 @@ def add_menu():
             _('同时编辑多个节点', lambda: edit_panels.MultiEdit().show(), 'F2'),
             _('RotoPaint摄影表', lambda: edit.rotopaint_dopesheet.Panel(
                 nuketools.selected_node()).show(), 'SHIFT+R'),
+            _('RotoPaint运动扭曲',
+              edit.rotopaint_motion_distort.show_dialog),
             _('分离图层', lambda: edit.split_layers(nuketools.selected_node()),
               'F3', icon="SplitLayers.png"),
-            _("分离rgba",
-              lambda: edit.shuffle_rgba(nuketools.selected_node()), 'SHIFT+F3'),
+            _(
+                "分离rgba",
+                lambda: edit.shuffle_rgba(
+                    nuketools.selected_node()),
+                'SHIFT+F3',
+            ),
             _("重命名PuzzleMatte",
               lambda: edit_panels.ChannelsRename().show(), 'F4'),
             _("标记为稍后启用",
@@ -109,7 +116,7 @@ def add_menu():
                       lambda: edit.script_use_seq.panels.ConfigPanel().showModalDialog()),
                 ]
             },
-            _("创建 MotionDistort",
+            _("创建运动扭曲",
               edit.motion_distort.show_motion_distort_dialog),
             {_('最佳实践'): [
                 _("清理无用节点",

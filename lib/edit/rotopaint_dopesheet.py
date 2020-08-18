@@ -11,12 +11,7 @@ import nuke.rotopaint
 
 import nuketools
 from panels import PythonPanel
-
-LIFETIME_TYPE_ALL = 0
-LIFETIME_TYPE_START_TO_FRAME = 1
-LIFETIME_TYPE_SINGLE_FRAME = 2
-LIFETIME_TYPE_FRAME_TO_END = 3
-LIFETIME_TYPE_RANGE = 4
+from rotopaint_tools import LIFETIME_TYPE_ALL, iter_layer
 
 
 def _rotopaint_keyframes(n):
@@ -62,7 +57,7 @@ def apply_timewarp(rotopaint, timewarp, all_stroke=False):
         output_time = time_map[int(input_time)]
         attrs.set(key, output_time)
 
-    for i in _iter_layer(root_layer):
+    for i in iter_layer(root_layer):
         if isinstance(i, nuke.rotopaint.Layer):
             continue
         attrs = i.getAttributes()
@@ -135,12 +130,3 @@ class Panel(PythonPanel):
             self.rotopaint.showControlPanel()
             self.destroy()
             nuketools.raise_panel("DAG.1")
-
-
-def _iter_layer(l):
-    # type: (nuke.rotopaint.Layer,) -> Iterator[nuke.rotopaint.Element]
-    for i in l:
-        yield i
-        if isinstance(i, nuke.rotopaint.Layer):
-            for j in _iter_layer(i):
-                yield j
