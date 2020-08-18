@@ -204,10 +204,6 @@ def show_dialog():
         nuke.message(utf8("请选中RotoPaint节点"))
         return
 
-    # Node.sample need a transformed position when using proxy
-    nuke.Root()["proxy"].setValue(False)
-    
-
     def _tr(key):
         return utf8({
             'start': '起始帧',
@@ -223,6 +219,10 @@ def show_dialog():
     panel.addExpressionInput(_tr('interval'), 1)
     if not panel.show():
         return
+
+    # Node.sample need a transformed position when using proxy
+    nuke.Root()["proxy"].setValue(False)
+
     base = int(panel.value(_tr('base')))
     start = int(panel.value(_tr('start')))
     end = int(panel.value(_tr('end')))
