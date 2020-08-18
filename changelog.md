@@ -1,6 +1,6 @@
 # 更新日志
 
-### [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
+## [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
 
 ### 功能
 
