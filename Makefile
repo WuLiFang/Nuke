@@ -29,6 +29,8 @@ requirements.txt: pyproject.toml
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
+	# pendulum require poetry to install
+	poetry run python -m pip install -U pip poetry==1.1.0b2
 	poetry run python -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
