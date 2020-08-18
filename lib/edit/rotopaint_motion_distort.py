@@ -233,8 +233,8 @@ def show_dialog():
                 lambda i: i.name()
             ),
     ):
-        layers = n.channels()
-        if not ("forward.u" in layers and "forward.v" in layers):
+        channels = n.channels()
+        if not ("forward.u" in channels and "forward.v" in channels):
             nuke.message(
                 utf8("节点 {} 缺少 forward.u 和 forward.v 通道，将跳过")
                 .format(n.getName())
