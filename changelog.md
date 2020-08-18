@@ -1,5 +1,21 @@
 # 更新日志
 
+## [0.20.8](https://github.com/WuLiFang/Nuke/compare/v0.20.7...v0.20.8) (2020-08-18)
+
+### 功能
+
+- rotopaint 运动扭曲 ([f4406e6](https://github.com/WuLiFang/Nuke/commit/f4406e6c2ff2a0012c8b16a9a73c571d0c7327e0))
+- **运动扭曲:** v0.2.0 支持设置基准帧 ([ed9c513](https://github.com/WuLiFang/Nuke/commit/ed9c5139cc5da1a8c96ce3d3024f1627d9cfdcd1))
+- 添加创建运动扭曲命令 ([bf1c1cb](https://github.com/WuLiFang/Nuke/commit/bf1c1cb02cdbe35d0ae4cd4e582b34977188fd9b))
+- 添加第三方 RealGlow 节点 ([e170849](https://github.com/WuLiFang/Nuke/commit/e170849ec451431f1acdbf01baa3d40734516cfb))
+
+### 修复
+
+- **MotionDistort:** v0.2.1 错误的边界框设置 ([871bdbe](https://github.com/WuLiFang/Nuke/commit/871bdbe8a9166f4890fe952611b5c11d7f112c40))
+- NukeX 有重复的 pyblish 窗口 ([30f029b](https://github.com/WuLiFang/Nuke/commit/30f029ba53a807712d8d5e8e02ba3aeb1ebcabcb))
+- 有重复的 pyblish 面板 ([0d23ec5](https://github.com/WuLiFang/Nuke/commit/0d23ec52331d3371d64829df3619d9865245e0f3))
+- NukeStudio pyblish 窗口 ([8298f11](https://github.com/WuLiFang/Nuke/commit/8298f114141dce519642a85a41861f363c6f20d0))
+
 ## [0.20.7](https://github.com/WuLiFang/Nuke/compare/v0.20.6...v0.20.7) (2020-07-29)
 
 ### 功能
