@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
+
+
+### Features
+
+* **RotoPaint MotionDistort:** disable proxy after dialog confirm ([eb13fe5](https://github.com/WuLiFang/Nuke/commit/eb13fe5c5f789feaf7118cdbb1935d64a4a1b873))
+
+
+### Bug Fixes
+
+* should disable proxy before rotopaint motion distort ([f18847a](https://github.com/WuLiFang/Nuke/commit/f18847a6e447a7e74ab10c9cc577fae295c3243a))
+
 ### [0.20.8](https://github.com/WuLiFang/Nuke/compare/v0.20.7...v0.20.8) (2020-08-18)
 
 
