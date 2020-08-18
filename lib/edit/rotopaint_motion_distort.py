@@ -60,9 +60,6 @@ class _RelativePointProxy(_PointProxy):
 
 def _motion_distort_rotopaint_anim_point_frame(
         motion, point, frame, direction):
-    # Node.sample need a transformed position when using proxy
-    nuke.Root()["proxy"].setValue(False)
-
     base_frame = frame-direction
     base_pos = point.getPosition(base_frame)
     offset = CVec3(
@@ -206,6 +203,10 @@ def show_dialog():
     if not nodes:
         nuke.message(utf8("请选中RotoPaint节点"))
         return
+
+    # Node.sample need a transformed position when using proxy
+    nuke.Root()["proxy"].setValue(False)
+    
 
     def _tr(key):
         return utf8({
