@@ -1,5 +1,15 @@
 # 更新日志
 
+### [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
+
+### 功能
+
+- **RotoPaint 运动扭曲:** 在对话框确认后禁用代理 ([eb13fe5](https://github.com/WuLiFang/Nuke/commit/eb13fe5c5f789feaf7118cdbb1935d64a4a1b873))
+
+### 修复
+
+- 应该在 RotoPaint 运动扭曲前禁用代理 ([f18847a](https://github.com/WuLiFang/Nuke/commit/f18847a6e447a7e74ab10c9cc577fae295c3243a))
+
 ## [0.20.8](https://github.com/WuLiFang/Nuke/compare/v0.20.7...v0.20.8) (2020-08-18)
 
 ### 功能
