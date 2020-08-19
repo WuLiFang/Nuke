@@ -41,32 +41,52 @@ def _motion_distort_rotopaint_anim_point_frame(
                       base_pos.y,
                       frame=base_frame),
     )
-    point.addPositionKey(frame, base_pos + offset*direction)
+    computed_pos = base_pos + offset*direction
+
+    def _job():
+        point.addPositionKey(frame, computed_pos)
+
+    return _job
 
 
-def _motion_distort_rotopaint_anim_point(
-        motion, point, base_frame, frame_gte, frame_lte, interval):
-    # base
-    _motion_distort_rotopaint_anim_point_frame(motion, point, base_frame, 0)
-    # backward
-    for i in range(base_frame-1, frame_gte-1, -1):
-        _motion_distort_rotopaint_anim_point_frame(
-            motion, point, i, -1)
-    # forward
-    for i in range(base_frame+1, frame_lte+1):
-        _motion_distort_rotopaint_anim_point_frame(
-            motion, point, i, 1)
-    # interval
-    for i in range(frame_gte, frame_lte + 1):
-        if (i - base_frame) % interval != 0:
-            point.removePositionKey(i)
+def _motion_distort_rotopaint_shape_point_frame(
+        motion, point, frame, direction):
+    # we should change center after sample finished.
+    deferred_jobs = []
+    for i in iter_shape_point(point):
+        job = _motion_distort_rotopaint_anim_point_frame(
+            motion,
+            i,
+            frame,
+            direction,
+        )
+        deferred_jobs.append(job)
+
+    for i in deferred_jobs:
+        i()
+
+
+def _remove_shape_point_position_key(point, frame):
+    for i in iter_shape_point(point):
+        i.removePositionKey(frame)
 
 
 def _motion_distort_rotopaint_shape_point(
         motion, point, base_frame, frame_gte, frame_lte, interval):
-    for i in iter_shape_point(point):
-        _motion_distort_rotopaint_anim_point(
-            motion, i, base_frame, frame_gte, frame_lte, interval)
+    # base
+    _motion_distort_rotopaint_shape_point_frame(motion, point, base_frame, 0)
+    # backward
+    for i in range(base_frame-1, frame_gte-1, -1):
+        _motion_distort_rotopaint_shape_point_frame(
+            motion, point, i, -1)
+    # forward
+    for i in range(base_frame+1, frame_lte+1):
+        _motion_distort_rotopaint_shape_point_frame(
+            motion, point, i, 1)
+    # interval
+    for i in range(frame_gte, frame_lte + 1):
+        if (i - base_frame) % interval != 0:
+            _remove_shape_point_position_key(point, i)
 
 
 def _motion_distort_rotopaint_shape(
@@ -180,7 +200,7 @@ def show_dialog():
     end = int(panel.value(_tr('end')))
     interval = int(panel.value(_tr('interval')))
     for n in progress(
-            nodes, "RotoPaint motion distort",
+            nodes, "RotoPaint 运动扭曲",
             handler=CustomMessageProgressHandler(
                 lambda i: i.name()
             ),
