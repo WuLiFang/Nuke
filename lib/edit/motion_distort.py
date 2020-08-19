@@ -16,32 +16,43 @@ def _create_motion_distort_frame(target, source, frame, direction):
     assert isinstance(target, nuke.Node)
     assert isinstance(source, nuke.Node)
     assert isinstance(frame, int)
-    hold_base = nuke.nodes.FrameHold(
-        first_frame=frame+direction,
+    base_frame = frame-direction
+    rgba = nuke.nodes.FrameHold(
+        first_frame=base_frame,
         inputs=[target],
     )
-    hold_current = nuke.nodes.FrameHold(
+
+    motion_current = nuke.nodes.FrameHold(
         first_frame=frame,
         inputs=[source]
     )
+    # backward: current frame motion + base frame rgba.
+    motion = motion_current
+    if direction > 0:
+        # forward: base frame motion + base frame rgba.
+        motion = nuke.nodes.FrameHold(
+            first_frame=base_frame,
+            inputs=[source],
+        )
+
     copy = nuke.nodes.Merge2(
         operation="copy",
         Achannels="motion",
         Bchannels="motion",
         rangeinput="All",
         output="motion",
-        inputs=[hold_base, hold_current],
+        inputs=[rgba, motion],
     )
     distort = nuke.nodes.IDistort(
         channels="rgba",
         uv="motion",
-        uv_scale=direction,
+        uv_scale=-direction,
         inputs=[copy]
     )
     mask = nuke.nodes.Merge2(
         operation="mask",
         bbox="intersection",
-        inputs=[distort, hold_current],
+        inputs=[distort, motion_current],
         disable="{{parent.disable_motion_mask}}",
     )
     cache = nuke.nodes.DiskCache(channels="rgba", inputs=[mask])
@@ -69,17 +80,18 @@ def create_motion_distrot(base_frame, frame_gte, frame_lte):
     assert isinstance(frame_lte, int)
     group = nuke.nodes.Group(tile_color="0xa57aaaff")
     group.setName("MotionDistort1")
-    group.addKnob(nuke.Tab_Knob("", "MotionDistort v0.2.1"))
+    group.addKnob(nuke.Tab_Knob("", "MotionDistort v0.2.2"))
     group.addKnob(nuke.Boolean_Knob("disable_motion_mask"))
     group.addKnob(nuke.EndTabGroup_Knob(""))
     with group:
         input_ = nuke.nodes.Input(name="Input")
         input_motion = nuke.nodes.Input(name="motion")
         last = input_
-        # we need generate frames that near base frame first
-        for frame in range(base_frame - 1, frame_gte - 1, -1):
-            last = _create_motion_distort_frame(last, input_motion, frame, 1)
+        # forward
         for frame in range(base_frame + 1, frame_lte + 1, 1):
+            last = _create_motion_distort_frame(last, input_motion, frame, 1)
+        # backward
+        for frame in range(base_frame - 1, frame_gte - 1, -1):
             last = _create_motion_distort_frame(last, input_motion, frame, -1)
         output = nuke.nodes.Output(inputs=[last])
         autoplace()
