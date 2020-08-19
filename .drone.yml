@@ -100,6 +100,7 @@ steps:
       - git worktree add -f docs docs
       - git fetch -fn origin gh-pages:gh-pages
       - git worktree add -f docs/build/html gh-pages
+      - rm -r docs/build/html/*
       - >-
         docker build
         --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
@@ -108,15 +109,20 @@ steps:
         --build-arg "VERSION=latest"
         --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
         --file docs.Dockerfile
-        --tag "temp:${DRONE_COMMIT_SHA}"
+        --tag "temp-image:${DRONE_COMMIT_SHA}"
         .
       - >-
         docker run 
-        --rm 
-        -v $(pwd):/mnt/workspace
-        temp:${DRONE_COMMIT_SHA}
-        sudo cp -rf docs/build/ /mnt/workspace/docs/
-      - docker image rm temp:${DRONE_COMMIT_SHA}
+        --rm
+        --name temp-container:${DRONE_COMMIT_SHA}
+        temp-image:${DRONE_COMMIT_SHA}
+        sleep 600
+      - >-
+        docker cp 
+        temp-container:${DRONE_COMMIT_SHA}:/home/nuke/src/github.com/WuLiFang/Nuke/docs/
+        ./docs/
+      - docker container rm -f temp-container:${DRONE_COMMIT_SHA}
+      - docker image rm temp-image:${DRONE_COMMIT_SHA}
       - git -C docs/build/html status
   - name: deploy to github
     image: node:lts
