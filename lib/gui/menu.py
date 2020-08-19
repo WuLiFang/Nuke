@@ -21,6 +21,7 @@ import edit
 import edit.motion_distort
 import edit.rotopaint_dopesheet
 import edit.rotopaint_motion_distort
+import edit.rotopaint_uv_map
 import edit.script_use_seq
 import edit.script_use_seq.panels
 import edit_panels
@@ -75,6 +76,8 @@ def add_menu():
                 nuketools.selected_node()).show(), 'SHIFT+R'),
             _('RotoPaint运动扭曲',
               edit.rotopaint_motion_distort.show_dialog),
+            _('RotoPaint UV映射',
+              edit.rotopaint_uv_map.uv_map_selected_rotopaint),
             _('分离图层', lambda: edit.split_layers(nuketools.selected_node()),
               'F3', icon="SplitLayers.png"),
             _(

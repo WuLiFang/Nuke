@@ -9,6 +9,7 @@ def nodePresetsStartup():
   nuke.setPreset("Expression", "SaturationToRGB", {'expr0': '(max(r,g,b)-min(r,g,b))/max(r,g,b)', 'channel0': 'rgb', 'selected': 'true', 'label': 'SaturationToRGB'})
   nuke.setPreset("Expression", "Depth:NukeToRedshift", {'expr0': '(z==0)?99999:1/z*0.0001', 'channel0': 'depth', 'selected': 'true', 'label': 'Depth:NukeToRedshift'})
   nuke.setPreset("Expression", "Depth:RedshiftToNuke", {'expr0': '(z==0)?0:1/(z*10000)', 'channel0': 'depth', 'selected': 'true', 'label': 'Depth:RedshiftToNuke'})
+  nuke.setPreset("Expression", "UV", {'postage_stamp': 'true', 'expr0': '(cx+1)/2', 'expr1': '(cy+1)/2', 'label': "UV"})
   nuke.setPreset("Merge2", "DepthMerge", {'Achannels': 'depth', 'output': 'depth', 'operation': 'min', 'Bchannels': 'depth', 'selected': 'true'})
   nuke.setPreset("Merge2", "AO", {'screen_alpha': 'true', 'operation': 'multiply', 'selected': 'true', 'label': 'AO'})
   nuke.setPreset("Merge2", "LayerCopy", {'Achannels': 'BumpNormals', 'output': '{{Achannels}}', 'operation': 'copy', 'Bchannels': '{{Achannels}}', 'selected': 'true'})

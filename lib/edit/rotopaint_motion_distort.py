@@ -9,53 +9,22 @@ from nuke.rotopaint import CVec3
 from six.moves import range
 
 from nuketools import undoable_func, utf8
-from rotopaint_tools import LIFETIME_TYPE_ALL, iter_layer
+from rotopaint_tools import (LIFETIME_TYPE_ALL, RelativePointProxy, iter_layer,
+                             iter_shape_point)
 from wlf.progress import progress
 from wlf.progress.handlers.nuke import NukeProgressHandler
-
-
-class _CustomMessageProgressHandler(NukeProgressHandler):
-    def __init__(self, message_factory, **kwargs):
-        super(_CustomMessageProgressHandler, self).__init__(**kwargs)
-        self._message_factory = message_factory
-
-    def message_factory(self, item):
-        return self._message_factory(item)
+from wlf_tools.progress import CustomMessageProgressHandler
 
 
 def _is_point_single_key(point):
     return all(
         len(p.getControlPointKeyTimes()) == 1
-        for p in _iter_anim_point(point)
+        for p in iter_shape_point(point)
     )
 
 
 def _is_shape_single_key(shape):
     return all(_is_point_single_key(p) for p in shape)
-
-
-class _PointProxy(object):
-    def getPosition(self, frame):
-        raise NotImplementedError()
-
-    def addPositionKey(self, frame, position):
-        raise NotImplementedError()
-
-
-class _RelativePointProxy(_PointProxy):
-    def __init__(self, point, center):
-        self.point = point
-        self.center = center
-
-    def __getattr__(self, name):
-        return getattr(self.point, name)
-
-    def getPosition(self, frame):
-        return self.center.getPosition(frame) + self.point.getPosition(frame)
-
-    def addPositionKey(self, frame, position):
-        self.point.addPositionKey(
-            frame, position-self.center.getPosition(frame))
 
 
 def _motion_distort_rotopaint_anim_point_frame(
@@ -93,18 +62,9 @@ def _motion_distort_rotopaint_anim_point(
             point.removePositionKey(i)
 
 
-def _iter_anim_point(point):
-    yield point.center
-    yield _RelativePointProxy(point.leftTangent, point.center)
-    yield _RelativePointProxy(point.rightTangent, point.center)
-    yield _RelativePointProxy(point.featherCenter, point.center)
-    yield _RelativePointProxy(point.featherLeftTangent, point.center)
-    yield _RelativePointProxy(point.featherRightTangent, point.center)
-
-
 def _motion_distort_rotopaint_shape_point(
         motion, point, base_frame, frame_gte, frame_lte, interval):
-    for i in _iter_anim_point(point):
+    for i in iter_shape_point(point):
         _motion_distort_rotopaint_anim_point(
             motion, i, base_frame, frame_gte, frame_lte, interval)
 
@@ -162,7 +122,7 @@ def create_rotopaint_motion_distort(
     for i in progress(
             list(_iter_matched_shape(layer)),
             rotopaint.name(),
-            handler=_CustomMessageProgressHandler(
+            handler=CustomMessageProgressHandler(
                 lambda i: i.name,
             ),
     ):
@@ -188,13 +148,6 @@ def create_rotopaint_motion_distort(
         )
 
 
-class _NodeProgressHandler(NukeProgressHandler):
-    total = None
-
-    def message_factory(self, item):
-        return item.name()
-
-
 def show_dialog():
     """Show GUI dialog for `create_rotopaint_motion_distort`."""
 
@@ -206,7 +159,6 @@ def show_dialog():
 
     # Node.sample need a transformed position when using proxy
     nuke.Root()["proxy"].setValue(False)
-    
 
     def _tr(key):
         return utf8({
@@ -229,7 +181,7 @@ def show_dialog():
     interval = int(panel.value(_tr('interval')))
     for n in progress(
             nodes, "RotoPaint motion distort",
-            handler=_CustomMessageProgressHandler(
+            handler=CustomMessageProgressHandler(
                 lambda i: i.name()
             ),
     ):

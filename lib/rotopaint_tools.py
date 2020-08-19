@@ -28,3 +28,68 @@ def iter_layer(layer):
         if isinstance(i, nuke.rotopaint.Layer):
             for j in _iter_layer(i):
                 yield j
+
+
+def iter_shapes_in_layer(layer):
+    """Iterate shapes in layer recursively.
+
+    Args:
+        layer (nuke.rotopaint.Layer): The layer to iterate.
+
+    Yields:
+        Iterator[nuke.rotopaint.Shape]: shapes in layer.
+    """
+    for i in iter_layer(layer):
+        if isinstance(i, nuke.rotopaint.Shape):
+            yield i
+
+
+class PointProxy(object):
+    """Abstract proxy for nuke.rotopaint.AnimControlPoint. """
+
+    def __init__(self, point):
+        self.point = point
+
+    def __getattr__(self, name):
+        return getattr(self.point, name)
+
+
+class RelativePointProxy(PointProxy):
+    """
+    RelativePointProxy change point methods
+    to work with absolute position.
+    """
+
+    def __init__(self, point, center):
+        super(RelativePointProxy, self).__init__(point)
+        self.center = center
+
+    def getPosition(self, frame):
+        return self.center.getPosition(frame) + self.point.getPosition(frame)
+
+    def addPositionKey(self, frame, position):
+        self.point.addPositionKey(
+            frame, position-self.center.getPosition(frame))
+
+
+def iter_shape_point(point):
+    """Iterate AnimControlPoint in given shape point,
+    Relative point is wrapped with RelativePointProxy
+    so we can treat all points as absolute.
+
+    Args:
+        point (nuke.rotopaint.ShapeControlPoint): The point to iterate.
+
+    Yields:
+        Iterator[Union[nuke.rotopaint.AnimControlPoint, RelativePointProxy]]:
+            items in point.
+    """
+
+    # type: (nuke.rotopaint.ShapeControlPoint,)
+    # -> Iterator[Union[nuke.rotopaint.AnimControlPoint, RelativePointProxy]]
+    yield point.center
+    yield RelativePointProxy(point.leftTangent, point.center)
+    yield RelativePointProxy(point.rightTangent, point.center)
+    yield RelativePointProxy(point.featherCenter, point.center)
+    yield RelativePointProxy(point.featherLeftTangent, point.center)
+    yield RelativePointProxy(point.featherRightTangent, point.center)
