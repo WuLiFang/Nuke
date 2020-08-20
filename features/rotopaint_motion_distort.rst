@@ -1,9 +1,9 @@
 RotoPaint 运动扭曲
 ========================
 
-.. image:: /_images/Nuke10.5_2020-08-18_14-20-31.png
+.. image:: /_images/Nuke10.5_2020-08-20_10-51-52.png
 
-.. image:: /_images/Nuke10.5_2020-08-18_14-20-36.png
+.. image:: /_images/Nuke10.5_2020-08-20_10-52-02.png
 
 基于 motion 层对 RotoPaint 形状进行创建动画。
 
