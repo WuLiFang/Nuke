@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
+
+
+### Features
+
+* rotopaint uv map ([483f95d](https://github.com/WuLiFang/Nuke/commit/483f95d2c1e8a1fd1455bb95fbd7029c9c4ce2ba))
+
+
+### Bug Fixes
+
+* **Motion Distort:** v0.2.2 correct forward motion ([fbf639b](https://github.com/WuLiFang/Nuke/commit/fbf639bbe82be1a7010f9eb8bc3e099b8c6b01d0))
+* **RotoPaint MotionDistort:** correct backward motion ([11f2c56](https://github.com/WuLiFang/Nuke/commit/11f2c5674f0e7df5417ab21fcf5a34437c7a9bab))
+* **RotoPaint MotionDistort:** motion missing notification ([c145fdb](https://github.com/WuLiFang/Nuke/commit/c145fdb3cac3cca13368e4917e6e3a71a69f4f64))
+* **RotoPaint MotionDistort:** should change center after sample finished ([bb73f53](https://github.com/WuLiFang/Nuke/commit/bb73f5329144b7b6f9949d51ccf95d626c31d9db))
+
 ### [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
 
 
