@@ -94,7 +94,6 @@ def create_motion_distrot(base_frame, frame_gte, frame_lte):
         for frame in range(base_frame - 1, frame_gte - 1, -1):
             last = _create_motion_distort_frame(last, input_motion, frame, -1)
         output = nuke.nodes.Output(inputs=[last])
-        autoplace()
     return group
 
 
