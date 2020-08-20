@@ -30,16 +30,19 @@ def _is_shape_single_key(shape):
 def _motion_distort_rotopaint_anim_point_frame(
         motion, point, frame, direction):
     base_frame = frame-direction
+    motion_frame = base_frame
+    if direction < 0:
+        motion_frame -= 1
     base_pos = point.getPosition(base_frame)
     offset = CVec3(
         motion.sample(utf8("forward.u"),
                       base_pos.x,
                       base_pos.y,
-                      frame=base_frame),
+                      frame=motion_frame),
         motion.sample(utf8("forward.v"),
                       base_pos.x,
                       base_pos.y,
-                      frame=base_frame),
+                      frame=motion_frame),
     )
     computed_pos = base_pos + offset*direction
 
