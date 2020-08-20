@@ -109,20 +109,21 @@ steps:
         --build-arg "VERSION=latest"
         --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
         --file docs.Dockerfile
-        --tag "temp-image:${DRONE_COMMIT_SHA}"
+        --tag "temp-image-${DRONE_COMMIT_SHA}"
         .
       - >-
         docker run 
+        -d
         --rm
-        --name temp-container:${DRONE_COMMIT_SHA}
-        temp-image:${DRONE_COMMIT_SHA}
+        --name temp-container-${DRONE_COMMIT_SHA}
+        temp-image-${DRONE_COMMIT_SHA}
         sleep 600
       - >-
         docker cp 
-        temp-container:${DRONE_COMMIT_SHA}:/home/nuke/src/github.com/WuLiFang/Nuke/docs/
+        temp-container-${DRONE_COMMIT_SHA}:/home/nuke/src/github.com/WuLiFang/Nuke/docs/.
         ./docs/
-      - docker container rm -f temp-container:${DRONE_COMMIT_SHA}
-      - docker image rm temp-image:${DRONE_COMMIT_SHA}
+      - docker container rm -f temp-container-${DRONE_COMMIT_SHA}
+      - docker image rm temp-image-${DRONE_COMMIT_SHA}
       - git -C docs/build/html status
   - name: deploy to github
     image: node:lts
@@ -142,7 +143,7 @@ steps:
           echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
         fi
       - chmod 600 ~/.ssh/id_rsa
-      - "cp ./scripts/known_hosts ~/.ssh/"
+      - "cp ../../../scripts/known_hosts ~/.ssh/"
       - chmod 644 ~/.ssh/known_hosts
       - git config --global user.name 'CI User'
       - git config --global user.email '<>'
