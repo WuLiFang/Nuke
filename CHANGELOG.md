@@ -2,108 +2,96 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
-
-
-### Features
-
-* rotopaint uv map ([483f95d](https://github.com/WuLiFang/Nuke/commit/483f95d2c1e8a1fd1455bb95fbd7029c9c4ce2ba))
-
-
-### Bug Fixes
-
-* **Motion Distort:** v0.2.2 correct forward motion ([fbf639b](https://github.com/WuLiFang/Nuke/commit/fbf639bbe82be1a7010f9eb8bc3e099b8c6b01d0))
-* **RotoPaint MotionDistort:** correct backward motion ([11f2c56](https://github.com/WuLiFang/Nuke/commit/11f2c5674f0e7df5417ab21fcf5a34437c7a9bab))
-* **RotoPaint MotionDistort:** motion missing notification ([c145fdb](https://github.com/WuLiFang/Nuke/commit/c145fdb3cac3cca13368e4917e6e3a71a69f4f64))
-* **RotoPaint MotionDistort:** should change center after sample finished ([bb73f53](https://github.com/WuLiFang/Nuke/commit/bb73f5329144b7b6f9949d51ccf95d626c31d9db))
-
-### [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
-
+## [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
 
 ### Features
 
-* **RotoPaint MotionDistort:** disable proxy after dialog confirm ([eb13fe5](https://github.com/WuLiFang/Nuke/commit/eb13fe5c5f789feaf7118cdbb1935d64a4a1b873))
-
+- rotopaint uv map ([483f95d](https://github.com/WuLiFang/Nuke/commit/483f95d2c1e8a1fd1455bb95fbd7029c9c4ce2ba))
 
 ### Bug Fixes
 
-* should disable proxy before rotopaint motion distort ([f18847a](https://github.com/WuLiFang/Nuke/commit/f18847a6e447a7e74ab10c9cc577fae295c3243a))
+- **Motion Distort:** v0.2.2 correct forward motion ([fbf639b](https://github.com/WuLiFang/Nuke/commit/fbf639bbe82be1a7010f9eb8bc3e099b8c6b01d0))
+- **RotoPaint MotionDistort:** correct backward motion ([11f2c56](https://github.com/WuLiFang/Nuke/commit/11f2c5674f0e7df5417ab21fcf5a34437c7a9bab))
+- **RotoPaint MotionDistort:** motion missing notification ([c145fdb](https://github.com/WuLiFang/Nuke/commit/c145fdb3cac3cca13368e4917e6e3a71a69f4f64))
+- **RotoPaint MotionDistort:** should change center after sample finished ([bb73f53](https://github.com/WuLiFang/Nuke/commit/bb73f5329144b7b6f9949d51ccf95d626c31d9db))
 
-### [0.20.8](https://github.com/WuLiFang/Nuke/compare/v0.20.7...v0.20.8) (2020-08-18)
-
+## [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
 
 ### Features
 
-* rotopaint motion distort ([f4406e6](https://github.com/WuLiFang/Nuke/commit/f4406e6c2ff2a0012c8b16a9a73c571d0c7327e0))
-* **MotionDistort:** v0.2.0 support set base frame ([ed9c513](https://github.com/WuLiFang/Nuke/commit/ed9c5139cc5da1a8c96ce3d3024f1627d9cfdcd1))
-* add create motion distort command ([bf1c1cb](https://github.com/WuLiFang/Nuke/commit/bf1c1cb02cdbe35d0ae4cd4e582b34977188fd9b))
-* add third party RealGlow node ([e170849](https://github.com/WuLiFang/Nuke/commit/e170849ec451431f1acdbf01baa3d40734516cfb))
-
+- **RotoPaint MotionDistort:** disable proxy after dialog confirm ([eb13fe5](https://github.com/WuLiFang/Nuke/commit/eb13fe5c5f789feaf7118cdbb1935d64a4a1b873))
 
 ### Bug Fixes
 
-* **MotionDistort:** v0.2.1 wrong bbox setting ([871bdbe](https://github.com/WuLiFang/Nuke/commit/871bdbe8a9166f4890fe952611b5c11d7f112c40))
-* duplicated pyblish window for nukeX ([30f029b](https://github.com/WuLiFang/Nuke/commit/30f029ba53a807712d8d5e8e02ba3aeb1ebcabcb))
-* duplicated pybulish panel ([0d23ec5](https://github.com/WuLiFang/Nuke/commit/0d23ec52331d3371d64829df3619d9865245e0f3))
-* pyblish window for nuke studio ([8298f11](https://github.com/WuLiFang/Nuke/commit/8298f114141dce519642a85a41861f363c6f20d0))
+- should disable proxy before rotopaint motion distort ([f18847a](https://github.com/WuLiFang/Nuke/commit/f18847a6e447a7e74ab10c9cc577fae295c3243a))
 
-### [0.20.7](https://github.com/WuLiFang/Nuke/compare/v0.20.6...v0.20.7) (2020-07-29)
-
+## [0.20.8](https://github.com/WuLiFang/Nuke/compare/v0.20.7...v0.20.8) (2020-08-18)
 
 ### Features
 
-* add third party node FilmicTonemappingOperator ([b83f142](https://github.com/WuLiFang/Nuke/commit/b83f142c46c2376286d4657f62788dbb003dbae0))
-* arnold precomp ([5edd665](https://github.com/WuLiFang/Nuke/commit/5edd665c041d3c4e6d35e7242cae87691b1fd3e3))
-* **RoateCrop:** v0.1.0 add new node ([54cec0f](https://github.com/WuLiFang/Nuke/commit/54cec0f0f5b0a281ebc470ad3135ae8dc11232cc))
-* **SoftGlow:** v0.1.2 add width channel knob ([4194084](https://github.com/WuLiFang/Nuke/commit/4194084f5757993d413b699b4abe367e702b0507))
-* **SoftGlow:** v0.1.3 skip glow that size less than 1 ([0303209](https://github.com/WuLiFang/Nuke/commit/03032095aca1af311a9015b6c86a77016e656fdd))
-
+- rotopaint motion distort ([f4406e6](https://github.com/WuLiFang/Nuke/commit/f4406e6c2ff2a0012c8b16a9a73c571d0c7327e0))
+- **MotionDistort:** v0.2.0 support set base frame ([ed9c513](https://github.com/WuLiFang/Nuke/commit/ed9c5139cc5da1a8c96ce3d3024f1627d9cfdcd1))
+- add create motion distort command ([bf1c1cb](https://github.com/WuLiFang/Nuke/commit/bf1c1cb02cdbe35d0ae4cd4e582b34977188fd9b))
+- add third party RealGlow node ([e170849](https://github.com/WuLiFang/Nuke/commit/e170849ec451431f1acdbf01baa3d40734516cfb))
 
 ### Bug Fixes
 
-* **SoftGlow:** v0.1.4 should always use default input ([cb61203](https://github.com/WuLiFang/Nuke/commit/cb612037bff924d399e02df770f945504dc0dcb4))
+- **MotionDistort:** v0.2.1 wrong bbox setting ([871bdbe](https://github.com/WuLiFang/Nuke/commit/871bdbe8a9166f4890fe952611b5c11d7f112c40))
+- duplicated pyblish window for nukeX ([30f029b](https://github.com/WuLiFang/Nuke/commit/30f029ba53a807712d8d5e8e02ba3aeb1ebcabcb))
+- duplicated pybulish panel ([0d23ec5](https://github.com/WuLiFang/Nuke/commit/0d23ec52331d3371d64829df3619d9865245e0f3))
+- pyblish window for nuke studio ([8298f11](https://github.com/WuLiFang/Nuke/commit/8298f114141dce519642a85a41861f363c6f20d0))
 
-### [0.20.6](https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6) (2020-07-05)
-
+## [0.20.7](https://github.com/WuLiFang/Nuke/compare/v0.20.6...v0.20.7) (2020-07-29)
 
 ### Features
 
-* update expire time to 2021-07-01 ([c56d413](https://github.com/WuLiFang/Nuke/commit/c56d413470211686c5ead85019ace23fcf301db0))
-* **SoftGlow:** v0.1.1 add more knobs ([bf249b6](https://github.com/WuLiFang/Nuke/commit/bf249b63f6d23ba42aa8a74a5f0957c26ef97c7c))
-* add message for no selected node ([c4c8002](https://github.com/WuLiFang/Nuke/commit/c4c80023a35339a558542641a71763a7fca35760))
-* add OnionSkin node ([f47a6ef](https://github.com/WuLiFang/Nuke/commit/f47a6efeffb0c3fd457c198cad71d360bed219a8))
-* add SoftGlow node ([c1e8643](https://github.com/WuLiFang/Nuke/commit/c1e8643d447f7b0d90acf92bce3f8174a3d9c188))
-* **OnionSkin:** 0.1.2 add effect_only knob ([09ccb1b](https://github.com/WuLiFang/Nuke/commit/09ccb1bca0c53c49d857249ccf541c1862779573))
-* add OnionSkin.knob_hash to invalidate viewer cache ([979614d](https://github.com/WuLiFang/Nuke/commit/979614dacef9e97ab96803a2decca3b6ee826882))
-* add rotopaint dopesheet ([0e8dc18](https://github.com/WuLiFang/Nuke/commit/0e8dc1836bea1e5ac567d5fcc8a7ac6526e3d12a))
-
+- add third party node FilmicTonemappingOperator ([b83f142](https://github.com/WuLiFang/Nuke/commit/b83f142c46c2376286d4657f62788dbb003dbae0))
+- arnold precomp ([5edd665](https://github.com/WuLiFang/Nuke/commit/5edd665c041d3c4e6d35e7242cae87691b1fd3e3))
+- **RoateCrop:** v0.1.0 add new node ([54cec0f](https://github.com/WuLiFang/Nuke/commit/54cec0f0f5b0a281ebc470ad3135ae8dc11232cc))
+- **SoftGlow:** v0.1.2 add width channel knob ([4194084](https://github.com/WuLiFang/Nuke/commit/4194084f5757993d413b699b4abe367e702b0507))
+- **SoftGlow:** v0.1.3 skip glow that size less than 1 ([0303209](https://github.com/WuLiFang/Nuke/commit/03032095aca1af311a9015b6c86a77016e656fdd))
 
 ### Bug Fixes
 
-* active pyblish panel remains tab unchanged ([012b652](https://github.com/WuLiFang/Nuke/commit/012b652945060a765bb55edad3e26f5e01213af6))
-* avoid use nuke.openPanels() ([b9604bf](https://github.com/WuLiFang/Nuke/commit/b9604bf853573b9e9cbeb8cb5eba1248f1fa9372))
-* pyblish window can not active if window deleted ([bd2c950](https://github.com/WuLiFang/Nuke/commit/bd2c950182b1add1f3a9045f53ee6cb5061c2e47))
-* **OnionSkin:** 0.1.1 wrong result when frame out of range ([f88e9e9](https://github.com/WuLiFang/Nuke/commit/f88e9e98a28defd835de5ad4f59fcefa343b402d))
-* active viewer input when no input ([eed6775](https://github.com/WuLiFang/Nuke/commit/eed6775b0686717743d92c45501793e57d90c959))
-* handle overlap frame for rotopaint dopesheet ([fc3439f](https://github.com/WuLiFang/Nuke/commit/fc3439fbe91069441a558ded9fc733650cb64f76))
-* unexpected transition when using rotopaint dopesheet ([2d58e21](https://github.com/WuLiFang/Nuke/commit/2d58e212233cc505955bb2f89ae7e1a9a77ce45e))
+- **SoftGlow:** v0.1.4 should always use default input ([cb61203](https://github.com/WuLiFang/Nuke/commit/cb612037bff924d399e02df770f945504dc0dcb4))
 
-### [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
-
+## [0.20.6](https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6) (2020-07-05)
 
 ### Features
 
-* add more prefix filter ([c8bc545](https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f))
-* update expire time to 2021-01-01 ([d79a95c](https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1))
-* **wlf_Lightwrap:** add channels control ([7f5a71d](https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb))
-
+- update expire time to 2021-07-01 ([c56d413](https://github.com/WuLiFang/Nuke/commit/c56d413470211686c5ead85019ace23fcf301db0))
+- **SoftGlow:** v0.1.1 add more knobs ([bf249b6](https://github.com/WuLiFang/Nuke/commit/bf249b63f6d23ba42aa8a74a5f0957c26ef97c7c))
+- add message for no selected node ([c4c8002](https://github.com/WuLiFang/Nuke/commit/c4c80023a35339a558542641a71763a7fca35760))
+- add OnionSkin node ([f47a6ef](https://github.com/WuLiFang/Nuke/commit/f47a6efeffb0c3fd457c198cad71d360bed219a8))
+- add SoftGlow node ([c1e8643](https://github.com/WuLiFang/Nuke/commit/c1e8643d447f7b0d90acf92bce3f8174a3d9c188))
+- **OnionSkin:** 0.1.2 add effect_only knob ([09ccb1b](https://github.com/WuLiFang/Nuke/commit/09ccb1bca0c53c49d857249ccf541c1862779573))
+- add OnionSkin.knob_hash to invalidate viewer cache ([979614d](https://github.com/WuLiFang/Nuke/commit/979614dacef9e97ab96803a2decca3b6ee826882))
+- add rotopaint dopesheet ([0e8dc18](https://github.com/WuLiFang/Nuke/commit/0e8dc1836bea1e5ac567d5fcc8a7ac6526e3d12a))
 
 ### Bug Fixes
 
-* **deps:** update dependency jinja2 to v2.11.0 ([6f3ff93](https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf))
-* **wlf_Lightwrap:** blur on rgba channel instead of rgb channel ([a336040](https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30))
+- active pyblish panel remains tab unchanged ([012b652](https://github.com/WuLiFang/Nuke/commit/012b652945060a765bb55edad3e26f5e01213af6))
+- avoid use nuke.openPanels() ([b9604bf](https://github.com/WuLiFang/Nuke/commit/b9604bf853573b9e9cbeb8cb5eba1248f1fa9372))
+- pyblish window can not active if window deleted ([bd2c950](https://github.com/WuLiFang/Nuke/commit/bd2c950182b1add1f3a9045f53ee6cb5061c2e47))
+- **OnionSkin:** 0.1.1 wrong result when frame out of range ([f88e9e9](https://github.com/WuLiFang/Nuke/commit/f88e9e98a28defd835de5ad4f59fcefa343b402d))
+- active viewer input when no input ([eed6775](https://github.com/WuLiFang/Nuke/commit/eed6775b0686717743d92c45501793e57d90c959))
+- handle overlap frame for rotopaint dopesheet ([fc3439f](https://github.com/WuLiFang/Nuke/commit/fc3439fbe91069441a558ded9fc733650cb64f76))
+- unexpected transition when using rotopaint dopesheet ([2d58e21](https://github.com/WuLiFang/Nuke/commit/2d58e212233cc505955bb2f89ae7e1a9a77ce45e))
 
-### [0.20.4](https://github.com/WuLiFang/Nuke/compare/v0.20.3...v0.20.4) (2020-01-10)
+## [0.20.5](https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5) (2020-05-19)
+
+### Features
+
+- add more prefix filter ([c8bc545](https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f))
+- update expire time to 2021-01-01 ([d79a95c](https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1))
+- **wlf_Lightwrap:** add channels control ([7f5a71d](https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb))
+
+### Bug Fixes
+
+- **deps:** update dependency jinja2 to v2.11.0 ([6f3ff93](https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf))
+- **wlf_Lightwrap:** blur on rgba channel instead of rgb channel ([a336040](https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30))
+
+## [0.20.4](https://github.com/WuLiFang/Nuke/compare/v0.20.3...v0.20.4) (2020-01-10)
 
 ### Features
 
