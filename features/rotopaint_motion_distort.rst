@@ -7,6 +7,11 @@ RotoPaint 运动扭曲
 
 基于 motion 层对 RotoPaint 形状进行创建动画。
 
+.. note::
+
+  渲染器的运动模糊快门时间和偏移会影响输出运动向量的值。
+  将快门偏移设为 0（帧首），快门时间设为 1 (帧首至帧尾) 才是正确的整帧运动向量。
+
 和 :doc:`/features/motion_distort` 不同此命令仅支持 RotoPaint 但输出为矢量形状方便修改。
 
 在菜单中选择 :guilabel:`编辑` - :guilabel:`RotoPaint 运动扭曲` 进行创建。
