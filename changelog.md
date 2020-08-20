@@ -1,5 +1,18 @@
 # 更新日志
 
+## [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
+
+### 功能
+
+- rotopaint uv 映射 ([483f95d](https://github.com/WuLiFang/Nuke/commit/483f95d2c1e8a1fd1455bb95fbd7029c9c4ce2ba))
+
+### 修复
+
+- **运动扭曲:** v0.2.2 修正向前运动 ([fbf639b](https://github.com/WuLiFang/Nuke/commit/fbf639bbe82be1a7010f9eb8bc3e099b8c6b01d0))
+- **RotoPaint 运动扭曲:** 修正向后运动 ([11f2c56](https://github.com/WuLiFang/Nuke/commit/11f2c5674f0e7df5417ab21fcf5a34437c7a9bab))
+- **RotoPaint 运动扭曲:** motion 层丢失提醒 ([c145fdb](https://github.com/WuLiFang/Nuke/commit/c145fdb3cac3cca13368e4917e6e3a71a69f4f64))
+- **RotoPaint 运动扭曲:** 应当在采样完后再移动中心点 ([bb73f53](https://github.com/WuLiFang/Nuke/commit/bb73f5329144b7b6f9949d51ccf95d626c31d9db))
+
 ## [0.20.9](https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9) (2020-08-18)
 
 ### 功能
