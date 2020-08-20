@@ -212,7 +212,7 @@ def show_dialog():
         if not ("forward.u" in channels and "forward.v" in channels):
             nuke.message(
                 utf8("节点 {} 缺少 forward.u 和 forward.v 通道，将跳过")
-                .format(n.getName())
+                .format(n.name())
             )
             continue
         create_rotopaint_motion_distort(n, base, start, end, interval)
