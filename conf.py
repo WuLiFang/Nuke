@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'吾立方插件'
-copyright = u'2017-2018, WuLiFang Studio'
+copyright = u'2017-2020, WuLiFang Studio'
 author = u'NateScarlet'
 
 # The version info for the project you're documenting, acts as replacement for
