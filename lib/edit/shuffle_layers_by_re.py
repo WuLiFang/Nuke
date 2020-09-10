@@ -37,7 +37,7 @@ def shuffle_layers_by_re(nodes, pattern):
     if not layers:
         return []
     return layers + [nuke.nodes.Merge2(
-        inputs=layers,
+        inputs=layers[:2] + [None] + layers[2:],
         operation='plus',
         label="正则图层分组\n/{}/".format(pattern.pattern).encode("utf8"),
     )]
