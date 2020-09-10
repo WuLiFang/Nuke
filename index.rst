@@ -12,6 +12,7 @@
     guide
     spec
     development
+    re
     reference
     changelog
   
