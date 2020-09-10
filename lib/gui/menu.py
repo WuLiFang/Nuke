@@ -24,6 +24,7 @@ import edit.rotopaint_motion_distort
 import edit.rotopaint_uv_map
 import edit.script_use_seq
 import edit.script_use_seq.panels
+import edit.shuffle_layers_by_re
 import edit_panels
 import enable_later
 import nuketools
@@ -85,6 +86,10 @@ def add_menu():
                 lambda: edit.shuffle_rgba(
                     nuketools.selected_node()),
                 'SHIFT+F3',
+            ),
+            _(
+                "正则分离图层组",
+                edit.shuffle_layers_by_re.show_dialog,
             ),
             _("重命名PuzzleMatte",
               lambda: edit_panels.ChannelsRename().show(), 'F4'),
