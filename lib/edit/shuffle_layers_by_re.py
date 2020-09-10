@@ -53,7 +53,7 @@ class Config(BaseConfig):
 if nuke.GUI:
     class Panel(PythonPanel):
         def __init__(self):
-            super(Panel, self).__init__()
+            super(Panel, self).__init__("正则分离图层组".encode("utf8"))
             self.addKnob(nuke.Multiline_Eval_String_Knob(
                 "pattern", "正则匹配规则".encode("utf8")))
             self.addKnob(nuke.Script_Knob("re_help", "正则帮助".encode("utf8")))
