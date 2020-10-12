@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.11](https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11) (2020-10-12)
+
+
+### Features
+
+* **shuffle_layers_by_re:** use internal help ([0a1da07](https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14))
+* shuffle_layers_by_re ([db6eb39](https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b))
+
+
+### Bug Fixes
+
+* **shuffle layers by re:**  wrong merge input ([9c49457](https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6))
+* **shuffle layers by re:** wrong dialog title ([2cfc1f9](https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d))
+* **wlf_Write:** v1.56.3 deadline job submit ([955c09a](https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0))
+* **wlf_Write:** v1.56.4 wrong sequence output condition ([39268b8](https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8))
+
 ## [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
 
 ### Features
