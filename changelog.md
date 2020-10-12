@@ -1,5 +1,19 @@
 # 更新日志
 
+## [0.20.11](https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11) (2020-10-12)
+
+### 功能
+
+* **正则分割图层组:** 使用本地帮助文档 ([0a1da07](https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14))
+* 正则分割图层组 ([db6eb39](https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b))
+
+### 修复
+
+* **正则分割图层组:** 错误的 merge 输入 ([9c49457](https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6))
+* **正则分割图层组:** 错误的对话框标题 ([2cfc1f9](https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d))
+* **wlf_Write:** v1.56.3 deadline 任务提交 ([955c09a](https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0))
+* **wlf_Write:** v1.56.4 错误的序列输出条件 ([39268b8](https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8))
+
 ## [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
 
 ### 功能
