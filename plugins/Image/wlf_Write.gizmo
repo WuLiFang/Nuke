@@ -4,8 +4,8 @@
 version 10.0 v4
 Gizmo {
   onCreate {
-if '__wlf_Write_1_56_3' not in locals():
-    class __wlf_Write_1_56_3(object):
+if '__wlf_Write_1_56_4' not in locals():
+    class __wlf_Write_1_56_4(object):
         @classmethod
         def on_create(cls):
             this = nuke.thisNode()
@@ -80,14 +80,14 @@ if '__wlf_Write_1_56_3' not in locals():
                 enabled['exr'] = True
 
             frame_count = abs(nuke.numvalue('root.first_frame') - nuke.numvalue('root.last_frame')) + 1
-            if enabled[output_type] and frame_count < p['exr_threshold'].value():
+            if enabled[output_type] and frame_count >= p['exr_threshold'].value():
                 return False
             return True
 
         class WriteMOV(object):
             @classmethod
             def before_render(cls):
-                globals()['__wlf_Write_1_56_3'].create_output_dir(nuke.thisNode())
+                globals()['__wlf_Write_1_56_4'].create_output_dir(nuke.thisNode())
                 nuke.knob('parent.Write_JPG_1.disable', 'True')
 
         class WriteJPG(object):
@@ -107,7 +107,7 @@ if '__wlf_Write_1_56_3' not in locals():
                 cls.last_render_mode = nuke.Root()['proxy'].value()
                 cls.blur_nodes = [n for n in nuke.allNodes(group=nuke.Root())
                                 if n.Class() in cls.blur_node_classes and not n['disable'].value()]
-                globals()['__wlf_Write_1_56_3'].create_output_dir(nuke.thisNode())
+                globals()['__wlf_Write_1_56_4'].create_output_dir(nuke.thisNode())
                 nuke.knob('root.proxy', 'False')
                 if nuke.numvalue('parent.no_motionblur'):
                     map(lambda n: n['disable'].setValue(
@@ -122,19 +122,19 @@ if '__wlf_Write_1_56_3' not in locals():
                 nuke.knob('this.disable', 'True')
 
 
-__wlf_Write_1_56_3.on_create()
+__wlf_Write_1_56_4.on_create()
 }
- onDestroy __wlf_Write_1_56_3.on_destroy()
- autolabel __wlf_Write_1_56_3.autolabel()
+ onDestroy __wlf_Write_1_56_4.on_destroy()
+ autolabel __wlf_Write_1_56_4.autolabel()
  knobChanged {
 try:
-    __wlf_Write_1_56_3.knob_changed()
+    __wlf_Write_1_56_4.knob_changed()
 except NameError:
     pass
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.56.3"}
+ addUserKnob {20 Write l "wlf_Write v1.56.4"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -319,8 +319,8 @@ use_limit true
 checkHashOnRead false
 in_colorspace linear
 out_colorspace linear
-beforeRender __wlf_Write_1_56_3.WriteJPG.before_render()
-afterRender __wlf_Write_1_56_3.WriteJPG.after_render()
+beforeRender __wlf_Write_1_56_4.WriteJPG.before_render()
+afterRender __wlf_Write_1_56_4.WriteJPG.after_render()
 name Write_JPG_1
 label "单帧\n会在退出脚本时自动输出"
 xpos 0
@@ -332,12 +332,12 @@ file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \
 proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
 file_type exr
 render_order 0
-reading {{"\[python __wlf_Write_1_56_3.is_reading()]"}}
+reading {{"\[python __wlf_Write_1_56_4.is_reading()]"}}
 checkHashOnRead false
 name Write_EXR_1
 xpos 0
 ypos -918
-disable {{"\[python __wlf_Write_1_56_3.is_write_disabled('exr')]"}}
+disable {{"\[python __wlf_Write_1_56_4.is_write_disabled('exr')]"}}
 }
 Write {
 channels {rgba.red rgba.green rgba.blue rgba.alpha}
@@ -346,13 +346,13 @@ proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[l
 file_type png
 datatype "16 bit"
 render_order 0
-reading {{"\[python __wlf_Write_1_56_3.is_reading()]"}}
+reading {{"\[python __wlf_Write_1_56_4.is_reading()]"}}
 checkHashOnRead false
 name Write_PNG_1
 selected true
 xpos 0
 ypos -862
-disable {{"\[python __wlf_Write_1_56_3.is_write_disabled('png')]"}}
+disable {{"\[python __wlf_Write_1_56_4.is_write_disabled('png')]"}}
 }
 Write {
 file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -365,7 +365,7 @@ mov32_codec "rle "
 mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
 mov64_codec apch
 mov64_fps {{root.fps}}
-beforeRender __wlf_Write_1_56_3.WriteMOV.before_render()
+beforeRender __wlf_Write_1_56_4.WriteMOV.before_render()
 name Write_MOV_1
 xpos 0
 ypos -806
@@ -389,7 +389,7 @@ mov64_codec apch
 mov64_fps {{root.fps}}
 render_order 2
 checkHashOnRead false
-beforeRender __wlf_Write_1_56_3.WriteMOV.before_render()
+beforeRender __wlf_Write_1_56_4.WriteMOV.before_render()
 name Write_MOV_2
 label 带帧编号的MOV
 xpos 0
