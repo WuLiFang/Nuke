@@ -26,6 +26,7 @@ requirements.txt: pyproject.toml
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
+	poetry run python -m pip install -U pip setuptools poetry
 	poetry run python -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
@@ -51,7 +52,6 @@ release:
 .venv: export POETRY_VIRTUALENVS_IN_PROJECT=true
 .venv: pyproject.toml
 	poetry env use "$(PYTHON27)"
-	poetry run python -m pip install -U pip setuptools poetry
 	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > "$(PYTHON_LIB)/nuke.pth"
 	touch .venv
 
