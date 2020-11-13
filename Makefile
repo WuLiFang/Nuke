@@ -20,14 +20,14 @@ endif
 export PYTHONPATH
 
 requirements.txt: pyproject.toml
-	poetry export --without-hashes --output requirements.txt
+	poetry export --without-hashes --dev --output requirements.txt
 
 # https://github.com/pypa/pip/issues/5735
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
-	poetry run python -m pip install -U pip setuptools poetry
-	poetry run python -m pip install -r requirements.txt --target lib/site-packages
+	"$(PYTHON27)" -m pip install -U poetry==1.1.4
+	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
 	git fetch -fn origin docs:docs
