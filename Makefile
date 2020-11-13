@@ -26,7 +26,7 @@ requirements.txt: pyproject.toml
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
-	"$(PYTHON27)" -m pip install -U poetry==1.1.4
+	"$(PYTHON27)" -m pip install -U poetry==1.1.4 pip==18.1
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
