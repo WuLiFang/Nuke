@@ -5,8 +5,7 @@ default: .venv build docs/build/html
 build: docs/build/html/.git lib/site-packages
 
 ifeq ($(OS), Windows_NT)
-export PY_PYTHON=2.7
-PYTHON27?=py
+PYTHON27?=C:\Python27\python.exe
 NUKE_PYTHON?=C:/Program Files/Nuke10.5v7/python.exe
 # abspath not work on windows
 PYTHON_LIB=.venv/Lib/site-packages/
@@ -21,16 +20,12 @@ endif
 export PYTHONPATH
 
 requirements.txt: pyproject.toml
-	poetry export -f requirements.txt --output requirements.txt
-	# https://github.com/python-poetry/poetry/issues/897
-	sed -i 's/^-e //g' requirements.txt 
+	poetry export --without-hashes --output requirements.txt
 
 # https://github.com/pypa/pip/issues/5735
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
-	# pendulum require poetry to install
-	poetry run python -m pip install -U pip poetry==1.1.0b2
 	poetry run python -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
@@ -56,9 +51,7 @@ release:
 .venv: export POETRY_VIRTUALENVS_IN_PROJECT=true
 .venv: pyproject.toml
 	poetry env use "$(PYTHON27)"
-	# pendulum require poetry to install
-	poetry run python -m pip install -U pip poetry==1.1.0b2
-	poetry install -vv
+	poetry run python -m pip install -U pip setuptools poetry
 	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > "$(PYTHON_LIB)/nuke.pth"
 	touch .venv
 

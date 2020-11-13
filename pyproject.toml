@@ -13,10 +13,10 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^2.7"
 jinja2 = "^2.11"
-wlf = {path = "vendor/wlf-0.6.0-py2.py3-none-any.whl"}
-cgtwq = {path = "vendor/cgtwq-3.0.0b1-py2.py3-none-any.whl"}
-cgtwq-uploader = {path = "vendor/cgtwq_uploader-3.6.0-py2.py3-none-any.whl"}
-pendulum = "^2.0"
+wlf = { git = "https://github.com/WuLiFang/wlf", tag = "v0.6.0" }
+cgtwq = { git = "https://github.com/WuLiFang/cgtwq", tag = "v3.0.0-beta.4" }
+cgtwq-uploader = { git = "https://github.com/WuLiFang/uploader", tag = "v3.6.3" }
+pendulum = "^1" # upgrade blocked by https://github.com/sdispater/pendulum/issues/307
 pyblish-lite = "^0.8.4"
 pluggy = "^0.12.0"
 urllib3 = "^1.23"
