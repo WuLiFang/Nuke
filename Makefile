@@ -36,11 +36,11 @@ docs/build/html/.git: docs/.git
 
 docs/*: docs/.git
 
-docs/build/html: .venv docs/build/html/.git
+docs/build/html: .venv/lib/site-packages lib/site-packages docs/build/html/.git
 	. ./scripts/activate-venv.sh &&\
 		"$(MAKE)" -C docs html
 
-test: .venv lib/site-packages
+test: .venv/lib/site-packages lib/site-packages
 	. ./scripts/activate-venv.sh &&\
 		pytest tests
 
