@@ -23,8 +23,7 @@ export PYTHONPATH
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
-	. ./scripts/activate-venv.sh &&\
-		pip install -r requirements.txt --target lib/site-packages
+	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
 	git fetch -fn origin docs:docs
