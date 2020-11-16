@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.12](https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12) (2020-11-16)
+
+
+### Bug Fixes
+
+* **deps:** downgrade pendulum to v1 ([ddfc3f4](https://github.com/WuLiFang/Nuke/commit/ddfc3f45ab8652754f4f5af2a1390e018ed9d807))
+* **deps:** not use poetry ([4b8ee7f](https://github.com/WuLiFang/Nuke/commit/4b8ee7f1a95c14aa5318bfadb8cd424d3ab339ba))
+
 ### [0.20.11](https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11) (2020-10-12)
 
 
