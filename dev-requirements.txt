@@ -1,0 +1,9 @@
+autopep8==1.4.4
+pylint==1.*
+pytest==4.*
+rope==0.14.0
+doc8==0.8.0
+sphinx==1.*
+sphinx-git==11.*
+recommonmark==0.6.0
+more-itertools==5.0.0

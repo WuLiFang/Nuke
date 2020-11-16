@@ -1,6 +1,6 @@
-.PHONY: default test release build docs/build/html
+.PHONY: default test build docs/build/html
 
-default: .venv build docs/build/html
+default: .venv/lib/site-packages build docs/build/html
 
 build: docs/build/html/.git lib/site-packages
 
@@ -19,15 +19,12 @@ endif
 
 export PYTHONPATH
 
-requirements.txt: pyproject.toml
-	poetry export --without-hashes --dev --output requirements.txt
-
 # https://github.com/pypa/pip/issues/5735
 lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages: requirements.txt
 	rm -rf lib/site-packages
-	"$(PYTHON27)" -m pip install -U poetry==1.1.4 pip==18.1
-	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
+	. ./scripts/activate-venv.sh &&\
+		pip install -r requirements.txt --target lib/site-packages
 
 docs/.git:
 	git fetch -fn origin docs:docs
@@ -41,18 +38,19 @@ docs/build/html/.git: docs/.git
 docs/*: docs/.git
 
 docs/build/html: .venv docs/build/html/.git
-	poetry run "$(MAKE)" -C docs html
+	. ./scripts/activate-venv.sh &&\
+		"$(MAKE)" -C docs html
 
 test: .venv lib/site-packages
-	poetry run pytest tests
+	. ./scripts/activate-venv.sh &&\
+		pytest tests
 
-release:
-	standard-version
-
-.venv: export POETRY_VIRTUALENVS_IN_PROJECT=true
-.venv: pyproject.toml
-	poetry env use "$(PYTHON27)"
+.venv:
+	virtualenv --python "$(PYTHON27)" --clear .venv
 	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > "$(PYTHON_LIB)/nuke.pth"
 	touch .venv
 
-
+.venv/lib/site-packages: .venv dev-requirements.txt
+	. ./scripts/activate-venv.sh &&\
+		pip install -U -r dev-requirements.txt
+	touch .venv/lib/site-packages
