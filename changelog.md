@@ -1,18 +1,25 @@
 # 更新日志
 
+## [0.20.12](https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12) (2020-11-16)
+
+### 修复
+
+- **依赖:** 降级 pendulum 至 v1 ([ddfc3f4](https://github.com/WuLiFang/Nuke/commit/ddfc3f45ab8652754f4f5af2a1390e018ed9d807))
+- **依赖:** 不使用 poetry ([4b8ee7f](https://github.com/WuLiFang/Nuke/commit/4b8ee7f1a95c14aa5318bfadb8cd424d3ab339ba))
+
 ## [0.20.11](https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11) (2020-10-12)
 
 ### 功能
 
-* **正则分割图层组:** 使用本地帮助文档 ([0a1da07](https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14))
-* 正则分割图层组 ([db6eb39](https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b))
+- **正则分割图层组:** 使用本地帮助文档 ([0a1da07](https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14))
+- 正则分割图层组 ([db6eb39](https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b))
 
 ### 修复
 
-* **正则分割图层组:** 错误的 merge 输入 ([9c49457](https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6))
-* **正则分割图层组:** 错误的对话框标题 ([2cfc1f9](https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d))
-* **wlf_Write:** v1.56.3 deadline 任务提交 ([955c09a](https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0))
-* **wlf_Write:** v1.56.4 错误的序列输出条件 ([39268b8](https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8))
+- **正则分割图层组:** 错误的 merge 输入 ([9c49457](https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6))
+- **正则分割图层组:** 错误的对话框标题 ([2cfc1f9](https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d))
+- **wlf_Write:** v1.56.3 deadline 任务提交 ([955c09a](https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0))
+- **wlf_Write:** v1.56.4 错误的序列输出条件 ([39268b8](https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8))
 
 ## [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
 
