@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>547</width>
+    <width>446</width>
     <height>600</height>
    </rect>
   </property>
@@ -34,39 +34,60 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <layout class="QGridLayout" name="gridLayout">
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_4">
+             <property name="styleSheet">
+              <string notr="true">work-break: break-all;</string>
+             </property>
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;每行填写一条规则&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;符号 * 代表匹配 0-1 个文件夹,&lt;/p&gt;&lt;p align=&quot;justify&quot;&gt;例如 D:/example/* 将匹配所有D:/example下的文件夹，但是不含匹配文件夹中的文件夹。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>路径模式</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>正则筛选</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLineEdit" name="lineEditRegexPattern"/>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>使用正则表达式筛选匹配结果</string>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="1">
-            <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
              <item>
-              <widget class="QLineEdit" name="lineEditPath"/>
+              <widget class="QTextEdit" name="textEditPatterns">
+               <property name="placeholderText">
+                <string>请输入路径匹配模式</string>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QToolButton" name="toolButtonPath">
                <property name="text">
                 <string>...</string>
                </property>
-               <property name="autoRaise">
-                <bool>true</bool>
-               </property>
               </widget>
              </item>
             </layout>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>路径</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>镜头名正则</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEditShotPattern"/>
            </item>
           </layout>
          </item>
@@ -121,7 +142,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>547</width>
+     <width>446</width>
      <height>23</height>
     </rect>
    </property>
@@ -144,22 +165,6 @@
  </widget>
  <resources/>
  <connections>
-  <connection>
-   <sender>toolButtonPath</sender>
-   <signal>clicked()</signal>
-   <receiver>actionAskPath</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>338</x>
-     <y>104</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>toolButtonTxt</sender>
    <signal>clicked()</signal>
@@ -193,34 +198,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>lineEditPath</sender>
-   <signal>editingFinished()</signal>
-   <receiver>actionRefresh</receiver>
+   <sender>toolButtonPath</sender>
+   <signal>clicked()</signal>
+   <receiver>actionAskPath</receiver>
    <slot>trigger()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>425</x>
-     <y>68</y>
+     <x>405</x>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
-     <x>466</x>
-     <y>77</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>lineEditShotPattern</sender>
-   <signal>editingFinished()</signal>
-   <receiver>actionRefresh</receiver>
-   <slot>trigger()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>392</x>
-     <y>134</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>382</x>
-     <y>139</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
    </hints>
   </connection>
