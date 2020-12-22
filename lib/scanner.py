@@ -69,24 +69,20 @@ class MainWindow(QtWidgets.QMainWindow):
                             ex.itemText(index)
                         )
                     )
-                else:
-                    print(u'待处理的控件: {} {}'.format(type(edit), edit).encode("utf-8"))
 
             for qt_edit, k in self.edits_key.items():
-                try:
-                    if isinstance(qt_edit, QtWidgets.QLineEdit):
-                        qt_edit.setText(self._config[k])
-                    if isinstance(qt_edit, QtWidgets.QTextEdit):
-                        qt_edit.setText(self._config[k])
-                    elif isinstance(qt_edit, QtWidgets.QCheckBox):
-                        qt_edit.setCheckState(
-                            QtCore.Qt.CheckState(self._config[k])
-                        )
-                    elif isinstance(qt_edit, QtWidgets.QComboBox):
-                        qt_edit.setCurrentIndex(
-                            qt_edit.findText(self._config[k]))
-                except KeyError as ex:
-                    print(ex)
+                if isinstance(qt_edit, QtWidgets.QLineEdit):
+                    qt_edit.setText(self._config[k])
+                if isinstance(qt_edit, QtWidgets.QTextEdit):
+                    qt_edit.setText(self._config[k])
+                elif isinstance(qt_edit, QtWidgets.QCheckBox):
+                    qt_edit.setCheckState(
+                        QtCore.Qt.CheckState(self._config[k])
+                    )
+                elif isinstance(qt_edit, QtWidgets.QComboBox):
+                    qt_edit.setCurrentIndex(
+                        qt_edit.findText(self._config[k]))
+
 
         super(MainWindow, self).__init__(parent)
         self._ui = QtCompat.loadUi(os.path.join(__file__, '../scanner.ui'))
@@ -104,6 +100,7 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         self._config = Config()
         self.labelVersion.setText('v{}'.format(__version__))
+        self.setWindowTitle(u'空文件夹扫描')
         self.resize(500, 600)
 
         _icon()
