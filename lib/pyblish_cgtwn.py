@@ -96,7 +96,11 @@ class CollectFX(TaskMixin, pyblish.api.ContextPlugin):
     def process(self, context):
         task = self.get_task(context)
         assert isinstance(task, Task)
-        filebox = task.filebox.get('fx')
+        try:
+            filebox = task.filebox.get('fx')
+        except ValueError: 
+            self.log.warn('找不到标识为 fx 的文件框，无法获取特效文件。可联系管理员进行设置')
+            return
         dir_ = filebox.path
         context.create_instance(
             '有特效素材' if os.listdir(dir_) else '无特效素材',
@@ -157,7 +161,7 @@ class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
             try:
                 n = task.import_video('animation_videos')
             except ValueError:
-                self.log.error('导入上游视频失败')
+                self.log.error('找不到标识为 animation_videos 的文件框，无法获取动画文件。可联系管理员进行设置')
                 raise
         upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
         current_framecount = int(
@@ -241,7 +245,12 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
 
         n = wlf_write_node()
         path = u(nuke.filename(n.node('Write_JPG_1')))
-        dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
+        try:
+            dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
+        except ValueError:
+            self.log.error('找不到标识为 image 的文件框，请联系管理员进行设置。')
+            raise
+        
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
 
