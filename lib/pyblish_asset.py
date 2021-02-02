@@ -124,7 +124,7 @@ class ValidateFootageStore(pyblish.api.InstancePlugin):
     order = pyblish.api.ValidatorOrder
     label = '检查素材保存位置'
     families = ['素材']
-    valid_dir = ('x:\\', 'y:\\', 'z:\\') if sys.platform == 'win32' else ('',)
+    valid_dir = ('x:\\', 'y:\\', 'z:\\', "b:\\") if sys.platform == 'win32' else ('',)
 
     def process(self, instance):
         is_ok = True
