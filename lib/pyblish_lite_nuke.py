@@ -246,7 +246,7 @@ def setup():
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
     if os.getenv("DEBUG") != "pyblish":
-        settings.TerminalLoglevel = logging.CRITICAL
+        settings.TerminalLoglevel = logging.INFO
 
     app.install_fonts()
     app.install_translator(QApplication.instance())
