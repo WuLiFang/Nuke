@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.13](https://github.com/WuLiFang/Nuke/compare/v0.20.12...v0.20.13) (2021-02-23)
+
+
+### Features
+
+* change pyblish terminal log level to info ([3d3065a](https://github.com/WuLiFang/Nuke/commit/3d3065aac8454c2ebfb2b8d17a66895e66ef9e92))
+* support glob in empty folder scanner ([e93c86a](https://github.com/WuLiFang/Nuke/commit/e93c86ac45943871bc668741f11296ac350a60f6))
+* update expire time to 2022-01-01 ([03cda3d](https://github.com/WuLiFang/Nuke/commit/03cda3ddde32f0633e003b31d9b45741cb57e32c))
+
+
+### Bug Fixes
+
+* handle no misconfigured cgtw project ([1f4d494](https://github.com/WuLiFang/Nuke/commit/1f4d494b24e73711711fd86b860a8eff32cc5e77))
+* should set scanner window title ([49d285e](https://github.com/WuLiFang/Nuke/commit/49d285ed0eda05292271f235fcf969fc14054093))
+
 ### [0.20.12](https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12) (2020-11-16)
 
 
