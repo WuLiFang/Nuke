@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.14](https://github.com/WuLiFang/Nuke/compare/v0.20.13...v0.20.14) (2021-02-24)
+
+
+### Features
+
+* add last commit info to banner ([404023e](https://github.com/WuLiFang/Nuke/commit/404023e6e1b98ad74ecc12dd514de4249e8198a6))
+
 ### [0.20.13](https://github.com/WuLiFang/Nuke/compare/v0.20.12...v0.20.13) (2021-02-23)
 
 
