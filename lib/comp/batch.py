@@ -13,7 +13,6 @@ from subprocess import PIPE, Popen
 import nuke
 from jinja2 import Environment, FileSystemLoader
 
-import __about__
 from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)

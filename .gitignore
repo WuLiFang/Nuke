@@ -78,5 +78,8 @@ build/
 
 /lib/validation.py
 
+# Node packages
+node_modules
+
 #worktree
 /docs

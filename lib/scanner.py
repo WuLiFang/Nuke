@@ -13,7 +13,7 @@ from Qt import QtCompat, QtCore, QtWidgets
 from Qt.QtWidgets import QFileDialog
 
 import wlf.config
-from __about__ import __version__
+import __version__
 
 
 class Config(wlf.config.Config):
@@ -99,7 +99,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.reset_status_bar,
         )
         self._config = Config()
-        self.labelVersion.setText('v{}'.format(__version__))
+        self.labelVersion.setText('v{}'.format(__version__.VERSION))
         self.setWindowTitle(u'空文件夹扫描')
         self.resize(500, 600)
 
