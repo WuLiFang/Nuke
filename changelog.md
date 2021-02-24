@@ -1,5 +1,24 @@
 # 更新日志
 
+## [0.20.14](https://github.com/WuLiFang/Nuke/compare/v0.20.13...v0.20.14) (2021-02-24)
+
+### 功能
+
+- 在启动横幅中显示最近提交信息 ([404023e](https://github.com/WuLiFang/Nuke/commit/404023e6e1b98ad74ecc12dd514de4249e8198a6))
+
+## [0.20.13](https://github.com/WuLiFang/Nuke/compare/v0.20.12...v0.20.13) (2021-02-23)
+
+### 功能
+
+- 将 pyblish 日志级别改为 info ([3d3065a](https://github.com/WuLiFang/Nuke/commit/3d3065aac8454c2ebfb2b8d17a66895e66ef9e92))
+- 空文件夹扫描支持路径模式匹配 ([e93c86a](https://github.com/WuLiFang/Nuke/commit/e93c86ac45943871bc668741f11296ac350a60f6))
+- 延长许可时间至 2022-01-01 ([03cda3d](https://github.com/WuLiFang/Nuke/commit/03cda3ddde32f0633e003b31d9b45741cb57e32c))
+
+### 修复
+
+- 处理未配置好的 CGTW 项目 ([1f4d494](https://github.com/WuLiFang/Nuke/commit/1f4d494b24e73711711fd86b860a8eff32cc5e77))
+- 空文件夹扫描应设置窗口标题 ([49d285e](https://github.com/WuLiFang/Nuke/commit/49d285ed0eda05292271f235fcf969fc14054093))
+
 ## [0.20.12](https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12) (2020-11-16)
 
 ### 修复
