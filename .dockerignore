@@ -9,3 +9,5 @@ node_modules/
 /docs.Dockerfile
 /.drone.yml
 /appveyor.yml
+/docs/build
+/lib/site-packages
