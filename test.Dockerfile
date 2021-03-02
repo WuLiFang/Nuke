@@ -1,11 +1,20 @@
 ARG VERSION=latest
 FROM natescarlet/nuke:${VERSION}
 
-ARG PIP_INDEX_URL
+USER root
+RUN set -ex ;\
+    yum -y --setopt=skip_missing_names_on_install=0 install \
+        make \
+        gcc \
+        python27-python-devel \
+    ;\
+    yum -y clean all ;\
+    rm -rf /var/cache
 
-RUN sudo -EH pip install -U pip
 WORKDIR /home/nuke/src/github.com/WuLiFang/Nuke
-RUN sudo chown nuke .
+RUN chown nuke .
+
+USER nuke
 COPY --chown=nuke ./dev-requirements.txt ./requirements.txt ./
 COPY --chown=nuke ./vendor ./vendor
 COPY --chown=nuke ./Makefile ./
