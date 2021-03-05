@@ -28,6 +28,7 @@ lib/site-packages/.sentinel: requirements.txt patches/* patches/*/*
 	# https://github.com/python/typing/issues/582
 	cp -rvf patches/typing/* lib/site-packages/
 	# fix unicode issue
+	rm -rvf lib/site-packages/importlib_metadata/*
 	cp -rvf patches/importlib_metadata/* lib/site-packages/importlib_metadata/
 	cp patches/sitecustomize.py lib/site-packages/
 	touch $@
