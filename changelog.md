@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.17](https://github.com/WuLiFang/Nuke/compare/v0.20.16...v0.20.17) (2021-03-05)
+
+### 修复
+
+- 当文件路径只包含英文字母时无法启动 ([78d4014](https://github.com/WuLiFang/Nuke/commit/78d40144d1931db98a824ba972454beed085de1e))
+
 ## [0.20.16](https://github.com/WuLiFang/Nuke/compare/v0.20.15...v0.20.16) (2021-03-05)
 
 ### 修复
