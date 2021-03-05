@@ -435,7 +435,7 @@ class DistributionFinder(MetaPathFinder):
 def _cast_text(v):
     if isinstance(v, six.binary_type):
         import chardet
-        return v.decode(chardet.detect(v)["encoding"])
+        return v.decode(chardet.detect(v)["encoding"] or 'ascii')
     return six.text_type(v)
 
 class FastPath:
