@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.16](https://github.com/WuLiFang/Nuke/compare/v0.20.15...v0.20.16) (2021-03-05)
+
+
+### Bug Fixes
+
+* importlib_metadata patch may not work ([4a60091](https://github.com/WuLiFang/Nuke/commit/4a6009131648f7755417053b5ba50c49202ffec8))
+
 ### [0.20.15](https://github.com/WuLiFang/Nuke/compare/v0.20.14...v0.20.15) (2021-03-05)
 
 

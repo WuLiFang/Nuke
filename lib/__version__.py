@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.15'
-RELEASE_DATE = datetime.fromtimestamp(1614936144)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.14-5-g4936eb8'
-LAST_GIT_COMMIT_HASH = '4936eb8f67dfcacf9067e9d48d3def544ee0cfc0'
+VERSION = '0.20.16'
+RELEASE_DATE = datetime.fromtimestamp(1614939787)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.15-1-g4a60091'
+LAST_GIT_COMMIT_HASH = '4a6009131648f7755417053b5ba50c49202ffec8'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1614916530)
-LAST_GIT_COMMIT_SUBJECT = 'fix: can not launch when file path contains chinese'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1614939253)
+LAST_GIT_COMMIT_SUBJECT = 'fix: importlib_metadata patch may not work'
 LAST_GIT_COMMIT_BODY = ''
