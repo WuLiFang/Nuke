@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.17](https://github.com/WuLiFang/Nuke/compare/v0.20.16...v0.20.17) (2021-03-05)
+
+
+### Bug Fixes
+
+* nuke not launch when file path is ascii only ([78d4014](https://github.com/WuLiFang/Nuke/commit/78d40144d1931db98a824ba972454beed085de1e))
+
 ### [0.20.16](https://github.com/WuLiFang/Nuke/compare/v0.20.15...v0.20.16) (2021-03-05)
 
 

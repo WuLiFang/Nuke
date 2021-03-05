@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.16'
-RELEASE_DATE = datetime.fromtimestamp(1614939787)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.15-1-g4a60091'
-LAST_GIT_COMMIT_HASH = '4a6009131648f7755417053b5ba50c49202ffec8'
+VERSION = '0.20.17'
+RELEASE_DATE = datetime.fromtimestamp(1614940646)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.16-1-g78d4014'
+LAST_GIT_COMMIT_HASH = '78d40144d1931db98a824ba972454beed085de1e'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1614939253)
-LAST_GIT_COMMIT_SUBJECT = 'fix: importlib_metadata patch may not work'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1614940619)
+LAST_GIT_COMMIT_SUBJECT = 'fix: nuke not launch when file path is ascii only'
 LAST_GIT_COMMIT_BODY = ''
