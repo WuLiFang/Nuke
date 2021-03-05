@@ -1,6 +1,7 @@
 ./vendor/cgtwq_uploader-3.6.3-py2.py3-none-any.whl
 ./vendor/cgtwq-3.0.0b5-py2.py3-none-any.whl
 ./vendor/wlf-0.6.0-py2.py3-none-any.whl
+pathlib2_unicode==3.0.0
 futures==3.3.0
 jinja2==2.11.2
 # https://github.com/sdispater/pendulum/issues/338

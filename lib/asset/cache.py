@@ -7,6 +7,7 @@ from __future__ import (absolute_import, division, print_function,
 import os
 
 import six
+from pathlib2_unicode import Path
 
 import callback
 from executor import EXECUTOR
@@ -15,7 +16,7 @@ _EXIST_CACHE = {}
 
 
 def _update_exist_cache(key):
-    _EXIST_CACHE[key] = os.path.exists(key)
+    _EXIST_CACHE[key] = Path(key).exists()
     return _EXIST_CACHE[key]
 
 

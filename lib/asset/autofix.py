@@ -12,7 +12,8 @@ import nuke
 import dropdata
 from wlf.codectools import get_encoded as e
 from wlf.codectools import u_print
-from wlf.path import PurePath
+from pathlib2_unicode import PurePath
+import filetools
 
 LOGGER = logging.getLogger(__name__)
 IS_TESTING = False
@@ -128,4 +129,4 @@ def _fix_dir(context):
 def _current_basename(filename):
     if not filename:
         return None
-    return PurePath(filename).with_frame(nuke.frame()).name
+    return PurePath(filetools.expand_frame(filename, nuke.frame())).name

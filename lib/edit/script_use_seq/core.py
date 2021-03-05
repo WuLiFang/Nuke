@@ -13,7 +13,7 @@ from edit import replace_node
 from edit.script_use_seq import files
 from edit.script_use_seq.config import Config
 from nuketools import utf8
-from wlf.path import Path
+from pathlib2_unicode import Path
 from wlf.progress import progress
 
 

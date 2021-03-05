@@ -7,7 +7,7 @@ from __future__ import (absolute_import, division, print_function,
 import logging
 import re
 
-from wlf.path import Path
+from pathlib2_unicode import Path
 
 
 LOGGER = logging.getLogger(__name__)

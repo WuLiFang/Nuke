@@ -10,14 +10,14 @@ import nuke
 
 import nuketools
 from wlf.codectools import get_unicode as u
-from wlf.path import Path
+from pathlib2_unicode import Path
 
 from . import cache, core
 from .frameranges import FrameRanges
 
 LOGGER = logging.getLogger(__name__)
 
-
+import filetools
 class Footage(object):
     """Asset for nuke node.  """
 
@@ -35,7 +35,7 @@ class Footage(object):
         for i in core.CACHED_ASSET:
             assert isinstance(i, Footage)
             if u(i.filename) == u(filename):
-                if filename.with_frame(1) != filename.with_frame(2):
+                if filetools.is_sequence_name(filename):
                     i.frame_ranges += FrameRanges(frame_ranges)
                 return i
         return super(Footage, cls).__new__(cls)
@@ -106,7 +106,7 @@ class Footage(object):
         missing_frames = []
         is_processing = False
         for f in frame_ranges.toFrameList():
-            path = self.filename.with_frame(f)
+            path = filetools.expand_frame(self.filename, f)
             result = cache.is_file_exist(path, timeout=timeout)
             if result is None:
                 is_processing = True

@@ -1,29 +1,36 @@
 .PHONY: default test build docs/build/html
 
-default: .venv/lib/site-packages build docs/build/html
-
-build: docs/build/html/.git lib/site-packages
-
 ifeq ($(OS), Windows_NT)
 PYTHON27?=C:\Python27\python.exe
 NUKE_PYTHON?=C:/Program Files/Nuke10.5v7/python.exe
 # abspath not work on windows
-PYTHON_LIB=.venv/Lib/site-packages/
+VENV_SITEPATH=.venv/Lib/site-packages
 PYTHONPATH:=$(PYTHONPATH);lib/site-packages;lib;../lib/site-packages;../lib
 else
 PYTHON27?=/usr/bin/python
 NUKE_PYTHON?=python
-PYTHON_LIB=$(abspath .venv/lib/python2.7/site-packages/)
+VENV_SITEPATH=$(abspath .venv/lib/python2.7/site-packages/)
 PYTHONPATH:=$(PYTHONPATH):$(abspath lib/site-packages):$(abspath lib)
 endif
 
+default: .venv build docs/build/html $(VENV_SITEPATH)/lib.pth
+
+build: docs/build/html/.git lib/site-packages/.sentinel
+
 export PYTHONPATH
+export PYTHONIOENCODING=
 
 # https://github.com/pypa/pip/issues/5735
-lib/site-packages: export PIP_NO_BUILD_ISOLATION=false
-lib/site-packages: requirements.txt
+lib/site-packages/.sentinel: export PIP_NO_BUILD_ISOLATION=false
+lib/site-packages/.sentinel: requirements.txt patches/* patches/*/*
 	rm -rf lib/site-packages
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
+	# https://github.com/python/typing/issues/582
+	cp -rvf patches/typing/* lib/site-packages/
+	# fix unicode issue
+	cp -rvf patches/importlib_metadata/* lib/site-packages/importlib_metadata/
+	cp patches/sitecustomize.py lib/site-packages/
+	touch $@
 
 docs/.git:
 	git fetch -fn origin docs:docs
@@ -36,20 +43,25 @@ docs/build/html/.git: docs/.git
 
 docs/*: docs/.git
 
-docs/build/html: .venv/lib/site-packages lib/site-packages docs/build/html/.git
+docs/build/html: .venv/.sentinel lib/site-packages/.sentinel docs/build/html/.git
 	. ./scripts/activate-venv.sh &&\
 		"$(MAKE)" -C docs html
 
-test: .venv/lib/site-packages lib/site-packages
-	. ./scripts/activate-venv.sh &&\
-		pytest tests
-
 .venv:
 	virtualenv --python "$(PYTHON27)" --clear .venv
-	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > "$(PYTHON_LIB)/nuke.pth"
-	touch .venv
+	touch $@
 
-.venv/lib/site-packages: .venv dev-requirements.txt
+$(VENV_SITEPATH)/nuke.pth:
+	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $@
+
+$(VENV_SITEPATH)/lib.pth: lib/site-packages/.sentinel
+	./scripts/add-lib-path.sh
+
+.venv/.sentinel: .venv dev-requirements.txt $(VENV_SITEPATH)/nuke.pth $(VENV_SITEPATH)/lib.pth
 	. ./scripts/activate-venv.sh &&\
 		pip install -U -r dev-requirements.txt
-	touch .venv/lib/site-packages
+	touch $@
+
+test: .venv/.sentinel
+	. ./scripts/activate-venv.sh &&\
+		pytest

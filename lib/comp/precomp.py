@@ -19,7 +19,7 @@ from nuketools import undoable_func, utf8, utf8_dict
 from orgnize import autoplace
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
-from wlf.path import PurePath
+from pathlib2_unicode import PurePath
 from wlf.pathtools import module_path as wlf_module_path
 
 LOGGER = logging.getLogger('com.wlf.precomp')

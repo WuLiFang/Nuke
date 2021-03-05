@@ -15,7 +15,6 @@ from wlf.decorators import run_with_clock
 from .footage import Footage
 from .model import MissingFramesDict
 
-
 class FootagesMonitor(list):
     """Multiple Asset. Get assets from a obj.
 

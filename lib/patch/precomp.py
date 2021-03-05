@@ -11,7 +11,7 @@ import six
 
 import edit
 from wlf.codectools import get_unicode as u
-from wlf.path import PurePath
+from pathlib2_unicode import PurePath
 
 from .core import BasePatch
 

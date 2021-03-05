@@ -17,7 +17,7 @@ try:
     from wlf.decorators import run_async
     from wlf.progress import progress
     from wlf.codectools import get_encoded as e
-    from wlf.path import PurePath, Path
+    from pathlib2_unicode import PurePath, Path
 except:
     raise
 

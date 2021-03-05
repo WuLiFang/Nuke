@@ -14,7 +14,7 @@ import cgtwq
 from cgtwq.helper.wlf import get_entry_by_file
 from edit import CurrentViewer
 from nuketools import utf8
-from wlf.path import Path
+from pathlib2_unicode import Path
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 

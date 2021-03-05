@@ -13,7 +13,7 @@ from node import wlf_write_node
 from nuketools import undoable_func, utf8
 from wlf.codectools import get_unicode as u
 from wlf.codectools import u_print
-from wlf.path import PurePath
+from pathlib2_unicode import PurePath
 
 from . import core
 
@@ -78,10 +78,10 @@ def use_relative_path(nodes):
     if isinstance(nodes, nuke.Node):
         nodes = [nodes]
 
-    proj_dir = PurePath(nuke.value('root.project_directory'))
+    proj_dir = PurePath(nuke.value('root.project_directory').decode("utf-8"))
     for n in nodes:
         try:
-            path = PurePath(n['file'].value())
+            path = PurePath(n['file'].value().decode("utf-8"))
             n['file'].setValue(utf8(path.relative_to(proj_dir).as_posix()))
         except NameError:
             continue

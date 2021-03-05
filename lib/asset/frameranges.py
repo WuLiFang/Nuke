@@ -10,7 +10,9 @@ import nuke
 
 from nodeutil import is_node_deleted
 from wlf.codectools import get_unicode as u
-from wlf.path import PurePath
+from pathlib2_unicode import PurePath
+
+import filetools
 
 
 class FrameRanges(object):
@@ -23,27 +25,25 @@ class FrameRanges(object):
 
     def __init__(self, obj=None):
         self._wrapped = obj
+        self._cached_framerange = None
         self._list = None
         self._node_filename = (nuke.filename(obj)
                                if isinstance(obj, nuke.Node) else None)
 
-    @property
-    def wrapped(self):
-        """Get frame range from wrapped object."""
+    def to_frame_ranges(self):
+        """Get nuke.FrameRanges from wrapped object."""
+
+        if self._cached_framerange is not None:
+            return self._cached_framerange
 
         obj = self._wrapped
         if isinstance(obj, nuke.FrameRanges):
             return obj
 
-        # Get frame_list from obj
-        try:
-            ret = nuke.FrameRanges(self._frame_list())
-            # Save result for some case.
-        except (TypeError, ValueError, NotImplementedError):
-            ret = nuke.FrameRanges(self.from_root().to_frame_list())
-
-        if isinstance(obj, (list, str, unicode, PurePath, nuke.FrameRanges)):
-            self._wrapped = ret
+        ret = nuke.FrameRanges(self._frame_list())
+        # Save result for some case.
+        if isinstance(obj, (list, str, unicode, PurePath)):
+            self._cached_framerange = ret
 
         return ret
 
@@ -62,11 +62,10 @@ class FrameRanges(object):
             # use previous result.
             if (is_node_deleted(obj)
                     or nuke.filename(obj) != self._node_filename):
-                list_ = self._list
-                if list_ is None:
-                    raise TypeError
+                list_ = self._list or FrameRanges.from_node(
+                    obj).to_frame_list()
             else:
-                list_ = self.from_node(obj).to_frame_list()
+                list_ = FrameRanges.from_node(obj).to_frame_list()
         elif isinstance(obj, Footage):
             list_ = obj.frame_ranges.toFrameList()
         elif isinstance(obj, FrameRanges):
@@ -85,7 +84,7 @@ class FrameRanges(object):
         return list_
 
     def __str__(self):
-        return str(self.wrapped)
+        return str(self.to_frame_ranges())
 
     def __add__(self, other):
         if isinstance(other, (nuke.FrameRanges, FrameRanges)):
@@ -98,7 +97,7 @@ class FrameRanges(object):
         return ret
 
     def __getattr__(self, name):
-        return getattr(self.wrapped, name)
+        return getattr(self.to_frame_ranges(), name)
 
     def __nonzero__(self):
         return bool(self.to_frame_list())
@@ -110,7 +109,7 @@ class FrameRanges(object):
         Returns:
             list: Frame list in this frame ranges.
         """
-        ret = self.wrapped.toFrameList()
+        ret = self.to_frame_ranges().toFrameList()
         if ret is None:
             ret = []
         return ret
@@ -136,6 +135,8 @@ class FrameRanges(object):
         """
 
         assert isinstance(node, nuke.Node)
+        if is_node_deleted(node):
+            return cls.from_root()
         if node.Class() == 'Read':
             first = node['first'].value()
             last = node['last'].value()
@@ -161,7 +162,7 @@ class FrameRanges(object):
     def from_path(cls, path):
         """"Get frame ranges from path.  """
 
-        path = PurePath(path)
-        if path.with_frame(1) == path.with_frame(2):
+        if (filetools.expand_frame(path, 1) ==
+                filetools.expand_frame(path, 2)):
             return cls([1])
-        raise NotImplementedError
+        return cls.from_root()

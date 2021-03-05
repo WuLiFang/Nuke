@@ -16,7 +16,7 @@ from cgtwn import Task
 from node import wlf_write_node
 from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
-from wlf.path import PurePath
+from pathlib2_unicode import PurePath
 
 # pylint: disable=no-init
 

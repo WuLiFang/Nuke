@@ -12,7 +12,7 @@ from unittest import TestCase, main
 import nuke
 
 import asset
-from wlf.path import Path
+from pathlib2_unicode import Path
 
 FrameRanges = asset.FrameRanges
 Footage = asset.Footage
@@ -192,11 +192,11 @@ class FootagesMonitorTestCase(TestCase):
     def tearDown(self):
         for n in self.nodes:
             nuke.delete(n)
-
-
+import six
+import filetools
 class FootageMissingFrameTestCase(TestCase):
     def setUp(self):
-        self.temp_dir = mkdtemp()
+        self.temp_dir = six.text_type(mkdtemp())
         self.addCleanup(os.removedirs, self.temp_dir)
         self.test_file = os.path.join(self.temp_dir, 'test_seq.%04d.exr')
         self.expected_missing_frames = nuke.FrameRanges(
@@ -207,7 +207,7 @@ class FootageMissingFrameTestCase(TestCase):
         path = Path(Path(self.temp_dir) / 'test_seq.%04d.exr')
         for i in set(xrange(1, 91)).difference(
                 self.expected_missing_frames.toFrameList()):
-            j = Path(path.with_frame(i))
+            j = Path(filetools.expand_frame(path, i))
             with j.open('w') as f:
                 f.write(unicode(i))
             self.addCleanup(j.unlink)

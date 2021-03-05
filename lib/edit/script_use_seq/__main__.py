@@ -12,7 +12,7 @@ import sys
 import nuke
 from nuketools import utf8
 
-from wlf.path import Path
+from pathlib2_unicode import Path
 from wlf.codectools import u_print
 
 

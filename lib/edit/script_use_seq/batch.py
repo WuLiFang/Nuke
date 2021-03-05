@@ -19,7 +19,7 @@ from nuketools import utf8
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.decorators import run_async
-from wlf.path import Path
+from pathlib2_unicode import Path
 from wlf.progress import CancelledError, progress
 
 from . import __main__, files
