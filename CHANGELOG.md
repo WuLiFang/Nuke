@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.15](https://github.com/WuLiFang/Nuke/compare/v0.20.14...v0.20.15) (2021-03-05)
+
+
+### Bug Fixes
+
+* can not launch when file path contains chinese ([4936eb8](https://github.com/WuLiFang/Nuke/commit/4936eb8f67dfcacf9067e9d48d3def544ee0cfc0))
+
 ### [0.20.14](https://github.com/WuLiFang/Nuke/compare/v0.20.13...v0.20.14) (2021-02-24)
 
 
