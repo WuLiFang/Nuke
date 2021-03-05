@@ -55,7 +55,7 @@ volumes:
       path: /var/run/docker.sock
 ---
 kind: pipeline
-name: nuke:latest
+name: nuke11
 
 steps:
   - name: test
@@ -73,7 +73,7 @@ steps:
         --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
         --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
         --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
-        --build-arg "VERSION=latest"
+        --build-arg "VERSION=11"
         --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
         --file test.Dockerfile
         .
@@ -106,7 +106,7 @@ steps:
         --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
         --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
         --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
-        --build-arg "VERSION=latest"
+        --build-arg "VERSION=10.5v7"
         --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
         --file docs.Dockerfile
         --tag "temp-image-${DRONE_COMMIT_SHA}"
@@ -158,7 +158,7 @@ steps:
 depends_on:
   - nuke10.0v4
   - nuke10.5v7
-  - nuke:latest
+  - nuke11
 volumes:
   - name: dockersock
     host:
@@ -191,7 +191,7 @@ steps:
 depends_on:
   - nuke10.0v4
   - nuke10.5v7
-  - nuke:latest
+  - nuke11
   - docs
 trigger:
   status:

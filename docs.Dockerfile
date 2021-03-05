@@ -1,21 +1,31 @@
-ARG VERSION=latest
-FROM natescarlet/nuke:${VERSION} as build
+ARG VERSION=10.5v7
+FROM natescarlet/nuke:${VERSION}
 
-ARG PIP_INDEX_URL
+USER root
+RUN set -ex ;\
+    yum -y --setopt=skip_missing_names_on_install=0 install \
+        make \
+        gcc \
+        python-devel \
+        git \
+    ;\
+    yum -y clean all ;\
+    rm -rf /var/cache
 
-RUN sudo -EH pip install -U pip
 WORKDIR /home/nuke/src/github.com/WuLiFang/Nuke
-RUN sudo chown nuke .
+RUN chown nuke .
+
+USER nuke
 COPY --chown=nuke ./dev-requirements.txt ./requirements.txt ./
 COPY --chown=nuke ./vendor ./vendor
 COPY --chown=nuke ./Makefile ./
 COPY --chown=nuke ./scripts ./scripts
-RUN make .venv/lib/site-packages lib/site-packages
-COPY --chown=nuke . . 
+COPY --chown=nuke ./patches ./patches
+RUN make .venv/.sentinel lib/site-packages/.sentinel
+COPY --chown=nuke . .
 
 # foundry_LICENSE arg already used by base image, so we can not use.
 ARG FOUNDRY_LICENSE 
 ENV foundry_LICENSE=${FOUNDRY_LICENSE} 
-RUN python -c 'import nuke; print(nuke.NUKE_VERSION_STRING)'
 ARG SPHINXOPTS="-W"
 RUN make docs/build/html
