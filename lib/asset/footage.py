@@ -21,8 +21,6 @@ import filetools
 class Footage(object):
     """Asset for nuke node.  """
 
-    update_interval = 10
-
     def __new__(cls, filename, frame_ranges=None):
         # Skip new from other Asset objet.
         if isinstance(filename, Footage):
