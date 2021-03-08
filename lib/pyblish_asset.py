@@ -4,13 +4,13 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import os
 import sys
 from collections import namedtuple
 
 import nuke
 import pendulum
 import pyblish.api
+from pathlib2_unicode import PurePath
 
 import callback
 from node import wlf_write_node
@@ -118,18 +118,25 @@ class CollectMemoryUsage(pyblish.api.ContextPlugin):
             family='内存')
 
 
+def _is_local_file(path):
+    path = u(path)
+    if sys.platform == 'win32':
+        import ctypes
+        return ctypes.windll.kernel32.GetDriveTypeW(PurePath(path).drive) == 3
+    return False
+
+
 class ValidateFootageStore(pyblish.api.InstancePlugin):
     """检查素材文件是否保存于服务器.  """
 
     order = pyblish.api.ValidatorOrder
     label = '检查素材保存位置'
     families = ['素材']
-    valid_dir = ('x:\\', 'y:\\', 'z:\\', "b:\\") if sys.platform == 'win32' else ('',)
 
     def process(self, instance):
         for i in instance:
             assert isinstance(i, FootageInfo)
-            if not os.path.normcase(u(i.filename)).startswith(self.valid_dir):
+            if _is_local_file(i.filename):
                 raise ValueError('使用了本地素材: %s', i.filename)
 
 
