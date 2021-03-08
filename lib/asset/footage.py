@@ -66,7 +66,7 @@ class Footage(object):
             obj (str or unicode or nuke.Node): Object contain filename.
 
         Returns:
-            wlf.path.Path: filename path.
+            Path: filename path.
         """
 
         filename = obj
