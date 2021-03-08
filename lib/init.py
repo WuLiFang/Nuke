@@ -16,9 +16,6 @@ def setup_site():
         os.path.join(__file__, '../site-packages')))
 
 
-setup_site()
-
-
 def _enable_windows_unicode_console():
     import sys
     if sys.platform != 'win32':
@@ -28,6 +25,10 @@ def _enable_windows_unicode_console():
 
 
 def main():
+    setup_site()
+    import sentry
+    sentry.setup()
+
     _enable_windows_unicode_console()
 
     import os

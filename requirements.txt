@@ -12,3 +12,4 @@ pyblish-lite==0.8.7
 qt.py==1.1.0
 six==1.15.0
 win-unicode-console==0.5; sys_platform == "win32"
+sentry-sdk==1.0.0
