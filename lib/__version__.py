@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.18'
-RELEASE_DATE = datetime.fromtimestamp(1615188650)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.17-5-g35dfbaa'
-LAST_GIT_COMMIT_HASH = '35dfbaab9b38ca4e3f36e5f8bc2efd2981caf43f'
+VERSION = '0.20.19'
+RELEASE_DATE = datetime.fromtimestamp(1615196022)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.18-2-g52f7f83'
+LAST_GIT_COMMIT_HASH = '52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615187167)
-LAST_GIT_COMMIT_SUBJECT = 'docs: correct docstring'
-LAST_GIT_COMMIT_BODY = '[skip ci]'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615195799)
+LAST_GIT_COMMIT_SUBJECT = 'feat: integrate sentry'
+LAST_GIT_COMMIT_BODY = ''

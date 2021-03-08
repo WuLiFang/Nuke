@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.19](https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19) (2021-03-08)
+
+
+### Features
+
+* integrate sentry ([52f7f83](https://github.com/WuLiFang/Nuke/commit/52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b))
+
+
+### Bug Fixes
+
+* undefined variable `_iter_layer` used ([29cc348](https://github.com/WuLiFang/Nuke/commit/29cc348417843ab7664860468c35e819734e4a56))
+
 ### [0.20.18](https://github.com/WuLiFang/Nuke/compare/v0.20.17...v0.20.18) (2021-03-08)
 
 
