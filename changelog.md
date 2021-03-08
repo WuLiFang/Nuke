@@ -1,5 +1,15 @@
 # 更新日志
 
+## [0.20.19](https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19) (2021-03-08)
+
+### 功能
+
+- 集成 sentry ([52f7f83](https://github.com/WuLiFang/Nuke/commit/52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b))
+
+### 修复
+
+- 使用了未定义的变量 `_iter_layer` ([29cc348](https://github.com/WuLiFang/Nuke/commit/29cc348417843ab7664860468c35e819734e4a56))
+
 ## [0.20.18](https://github.com/WuLiFang/Nuke/compare/v0.20.17...v0.20.18) (2021-03-08)
 
 ### 修复

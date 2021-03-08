@@ -11,6 +11,7 @@
     pyblish
     guide
     spec
+    env-vars
     development
     re
     reference
