@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.20](https://github.com/WuLiFang/Nuke/compare/v0.20.19...v0.20.20) (2021-03-08)
+
+### 功能
+
+- 不再记录 pyblish 错误到日志 ([252651a](https://github.com/WuLiFang/Nuke/commit/252651a24f4cb01447311b8d04bca94e320a21bb))
+
 ## [0.20.19](https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19) (2021-03-08)
 
 ### 功能
