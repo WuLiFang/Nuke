@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.19'
-RELEASE_DATE = datetime.fromtimestamp(1615196022)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.18-2-g52f7f83'
-LAST_GIT_COMMIT_HASH = '52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b'
+VERSION = '0.20.20'
+RELEASE_DATE = datetime.fromtimestamp(1615197084)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.19-1-g252651a'
+LAST_GIT_COMMIT_HASH = '252651a24f4cb01447311b8d04bca94e320a21bb'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615195799)
-LAST_GIT_COMMIT_SUBJECT = 'feat: integrate sentry'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615197072)
+LAST_GIT_COMMIT_SUBJECT = 'feat: not log pyblish error'
 LAST_GIT_COMMIT_BODY = ''

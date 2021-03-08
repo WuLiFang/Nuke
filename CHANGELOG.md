@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.20.20](https://github.com/WuLiFang/Nuke/compare/v0.20.19...v0.20.20) (2021-03-08)
+
+
+### Features
+
+* not log pyblish error ([252651a](https://github.com/WuLiFang/Nuke/commit/252651a24f4cb01447311b8d04bca94e320a21bb))
+
 ### [0.20.19](https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19) (2021-03-08)
 
 
