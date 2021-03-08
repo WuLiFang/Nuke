@@ -118,7 +118,7 @@ class OpenFolder(pyblish.api.InstancePlugin):
             webbrowser.open(instance.data['folder'])
 
 
-class VadiateArtist(TaskMixin, pyblish.api.InstancePlugin):
+class ValidateArtist(TaskMixin, pyblish.api.InstancePlugin):
     """检查任务是否分配给当前用户。  """
 
     order = pyblish.api.ValidatorOrder
@@ -140,7 +140,7 @@ class VadiateArtist(TaskMixin, pyblish.api.InstancePlugin):
                              (current_artist, task['artist']))
 
 
-class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
+class ValidateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
     """检查帧范围是否匹配上游.  """
 
     order = pyblish.api.ValidatorOrder
@@ -170,7 +170,7 @@ class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
             )
 
 
-class VadiateFPS(TaskMixin, pyblish.api.InstancePlugin):
+class ValidateFPS(TaskMixin, pyblish.api.InstancePlugin):
     """检查帧速率是否匹配数据库设置.   """
 
     order = pyblish.api.ValidatorOrder
@@ -240,7 +240,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         n = wlf_write_node()
         path = u(nuke.filename(n.node('Write_JPG_1')))
         try:
-            dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
+            dest = task.filebox.getd('image').path + '/{}.jpg'.format(task.shot)
         except ValueError:
             raise ValueError('找不到标识为 image 的文件框，请联系管理员进行设置。')
 
