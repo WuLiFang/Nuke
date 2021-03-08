@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.18](https://github.com/WuLiFang/Nuke/compare/v0.20.17...v0.20.18) (2021-03-08)
+
+### 修复
+
+- 预合成时出错 ([1f32e79](https://github.com/WuLiFang/Nuke/commit/1f32e79c0b8bd661f25b3e30099d8ce046b819c8))
+
 ## [0.20.17](https://github.com/WuLiFang/Nuke/compare/v0.20.16...v0.20.17) (2021-03-05)
 
 ### 修复
