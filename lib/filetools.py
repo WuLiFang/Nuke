@@ -3,9 +3,10 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import typing
 import re
-import six
 
+import wlf.path
 from wlf.pathtools import make_path_finder
 from wlf.codectools import get_unicode
 
@@ -14,7 +15,9 @@ plugin_folder_path = make_path_finder(  # pylint: disable = invalid-name
     module_path())
 
 
-_ = six
+if typing.TYPE_CHECKING:
+    import six
+    _ = six
 
 
 def expand_frame(filename, frame):
@@ -46,6 +49,7 @@ def expand_frame(filename, frame):
     ret = re.sub(r'(%0?\d*d)', _format_repl, ret)
     return ret
 
+
 def is_sequence_name(name):
     # type: (str) -> bool
     """check if {name} is a sequence.
@@ -57,3 +61,51 @@ def is_sequence_name(name):
         [bool]: filename is a sequence
     """
     return expand_frame(name, 1) != expand_frame(name, 2)
+
+
+def get_layer(filename, layers=None):
+    # type: (str, typing.Optional[typing.List[str]]) -> str
+    """The footage layer name.
+
+    >>> get_layer('Z:/MT/Render/image/MT_BG_co/MT_BG_co_PuzzleMatte1/PuzzleMatte1.001.exr')
+    u'PuzzleMatte1'
+    """
+
+    path = wlf.path.PurePath(filename)
+    if layers is not None:
+        path.layers = layers
+    return path.layer
+
+
+def get_tag(filename, tag_pattern=None):
+    # type: (str, typing.Optional[str]) -> str
+    """The footage tag name.
+
+    >>> get_tag('Z:/MT/Render/image/MT_BG_co/MT_BG_co_PuzzleMatte1/PuzzleMatte1.001.exr')
+    u'PuzzleMatte1'
+    """
+
+    path = wlf.path.PurePath(filename)
+    if tag_pattern is not None:
+        path.tag_pattern = tag_pattern
+    return path.tag
+
+def get_shot(filename):
+    # type: (str) -> str
+    """The related shot for this footage.
+
+    >>> PurePath('sc_001_v20.nk').shot
+    u'sc_001'
+    >>> PurePath('hello world').shot
+    u'hello world'
+    >>> PurePath('sc_001_v-1.nk').shot
+    u'sc_001_v-1'
+    >>> PurePath('sc001V1.jpg').shot
+    u'sc001'
+    >>> PurePath('sc001V1_no_bg.jpg').shot
+    u'sc001'
+    >>> PurePath('suv2005_v2_m.jpg').shot
+    u'suv2005'
+    """
+
+    return wlf.path.PurePath(filename).shot

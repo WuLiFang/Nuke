@@ -16,7 +16,7 @@ from cgtwn import Task
 from node import wlf_write_node
 from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
-from pathlib2_unicode import PurePath
+from filetools import get_shot
 
 # pylint: disable=no-init
 
@@ -50,7 +50,7 @@ class CollectTask(pyblish.api.InstancePlugin):
         if client.is_logged_in():
             client.connect()
 
-        shot = PurePath(instance.name).shot
+        shot = get_shot(instance.name)
         try:
             task = Task.from_shot(shot)
             instance.context.data['task'] = task
@@ -98,7 +98,7 @@ class CollectFX(TaskMixin, pyblish.api.ContextPlugin):
         assert isinstance(task, Task)
         try:
             filebox = task.filebox.get('fx')
-        except ValueError: 
+        except ValueError:
             self.log.warn('找不到标识为 fx 的文件框，无法获取特效文件。可联系管理员进行设置')
             return
         dir_ = filebox.path
@@ -161,7 +161,8 @@ class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
             try:
                 n = task.import_video('animation_videos')
             except ValueError:
-                self.log.error('找不到标识为 animation_videos 的文件框，无法获取动画文件。可联系管理员进行设置')
+                self.log.error(
+                    '找不到标识为 animation_videos 的文件框，无法获取动画文件。可联系管理员进行设置')
                 raise
         upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
         current_framecount = int(
@@ -250,7 +251,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         except ValueError:
             self.log.error('找不到标识为 image 的文件框，请联系管理员进行设置。')
             raise
-        
+
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
 

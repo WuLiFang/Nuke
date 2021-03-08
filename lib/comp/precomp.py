@@ -11,19 +11,15 @@ import sys
 from typing import Dict, List, Optional, Set
 
 import nuke
-import six
 
 from edit import add_layer, copy_layer, replace_node
-from filetools import module_path
-from nuketools import undoable_func, utf8, utf8_dict
+from filetools import module_path, get_layer
+from nuketools import utf8, utf8_dict
 from orgnize import autoplace
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
-from pathlib2_unicode import PurePath
-from wlf.pathtools import module_path as wlf_module_path
 
 LOGGER = logging.getLogger('com.wlf.precomp')
-
 
 class __PrecompSwitch(object):
     """Modified switch node for precomp.  """
@@ -201,7 +197,7 @@ class Precomp(object):
         assert nodes, 'Can not precomp without node.'
 
         def _get_filename(n):
-            return n.metadata('input/filename') or nuke.filename(n) or ''
+            return u(n.metadata('input/filename') or nuke.filename(n) or '')
 
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
@@ -210,8 +206,7 @@ class Precomp(object):
 
         # Record node for every source layer.
         for n in nodes:
-            path = PurePath(_get_filename(n))
-            layer = path.layer
+            layer = get_layer(_get_filename(n))
             if layer:
                 self.source[layer] = n
             else:
