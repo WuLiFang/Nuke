@@ -127,14 +127,10 @@ class ValidateFootageStore(pyblish.api.InstancePlugin):
     valid_dir = ('x:\\', 'y:\\', 'z:\\', "b:\\") if sys.platform == 'win32' else ('',)
 
     def process(self, instance):
-        is_ok = True
         for i in instance:
             assert isinstance(i, FootageInfo)
             if not os.path.normcase(u(i.filename)).startswith(self.valid_dir):
-                self.log.error('使用了本地素材: %s', i.filename)
-                is_ok = False
-        if not is_ok:
-            raise ValueError('Local file used.')
+                raise ValueError('使用了本地素材: %s', i.filename)
 
 
 class ExtractJPG(pyblish.api.InstancePlugin):

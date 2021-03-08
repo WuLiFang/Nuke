@@ -31,8 +31,7 @@ class TaskMixin(object):
             assert isinstance(task, Task), type(task)
             return task
         except KeyError:
-            self.log.error('无对应任务')
-            raise
+            raise ValueError('无对应任务')
 
 
 class CollectTask(pyblish.api.InstancePlugin):
@@ -55,16 +54,14 @@ class CollectTask(pyblish.api.InstancePlugin):
             task = Task.from_shot(shot)
             instance.context.data['task'] = task
         except ValueError:
-            self.log.error('无法在数据库中找到对应任务: %s', shot)
-            raise
+            raise ValueError('无法在数据库中找到对应任务: %s', shot)
         self.log.info('任务 %s', task)
 
         try:
             instance.context.data['workfileFileboxInfo'] = \
                 task.filebox.get('workfile')
         except:
-            self.log.error('找不到标识为workfile的文件框 请联系管理员进行设置')
-            raise
+            raise ValueError('找不到标识为workfile的文件框 请联系管理员进行设置')
 
 
 class CollectUser(pyblish.api.ContextPlugin):
@@ -139,10 +136,8 @@ class VadiateArtist(TaskMixin, pyblish.api.InstancePlugin):
 
         id_ = task['account_id']
         if current_id not in id_.split(','):
-            self.log.error('用户不匹配: %s -> %s',
-                           current_artist, task['artist'])
-            raise cgtwq.AccountError(
-                owner=id_, current=current_id)
+            raise ValueError('用户不匹配: %s -> %s' %
+                             (current_artist, task['artist']))
 
 
 class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
@@ -161,19 +156,18 @@ class VadiateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
             try:
                 n = task.import_video('animation_videos')
             except ValueError:
-                self.log.error(
-                    '找不到标识为 animation_videos 的文件框，无法获取动画文件。可联系管理员进行设置')
-                raise
+                raise ValueError(
+                    '找不到标识为 animation_videos 的文件框，无法获取动画文件。可联系管理员进行设置',
+                )
         upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
         current_framecount = int(
             instance.data['last'] - instance.data['first'] + 1)
         if upstream_framecount != current_framecount:
-            self.log.error('工程帧数和上游不一致: %s -> %s',
-                           current_framecount, upstream_framecount)
             raise ValueError(
-                'Frame range not match.',
-                upstream_framecount,
-                current_framecount)
+                '工程帧数和上游不一致: %s -> %s' %
+                (upstream_framecount,
+                 current_framecount),
+            )
 
 
 class VadiateFPS(TaskMixin, pyblish.api.InstancePlugin):
@@ -194,8 +188,7 @@ class VadiateFPS(TaskMixin, pyblish.api.InstancePlugin):
         else:
             current_fps = instance.data['fps']
             if float(fps) != current_fps:
-                self.log.error('帧速率不一致: %s -> %s', current_fps, fps)
-                raise ValueError('Not same fps', fps, current_fps)
+                raise ValueError('帧速率不一致: %s -> %s', current_fps, fps)
 
 
 class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):
@@ -249,8 +242,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         try:
             dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
         except ValueError:
-            self.log.error('找不到标识为 image 的文件框，请联系管理员进行设置。')
-            raise
+            raise ValueError('找不到标识为 image 的文件框，请联系管理员进行设置。')
 
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         copy(path, dest)
