@@ -94,17 +94,17 @@ def get_shot(filename):
     # type: (str) -> str
     """The related shot for this footage.
 
-    >>> PurePath('sc_001_v20.nk').shot
+    >>> get_shot('sc_001_v20.nk')
     u'sc_001'
-    >>> PurePath('hello world').shot
+    >>> get_shot('hello world')
     u'hello world'
-    >>> PurePath('sc_001_v-1.nk').shot
+    >>> get_shot('sc_001_v-1.nk')
     u'sc_001_v-1'
-    >>> PurePath('sc001V1.jpg').shot
+    >>> get_shot('sc001V1.jpg')
     u'sc001'
-    >>> PurePath('sc001V1_no_bg.jpg').shot
+    >>> get_shot('sc001V1_no_bg.jpg')
     u'sc001'
-    >>> PurePath('suv2005_v2_m.jpg').shot
+    >>> get_shot('suv2005_v2_m.jpg')
     u'suv2005'
     """
 
