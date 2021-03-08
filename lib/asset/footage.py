@@ -96,7 +96,7 @@ class Footage(object):
             Optional[FrameRanges] : missing frame ranges,
                 None means result not ready.
         """
-
+        LOGGER.debug("checking missing frames: %s", self.filename)
         if frame_ranges is None:
             frame_ranges = self.frame_ranges
         else:
