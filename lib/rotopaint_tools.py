@@ -26,7 +26,7 @@ def iter_layer(layer):
     for i in layer:
         yield i
         if isinstance(i, nuke.rotopaint.Layer):
-            for j in _iter_layer(i):
+            for j in iter_layer(i):
                 yield j
 
 

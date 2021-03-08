@@ -16,7 +16,7 @@ from rotopaint_tools import LIFETIME_TYPE_ALL, iter_layer
 
 def _rotopaint_keyframes(n):
     key_frames = set([n.firstFrame(), n.lastFrame()])
-    for i in _iter_layer(n["curves"].rootLayer):
+    for i in iter_layer(n["curves"].rootLayer):
         if isinstance(i, nuke.rotopaint.Layer):
             continue
         attrs = i.getAttributes()
