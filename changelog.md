@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.21](https://github.com/WuLiFang/Nuke/compare/v0.20.20...v0.20.21) (2021-03-09)
+
+### 功能
+
+- 使用 win32 api 来检查是否使用了本地文件 ([0ba976c](https://github.com/WuLiFang/Nuke/commit/0ba976ce8a7a2e10bbba4268660d251e50c44fbd))
+
 ## [0.20.20](https://github.com/WuLiFang/Nuke/compare/v0.20.19...v0.20.20) (2021-03-08)
 
 ### 功能
