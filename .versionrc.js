@@ -25,4 +25,7 @@ module.exports = {
       updater: "scripts/python-version-updater.js",
     },
   ],
+  scripts: {
+    postchangelog: "bash scripts/postchangelog.sh",
+  },
 };
