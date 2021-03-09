@@ -2,98 +2,91 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.20.20](https://github.com/WuLiFang/Nuke/compare/v0.20.19...v0.20.20) (2021-03-08)
-
-
-### Features
-
-* not log pyblish error ([252651a](https://github.com/WuLiFang/Nuke/commit/252651a24f4cb01447311b8d04bca94e320a21bb))
-
-### [0.20.19](https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19) (2021-03-08)
-
+## [0.20.21](https://github.com/WuLiFang/Nuke/compare/v0.20.20...v0.20.21) (2021-03-09)
 
 ### Features
 
-* integrate sentry ([52f7f83](https://github.com/WuLiFang/Nuke/commit/52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b))
+- use win32 api to check whether local file used ([0ba976c](https://github.com/WuLiFang/Nuke/commit/0ba976ce8a7a2e10bbba4268660d251e50c44fbd))
 
-
-### Bug Fixes
-
-* undefined variable `_iter_layer` used ([29cc348](https://github.com/WuLiFang/Nuke/commit/29cc348417843ab7664860468c35e819734e4a56))
-
-### [0.20.18](https://github.com/WuLiFang/Nuke/compare/v0.20.17...v0.20.18) (2021-03-08)
-
-
-### Bug Fixes
-
-* error when precomp ([1f32e79](https://github.com/WuLiFang/Nuke/commit/1f32e79c0b8bd661f25b3e30099d8ce046b819c8))
-
-### [0.20.17](https://github.com/WuLiFang/Nuke/compare/v0.20.16...v0.20.17) (2021-03-05)
-
-
-### Bug Fixes
-
-* nuke not launch when file path is ascii only ([78d4014](https://github.com/WuLiFang/Nuke/commit/78d40144d1931db98a824ba972454beed085de1e))
-
-### [0.20.16](https://github.com/WuLiFang/Nuke/compare/v0.20.15...v0.20.16) (2021-03-05)
-
-
-### Bug Fixes
-
-* importlib_metadata patch may not work ([4a60091](https://github.com/WuLiFang/Nuke/commit/4a6009131648f7755417053b5ba50c49202ffec8))
-
-### [0.20.15](https://github.com/WuLiFang/Nuke/compare/v0.20.14...v0.20.15) (2021-03-05)
-
-
-### Bug Fixes
-
-* can not launch when file path contains chinese ([4936eb8](https://github.com/WuLiFang/Nuke/commit/4936eb8f67dfcacf9067e9d48d3def544ee0cfc0))
-
-### [0.20.14](https://github.com/WuLiFang/Nuke/compare/v0.20.13...v0.20.14) (2021-02-24)
-
+## [0.20.20](https://github.com/WuLiFang/Nuke/compare/v0.20.19...v0.20.20) (2021-03-08)
 
 ### Features
 
-* add last commit info to banner ([404023e](https://github.com/WuLiFang/Nuke/commit/404023e6e1b98ad74ecc12dd514de4249e8198a6))
+- not log pyblish error ([252651a](https://github.com/WuLiFang/Nuke/commit/252651a24f4cb01447311b8d04bca94e320a21bb))
 
-### [0.20.13](https://github.com/WuLiFang/Nuke/compare/v0.20.12...v0.20.13) (2021-02-23)
-
-
-### Features
-
-* change pyblish terminal log level to info ([3d3065a](https://github.com/WuLiFang/Nuke/commit/3d3065aac8454c2ebfb2b8d17a66895e66ef9e92))
-* support glob in empty folder scanner ([e93c86a](https://github.com/WuLiFang/Nuke/commit/e93c86ac45943871bc668741f11296ac350a60f6))
-* update expire time to 2022-01-01 ([03cda3d](https://github.com/WuLiFang/Nuke/commit/03cda3ddde32f0633e003b31d9b45741cb57e32c))
-
-
-### Bug Fixes
-
-* handle no misconfigured cgtw project ([1f4d494](https://github.com/WuLiFang/Nuke/commit/1f4d494b24e73711711fd86b860a8eff32cc5e77))
-* should set scanner window title ([49d285e](https://github.com/WuLiFang/Nuke/commit/49d285ed0eda05292271f235fcf969fc14054093))
-
-### [0.20.12](https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12) (2020-11-16)
-
-
-### Bug Fixes
-
-* **deps:** downgrade pendulum to v1 ([ddfc3f4](https://github.com/WuLiFang/Nuke/commit/ddfc3f45ab8652754f4f5af2a1390e018ed9d807))
-* **deps:** not use poetry ([4b8ee7f](https://github.com/WuLiFang/Nuke/commit/4b8ee7f1a95c14aa5318bfadb8cd424d3ab339ba))
-
-### [0.20.11](https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11) (2020-10-12)
-
+## [0.20.19](https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19) (2021-03-08)
 
 ### Features
 
-* **shuffle_layers_by_re:** use internal help ([0a1da07](https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14))
-* shuffle_layers_by_re ([db6eb39](https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b))
-
+- integrate sentry ([52f7f83](https://github.com/WuLiFang/Nuke/commit/52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b))
 
 ### Bug Fixes
 
-* **shuffle layers by re:**  wrong merge input ([9c49457](https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6))
-* **shuffle layers by re:** wrong dialog title ([2cfc1f9](https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d))
-* **wlf_Write:** v1.56.3 deadline job submit ([955c09a](https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0))
-* **wlf_Write:** v1.56.4 wrong sequence output condition ([39268b8](https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8))
+- undefined variable `_iter_layer` used ([29cc348](https://github.com/WuLiFang/Nuke/commit/29cc348417843ab7664860468c35e819734e4a56))
+
+## [0.20.18](https://github.com/WuLiFang/Nuke/compare/v0.20.17...v0.20.18) (2021-03-08)
+
+### Bug Fixes
+
+- error when precomp ([1f32e79](https://github.com/WuLiFang/Nuke/commit/1f32e79c0b8bd661f25b3e30099d8ce046b819c8))
+
+## [0.20.17](https://github.com/WuLiFang/Nuke/compare/v0.20.16...v0.20.17) (2021-03-05)
+
+### Bug Fixes
+
+- nuke not launch when file path is ascii only ([78d4014](https://github.com/WuLiFang/Nuke/commit/78d40144d1931db98a824ba972454beed085de1e))
+
+## [0.20.16](https://github.com/WuLiFang/Nuke/compare/v0.20.15...v0.20.16) (2021-03-05)
+
+### Bug Fixes
+
+- importlib_metadata patch may not work ([4a60091](https://github.com/WuLiFang/Nuke/commit/4a6009131648f7755417053b5ba50c49202ffec8))
+
+## [0.20.15](https://github.com/WuLiFang/Nuke/compare/v0.20.14...v0.20.15) (2021-03-05)
+
+### Bug Fixes
+
+- can not launch when file path contains chinese ([4936eb8](https://github.com/WuLiFang/Nuke/commit/4936eb8f67dfcacf9067e9d48d3def544ee0cfc0))
+
+## [0.20.14](https://github.com/WuLiFang/Nuke/compare/v0.20.13...v0.20.14) (2021-02-24)
+
+### Features
+
+- add last commit info to banner ([404023e](https://github.com/WuLiFang/Nuke/commit/404023e6e1b98ad74ecc12dd514de4249e8198a6))
+
+## [0.20.13](https://github.com/WuLiFang/Nuke/compare/v0.20.12...v0.20.13) (2021-02-23)
+
+### Features
+
+- change pyblish terminal log level to info ([3d3065a](https://github.com/WuLiFang/Nuke/commit/3d3065aac8454c2ebfb2b8d17a66895e66ef9e92))
+- support glob in empty folder scanner ([e93c86a](https://github.com/WuLiFang/Nuke/commit/e93c86ac45943871bc668741f11296ac350a60f6))
+- update expire time to 2022-01-01 ([03cda3d](https://github.com/WuLiFang/Nuke/commit/03cda3ddde32f0633e003b31d9b45741cb57e32c))
+
+### Bug Fixes
+
+- handle no misconfigured cgtw project ([1f4d494](https://github.com/WuLiFang/Nuke/commit/1f4d494b24e73711711fd86b860a8eff32cc5e77))
+- should set scanner window title ([49d285e](https://github.com/WuLiFang/Nuke/commit/49d285ed0eda05292271f235fcf969fc14054093))
+
+## [0.20.12](https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12) (2020-11-16)
+
+### Bug Fixes
+
+- **deps:** downgrade pendulum to v1 ([ddfc3f4](https://github.com/WuLiFang/Nuke/commit/ddfc3f45ab8652754f4f5af2a1390e018ed9d807))
+- **deps:** not use poetry ([4b8ee7f](https://github.com/WuLiFang/Nuke/commit/4b8ee7f1a95c14aa5318bfadb8cd424d3ab339ba))
+
+## [0.20.11](https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11) (2020-10-12)
+
+### Features
+
+- **shuffle_layers_by_re:** use internal help ([0a1da07](https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14))
+- shuffle_layers_by_re ([db6eb39](https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b))
+
+### Bug Fixes
+
+- **shuffle layers by re:** wrong merge input ([9c49457](https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6))
+- **shuffle layers by re:** wrong dialog title ([2cfc1f9](https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d))
+- **wlf_Write:** v1.56.3 deadline job submit ([955c09a](https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0))
+- **wlf_Write:** v1.56.4 wrong sequence output condition ([39268b8](https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8))
 
 ## [0.20.10](https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10) (2020-08-20)
 

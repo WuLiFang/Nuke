@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.20'
-RELEASE_DATE = datetime.fromtimestamp(1615197084)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.19-1-g252651a'
-LAST_GIT_COMMIT_HASH = '252651a24f4cb01447311b8d04bca94e320a21bb'
+VERSION = '0.20.21'
+RELEASE_DATE = datetime.fromtimestamp(1615261003)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.20-3-g3c11b23'
+LAST_GIT_COMMIT_HASH = '3c11b2314d98172147076c2024caa2f6cb58128a'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615197072)
-LAST_GIT_COMMIT_SUBJECT = 'feat: not log pyblish error'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615260326)
+LAST_GIT_COMMIT_SUBJECT = 'chore: add scripts/postchangelog.sh'
 LAST_GIT_COMMIT_BODY = ''
