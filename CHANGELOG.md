@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.22](https://github.com/WuLiFang/Nuke/compare/v0.20.21...v0.20.22) (2021-03-09)
+
+### Bug Fixes
+
+- wrong attr name cause jpg upload fail ([d3cde69](https://github.com/WuLiFang/Nuke/commit/d3cde692714afdff069a64a75abbdde2c6df8be6))
+
 ## [0.20.21](https://github.com/WuLiFang/Nuke/compare/v0.20.20...v0.20.21) (2021-03-09)
 
 ### Features

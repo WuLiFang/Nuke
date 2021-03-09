@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.21'
-RELEASE_DATE = datetime.fromtimestamp(1615261003)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.20-3-g3c11b23'
-LAST_GIT_COMMIT_HASH = '3c11b2314d98172147076c2024caa2f6cb58128a'
+VERSION = '0.20.22'
+RELEASE_DATE = datetime.fromtimestamp(1615273143)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.21-2-gd3cde69'
+LAST_GIT_COMMIT_HASH = 'd3cde692714afdff069a64a75abbdde2c6df8be6'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615260326)
-LAST_GIT_COMMIT_SUBJECT = 'chore: add scripts/postchangelog.sh'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615273129)
+LAST_GIT_COMMIT_SUBJECT = 'fix: wrong attr name cause jpg upload fail'
 LAST_GIT_COMMIT_BODY = ''
