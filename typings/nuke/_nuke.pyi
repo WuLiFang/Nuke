@@ -6,7 +6,8 @@ typing for nuke python api.
 https://learn.foundry.com/nuke/developers/100/pythonreference/
 """
 
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union, overload
+import io
+from typing import Any, Callable, Dict, IO, List, Optional, Tuple, Union, overload
 
 import six
 
@@ -444,5 +445,18 @@ def root() -> Root:
 
     Returns: node
         The root node. This will never be None.
+    """
+    ...
+
+
+def tprint(*value: Any, sep: six.binary_type = b' ', end: six.binary_type = b'\n', file: IO = ...):
+    """
+    Prints the values to a stream, or to stdout by default.
+
+    Parameters:
+        value - A python object
+        file - a file-like object (stream); defaults to stdout.
+        sep - string inserted between values, default a space.
+        end - string appended after the last value, default a newline.
     """
     ...
