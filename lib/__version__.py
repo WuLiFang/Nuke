@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.22'
-RELEASE_DATE = datetime.fromtimestamp(1615273143)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.21-2-gd3cde69'
-LAST_GIT_COMMIT_HASH = 'd3cde692714afdff069a64a75abbdde2c6df8be6'
+VERSION = '0.20.23'
+RELEASE_DATE = datetime.fromtimestamp(1615454924)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.22-9-g79e72a9'
+LAST_GIT_COMMIT_HASH = '79e72a91001412394f6a136af07b590ca09839ad'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615273129)
-LAST_GIT_COMMIT_SUBJECT = 'fix: wrong attr name cause jpg upload fail'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615454841)
+LAST_GIT_COMMIT_SUBJECT = 'style: organzie imports'
 LAST_GIT_COMMIT_BODY = ''

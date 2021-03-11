@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.23](https://github.com/WuLiFang/Nuke/compare/v0.20.22...v0.20.23) (2021-03-11)
+
+### Features
+
+- callback error not abort next execution ([b4b774a](https://github.com/WuLiFang/Nuke/commit/b4b774a9566de0b7f717b9bbbd4ae22f52ab0281))
+- rewrite missing frames check ([9bba07a](https://github.com/WuLiFang/Nuke/commit/9bba07a49b96063abc82561183f76572d412f56f))
+
 ## [0.20.22](https://github.com/WuLiFang/Nuke/compare/v0.20.21...v0.20.22) (2021-03-09)
 
 ### Bug Fixes
