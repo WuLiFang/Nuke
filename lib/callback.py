@@ -11,11 +11,6 @@ import nuke
 LOGGER = logging.getLogger('com.wlf.callback')
 
 
-class AbortedError(Exception):
-    """Indicate abort execution.   """
-    pass
-
-
 class Callbacks(list):
     """Failsafe callbacks executor.  """
     current = None
@@ -36,26 +31,20 @@ class Callbacks(list):
 
         with self.set_current():
             ret = None
-            try:
-                for i in self:
-                    try:
-                        ret = i(*args, **kwargs) or ret
-                    except AbortedError:
-                        raise
-                    except:
-                        import inspect
+            for i in self:
+                try:
+                    ret = i(*args, **kwargs) or ret
+                except:
+                    import inspect
+                    LOGGER.error(
+                        'Error during execute callback: %s(%s,%s):'
+                        '\nfrom %s',
+                        i.__name__,
+                        args, kwargs,
+                        inspect.getsourcefile(i),
+                        exc_info=True)
 
-                        LOGGER.error(
-                            'Error during execute callback: %s(%s,%s):'
-                            '\nfrom %s',
-                            i.__name__,
-                            args, kwargs,
-                            inspect.getsourcefile(i),
-                            exc_info=True)
-
-                        raise RuntimeError
-            except RuntimeError:
-                pass
+                    continue
         return ret
 
 
