@@ -211,7 +211,7 @@ class Node:
         """Last frame in frame range for this node.  """
         ...
 
-    def metadata(self, key: six.binary_type, time: int = ..., view: six.binary_type = ...) -> Union[six.binary_type, dict]:
+    def metadata(self, key: six.binary_type, time: int = ..., view: six.binary_type = ...) -> Union[six.binary_type, dict, None]:
         """
         Return the metadata item for key on this node
         at current output context, or at optional time and view.
