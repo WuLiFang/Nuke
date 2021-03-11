@@ -3,12 +3,12 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import typing
 import re
+import typing
 
 import wlf.path
-from wlf.pathtools import make_path_finder
 from wlf.codectools import get_unicode
+from wlf.pathtools import make_path_finder
 
 module_path = make_path_finder(__file__)  # pylint: disable = invalid-name
 plugin_folder_path = make_path_finder(  # pylint: disable = invalid-name

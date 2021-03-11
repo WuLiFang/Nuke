@@ -10,8 +10,8 @@ import nuke
 import six
 
 import edit
-from wlf.codectools import get_unicode as u
 from pathlib2_unicode import PurePath
+from wlf.codectools import get_unicode as u
 
 from .core import BasePatch
 

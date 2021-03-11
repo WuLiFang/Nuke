@@ -2,11 +2,10 @@
 """Add callback for wlf plugins."""
 from __future__ import absolute_import, print_function, unicode_literals
 
-import logging
 import contextlib
+import logging
 
 import nuke
-
 
 LOGGER = logging.getLogger('com.wlf.callback')
 

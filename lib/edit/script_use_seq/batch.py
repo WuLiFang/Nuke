@@ -16,14 +16,14 @@ import nuke
 import six
 
 from nuketools import utf8
+from pathlib2_unicode import Path
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.decorators import run_async
-from pathlib2_unicode import Path
 from wlf.progress import CancelledError, progress
 
 from . import __main__, files
-from .config import Config, START_MESSAGE
+from .config import START_MESSAGE, Config
 
 LOGGER = logging.getLogger(__name__)
 

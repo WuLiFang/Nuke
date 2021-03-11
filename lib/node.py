@@ -8,8 +8,8 @@ import logging
 
 import nuke
 
-from wlf.codectools import get_unicode as u
 from pathlib2_unicode import PurePath
+from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.node')
 

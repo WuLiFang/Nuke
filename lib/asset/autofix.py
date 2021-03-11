@@ -10,10 +10,10 @@ import os
 import nuke
 
 import dropdata
+import filetools
+from pathlib2_unicode import PurePath
 from wlf.codectools import get_encoded as e
 from wlf.codectools import u_print
-from pathlib2_unicode import PurePath
-import filetools
 
 LOGGER = logging.getLogger(__name__)
 IS_TESTING = False

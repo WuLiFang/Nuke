@@ -14,9 +14,9 @@ from comp.batch import BatchComp
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, BatchCompConfig,
                          CompConfig)
 from nuketools import iutf8, utf8
-from wlf.decorators import run_async, run_in_main_thread
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
+from wlf.decorators import run_async, run_in_main_thread
 
 
 class CompConfigPanel(nukescripts.PythonPanel):

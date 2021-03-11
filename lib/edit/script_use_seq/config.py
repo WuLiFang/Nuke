@@ -2,7 +2,6 @@ import os
 
 import wlf.config
 
-
 START_MESSAGE = '{:-^50s}'.format('SCRIPT USE SEQUENCE CONVERT START')
 
 

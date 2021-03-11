@@ -12,9 +12,7 @@ import Queue
 
 import nuke
 import pyblish.plugin
-import pyblish_lite
 from nukescripts.panels import restorePanel  # pylint: disable=import-error
-from pyblish_lite import app, control, settings, util, window
 from Qt import QtGui
 from Qt.QtCore import Qt
 from Qt.QtWidgets import QApplication
@@ -25,7 +23,9 @@ import nuketools
 import panels
 import pyblish_asset
 import pyblish_cgtwn
+import pyblish_lite
 from nuketools import abort_modified, mainwindow
+from pyblish_lite import app, control, settings, util, window
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.uitools import Tray

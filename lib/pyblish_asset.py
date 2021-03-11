@@ -10,11 +10,11 @@ from collections import namedtuple
 import nuke
 import pendulum
 import pyblish.api
-from pathlib2_unicode import PurePath
 
 import callback
 from node import wlf_write_node
 from nuketools import keep_modifield_status
+from pathlib2_unicode import PurePath
 from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
 

@@ -9,7 +9,6 @@ import re
 
 from pathlib2_unicode import Path
 
-
 LOGGER = logging.getLogger(__name__)
 
 

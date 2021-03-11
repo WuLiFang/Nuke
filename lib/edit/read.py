@@ -11,9 +11,9 @@ import nuke
 
 from node import wlf_write_node
 from nuketools import undoable_func, utf8
+from pathlib2_unicode import PurePath
 from wlf.codectools import get_unicode as u
 from wlf.codectools import u_print
-from pathlib2_unicode import PurePath
 
 from . import core
 

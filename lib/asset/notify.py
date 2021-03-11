@@ -11,18 +11,18 @@ import time
 import webbrowser
 from tempfile import mkstemp
 
-import cast_unknown as cast
 import nuke
 import pendulum
 from jinja2 import Environment, FileSystemLoader
 
 import asset.missing_frames
 import callback
+import cast_unknown as cast
 import templates
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.decorators import run_with_clock
-import base64
+
 from . import core
 
 LOGGER = logging.getLogger(__name__)

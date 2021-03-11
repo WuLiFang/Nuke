@@ -3,17 +3,17 @@
 
 from __future__ import absolute_import
 
+import glob
 import os
 import re
 import sys
 import webbrowser
-import glob
 
 from Qt import QtCompat, QtCore, QtWidgets
 from Qt.QtWidgets import QFileDialog
 
-import wlf.config
 import __version__
+import wlf.config
 
 
 class Config(wlf.config.Config):

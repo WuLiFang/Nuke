@@ -13,7 +13,7 @@ from typing import Dict, List, Optional, Set
 import nuke
 
 from edit import add_layer, copy_layer, replace_node
-from filetools import module_path, get_layer
+from filetools import get_layer, module_path
 from nuketools import utf8, utf8_dict
 from orgnize import autoplace
 from wlf.codectools import get_encoded as e

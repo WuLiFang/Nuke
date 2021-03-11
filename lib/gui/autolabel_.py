@@ -6,18 +6,18 @@ from __future__ import (absolute_import, division, print_function,
 
 import logging
 
-import cast_unknown as cast
 import nuke
+import six
 from autolabel import autolabel  # pylint : disable=import-error
 
 import asset
 import asset.missing_frames
+import cast_unknown as cast
 from nuketools import utf8
 from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger(__name__)
 
-import six
 def custom_autolabel():
     '''
     add addition information on Node in Gui

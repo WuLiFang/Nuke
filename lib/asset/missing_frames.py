@@ -9,11 +9,11 @@ import os
 import time
 from concurrent import futures
 
-import cast_unknown as cast
 import six
-from pathlib2_unicode import Path
 
+import cast_unknown as cast
 import filetools
+from pathlib2_unicode import Path
 
 _EXISTS_CACHE = dict()
 LOGGER = logging.getLogger(__name__)
@@ -48,4 +48,3 @@ def get(filename, first, last, ttl=60):
             if not is_exist:
                 ret.append(f)
     return ret
-

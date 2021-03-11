@@ -10,8 +10,8 @@ import os
 import sys
 
 import nuke
-from nuketools import utf8
 
+from nuketools import utf8
 from pathlib2_unicode import Path
 from wlf.codectools import u_print
 

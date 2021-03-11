@@ -16,7 +16,6 @@ from nuketools import utf8
 from pathlib2_unicode import Path
 from wlf.progress import progress
 
-
 LOGGER = logging.getLogger(__name__)
 
 

@@ -13,10 +13,10 @@ import pyblish.api
 import cgtwq
 import scripttools
 from cgtwn import Task
+from filetools import get_shot
 from node import wlf_write_node
 from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
-from filetools import get_shot
 
 # pylint: disable=no-init
 

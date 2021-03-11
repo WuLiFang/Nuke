@@ -8,7 +8,6 @@ import os
 from wlf.config import Config
 from wlf.path import TAG_PATTERN
 
-
 START_MESSAGE = '{:-^50s}'.format('COMP START')
 
 # bitmask
