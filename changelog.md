@@ -1,5 +1,12 @@
 # 更新日志
 
+## [0.20.23](https://github.com/WuLiFang/Nuke/compare/v0.20.22...v0.20.23) (2021-03-11)
+
+### 功能
+
+- 回调错误不取消后续其他回调的执行 ([b4b774a](https://github.com/WuLiFang/Nuke/commit/b4b774a9566de0b7f717b9bbbd4ae22f52ab0281))
+- 重写缺帧检查 ([9bba07a](https://github.com/WuLiFang/Nuke/commit/9bba07a49b96063abc82561183f76572d412f56f))
+
 ## [0.20.21](https://github.com/WuLiFang/Nuke/compare/v0.20.20...v0.20.21) (2021-03-09)
 
 ### 功能
