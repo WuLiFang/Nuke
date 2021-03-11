@@ -18,3 +18,4 @@ This module provides all the Nuke-specific functions and Classes.
 def import_module(name, filterRule):
   ...
 
+from ._nuke import *
