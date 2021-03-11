@@ -36,7 +36,6 @@ def warn_missing_frames(nodes=None, show_ok=False):
             show_ok (bool, optional): Defaults to False.
             If show message for no missing frames.
     """
-    nuke.tprint(nodes, show_ok)
     if nodes is None:
         nodes = nuke.allNodes(b"Read")
 
