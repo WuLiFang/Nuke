@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.24](https://github.com/WuLiFang/Nuke/compare/v0.20.23...v0.20.24) (2021-03-11)
+
+### Bug Fixes
+
+- importing deleted `asset.cache` package ([6983120](https://github.com/WuLiFang/Nuke/commit/69831206fb591aa464cabd43cb003f674347177b))
+
 ## [0.20.23](https://github.com/WuLiFang/Nuke/compare/v0.20.22...v0.20.23) (2021-03-11)
 
 ### Features

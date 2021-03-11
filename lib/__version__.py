@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.23'
-RELEASE_DATE = datetime.fromtimestamp(1615454924)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.22-9-g79e72a9'
-LAST_GIT_COMMIT_HASH = '79e72a91001412394f6a136af07b590ca09839ad'
+VERSION = '0.20.24'
+RELEASE_DATE = datetime.fromtimestamp(1615455805)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.23-2-g6983120'
+LAST_GIT_COMMIT_HASH = '69831206fb591aa464cabd43cb003f674347177b'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615454841)
-LAST_GIT_COMMIT_SUBJECT = 'style: organzie imports'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615455792)
+LAST_GIT_COMMIT_SUBJECT = 'fix: importing deleted `asset.cache` package'
 LAST_GIT_COMMIT_BODY = ''
