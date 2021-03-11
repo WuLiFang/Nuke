@@ -1,4 +1,5 @@
 # -*- coding=UTF-8 -*-
+# TODO: remove this
 """Footage monitor.  """
 
 from __future__ import (absolute_import, division, print_function,

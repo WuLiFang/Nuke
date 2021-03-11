@@ -4,7 +4,6 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import functools
 import io
 import logging
 import os
@@ -12,24 +11,24 @@ import time
 import webbrowser
 from tempfile import mkstemp
 
+import cast_unknown as cast
 import nuke
 import pendulum
 from jinja2 import Environment, FileSystemLoader
 
+import asset.missing_frames
 import callback
-from executor import EXECUTOR
-from nuketools import utf8
+import templates
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.decorators import run_with_clock
-
+import base64
 from . import core
-from .monitor import FootagesMonitor
 
 LOGGER = logging.getLogger(__name__)
 
 
-def warn_missing_frames(assets=None, show_ok=False):
+def warn_missing_frames(nodes=None, show_ok=False):
     """Show missing frames to user
         Args:
             assets (any, optional): Defaults to None.
@@ -37,27 +36,44 @@ def warn_missing_frames(assets=None, show_ok=False):
             show_ok (bool, optional): Defaults to False.
             If show message for no missing frames.
     """
+    nuke.tprint(nodes, show_ok)
+    if nodes is None:
+        nodes = nuke.allNodes(b"Read")
 
-    if assets is None:
-        assets = FootagesMonitor.all()
-    else:
-        assets = FootagesMonitor(assets)
+    result = []
+    for n in nodes:
+        filename = cast.text(nuke.filename(n))
+        frame_ranges = asset.missing_frames.get(
+            filename, n.firstFrame(), n.lastFrame())
+        if not frame_ranges:
+            continue
+        result.append(dict(
+            nodename=cast.text(n.name()),
+            filename=filename,
+            frame_ranges=nuke.FrameRanges(frame_ranges),
+        ))
 
-    result = assets.missing_frames_dict()
+    html = templates.render("missing_frames.tmpl", dict(
+        result=result,
+    ))
+
     if not result:
         if show_ok:
-            nuke.message(utf8('没有发现缺帧素材'))
-    elif len(result) < 10:
-        if nuke.GUI:
-            nuke.message(utf8(result.as_html().replace('\n', '')))
-        else:
-            LOGGER.warning(result)
+            nuke.message(cast.binary('没有发现缺帧素材'))
+        return
+
+    if not nuke.GUI:
+        LOGGER.warning(result)
+        return
+
+    if len(result) < 10:
+        nuke.message(cast.binary(html.replace('\n', '')))
     else:
-        # Use html to display.
-        fd, name = mkstemp('.html', text=True)
-        with io.open(fd, 'w') as f:
-            f.write(result.as_html())
-        webbrowser.open(name)
+        fd, _ = mkstemp('.html', text=True)
+        with io.open(fd, 'w', encoding='utf-8') as f:
+            f.write(html)
+        webbrowser.open(html)
+
 
 SHOWED_WARNING = []
 
@@ -67,7 +83,7 @@ def throtted_warning(msg):
 
     msg = u(msg)
     if msg not in SHOWED_WARNING:
-        nuke.warning(utf8(msg))
+        nuke.warning(cast.binary(msg))
         SHOWED_WARNING.append(msg)
 
 
@@ -86,7 +102,7 @@ def warn_mtime(show_ok=False, since=None):
         script_name = nuke.scriptName()
     except RuntimeError:
         if show_ok:
-            nuke.message(utf8('文件未保存'))
+            nuke.message(cast.binary('文件未保存'))
         return
     script_mtime = os.path.getmtime(e(script_name))
     since = since or script_mtime
@@ -94,12 +110,14 @@ def warn_mtime(show_ok=False, since=None):
     @run_with_clock('检查素材修改日期')
     def _get_mtime_info():
         ret = {}
-        for n in nuke.allNodes('Read', nuke.Root()):
-            try:
-                mtime = time.mktime(time.strptime(
-                    n.metadata('input/mtime'), '%Y-%m-%d %H:%M:%S'))
-            except TypeError:
+        for n in nuke.allNodes(b'Read', nuke.Root()):
+            mtime_text = n.metadata(b'input/mtime')
+            if mtime_text is None:
                 continue
+            mtime = time.mktime(time.strptime(
+                cast.text(mtime_text),
+                '%Y-%m-%d %H:%M:%S',
+            ))
             if mtime > since:
                 ret[nuke.filename(n)] = mtime
                 ftime = time.strftime('%m-%d %H:%M:%S', time.localtime(mtime))
@@ -120,7 +138,8 @@ def warn_mtime(show_ok=False, since=None):
                           script_mtime=pendulum.from_timestamp(
                               script_mtime).diff_for_humans(),
                           data=data)
-    nuke.message(utf8(msg))
+    nuke.message(cast.binary(msg))
+
 
 def setup():
     pendulum.set_locale('zh')

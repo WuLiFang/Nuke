@@ -14,6 +14,7 @@ from wlf.decorators import run_in_main_thread
 
 LOGGER = logging.getLogger('com.wlf.nuketools')
 
+# TODO: replace utf8 related code with cast_unknown
 
 class UTF8Object(object):
     """UTF8Wraper for nuke object.  """
