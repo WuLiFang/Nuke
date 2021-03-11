@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.24](https://github.com/WuLiFang/Nuke/compare/v0.20.23...v0.20.24) (2021-03-11)
+
+### 修复
+
+- 不应导入已删除的 `asset.cache` 模块 ([6983120](https://github.com/WuLiFang/Nuke/commit/69831206fb591aa464cabd43cb003f674347177b))
+
 ## [0.20.23](https://github.com/WuLiFang/Nuke/compare/v0.20.22...v0.20.23) (2021-03-11)
 
 ### 功能
