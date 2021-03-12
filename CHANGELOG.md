@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.20.25](https://github.com/WuLiFang/Nuke/compare/v0.20.24...v0.20.25) (2021-03-12)
+
+### Bug Fixes
+
+- **deps:** update package cgtwq to 3.0.2 ([ca8dfaf](https://github.com/WuLiFang/Nuke/commit/ca8dfafe2c937d0c9a269fc319d7ea66ccefd9dd))
+
 ## [0.20.24](https://github.com/WuLiFang/Nuke/compare/v0.20.23...v0.20.24) (2021-03-11)
 
 ### Bug Fixes
