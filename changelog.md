@@ -1,5 +1,11 @@
 # 更新日志
 
+## [0.20.25](https://github.com/WuLiFang/Nuke/compare/v0.20.24...v0.20.25) (2021-03-12)
+
+### 修复
+
+- **依赖:** 更新 cgtwq 至 3.0.2 ([ca8dfaf](https://github.com/WuLiFang/Nuke/commit/ca8dfafe2c937d0c9a269fc319d7ea66ccefd9dd))
+
 ## [0.20.24](https://github.com/WuLiFang/Nuke/compare/v0.20.23...v0.20.24) (2021-03-11)
 
 ### 修复
