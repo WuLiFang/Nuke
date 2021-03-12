@@ -18,30 +18,16 @@ core
 .. automodule:: asset.core
 
 
-footage
------------
+missing_frames
+----------------------------
 
-.. automodule:: asset.footage
+.. automodule:: asset.missing_frames
 
-frameranges
-------------
-
-.. automodule:: asset.frameranges
 
 localization
 -------------
 
 .. automodule:: asset.localization
-
-model
------------
-
-.. automodule:: asset.model
-
-monitor
--------------
-
-.. automodule:: asset.monitor
 
 notify
 ------------
