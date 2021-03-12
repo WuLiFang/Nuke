@@ -14,11 +14,12 @@ steps:
     commands:
       - >-
         docker build
-        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
-        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
-        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg HTTP_PROXY
+        --build-arg HTTPS_PROXY
+        --build-arg PIP_INDEX_URL
+        --build-arg PIP_TRUSTED_HOST
         --build-arg "VERSION=10.0v4"
-        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --build-arg foundry_LICENSE
         --file test.Dockerfile
         .
 volumes:
@@ -42,11 +43,12 @@ steps:
     commands:
       - >-
         docker build
-        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
-        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
-        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg HTTP_PROXY
+        --build-arg HTTPS_PROXY
+        --build-arg PIP_INDEX_URL
+        --build-arg PIP_TRUSTED_HOST
         --build-arg "VERSION=10.5v7"
-        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --build-arg foundry_LICENSE
         --file test.Dockerfile
         .
 volumes:
@@ -70,11 +72,12 @@ steps:
     commands:
       - >-
         docker build
-        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
-        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
-        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg HTTP_PROXY
+        --build-arg HTTPS_PROXY
+        --build-arg PIP_INDEX_URL
+        --build-arg PIP_TRUSTED_HOST
         --build-arg "VERSION=11"
-        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --build-arg foundry_LICENSE
         --file test.Dockerfile
         .
 volumes:
@@ -103,11 +106,12 @@ steps:
       - rm -r docs/build/html/*
       - >-
         docker build
-        --build-arg "HTTP_PROXY=$${HTTP_PROXY}"
-        --build-arg "HTTPS_PROXY=$${HTTPS_PROXY}"
-        --build-arg "PIP_INDEX_URL=$${PIP_INDEX_URL}"
+        --build-arg HTTP_PROXY
+        --build-arg HTTPS_PROXY
+        --build-arg PIP_INDEX_URL
+        --build-arg PIP_TRUSTED_HOST
         --build-arg "VERSION=10.5v7"
-        --build-arg "FOUNDRY_LICENSE=$${foundry_LICENSE}"
+        --build-arg foundry_LICENSE
         --file docs.Dockerfile
         --tag "temp-image-${DRONE_COMMIT_SHA}"
         .

@@ -1,5 +1,21 @@
 ARG VERSION=10.5v7
-FROM natescarlet/nuke:${VERSION}
+FROM natescarlet/nuke:${VERSION} as base
+
+USER root
+RUN set -ex ;\
+    yum -y --setopt=skip_missing_names_on_install=0 install \
+        make \
+        gcc \
+        python-devel \
+    ;\
+    yum -y clean all ;\
+    rm -rf /var/cache
+
+FROM base as build
+
+ARG PIP_INDEX_URL
+ARG PIP_TRUSTED_HOST
+ARG foundry_LICENSE 
 
 USER root
 RUN set -ex ;\
@@ -24,8 +40,5 @@ COPY --chown=nuke ./patches ./patches
 RUN make .venv/.sentinel lib/site-packages/.sentinel
 COPY --chown=nuke . .
 
-# foundry_LICENSE arg already used by base image, so we can not use.
-ARG FOUNDRY_LICENSE 
-ENV foundry_LICENSE=${FOUNDRY_LICENSE} 
 ARG SPHINXOPTS="-W"
 RUN make docs/build/html
