@@ -16,6 +16,7 @@
       "postchangelog",
       "pylint",
       "rgba"
-    ]
+    ],
+    "jupyter.jupyterServerType": "local"
   }
 }
