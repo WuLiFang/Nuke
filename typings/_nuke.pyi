@@ -5309,7 +5309,7 @@ def addView(s) -> None:
     ...
 
 
-def allNodes(filter, group) -> list:
+def allNodes(filter:six.binary_type=..., group: Group= ...) -> list:
     """
     List of all nodes in a group. If you need to get all the nodes in the script
     from a context which has no child nodes, for instance a control panel, use
