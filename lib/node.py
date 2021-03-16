@@ -3,6 +3,7 @@
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
+from filetools import get_tag
 
 import logging
 
@@ -10,6 +11,8 @@ import nuke
 
 from pathlib2_unicode import PurePath
 from wlf.codectools import get_unicode as u
+import cast_unknown as cast
+import filetools
 
 LOGGER = logging.getLogger('com.wlf.node')
 
@@ -35,22 +38,26 @@ class ReadNode(object):
         assert isinstance(node, nuke.Node)
         n = node
 
-        self._filename = u(nuke.filename(n))
+        self._filename = cast.binary(nuke.filename(n))
         path = PurePath(self._filename)
 
-        tag = (nuke.value(
+        tag = cast.text(nuke.value(
             '{}.{}'.format(u(n.name()),
                            self.tag_knob_name).encode('utf-8'),
-            '') or path.tag)
+            '') or filetools.get_tag(cast.text(path)))
 
-        k = nuke.String_Knob(self.tag_knob_name, '标签'.encode('utf-8'))
+        k = nuke.String_Knob(
+            cast.binary(self.tag_knob_name),
+            cast.binary('标签'),
+        )
         append_knob(node, k)
         k.setValue(tag)
 
-        layer = path.layer
-        k = nuke.String_Knob(self.layer_knob_name, '层'.encode('utf-8'))
+        layer = filetools.get_layer(cast.text(path))
+        k = nuke.String_Knob(cast.binary(
+            self.layer_knob_name), '层'.encode('utf-8'))
         append_knob(node, k)
-        k.setValue(path.layer)
+        k.setValue(layer)
 
         n.setName('_'.join(i for i in (tag, layer) if i).encode('utf-8'),
                   updateExpressions=True)
@@ -62,7 +69,7 @@ def wlf_write_node():
     n = (nuke.toNode('_Write')
          or nuke.toNode('wlf_Write1'))
     if not n:
-        nodes = nuke.allNodes('wlf_Write')
+        nodes = nuke.allNodes(b'wlf_Write')
         n = nodes and nodes[0]
     if not n:
         raise ValueError('Not found wlf_Write Node.')
@@ -72,7 +79,7 @@ def wlf_write_node():
 def parent_backdrop(node):
     """ Return direct parent backdrop for @node.  """
 
-    backdrops = nuke.allNodes('BackdropNode')
+    backdrops = nuke.allNodes(b'BackdropNode')
     nodes = set()
     list(nodes.union(n.getNodes()) for n in backdrops)
     backdrops = set(backdrops) - nodes

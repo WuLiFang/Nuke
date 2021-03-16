@@ -9,8 +9,8 @@ import nuke
 
 import callback
 import edit
-from nuketools import utf8
 from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 
 
 def _gizmo_to_group_on_create():
@@ -25,19 +25,19 @@ def _gizmo_to_group_on_create():
     if nuke.knobChangeds.get(n.Class()):
         return
 
-    n.addKnob(nuke.Text_Knob('wlf_gizmo_to_group'))
+    n.addKnob(nuke.Text_Knob(b'wlf_gizmo_to_group'))
 
 
 def _gizmo_to_group_update_ui():
     n = nuke.thisNode()
     _temp_knob_name = 'wlf_gizmo_to_group'
     _has_temp_knob = nuke.exists(
-        utf8('{}.{}'.format(u(n.name()), _temp_knob_name)))
+        cast.binary('{}.{}'.format(u(n.name()), _temp_knob_name)))
 
     if _has_temp_knob:
         n = edit.gizmo_to_group(n)
-        n.removeKnob(n[_temp_knob_name])
-        n.removeKnob(n['User'])
+        n.removeKnob(n[cast.binary(_temp_knob_name)])
+        n.removeKnob(n[b'User'])
 
 
 def setup():

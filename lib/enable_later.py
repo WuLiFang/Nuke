@@ -20,12 +20,12 @@ def mark_enable(nodes):
         nodes = (nodes,)
     for n in nodes:
         try:
-            label_knob = n['label']
+            label_knob = n[b'label']
             label = u(label_knob.value())
             if ENABLE_MARK not in label:
                 label_knob.setValue(
                     '{}\n{}'.format(label, ENABLE_MARK).encode('utf-8'))
-            n['disable'].setValue(True)
+            n[b'disable'].setValue(True)
         except NameError:
             continue
 

@@ -6,6 +6,8 @@ import logging
 import threading
 from contextlib import contextmanager
 from functools import wraps
+import cast_unknown as cast
+import six
 
 import nuke
 
@@ -22,7 +24,7 @@ class UTF8Object(object):
     def __new__(cls, obj):
         if obj is None or isinstance(obj, (float, int, UTF8Object)):
             return obj
-        return super(UTF8Object, cls).__new__(cls, obj)
+        return super(UTF8Object, cls).__new__(cls)
 
     def __init__(self, obj):
         if obj is self:
@@ -37,7 +39,7 @@ class UTF8Object(object):
                 self.__dict__[i] = getattr(obj, i)
 
     def __repr__(self):
-        return get_encoded('|utf8 {}|' .format(repr(self.obj).decode('utf-8')))
+        return get_encoded('|utf8 {}|' .format(cast.text(repr(self.obj))))
 
     def __dir__(self):
         return dir(self.obj)
@@ -45,11 +47,10 @@ class UTF8Object(object):
     def __getitem__(self, name):
         return utf8(self.obj.__getitem__(name))
 
-
 def utf8(obj):
     """Convert unicode to str with utf8 encoding.  """
 
-    if isinstance(obj, (str, unicode)):
+    if isinstance(obj, (six.text_type, six.binary_type)):
         return get_encoded(obj, 'utf-8')
     elif isinstance(obj, dict):
         return utf8_dict(obj)

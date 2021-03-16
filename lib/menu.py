@@ -25,8 +25,8 @@ def main():
         import pyblish_lite_nuke
         import time
 
-        started = time.clock()
-        while time.clock() - started < 10:
+        started = time.time()
+        while time.time() - started < 10:
             try:
                 client.start()
                 pyblish_lite_nuke.setup()
