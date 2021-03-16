@@ -18,6 +18,7 @@ LOGGER = logging.getLogger('com.wlf.nuketools')
 
 # TODO: replace utf8 related code with cast_unknown
 
+
 class UTF8Object(object):
     """UTF8Wraper for nuke object.  """
 
@@ -47,6 +48,7 @@ class UTF8Object(object):
     def __getitem__(self, name):
         return utf8(self.obj.__getitem__(name))
 
+
 def utf8(obj):
     """Convert unicode to str with utf8 encoding.  """
 
@@ -75,27 +77,6 @@ def utf8_dict(dict_):
     for i in ret:
         ret[i] = utf8(ret[i])
     return ret
-
-
-def utf8_func(func):
-    """(Decorator)Wrap utf8 only @func to support unicode.  """
-
-    @wraps(func)
-    def _func(*args, **kwargs):
-        args = tuple(utf8(i) for i in args)
-        kwargs = utf8_dict(kwargs)
-        try:
-            ret = func(*args, **kwargs)
-        except:
-            nuke.message(repr(func))
-            raise
-        if isinstance(ret, str):
-            ret = ret.decode('utf-8')
-        elif callable(ret):
-            ret = UTF8Object(ret)
-        return ret
-
-    return _func
 
 
 def undoable_func(name=None):
