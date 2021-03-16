@@ -12,7 +12,6 @@ import nuke
 
 import cgtwq
 import cgtwq.core
-from nuketools import utf8
 from wlf.progress import CancelledError, progress
 from wlf.uitools import Tray
 import cast_unknown as cast
@@ -81,7 +80,7 @@ def dialog_create_dirs():
                     if not os.path.exists(_path):
                         os.makedirs(_path)
             except cgtwq.IDError as ex:
-                nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
+                nuke.message(cast.binary('找不到对应条目\n{}'.format(ex)))
                 return
 
         webbrowser.open(save_path)

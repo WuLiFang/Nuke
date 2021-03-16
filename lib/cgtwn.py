@@ -15,6 +15,8 @@ from cgtwq.helper.wlf import get_entry_by_file
 from edit import CurrentViewer
 from nuketools import utf8
 from pathlib2_unicode import Path
+import cast_unknown as cast
+
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -42,7 +44,7 @@ class Database(cgtwq.Database):
         data = cgtwq.PROJECT.select_all().get_fields('code', 'database')
         for i in data:
             code, database = i
-            if unicode(shot).startswith(code):
+            if cast.text(shot).startswith(code):
                 return cls(database)
         if default:
             return cls(default)
@@ -79,13 +81,16 @@ class Task(cgtwq.Entry):
             videos = Path(dir_).glob('{}.*'.format(self.shot))
             for video in videos:
                 n = nuke.nodes.Read(name=utf8(node_name))
-                n['file'].fromUserText(unicode(video).encode('utf-8'))
+                k = n[b'file']
+                assert isinstance(k, nuke.File_Knob), k
+                k.fromUserText(cast.binary(video))
                 break
             if not n:
                 raise ValueError('No matched upstream video.')
-        n['frame_mode'].setValue(b'start_at')
-        n['frame'].setValue(b'{:.0f}'.format(
-            nuke.numvalue('root.first_frame')))
+        n[b'frame_mode'].setValue(b'start_at')
+        n[b'frame'].setValue(
+            cast.binary('{:.0f}'.format(nuke.numvalue('root.first_frame'))),
+        )
         CurrentViewer().link(n, 4, replace=False)
         return n
 
