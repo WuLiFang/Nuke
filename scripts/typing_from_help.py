@@ -6,8 +6,6 @@ Usage: "$NUKE_PYTHON" -c 'import nuke; import _nuke; help(_nuke)' | "$PYTHON27" 
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-from sys import stderr
-import six
 import cast_unknown as cast
 import re
 
@@ -274,7 +272,7 @@ def _typing_from_class(class_def):
     if docstring:
         yield '    """'
         for i in docstring:
-            yield "    %s" % i
+            yield ("    %s" % i).rstrip()
         yield '    """'
         yield ""
     if data:
@@ -282,7 +280,7 @@ def _typing_from_class(class_def):
             yield "    %s: ...%s" % (i["name"], " = %s" % i["value"] if i['value'] else '')
             yield '    """'
             for j in i["docstring"]:
-                yield "    %s" % j
+                yield ("    %s" % j).rstrip()
             yield '    """'
             yield ""
     if methods:
@@ -290,7 +288,7 @@ def _typing_from_class(class_def):
             yield "    def %s(%s)%s:" % (i["name"], ", ".join(i["args"]), " -> %s" % i["return_type"] if i["return_type"] else "")
             yield '        """'
             for j in i["docstring"]:
-                yield "        %s" % j
+                yield ("        %s" % j).rstrip()
             yield '        """'
             yield "        ..."
             yield ""
@@ -306,7 +304,7 @@ def _typing_from_function(func_def):
     yield "def %s(%s)%s:" % (name, ", ".join(args), " -> %s" % return_type if return_type else "")
     yield '    """'
     for i in docstring:
-        yield "    %s" % i
+        yield ("    %s" % i).rstrip()
     yield '    """'
     yield "    ..."
     yield ""
@@ -426,7 +424,6 @@ def typing_from_help(text):
 
 
 if __name__ == '__main__':
-    import fileinput
     import argparse
     import sys
     import codecs
