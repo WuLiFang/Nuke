@@ -4,6 +4,7 @@
 _nuke
 """
 
+import io
 import six
 import typing
 import _geo
@@ -6958,7 +6959,7 @@ def memory(cmd: six.binary_type, value=...) -> typing.Union[six.binary_type, int
     ...
 
 
-def menu(name) -> Menu:
+def menu(name: six.binary_type) -> Menu:
     """
     Find and return the Menu object with the given name. Current valid menus are:
 
@@ -6978,7 +6979,7 @@ def menu(name) -> Menu:
     ...
 
 
-def message(prompt) -> None:
+def message(prompt: six.binary_type) -> None:
     """
     Show an info dialog box. Pops up an info box (with a 'i' and the text message) and waits for the user to hit the OK button.
 
@@ -6988,7 +6989,7 @@ def message(prompt) -> None:
     ...
 
 
-def modified(status) -> bool:
+def modified(status: bool = ...) -> bool:
     """
     Deprecated. Use Root.modified and Root.setModified.
 
@@ -7000,7 +7001,7 @@ def modified(status) -> bool:
     ...
 
 
-def nodeCopy(s) -> bool:
+def nodeCopy(s: six.binary_type) -> bool:
     """
     Copy all selected nodes into a file or the clipboard.
 
@@ -7974,7 +7975,7 @@ def toggleViewers() -> None:
     ...
 
 
-def toolbar(name, create=True) -> ToolBar:
+def toolbar(name: six.binary_type, create: bool = True) -> ToolBar:
     """
     Find and return the ToolBar object with the given name. The name of the built-in nodes toolbar is 'Nodes'.
 
@@ -7986,7 +7987,12 @@ def toolbar(name, create=True) -> ToolBar:
     ...
 
 
-def tprint(*args, **kwargs) -> None:
+def tprint(
+    *value,
+    sep: six.binary_type = b' ',
+    end: six.binary_type = b'\n',
+    file: typing.IO = ...,
+) -> None:
     """
     Prints the values to a stream, or to stdout by default.
 
@@ -8087,7 +8093,7 @@ class Panel:
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, arg2: int = ..., /, ) :
+    def __init__(self, name: six.binary_type, arg2: int = ..., /, ):
         ...
 
     def addBooleanCheckBox(self, name: six.binary_type, value) -> bool:
