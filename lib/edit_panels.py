@@ -11,6 +11,8 @@ from nodeutil import is_node_deleted
 from nuketools import undoable_func
 from panels import PythonPanel
 from wlf.progress import CancelledError, progress
+import six
+import cast_unknown as cast
 
 
 class ChannelsRename(PythonPanel):
@@ -34,11 +36,12 @@ class ChannelsRename(PythonPanel):
             repl = {'.red': '.<span style=\"color:#FF4444\">red</span>',
                     '.green':  '.<span style=\"color:#44FF44\">green</span>',
                     '.blue': '.<span style=\"color:#4444FF\">blue</span>'}
-            for k, v in repl.iteritems():
+            for k, v in six.iteritems(repl):
                 ret = ret.replace(k, v)
             return ret
 
-        super(ChannelsRename, self).__init__(b'重命名通道', self.widget_id)
+        super(ChannelsRename, self).__init__(
+            cast.binary('重命名通道'), cast.binary(self.widget_id))
 
         viewer = CurrentViewer()
         n = node or nuke.selectedNode()
@@ -54,18 +57,18 @@ class ChannelsRename(PythonPanel):
         self._layercontactsheet = n
 
         viewer.link(n)
-        viewer.node['channels'].setValue('rgba')
+        viewer.node[b'channels'].setValue('rgba')
 
         for channel in self._channels:
             self.addKnob(nuke.String_Knob(
-                channel, _stylize(channel), ''))
-            if channel.endswith('.blue'):
-                self.addKnob(nuke.Text_Knob(''))
-        self.addKnob(nuke.Text_Knob(''))
-        k = nuke.Script_Knob('ok', 'OK')
+                channel, _stylize(channel), b''))
+            if channel.endswith(b'.blue'):
+                self.addKnob(nuke.Text_Knob(b''))
+        self.addKnob(nuke.Text_Knob(b''))
+        k = nuke.Script_Knob(b'ok', b'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
-        k = nuke.Script_Knob('cancel', 'Cancel')
+        k = nuke.Script_Knob(b'cancel', b'Cancel')
         self.addKnob(k)
 
         nuke.Undo.enable()
@@ -89,7 +92,7 @@ class ChannelsRename(PythonPanel):
 
         if not is_node_deleted(self._layercontactsheet):
             nuke.Undo.disable()
-            self._layercontactsheet['label'].setValue('[delete this]')
+            self._layercontactsheet[b'label'].setValue('[delete this]')
             nuke.Undo.enable()
         self.remove_callbacks()
         super(ChannelsRename, self).destroy()
@@ -121,7 +124,8 @@ class MultiEdit(PythonPanel):
     widget_id = 'com.wlf.multiedit'
 
     def __init__(self, nodes=None):
-        super(MultiEdit, self).__init__(b'多节点编辑', self.widget_id)
+        super(MultiEdit, self).__init__(
+            cast.binary('多节点编辑'), cast.binary(self.widget_id))
 
         nodes = nodes or nuke.selectedNodes()
         assert nodes, 'Nodes not given. '
@@ -131,8 +135,9 @@ class MultiEdit(PythonPanel):
 
         knobs = nodes[0].allKnobs()
 
-        self.addKnob(nuke.Text_Knob('', b'以 {} 为模版'.format(nodes[0].name())))
-        self.addKnob(nuke.Tab_Knob('', nodes[0].Class()))
+        self.addKnob(nuke.Text_Knob(b'', cast.binary(
+            '以 {} 为模版'.format(nodes[0].name()))))
+        self.addKnob(nuke.Tab_Knob(b'', nodes[0].Class()))
 
         def _tab_knob():
             if label is None:
@@ -149,17 +154,17 @@ class MultiEdit(PythonPanel):
 
             knob_class = getattr(nuke, type(k).__name__)
 
-            if issubclass(knob_class, (nuke.Script_Knob, nuke.Obsolete_Knob)) \
+            if isinstance(k, (nuke.Script_Knob, nuke.Obsolete_Knob)) \
                     or knob_class is nuke.Knob:
                 continue
-            elif issubclass(knob_class, nuke.Channel_Knob):
+            elif isinstance(k, nuke.Channel_Knob):
                 new_k = nuke.Channel_Knob(name, label, k.depth())
-            elif issubclass(knob_class, nuke.Enumeration_Knob):
+            elif isinstance(k, nuke.Enumeration_Knob):
                 enums = [k.enumName(i) for i in range(k.numValues())]
                 new_k = knob_class(name, label, enums)
-            elif issubclass(knob_class, nuke.Tab_Knob):
+            elif isinstance(k, nuke.Tab_Knob):
                 new_k = _tab_knob()
-            elif issubclass(knob_class, nuke.Array_Knob):
+            elif isinstance(k, nuke.Array_Knob):
                 new_k = knob_class(name, label)
                 new_k.setRange(k.min(), k.max())
             else:
@@ -173,17 +178,17 @@ class MultiEdit(PythonPanel):
 
             self.addKnob(new_k)
 
-        self.addKnob(nuke.EndTabGroup_Knob(''))
+        self.addKnob(nuke.EndTabGroup_Knob(b''))
 
-        self._rename_knob = nuke.EvalString_Knob('', b'重命名')
+        self._rename_knob = nuke.EvalString_Knob(b'', cast.binary('重命名'))
         self.addKnob(self._rename_knob)
-        self.addKnob(nuke.ColorChip_Knob('tile_color', b'节点颜色'))
-        self.addKnob(nuke.ColorChip_Knob('gl_color', b'框线颜色'))
-        k = nuke.PyScript_Knob('ok', 'OK')
+        self.addKnob(nuke.ColorChip_Knob(b'tile_color', cast.binary('节点颜色')))
+        self.addKnob(nuke.ColorChip_Knob(b'gl_color', cast.binary('框线颜色')))
+        k = nuke.PyScript_Knob(b'ok', b'OK')
         k.setFlag(nuke.STARTLINE)
         self.addKnob(k)
         self.addKnob(nuke.PyScript_Knob(
-            'cancel', 'Cancel', 'nuke.tabClose()'))
+            b'cancel', b'Cancel', b'nuke.tabClose()'))
 
     def knobChanged(self, knob):
         """Override. """
@@ -205,7 +210,7 @@ class MultiEdit(PythonPanel):
                 try:
                     n.setName(new_name)
                 except ValueError:
-                    nuke.message(b'非法名称, 已忽略')
+                    nuke.message(cast.binary('非法名称, 已忽略'))
 
 
 def same_class_filter(nodes, node_class=None):
@@ -215,7 +220,8 @@ def same_class_filter(nodes, node_class=None):
         set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
     classes.sort()
     if len(classes) > 1:
-        choice = nuke.choice(b'选择节点分类', b'节点分类', classes, default=0)
+        choice = nuke.choice(cast.binary('选择节点分类'),
+                             cast.binary('节点分类'), classes, default=0)
         if choice is not None:
             nodes = [n for n in nodes if n.Class()
                      == classes[choice]]
