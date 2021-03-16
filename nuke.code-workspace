@@ -47,6 +47,7 @@
       "struct",
       "tprint",
       "uncollide",
+      "unregister",
       "unsplit",
       "vect",
       "vtransform",

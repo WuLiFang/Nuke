@@ -4,7 +4,7 @@
 _nuke
 """
 
-import io
+import typing
 import six
 import typing
 import _geo
@@ -1486,7 +1486,7 @@ class Array_Knob(Knob):
         """
         ...
 
-    def value(self, index, view, time) -> typing.Union[float, typing.List[float]]:
+    def value(self, index:int=0, view=..., time:int=...) -> typing.Union[float, typing.List[float]]:
         """
         @param index: Optional index. Default is 0.
 
@@ -2921,7 +2921,10 @@ class Channel_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):...
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, depth: int = ..., /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3063,7 +3066,7 @@ class String_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3383,7 +3386,10 @@ class PyScript_Knob(Script_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):...
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3883,6 +3889,14 @@ class Tab_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
+    @typing.overload
+    def __init__(self, name: six.binary_type, /, ): ...
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, flags: int = ..., /, ):
+        ...
     ...
 
 
@@ -7702,7 +7716,7 @@ def selectedNode() -> Node:
     ...
 
 
-def selectedNodes(filter) -> list:
+def selectedNodes(filter: six.binary_type = ...) -> typing.List[Node]:
     """
     Returns a list of all selected nodes in the current group. An attempt is made to return them in 'useful' order where inputs are done before the final node, so commands applied to this list go from top-down.
 
@@ -8400,6 +8414,145 @@ class GlobalsEnvironment:
     def __setitem__(self, *args, **kwargs):
         """
         x.__setitem__(i, y) <==> x[i]=y
+        """
+        ...
+
+    ...
+
+
+class Undo:
+    """
+    Undo
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @staticmethod
+    def begin(name: six.binary_type, /, ) -> None:
+        """
+        Begin a new user-visible group of undo actions.
+        """
+        ...
+
+    @staticmethod
+    def cancel() -> None:
+        """
+        Undoes any actions recorded in the current set and throws it away.
+        """
+        ...
+
+    @staticmethod
+    def disable() -> None:
+        """
+        Prevent recording undos until matching enable()
+        """
+        ...
+
+    @staticmethod
+    def disabled() -> None:
+        """
+        True if disable() has been called
+        """
+        ...
+
+    @staticmethod
+    def enable() -> None:
+        """
+        Undoes the previous disable()
+        """
+        ...
+
+    @staticmethod
+    def end() -> None:
+        """
+        Complete current undo set and add it to the undo list.
+        """
+        ...
+
+    @staticmethod
+    def name(v: six.binary_type, /, ) -> None:
+        """
+        Name current undo set.
+        """
+        ...
+
+    @staticmethod
+    def new() -> None:
+        """
+        Same as end();begin().
+        """
+        ...
+
+    @staticmethod
+    def redo() -> None:
+        """
+        Redoes 0'th redo.
+        """
+        ...
+
+    @staticmethod
+    def redoDescribe(n: int, /, ) -> six.binary_type:
+        """
+        Return short description of redo n.
+        """
+        ...
+
+    @staticmethod
+    def redoDescribeFully(n: int, /, ) -> six.binary_type:
+        """
+        Return long description of redo n.
+        """
+        ...
+
+    @staticmethod
+    def redoSize() -> int:
+        """
+        Number of redo's that can be done.
+        """
+        ...
+
+    @staticmethod
+    def redoTruncate(n: int, /, ) -> None:
+        """
+        Destroy any redo's greater or equal to n.
+        """
+        ...
+
+    @staticmethod
+    def undo() -> None:
+        """
+        Undoes 0'th undo.
+        """
+        ...
+
+    @staticmethod
+    def undoDescribe(n: int, /, ) -> None:
+        """
+        Return short description of undo n.
+        """
+        ...
+
+    @staticmethod
+    def undoDescribeFully(n: int, /, ) -> None:
+        """
+        Return long description of undo n.
+        """
+        ...
+
+    @staticmethod
+    def undoSize() -> int:
+        """
+        Number of undo that can be done.
+        """
+        ...
+
+    @staticmethod
+    def undoTruncate() -> None:
+        """
+        Destroy any undo greater or equal to n.
         """
         ...
 
