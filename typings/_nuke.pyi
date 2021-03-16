@@ -4,6 +4,7 @@
 _nuke
 """
 
+
 import typing
 import six
 import typing
@@ -11,18 +12,9 @@ import _geo
 import _nukemath
 
 
-class CancelledError(Exception):
-    __weakref__: ...
+class AColor_Knob(Color_Knob):
     """
-    list of weak references to the object (if defined)
-    """
-
-    ...
-
-
-class Info:
-    """
-    An info object stores x, y, w and h values.
+    AColor_Knob
     """
 
     __new__: ...
@@ -30,402 +22,9 @@ class Info:
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def h(self) -> float:
-        """
-        Return height.
-        """
-        ...
-
-    def w(self) -> float:
-        """
-        Return width.
-        """
-        ...
-
-    def x(self) -> float:
-        """
-        Return left edge.
-        """
-        ...
-
-    def y(self) -> float:
-        """
-        Return the bottom edge.
-        """
-        ...
-
-    ...
-
-
-class Format:
-    """
-    A format.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(
-        self,
-        width: int,
-        height: int,
-        x: int,
-        y: int,
-        right: int,
-        top: int,
-        /,
-    ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def add(self, name) -> None:
-        """
-        Add this instance to a list of "named" formats. The name parameter is the name of the list to add the format to.
-        """
-        ...
-
-    def fromUV(self, u, v) -> typing.List[int]:
-        """
-        Transform a UV coordinate in the range 0-1 into the format's XY range. Returns a list containing the x and y coordinates.
-
-        @param u: The U coordinate.
-
-        @param v: The V coordinate.
-
-        @return: [x, y]
-        """
-        ...
-
-    def height(self) -> int:
-        """
-        Return the height of image file in pixels.
-        """
-        ...
-
-    def name(self) -> six.binary_type:
-        """
-        Returns the user-visible name of the format.
-        """
-        ...
-
-    def pixelAspect(self) -> float:
-        """
-        Returns the pixel aspect ratio (pixel width divided by pixel height) for this format.
-        """
-        ...
-
-    def r(self) -> int:
-        """
-        Return the right edge of image file in pixels.
-        """
-        ...
-
-    def scaled(self, sx, sy, tx, ty) -> Format:
-        """
-        Scale and translate this format by sx, sy, tx and ty.
-
-
-
-        @param sx: Scale factor in X.@param sy: Scale factor in Y.@param tx: Offset factor in X.@param ty: Offset factor in Y.@return: Format.
-        """
-        ...
-
-    def setHeight(self, newHeight) -> None:
-        """
-        Set the height of image file in pixels. newHeight is the new height for the image; it should be a positive integer.
-        """
-        ...
-
-    def setName(self, name) -> None:
-        """
-        Set name of this format. The name parameter is the new name for the format.
-        """
-        ...
-
-    def setPixelAspect(self, aspectRatio) -> None:
-        """
-        Set a new pixel aspect ratio for this format. The aspectRatio parameter is the new ratio, found by dividing the desired pixel width by the desired pixel height.
-        """
-        ...
-
-    def setR(self, newR) -> None:
-        """
-        Set the right edge of image file in pixels. newR is the new right edge for the image; it should be a positive integer.
-        """
-        ...
-
-    def setT(self, newT) -> None:
-        """
-        Set the top edge of image file in pixels. newY is the new top edge for the image; it should be a positive integer.
-        """
-        ...
-
-    def setWidth(self, newWidth) -> None:
-        """
-        Set the width of image file in pixels.newWidth is the new width for the image; it should be a positive integer.
-        """
-        ...
-
-    def setX(self, newX) -> None:
-        """
-        Set the left edge of image file in pixels. newX is the new left edge for the  image; it should be a positive integer.
-        """
-        ...
-
-    def setY(self, newY) -> None:
-        """
-        Set the bottom edge of image file in pixels. newY is the new bottom edge for the image; it should be a positive integer.
-        """
-        ...
-
-    def t(self) -> int:
-        """
-        Return the top edge of image file in pixels.
-        """
-        ...
-
-    def toUV(self, x, y) -> typing.List[int]:
-        """
-        Back-transform an XY coordinate in the format's space into UV space.
-
-
-
-        @param x: The X coordinate.
-
-        @param y: The Y coordinate.
-
-        @return: [u, v].
-        """
-        ...
-
-    def width(self) -> int:
-        """
-        Return the width of image file in pixels.
-        """
-        ...
-
-    def x(self) -> int:
-        """
-        Return the left edge of image file in pixels.
-        """
-        ...
-
-    def y(self) -> int:
-        """
-        Return the bottom edge of image file in pixels.
-        """
-        ...
-
-    ...
-
-
-class FrameRange:
-    """
-    A frame range, with an upper and lower bound and an increment.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    @typing.overload
-    def __init__(self, first: int, last: int, increment: int) -> None: ...
-
-    @typing.overload
-    def __init__(self, s: six.binary_type) -> None:
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def __iter__(self) -> int:
-        """
-        x.__iter__() <==> iter(x)
-        """
-        ...
-
-    def __str__(self) -> six.binary_type:
-        """
-        x.__str__() <==> str(x)
-        """
-        ...
-
-    def first(self) -> int:
-        """
-        return the first frame of the range.
-        """
-        ...
-
-    def frames(self) -> int:
-        """
-        return the numbers of frames defined in the range.
-        """
-        ...
-
-    def getFrame(self, n: int) -> int:
-        """
-        return the frame according to the index, parameter n must be between 0 and frames().
-        """
-        ...
-
-    def increment(self) -> int:
-        """
-        return the increment between two frames.
-        """
-        ...
-
-    def isInRange(self, n: int) -> bool:
-        """
-        return if the frame is inside the range.
-        """
-        ...
-
-    def last(self) -> int:
-        """
-        return the last frame of the range.
-        """
-        ...
-
-    def maxFrame(self) -> int:
-        """
-        return the maximun frame define in the range.
-        """
-        ...
-
-    def minFrame(self) -> int:
-        """
-        return the minimun frame define in the range.
-        """
-        ...
-
-    def next(self) -> int:
-        """
-        x.next() -> the next value, or raise StopIteration
-        """
-        ...
-
-    def setFirst(self, n: int) -> None:
-        """
-        set the first frame of the range.
-        """
-        ...
-
-    def setIncrement(self, n: int) -> None:
-        """
-        set the increment between two frames.
-        """
-        ...
-
-    def setLast(self, n: int) -> None:
-        """
-        set the last frame of the range.
-        """
-        ...
-
-    def stepFrame(self) -> int:
-        """
-        return the absolute increment between two frames.
-        """
-        ...
-
-    ...
-
-
-class FrameRanges:
-    """
-    A sequence of FrameRange objects with convenience functions for iterating over all frames in all ranges.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, o: typing.Union[
-        six.binary_type,
-        typing.List[FrameRange],
-        typing.List[six.binary_type],
-        typing.List[int],
-    ]) -> None:
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def __iter__(self) -> FrameRange:
-        """
-        x.__iter__() <==> iter(x)
-        """
-        ...
-
-    def __str__(self) -> six.binary_type:
-        """
-        x.__str__() <==> str(x)
-        """
-        ...
-
-    def add(self, r: FrameRange) -> None:
-        """
-        add a new frame range.
-        """
-        ...
-
-    def clear(self) -> None:
-        """
-        reset all store frame ranges.
-        """
-        ...
-
-    def compact(self) -> None:
-        """
-        compact all the frame ranges.
-        """
-        ...
-
-    def getRange(self) -> FrameRange:
-        """
-        return a range from the list
-        """
-        ...
-
-    def maxFrame(self) -> int:
-        """
-        get maximun frame of all ranges.
-        """
-        ...
-
-    def minFrame(self) -> int:
-        """
-        get minimun frame of all ranges.
-        """
-        ...
-
-    def next(self) -> FrameRange:
-        """
-        x.next() -> the next value, or raise StopIteration
-        """
-        ...
-
-    def size(self) -> int:
-        """
-        return the ranges number.
-        """
-        ...
-
-    def toFrameList(self) -> typing.List[int]:
-        """
-        return a list of frames in a vector
         """
         ...
 
@@ -683,12 +282,65 @@ class AnimationCurve:
     ...
 
 
-class Knob:
+class AnimationKey:
     """
-    A modifiable control that appears (unless hidden) in the panel for a node.
-    This is a base class that specific knob types inherit from.
-
-    Knobs can be animated, have expressions, be disabled or hidden and more.
+    A control point for an animation curve.
+    @var x
+    The horizontal position of the point
+    @var y
+    The vertical position of the point
+    @var lslope
+    The derivative to the left of the point. If interpolation does not have
+    USER_SET_SLOPE then this may not be correct until after evaluate() has been
+    called.
+    @var rslope
+    The derivative to the right of the point. If interpolation does not have
+    USER_SET_SLOPE then this may not be correct until after evaluate() has been
+    called.
+    @var la
+    The left 'bicubic' value. This represents the horizontal
+    position of the left bezier handle end, where 1.0 means 1/3 of the
+    distance to the previous point. If both handles for a span are 1.0
+    then the horizontal interpolation is linear and thus the vertical
+    interpolation a cubic function.  The legal values are 0 to
+    3. Setting outside of this range will produce undefined results.
+    @var ra
+    The right 'bicubic' value, again the legal range is 0 to 3.
+    @var interpolation
+    Used to calculate all the slopes except for the left slope of the first key
+    and the right slope of the last key.
+    Legal values are:
+    - USER_SET_SLOPE: If this bit is on, the slopes are fixed by
+                      the user and interpolation and extrapolation are ignored.
+    - CONSTANT: The value of the curve is equal to the y of the
+                point to the left.
+    - LINEAR: slopes point directly at the next key.
+    - SMOOTH: same as CATMULL_ROM but the slopes are clamped so that the
+              convex-hull property is preserved (meaning no part of the curve
+              extends vertically outside the range of the keys on each side of
+              it). This is the default.
+    - CATMULL_ROM: the slope at key n is set to the slope between the control
+                   points n-1 and n+1. This is used by lots of software.
+    - cubic: the slope is calculated to the only cubic interpolation which makes
+             the first and second derivatives continuous. This type of
+             interpolation was very popular in older animation software.  A
+             different cubic interpolation is figured out for each set of adjacent
+             points with the CUBIC type.
+    - for the smooth, CATMULL_ROM, and CUBIC interpolations, the first and last
+      key have slopes calculated so that the second derivative is zero at them.
+    @var extrapolation
+    controls how to set the left slope of the first point and the right slope of
+    the last point. Notice that this can be set differently on the first and last
+    points, and is also remembered on all internal points so if end points are
+    deleted old behavior is restored).
+    - constant: the left slope of the first point, and the right slope of the last
+                point, are set to zero.
+    - linear: (and all other values): The left slope of the first point is set
+              equal to it's right slope (calculated by the interpolation).
+    the right slope of the last point is set equal to it's left slope.
+    if there is only one point both slopes are set to zero.
+    @var selected
+    True if the point is selected in the curve editor.
     """
 
     __new__: ...
@@ -696,326 +348,9 @@ class Knob:
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def Class(self) -> six.binary_type:
+    def __init__(self, *args, **kwargs):
         """
-        Class name.
-        """
-        ...
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        """
-        ...
-
-    def clearAnimated(self, *args, **kwargs):
-        """
-        Clear animation for channel 'c'. Return True if successful.
-        """
-        ...
-
-    def clearFlag(self, f) -> None:
-        """
-        Clear flag.
-
-        @param f: Flag.
-
-        @return: None.
-        """
-        ...
-
-    def critical(self, message) -> None:
-        """
-        @param message: message to put the knob in error, and do a popup.
-
-        @return: None.
-        """
-        ...
-
-    def debug(self, message) -> None:
-        """
-        @param message: message to put out to the error console, attached to the knob, if the verbosity level is set high enough.
-
-        @return: None.
-        """
-        ...
-
-    def enabled(self) -> bool:
-        """
-        True if the knob is enabled, False if it's disabled.
-        """
-        ...
-
-    def error(self, message) -> None:
-        """
-        @param message: message to put the knob in error.
-
-        @return: None.
-        """
-        ...
-
-    def fromScript(self, *args, **kwargs):
-        """
-        Initialise from script.
-        """
-        ...
-
-    def fullyQualifiedName(self, channel=-1) -> six.binary_type:
-        """
-        Returns the fully-qualified name of the knob within the node. This can be useful for expression linking.
-
-
-
-        @param channel: Optional parameter, specifies the channel number of the sub-knob (for example, channels of  0 and 1 would refer to the x and y of a XY_Knob respectively), leave blank or set to -1 to get the  qualified name of the knob only.
-
-        @return: The string of the qualified knob or sub-knob, which can be used directly in expression links.
-        """
-        ...
-
-    def getDerivative(self, *args, **kwargs):
-        """
-        Return derivative at time 't' for channel 'c'.
-        """
-        ...
-
-    def getFlag(self, f) -> bool:
-        """
-        Returns whether the input flag is set.
-
-        @param f: Flag.
-
-        @return: True if set, False otherwise.
-        """
-        ...
-
-    def getIntegral(self, *args, **kwargs):
-        """
-        Return integral at the interval [t1, t2] for channel 'c'.
-        """
-        ...
-
-    def getKeyIndex(self, *args, **kwargs):
-        """
-        Return keyframe index at time 't' for channel 'c'.
-        """
-        ...
-
-    def getKeyList(self, *args, **kwargs):
-        """
-        Get all unique keys on the knob.  Returns list.
-        """
-        ...
-
-    def getKeyTime(self, *args, **kwargs):
-        """
-        Return index of the keyframe at time 't' for channel 'c'.
-        """
-        ...
-
-    def getNthDerivative(self, *args, **kwargs):
-        """
-        Return nth derivative at time 't' for channel 'c'.
-        """
-        ...
-
-    def getNumKeys(self, *args, **kwargs):
-        """
-        Return number of keyframes for channel 'c'.
-        """
-        ...
-
-    def getValue(self, *args, **kwargs):
-        """
-        Return value at the current frame for channel 'c'.
-        """
-        ...
-
-    def getValueAt(self, *args, **kwargs):
-        """
-        Return value at time 't' for channel 'c'.
-        """
-        ...
-
-    def hasExpression(self, index=-1) -> bool:
-        """
-        Return True if animation at index 'index' has an expression.
-
-        @param index: Optional index parameter. Defaults to -1 if not specified. This can be specified as a keyword parameter if desired.
-
-        @return: True if has expression, False otherwise.
-        """
-        ...
-
-    def isAnimated(self, *args, **kwargs):
-        """
-        Return True if channel 'c' is animated.
-        """
-        ...
-
-    def isKey(self, *args, **kwargs):
-        """
-        Return True if there is a keyframe at the current frame for channel 'c'.
-        """
-        ...
-
-    def isKeyAt(self, *args, **kwargs):
-        """
-        Return True if there is a keyframe at time 't' for channel 'c'.
-        """
-        ...
-
-    def label(self) -> six.binary_type:
-        """
-        label.
-        """
-        ...
-
-    def name(self) -> six.binary_type:
-        """
-        name.
-        """
-        ...
-
-    def node(self) -> Node:
-        """
-        Return the node that this knob belongs to. If the node has been cloned, we'll always return a reference to the original.
-
-        @return: The node which owns this knob, or None if the knob has no owner yet.
-        """
-        ...
-
-    def removeKey(self, *args, **kwargs):
-        """
-        Remove key for channel 'c'. Return True if successful.
-        """
-        ...
-
-    def removeKeyAt(self, *args, **kwargs):
-        """
-        Remove key at time 't' for channel 'c'. Return True if successful.
-        """
-        ...
-
-    def setAnimated(self, *args, **kwargs):
-        """
-        Set channel 'c' to be animated.
-        """
-        ...
-
-    def setEnabled(self, enabled) -> None:
-        """
-        Enable or disable the knob.
-
-        @param enabled: True to enable the knob, False to disable it.
-        """
-        ...
-
-    def setExpression(self, expression, channel=-1, view=None) -> bool:
-        """
-        Set the expression for a knob. You can optionally specify a channel to set the expression for.
-
-
-
-        @param expression: The new expression for the knob. This should be a string.
-
-        @param channel: Optional parameter, specifying the channel to set the expression for. This should be an integer.
-
-        @param view: Optional view parameter. Without, this command will set the expression for the current view theinterface is displaying. Can be the name of the view or the index.
-
-        @return: True if successful, False if not.
-        """
-        ...
-
-    def setFlag(self, f) -> None:
-        """
-        Logical OR of the argument and existing knob flags.
-
-        @param f: Flag.
-
-        @return: None.
-        """
-        ...
-
-    def setLabel(self, s) -> None:
-        """
-        @param s: New label.
-
-        @return: None.
-        """
-        ...
-
-    def setName(self, s) -> None:
-        """
-        @param s: New name.
-
-        @return: None.
-        """
-        ...
-
-    def setTooltip(self, s) -> None:
-        """
-        @param s: New tooltip.
-
-        @return: None.
-        """
-        ...
-
-    def setValue(self, val, chan: six.binary_type = ...) -> bool:
-        """
-        Sets the value 'val' at channel 'chan'.
-
-        @return: True if successful, False if not.
-        """
-        ...
-
-    def setValueAt(self, val, time, chan) -> bool:
-        """
-        Sets the value 'val' at channel 'chan' for time 'time'.
-
-        @return: True if successful, False if not.
-        """
-        ...
-
-    def setVisible(self, visible) -> None:
-        """
-        Show or hide the knob.
-
-        @param visible: True to show the knob, False to hide it.
-        """
-        ...
-
-    def toScript(self, quote, context=...) -> six.binary_type:
-        """
-        Return the value of the knob in script syntax.
-
-        Pass True for quote to return results quoted in {}.
-
-        Pass None for context to get results for all views and key times (as stored in a .nk file).
-        """
-        ...
-
-    def tooltip(self) -> six.binary_type:
-        """
-        tooltip.
-        """
-        ...
-
-    def value(self, *args, **kwargs):
-        """
-        Return value at the current frame for channel 'c'.
-        """
-        ...
-
-    def visible(self) -> bool:
-        """
-        True if the knob is visible, False if it's hidden.
-        """
-        ...
-
-    def warning(self, message) -> None:
-        """
-        @param message: message to put a warning on the knob.
-
-        @return: None.
+        x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
@@ -1486,7 +821,7 @@ class Array_Knob(Knob):
         """
         ...
 
-    def value(self, index:int=0, view=..., time:int=...) -> typing.Union[float, typing.List[float]]:
+    def value(self, index: int = 0, view=..., time: int = ...) -> typing.Union[float, typing.List[float]]:
         """
         @param index: Optional index. Default is 0.
 
@@ -1527,40 +862,9 @@ class Array_Knob(Knob):
     ...
 
 
-class Color_Knob(Array_Knob):
+class Axis_Knob(Knob):
     """
-    A knob which holds a color. Provides a UI for picking colours as well as editing the values directly.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def inputNumber(self) -> int:
-        """
-        Return input number.
-        """
-        ...
-
-    def names(self, n) -> six.binary_type:
-        """
-        Return name for dimension n. The argument n is an integer.
-        """
-        ...
-
-    ...
-
-
-class AColor_Knob(Color_Knob):
-    """
-    AColor_Knob
+    A knob which describes a 3D affine transformation, by combining rotations around each principal axis, scaling, translation, skew and a pivot point.
     """
 
     __new__: ...
@@ -1571,6 +875,48 @@ class AColor_Knob(Color_Knob):
     def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def pivot(self) -> XYZ_Knob:
+        """
+        Return pivot knob.
+        """
+        ...
+
+    def rotate(self) -> XYZ_Knob:
+        """
+        Return rotation knob.
+        """
+        ...
+
+    def scale(self) -> Scale_Knob:
+        """
+        Return scale knob.
+        """
+        ...
+
+    def skew(self) -> XYZ_Knob:
+        """
+        Return skew knob.
+        """
+        ...
+
+    def translate(self) -> XYZ_Knob:
+        """
+        Return translation knob.
+        """
+        ...
+
+    def uniformScale(self) -> Double_Knob:
+        """
+        Return uniform scale knob.
+        """
+        ...
+
+    def value(self) -> _nukemath.Matrix4:
+        """
+        Return the transform matrix formed by combining the input knob values for translate, rotate, scale, skew and pivot.
         """
         ...
 
@@ -1674,9 +1020,276 @@ class BBox_Knob(Array_Knob):
     ...
 
 
-class Unsigned_Knob(Array_Knob):
+class BackdropNode(Node):
+    def __getitem__(self, *args, **kwargs):
+        """
+        x.__getitem__(y) <==> x[y]
+        """
+        ...
+
+    def __len__(self, *args, **kwargs):
+        """
+        x.__len__() <==> len(x)
+        """
+        ...
+
+    def __repr__(self, *args, **kwargs):
+        """
+        x.__repr__() <==> repr(x)
+        """
+        ...
+
+    def __str__(self, *args, **kwargs):
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def getNodes(self) -> typing.List[Node]:
+        """
+        Get the nodes contained inside a backdrop node
+        Example:
+        backdrop = nuke.toNode("BackdropNode1")
+        nodesInBackdrop = backdrop.getNodes()
+
+        @return: a list of nodes contained inside the backdrop.
+        """
+        ...
+
+    def selectNodes(self, selectNodes) -> None:
+        """
+        Select or deselect all nodes in backdrop node
+        Example:
+        backdrop = nuke.toNode("BackdropNode1")
+        backdrop.selectNodes(True)
+
+        @return: None.
+        """
+        ...
+
+    ...
+
+
+class BeginTabGroup_Knob(Knob):
     """
-    A knob which holds one or more unsigned integer values.
+    Begin a group of tabs. Subsequent knobs will all be part of the same tab group, until a matching EndTabGroup knob is found.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    ...
+
+
+class Bitmask_Knob(Enumeration_Knob):
+    """
+    Bitmask_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    ...
+
+
+class Boolean_Knob(Array_Knob):
+    """
+    A knob which holds a boolean value. This appears in a Node panel as a check box.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def setValue(self, b) -> bool:
+        """
+        Set the boolean value of this knob.
+        @param b: Boolean convertible object.
+        @return: True if modified, False otherwise.
+        """
+        ...
+
+    def value(self) -> bool:
+        """
+        Get the boolean value for this knob.
+        @return: True or False.
+        """
+        ...
+
+    ...
+
+
+class Box:
+    """
+    A 2-dimensional rectangle. Described by left, right, top and bottom coords (width and height are calculated as necessary).
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def centerX(self) -> float:
+        """
+        Return center in X.
+        """
+        ...
+
+    def centerY(self) -> float:
+        """
+        Return height in Y.
+        """
+        ...
+
+    def clampX(self, x) -> int:
+        """
+        Return x restricted to pointing at a pixel in the box.
+        """
+        ...
+
+    def clampY(self, y) -> int:
+        """
+        Return y restricted to pointing at a pixel in the box.
+        """
+        ...
+
+    def clear(self) -> None:
+        """
+        Set to is_constant().
+        """
+        ...
+
+    def h(self) -> int:
+        """
+        Return height.
+        """
+        ...
+
+    def intersect(self, x, y, r, t) -> None:
+        """
+        Intersect with the given edges.
+        """
+        ...
+
+    def isConstant(self) -> bool:
+        """
+        True if box is 1x1 in both directions, False otherwise
+        """
+        ...
+
+    def merge(self, x, y, r, t) -> None:
+        """
+        Merge with the given edges.
+        """
+        ...
+
+    def move(self, dx, dy) -> None:
+        """
+        Move all the sides and thus the entire box by the given deltas.
+        """
+        ...
+
+    def pad(self, dx, dy, dr, dt) -> None:
+        """
+        Move all the sides and thus the entire box by the given deltas.
+        """
+        ...
+
+    def r(self) -> int:
+        """
+        Return the right edge of the box.
+        """
+        ...
+
+    def set(self, x, y, r, t) -> None:
+        """
+        Set all values at once.
+        """
+        ...
+
+    def setH(self, n) -> None:
+        """
+        Set height by moving top edge.
+        """
+        ...
+
+    def setR(self, n) -> None:
+        """
+        Set the right edge. The parameter n is an integer.
+        """
+        ...
+
+    def setT(self, n) -> None:
+        """
+        Set top edge.
+        """
+        ...
+
+    def setW(self, n) -> None:
+        """
+        Set width by moving right edge.
+        """
+        ...
+
+    def setX(self, n) -> None:
+        """
+        Set the left edge. The parameter n is an integer.
+        """
+        ...
+
+    def setY(self, n) -> None:
+        """
+        Set the bottom edge. The parameter n is an integer.
+        """
+        ...
+
+    def t(self) -> int:
+        """
+        Return top edge.
+        """
+        ...
+
+    def w(self) -> int:
+        """
+        Return width.
+        """
+        ...
+
+    def x(self) -> int:
+        """
+        The left edge of the box.
+        """
+        ...
+
+    def y(self) -> int:
+        """
+        Return the bottom edge.
+        """
+        ...
+
+    ...
+
+
+class Box3_Knob(Array_Knob):
+    """
+    A 3-dimensional box.
     """
 
     __new__: ...
@@ -1690,23 +1303,504 @@ class Unsigned_Knob(Array_Knob):
         """
         ...
 
-    def setValue(self, val) -> bool:
+    def f(self, *args, **kwargs):
         """
-        Set the unsigned integer value of this knob.
-
-        @param val: The new value for the knob. Must be an integer >= 0.
-
-        @return: True if succeeded, False otherwise.
+        Return value for F extent. F (far) is the maximum Z extent of the box.
         """
         ...
 
-    def value(self) -> int:
+    def n(self, *args, **kwargs):
         """
-        Get the value of this knob as an integer.
-
-        @return: int
+        Return value for N position. N (near) is the minimum Z extent of the box.
         """
         ...
+
+    def names(self, *args, **kwargs):
+        """
+        Return name for dimension 'i'
+        """
+        ...
+
+    def r(self, *args, **kwargs):
+        """
+        Return value for R extent. R (right) is the right extent of the box.
+        """
+        ...
+
+    def setF(self, *args, **kwargs):
+        """
+        Set value for F extent. F (far) is the maximum Z extent of the box.
+        """
+        ...
+
+    def setN(self, *args, **kwargs):
+        """
+        Set value for N position. N (near) is the minimum Z extent of the box.
+        """
+        ...
+
+    def setR(self, *args, **kwargs):
+        """
+        Set value for R extent. R (right) is the right extent of the box.
+        """
+        ...
+
+    def setT(self, *args, **kwargs):
+        """
+        Set value for T extent. T (top) is the maximum vertical extent of the box.
+        """
+        ...
+
+    def setX(self, *args, **kwargs):
+        """
+        Set value for X position. X is the minimum horizontal extent of the box.
+        """
+        ...
+
+    def setY(self, *args, **kwargs):
+        """
+        Set value for Y position. Y is the minimum vertical extent of the box.
+        """
+        ...
+
+    def t(self, *args, **kwargs):
+        """
+        Return value for T extent. T (top) is the maximum vertical extent of the box.
+        """
+        ...
+
+    def value(self, *args, **kwargs):
+        """
+        Return value for dimension 'i'
+        """
+        ...
+
+    def x(self, *args, **kwargs):
+        """
+        Return value for X position. X is the minimum horizontal extent of the box.
+        """
+        ...
+
+    def y(self, *args, **kwargs):
+        """
+        Return value for Y position. Y is the minimum vertical extent of the box.
+        """
+        ...
+
+    ...
+
+
+class CancelledError(Exception):
+    __weakref__: ...
+    """
+    list of weak references to the object (if defined)
+    """
+
+    ...
+
+
+class CascadingEnumeration_Knob(Enumeration_Knob):
+    """
+    Stores a single value between 0 and some maximum, and manages a
+
+    set of keywords visible to the user. The words themselves are
+
+    displayed on a pulldown list in the user interface, and are written
+
+    to the saved scripts (so that the numerical values can change). To
+
+    create cascading submenus simply use the forward slash ( '/' )
+
+    e.g. menu/item1self.__init__(name, label, items) -> None
+
+    @param name: Name.
+
+    @param label: Label.
+
+    @param items: List of strings.
+
+    Example:
+
+    k = nuke.Enumeration_Knob('MyEnumKnobName', 'MyEnumKnobLabel', ['menu1/label1', 'label2'])
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class ChannelMask_Knob(Channel_Knob):
+    """
+    ChannelMask_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class Channel_Knob(Knob):
+    """
+    A knob which lets you select a layer and enable or disable individual channels.
+
+    self.__init__(s, label, depth) -> None
+
+    Constructor.
+
+    @param s: name.
+
+    @param label: Optional name to appear in GUI. Defaults to the knob's name.
+
+    @param depth: Optional number of channels with zero being the Nuke default number of channels. Defaults to 0.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, depth: int = ..., /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def channelSelector(self) -> bool:
+        """
+        """
+        ...
+
+    def checkMarks(self) -> bool:
+        """
+        """
+        ...
+
+    def depth(self) -> int:
+        """
+        Get the channel depth.
+
+        @return: The depth of the channel as an int.
+        """
+        ...
+
+    def enableChannel(self, name, b) -> None:
+        """
+        Enable or disable a channel.
+
+        @param name: The name of the channel.
+
+        @param b: True to enable the channel, False to disable it.
+
+        @return: None
+        """
+        ...
+
+    def inputKnob(self) -> bool:
+        """
+        """
+        ...
+
+    def inputNumber(self) -> int:
+        """
+        """
+        ...
+
+    def isChannelEnabled(self, name) -> bool:
+        """
+        Test if a channel is enabled.
+
+        @param name: The name of the channel.@return: True if the channel is enabled, False otherwise.
+        """
+        ...
+
+    def layerSelector(self) -> bool:
+        """
+        """
+        ...
+
+    def setEnable(self, name) -> None:
+        """
+        Enable a channel.
+
+        @param name: The name of the channel to enable.
+
+        @return: None
+        """
+        ...
+
+    def setInput(self, num) -> None:
+        """
+        Set the input number for this knob.@param num: The number of the new input.
+
+        @return: None
+        """
+        ...
+
+    def setValue(self, name) -> None:
+        """
+        Set the selected channel using the channel name.
+
+        @param name: The name of the new channel as a string.
+
+        @return: None
+
+        @raise ValueError exception if the channel doesn't exist.
+        """
+        ...
+
+    def value(self) -> six.binary_type:
+        """
+        Get the name of the selected channel.
+
+        @return: The name of the channel as a string.
+        """
+        ...
+
+    ...
+
+
+class ColorChip_Knob(Unsigned_Knob):
+    """
+    A knob which holds a single unsigned int that describes a user interface colour. The color format is 0xRRGGBB00.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class Color_Knob(Array_Knob):
+    """
+    A knob which holds a color. Provides a UI for picking colours as well as editing the values directly.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def inputNumber(self) -> int:
+        """
+        Return input number.
+        """
+        ...
+
+    def names(self, n) -> six.binary_type:
+        """
+        Return name for dimension n. The argument n is an integer.
+        """
+        ...
+
+    ...
+
+
+class Disable_Knob(Boolean_Knob):
+    """
+    A knob which holds a boolean value representing the disabled state of a node. This appears in a Node panel as a check box.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def setValue(self, b) -> bool:
+        """
+        Set the boolean value of this knob.
+
+        @param b: Boolean convertible object.
+
+        @return: True if modified, False otherwise.
+        """
+        ...
+
+    def value(self) -> bool:
+        """
+        Get the boolean value for this knob.
+
+        @return: True or False.
+        """
+        ...
+
+    ...
+
+
+class Double_Knob(Array_Knob):
+    """
+    A knob which holds one or more double-precision floating point values.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class EditableEnumeration_Knob(Enumeration_Knob):
+    """
+    Stores a single value between 0 and some maximum, and manages a
+
+    set of Radio Buttons visible to the user. This is essentially an
+
+    Enumeration_Knob with a different widget.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def enumName(self, n) -> six.binary_type:
+        """
+        Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
+        """
+        ...
+
+    def numValues(self) -> int:
+        """
+        Return number of values. Deprecated.
+        """
+        ...
+
+    def setValue(self, item) -> None:
+        """
+        Set the current value. item will first be converted into a string and matched against the enum values.
+
+        If this fails, it will attempt to be used as an index into the enum.
+
+        @param item: String or Integer.
+
+        @return: None.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.setValue('exr')
+        """
+        ...
+
+    def setValues(self, items) -> None:
+        """
+        (Re)initialise knob to the supplied list of items.
+
+        @param items: The new list of values.
+
+        @return: None.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.setValues(['exr'])
+        """
+        ...
+
+    def value(self) -> six.binary_type:
+        """
+        Current value.
+
+        @return: String.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.value()
+        """
+        ...
+
+    def values(self) -> typing.List[six.binary_type]:
+        """
+        Return list of items.
+
+        @return: List of strings.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.values()
+        """
+        ...
+
+    ...
+
+
+class EndTabGroup_Knob(Knob):
+    """
+    End a group of tabs. This is only valid when a BeginTabGroup knob has already been used.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
 
     ...
 
@@ -1830,1333 +1924,6 @@ class Enumeration_Knob(Unsigned_Knob):
     ...
 
 
-class Bitmask_Knob(Enumeration_Knob):
-    """
-    Bitmask_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    ...
-
-
-class CascadingEnumeration_Knob(Enumeration_Knob):
-    """
-    Stores a single value between 0 and some maximum, and manages a
-
-    set of keywords visible to the user. The words themselves are
-
-    displayed on a pulldown list in the user interface, and are written
-
-    to the saved scripts (so that the numerical values can change). To
-
-    create cascading submenus simply use the forward slash ( '/' )
-
-    e.g. menu/item1self.__init__(name, label, items) -> None
-
-    @param name: Name.
-
-    @param label: Label.
-
-    @param items: List of strings.
-
-    Example:
-
-    k = nuke.Enumeration_Knob('MyEnumKnobName', 'MyEnumKnobLabel', ['menu1/label1', 'label2'])
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class EditableEnumeration_Knob(Enumeration_Knob):
-    """
-    Stores a single value between 0 and some maximum, and manages a
-
-    set of Radio Buttons visible to the user. This is essentially an
-
-    Enumeration_Knob with a different widget.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def enumName(self, n) -> six.binary_type:
-        """
-        Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
-        """
-        ...
-
-    def numValues(self) -> int:
-        """
-        Return number of values. Deprecated.
-        """
-        ...
-
-    def setValue(self, item) -> None:
-        """
-        Set the current value. item will first be converted into a string and matched against the enum values.
-
-        If this fails, it will attempt to be used as an index into the enum.
-
-        @param item: String or Integer.
-
-        @return: None.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.setValue('exr')
-        """
-        ...
-
-    def setValues(self, items) -> None:
-        """
-        (Re)initialise knob to the supplied list of items.
-
-        @param items: The new list of values.
-
-        @return: None.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.setValues(['exr'])
-        """
-        ...
-
-    def value(self) -> six.binary_type:
-        """
-        Current value.
-
-        @return: String.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.value()
-        """
-        ...
-
-    def values(self) -> typing.List[six.binary_type]:
-        """
-        Return list of items.
-
-        @return: List of strings.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.values()
-        """
-        ...
-
-    ...
-
-
-class OneView_Knob(Enumeration_Knob):
-    """
-    OneView_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    ...
-
-
-class Pulldown_Knob(Enumeration_Knob):
-    """
-    Pulldown_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def commands(self, n) -> six.binary_type:
-        """
-        Return command n. The argument n is an integer and in the range of 0 and numValues.
-        """
-        ...
-
-    def itemName(self, n) -> six.binary_type:
-        """
-        Return name of item n. The argument n is an integer and in the range of 0 and numValues.
-        """
-        ...
-
-    def numValues(self) -> int:
-        """
-        Return number of values.
-        """
-        ...
-
-    def setValues(self, items) -> None:
-        """
-        (Re)initialise knob to the list of items.
-
-        @param items: Dictionary of name/value pairs.
-
-        @param sort: Optional parameter as to whether to sort the names.
-
-        @return: None.
-
-        Example:
-
-        w = nuke.nodes.NoOp()
-
-        k = nuke.Pulldown_Knob('kname', 'klabel')
-
-        k.setValues({'label/command' : 'eval("3*2")'})
-
-        w.addKnob(k)
-
-        k = w['kname']
-        """
-        ...
-
-    ...
-
-
-class Radio_Knob(Enumeration_Knob):
-    """
-    Stores a single value between 0 and some maximum, and manages a
-
-    set of Radio Buttons visible to the user. This is essentially an
-
-    Enumeration_Knob with a different widget.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def enumName(self, n) -> six.binary_type:
-        """
-        Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
-        """
-        ...
-
-    def numValues(self) -> int:
-        """
-        Return number of values. Deprecated.
-        """
-        ...
-
-    def setValue(self, item) -> None:
-        """
-        Set the current value. item will first be converted into a string and matched against the enum values.
-
-        If this fails, it will attempt to be used as an index into the enum.
-
-        @param item: String or Integer.
-
-        @return: None.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.setValue('exr')
-        """
-        ...
-
-    def setValues(self, items) -> None:
-        """
-        (Re)initialise knob to the supplied list of items.
-
-        @param items: The new list of values.
-
-        @return: None.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.setValues(['exr'])
-        """
-        ...
-
-    def value(self) -> six.binary_type:
-        """
-        Current value.
-
-        @return: String.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.value()
-        """
-        ...
-
-    def values(self) -> typing.List[six.binary_type]:
-        """
-        Return list of items.
-
-        @return: List of strings.
-
-        Example:
-
-        w = nuke.nodes.Write()
-
-        k = w['file_type']
-
-        k.values()
-        """
-        ...
-
-    ...
-
-
-class ColorChip_Knob(Unsigned_Knob):
-    """
-    A knob which holds a single unsigned int that describes a user interface colour. The color format is 0xRRGGBB00.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class SceneView_Knob(Unsigned_Knob):
-    """
-    Displays a list of items as a hierarchy.
-
-    The hierarchy is specified using back or forward slashes within the item names
-
-    to specify their level in the tree. Handles multiple selection of items within the tree.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def addItems(self) -> None:
-        """
-        Adds a list of string items to the knob. New items are automatically set as imported and selected.
-        """
-        ...
-
-    def getAllItems(self) -> list:
-        """
-        Returns a list of strings containing all items that the knob can import.
-        """
-        ...
-
-    def getHighlightedItem(self) -> six.binary_type:
-        """
-        Returns a string containing the item which is currently highlighted.
-        """
-        ...
-
-    def getImportedItems(self) -> list:
-        """
-        Returns a list of strings containing all items imported into the knob.
-        """
-        ...
-
-    def getSelectedItems(self) -> list:
-        """
-        Returns a list of strings containing all currently selected items in the knob.
-        """
-        ...
-
-    def removeItems(self) -> None:
-        """
-        Removes a list of string items from the knob.
-        """
-        ...
-
-    def setAllItems(self, items, autoSelect) -> None:
-        """
-        Sets a list of strings containing all items that the knob can import.
-
-        After calling this function, only items from this list can be imported into the nosde.
-
-        @param items: List of imported items.
-
-        @param autoSelect: If True, all items are automatically set as imported and selected.
-
-        @return: None.
-        """
-        ...
-
-    def setImportedItems(self, items) -> None:
-        """
-        Sets a list of strings containing all items imported into the knob. This will overwrite the current imported items list.@param items: List of imported items.
-
-        @return: None.
-        """
-        ...
-
-    def setSelectedItems(self) -> None:
-        """
-        Takes a list of strings of items contained in the knob and sets them as selected.
-        """
-        ...
-
-    ...
-
-
-class Boolean_Knob(Array_Knob):
-    """
-    A knob which holds a boolean value. This appears in a Node panel as a check box.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def setValue(self, b) -> bool:
-        """
-        Set the boolean value of this knob.
-
-        @param b: Boolean convertible object.
-
-        @return: True if modified, False otherwise.
-        """
-        ...
-
-    def value(self) -> bool:
-        """
-        Get the boolean value for this knob.
-
-        @return: True or False.
-        """
-        ...
-
-    ...
-
-
-class Disable_Knob(Boolean_Knob):
-    """
-    A knob which holds a boolean value representing the disabled state of a node. This appears in a Node panel as a check box.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def setValue(self, b) -> bool:
-        """
-        Set the boolean value of this knob.
-
-        @param b: Boolean convertible object.
-
-        @return: True if modified, False otherwise.
-        """
-        ...
-
-    def value(self) -> bool:
-        """
-        Get the boolean value for this knob.
-
-        @return: True or False.
-        """
-        ...
-
-    ...
-
-
-class Box3_Knob(Array_Knob):
-    """
-    A 3-dimensional box.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def f(self, *args, **kwargs):
-        """
-        Return value for F extent. F (far) is the maximum Z extent of the box.
-        """
-        ...
-
-    def n(self, *args, **kwargs):
-        """
-        Return value for N position. N (near) is the minimum Z extent of the box.
-        """
-        ...
-
-    def names(self, *args, **kwargs):
-        """
-        Return name for dimension 'i'
-        """
-        ...
-
-    def r(self, *args, **kwargs):
-        """
-        Return value for R extent. R (right) is the right extent of the box.
-        """
-        ...
-
-    def setF(self, *args, **kwargs):
-        """
-        Set value for F extent. F (far) is the maximum Z extent of the box.
-        """
-        ...
-
-    def setN(self, *args, **kwargs):
-        """
-        Set value for N position. N (near) is the minimum Z extent of the box.
-        """
-        ...
-
-    def setR(self, *args, **kwargs):
-        """
-        Set value for R extent. R (right) is the right extent of the box.
-        """
-        ...
-
-    def setT(self, *args, **kwargs):
-        """
-        Set value for T extent. T (top) is the maximum vertical extent of the box.
-        """
-        ...
-
-    def setX(self, *args, **kwargs):
-        """
-        Set value for X position. X is the minimum horizontal extent of the box.
-        """
-        ...
-
-    def setY(self, *args, **kwargs):
-        """
-        Set value for Y position. Y is the minimum vertical extent of the box.
-        """
-        ...
-
-    def t(self, *args, **kwargs):
-        """
-        Return value for T extent. T (top) is the maximum vertical extent of the box.
-        """
-        ...
-
-    def value(self, *args, **kwargs):
-        """
-        Return value for dimension 'i'
-        """
-        ...
-
-    def x(self, *args, **kwargs):
-        """
-        Return value for X position. X is the minimum horizontal extent of the box.
-        """
-        ...
-
-    def y(self, *args, **kwargs):
-        """
-        Return value for Y position. Y is the minimum vertical extent of the box.
-        """
-        ...
-
-    ...
-
-
-class Double_Knob(Array_Knob):
-    """
-    A knob which holds one or more double-precision floating point values.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class IArray_Knob(Array_Knob):
-    """
-    IArray_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def dimensions(self, *args, **kwargs):
-        """
-        Return number of dimensions.
-        """
-        ...
-
-    def height(self, *args, **kwargs):
-        """
-        Return height of the array.
-        """
-        ...
-
-    def value(self, *args, **kwargs):
-        """
-        Return value of the array at position (x, y).
-        """
-        ...
-
-    def width(self, *args, **kwargs):
-        """
-        Return width of the array.
-        """
-        ...
-
-    ...
-
-
-class Int_Knob(Array_Knob):
-    """
-    A knob which holds one or more integer values.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def setValue(self, val) -> bool:
-        """
-        Set the integer value of this knob.
-
-        @param val: The new value. Must be an integer.
-
-        @return: True if succeeded, False otherwise.
-        """
-        ...
-
-    def value(self) -> int:
-        """
-        Get the integer value of this knob.
-
-        @return: The value of this knob as an int.
-        """
-        ...
-
-    ...
-
-
-class Keyer_Knob(Array_Knob):
-    """
-    Keyer_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def names(self, n) -> six.binary_type:
-        """
-        @param n: The index of the name to return.
-
-        @return: The name at position n.
-        """
-        ...
-
-    def value(self, outputCtx, n) -> float:
-        """
-        Get the value of argument n.
-
-        @param outputCtx: The OutputContext to evaluate the argument in.
-
-        @param n: The index of the argument to get the value of.
-
-        @return: The value of argument n.
-        """
-        ...
-
-    ...
-
-
-class Range_Knob(Array_Knob):
-    """
-    A knob which the minimum and maximum for a range of values.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class Scale_Knob(Array_Knob):
-    """
-    Scale_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def names(self, n) -> six.binary_type:
-        """
-        Return name for dimension n. The argument n is an integer.
-        """
-        ...
-
-    def value(self, n, oc) -> float:
-        """
-        Return value for dimension n. The optional argument oc is an OutputContext.
-        """
-        ...
-
-    def x(self, oc) -> float:
-        """
-        Return value for x. The optional oc argument is an OutputContext
-        """
-        ...
-
-    def y(self, oc) -> float:
-        """
-        Return value for y. The optional oc argument is an OutputContext
-        """
-        ...
-
-    def z(self, oc) -> float:
-        """
-        Return value for z. The optional oc argument is an OutputContext
-        """
-        ...
-
-    ...
-
-
-class UV_Knob(Array_Knob):
-    """
-    A knob which describes a texture coordinate.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def names(self, n) -> six.binary_type:
-        """
-        Return name for dimension n. The argument n is an integer.
-        """
-        ...
-
-    ...
-
-
-class WH_Knob(Array_Knob):
-    """
-    A knob which holds width and height values.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def names(self, *args, **kwargs):
-        """
-        Return name for dimension 'i'.
-        """
-        ...
-
-    def x(self, *args, **kwargs):
-        """
-        Return value for X position.
-        """
-        ...
-
-    def x_at(self, *args, **kwargs):
-        """
-        Return value for X position at time 't'.
-        """
-        ...
-
-    def y(self, *args, **kwargs):
-        """
-        Return value for Y position.
-        """
-        ...
-
-    def y_at(self, *args, **kwargs):
-        """
-        Return value for Y position at time 't'.
-        """
-        ...
-
-    ...
-
-
-class XYZ_Knob(Array_Knob):
-    """
-    A knob which holds a 3D coordinate.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def names(self, n) -> six.binary_type:
-        """
-        Return name for dimension n. The argument n is an integer.
-        """
-        ...
-
-    def parent(self) -> XYZ_Knob:
-        """
-        Return parent.
-        """
-        ...
-
-    def value(self, n, oc) -> float:
-        """
-        Return value for dimension n. The optional argument oc is an OutputContext.
-        """
-        ...
-
-    def x(self, oc) -> float:
-        """
-        Return value for x. The optional oc argument is an OutputContext
-        """
-        ...
-
-    def y(self, oc) -> float:
-        """
-        Return value for y. The optional oc argument is an OutputContext
-        """
-        ...
-
-    def z(self, oc) -> float:
-        """
-        Return value for z. The optional oc argument is an OutputContext
-        """
-        ...
-
-    ...
-
-
-class XY_Knob(Array_Knob):
-    """
-    A knob which describes a 2D position.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def names(self, n) -> six.binary_type:
-        """
-        Return name for dimension n. The argument n is an integer.
-        """
-        ...
-
-    def value(self, n, oc) -> float:
-        """
-        Return value for dimension n. The optional argument oc is an OutputContext.
-        """
-        ...
-
-    def x(self, oc) -> float:
-        """
-        Return value for x. The optional oc argument is an OutputContext
-        """
-        ...
-
-    def y(self, oc) -> float:
-        """
-        Return value for y. The optional oc argument is an OutputContext
-        """
-        ...
-
-    ...
-
-
-class Axis_Knob(Knob):
-    """
-    A knob which descibes a 3D affine transformation, by combining rotations around each principal axis, scaling, translation, skew and a pivot point.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def pivot(self) -> XYZ_Knob:
-        """
-        Return pivot knob.
-        """
-        ...
-
-    def rotate(self) -> XYZ_Knob:
-        """
-        Return rotation knob.
-        """
-        ...
-
-    def scale(self) -> Scale_Knob:
-        """
-        Return scale knob.
-        """
-        ...
-
-    def skew(self) -> XYZ_Knob:
-        """
-        Return skew knob.
-        """
-        ...
-
-    def translate(self) -> XYZ_Knob:
-        """
-        Return translation knob.
-        """
-        ...
-
-    def uniformScale(self) -> Double_Knob:
-        """
-        Return uniform scale knob.
-        """
-        ...
-
-    def value(self) -> _nukemath.Matrix4:
-        """
-        Return the transform matrix formed by combining the input knob values for translate, rotate, scale, skew and pivot.
-        """
-        ...
-
-    ...
-
-
-class BeginTabGroup_Knob(Knob):
-    """
-    Begin a group of tabs. Subsequent knobs will all be part of the same tab group, until a matching EndTabGroup knob is found.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    ...
-
-
-class Channel_Knob(Knob):
-    """
-    A knob which lets you select a layer and enable or disable individual channels.
-
-    self.__init__(s, label, depth) -> None
-
-    Constructor.
-
-    @param s: name.
-
-    @param label: Optional name to appear in GUI. Defaults to the knob's name.
-
-    @param depth: Optional number of channels with zero being the Nuke default number of channels. Defaults to 0.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):...
-    @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, depth: int = ..., /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def channelSelector(self) -> bool:
-        """
-        """
-        ...
-
-    def checkMarks(self) -> bool:
-        """
-        """
-        ...
-
-    def depth(self) -> int:
-        """
-        Get the channel depth.
-
-        @return: The depth of the channel as an int.
-        """
-        ...
-
-    def enableChannel(self, name, b) -> None:
-        """
-        Enable or disable a channel.
-
-        @param name: The name of the channel.
-
-        @param b: True to enable the channel, False to disable it.
-
-        @return: None
-        """
-        ...
-
-    def inputKnob(self) -> bool:
-        """
-        """
-        ...
-
-    def inputNumber(self) -> int:
-        """
-        """
-        ...
-
-    def isChannelEnabled(self, name) -> bool:
-        """
-        Test if a channel is enabled.
-
-        @param name: The name of the channel.@return: True if the channel is enabled, False otherwise.
-        """
-        ...
-
-    def layerSelector(self) -> bool:
-        """
-        """
-        ...
-
-    def setEnable(self, name) -> None:
-        """
-        Enable a channel.
-
-        @param name: The name of the channel to enable.
-
-        @return: None
-        """
-        ...
-
-    def setInput(self, num) -> None:
-        """
-        Set the input number for this knob.@param num: The number of the new input.
-
-        @return: None
-        """
-        ...
-
-    def setValue(self, name) -> None:
-        """
-        Set the selected channel using the channel name.
-
-        @param name: The name of the new channel as a string.
-
-        @return: None
-
-        @raise ValueError exception if the channel doesn't exist.
-        """
-        ...
-
-    def value(self) -> six.binary_type:
-        """
-        Get the name of the selected channel.
-
-        @return: The name of the channel as a string.
-        """
-        ...
-
-    ...
-
-
-class ChannelMask_Knob(Channel_Knob):
-    """
-    ChannelMask_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class EndTabGroup_Knob(Knob):
-    """
-    End a group of tabs. This is only valid when a BeginTabGroup knob has already been used.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    ...
-
-
-class String_Knob(Knob):
-    """
-    A knob which holds a string value. Appears as a text entry field in a Node panel.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def getText(self, oc) -> six.binary_type:
-        """
-        Get the non-evaluated value of this knob - also see `value()`
-
-        @param oc: Optional parameter specifying the output context.
-
-        Return text associated with knob.
-        """
-        ...
-
-    def getValue(self, *args, **kwargs):
-        """
-        self.value(oc) -> str
-
-
-
-        Get the evaluated value of this knob as a string - also see `getText()`.
-
-        @param oc: Optional parameter specifying the output context.
-
-        @return: String value.
-        """
-        ...
-
-    def setText(self, *args, **kwargs):
-        """
-        self.setValue(val, view='default') -> None
-
-
-
-        Set value of knob.
-
-        @param val: The new value.
-
-        @param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
-
-        @return: None
-        """
-        ...
-
-    def setValue(self, val, view='default') -> None:
-        """
-        Set value of knob.
-
-        @param val: The new value.
-
-        @param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
-
-        @return: None
-        """
-        ...
-
-    def splitView(self, view) -> None:
-        """
-        Split the view away from the current knob value.
-
-        @param view: Optional view. Default is current view.
-
-        @return: None.
-        """
-        ...
-
-    def unsplitView(self, view) -> None:
-        """
-        Unsplit the view so that it shares a value with other views.
-
-        @param view: Optional view. Default is current view.
-
-        @return: None.
-        """
-        ...
-
-    def value(self, oc) -> six.binary_type:
-        """
-        Get the evaluated value of this knob as a string - also see `getText()`.
-
-        @param oc: Optional parameter specifying the output context.
-
-        @return: String value.
-        """
-        ...
-
-    ...
-
-
 class EvalString_Knob(String_Knob):
     """
     A string-valued knob which evaluates it's value as a TCL expression.
@@ -3178,6 +1945,25 @@ class EvalString_Knob(String_Knob):
         Evaluate the string, performing substitutions.
 
         @return: String.
+        """
+        ...
+
+    ...
+
+
+class Eyedropper_Knob(AColor_Knob):
+    """
+    Eyedropper_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
@@ -3267,28 +2053,9 @@ class File_Knob(EvalString_Knob):
     ...
 
 
-class Multiline_Eval_String_Knob(EvalString_Knob):
+class Format:
     """
-    A knob which evaluates it's string value as a TCL expression. It provides a multiline text area when it appears in a Node panel.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class Script_Knob(String_Knob):
-    """
-    A button which executes a TCL script.
+    A format.
     """
 
     __new__: ...
@@ -3296,146 +2063,156 @@ class Script_Knob(String_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        width: int,
+        height: int,
+        x: int,
+        y: int,
+        right: int,
+        top: int,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
-    def command(self) -> six.binary_type:
+    def add(self, name) -> None:
         """
-        Get the current command.
-
-        @return: The current command as a string, or None if there is no current command.
+        Add this instance to a list of "named" formats. The name parameter is the name of the list to add the format to.
         """
         ...
 
-    def execute(self) -> None:
+    def fromUV(self, u, v) -> typing.List[int]:
         """
-        Execute the command.
+        Transform a UV coordinate in the range 0-1 into the format's XY range. Returns a list containing the x and y coordinates.
 
-        @return: None.
-        """
-        ...
+        @param u: The U coordinate.
 
-    def setCommand(self, cmd) -> None:
-        """
-        Set the new command for this knob.
+        @param v: The V coordinate.
 
-        @param cmd: String containing a TCL command.
-
-        @return: None.
+        @return: [x, y]
         """
         ...
 
-    def setValue(self, cmd) -> None:
+    def height(self) -> int:
         """
-        Set the new command for this knob.
-
-        @param cmd: String containing a TCL command.
-
-        @return: None.
+        Return the height of image file in pixels.
         """
         ...
 
-    def value(self) -> six.binary_type:
+    def name(self) -> six.binary_type:
         """
-        Get the current command.
-
-        @return: The current command as a string, or None if there is no current command.
+        Returns the user-visible name of the format.
         """
         ...
 
-    ...
-
-
-class PyCustom_Knob(Script_Knob):
-    """
-    PyCustom_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def pixelAspect(self) -> float:
         """
-        x.__init__(...) initializes x; see help(type(x)) for signature
+        Returns the pixel aspect ratio (pixel width divided by pixel height) for this format.
         """
         ...
 
-    def getObject(self, *args, **kwargs):
+    def r(self) -> int:
         """
-        Returns the custom knob object as created in the by the 'command' argument to the PyCuston_Knob constructor.
-        """
-        ...
-
-    ...
-
-
-class PyScript_Knob(Script_Knob):
-    """
-    PyScript_Knob(name, label=None, command=None)
-
-    A button that executes a Python script.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):...
-    @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
+        Return the right edge of image file in pixels.
         """
         ...
 
-    ...
-
-
-class PythonCustomKnob(Script_Knob):
-    """
-    PythonCustomKnob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def scaled(self, sx, sy, tx, ty) -> Format:
         """
-        x.__init__(...) initializes x; see help(type(x)) for signature
+        Scale and translate this format by sx, sy, tx and ty.
+
+
+
+        @param sx: Scale factor in X.@param sy: Scale factor in Y.@param tx: Offset factor in X.@param ty: Offset factor in Y.@return: Format.
         """
         ...
 
-    def getObject(self, *args, **kwargs):
+    def setHeight(self, newHeight) -> None:
         """
-        Returns the custom knob object as created in the by the 'command' argument to the PyCuston_Knob constructor.
+        Set the height of image file in pixels. newHeight is the new height for the image; it should be a positive integer.
         """
         ...
 
-    ...
-
-
-class PythonKnob(String_Knob):
-    """
-    A string-valued knob which evaluates its value as a Python expression.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def setName(self, name) -> None:
         """
-        x.__init__(...) initializes x; see help(type(x)) for signature
+        Set name of this format. The name parameter is the new name for the format.
+        """
+        ...
+
+    def setPixelAspect(self, aspectRatio) -> None:
+        """
+        Set a new pixel aspect ratio for this format. The aspectRatio parameter is the new ratio, found by dividing the desired pixel width by the desired pixel height.
+        """
+        ...
+
+    def setR(self, newR) -> None:
+        """
+        Set the right edge of image file in pixels. newR is the new right edge for the image; it should be a positive integer.
+        """
+        ...
+
+    def setT(self, newT) -> None:
+        """
+        Set the top edge of image file in pixels. newY is the new top edge for the image; it should be a positive integer.
+        """
+        ...
+
+    def setWidth(self, newWidth) -> None:
+        """
+        Set the width of image file in pixels.newWidth is the new width for the image; it should be a positive integer.
+        """
+        ...
+
+    def setX(self, newX) -> None:
+        """
+        Set the left edge of image file in pixels. newX is the new left edge for the  image; it should be a positive integer.
+        """
+        ...
+
+    def setY(self, newY) -> None:
+        """
+        Set the bottom edge of image file in pixels. newY is the new bottom edge for the image; it should be a positive integer.
+        """
+        ...
+
+    def t(self) -> int:
+        """
+        Return the top edge of image file in pixels.
+        """
+        ...
+
+    def toUV(self, x, y) -> typing.List[int]:
+        """
+        Back-transform an XY coordinate in the format's space into UV space.
+
+
+
+        @param x: The X coordinate.
+
+        @param y: The Y coordinate.
+
+        @return: [u, v].
+        """
+        ...
+
+    def width(self) -> int:
+        """
+        Return the width of image file in pixels.
+        """
+        ...
+
+    def x(self) -> int:
+        """
+        Return the left edge of image file in pixels.
+        """
+        ...
+
+    def y(self) -> int:
+        """
+        Return the bottom edge of image file in pixels.
         """
         ...
 
@@ -3528,6 +2305,209 @@ class Format_Knob(Knob):
     ...
 
 
+class FrameRange:
+    """
+    A frame range, with an upper and lower bound and an increment.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @typing.overload
+    def __init__(self, first: int, last: int, increment: int) -> None: ...
+
+    @typing.overload
+    def __init__(self, s: six.binary_type) -> None:
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def __iter__(self) -> int:
+        """
+        x.__iter__() <==> iter(x)
+        """
+        ...
+
+    def __str__(self) -> six.binary_type:
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def first(self) -> int:
+        """
+        return the first frame of the range.
+        """
+        ...
+
+    def frames(self) -> int:
+        """
+        return the numbers of frames defined in the range.
+        """
+        ...
+
+    def getFrame(self, n: int) -> int:
+        """
+        return the frame according to the index, parameter n must be between 0 and frames().
+        """
+        ...
+
+    def increment(self) -> int:
+        """
+        return the increment between two frames.
+        """
+        ...
+
+    def isInRange(self, n: int) -> bool:
+        """
+        return if the frame is inside the range.
+        """
+        ...
+
+    def last(self) -> int:
+        """
+        return the last frame of the range.
+        """
+        ...
+
+    def maxFrame(self) -> int:
+        """
+        return the maximun frame define in the range.
+        """
+        ...
+
+    def minFrame(self) -> int:
+        """
+        return the minimun frame define in the range.
+        """
+        ...
+
+    def next(self) -> int:
+        """
+        x.next() -> the next value, or raise StopIteration
+        """
+        ...
+
+    def setFirst(self, n: int) -> None:
+        """
+        set the first frame of the range.
+        """
+        ...
+
+    def setIncrement(self, n: int) -> None:
+        """
+        set the increment between two frames.
+        """
+        ...
+
+    def setLast(self, n: int) -> None:
+        """
+        set the last frame of the range.
+        """
+        ...
+
+    def stepFrame(self) -> int:
+        """
+        return the absolute increment between two frames.
+        """
+        ...
+
+    ...
+
+
+class FrameRanges:
+    """
+    A sequence of FrameRange objects with convenience functions for iterating over all frames in all ranges.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, o: typing.Union[
+        six.binary_type,
+        typing.List[FrameRange],
+        typing.List[six.binary_type],
+        typing.List[int],
+    ]) -> None:
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def __iter__(self) -> FrameRange:
+        """
+        x.__iter__() <==> iter(x)
+        """
+        ...
+
+    def __str__(self) -> six.binary_type:
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def add(self, r: FrameRange) -> None:
+        """
+        add a new frame range.
+        """
+        ...
+
+    def clear(self) -> None:
+        """
+        reset all store frame ranges.
+        """
+        ...
+
+    def compact(self) -> None:
+        """
+        compact all the frame ranges.
+        """
+        ...
+
+    def getRange(self) -> FrameRange:
+        """
+        return a range from the list
+        """
+        ...
+
+    def maxFrame(self) -> int:
+        """
+        get maximun frame of all ranges.
+        """
+        ...
+
+    def minFrame(self) -> int:
+        """
+        get minimun frame of all ranges.
+        """
+        ...
+
+    def next(self) -> FrameRange:
+        """
+        x.next() -> the next value, or raise StopIteration
+        """
+        ...
+
+    def size(self) -> int:
+        """
+        return the ranges number.
+        """
+        ...
+
+    def toFrameList(self) -> typing.List[int]:
+        """
+        return a list of frames in a vector
+        """
+        ...
+
+    ...
+
+
 class FreeType_Knob(Knob):
     """
     A knob which holds a font family and style name.
@@ -3613,6 +2593,344 @@ class GeoSelect_Knob(Knob):
     ...
 
 
+class Gizmo(Group):
+    def __getitem__(self, *args, **kwargs):
+        """
+        x.__getitem__(y) <==> x[y]
+        """
+        ...
+
+    def __len__(self, *args, **kwargs):
+        """
+        x.__len__() <==> len(x)
+        """
+        ...
+
+    def __repr__(self, *args, **kwargs):
+        """
+        x.__repr__() <==> repr(x)
+        """
+        ...
+
+    def __str__(self, *args, **kwargs):
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def command(self) -> six.binary_type:
+        """
+        Gizmo command.
+
+        @return: String.
+        """
+        ...
+
+    def filename(self) -> six.binary_type:
+        """
+        Gizmo filename.
+
+        @return: String.
+        """
+        ...
+
+    def makeGroup(self) -> Group:
+        """
+        Creates a Group node copy of the Gizmo node.
+
+        @return: Group.
+        """
+        ...
+
+    ...
+
+
+class GlobalsEnvironment:
+    """
+    Dictionary-style object holding global Nuke state.
+
+    Example:
+
+    nuke.env['threads'] = 4
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __delitem__(self, *args, **kwargs):
+        """
+        x.__delitem__(y) <==> del x[y]
+        """
+        ...
+
+    def __getitem__(self, *args, **kwargs):
+        """
+        x.__getitem__(y) <==> x[y]
+        """
+        ...
+
+    def __len__(self, *args, **kwargs):
+        """
+        x.__len__() <==> len(x)
+        """
+        ...
+
+    def __repr__(self, *args, **kwargs):
+        """
+        x.__repr__() <==> repr(x)
+        """
+        ...
+
+    def __setitem__(self, *args, **kwargs):
+        """
+        x.__setitem__(i, y) <==> x[i]=y
+        """
+        ...
+
+    ...
+
+
+class Group(Node):
+    def __getitem__(self, *args, **kwargs):
+        """
+        x.__getitem__(y) <==> x[y]
+        """
+        ...
+
+    def __len__(self) -> int:
+        """
+        x.__len__() <==> len(x)
+        """
+        ...
+
+    def __repr__(self) -> six.binary_type:
+        """
+        x.__repr__() <==> repr(x)
+        """
+        ...
+
+    def __str__(self) -> six.binary_type:
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def begin(self) -> Group:
+        """
+        All python code that follows will be executed in the context of node. All names are evaluated relative to this object. Must be paired with end.
+
+        @return: Group.
+        """
+        ...
+
+    def connectSelectedNodes(self, backward, inputA) -> None:
+        """
+        Connect the selected nodes.
+
+        @param backward.
+
+        @param inputA.
+
+        @return: None.
+        """
+        ...
+
+    def end(self) -> None:
+        """
+        All python code that follows will no longer be executed in the context of node. Must be paired with begin.
+
+        @return: None.
+        """
+        ...
+
+    def expand(self) -> None:
+        """
+        Moves all nodes from the group node into its parent group, maintaining node input
+
+        and output connections, and deletes the group.
+
+        Returns the nodes that were moved, which will also be selected.
+
+        @return: None.
+        """
+        ...
+
+    def node(self, s) -> typing.Optional[Node]:
+        """
+        Locate a node by name.
+
+        @param s: A string.
+
+        @return: Node with name s or None.
+        """
+        ...
+
+    def nodes(self) -> typing.List[Node]:
+        """
+        List of nodes in group.
+
+        @return: List of nodes
+        """
+        ...
+
+    def numNodes(self) -> int:
+        """
+        Number of nodes in group.
+
+        @return: Number of nodes
+        """
+        ...
+
+    def output(self) -> Node or None:
+        """
+        Return output node of group.
+
+        @return: Node or None.
+        """
+        ...
+
+    def run(self, callable) -> ...:
+        """
+        Execute in the context of node. All names are evaluated relative to this object.
+
+        @param callable: callable to execute.
+
+        @return: Result of callable.
+        """
+        ...
+
+    def selectedNode(self) -> Node or None:
+        """
+        Returns the node the user is most likely thinking about. This is the last node the user clicked on, if it is selected.  Otherwise it is an 'output' (one with no selected outputs) of the set of selected nodes. If no nodes are selected then None is returned.
+
+        @return: Node or None.
+        """
+        ...
+
+    def selectedNodes(self) -> Node or None:
+        """
+        Selected nodes.
+
+        @return: Node or None.
+        """
+        ...
+
+    def splaySelectedNodes(self, backward, inputA) -> None:
+        """
+        Splay the selected nodes.
+
+        @param backward.
+
+        @param inputA.
+
+        @return: None.
+        """
+        ...
+
+    ...
+
+
+class Hash:
+    """
+    A hash value for any number of objects.
+
+    The append() method is used to add objects to the hash; the value will be recomputed efficiently as each new object is added.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __delattr__(self, *args, **kwargs):
+        """
+        x.__delattr__('name') <==> del x.name
+        """
+        ...
+
+    def __eq__(self, *args, **kwargs):
+        """
+        x.__eq__(y) <==> x==y
+        """
+        ...
+
+    def __ge__(self, *args, **kwargs):
+        """
+        x.__ge__(y) <==> x>=y
+        """
+        ...
+
+    def __getattribute__(self, *args, **kwargs):
+        """
+        x.__getattribute__('name') <==> x.name
+        """
+        ...
+
+    def __gt__(self, *args, **kwargs):
+        """
+        x.__gt__(y) <==> x>y
+        """
+        ...
+
+    def __hash__(self, *args, **kwargs):
+        """
+        x.__hash__() <==> hash(x)
+        """
+        ...
+
+    def __le__(self, *args, **kwargs):
+        """
+        x.__le__(y) <==> x<=y
+        """
+        ...
+
+    def __lt__(self, *args, **kwargs):
+        """
+        x.__lt__(y) <==> x<y
+        """
+        ...
+
+    def __ne__(self, *args, **kwargs):
+        """
+        x.__ne__(y) <==> x!=y
+        """
+        ...
+
+    def __setattr__(self, *args, **kwargs):
+        """
+        x.__setattr__('name', value) <==> x.name = value
+        """
+        ...
+
+    def append(self, *args, **kwargs):
+        """
+        Add another value to the hash.
+        """
+        ...
+
+    def getHash(self, *args, **kwargs):
+        """
+        Get the current value of the hash.
+        """
+        ...
+
+    def reset(self, *args, **kwargs):
+        """
+        Reset the hash.
+        """
+        ...
+
+    def setHash(self, *args, **kwargs):
+        """
+        Set the current value of the hash.
+        """
+        ...
+
+    ...
+
+
 class Help_Knob(Knob):
     """
     Help_Knob
@@ -3645,6 +2963,560 @@ class Histogram_Knob(Knob):
     def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class IArray_Knob(Array_Knob):
+    """
+    IArray_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def dimensions(self, *args, **kwargs):
+        """
+        Return number of dimensions.
+        """
+        ...
+
+    def height(self, *args, **kwargs):
+        """
+        Return height of the array.
+        """
+        ...
+
+    def value(self, *args, **kwargs):
+        """
+        Return value of the array at position (x, y).
+        """
+        ...
+
+    def width(self, *args, **kwargs):
+        """
+        Return width of the array.
+        """
+        ...
+
+    ...
+
+
+class Info:
+    """
+    An info object stores x, y, w and h values.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def h(self) -> float:
+        """
+        Return height.
+        """
+        ...
+
+    def w(self) -> float:
+        """
+        Return width.
+        """
+        ...
+
+    def x(self) -> float:
+        """
+        Return left edge.
+        """
+        ...
+
+    def y(self) -> float:
+        """
+        Return the bottom edge.
+        """
+        ...
+
+    ...
+
+
+class Int_Knob(Array_Knob):
+    """
+    A knob which holds one or more integer values.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def setValue(self, val) -> bool:
+        """
+        Set the integer value of this knob.
+
+        @param val: The new value. Must be an integer.
+
+        @return: True if succeeded, False otherwise.
+        """
+        ...
+
+    def value(self) -> int:
+        """
+        Get the integer value of this knob.
+
+        @return: The value of this knob as an int.
+        """
+        ...
+
+    ...
+
+
+class Keyer_Knob(Array_Knob):
+    """
+    Keyer_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def names(self, n) -> six.binary_type:
+        """
+        @param n: The index of the name to return.
+
+        @return: The name at position n.
+        """
+        ...
+
+    def value(self, outputCtx, n) -> float:
+        """
+        Get the value of argument n.
+
+        @param outputCtx: The OutputContext to evaluate the argument in.
+
+        @param n: The index of the argument to get the value of.
+
+        @return: The value of argument n.
+        """
+        ...
+
+    ...
+
+
+class Knob:
+    """
+    A modifiable control that appears (unless hidden) in the panel for a node.
+    This is a base class that specific knob types inherit from.
+
+    Knobs can be animated, have expressions, be disabled or hidden and more.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def Class(self) -> six.binary_type:
+        """
+        Class name.
+        """
+        ...
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        """
+        ...
+
+    def clearAnimated(self, *args, **kwargs):
+        """
+        Clear animation for channel 'c'. Return True if successful.
+        """
+        ...
+
+    def clearFlag(self, f) -> None:
+        """
+        Clear flag.
+
+        @param f: Flag.
+
+        @return: None.
+        """
+        ...
+
+    def critical(self, message) -> None:
+        """
+        @param message: message to put the knob in error, and do a popup.
+
+        @return: None.
+        """
+        ...
+
+    def debug(self, message) -> None:
+        """
+        @param message: message to put out to the error console, attached to the knob, if the verbosity level is set high enough.
+
+        @return: None.
+        """
+        ...
+
+    def enabled(self) -> bool:
+        """
+        True if the knob is enabled, False if it's disabled.
+        """
+        ...
+
+    def error(self, message) -> None:
+        """
+        @param message: message to put the knob in error.
+
+        @return: None.
+        """
+        ...
+
+    def fromScript(self, *args, **kwargs):
+        """
+        Initialise from script.
+        """
+        ...
+
+    def fullyQualifiedName(self, channel=-1) -> six.binary_type:
+        """
+        Returns the fully-qualified name of the knob within the node. This can be useful for expression linking.
+
+
+
+        @param channel: Optional parameter, specifies the channel number of the sub-knob (for example, channels of  0 and 1 would refer to the x and y of a XY_Knob respectively), leave blank or set to -1 to get the  qualified name of the knob only.
+
+        @return: The string of the qualified knob or sub-knob, which can be used directly in expression links.
+        """
+        ...
+
+    def getDerivative(self, *args, **kwargs):
+        """
+        Return derivative at time 't' for channel 'c'.
+        """
+        ...
+
+    def getFlag(self, f) -> bool:
+        """
+        Returns whether the input flag is set.
+
+        @param f: Flag.
+
+        @return: True if set, False otherwise.
+        """
+        ...
+
+    def getIntegral(self, *args, **kwargs):
+        """
+        Return integral at the interval [t1, t2] for channel 'c'.
+        """
+        ...
+
+    def getKeyIndex(self, *args, **kwargs):
+        """
+        Return keyframe index at time 't' for channel 'c'.
+        """
+        ...
+
+    def getKeyList(self, *args, **kwargs):
+        """
+        Get all unique keys on the knob.  Returns list.
+        """
+        ...
+
+    def getKeyTime(self, *args, **kwargs):
+        """
+        Return index of the keyframe at time 't' for channel 'c'.
+        """
+        ...
+
+    def getNthDerivative(self, *args, **kwargs):
+        """
+        Return nth derivative at time 't' for channel 'c'.
+        """
+        ...
+
+    def getNumKeys(self, *args, **kwargs):
+        """
+        Return number of keyframes for channel 'c'.
+        """
+        ...
+
+    def getValue(self, *args, **kwargs):
+        """
+        Return value at the current frame for channel 'c'.
+        """
+        ...
+
+    def getValueAt(self, *args, **kwargs):
+        """
+        Return value at time 't' for channel 'c'.
+        """
+        ...
+
+    def hasExpression(self, index=-1) -> bool:
+        """
+        Return True if animation at index 'index' has an expression.
+
+        @param index: Optional index parameter. Defaults to -1 if not specified. This can be specified as a keyword parameter if desired.
+
+        @return: True if has expression, False otherwise.
+        """
+        ...
+
+    def isAnimated(self, *args, **kwargs):
+        """
+        Return True if channel 'c' is animated.
+        """
+        ...
+
+    def isKey(self, *args, **kwargs):
+        """
+        Return True if there is a keyframe at the current frame for channel 'c'.
+        """
+        ...
+
+    def isKeyAt(self, *args, **kwargs):
+        """
+        Return True if there is a keyframe at time 't' for channel 'c'.
+        """
+        ...
+
+    def label(self) -> six.binary_type:
+        """
+        label.
+        """
+        ...
+
+    def name(self) -> six.binary_type:
+        """
+        name.
+        """
+        ...
+
+    def node(self) -> Node:
+        """
+        Return the node that this knob belongs to. If the node has been cloned, we'll always return a reference to the original.
+
+        @return: The node which owns this knob, or None if the knob has no owner yet.
+        """
+        ...
+
+    def removeKey(self, *args, **kwargs):
+        """
+        Remove key for channel 'c'. Return True if successful.
+        """
+        ...
+
+    def removeKeyAt(self, *args, **kwargs):
+        """
+        Remove key at time 't' for channel 'c'. Return True if successful.
+        """
+        ...
+
+    def setAnimated(self, *args, **kwargs):
+        """
+        Set channel 'c' to be animated.
+        """
+        ...
+
+    def setEnabled(self, enabled) -> None:
+        """
+        Enable or disable the knob.
+
+        @param enabled: True to enable the knob, False to disable it.
+        """
+        ...
+
+    def setExpression(self, expression, channel=-1, view=None) -> bool:
+        """
+        Set the expression for a knob. You can optionally specify a channel to set the expression for.
+
+
+
+        @param expression: The new expression for the knob. This should be a string.
+
+        @param channel: Optional parameter, specifying the channel to set the expression for. This should be an integer.
+
+        @param view: Optional view parameter. Without, this command will set the expression for the current view theinterface is displaying. Can be the name of the view or the index.
+
+        @return: True if successful, False if not.
+        """
+        ...
+
+    def setFlag(self, f) -> None:
+        """
+        Logical OR of the argument and existing knob flags.
+
+        @param f: Flag.
+
+        @return: None.
+        """
+        ...
+
+    def setLabel(self, s) -> None:
+        """
+        @param s: New label.
+
+        @return: None.
+        """
+        ...
+
+    def setName(self, s) -> None:
+        """
+        @param s: New name.
+
+        @return: None.
+        """
+        ...
+
+    def setTooltip(self, s) -> None:
+        """
+        @param s: New tooltip.
+
+        @return: None.
+        """
+        ...
+
+    def setValue(self, val, chan: six.binary_type = ...) -> bool:
+        """
+        Sets the value 'val' at channel 'chan'.
+
+        @return: True if successful, False if not.
+        """
+        ...
+
+    def setValueAt(self, val, time, chan) -> bool:
+        """
+        Sets the value 'val' at channel 'chan' for time 'time'.
+
+        @return: True if successful, False if not.
+        """
+        ...
+
+    def setVisible(self, visible) -> None:
+        """
+        Show or hide the knob.
+
+        @param visible: True to show the knob, False to hide it.
+        """
+        ...
+
+    def toScript(self, quote, context=...) -> six.binary_type:
+        """
+        Return the value of the knob in script syntax.
+
+        Pass True for quote to return results quoted in {}.
+
+        Pass None for context to get results for all views and key times (as stored in a .nk file).
+        """
+        ...
+
+    def tooltip(self) -> six.binary_type:
+        """
+        tooltip.
+        """
+        ...
+
+    def value(self, *args, **kwargs):
+        """
+        Return value at the current frame for channel 'c'.
+        """
+        ...
+
+    def visible(self) -> bool:
+        """
+        True if the knob is visible, False if it's hidden.
+        """
+        ...
+
+    def warning(self, message) -> None:
+        """
+        @param message: message to put a warning on the knob.
+
+        @return: None.
+        """
+        ...
+
+    ...
+
+
+class KnobType:
+    """
+    Constants for use in parameters which require a knob type.
+    """
+
+    ...
+
+
+class Layer:
+    """
+    A layer is a set of channels.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def channels(self) -> typing.List[six.text_type]:
+        """
+        Get a list of the channels in this layer.
+
+        @return: A list of strings, where each string is the name of a channel in this layer.
+        """
+        ...
+
+    def name(self) -> six.binary_type:
+        """
+        Get the layer name.
+
+        @return: The layer name, as a string.
+        """
+        ...
+
+    def setName(self, newName) -> None:
+        """
+        Set the name of this layer.
+
+        @param newName: The new name for this layer.
+        """
+        ...
+
+    def visible(self) -> bool:
+        """
+        Check whether the layer is visible.
+
+        @return: True if visible, False if not.
         """
         ...
 
@@ -3703,6 +3575,62 @@ class Link_Knob(Knob):
     ...
 
 
+class LinkableKnobInfo:
+    """
+    A linkable knob description. Holds a reference to a knob that may be linked to, as well as an indication whether this knob should be used as part of an absolute or relative expression and whether it is enabled.
+    """
+
+    def __delattr__(self, *args, **kwargs):
+        """
+        x.__delattr__('name') <==> del x.name
+        """
+        ...
+
+    def __getattribute__(self, *args, **kwargs):
+        """
+        x.__getattribute__('name') <==> x.name
+        """
+        ...
+
+    def __setattr__(self, *args, **kwargs):
+        """
+        x.__setattr__('name', value) <==> x.name = value
+        """
+        ...
+
+    def absolute(self) -> bool:
+        """
+        Returns whether the values of this knob should be treated as absolute or relative. This may be useful for positions.
+        """
+        ...
+
+    def displayName(self) -> six.binary_type:
+        """
+        Returns the custom display name that will appear in Link-to menus.
+        """
+        ...
+
+    def enabled(self) -> bool:
+        """
+        Returns whether the knob is currently enabled or not.
+        """
+        ...
+
+    def indices(self) -> list:
+        """
+        Returns a list of the knob channels that should be used with this linkable knob.
+        """
+        ...
+
+    def knob(self) -> Knob:
+        """
+        Returns the knob that may be linked to.
+        """
+        ...
+
+    ...
+
+
 class LookupCurves_Knob(Knob):
     """
     Provide a set of user-editable lookup curves.
@@ -3750,6 +3678,414 @@ class LookupCurves_Knob(Knob):
         @param expr: The new expression for the curve.
 
         @return: None
+        """
+        ...
+
+    ...
+
+
+class Lut:
+    """
+    Lut
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def fromByte(self, float) -> float:
+        """
+        Converts byte values in the range 0-255 to floating point.
+        """
+        ...
+
+    def fromByteSingle(self, *args, **kwargs):
+        """
+        self.fromByte(float) -> float.
+
+        Converts byte values in the range 0-255 to floating point.
+        """
+        ...
+
+    def fromFloat(self, src, alpha) -> typing.List[float]:
+        """
+        Convert a sequence of floating-point values to from_byte(x*255).
+        Alpha is an optional argument and if present unpremultiply by alpha, convert, and then multiply back.
+        """
+        ...
+
+    def isLinear(self) -> bool:
+        """
+        True if toByte(x) appears to return x*255, False otherwise
+        """
+        ...
+
+    def isZero(self) -> bool:
+        """
+        True if toByte(0) returns a value <= 0, False otherwise
+        """
+        ...
+
+    def toByte(self, float) -> float:
+        """
+        Converts floating point values to byte values in the range 0-255.
+        """
+        ...
+
+    def toByteSingle(self, *args, **kwargs):
+        """
+        self.toByte(float) -> float.
+
+        Converts floating point values to byte values in the range 0-255.
+        """
+        ...
+
+    def toFloat(self, src, alpha) -> typing.List[float]:
+        """
+        Convert a sequence of floating-point values to to_byte(x)/255.
+        Alpha is an optional argument and if present unpremultiply by alpha, convert, and then multiply back.
+        """
+        ...
+
+    ...
+
+
+class Menu(MenuItem):
+    """
+    Menu
+    """
+
+    def addAction(self, action) -> bool:
+        """
+        Adds the QAction to the menu.
+        """
+        ...
+
+    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
+        """
+        Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
+
+        Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
+
+
+
+        Example:
+
+        menubar = nuke.menu('Nuke')
+
+        fileMenu = menubar.findItem('File')
+
+        fileMenu.addCommand('NewCommand', 'print 10', shortcut='t')
+
+
+
+        @param name: The name for the menu/toolbar item. The name may contain submenu names delimited by '/' or '', and submenus are created as needed.
+
+        @param command: Optional. The command to add to the menu/toolbar. This can be a string to evaluate or a Python Callable (function, method, etc) to run.
+
+        @param shortcut: Optional. The keyboard shortcut for the command, such as 'R', 'F5' or 'Ctrl-H'. Note that this overrides pre-existing other uses for the shortcut.
+
+        @param icon: Optional. An icon for the command. This should be a path to an icon in the nuke.pluginPath() directory. If the icon is not specified, Nuke will automatically try to find an icon with the name argument and .png appended to it.
+
+        @param tooltip: Optional. The tooltip text, displayed on mouseover for toolbar buttons.
+
+        @param index: Optional. The position to insert the new item in, in the menu/toolbar. This defaults to last in the menu/toolbar.
+
+        @param readonly: Optional. True/False for whether the item should be available when the menu is invoked in a read-only context.
+
+        @param shortcutContext: Optional. Sets the shortcut context (0==Window, 1=Application, 2=DAG).
+
+        @return: The menu/toolbar item that was added to hold the command.
+        """
+        ...
+
+    def addMenu(self, **kwargs) -> Menu:
+        """
+        Add a new submenu.
+
+        @param **kwargs The following keyword arguments are accepted:
+
+                        name      The name for the menu/toolbar item
+
+                        icon      An icon for the menu. Loaded from the nuke search path.
+
+                        tooltip   The tooltip text.
+
+                        index     The position to insert the menu in. Use -1 to add to the end of the menu.
+
+        @return: The submenu that was added.
+        """
+        ...
+
+    def addSeparator(self, **kwargs) -> ...:
+        """
+        Add a separator to this menu/toolbar.
+
+        @param **kwargs The following keyword arguments are accepted:
+
+        index     The position to insert the new separator in, in the menu/toolbar.
+
+        @return: The separator that was created.
+        """
+        ...
+
+    def clearMenu(self, *args, **kwargs):
+        """
+        self.clearMenu() 
+
+        Clears a menu.
+
+        @param **kwargs The following keyword arguments are accepted:
+
+                        name      The name for the menu/toolbar item
+
+        @return: true if cleared, false if menu not found
+        """
+        ...
+
+    def findItem(self, name) -> Menu or None:
+        """
+        Finds a submenu or command with a particular name.
+
+        @param name: The name to search for.
+
+        @return: The submenu or command we found, or None if we could not find anything.
+        """
+        ...
+
+    def items(self) -> None:
+        """
+        Returns a list of sub menu items.
+        """
+        ...
+
+    def menu(self, name) -> Menu or None:
+        """
+        Finds a submenu or command with a particular name.
+
+        @param name: The name to search for.
+
+        @return: The submenu or command we found, or None if we could not find anything.
+        """
+        ...
+
+    def name(self) -> six.binary_type:
+        """
+        Returns the name of the menu item.
+        """
+        ...
+
+    def removeItem(self, name) -> None:
+        """
+        Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
+
+        @param name: The name to remove for.
+
+        @return: true if removed, false if menu not found
+        """
+        ...
+
+    def updateMenuItems(self) -> None:
+        """
+        Updates menu items' states. Call on about to show menu.
+        """
+        ...
+
+    ...
+
+
+class MenuBar:
+    """
+    MenuBar
+    """
+
+    def addAction(self, action) -> bool:
+        """
+        Adds the QAction to the menu.
+        """
+        ...
+
+    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
+        """
+        Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
+        Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
+
+        Example:
+        menubar = nuke.menu('Nuke')
+        fileMenu = menubar.findItem('File')
+        fileMenu.addCommand('NewCommand', 'print 10', shortcut='t')
+
+        @param name: The name for the menu/toolbar item. The name may contain submenu names delimited by '/' or '', and submenus are created as needed.
+        @param command: Optional. The command to add to the menu/toolbar. This can be a string to evaluate or a Python Callable (function, method, etc) to run.
+        @param shortcut: Optional. The keyboard shortcut for the command, such as 'R', 'F5' or 'Ctrl-H'. Note that this overrides pre-existing other uses for the shortcut.
+        @param icon: Optional. An icon for the command. This should be a path to an icon in the nuke.pluginPath() directory. If the icon is not specified, Nuke will automatically try to find an icon with the name argument and .png appended to it.
+        @param tooltip: Optional. The tooltip text, displayed on mouseover for toolbar buttons.
+        @param index: Optional. The position to insert the new item in, in the menu/toolbar. This defaults to last in the menu/toolbar.
+        @param readonly: Optional. True/False for whether the item should be available when the menu is invoked in a read-only context.
+        @param shortcutContext: Optional. Sets the shortcut context (0==Window, 1=Application, 2=DAG).
+        @return: The menu/toolbar item that was added to hold the command.
+        """
+        ...
+
+    def addMenu(self, **kwargs) -> Menu:
+        """
+        Add a new submenu.
+        @param **kwargs The following keyword arguments are accepted:
+                        name      The name for the menu/toolbar item
+                        icon      An icon for the menu. Loaded from the nuke search path.
+                        tooltip   The tooltip text.
+                        index     The position to insert the menu in. Use -1 to add to the end of the menu.
+        @return: The submenu that was added.
+        """
+        ...
+
+    def addSeparator(self, **kwargs) -> ...:
+        """
+        Add a separator to this menu/toolbar.
+        @param **kwargs The following keyword arguments are accepted:
+        index     The position to insert the new separator in, in the menu/toolbar.
+        @return: The separator that was created.
+        """
+        ...
+
+    def clearMenu(self, *args, **kwargs):
+        """
+        self.clearMenu()
+        Clears a menu.
+        @param **kwargs The following keyword arguments are accepted:
+                        name      The name for the menu/toolbar item
+        @return: true if cleared, false if menu not found
+        """
+        ...
+
+    def findItem(self, name) -> Menu or None:
+        """
+        Finds a submenu or command with a particular name.
+        @param name: The name to search for.
+        @return: The submenu or command we found, or None if we could not find anything.
+        """
+        ...
+
+    def items(self) -> None:
+        """
+        Returns a list of sub menu items.
+        """
+        ...
+
+    def menu(self, name) -> Menu or None:
+        """
+        Finds a submenu or command with a particular name.
+        @param name: The name to search for.
+        @return: The submenu or command we found, or None if we could not find anything.
+        """
+        ...
+
+    def name(self) -> six.binary_type:
+        """
+        Returns the name of the menu item.
+        """
+        ...
+
+    def removeItem(self, name) -> None:
+        """
+        Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
+        @param name: The name to remove for.
+        @return: true if removed, false if menu not found
+        """
+        ...
+
+    def updateMenuItems(self) -> None:
+        """
+        Updates menu items' states. Call on about to show menu.
+        """
+        ...
+
+    ...
+
+
+class MenuItem:
+    """
+    MenuItem
+    """
+
+    def action(self) -> None:
+        """
+        Get the action associated with this menu item.
+        """
+        ...
+
+    def icon(self) -> six.binary_type:
+        """
+        Returns the name of the icon on this menu item as path of the icon.
+        """
+        ...
+
+    def invoke(self) -> None:
+        """
+        Perform the action associated with this menu item.
+        """
+        ...
+
+    def name(self) -> six.binary_type:
+        """
+        Returns the name of the menu item.
+        """
+        ...
+
+    def script(self) -> six.binary_type:
+        """
+        Returns the script that gets executed for this menu item.
+        """
+        ...
+
+    def setEnabled(self, enabled, recursive) -> None:
+        """
+        Enable or disable the item.
+
+        @param enabled: True to enable the object; False to disable it.
+
+        @param recursive: True to also setEnabled on submenu actions.
+        """
+        ...
+
+    def setIcon(self, icon) -> None:
+        """
+        Set the icon on this menu item.
+
+        @param icon: the new icon as a path
+        """
+        ...
+
+    def setScript(self, script) -> None:
+        """
+        Set the script to be executed for this menu item.
+
+        Note: To call a python script file, you can use the execfile() function. i.e:
+
+        menu.setScript("execfile('script.py')")
+        """
+        ...
+
+    def setShortcut(self, keySequence) -> None:
+        """
+        Set the keyboard shortcut on this menu item.
+
+        @param keySequence: the new shortcut in PortableText format, e.g. "Ctrl+Shift+P"
+        """
+        ...
+
+    def setVisible(self, visible) -> None:
+        """
+        Show or hide the item.
+
+        @param visible: True to show the object; False to hide it.
+        """
+        ...
+
+    def shortcut(self) -> six.binary_type:
+        """
+        Returns the keyboard shortcut on this menu item. The format of this is the PortableText format. It will return a string such as "Ctrl+Shift+P". Note that on Mac OS X the Command key is equivalent to Ctrl.
         """
         ...
 
@@ -3820,133 +4156,9 @@ class MultiView_Knob(Knob):
     ...
 
 
-class Obsolete_Knob(Knob):
+class Multiline_Eval_String_Knob(EvalString_Knob):
     """
-    For internal use only.
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class Password_Knob(Knob):
-    """
-    A knob which holds a password string value. Appears as a password entry field in a Node panel.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def getText(self) -> six.binary_type:
-        """
-        Return text associated with knob.
-        """
-        ...
-
-    def setValue(self, val, view='default') -> None:
-        """
-        Set value of knob.
-
-        @param val: The new value.
-
-        @param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
-
-        @return: None
-        """
-        ...
-
-    def value(self) -> six.binary_type:
-        """
-        Get the value of this knob as a string.
-
-        @return: String value.
-        """
-        ...
-
-    ...
-
-
-class Tab_Knob(Knob):
-    """
-    Groups subsequent knobs onto a tab.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    @typing.overload
-    def __init__(self, name: six.binary_type, /, ): ...
-    @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
-    @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, flags: int = ..., /, ):
-        ...
-    ...
-
-
-class Text_Knob(Knob):
-    """
-    A knob which holds a string value.
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    ...
-
-
-class Transform2d_Knob(Knob):
-    """
-    Transform2d_Knob
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        x.__init__(...) initializes x; see help(type(x)) for signature
-        """
-        ...
-
-    def value(self, oc) -> ...:
-        """
-        Return transformation matrix. The argument oc is an OutputContext. Both arguments are optional.
-        """
-        ...
-
-    ...
-
-
-class ViewView_Knob(Knob):
-    """
-    ViewView_Knob
+    A knob which evaluates it's string value as a TCL expression. It provides a multiline text area when it appears in a Node panel.
     """
 
     __new__: ...
@@ -4744,147 +4956,498 @@ class Node:
     ...
 
 
-class Group(Node):
-    def __getitem__(self, *args, **kwargs):
+class NodeConstructor:
+    """
+    NodeConstructor
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __call__(self, *args, **kwargs) -> Node:
         """
-        x.__getitem__(y) <==> x[y]
-        """
-        ...
-
-    def __len__(self) -> int:
-        """
-        x.__len__() <==> len(x)
-        """
-        ...
-
-    def __repr__(self) -> six.binary_type:
-        """
-        x.__repr__() <==> repr(x)
-        """
-        ...
-
-    def __str__(self) -> six.binary_type:
-        """
-        x.__str__() <==> str(x)
-        """
-        ...
-
-    def begin(self) -> Group:
-        """
-        All python code that follows will be executed in the context of node. All names are evaluated relative to this object. Must be paired with end.
-
-        @return: Group.
-        """
-        ...
-
-    def connectSelectedNodes(self, backward, inputA) -> None:
-        """
-        Connect the selected nodes.
-
-        @param backward.
-
-        @param inputA.
-
-        @return: None.
-        """
-        ...
-
-    def end(self) -> None:
-        """
-        All python code that follows will no longer be executed in the context of node. Must be paired with begin.
-
-        @return: None.
-        """
-        ...
-
-    def expand(self) -> None:
-        """
-        Moves all nodes from the group node into its parent group, maintaining node input
-
-        and output connections, and deletes the group.
-
-        Returns the nodes that were moved, which will also be selected.
-
-        @return: None.
-        """
-        ...
-
-    def node(self, s) -> typing.Optional[Node]:
-        """
-        Locate a node by name.
-
-        @param s: A string.
-
-        @return: Node with name s or None.
-        """
-        ...
-
-    def nodes(self) -> typing.List[Node]:
-        """
-        List of nodes in group.
-
-        @return: List of nodes
-        """
-        ...
-
-    def numNodes(self) -> int:
-        """
-        Number of nodes in group.
-
-        @return: Number of nodes
-        """
-        ...
-
-    def output(self) -> Node or None:
-        """
-        Return output node of group.
-
-        @return: Node or None.
-        """
-        ...
-
-    def run(self, callable) -> ...:
-        """
-        Execute in the context of node. All names are evaluated relative to this object.
-
-        @param callable: callable to execute.
-
-        @return: Result of callable.
-        """
-        ...
-
-    def selectedNode(self) -> Node or None:
-        """
-        Returns the node the user is most likely thinking about. This is the last node the user clicked on, if it is selected.  Otherwise it is an 'output' (one with no selected outputs) of the set of selected nodes. If no nodes are selected then None is returned.
-
-        @return: Node or None.
-        """
-        ...
-
-    def selectedNodes(self) -> Node or None:
-        """
-        Selected nodes.
-
-        @return: Node or None.
-        """
-        ...
-
-    def splaySelectedNodes(self, backward, inputA) -> None:
-        """
-        Splay the selected nodes.
-
-        @param backward.
-
-        @param inputA.
-
-        @return: None.
+        x.__call__(...) <==> x(...)
         """
         ...
 
     ...
 
 
-class Gizmo(Group):
+class Nodes:
+    """
+    Nodes
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __getattribute__(self, name: six.binary_type) -> NodeConstructor:
+        ...
+    ...
+
+
+class Obsolete_Knob(Knob):
+    """
+    For internal use only.
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class OneView_Knob(Enumeration_Knob):
+    """
+    OneView_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    ...
+
+
+class OutputContext:
+    """
+    Describes a context in which expressions can be evaluated.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def frame(self) -> float:
+        """
+        Return frame value.
+        """
+        ...
+
+    def setFrame(self, f) -> bool:
+        """
+        Set frame value. The f argument is a float.
+        """
+        ...
+
+    def setView(self, n) -> bool:
+        """
+        Set view number. The n argument is an integer in the range of 0 to number of views.
+        """
+        ...
+
+    def view(self) -> int:
+        """
+        Return view number.
+        """
+        ...
+
+    def viewFromName(self, name) -> int:
+        """
+        Returns the index of the view with name matching the argument name or -1 if there is no match.
+        """
+        ...
+
+    def viewcount(self) -> int:
+        """
+        Return number of views.
+        """
+        ...
+
+    def viewname(self, n) -> six.binary_type:
+        """
+        Return name of the view. The n argument is an integer in the range of 0 to number of views.
+        """
+        ...
+
+    def viewshort(self, n) -> six.binary_type:
+        """
+        Return short name of the view. The n argument is an integer in the range of 0 to number of views.
+        """
+        ...
+
+    ...
+
+
+class Panel:
+    """
+    Panel
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, arg2: int = ..., /, ):
+        ...
+
+    def addBooleanCheckBox(self, name: six.binary_type, value) -> bool:
+        """
+        Add a boolean check box knob to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addButton(self, name: six.binary_type, value) -> bool:
+        """
+        Add a button to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addClipnameSearch(self, name: six.binary_type, value) -> bool:
+        """
+        Add a clipname search knob to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addEnumerationPulldown(self, name: six.binary_type, value) -> bool:
+        """
+        Add a pulldown menu to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addExpressionInput(self, name: six.binary_type, value) -> bool:
+        """
+        Add an expression evaluator to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addFilenameSearch(self, name: six.binary_type, value) -> bool:
+        """
+        Add a filename search knob to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addMultilineTextInput(self, name: six.binary_type, value) -> bool:
+        """
+        Add a multi-line text knob to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addNotepad(self, name: six.binary_type, value) -> bool:
+        """
+        Add a text edit widget to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addPasswordInput(self, name: six.binary_type, value) -> bool:
+        """
+        Add a password input knob to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addRGBColorChip(self, name: six.binary_type, value) -> bool:
+        """
+        Add a color chooser to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addScriptCommand(self, name: six.binary_type, value) -> bool:
+        """
+        Add a script command evaluator to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addSingleLineInput(self, name: six.binary_type, value) -> bool:
+        """
+        Add a single-line input knob to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def addTextFontPulldown(self, name: six.binary_type, value) -> bool:
+        """
+        Add a font chooser to the panel.
+
+        @param name: The name for the new knob.
+
+        @param value: The initial value for the new knob.
+
+        @return: True if successful.
+        """
+        ...
+
+    def clear(self) -> None:
+        """
+        Clear all panel attributes.
+        """
+        ...
+
+    def execute(self, name: six.binary_type) -> typing.Optional[six.binary_type]:
+        """
+        Execute the script command associated with a particular label and return the result as a string.
+
+        @param name: The name of the script field to execute.
+
+        @return: The result of the script as a string, or None if it fails.
+        """
+        ...
+
+    def setTitle(self, val: six.binary_type) -> bool:
+        """
+        Set the current title for the panel.
+
+        @param val: The title as a string.
+
+        @return: True if successful.
+        """
+        ...
+
+    def setWidth(self, val: int) -> bool:
+        """
+        Set the width of the panel.
+
+        @param val: The width as an int.
+
+        @return: True if successful.
+        """
+        ...
+
+    def show(self) -> int:
+        """
+        Display the panel.
+
+        @return: An int value indicating how the dialog was closed (normally, or cancelled).
+        """
+        ...
+
+    def title(self) -> six.binary_type:
+        """
+        Get the current title for the panel.
+
+        @return: The title as a string.
+        """
+        ...
+
+    def value(self, name: six.binary_type) -> typing.Optional[typing.Any]:
+        """
+        Get the value of a particular control in the panel.
+
+        @param name: The name of the knob to get a value from.
+
+        @return: The value for the field if any, otherwise None.
+        """
+        ...
+
+    def width(self) -> int:
+        """
+        Get the width of the panel.
+
+        @return: The width as an int.
+        """
+        ...
+
+    ...
+
+
+class PanelNode:
+    """
+    PanelNode
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __str__(self, *args, **kwargs):
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def addKnob(self, k) -> None:
+        """
+        Add knob k to this node or panel.
+        @param k: Knob.
+        @return: None.
+        """
+        ...
+
+    def createWidget(self, *args, **kwargs):
+        """
+        Create the widget for the panel
+        """
+        ...
+
+    def knobs(self) -> dict:
+        """
+        Get a dictionary of (name, knob) pairs for all knobs in this node.
+
+        For example:
+
+           >>> b = nuke.nodes.Blur()
+           >>> b.knobs()
+
+        @return: Dictionary of all knobs.
+
+        Note that this doesn't follow the links for Link_Knobs
+        """
+        ...
+
+    def readKnobs(self, s) -> None:
+        """
+        Read the knobs from a string (TCL syntax).
+        @param s: A string.
+        @return: None.
+        """
+        ...
+
+    def removeKnob(self, k) -> None:
+        """
+        Remove knob k from this node or panel. Throws a ValueError exception if k is not found on the node.
+        @param k: Knob.
+        @return: None.
+        """
+        ...
+
+    def writeKnobs(self, i) -> six.text_type:
+        """
+        Return a tcl list. If TO_SCRIPT | TO_VALUE is not on, this is a simple list
+        of knob names. If it is on, it is an alternating list of knob names
+        and the output of to_script().
+
+        Flags can be any of these or'ed together:
+        - nuke.TO_SCRIPT produces to_script(0) values
+        - nuke.TO_VALUE produces to_script(context) values
+        - nuke.WRITE_NON_DEFAULT_ONLY skips knobs with not_default() false
+        - nuke.WRITE_USER_KNOB_DEFS writes addUserKnob commands for user knobs
+        - nuke.WRITE_ALL writes normally invisible knobs like name, xpos, ypos
+
+        @param i: The set of flags or'ed together. Default is TO_SCRIPT | TO_VALUE.
+        @return: String in .nk form.
+        """
+        ...
+
+    ...
+
+
+class Password_Knob(Knob):
+    """
+    A knob which holds a password string value. Appears as a password entry field in a Node panel.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def getText(self) -> six.binary_type:
+        """
+        Return text associated with knob.
+        """
+        ...
+
+    def setValue(self, val, view='default') -> None:
+        """
+        Set value of knob.
+
+        @param val: The new value.
+
+        @param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
+
+        @return: None
+        """
+        ...
+
+    def value(self) -> six.binary_type:
+        """
+        Get the value of this knob as a string.
+
+        @return: String value.
+        """
+        ...
+
+    ...
+
+
+class Precomp(Group):
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
@@ -4909,38 +5472,19 @@ class Gizmo(Group):
         """
         ...
 
-    def command(self) -> six.binary_type:
+    def reload(self) -> None:
         """
-        Gizmo command.
-
-        @return: String.
-        """
-        ...
-
-    def filename(self) -> six.binary_type:
-        """
-        Gizmo filename.
-
-        @return: String.
-        """
-        ...
-
-    def makeGroup(self) -> Group:
-        """
-        Creates a Group node copy of the Gizmo node.
-
-        @return: Group.
+        Precomp Node reload()
+        @return: None
         """
         ...
 
     ...
 
 
-class Hash:
+class ProgressTask:
     """
-    A hash value for any number of objects.
-
-    The append() method is used to add objects to the hash; the value will be recomputed efficiently as each new object is added.
+    ProgressTask
     """
 
     __new__: ...
@@ -4948,151 +5492,1461 @@ class Hash:
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __delattr__(self, *args, **kwargs):
+    def isCancelled(self) -> bool:
         """
-        x.__delattr__('name') <==> del x.name
-        """
-        ...
-
-    def __eq__(self, *args, **kwargs):
-        """
-        x.__eq__(y) <==> x==y
+        True if the user has requested the task to be cancelled
         """
         ...
 
-    def __ge__(self, *args, **kwargs):
+    def setMessage(self, s) -> None:
         """
-        x.__ge__(y) <==> x>=y
-        """
-        ...
-
-    def __getattribute__(self, *args, **kwargs):
-        """
-        x.__getattribute__('name') <==> x.name
+        set the message for the progress task
         """
         ...
 
-    def __gt__(self, *args, **kwargs):
+    def setProgress(self, i) -> None:
         """
-        x.__gt__(y) <==> x>y
-        """
-        ...
-
-    def __hash__(self, *args, **kwargs):
-        """
-        x.__hash__() <==> hash(x)
-        """
-        ...
-
-    def __le__(self, *args, **kwargs):
-        """
-        x.__le__(y) <==> x<=y
-        """
-        ...
-
-    def __lt__(self, *args, **kwargs):
-        """
-        x.__lt__(y) <==> x<y
-        """
-        ...
-
-    def __ne__(self, *args, **kwargs):
-        """
-        x.__ne__(y) <==> x!=y
-        """
-        ...
-
-    def __setattr__(self, *args, **kwargs):
-        """
-        x.__setattr__('name', value) <==> x.name = value
-        """
-        ...
-
-    def append(self, *args, **kwargs):
-        """
-        Add another value to the hash.
-        """
-        ...
-
-    def getHash(self, *args, **kwargs):
-        """
-        Get the current value of the hash.
-        """
-        ...
-
-    def reset(self, *args, **kwargs):
-        """
-        Reset the hash.
-        """
-        ...
-
-    def setHash(self, *args, **kwargs):
-        """
-        Set the current value of the hash.
+        i is an integer representing the current progress
         """
         ...
 
     ...
 
 
-class KnobType:
+class Pulldown_Knob(Enumeration_Knob):
     """
-    Constants for use in parameters which require a knob type.
+    Pulldown_Knob
     """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def commands(self, n) -> six.binary_type:
+        """
+        Return command n. The argument n is an integer and in the range of 0 and numValues.
+        """
+        ...
+
+    def itemName(self, n) -> six.binary_type:
+        """
+        Return name of item n. The argument n is an integer and in the range of 0 and numValues.
+        """
+        ...
+
+    def numValues(self) -> int:
+        """
+        Return number of values.
+        """
+        ...
+
+    def setValues(self, items) -> None:
+        """
+        (Re)initialise knob to the list of items.
+
+        @param items: Dictionary of name/value pairs.
+
+        @param sort: Optional parameter as to whether to sort the names.
+
+        @return: None.
+
+        Example:
+
+        w = nuke.nodes.NoOp()
+
+        k = nuke.Pulldown_Knob('knob_name', 'knob_label')
+
+        k.setValues({'label/command' : 'eval("3*2")'})
+
+        w.addKnob(k)
+
+        k = w['knob_name']
+        """
+        ...
 
     ...
 
 
-class LinkableKnobInfo:
+class PyCustom_Knob(Script_Knob):
     """
-    A linkable knob description. Holds a reference to a knob that may be linked to, as well as an indication whether this knob should be used as part of an absolute or relative expression and whether it is enabled.
+    PyCustom_Knob
     """
 
-    def __delattr__(self, *args, **kwargs):
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
-        x.__delattr__('name') <==> del x.name
+        x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
-    def __getattribute__(self, *args, **kwargs):
+    def getObject(self, *args, **kwargs):
         """
-        x.__getattribute__('name') <==> x.name
-        """
-        ...
-
-    def __setattr__(self, *args, **kwargs):
-        """
-        x.__setattr__('name', value) <==> x.name = value
+        Returns the custom knob object as created in the by the 'command' argument to the PyCustom_Knob constructor.
         """
         ...
 
-    def absolute(self) -> bool:
+    ...
+
+
+class PyScript_Knob(Script_Knob):
+    """
+    PyScript_Knob(name, label=None, command=None)
+
+    A button that executes a Python script.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
         """
-        Returns whether the values of this knob should be treated as absolute or relative. This may be useful for positions.
+        x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
-    def displayName(self) -> six.binary_type:
+    ...
+
+
+class PythonCustomKnob(Script_Knob):
+    """
+    PythonCustomKnob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
-        Returns the custom display name that will appear in Link-to menus.
+        x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
-    def enabled(self) -> bool:
+    def getObject(self, *args, **kwargs):
         """
-        Returns whether the knob is currently enabled or not.
-        """
-        ...
-
-    def indices(self) -> list:
-        """
-        Returns a list of the knob channels that should be used with this linkable knob.
+        Returns the custom knob object as created in the by the 'command' argument to the PyCustom_Knob constructor.
         """
         ...
 
-    def knob(self) -> Knob:
+    ...
+
+
+class PythonKnob(String_Knob):
+    """
+    A string-valued knob which evaluates its value as a Python expression.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
-        Returns the knob that may be linked to.
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class Radio_Knob(Enumeration_Knob):
+    """
+    Stores a single value between 0 and some maximum, and manages a
+
+    set of Radio Buttons visible to the user. This is essentially an
+
+    Enumeration_Knob with a different widget.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def enumName(self, n) -> six.binary_type:
+        """
+        Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
+        """
+        ...
+
+    def numValues(self) -> int:
+        """
+        Return number of values. Deprecated.
+        """
+        ...
+
+    def setValue(self, item) -> None:
+        """
+        Set the current value. item will first be converted into a string and matched against the enum values.
+
+        If this fails, it will attempt to be used as an index into the enum.
+
+        @param item: String or Integer.
+
+        @return: None.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.setValue('exr')
+        """
+        ...
+
+    def setValues(self, items) -> None:
+        """
+        (Re)initialise knob to the supplied list of items.
+
+        @param items: The new list of values.
+
+        @return: None.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.setValues(['exr'])
+        """
+        ...
+
+    def value(self) -> six.binary_type:
+        """
+        Current value.
+
+        @return: String.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.value()
+        """
+        ...
+
+    def values(self) -> typing.List[six.binary_type]:
+        """
+        Return list of items.
+
+        @return: List of strings.
+
+        Example:
+
+        w = nuke.nodes.Write()
+
+        k = w['file_type']
+
+        k.values()
+        """
+        ...
+
+    ...
+
+
+class Range_Knob(Array_Knob):
+    """
+    A knob which the minimum and maximum for a range of values.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class Root(Group):
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __getitem__(self, *args, **kwargs):
+        """
+        x.__getitem__(y) <==> x[y]
+        """
+        ...
+
+    def __len__(self) -> int:
+        """
+        x.__len__() <==> len(x)
+        """
+        ...
+
+    def __repr__(self) -> six.binary_type:
+        """
+        x.__repr__() <==> repr(x)
+        """
+        ...
+
+    def __str__(self) -> six.binary_type:
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def addView(self, name, color) -> None:
+        """
+        Add view.
+
+        @param name: String - name of view.
+
+        @param color: Optional. String in the format #RGB, #RRGGBB, #RRRGGGBBB, #RRRRGGGGBBBB or a name from the list of colors defined in the list of SVG color keyword names.
+
+        @return: None.
+        """
+        ...
+
+    def channels(self, *args, **kwargs):
+        """
+        nuke.Root.channels() -> Channel list.
+
+        Class method.
+
+        @return: Channel list.
+        """
+        ...
+
+    def deleteView(self, s) -> None:
+        """
+        Delete view.
+
+        @param s: Name of view.
+
+        @return: None.
+        """
+        ...
+
+    def firstFrame(self) -> int:
+        """
+        First frame.
+
+        @return: Integer.
+        """
+        ...
+
+    def fps(self) -> int:
+        """
+        Return the FPS rounded to an int. This is deprecated. Please use real_fps().
+        """
+        ...
+
+    def getOCIOColorspaceFamily(self, *args, **kwargs):
+        """
+        nuke.root.getOCIOColorspaceFamily(colorspace) -> Family of colorspace
+
+        Gets the name of the family to which the specified colorspace belongs,
+
+        for the root node's current OCIO config.
+
+        @param colorspace: Colorspace name.
+
+        @return: Family name, may be an empty string.
+        """
+        ...
+
+    def getOCIOColorspaceFromViewTransform(self, *args, **kwargs):
+        """
+        nuke.root.getOCIOColorspaceFromViewTransform(display, view) -> Colorspace name
+
+        Gets the name of the colorspace to which the specified display and view names are mapped
+
+        for the root node's current OCIO config.
+
+        @param display: Display name.
+
+        @param view: View name.
+
+        @return: The corresponding colorspace name.
+        """
+        ...
+
+    def lastFrame(self) -> int:
+        """
+        Last frame.
+
+        @return: Integer.
+        """
+        ...
+
+    def layers(self, *args, **kwargs):
+        """
+        nuke.Root.layers() -> Layer list.
+
+        Class method.
+
+        @return: Layer list.
+        """
+        ...
+
+    def mergeFrameRange(self, a, b) -> None:
+        """
+        Merge frame range.
+
+        @param a: Low-end of interval range.
+
+        @param b: High-end of interval range.
+
+        @return: None.
+        """
+        ...
+
+    def modified(self) -> bool:
+        """
+        Get or set the 'modified' flag in a script
+
+        @return: True if modified, False otherwise.
+        """
+        ...
+
+    def proxy(self) -> bool:
+        """
+        True if proxy is set, False otherwise.
+        """
+        ...
+
+    def realFps(self) -> float:
+        """
+        The global frames per second setting.
+        """
+        ...
+
+    def setFrame(self, n) -> None:
+        """
+        Set frame.
+
+        @param n: Frame number.
+
+        @return: None.
+        """
+        ...
+
+    def setModified(self, b) -> None:
+        """
+        Set the 'modified' flag in a script.
+
+        Setting the value will turn the indicator in the title bar on/off and will start or stop the autosave timeout.
+
+        @param b: Boolean convertible object.
+
+        @return: None.
+        """
+        ...
+
+    def setProxy(self, b) -> None:
+        """
+        Set proxy.
+
+        @param b: Boolean convertible object.
+
+        @return: None.
+        """
+        ...
+
+    def setView(self, s) -> None:
+        """
+        Set view.
+
+        @param s: Name of view.
+
+        @return: None.
+        """
+        ...
+
+    ...
+
+
+class RunInMainThread:
+    """
+    RunInMainThread
+    """
+
+    def request(self, *args, **kwargs):
+        """
+        """
+        ...
+
+    ...
+
+
+class Scale_Knob(Array_Knob):
+    """
+    Scale_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def names(self, n) -> six.binary_type:
+        """
+        Return name for dimension n. The argument n is an integer.
+        """
+        ...
+
+    def value(self, n, oc) -> float:
+        """
+        Return value for dimension n. The optional argument oc is an OutputContext.
+        """
+        ...
+
+    def x(self, oc) -> float:
+        """
+        Return value for x. The optional oc argument is an OutputContext
+        """
+        ...
+
+    def y(self, oc) -> float:
+        """
+        Return value for y. The optional oc argument is an OutputContext
+        """
+        ...
+
+    def z(self, oc) -> float:
+        """
+        Return value for z. The optional oc argument is an OutputContext
+        """
+        ...
+
+    ...
+
+
+class SceneView_Knob(Unsigned_Knob):
+    """
+    Displays a list of items as a hierarchy.
+
+    The hierarchy is specified using back or forward slashes within the item names
+
+    to specify their level in the tree. Handles multiple selection of items within the tree.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def addItems(self) -> None:
+        """
+        Adds a list of string items to the knob. New items are automatically set as imported and selected.
+        """
+        ...
+
+    def getAllItems(self) -> list:
+        """
+        Returns a list of strings containing all items that the knob can import.
+        """
+        ...
+
+    def getHighlightedItem(self) -> six.binary_type:
+        """
+        Returns a string containing the item which is currently highlighted.
+        """
+        ...
+
+    def getImportedItems(self) -> list:
+        """
+        Returns a list of strings containing all items imported into the knob.
+        """
+        ...
+
+    def getSelectedItems(self) -> list:
+        """
+        Returns a list of strings containing all currently selected items in the knob.
+        """
+        ...
+
+    def removeItems(self) -> None:
+        """
+        Removes a list of string items from the knob.
+        """
+        ...
+
+    def setAllItems(self, items, autoSelect) -> None:
+        """
+        Sets a list of strings containing all items that the knob can import.
+
+        After calling this function, only items from this list can be imported into the nodes.
+
+        @param items: List of imported items.
+
+        @param autoSelect: If True, all items are automatically set as imported and selected.
+
+        @return: None.
+        """
+        ...
+
+    def setImportedItems(self, items) -> None:
+        """
+        Sets a list of strings containing all items imported into the knob. This will overwrite the current imported items list.@param items: List of imported items.
+
+        @return: None.
+        """
+        ...
+
+    def setSelectedItems(self) -> None:
+        """
+        Takes a list of strings of items contained in the knob and sets them as selected.
+        """
+        ...
+
+    ...
+
+
+class Script_Knob(String_Knob):
+    """
+    A button which executes a TCL script.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def command(self) -> six.binary_type:
+        """
+        Get the current command.
+
+        @return: The current command as a string, or None if there is no current command.
+        """
+        ...
+
+    def execute(self) -> None:
+        """
+        Execute the command.
+
+        @return: None.
+        """
+        ...
+
+    def setCommand(self, cmd) -> None:
+        """
+        Set the new command for this knob.
+
+        @param cmd: String containing a TCL command.
+
+        @return: None.
+        """
+        ...
+
+    def setValue(self, cmd) -> None:
+        """
+        Set the new command for this knob.
+
+        @param cmd: String containing a TCL command.
+
+        @return: None.
+        """
+        ...
+
+    def value(self) -> six.binary_type:
+        """
+        Get the current command.
+
+        @return: The current command as a string, or None if there is no current command.
+        """
+        ...
+
+    ...
+
+
+class String_Knob(Knob):
+    """
+    A knob which holds a string value. Appears as a text entry field in a Node panel.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, /, ): ...
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def getText(self, oc) -> six.binary_type:
+        """
+        Get the non-evaluated value of this knob - also see `value()`
+
+        @param oc: Optional parameter specifying the output context.
+
+        Return text associated with knob.
+        """
+        ...
+
+    def getValue(self, *args, **kwargs):
+        """
+        self.value(oc) -> str
+
+
+
+        Get the evaluated value of this knob as a string - also see `getText()`.
+
+        @param oc: Optional parameter specifying the output context.
+
+        @return: String value.
+        """
+        ...
+
+    def setText(self, *args, **kwargs):
+        """
+        self.setValue(val, view='default') -> None
+
+
+
+        Set value of knob.
+
+        @param val: The new value.
+
+        @param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
+
+        @return: None
+        """
+        ...
+
+    def setValue(self, val, view='default') -> None:
+        """
+        Set value of knob.
+
+        @param val: The new value.
+
+        @param view: Optional parameter specifying which view to set the value for. If omitted, the value will be set for the default view.
+
+        @return: None
+        """
+        ...
+
+    def splitView(self, view) -> None:
+        """
+        Split the view away from the current knob value.
+
+        @param view: Optional view. Default is current view.
+
+        @return: None.
+        """
+        ...
+
+    def unsplitView(self, view) -> None:
+        """
+        Unsplit the view so that it shares a value with other views.
+
+        @param view: Optional view. Default is current view.
+
+        @return: None.
+        """
+        ...
+
+    def value(self, oc) -> six.binary_type:
+        """
+        Get the evaluated value of this knob as a string - also see `getText()`.
+
+        @param oc: Optional parameter specifying the output context.
+
+        @return: String value.
+        """
+        ...
+
+    ...
+
+
+class Tab_Knob(Knob):
+    """
+    Groups subsequent knobs onto a tab.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, /, ): ...
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, flags: int = ..., /, ):
+        ...
+    ...
+
+
+class Text_Knob(Knob):
+    """
+    A knob which holds a string value.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class ToolBar:
+    """
+    ToolBar
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def addAction(self, action) -> bool:
+        """
+        Adds the QAction to the menu.
+        """
+        ...
+
+    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
+        """
+        Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
+
+        Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
+
+
+
+        Example:
+
+        menubar = nuke.menu('Nuke')
+
+        fileMenu = menubar.findItem('File')
+
+        fileMenu.addCommand('NewCommand', 'print 10', shortcut='t')
+
+
+
+        @param name: The name for the menu/toolbar item. The name may contain submenu names delimited by '/' or '', and submenus are created as needed.
+
+        @param command: Optional. The command to add to the menu/toolbar. This can be a string to evaluate or a Python Callable (function, method, etc) to run.
+
+        @param shortcut: Optional. The keyboard shortcut for the command, such as 'R', 'F5' or 'Ctrl-H'. Note that this overrides pre-existing other uses for the shortcut.
+
+        @param icon: Optional. An icon for the command. This should be a path to an icon in the nuke.pluginPath() directory. If the icon is not specified, Nuke will automatically try to find an icon with the name argument and .png appended to it.
+
+        @param tooltip: Optional. The tooltip text, displayed on mouseover for toolbar buttons.
+
+        @param index: Optional. The position to insert the new item in, in the menu/toolbar. This defaults to last in the menu/toolbar.
+
+        @param readonly: Optional. True/False for whether the item should be available when the menu is invoked in a read-only context.
+
+        @param shortcutContext: Optional. Sets the shortcut context (0==Window, 1=Application, 2=DAG).
+
+        @return: The menu/toolbar item that was added to hold the command.
+        """
+        ...
+
+    def addMenu(self, **kwargs) -> Menu:
+        """
+        Add a new submenu.
+
+        @param **kwargs The following keyword arguments are accepted:
+
+                        name      The name for the menu/toolbar item
+
+                        icon      An icon for the menu. Loaded from the nuke search path.
+
+                        tooltip   The tooltip text.
+
+                        index     The position to insert the menu in. Use -1 to add to the end of the menu.
+
+        @return: The submenu that was added.
+        """
+        ...
+
+    def addSeparator(self, **kwargs) -> ...:
+        """
+        Add a separator to this menu/toolbar.
+
+        @param **kwargs The following keyword arguments are accepted:
+
+        index     The position to insert the new separator in, in the menu/toolbar.
+
+        @return: The separator that was created.
+        """
+        ...
+
+    def clearMenu(self, *args, **kwargs):
+        """
+        self.clearMenu() 
+
+        Clears a menu.
+
+        @param **kwargs The following keyword arguments are accepted:
+
+                        name      The name for the menu/toolbar item
+
+        @return: true if cleared, false if menu not found
+        """
+        ...
+
+    def findItem(self, name) -> Menu or None:
+        """
+        Finds a submenu or command with a particular name.
+
+        @param name: The name to search for.
+
+        @return: The submenu or command we found, or None if we could not find anything.
+        """
+        ...
+
+    def items(self) -> None:
+        """
+        Returns a list of sub menu items.
+        """
+        ...
+
+    def menu(self, name) -> Menu or None:
+        """
+        Finds a submenu or command with a particular name.
+
+        @param name: The name to search for.
+
+        @return: The submenu or command we found, or None if we could not find anything.
+        """
+        ...
+
+    def name(self) -> six.binary_type:
+        """
+        Returns the name of the menu item.
+        """
+        ...
+
+    def removeItem(self, name) -> None:
+        """
+        Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
+
+        @param name: The name to remove for.
+
+        @return: true if removed, false if menu not found
+        """
+        ...
+
+    def updateMenuItems(self) -> None:
+        """
+        Updates menu items' states. Call on about to show menu.
+        """
+        ...
+
+    ...
+
+
+class Transform2d_Knob(Knob):
+    """
+    Transform2d_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def value(self, oc) -> ...:
+        """
+        Return transformation matrix. The argument oc is an OutputContext. Both arguments are optional.
+        """
+        ...
+
+    ...
+
+
+class UV_Knob(Array_Knob):
+    """
+    A knob which describes a texture coordinate.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def names(self, n) -> six.binary_type:
+        """
+        Return name for dimension n. The argument n is an integer.
+        """
+        ...
+
+    ...
+
+
+class Undo:
+    """
+    Undo
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    @staticmethod
+    def begin(name: six.binary_type, /, ) -> None:
+        """
+        Begin a new user-visible group of undo actions.
+        """
+        ...
+
+    @staticmethod
+    def cancel() -> None:
+        """
+        Undoes any actions recorded in the current set and throws it away.
+        """
+        ...
+
+    @staticmethod
+    def disable() -> None:
+        """
+        Prevent recording undo until matching enable()
+        """
+        ...
+
+    @staticmethod
+    def disabled() -> None:
+        """
+        True if disable() has been called
+        """
+        ...
+
+    @staticmethod
+    def enable() -> None:
+        """
+        Undoes the previous disable()
+        """
+        ...
+
+    @staticmethod
+    def end() -> None:
+        """
+        Complete current undo set and add it to the undo list.
+        """
+        ...
+
+    @staticmethod
+    def name(v: six.binary_type, /, ) -> None:
+        """
+        Name current undo set.
+        """
+        ...
+
+    @staticmethod
+    def new() -> None:
+        """
+        Same as end();begin().
+        """
+        ...
+
+    @staticmethod
+    def redo() -> None:
+        """
+        Redoes 0'th redo.
+        """
+        ...
+
+    @staticmethod
+    def redoDescribe(n: int, /, ) -> six.binary_type:
+        """
+        Return short description of redo n.
+        """
+        ...
+
+    @staticmethod
+    def redoDescribeFully(n: int, /, ) -> six.binary_type:
+        """
+        Return long description of redo n.
+        """
+        ...
+
+    @staticmethod
+    def redoSize() -> int:
+        """
+        Number of redo's that can be done.
+        """
+        ...
+
+    @staticmethod
+    def redoTruncate(n: int, /, ) -> None:
+        """
+        Destroy any redo's greater or equal to n.
+        """
+        ...
+
+    @staticmethod
+    def undo() -> None:
+        """
+        Undoes 0'th undo.
+        """
+        ...
+
+    @staticmethod
+    def undoDescribe(n: int, /, ) -> None:
+        """
+        Return short description of undo n.
+        """
+        ...
+
+    @staticmethod
+    def undoDescribeFully(n: int, /, ) -> None:
+        """
+        Return long description of undo n.
+        """
+        ...
+
+    @staticmethod
+    def undoSize() -> int:
+        """
+        Number of undo that can be done.
+        """
+        ...
+
+    @staticmethod
+    def undoTruncate() -> None:
+        """
+        Destroy any undo greater or equal to n.
+        """
+        ...
+
+    ...
+
+
+class Unsigned_Knob(Array_Knob):
+    """
+    A knob which holds one or more unsigned integer values.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def setValue(self, val) -> bool:
+        """
+        Set the unsigned integer value of this knob.
+
+        @param val: The new value for the knob. Must be an integer >= 0.
+
+        @return: True if succeeded, False otherwise.
+        """
+        ...
+
+    def value(self) -> int:
+        """
+        Get the value of this knob as an integer.
+
+        @return: int
+        """
+        ...
+
+    ...
+
+
+class View:
+    """
+    A named view.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def __str__(self, *args, **kwargs):
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def string(self) -> six.binary_type:
+        """
+        @return: Name of view.
+        """
+        ...
+
+    def value(self) -> ...:
+        """
+        @return: Value of view.
+        """
+        ...
+
+    ...
+
+
+class ViewView_Knob(Knob):
+    """
+    ViewView_Knob
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    ...
+
+
+class Viewer(Node):
+    def __getitem__(self, *args, **kwargs):
+        """
+        x.__getitem__(y) <==> x[y]
+        """
+        ...
+
+    def __len__(self, *args, **kwargs):
+        """
+        x.__len__() <==> len(x)
+        """
+        ...
+
+    def __repr__(self, *args, **kwargs):
+        """
+        x.__repr__() <==> repr(x)
+        """
+        ...
+
+    def __str__(self, *args, **kwargs):
+        """
+        x.__str__() <==> str(x)
+        """
+        ...
+
+    def capture(self, file) -> None:
+        """
+        Capture the viewer image to a file.  Only jpg files are supported at present.  The image is captured immediately even if the viewer is mid-render.To capture a fully rendered image at a frame or frame range use nuke.render passing in the viewer node you want to capture.When using nuke.render the filename is specified by the 'file' knob on the viewer node.
+        """
+        ...
+
+    def frameCached(self, f) -> bool:
+        """
+        Determine whether frame /f/ is known to be in the memory cache.
+        """
+        ...
+
+    def isPlayingOrRecording(self) -> bool:
+        """
+        @return: Is a recording being made or played?
+        """
+        ...
+
+    def playbackRange(self) -> FrameRange:
+        """
+        Return the frame range that's currently set to be played back in the viewer.@return: FrameRange.
+        """
+        ...
+
+    def recordMouse(self) -> bool:
+        """
+        Start viewer window mouse recording.@return: Recording started?
+        """
+        ...
+
+    def recordMouseStop(self, *args, **kwargs):
+        """
+        recordMouseStop()
+
+        Stop viewer window mouse recording.
+        """
+        ...
+
+    def replayMouseAsync(self, xmlRecordingFilename) -> bool:
+        """
+        Start timer based (asynchronous) playback of a viewer window mouse recording.@param: Name of recording xml file to play@return: Replay started?
+        """
+        ...
+
+    def replayMouseSync(self, xmlRecordingFilename) -> bool:
+        """
+        Start direct (synchronous) playback of a viewer window mouse recording.@param: Name of recording xml file to play@return: Replay succeeded?
+        """
+        ...
+
+    def roi(self) -> dict:
+        """
+        Region of interest set in the viewer in pixel space coordinates.
+        Returns None if the Viewer has no window yet.
+        @return: Dict with keys x, y, r and t or None.
+        """
+        ...
+
+    def roiEnabled(self) -> bool:
+        """
+        Whether the viewing of just a region of interest is enabled.
+        Returns None if the Viewer has no window yet.
+        @return: Boolean or None.
+        """
+        ...
+
+    def sendMouseEvent(self) -> bool:
+        """
+        Temporary:
+        Post a mouse event to the viewer window.
+        """
+        ...
+
+    def setRoi(self, box) -> None:
+        """
+        Set the region of interest in pixel space.
+        @param box: A dictionary with the x, y, r and t keys.@return: None.
+        """
+        ...
+
+    def toggleMouseTrails(self) -> bool:
+        """
+        Toggle mouse trails in the viewer window on/off.@return: Trails now showing?
+        """
+        ...
+
+    def toggleWaitOnReplayEvents(self, *args, **kwargs):
+        """
+        toggleWaitOnEvents() -> Bool
+
+        Toggle whether asynchronous playback waits on each event.
+        Otherwise events will be handled by the next nuke update.@return: Now waiting?
+        """
+        ...
+
+    ...
+
+
+class ViewerProcess:
+    """
+    ViewerProcess
+    """
+
+    def node(self, *args, **kwargs):
+        """
+        nuke.ViewerProcess.node(name, viewer) -> Node.
+        Returns a ViewerProcess node. Default is to return the current selected one. This is a class method.
+        @param name: Optional ViewerProcess name.
+        @param viewer: Optional viewer name.
+        @return: Node.
+        """
+        ...
+
+    def register(self, *args, **kwargs):
+        """
+        nuke.ViewerProcess.register(name, call, args, kwargs) -> None.
+        Register a ViewerProcess. This is a class method.
+        @param name: Menu name.
+        @param call: Python callable. Must return a Node.
+        @param args: Arguments to call.
+        @param kwargs: Optional named arguments.
+        @return: None.
+        """
+        ...
+
+    def registeredNames(self, *args, **kwargs):
+        """
+        nuke.ViewerProcess.registeredNames() -> List.
+        Returns a list containing the names of all currently regisered ViewerProcesses.
+        @return: List.
+        """
+        ...
+
+    def unregister(self, *args, **kwargs):
+        """
+        nuke.ViewerProcess.unregister(name) -> None.
+        Unregister a ViewerProcess. This is a class method.
+        @param name: Menu name.
+        @return: None.
         """
         ...
 
@@ -5235,6 +7089,153 @@ class ViewerWindow:
     ...
 
 
+class WH_Knob(Array_Knob):
+    """
+    A knob which holds width and height values.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def names(self, *args, **kwargs):
+        """
+        Return name for dimension 'i'.
+        """
+        ...
+
+    def x(self, *args, **kwargs):
+        """
+        Return value for X position.
+        """
+        ...
+
+    def x_at(self, *args, **kwargs):
+        """
+        Return value for X position at time 't'.
+        """
+        ...
+
+    def y(self, *args, **kwargs):
+        """
+        Return value for Y position.
+        """
+        ...
+
+    def y_at(self, *args, **kwargs):
+        """
+        Return value for Y position at time 't'.
+        """
+        ...
+
+    ...
+
+
+class XYZ_Knob(Array_Knob):
+    """
+    A knob which holds a 3D coordinate.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def names(self, n) -> six.binary_type:
+        """
+        Return name for dimension n. The argument n is an integer.
+        """
+        ...
+
+    def parent(self) -> XYZ_Knob:
+        """
+        Return parent.
+        """
+        ...
+
+    def value(self, n, oc) -> float:
+        """
+        Return value for dimension n. The optional argument oc is an OutputContext.
+        """
+        ...
+
+    def x(self, oc) -> float:
+        """
+        Return value for x. The optional oc argument is an OutputContext
+        """
+        ...
+
+    def y(self, oc) -> float:
+        """
+        Return value for y. The optional oc argument is an OutputContext
+        """
+        ...
+
+    def z(self, oc) -> float:
+        """
+        Return value for z. The optional oc argument is an OutputContext
+        """
+        ...
+
+    ...
+
+
+class XY_Knob(Array_Knob):
+    """
+    A knob which describes a 2D position.
+    """
+
+    __new__: ...
+    """
+    T.__new__(S, ...) -> a new object with type S, a subtype of T
+    """
+
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+        """
+        x.__init__(...) initializes x; see help(type(x)) for signature
+        """
+        ...
+
+    def names(self, n) -> six.binary_type:
+        """
+        Return name for dimension n. The argument n is an integer.
+        """
+        ...
+
+    def value(self, n, oc) -> float:
+        """
+        Return value for dimension n. The optional argument oc is an OutputContext.
+        """
+        ...
+
+    def x(self, oc) -> float:
+        """
+        Return value for x. The optional oc argument is an OutputContext
+        """
+        ...
+
+    def y(self, oc) -> float:
+        """
+        Return value for y. The optional oc argument is an OutputContext
+        """
+        ...
+
+    ...
+
+
 def activeViewer() -> ViewerWindow:
     """
     Return an object representing the active Viewer panel. This
@@ -5309,7 +7310,7 @@ def addView(s) -> None:
     ...
 
 
-def allNodes(filter:six.binary_type=..., group: Group= ...) -> list:
+def allNodes(filter: six.binary_type = ..., group: Group = ...) -> list:
     """
     List of all nodes in a group. If you need to get all the nodes in the script
     from a context which has no child nodes, for instance a control panel, use
@@ -5844,7 +7845,7 @@ def executing() -> bool:
     ...
 
 
-def exists(s) -> bool:
+def exists(s: six.binary_type) -> bool:
     """
     Check for the existence of a named item.
     Function for backwards-compatibility with TCL.
@@ -5909,7 +7910,7 @@ def extractSelected() -> None:
     ...
 
 
-def filename(node, i) -> six.binary_type:
+def filename(node: Node, i: int = ...) -> six.binary_type:
     """
     Return the filename(s) this node or group is working with.
 
@@ -6309,387 +8310,6 @@ def getPresets() -> None:
     gets a list of all presets for the currently selected node's class
     @return: a pyList containing all nodename/presetname pairs.
     """
-    ...
-
-
-class MenuItem:
-    """
-    MenuItem
-    """
-
-    def action(self) -> None:
-        """
-        Get the action associated with this menu item.
-        """
-        ...
-
-    def icon(self) -> six.binary_type:
-        """
-        Returns the name of the icon on this menu item as path of the icon.
-        """
-        ...
-
-    def invoke(self) -> None:
-        """
-        Perform the action associated with this menu item.
-        """
-        ...
-
-    def name(self) -> six.binary_type:
-        """
-        Returns the name of the menu item.
-        """
-        ...
-
-    def script(self) -> six.binary_type:
-        """
-        Returns the script that gets executed for this menu item.
-        """
-        ...
-
-    def setEnabled(self, enabled, recursive) -> None:
-        """
-        Enable or disable the item.
-
-        @param enabled: True to enable the object; False to disable it.
-
-        @param recursive: True to also setEnabled on submenu actions.
-        """
-        ...
-
-    def setIcon(self, icon) -> None:
-        """
-        Set the icon on this menu item.
-
-        @param icon: the new icon as a path
-        """
-        ...
-
-    def setScript(self, script) -> None:
-        """
-        Set the script to be executed for this menu item.
-
-        Note: To call a python script file, you can use the execfile() function. i.e:
-
-        menu.setScript("execfile('script.py')")
-        """
-        ...
-
-    def setShortcut(self, keySequence) -> None:
-        """
-        Set the keyboard shortcut on this menu item.
-
-        @param keySequence: the new shortcut in PortableText format, e.g. "Ctrl+Shift+P"
-        """
-        ...
-
-    def setVisible(self, visible) -> None:
-        """
-        Show or hide the item.
-
-        @param visible: True to show the object; False to hide it.
-        """
-        ...
-
-    def shortcut(self) -> six.binary_type:
-        """
-        Returns the keyboard shortcut on this menu item. The format of this is the PortableText format. It will return a string such as "Ctrl+Shift+P". Note that on Mac OS X the Command key is equivalent to Ctrl.
-        """
-        ...
-
-    ...
-
-
-class ToolBar:
-    """
-    ToolBar
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def addAction(self, action) -> bool:
-        """
-        Adds the QAction to the menu.
-        """
-        ...
-
-    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
-        """
-        Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
-
-        Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
-
-
-
-        Example:
-
-        menubar = nuke.menu('Nuke')
-
-        fileMenu = menubar.findItem('File')
-
-        fileMenu.addCommand('NewCommand', 'print 10', shortcut='t')
-
-
-
-        @param name: The name for the menu/toolbar item. The name may contain submenu names delimited by '/' or '', and submenus are created as needed.
-
-        @param command: Optional. The command to add to the menu/toolbar. This can be a string to evaluate or a Python Callable (function, method, etc) to run.
-
-        @param shortcut: Optional. The keyboard shortcut for the command, such as 'R', 'F5' or 'Ctrl-H'. Note that this overrides pre-existing other uses for the shortcut.
-
-        @param icon: Optional. An icon for the command. This should be a path to an icon in the nuke.pluginPath() directory. If the icon is not specified, Nuke will automatically try to find an icon with the name argument and .png appended to it.
-
-        @param tooltip: Optional. The tooltip text, displayed on mouseover for toolbar buttons.
-
-        @param index: Optional. The position to insert the new item in, in the menu/toolbar. This defaults to last in the menu/toolbar.
-
-        @param readonly: Optional. True/False for whether the item should be available when the menu is invoked in a read-only context.
-
-        @param shortcutContext: Optional. Sets the shortcut context (0==Window, 1=Application, 2=DAG).
-
-        @return: The menu/toolbar item that was added to hold the command.
-        """
-        ...
-
-    def addMenu(self, **kwargs) -> Menu:
-        """
-        Add a new submenu.
-
-        @param **kwargs The following keyword arguments are accepted:
-
-                        name      The name for the menu/toolbar item
-
-                        icon      An icon for the menu. Loaded from the nuke search path.
-
-                        tooltip   The tooltip text.
-
-                        index     The position to insert the menu in. Use -1 to add to the end of the menu.
-
-        @return: The submenu that was added.
-        """
-        ...
-
-    def addSeparator(self, **kwargs) -> ...:
-        """
-        Add a separator to this menu/toolbar.
-
-        @param **kwargs The following keyword arguments are accepted:
-
-        index     The position to insert the new separator in, in the menu/toolbar.
-
-        @return: The separator that was created.
-        """
-        ...
-
-    def clearMenu(self, *args, **kwargs):
-        """
-        self.clearMenu() 
-
-        Clears a menu.
-
-        @param **kwargs The following keyword arguments are accepted:
-
-                        name      The name for the menu/toolbar item
-
-        @return: true if cleared, false if menu not found
-        """
-        ...
-
-    def findItem(self, name) -> Menu or None:
-        """
-        Finds a submenu or command with a particular name.
-
-        @param name: The name to search for.
-
-        @return: The submenu or command we found, or None if we could not find anything.
-        """
-        ...
-
-    def items(self) -> None:
-        """
-        Returns a list of sub menu items.
-        """
-        ...
-
-    def menu(self, name) -> Menu or None:
-        """
-        Finds a submenu or command with a particular name.
-
-        @param name: The name to search for.
-
-        @return: The submenu or command we found, or None if we could not find anything.
-        """
-        ...
-
-    def name(self) -> six.binary_type:
-        """
-        Returns the name of the menu item.
-        """
-        ...
-
-    def removeItem(self, name) -> None:
-        """
-        Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
-
-        @param name: The name to remove for.
-
-        @return: true if removed, false if menu not found
-        """
-        ...
-
-    def updateMenuItems(self) -> None:
-        """
-        Updates menu items' states. Call on about to show menu.
-        """
-        ...
-
-    ...
-
-
-class Menu(MenuItem):
-    """
-    Menu
-    """
-
-    def addAction(self, action) -> bool:
-        """
-        Adds the QAction to the menu.
-        """
-        ...
-
-    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
-        """
-        Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
-
-        Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
-
-
-
-        Example:
-
-        menubar = nuke.menu('Nuke')
-
-        fileMenu = menubar.findItem('File')
-
-        fileMenu.addCommand('NewCommand', 'print 10', shortcut='t')
-
-
-
-        @param name: The name for the menu/toolbar item. The name may contain submenu names delimited by '/' or '', and submenus are created as needed.
-
-        @param command: Optional. The command to add to the menu/toolbar. This can be a string to evaluate or a Python Callable (function, method, etc) to run.
-
-        @param shortcut: Optional. The keyboard shortcut for the command, such as 'R', 'F5' or 'Ctrl-H'. Note that this overrides pre-existing other uses for the shortcut.
-
-        @param icon: Optional. An icon for the command. This should be a path to an icon in the nuke.pluginPath() directory. If the icon is not specified, Nuke will automatically try to find an icon with the name argument and .png appended to it.
-
-        @param tooltip: Optional. The tooltip text, displayed on mouseover for toolbar buttons.
-
-        @param index: Optional. The position to insert the new item in, in the menu/toolbar. This defaults to last in the menu/toolbar.
-
-        @param readonly: Optional. True/False for whether the item should be available when the menu is invoked in a read-only context.
-
-        @param shortcutContext: Optional. Sets the shortcut context (0==Window, 1=Application, 2=DAG).
-
-        @return: The menu/toolbar item that was added to hold the command.
-        """
-        ...
-
-    def addMenu(self, **kwargs) -> Menu:
-        """
-        Add a new submenu.
-
-        @param **kwargs The following keyword arguments are accepted:
-
-                        name      The name for the menu/toolbar item
-
-                        icon      An icon for the menu. Loaded from the nuke search path.
-
-                        tooltip   The tooltip text.
-
-                        index     The position to insert the menu in. Use -1 to add to the end of the menu.
-
-        @return: The submenu that was added.
-        """
-        ...
-
-    def addSeparator(self, **kwargs) -> ...:
-        """
-        Add a separator to this menu/toolbar.
-
-        @param **kwargs The following keyword arguments are accepted:
-
-        index     The position to insert the new separator in, in the menu/toolbar.
-
-        @return: The separator that was created.
-        """
-        ...
-
-    def clearMenu(self, *args, **kwargs):
-        """
-        self.clearMenu() 
-
-        Clears a menu.
-
-        @param **kwargs The following keyword arguments are accepted:
-
-                        name      The name for the menu/toolbar item
-
-        @return: true if cleared, false if menu not found
-        """
-        ...
-
-    def findItem(self, name) -> Menu or None:
-        """
-        Finds a submenu or command with a particular name.
-
-        @param name: The name to search for.
-
-        @return: The submenu or command we found, or None if we could not find anything.
-        """
-        ...
-
-    def items(self) -> None:
-        """
-        Returns a list of sub menu items.
-        """
-        ...
-
-    def menu(self, name) -> Menu or None:
-        """
-        Finds a submenu or command with a particular name.
-
-        @param name: The name to search for.
-
-        @return: The submenu or command we found, or None if we could not find anything.
-        """
-        ...
-
-    def name(self) -> six.binary_type:
-        """
-        Returns the name of the menu item.
-        """
-        ...
-
-    def removeItem(self, name) -> None:
-        """
-        Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
-
-        @param name: The name to remove for.
-
-        @return: true if removed, false if menu not found
-        """
-        ...
-
-    def updateMenuItems(self) -> None:
-        """
-        Updates menu items' states. Call on about to show menu.
-        """
-        ...
-
     ...
 
 
@@ -7321,207 +8941,6 @@ def resumePathProcessing() -> None:
     ...
 
 
-class Root(Group):
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __getitem__(self, *args, **kwargs):
-        """
-        x.__getitem__(y) <==> x[y]
-        """
-        ...
-
-    def __len__(self) -> int:
-        """
-        x.__len__() <==> len(x)
-        """
-        ...
-
-    def __repr__(self) -> six.binary_type:
-        """
-        x.__repr__() <==> repr(x)
-        """
-        ...
-
-    def __str__(self) -> six.binary_type:
-        """
-        x.__str__() <==> str(x)
-        """
-        ...
-
-    def addView(self, name, color) -> None:
-        """
-        Add view.
-
-        @param name: String - name of view.
-
-        @param color: Optional. String in the format #RGB, #RRGGBB, #RRRGGGBBB, #RRRRGGGGBBBB or a name from the list of colors defined in the list of SVG color keyword names.
-
-        @return: None.
-        """
-        ...
-
-    def channels(self, *args, **kwargs):
-        """
-        nuke.Root.channels() -> Channel list.
-
-        Class method.
-
-        @return: Channel list.
-        """
-        ...
-
-    def deleteView(self, s) -> None:
-        """
-        Delete view.
-
-        @param s: Name of view.
-
-        @return: None.
-        """
-        ...
-
-    def firstFrame(self) -> int:
-        """
-        First frame.
-
-        @return: Integer.
-        """
-        ...
-
-    def fps(self) -> int:
-        """
-        Return the FPS rounded to an int. This is deprecated. Please use real_fps().
-        """
-        ...
-
-    def getOCIOColorspaceFamily(self, *args, **kwargs):
-        """
-        nuke.root.getOCIOColorspaceFamily(colorspace) -> Family of colorspace
-
-        Gets the name of the family to which the specified colorspace belongs,
-
-        for the root node's current OCIO config.
-
-        @param colorspace: Colorspace name.
-
-        @return: Family name, may be an empty string.
-        """
-        ...
-
-    def getOCIOColorspaceFromViewTransform(self, *args, **kwargs):
-        """
-        nuke.root.getOCIOColorspaceFromViewTransform(display, view) -> Colorspace name
-
-        Gets the name of the colorspace to which the specified display and view names are mapped
-
-        for the root node's current OCIO config.
-
-        @param display: Display name.
-
-        @param view: View name.
-
-        @return: The corresponding colorspace name.
-        """
-        ...
-
-    def lastFrame(self) -> int:
-        """
-        Last frame.
-
-        @return: Integer.
-        """
-        ...
-
-    def layers(self, *args, **kwargs):
-        """
-        nuke.Root.layers() -> Layer list.
-
-        Class method.
-
-        @return: Layer list.
-        """
-        ...
-
-    def mergeFrameRange(self, a, b) -> None:
-        """
-        Merge frame range.
-
-        @param a: Low-end of interval range.
-
-        @param b: High-end of interval range.
-
-        @return: None.
-        """
-        ...
-
-    def modified(self) -> bool:
-        """
-        Get or set the 'modified' flag in a script
-
-        @return: True if modified, False otherwise.
-        """
-        ...
-
-    def proxy(self) -> bool:
-        """
-        True if proxy is set, False otherwise.
-        """
-        ...
-
-    def realFps(self) -> float:
-        """
-        The global frames per second setting.
-        """
-        ...
-
-    def setFrame(self, n) -> None:
-        """
-        Set frame.
-
-        @param n: Frame number.
-
-        @return: None.
-        """
-        ...
-
-    def setModified(self, b) -> None:
-        """
-        Set the 'modified' flag in a script.
-
-        Setting the value will turn the indicator in the title bar on/off and will start or stop the autosave timeout.
-
-        @param b: Boolean convertible object.
-
-        @return: None.
-        """
-        ...
-
-    def setProxy(self, b) -> None:
-        """
-        Set proxy.
-
-        @param b: Boolean convertible object.
-
-        @return: None.
-        """
-        ...
-
-    def setView(self, s) -> None:
-        """
-        Set view.
-
-        @param s: Name of view.
-
-        @return: None.
-        """
-        ...
-
-    ...
-
-
 def root() -> Root:
     """
     Get the DAG's root node. Always succeeds.
@@ -8097,468 +9516,6 @@ def zoomToFitSelected() -> None:
     ...
 
 
-class Panel:
-    """
-    Panel
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __init__(self, name: six.binary_type, arg2: int = ..., /, ):
-        ...
-
-    def addBooleanCheckBox(self, name: six.binary_type, value) -> bool:
-        """
-        Add a boolean check box knob to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addButton(self, name: six.binary_type, value) -> bool:
-        """
-        Add a button to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addClipnameSearch(self, name: six.binary_type, value) -> bool:
-        """
-        Add a clipname search knob to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addEnumerationPulldown(self, name: six.binary_type, value) -> bool:
-        """
-        Add a pulldown menu to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addExpressionInput(self, name: six.binary_type, value) -> bool:
-        """
-        Add an expression evaluator to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addFilenameSearch(self, name: six.binary_type, value) -> bool:
-        """
-        Add a filename search knob to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addMultilineTextInput(self, name: six.binary_type, value) -> bool:
-        """
-        Add a multi-line text knob to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addNotepad(self, name: six.binary_type, value) -> bool:
-        """
-        Add a text edit widget to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addPasswordInput(self, name: six.binary_type, value) -> bool:
-        """
-        Add a password input knob to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addRGBColorChip(self, name: six.binary_type, value) -> bool:
-        """
-        Add a color chooser to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addScriptCommand(self, name: six.binary_type, value) -> bool:
-        """
-        Add a script command evaluator to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addSingleLineInput(self, name: six.binary_type, value) -> bool:
-        """
-        Add a single-line input knob to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def addTextFontPulldown(self, name: six.binary_type, value) -> bool:
-        """
-        Add a font chooser to the panel.
-
-        @param name: The name for the new knob.
-
-        @param value: The initial value for the new knob.
-
-        @return: True if successful.
-        """
-        ...
-
-    def clear(self) -> None:
-        """
-        Clear all panel attributes.
-        """
-        ...
-
-    def execute(self, name: six.binary_type) -> typing.Optional[six.binary_type]:
-        """
-        Execute the script command associated with a particular label and return the result as a string.
-
-        @param name: The name of the script field to execute.
-
-        @return: The result of the script as a string, or None if it fails.
-        """
-        ...
-
-    def setTitle(self, val: six.binary_type) -> bool:
-        """
-        Set the current title for the panel.
-
-        @param val: The title as a string.
-
-        @return: True if successful.
-        """
-        ...
-
-    def setWidth(self, val: int) -> bool:
-        """
-        Set the width of the panel.
-
-        @param val: The width as an int.
-
-        @return: True if successful.
-        """
-        ...
-
-    def show(self) -> int:
-        """
-        Display the panel.
-
-        @return: An int value indicating how the dialog was closed (normally, or cancelled).
-        """
-        ...
-
-    def title(self) -> six.binary_type:
-        """
-        Get the current title for the panel.
-
-        @return: The title as a string.
-        """
-        ...
-
-    def value(self, name: six.binary_type) -> typing.Optional[typing.Any]:
-        """
-        Get the value of a particular control in the panel.
-
-        @param name: The name of the knob to get a value from.
-
-        @return: The value for the field if any, otherwise None.
-        """
-        ...
-
-    def width(self) -> int:
-        """
-        Get the width of the panel.
-
-        @return: The width as an int.
-        """
-        ...
-
-    ...
-
-
-class NodeConstructor:
-    """
-    NodeConstructor
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __call__(self, *args, **kwargs) -> Node:
-        """
-        x.__call__(...) <==> x(...)
-        """
-        ...
-
-    ...
-
-
-class Nodes:
-    """
-    Nodes
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __getattribute__(self, name: six.binary_type) -> NodeConstructor:
-        ...
-    ...
-
-
-class GlobalsEnvironment:
-    """
-    Dictionary-style object holding global Nuke state.
-
-    Example:
-
-    nuke.env['threads'] = 4
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    def __delitem__(self, *args, **kwargs):
-        """
-        x.__delitem__(y) <==> del x[y]
-        """
-        ...
-
-    def __getitem__(self, *args, **kwargs):
-        """
-        x.__getitem__(y) <==> x[y]
-        """
-        ...
-
-    def __len__(self, *args, **kwargs):
-        """
-        x.__len__() <==> len(x)
-        """
-        ...
-
-    def __repr__(self, *args, **kwargs):
-        """
-        x.__repr__() <==> repr(x)
-        """
-        ...
-
-    def __setitem__(self, *args, **kwargs):
-        """
-        x.__setitem__(i, y) <==> x[i]=y
-        """
-        ...
-
-    ...
-
-
-class Undo:
-    """
-    Undo
-    """
-
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
-
-    @staticmethod
-    def begin(name: six.binary_type, /, ) -> None:
-        """
-        Begin a new user-visible group of undo actions.
-        """
-        ...
-
-    @staticmethod
-    def cancel() -> None:
-        """
-        Undoes any actions recorded in the current set and throws it away.
-        """
-        ...
-
-    @staticmethod
-    def disable() -> None:
-        """
-        Prevent recording undos until matching enable()
-        """
-        ...
-
-    @staticmethod
-    def disabled() -> None:
-        """
-        True if disable() has been called
-        """
-        ...
-
-    @staticmethod
-    def enable() -> None:
-        """
-        Undoes the previous disable()
-        """
-        ...
-
-    @staticmethod
-    def end() -> None:
-        """
-        Complete current undo set and add it to the undo list.
-        """
-        ...
-
-    @staticmethod
-    def name(v: six.binary_type, /, ) -> None:
-        """
-        Name current undo set.
-        """
-        ...
-
-    @staticmethod
-    def new() -> None:
-        """
-        Same as end();begin().
-        """
-        ...
-
-    @staticmethod
-    def redo() -> None:
-        """
-        Redoes 0'th redo.
-        """
-        ...
-
-    @staticmethod
-    def redoDescribe(n: int, /, ) -> six.binary_type:
-        """
-        Return short description of redo n.
-        """
-        ...
-
-    @staticmethod
-    def redoDescribeFully(n: int, /, ) -> six.binary_type:
-        """
-        Return long description of redo n.
-        """
-        ...
-
-    @staticmethod
-    def redoSize() -> int:
-        """
-        Number of redo's that can be done.
-        """
-        ...
-
-    @staticmethod
-    def redoTruncate(n: int, /, ) -> None:
-        """
-        Destroy any redo's greater or equal to n.
-        """
-        ...
-
-    @staticmethod
-    def undo() -> None:
-        """
-        Undoes 0'th undo.
-        """
-        ...
-
-    @staticmethod
-    def undoDescribe(n: int, /, ) -> None:
-        """
-        Return short description of undo n.
-        """
-        ...
-
-    @staticmethod
-    def undoDescribeFully(n: int, /, ) -> None:
-        """
-        Return long description of undo n.
-        """
-        ...
-
-    @staticmethod
-    def undoSize() -> int:
-        """
-        Number of undo that can be done.
-        """
-        ...
-
-    @staticmethod
-    def undoTruncate() -> None:
-        """
-        Destroy any undo greater or equal to n.
-        """
-        ...
-
-    ...
-
-
 ADD_VIEWS: int = 0
 
 AFTER_CONST: int = 21
@@ -8592,6 +9549,9 @@ DO_NOT_WRITE: int = 512
 ENDLINE: int = 8192
 
 EXE_PATH: six.binary_type
+"""
+'C:/Program Files/Nuke10.5v7/python.exe'
+"""
 
 EXPAND_TO_WIDTH: int = 0
 
@@ -8604,6 +9564,9 @@ FONT: int = 4
 GEO: int = 16
 
 GUI: bool
+"""
+False
+"""
 
 HIDDEN_INPUTS: int = 4
 
@@ -8618,6 +9581,9 @@ INT16: int = 3
 INT8: int = 2
 
 INTERACTIVE: bool
+"""
+False
+"""
 
 INVALIDHINT: int = -1
 
@@ -8646,28 +9612,43 @@ NO_CHECKMARKS: int = 1
 NO_MULTIVIEW: int = 1073741824
 
 NO_POSTAGESTAMPS: bool
+"""
+False
+"""
 
 NO_UNDO: int = 524288
 
 NUKE_VERSION_DATE: six.binary_type
+"""
+'Nov 14 2017'
+"""
 
 NUKE_VERSION_MAJOR: int = 10
 
 NUKE_VERSION_MINOR: int = 5
 
 NUKE_VERSION_PHASE: six.binary_type
+"""
+''
+"""
 
 NUKE_VERSION_PHASENUMBER: int = 0
 
 NUKE_VERSION_RELEASE: int = 7
 
 NUKE_VERSION_STRING: six.binary_type
+"""
+'10.5v7'
+"""
 
 NUM_CPUS: int = 8
 
 NUM_INTERPOLATIONS: int = 5
 
 PLUGIN_EXT: six.binary_type
+"""
+'dll'
+"""
 
 PREPEND: int = 8
 
@@ -8716,6 +9697,9 @@ USER_SET_SLOPE: int = 16
 VIEWER: int = 1
 
 VIEW_NAMES: six.binary_type
+"""
+'input/view_names'
+"""
 
 WRITE_ALL: int = 8
 
@@ -8723,10 +9707,27 @@ WRITE_NON_DEFAULT_ONLY: int = 16
 
 WRITE_USER_KNOB_DEFS: int = 4
 
+__all__: typing.List[six.text_type]
+"""
+['AColor_Knob', 'ADD_VIEWS', 'AFTER_CONST', 'AFTER_LINEAR', ...
+"""
+
 env: GlobalsEnvironment
+"""
+{'64bit': True, 'ExecutablePath': 'C:/Program Fi...: 8, 'ple': F...
+"""
 
 nodes: Nodes
+"""
+<Nodes object>
+"""
 
 rawArgs: list
+"""
+[r'C:\\Program Files\\Nuke10.5v7\\python.exe']
+"""
 
 untitled: six.binary_type
+"""
+'Untitled'
+"""

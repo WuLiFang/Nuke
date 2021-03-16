@@ -1,7 +1,7 @@
 # -*- coding=UTF-8 -*-
 """generate typing from module help.  
 
-Usage: "$NUKE_PYTHON" -c 'import nuke; import _nuke; help(_nuke)' | "$PYTHON27" ./scripts/typing_from_help.py -
+Usage: "$NUKE_PYTHON" ./scripts/full_help.py nuke | "$PYTHON27" ./scripts/typing_from_help.py -
 """
 
 from __future__ import (absolute_import, division, print_function,
@@ -12,9 +12,11 @@ import re
 
 _CLASS_MRO_START = 'Method resolution order:'
 _CLASS_METHODS_START = 'Methods defined here:'
+_CLASS_STATIC_METHODS_START = 'Static methods defined here:'
 _CLASS_DATA_ATTR_START = 'Data and other attributes defined here:'
 _CLASS_DATA_DESC_START = 'Data descriptors defined here:'
 _CLASS_INHERITED_METHODS_START = 'Methods inherited from (.+):'
+_CLASS_INHERITED_STATIC_METHODS_START = 'Static methods inherited from (.+):'
 _CLASS_INHERITED_DATA_ATTR_START = 'Data and other attributes inherited from (.+):'
 _CLASS_INHERITED_DATA_DESC_START = 'Data descriptors inherited from (.+):'
 _CLASS_SECTION_END = '-{20,}'
@@ -63,6 +65,10 @@ def _iter_class_sections(lines):
             yield (section_type, section_values)
             section_type = 'methods'
             section_values = []
+        elif re.match(_CLASS_STATIC_METHODS_START, line):
+            yield (section_type, section_values)
+            section_type = 'static-methods'
+            section_values = []
         elif re.match(_CLASS_DATA_ATTR_START, line):
             yield (section_type, section_values)
             section_type = 'data'
@@ -75,6 +81,11 @@ def _iter_class_sections(lines):
             yield (section_type, section_values)
             match = re.match(_CLASS_INHERITED_METHODS_START, line)
             section_type = 'inherited-methods'
+            section_values = [match.group(1)]
+        elif re.match(_CLASS_INHERITED_STATIC_METHODS_START, line):
+            yield (section_type, section_values)
+            match = re.match(_CLASS_INHERITED_STATIC_METHODS_START, line)
+            section_type = 'inherited-static-methods'
             section_values = [match.group(1)]
         elif re.match(_CLASS_INHERITED_DATA_ATTR_START, line):
             yield (section_type, section_values)
@@ -100,7 +111,7 @@ def _strip_lines(lines):
     return "\n".join(lines).strip("\n").splitlines()
 
 
-def _parse_by_indent(lines, indent='    '):
+def _parse_by_indent(lines, indent='    ',):
     key = ''
     values = []
     for line in lines:
@@ -108,8 +119,9 @@ def _parse_by_indent(lines, indent='    '):
         if line.startswith(indent):
             values.append(line[len(indent):])
         else:
-            if values:
+            if key:
                 yield (key, values)
+                key = ''
                 values = []
             key = line
     if values:
@@ -120,19 +132,10 @@ def _parse_class_data(lines):
     for k, v in _parse_by_indent(
             lines
     ):
-        match = re.match(r"^(.+?)(?: ?= ?(.+))?$", k)
-        if not match:
-            raise NotImplementedError(k, v)
-        name = match.group(1)
-        value = match.group(2) or ""
-        if value.startswith("<") and value.endswith(">"):
-            value = ""
-        yield dict(
-            name=name,
-            value=value,
-            docstring=_strip_lines(v),
-
-        )
+        data_def = _parse_data_description(k)
+        if v :
+            data_def["docstring"] = _strip_lines(v)
+        yield data_def
 
 
 def _parse_args(args):
@@ -165,7 +168,7 @@ def _parse_class_method(lines):
         args = _parse_args(match.group(2))
         docstring = v
         return_type = ""
-        match = len(v[0]) > 0 and re.match(
+        match = len(docstring) > 0 and re.match(
             r"(?:self\.)?" +
             re.escape(name) +
             r"\((.*)\) ?-> ?(.+?)\.? *:?$",
@@ -177,8 +180,6 @@ def _parse_class_method(lines):
         args = [i.strip() for i in args]
         args = [TYPE_MAP.get(i, i) for i in args]
         args = [i for i in args if i]
-        if "self" not in args:
-            args.insert(0, "self")
         return_type = TYPE_MAP.get(return_type, return_type)
         docstring = _strip_lines(docstring)
 
@@ -209,6 +210,7 @@ def _iter_classes(lines):
             methods=[],
             data=[],
             docstring=[],
+            static_methods=[],
         )
         for (section_key, section_values) in _iter_class_sections(class_values):
             if section_key == '' and section_values == []:
@@ -216,6 +218,8 @@ def _iter_classes(lines):
             elif section_key == 'inherited-data':
                 continue
             elif section_key == 'inherited-methods':
+                continue
+            elif section_key == 'inherited-static-methods':
                 continue
             elif section_key == 'mro':
                 continue
@@ -227,6 +231,10 @@ def _iter_classes(lines):
                 ))
             elif section_key == 'methods':
                 class_def["methods"] = list(_parse_class_method(
+                    section_values
+                ))
+            elif section_key == 'static-methods':
+                class_def["static_methods"] = list(_parse_class_method(
                     section_values
                 ))
             else:
@@ -243,7 +251,7 @@ def _iter_functions(lines):
         name = match.group(1)
         args = _parse_args(match.group(2))
         docstring = _strip_lines(v)
-        match = len(docstring[0]) > 0 and re.match(
+        match = len(docstring) > 0 and re.match(
             re.escape(name) +
             r"\((.*)\) ?-> ?(.+?)\.? *$",
             docstring[0]) or None
@@ -269,6 +277,7 @@ def _typing_from_class(class_def):
     inherits = [TYPE_MAP.get(i, i) for i in inherits]
     inherits = [i for i in inherits if i]
     methods = class_def["methods"]
+    static_methods = class_def["static_methods"]
     data = class_def["data"]
     yield "class %s%s:" % (name, "(%s)" % ",".join(inherits) if inherits else "")
     if docstring:
@@ -285,8 +294,20 @@ def _typing_from_class(class_def):
                 yield ("    %s" % j).rstrip()
             yield '    """'
             yield ""
+    if static_methods:
+        for i in static_methods:
+            yield "    @staticmethod"
+            yield "    def %s(%s)%s:" % (i["name"], ", ".join(i["args"]), " -> %s" % i["return_type"] if i["return_type"] else "")
+            yield '        """'
+            for j in i["docstring"]:
+                yield ("        %s" % j).rstrip()
+            yield '        """'
+            yield "        ..."
+            yield ""
     if methods:
         for i in methods:
+            if "self" not in i["args"]:
+                i["args"].insert(0, "self")
             yield "    def %s(%s)%s:" % (i["name"], ", ".join(i["args"]), " -> %s" % i["return_type"] if i["return_type"] else "")
             yield '        """'
             for j in i["docstring"]:
@@ -326,47 +347,65 @@ def _typing_from_classes(lines):
         yield ""
 
 
+def _parse_data_description(i):
+    match = re.match(r"^(.+?)(?: ?= ?(.+))?$", i)
+    if not match:
+        raise NotImplementedError(i)
+    name = match.group(1)
+    value = match.group(2) or ""
+    value_type = '...'
+    docstring = []
+    if value.endswith("..."):
+        docstring.append(value)
+        value = ''
+    elif value.startswith("<"):
+        docstring.append(value)
+        value = ''
+    elif value.startswith(("'", '"')):
+        docstring.append(value)
+        value_type = "six.binary_type"
+        value = ''
+    elif value.startswith("["):
+        docstring.append(value)
+        value = ''
+        value_type = 'list'
+    elif value.startswith("{"):
+        docstring.append(value)
+        value = ''
+        value_type = 'dict'
+    elif value in ('True', 'False'):
+        docstring.append(value)
+        value = ''
+        value_type = 'bool'
+    elif re.match(r"-?\d+", value):
+        value_type = 'int'
+    return dict(
+        name=name,
+        value=value,
+        value_type=value_type,
+        docstring=docstring,
+    )
+
+
 def _iter_data(lines):
     for i in lines:
         if i == "":
             continue
-        match = re.match(r"(.+?) ?= ?(.+)$", i)
-        if not match:
-            raise NotImplementedError(i)
-        name = match.group(1)
-        value = match.group(2)
-        value_type = '...'
-        if value.endswith("..."):
-            value = ''
-        elif value.startswith("<"):
-            value = ''
-        elif value.startswith(("'", '"')):
-            value_type = "six.binary_type"
-            value = ''
-        elif value.startswith("["):
-            value = ''
-            value_type = 'list'
-        elif value.startswith("{"):
-            value = ''
-            value_type = 'dict'
-        elif value in ('True', 'False'):
-            value = ''
-            value_type = 'bool'
-        elif re.match(r"-?\d+", value):
-            value_type = 'int'
-        yield dict(
-            name=name,
-            value=value,
-            value_type=value_type,
-        )
+        yield _parse_data_description(i)
 
 
 def _typing_from_datum(datum_def):
     name = datum_def["name"]
     value = datum_def["value"]
     value_type = datum_def["value_type"]
+    docstring = datum_def["docstring"]
 
     yield "%s: %s%s" % (name, value_type, " = %s" % value if value else "")
+    if docstring:
+        yield '"""'
+        for i in docstring:
+            yield i
+        yield '"""'
 
 
 def _typing_from_data(lines):
@@ -394,7 +433,7 @@ def _handle_windows_line_ending(lines):
 def iterate_typing_from_help(lines):
     yield "# -*- coding=UTF-8 -*-"
     yield "# This typing file was generated by typing_from_help.py"
-    for k, v in _parse_by_indent(_fix_nuke_docstring(_handle_windows_line_ending(lines)),):
+    for k, v in _parse_by_indent(lines):
         if k == "NAME":
             yield '"""'
             for i in v:
@@ -414,9 +453,21 @@ def iterate_typing_from_help(lines):
             pass
         elif k == "PACKAGE CONTENTS":
             pass
+        elif k == "DESCRIPTION":
+            yield '"""'
+            for i in v:
+                yield i
+            yield '"""'
+        elif k == "SUBMODULES":
+            for i in v:
+                yield "from . import %s" % i
+        elif k == "VERSION":
+            yield '# version: %s' % cast.one(v)
         elif k == "FUNCTIONS":
             for i in _typing_from_functions(v):
                 yield i
+        elif not v:
+            pass
         else:
             raise NotImplementedError(k, v)
 
@@ -442,11 +493,12 @@ if __name__ == '__main__':
         should_close = True
 
     try:
+        lines = _fix_nuke_docstring(_handle_windows_line_ending(f))
         if args.type == 'class':
-            for i in _typing_from_classes(f):
+            for i in _typing_from_classes(lines):
                 print(i)
         else:
-            for i in iterate_typing_from_help(f):
+            for i in iterate_typing_from_help(lines):
                 print(i)
     finally:
         if should_close:
