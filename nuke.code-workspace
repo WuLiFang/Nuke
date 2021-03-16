@@ -13,6 +13,7 @@
       "cmath": "cpp"
     },
     "cSpell.words": [
+      "Bezier",
       "DONT",
       "Keyer",
       "NODIR",
@@ -31,6 +32,7 @@
       "isub",
       "lvalue",
       "mult",
+      "n'th",
       "ntransform",
       "ocula",
       "or'ed",
@@ -44,6 +46,8 @@
       "struct",
       "tprint",
       "uncollide",
+      "unsplit",
+      "vect",
       "vtransform",
       "xpos",
       "xyrt",

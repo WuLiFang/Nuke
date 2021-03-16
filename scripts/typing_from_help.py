@@ -31,6 +31,7 @@ TYPE_MAP = {
     "Floating point value": "float",
     "Bool": "bool",
     "Boolean": "bool",
+    "Int": "int",
     "Integer": "int",
     "integer": "int",
     "Integer value": "int",
@@ -45,6 +46,7 @@ TYPE_MAP = {
     "List": 'list',
     "(x, y, z)": 'typing.Tuple',
     "list of (x,y,z) tuples": 'typing.List',
+    "list of floats": 'typing.List[float]',
 }
 
 
