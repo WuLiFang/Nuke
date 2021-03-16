@@ -49,6 +49,7 @@
       "xyrt",
       "ypos"
     ],
-    "jupyter.jupyterServerType": "local"
+    "jupyter.jupyterServerType": "local",
+    "python.linting.enabled": false
   }
 }
