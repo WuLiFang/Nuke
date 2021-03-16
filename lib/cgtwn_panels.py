@@ -11,10 +11,11 @@ import webbrowser
 import nuke
 
 import cgtwq
+import cgtwq.core
 from nuketools import utf8
 from wlf.progress import CancelledError, progress
 from wlf.uitools import Tray
-
+import cast_unknown as cast
 LOGGER = logging.getLogger(__name__)
 
 
@@ -28,16 +29,18 @@ def dialog_login():
         return
     account = '帐号'
     password = '密码'
-    panel = nuke.Panel(utf8('登录CGTeamWork'))
-    panel.addSingleLineInput(utf8('帐号'), '')
-    panel.addPasswordInput(utf8('密码'), '')
+    panel = nuke.Panel(b'')
+    panel.addSingleLineInput(cast.binary(account), '')
+    panel.addPasswordInput(cast.binary(password), '')
 
     while True:
         confirm = panel.show()
         if confirm:
             try:
                 cgtwq.core.CONFIG['DEFAULT_TOKEN'] = cgtwq.login(
-                    panel.value(account), panel.value(password))
+                    panel.value(cast.binary(account)) or "",
+                    panel.value(cast.binary(password)) or "",
+                )
             except ValueError:
                 Tray.message('CGTeamWork', '登录失败')
                 continue
@@ -48,36 +51,39 @@ def dialog_login():
 def dialog_create_dirs():
     """A dialog for create dirs from cgtwq.  """
 
-    folder_input_name = b'输出文件夹'
-    database_input_name = b'数据库'
-    prefix_input_name = b'镜头名前缀限制'
-    panel = nuke.Panel(b'为项目创建文件夹')
-    panel.addSingleLineInput(database_input_name, 'proj_qqfc_2017')
-    panel.addSingleLineInput(prefix_input_name, '')
-    panel.addFilenameSearch(folder_input_name, 'E:/temp')
+    folder_input_name = '输出文件夹'
+    database_input_name = '数据库'
+    prefix_input_name = '镜头名前缀限制'
+    panel = nuke.Panel(cast.binary('为项目创建文件夹'))
+    panel.addSingleLineInput(cast.binary(
+        database_input_name), b'proj_qqfc_2017')
+    panel.addSingleLineInput(cast.binary(prefix_input_name), b'')
+    panel.addFilenameSearch(cast.binary(folder_input_name), b'E:/temp')
     confirm = panel.show()
     if not confirm:
         return
 
     try:
-        database = panel.value(database_input_name)
-        save_path = panel.value(folder_input_name)
-        prefix = panel.value(prefix_input_name)
+        database = panel.value(cast.binary(database_input_name))
+        save_path = panel.value(cast.binary(folder_input_name))
+        prefix = panel.value(cast.binary(prefix_input_name))
+        if not save_path:
+            return
 
         for _ in progress(['连接CGTeamWork...', ], '创建文件夹'):
             try:
                 select = cgtwq.Database(database)['shot_task'].filter(
                     cgtwq.Field('pipeline') == '合成')
+                for name in progress(select['shot.shot'], '创建文件夹'):
+                    if not name or not name.startswith(prefix):
+                        continue
+                    _path = os.path.join(save_path, name)
+                    if not os.path.exists(_path):
+                        os.makedirs(_path)
             except cgtwq.IDError as ex:
                 nuke.message(utf8('找不到对应条目\n{}'.format(ex)))
                 return
 
-        for name in progress(select['shot.shot'], '创建文件夹'):
-            if not name or not name.startswith(prefix):
-                continue
-            _path = os.path.join(save_path, name)
-            if not os.path.exists(_path):
-                os.makedirs(_path)
         webbrowser.open(save_path)
     except CancelledError:
         LOGGER.debug('用户取消创建文件夹')
