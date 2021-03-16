@@ -701,7 +701,7 @@ class Knob:
         """
         ...
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         """
         ...
@@ -1536,7 +1536,7 @@ class Color_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1567,7 +1567,7 @@ class AColor_Knob(Color_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1586,7 +1586,7 @@ class BBox_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1683,7 +1683,7 @@ class Unsigned_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1738,7 +1738,7 @@ class Enumeration_Knob(Unsigned_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1872,7 +1872,7 @@ class CascadingEnumeration_Knob(Enumeration_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1895,7 +1895,7 @@ class EditableEnumeration_Knob(Enumeration_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2009,7 +2009,7 @@ class Pulldown_Knob(Enumeration_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2074,7 +2074,7 @@ class Radio_Knob(Enumeration_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2175,7 +2175,7 @@ class ColorChip_Knob(Unsigned_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2198,7 +2198,7 @@ class SceneView_Knob(Unsigned_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2281,7 +2281,7 @@ class Boolean_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2318,7 +2318,7 @@ class Disable_Knob(Boolean_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2355,7 +2355,7 @@ class Box3_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2458,7 +2458,7 @@ class Double_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2477,7 +2477,7 @@ class IArray_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2520,7 +2520,7 @@ class Int_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2557,7 +2557,7 @@ class Keyer_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2596,7 +2596,7 @@ class Range_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2615,7 +2615,7 @@ class Scale_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2664,7 +2664,7 @@ class UV_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2689,7 +2689,7 @@ class WH_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2738,7 +2738,7 @@ class XYZ_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2793,7 +2793,7 @@ class XY_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2836,7 +2836,7 @@ class Axis_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2920,7 +2920,7 @@ class Channel_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3018,6 +3018,8 @@ class Channel_Knob(Knob):
         ...
 
     ...
+
+
 class ChannelMask_Knob(Channel_Knob):
     """
     ChannelMask_Knob
@@ -3028,13 +3030,15 @@ class ChannelMask_Knob(Channel_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
+
 class EndTabGroup_Knob(Knob):
     """
     End a group of tabs. This is only valid when a BeginTabGroup knob has already been used.
@@ -3058,7 +3062,7 @@ class String_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3159,7 +3163,7 @@ class EvalString_Knob(String_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3175,6 +3179,7 @@ class EvalString_Knob(String_Knob):
 
     ...
 
+
 class File_Knob(EvalString_Knob):
     """
     A knob which holds a filename. When it appears in a Node panel it provides a text field to show the filename and a button which opens the file chooser dialog.
@@ -3185,7 +3190,7 @@ class File_Knob(EvalString_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3257,6 +3262,7 @@ class File_Knob(EvalString_Knob):
 
     ...
 
+
 class Multiline_Eval_String_Knob(EvalString_Knob):
     """
     A knob which evaluates it's string value as a TCL expression. It provides a multiline text area when it appears in a Node panel.
@@ -3267,13 +3273,14 @@ class Multiline_Eval_String_Knob(EvalString_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Script_Knob(String_Knob):
     """
@@ -3285,7 +3292,7 @@ class Script_Knob(String_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3336,6 +3343,8 @@ class Script_Knob(String_Knob):
         ...
 
     ...
+
+
 class PyCustom_Knob(Script_Knob):
     """
     PyCustom_Knob
@@ -3346,7 +3355,7 @@ class PyCustom_Knob(Script_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3360,6 +3369,7 @@ class PyCustom_Knob(Script_Knob):
 
     ...
 
+
 class PyScript_Knob(Script_Knob):
     """
     PyScript_Knob(name, label=None, command=None)
@@ -3372,13 +3382,14 @@ class PyScript_Knob(Script_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class PythonCustomKnob(Script_Knob):
     """
@@ -3390,7 +3401,7 @@ class PythonCustomKnob(Script_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3415,13 +3426,14 @@ class PythonKnob(String_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Font_Knob(Knob):
     """
@@ -3433,13 +3445,14 @@ class Font_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Format_Knob(Knob):
     """
@@ -3451,7 +3464,7 @@ class Format_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type=None, /):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3506,6 +3519,8 @@ class Format_Knob(Knob):
         ...
 
     ...
+
+
 class FreeType_Knob(Knob):
     """
     A knob which holds a font family and style name.
@@ -3516,7 +3531,7 @@ class FreeType_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type=None, /):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3551,7 +3566,6 @@ class FreeType_Knob(Knob):
         ...
 
     ...
-
 
 
 class GeoSelect_Knob(Knob):
@@ -3590,6 +3604,8 @@ class GeoSelect_Knob(Knob):
         ...
 
     ...
+
+
 class Help_Knob(Knob):
     """
     Help_Knob
@@ -3600,13 +3616,14 @@ class Help_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Histogram_Knob(Knob):
     """
@@ -3618,13 +3635,14 @@ class Histogram_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Link_Knob(Knob):
     """
@@ -3636,7 +3654,7 @@ class Link_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3676,6 +3694,8 @@ class Link_Knob(Knob):
         ...
 
     ...
+
+
 class LookupCurves_Knob(Knob):
     """
     Provide a set of user-editable lookup curves.
@@ -3686,7 +3706,7 @@ class LookupCurves_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3739,7 +3759,7 @@ class MultiView_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3798,13 +3818,14 @@ class Obsolete_Knob(Knob):
     For internal use only.
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Password_Knob(Knob):
     """
@@ -3816,7 +3837,7 @@ class Password_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3850,6 +3871,7 @@ class Password_Knob(Knob):
 
     ...
 
+
 class Tab_Knob(Knob):
     """
     Groups subsequent knobs onto a tab.
@@ -3873,13 +3895,14 @@ class Text_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
 
     ...
+
 
 class Transform2d_Knob(Knob):
     """
@@ -3891,7 +3914,7 @@ class Transform2d_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3905,6 +3928,7 @@ class Transform2d_Knob(Knob):
 
     ...
 
+
 class ViewView_Knob(Knob):
     """
     ViewView_Knob
@@ -3915,7 +3939,7 @@ class ViewView_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label:six.binary_type =None ,/ ,):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -8062,6 +8086,9 @@ class Panel:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
+
+    def __init__(self, name: six.binary_type, arg2: int = ..., /, ) :
+        ...
 
     def addBooleanCheckBox(self, name: six.binary_type, value) -> bool:
         """
