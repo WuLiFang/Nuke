@@ -4,7 +4,6 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import re
-import typing
 
 import wlf.path
 from wlf.codectools import get_unicode
@@ -15,13 +14,7 @@ plugin_folder_path = make_path_finder(  # pylint: disable = invalid-name
     module_path())
 
 
-if typing.TYPE_CHECKING:
-    import six
-    _ = six
-
-
 def expand_frame(filename, frame):
-    # type: (str, int) -> str
     """expand frame number placeholder in filename, support # and %0d style.
 
     Args:
@@ -51,7 +44,6 @@ def expand_frame(filename, frame):
 
 
 def is_sequence_name(name):
-    # type: (str) -> bool
     """check if {name} is a sequence.
 
     Args:
@@ -64,7 +56,6 @@ def is_sequence_name(name):
 
 
 def get_layer(filename, layers=None):
-    # type: (str, typing.Optional[typing.List[str]]) -> str
     """The footage layer name.
 
     >>> get_layer('Z:/MT/Render/image/MT_BG_co/MT_BG_co_PuzzleMatte1/PuzzleMatte1.001.exr')
@@ -78,7 +69,6 @@ def get_layer(filename, layers=None):
 
 
 def get_tag(filename, tag_pattern=None):
-    # type: (str, typing.Optional[str]) -> str
     """The footage tag name.
 
     >>> get_tag('Z:/MT/Render/image/MT_BG_co/MT_BG_co_PuzzleMatte1/PuzzleMatte1.001.exr')
@@ -90,8 +80,8 @@ def get_tag(filename, tag_pattern=None):
         path.tag_pattern = tag_pattern
     return path.tag
 
+
 def get_shot(filename):
-    # type: (str) -> str
     """The related shot for this footage.
 
     >>> get_shot('sc_001_v20.nk')
