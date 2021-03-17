@@ -6,6 +6,8 @@ _nuke
 
 
 import typing
+import typing
+import typing
 import six
 import typing
 import _geo
@@ -1021,11 +1023,6 @@ class BBox_Knob(Array_Knob):
 
 
 class BackdropNode(Node):
-    def __getitem__(self, *args, **kwargs):
-        """
-        x.__getitem__(y) <==> x[y]
-        """
-        ...
 
     def __len__(self, *args, **kwargs):
         """
@@ -1056,7 +1053,7 @@ class BackdropNode(Node):
         """
         ...
 
-    def selectNodes(self, selectNodes) -> None:
+    def selectNodes(self, selectNodes: bool = ...) -> None:
         """
         Select or deselect all nodes in backdrop node
         Example:
@@ -2428,12 +2425,15 @@ class FrameRanges:
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, o: typing.Union[
-        six.binary_type,
-        typing.List[FrameRange],
-        typing.List[six.binary_type],
-        typing.List[int],
-    ]) -> None:
+    def __init__(
+        self,
+        o: typing.Union[
+            six.binary_type,
+            typing.List[FrameRange],
+            typing.List[six.binary_type],
+            typing.List[int],
+        ] = ...,
+    ) -> None:
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2700,12 +2700,6 @@ class Group(Node):
 
     def __exit__(self, *args, **kwargs):
         """
-        """
-        ...
-
-    def __getitem__(self, *args, **kwargs):
-        """
-        x.__getitem__(y) <==> x[y]
         """
         ...
 
@@ -3825,7 +3819,13 @@ class Menu(MenuItem):
         """
         ...
 
-    def addMenu(self, **kwargs) -> Menu:
+    def addMenu(
+        self,
+        name: six.binary_type,
+        icon: six.binary_type = ...,
+        tooltip: six.binary_type = ...,
+        index: int = ...,
+    ) -> Menu:
         """
         Add a new submenu.
 
@@ -4201,10 +4201,18 @@ class Multiline_Eval_String_Knob(EvalString_Knob):
 
 
 class Node:
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
+    def __new__(
+        cls,
+        node: six.binary_type,
+        args: six.binary_type = ...,
+        /,
+        inpanel: bool = True,
+    ) -> Node:
+        """
+        NOT OFFICIAL DOCUMENTED
+        seems same as `createNode`
+        """
+        ...
 
     def Class(self) -> six.binary_type:
         """
@@ -4212,6 +4220,48 @@ class Node:
         """
         ...
 
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'autolabel'], /, ) -> PythonKnob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'gl_color'], /, ) -> ColorChip_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'help'], /, ) -> EvalString_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'hide_input'], /, ) -> Boolean_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'icon'], /, ) -> File_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'indicators'], /, ) -> Array_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'knobChanged'], /, ) -> PythonKnob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'label'], /, ) -> Multiline_Eval_String_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'name'], /, ) -> String_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'note_font'], /, ) -> Font_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'note_font_color'], /, ) -> ColorChip_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'note_font_size'], /, ) -> Array_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'onCreate'], /, ) -> PythonKnob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'onDestroy'], /, ) -> PythonKnob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'panel'], /, ) -> Obsolete_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'selected'], /, ) -> Boolean_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'tile_color'], /, ) -> ColorChip_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'updateUI'], /, ) -> PythonKnob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'xpos'], /, ) -> Array_Knob: ...
+    @typing.overload
+    def __getitem__(self, name: typing.Literal[b'ypos'], /, ) -> Array_Knob: ...
+
+    @typing.overload
     def __getitem__(self, name: six.binary_type, /, ) -> Knob:
         """
         x.__getitem__(y) <==> x[y]
@@ -4818,7 +4868,7 @@ class Node:
         """
         ...
 
-    def setName(self, name, uncollide=True, updateExpressions=False) -> None:
+    def setName(self, name: six.binary_type, uncollide: bool = True, updateExpressions: bool = False) -> None:
         """
         Set name of the node and resolve name collisions if optional named argument 'uncollide' is True.
 
@@ -4991,9 +5041,33 @@ class NodeConstructor:
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __call__(self, *args, **kwargs) -> Node:
+    def __call__(
+        self,
+        *,
+        autolabel: six.binary_type = ...,
+        gl_color: int = ...,
+        help: six.binary_type = ...,
+        hide_input: bool = ...,
+        icon: six.binary_type = ...,
+        indicators=...,
+        knobChanged: six.binary_type = ...,
+        label: six.binary_type = ...,
+        name: six.binary_type = ...,
+        note_font_color: int = ...,
+        note_font_size: int = ...,
+        note_font: six.binary_type = ...,
+        onCreate: six.binary_type = ...,
+        onDestroy: six.binary_type = ...,
+        panel=...,
+        selected: bool = ...,
+        tile_color: int = ...,
+        updateUI: six.binary_type = ...,
+        xpos: int = ...,
+        ypos: int = ...,
+        **kwargs,
+    ) -> Node:
         """
-        x.__call__(...) <==> x(...)
+        Construct a node and assign knob values to it.
         """
         ...
 
@@ -5823,12 +5897,6 @@ class Root(Group):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __getitem__(self, *args, **kwargs):
-        """
-        x.__getitem__(y) <==> x[y]
-        """
-        ...
-
     def __len__(self) -> int:
         """
         x.__len__() <==> len(x)
@@ -6324,7 +6392,7 @@ class String_Knob(Knob):
         """
         ...
 
-    def value(self, oc) -> six.binary_type:
+    def value(self, oc: OutputContext = ...) -> six.binary_type:
         """
         Get the evaluated value of this knob as a string - also see `getText()`.
 
@@ -6368,7 +6436,22 @@ class Text_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    @typing.overload
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
+
+    @typing.overload
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        content: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -7335,7 +7418,22 @@ def addView(s) -> None:
     ...
 
 
-def allNodes(filter: six.binary_type = ..., group: Group = ...) -> list:
+@typing.overload
+def allNodes(filter: typing.Literal[b"BackdropNode"] = ..., group: Group = ...) -> typing.List[BackdropNode]: ...
+@typing.overload
+def allNodes(filter: typing.Literal[b"Group"] = ..., group: Group = ...) -> typing.List[Group]: ...
+@typing.overload
+def allNodes(filter: typing.Literal[b"Viewer"] = ..., group: Group = ...) -> typing.List[Viewer]: ...
+@typing.overload
+def allNodes(filter: typing.Literal[b"Gizmo"] = ..., group: Group = ...) -> typing.List[Gizmo]: ...
+@typing.overload
+def allNodes(filter: typing.Literal[b"Root"] = ..., group: Group = ...) -> typing.List[Root]: ...
+@typing.overload
+def allNodes(filter: typing.Literal[b"Precomp"] = ..., group: Group = ...) -> typing.List[Precomp]: ...
+
+
+@typing.overload
+def allNodes(filter: six.binary_type = ..., group: Group = ...) -> typing.List[Node]:
     """
     List of all nodes in a group. If you need to get all the nodes in the script
     from a context which has no child nodes, for instance a control panel, use
@@ -8117,7 +8215,7 @@ def getFramesAndViews(label, default=None, maxviews=0) -> ...:
     ...
 
 
-def getInput(prompt, default) -> six.binary_type:
+def getInput(prompt: six.binary_type, default: six.binary_type = ...) -> typing.Optional[six.binary_type]:
     """
     Pops up a dialog box with a text field for an arbitrary string.
 
@@ -8424,7 +8522,12 @@ def invertSelection() -> None:
     ...
 
 
-def knob(name, value, getType, getClass) -> None:
+def knob(
+    name: six.binary_type,
+    value: typing.Any = ...,
+    getType: bool = ...,
+    getClass: bool = ...,
+) -> None:
     """
     Returns or sets the entire state of a knob.
 

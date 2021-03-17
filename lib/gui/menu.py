@@ -200,7 +200,7 @@ def add_menu():
             ], })
 
     # Add all menu.
-    def _add_menu(menu, parent=nuke.menu("Nuke")):
+    def _add_menu(menu, parent=nuke.menu(b"Nuke")):
         assert isinstance(menu, dict)
 
         for k, v in menu.items():
@@ -218,7 +218,7 @@ def add_menu():
 
     # Set old autoplace shortcut.
     try:
-        nuke.menu("Nuke").findItem('Edit').findItem(
+        nuke.menu(b"Nuke").findItem('Edit').findItem(
             'Node').findItem('Autoplace').setShortcut("Ctrl+L")
     except AttributeError as ex:
         print(ex)
@@ -226,8 +226,8 @@ def add_menu():
     # create_node_menu
     _plugin_path = '../../../plugins'
 
-    m = nuke.menu("Nodes")
-    m = m.addMenu('吾立方'.encode('utf-8'), icon='Modify.png')
+    m = nuke.menu(b"Nodes")
+    m = m.addMenu('吾立方'.encode('utf-8'), icon=b'Modify.png')
     create_menu_by_dir(m, os.path.abspath(
         os.path.join(__file__, _plugin_path)))
 
@@ -249,7 +249,7 @@ def create_menu_by_dir(parent, dir_):
             continue
         _abspath = os.path.join(_dir, i)
         if os.path.isdir(_abspath):
-            m = nuke.menu('Nodes').findItem(
+            m = nuke.menu(b'Nodes').findItem(
                 i) or parent.addMenu(i, icon='{}.png'.format(i))
             create_menu_by_dir(m, _abspath)
         else:

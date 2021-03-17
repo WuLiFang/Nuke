@@ -22,31 +22,31 @@ def replace_sequence():
     '''Replace all read node to specified frame range sequence.  '''
 
     # Prepare Panel
-    panel = nuke.Panel(b'单帧替换为序列')
-    label_path_prefix = b'限定只替换此文件夹中的读取节点'
-    label_first = b'设置工程起始帧'
-    label_last = b'设置工程结束帧'
+    panel = nuke.Panel(cast.binary('单帧替换为序列'))
+    label_path_prefix = cast.binary('限定只替换此文件夹中的读取节点')
+    label_first = cast.binary('设置工程起始帧')
+    label_last = cast.binary('设置工程结束帧')
 
     panel.addFilenameSearch(label_path_prefix, 'z:/')
     panel.addExpressionInput(label_first, int(
-        nuke.Root()['first_frame'].value()))
+        nuke.Root()[b'first_frame'].value()))
     panel.addExpressionInput(label_last, int(
-        nuke.Root()['last_frame'].value()))
+        nuke.Root()[b'last_frame'].value()))
 
     confirm = panel.show()
     if confirm:
         render_path = os.path.normcase(
             cast.text(panel.value(label_path_prefix)))
 
-        first = int(panel.value(label_first))
-        last = int(panel.value(label_last))
+        first = int(cast.not_none(panel.value(label_first)))
+        last = int(cast.not_none(panel.value(label_last)))
         flag_frame = None
 
         nuke.Root()[b'proxy'].setValue(False)
         nuke.Root()[b'first_frame'].setValue(first)
         nuke.Root()[b'last_frame'].setValue(last)
 
-        for n in nuke.allNodes('Read'):
+        for n in nuke.allNodes(b'Read'):
             file_path = cast.text(nuke.filename(n))
             if os.path.normcase(file_path).startswith(render_path):
                 search_result = re.search(r'\.([\d]+)\.', file_path)
@@ -81,8 +81,8 @@ def use_relative_path(nodes):
     proj_dir = PurePath(nuke.value('root.project_directory').decode("utf-8"))
     for n in nodes:
         try:
-            path = PurePath(n['file'].value().decode("utf-8"))
-            n['file'].setValue(cast.binary(
+            path = PurePath(n[b'file'].value().decode("utf-8"))
+            n[b'file'].setValue(cast.binary(
                 path.relative_to(proj_dir).as_posix()))
         except NameError:
             continue
@@ -91,8 +91,10 @@ def use_relative_path(nodes):
 def reload_all_read_node():
     """Reload all read node by reload button.  """
 
-    for n in nuke.allNodes('Read'):
-        n['reload'].execute()
+    for n in nuke.allNodes(b'Read'):
+        k = n[b'reload']
+        assert isinstance(k, nuke.Script_Knob)
+        k.execute()
 
 
 def set_framerange(first, last, nodes=None):
@@ -103,29 +105,29 @@ def set_framerange(first, last, nodes=None):
     first, last = int(first), int(last)
     for n in nodes:
         if n.Class() == 'Read':
-            n['first'].setValue(first)
-            n['origfirst'].setValue(first)
-            n['last'].setValue(last)
-            n['origlast'].setValue(last)
+            n[b'first'].setValue(first)
+            n[b'origfirst'].setValue(first)
+            n[b'last'].setValue(last)
+            n[b'origlast'].setValue(last)
 
 
 def dialog_set_framerange():
     """Dialog for set_framerange.  """
 
-    panel = nuke.Panel('设置帧范围')
-    panel.addExpressionInput('first', nuke.numvalue('root.first_frame'))
-    panel.addExpressionInput('last', nuke.numvalue('root.last_frame'))
+    panel = nuke.Panel(cast.binary('设置帧范围'))
+    panel.addExpressionInput(b'first', nuke.numvalue('root.first_frame'))
+    panel.addExpressionInput(b'last', nuke.numvalue('root.last_frame'))
     confirm = panel.show()
 
     if confirm:
-        set_framerange(panel.value('first'), panel.value('last'))
+        set_framerange(panel.value(b'first'), panel.value(b'last'))
 
 
 @undoable_func('合并重复读取节点')
 def remove_duplicated_read(is_show_result=True):
     """Remove duplicated read to save memory.  """
 
-    nodes = nuke.allNodes('Read')
+    nodes = nuke.allNodes(b'Read')
     nodes.sort(key=lambda n: n.ypos())
     distinct_read = []
     removed_nodes = []

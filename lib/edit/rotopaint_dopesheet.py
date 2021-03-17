@@ -7,7 +7,7 @@ from __future__ import (absolute_import, division, print_function,
 import re
 
 import nuke
-import nuke.rotopaint
+import nuke.curveknob
 
 import nuketools
 from panels import PythonPanel
@@ -17,7 +17,7 @@ from rotopaint_tools import LIFETIME_TYPE_ALL, iter_layer
 def _rotopaint_keyframes(n):
     key_frames = set([n.firstFrame(), n.lastFrame()])
     for i in iter_layer(n["curves"].rootLayer):
-        if isinstance(i, nuke.rotopaint.Layer):
+        if isinstance(i, nuke.curveknob.Layer):
             continue
         attrs = i.getAttributes()
         lifetime_type = attrs.getValue(0, attrs.kLifeTimeTypeAttribute)
@@ -58,7 +58,7 @@ def apply_timewarp(rotopaint, timewarp, all_stroke=False):
         attrs.set(key, output_time)
 
     for i in iter_layer(root_layer):
-        if isinstance(i, nuke.rotopaint.Layer):
+        if isinstance(i, nuke.curveknob.Layer):
             continue
         attrs = i.getAttributes()
         lifetime_type = attrs.getValue(0, attrs.kLifeTimeTypeAttribute)
@@ -74,7 +74,7 @@ def apply_timewarp(rotopaint, timewarp, all_stroke=False):
 
 class Panel(PythonPanel):
     """Panel for rotopaint dopesheet command.  """
-    widget_id = 'com.wlf.rotopaint_dopesheet'
+    widget_id = b'com.wlf.rotopaint_dopesheet'
 
     def __init__(self, rotopaint):
         super(Panel, self).__init__(
@@ -90,23 +90,23 @@ class Panel(PythonPanel):
                          for i in _rotopaint_keyframes(rotopaint))
             ),
         )
-        self.timewarp["lookup"].setExpression("floor(curve)")
+        self.timewarp[b"lookup"].setExpression("floor(curve)")
         self.timewarp.showControlPanel()
         viewer = nuke.activeViewer()
         viewer.node().setInput(viewer.activeInput() or 0, self.timewarp)
 
         k = nuke.Text_Knob(
-            "",
+            b"",
             "说明".encode("utf-8"),
             ("请在摄影表中编辑 {} 然后选择以下操作"
              .format(self.timewarp.name())
              .encode("utf-8")))
         self.addKnob(k)
-        k = nuke.Script_Knob("apply", "应用至可见笔画".encode("utf-8"))
+        k = nuke.Script_Knob(b"apply", "应用至可见笔画".encode("utf-8"))
         self.addKnob(k)
-        k = nuke.Script_Knob("apply_all", "应用至所有笔画".encode("utf-8"))
+        k = nuke.Script_Knob(b"apply_all", "应用至所有笔画".encode("utf-8"))
         self.addKnob(k)
-        k = nuke.Script_Knob('cancel', 'Cancel'.encode("utf-8"))
+        k = nuke.Script_Knob(b'cancel', 'Cancel'.encode("utf-8"))
         self.addKnob(k)
 
     def show(self):

@@ -7,6 +7,7 @@ _curvelib - The Python API for the Nuke's core curve library
 import six
 import typing
 
+
 class AnimAttributes:
     """
     A collection of named attributes.
@@ -64,7 +65,7 @@ class AnimAttributes:
         """
         ...
 
-    def getCurve(self, attr, view) -> AnimCurve:
+    def getCurve(self, attr: typing.Union[int, six.binary_type], view=...) -> AnimCurve:
         """
         Gets the AnimCurve object for a particular attribute. The attr parameter can be the index or name of the attribute. The view parameter is optional.
         """
@@ -150,6 +151,7 @@ class AnimAttributes:
         ...
 
     ...
+
 
 class AnimCTransform:
     """
@@ -437,6 +439,7 @@ class AnimCTransform:
 
     ...
 
+
 class AnimControlPoint(Flag):
     """
     An animated control point.
@@ -558,6 +561,7 @@ class AnimControlPoint(Flag):
 
     ...
 
+
 class AnimCurve(BaseCurve):
     """
     An animated curve. The curve is described as a series of key values (instances of the AnimCurveKey class) which say what value it should have a particular time. For any time in between keys, the neighbouring key values are interpolated based on a curve type and interpolation settings specified at each key.
@@ -645,6 +649,7 @@ class AnimCurve(BaseCurve):
 
     ...
 
+
 class AnimCurveKey(Flag):
     """
     A key value in a parametric curve represented as a value at a particular time.
@@ -680,6 +685,7 @@ class AnimCurveKey(Flag):
         ...
 
     ...
+
 
 class AnimCurveViews:
     __new__: ...
@@ -731,6 +737,7 @@ class AnimCurveViews:
 
     ...
 
+
 class BaseCurve(Flag):
     """
     A base class for animated curves.
@@ -762,6 +769,7 @@ class BaseCurve(Flag):
         ...
 
     ...
+
 
 class CMatrix4:
     """
@@ -972,6 +980,7 @@ class CMatrix4:
 
     ...
 
+
 class CTransform:
     """
     A transform at a single point in time.
@@ -1039,6 +1048,7 @@ class CTransform:
         ...
 
     ...
+
 
 class CVec2:
     """
@@ -1202,6 +1212,7 @@ class CVec2:
 
     ...
 
+
 class CVec3:
     """
     A 3-component vector.
@@ -1363,6 +1374,7 @@ class CVec3:
         ...
 
     ...
+
 
 class CVec4:
     """
@@ -1526,6 +1538,7 @@ class CVec4:
 
     ...
 
+
 class ControlPoint:
     """
     A control point at a particular point in time.
@@ -1563,6 +1576,7 @@ class ControlPoint:
         ...
 
     ...
+
 
 class CorrespondencePoints:
     """
@@ -1659,6 +1673,7 @@ class CorrespondencePoints:
 
     ...
 
+
 class CubicCurve:
     """
     A baked out curve for a specific frame and view.
@@ -1700,6 +1715,7 @@ class CubicCurve:
 
     ...
 
+
 class CurveType:
     """
     Constants for use in parameters which require a curve type.
@@ -1707,12 +1723,14 @@ class CurveType:
 
     ...
 
+
 class ExtrapolationType:
     """
     Constants for use in parameters which require an extrapolation type.
     """
 
     ...
+
 
 class Flag:
     """
@@ -1758,12 +1776,14 @@ class Flag:
 
     ...
 
+
 class FlagType:
     """
     Constants for use in parameters which require a flag type.
     """
 
     ...
+
 
 class InterpolationType:
     """
@@ -1772,6 +1792,7 @@ class InterpolationType:
 
     ...
 
+
 class RotationOrder:
     """
     Constants for use in parameters which require a rotation order.
@@ -1779,10 +1800,10 @@ class RotationOrder:
 
     ...
 
+
 class TransformOrder:
     """
     Constants for use in parameters which require a transform order.
     """
 
     ...
-

@@ -7,6 +7,8 @@ _curveknob - The Python API for the CurveKnob
 import six
 import typing
 import _curvelib
+import _curveknob
+
 
 class CurveKnob:
     """
@@ -23,12 +25,12 @@ class CurveKnob:
     Creating any new shapes, strokes or layers will require you to pass in a reference to the knob, so it's worth storing the reference in a variable.
     """
 
-    curveWidget: ...
+    curveWidget: _curveknob.CurveWidget
     """
     Curve Widget
     """
 
-    rootLayer: ...
+    rootLayer: _curveknob.Layer
     """
     The root layer.
     """
@@ -79,6 +81,7 @@ class CurveKnob:
         ...
 
     ...
+
 
 class CurveWidget(Element):
     """
@@ -133,6 +136,7 @@ class CurveWidget(Element):
 
     ...
 
+
 class Element:
     """
     The base class for the different types of elements you can create in the RotoPaint node.
@@ -186,6 +190,7 @@ class Element:
         ...
 
     ...
+
 
 class Layer(Element):
     """
@@ -286,6 +291,7 @@ class Layer(Element):
         ...
 
     ...
+
 
 class Shape(Element):
     """
@@ -406,6 +412,7 @@ class Shape(Element):
 
     ...
 
+
 class ShapeControlPoint:
     """
     A control point in a roto shape.
@@ -437,6 +444,7 @@ class ShapeControlPoint:
         ...
 
     ...
+
 
 class Stroke(Element):
     """
@@ -531,4 +539,3 @@ class Stroke(Element):
         ...
 
     ...
-

@@ -6,6 +6,7 @@ from __future__ import (absolute_import, division, print_function,
 
 import nuke
 from six.moves import range
+import cast_unknown as cast
 
 import nuketools
 
@@ -57,7 +58,7 @@ def _create_motion_distort_frame(target, source, frame, direction):
     switch = nuke.nodes.Switch(
         which="{{{{x=={}}}}}".format(frame),
         inputs=[target, cache],
-        label="frame {}".format(frame)
+        label=cast.binary("frame {}".format(frame))
     )
     return switch
 
@@ -76,14 +77,15 @@ def create_motion_distrot(base_frame, frame_gte, frame_lte):
     """
     assert isinstance(frame_gte, int)
     assert isinstance(frame_lte, int)
-    group = nuke.nodes.Group(tile_color="0xa57aaaff")
-    group.setName("MotionDistort1")
-    group.addKnob(nuke.Tab_Knob("", "MotionDistort v0.2.2"))
-    group.addKnob(nuke.Boolean_Knob("disable_motion_mask"))
-    group.addKnob(nuke.EndTabGroup_Knob(""))
+    group = nuke.nodes.Group(tile_color=0xa57aaaff)
+    assert isinstance(group, nuke.Group)
+    group.setName(b"MotionDistort1")
+    group.addKnob(nuke.Tab_Knob(b"", b"MotionDistort v0.2.2"))
+    group.addKnob(nuke.Boolean_Knob(b"disable_motion_mask"))
+    group.addKnob(nuke.EndTabGroup_Knob(b""))
     with group:
-        input_ = nuke.nodes.Input(name="Input")
-        input_motion = nuke.nodes.Input(name="motion")
+        input_ = nuke.nodes.Input(name=b"Input")
+        input_motion = nuke.nodes.Input(name=b"motion")
         last = input_
         # forward
         for frame in range(base_frame + 1, frame_lte + 1, 1):
@@ -103,7 +105,7 @@ def show_motion_distort_dialog():
     """
 
     def _tr(key):
-        return _({
+        return cast.binary({
             'start': '起始帧',
             'end': '结束帧',
             'base': '基准帧',
@@ -115,10 +117,10 @@ def show_motion_distort_dialog():
     panel.addExpressionInput(_tr('end'), nuke.numvalue("root.last_frame"))
     if not panel.show():
         return
-    base = int(panel.value(_tr('base')))
-    start = int(panel.value(_tr('start')))
-    end = int(panel.value(_tr('end')))
+    base = int(cast.not_none(panel.value(_tr('base'))))
+    start = int(cast.not_none(panel.value(_tr('start'))))
+    end = int(cast.not_none(panel.value(_tr('end'))))
     group = create_motion_distrot(base, start, end)
-    group["label"].setValue("{}({}-{})".format(base, start, end))
+    group[b"label"].setValue("{}({}-{})".format(base, start, end))
     for i, n in enumerate(nuke.selectedNodes()[:2]):
         group.setInput(i, n)

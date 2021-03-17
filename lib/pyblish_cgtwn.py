@@ -159,7 +159,7 @@ class ValidateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
                 raise ValueError(
                     '找不到标识为 animation_videos 的文件框，无法获取动画文件。可联系管理员进行设置',
                 )
-        upstream_framecount = int(n['last'].value() - n['first'].value() + 1)
+        upstream_framecount = int(n[b'last'].value() - n[b'first'].value() + 1)
         current_framecount = int(
             instance.data['last'] - instance.data['first'] + 1)
         if upstream_framecount != current_framecount:
@@ -202,7 +202,7 @@ class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):
         assert isinstance(instance, pyblish.api.Instance)
         dest = instance.context.data['workfileFileboxInfo'].path + '/'
 
-        for n in nuke.allNodes('Precomp'):
+        for n in nuke.allNodes(b'Precomp'):
             src = cast.text(nuke.filename(n))
             if src.startswith(dest.replace('\\', '/')):
                 continue

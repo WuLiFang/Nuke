@@ -68,7 +68,7 @@ def _knob_changed(self, knob):
     options = {name: k.value() for name, k in self.knobs().items()}
     options = {k: cast.text(v) if isinstance(v, six.binary_type) else v
                for k, v in options.items()}
-    PatchPrecompSelected.current_options = options
+    PatchPrecompSelected.current_options = options # type: ignore
     assert PatchPrecompSelected.current_options
 
 
@@ -76,7 +76,7 @@ class PatchPrecompSelected(BasePatch):
     """Enhance precomp creation.  """
 
     target = 'nukescripts.precomp_selected'
-    current_options = None
+    current_options = None 
     current_precomp_node = None
 
     @classmethod
@@ -87,9 +87,10 @@ class PatchPrecompSelected(BasePatch):
             return ret
 
         group = nuke.nodes.Group()
+        assert isinstance(group, nuke.Group)
         with group:
             nuke.scriptReadFile(cls.current_options['script'].encode('utf-8'))
-            write_nodes = nuke.allNodes('Write')
+            write_nodes = nuke.allNodes(b'Write')
             assert write_nodes
             if len(write_nodes) != 1:
                 nuke.message('注意: 预合成中发现了多个输出节点, 可能导致渲染出错'.encode('utf-8'))
@@ -104,7 +105,7 @@ class PatchPrecompSelected(BasePatch):
                 # precomp node will change the value
                 # so we need a assert node.
                 assert_node = nuke.nodes.Assert()
-                assert_node['expression'].setExpression(
+                assert_node[b'expression'].setExpression(
                     '[knob {}.checkHashOnRead 0]\n'
                     '[return 1]'.format(n.name()).encode('utf-8'))
                 edit.insert_node(assert_node, n.input(0))
@@ -124,7 +125,7 @@ class PatchPrecompSelected(BasePatch):
 
 
 def _on_precomp_create():
-    PatchPrecompSelected.current_precomp_node = nuke.thisNode()
+    PatchPrecompSelected.current_precomp_node = nuke.thisNode() # type: ignore
 
 
 def enable():

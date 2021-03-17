@@ -7,6 +7,8 @@ comp.precomp - Comp multi pass to beauty.
 import six
 import typing
 
+import nuke
+
 
 class Precomp:
     """
@@ -14,8 +16,8 @@ class Precomp:
     """
 
     def __init__(self, nodes, renderer=None, async_=True):
-        """
-        """
+        self.last_node: typing.Optional[nuke.Node] = ...
+        self.source: typing.Dict[six.text_type, nuke.Node] = {}
         ...
 
     def check(self):
@@ -114,7 +116,6 @@ class __PrecompSwitch:
         Add necessary knobs.
         """
         ...
-
 
     ...
 

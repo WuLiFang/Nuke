@@ -6,9 +6,10 @@ from __future__ import (absolute_import, division, print_function,
 
 import cast_unknown as cast
 import nuke
-from nuke.rotopaint import CVec3
+from nuke.curvelib import CVec3
+import nuke.curveknob
 from six.moves import range
-
+import _rotopaint
 from nuketools import undoable_func
 from rotopaint_tools import LIFETIME_TYPE_ALL, iter_layer, iter_shape_point
 from wlf.progress import progress
@@ -103,7 +104,7 @@ GENERATED_SHAPE_SUFFIX = ".MotionDistort"
 
 def _iter_matched_shape(layer):
     for i in iter_layer(layer):
-        if not isinstance(i, nuke.rotopaint.Shape):
+        if not isinstance(i, nuke.curveknob.Shape):
             continue
         attrs = i.getAttributes()
         visible_curve = attrs.getCurve(attrs.kVisibleAttribute)
@@ -139,7 +140,9 @@ def create_rotopaint_motion_distort(
     assert isinstance(rotopaint, nuke.Node)
     assert rotopaint.Class() == "RotoPaint", (
         "should be rotopaint, got {}".format(rotopaint.Class()))
-    layer = rotopaint["curves"].rootLayer
+    k = rotopaint[b"curves"]
+    assert isinstance(k, _rotopaint.RotoKnob)
+    layer = k.rootLayer
     existed_shape = {i.name: i for i in iter_layer(layer)}
     for i in progress(
             list(_iter_matched_shape(layer)),
@@ -173,14 +176,14 @@ def create_rotopaint_motion_distort(
 def show_dialog():
     """Show GUI dialog for `create_rotopaint_motion_distort`."""
 
-    nodes = nuke.selectedNodes("RotoPaint")
+    nodes = nuke.selectedNodes(b"RotoPaint")
 
     if not nodes:
         nuke.message(cast.binary("请选中RotoPaint节点"))
         return
 
     # Node.sample need a transformed position when using proxy
-    nuke.Root()["proxy"].setValue(False)
+    nuke.Root()[b"proxy"].setValue(False)
 
     def _tr(key):
         return cast.binary({
@@ -197,10 +200,10 @@ def show_dialog():
     panel.addExpressionInput(_tr('interval'), 1)
     if not panel.show():
         return
-    base = int(panel.value(_tr('base')))
-    start = int(panel.value(_tr('start')))
-    end = int(panel.value(_tr('end')))
-    interval = int(panel.value(_tr('interval')))
+    base = int(cast.not_none(panel.value(_tr('base'))))
+    start = int(cast.not_none(panel.value(_tr('start'))))
+    end = int(cast.not_none(panel.value(_tr('end'))))
+    interval = int(cast.not_none(panel.value(_tr('interval'))))
     for n in progress(
             nodes, "RotoPaint 运动扭曲",
             handler=CustomMessageProgressHandler(
@@ -210,8 +213,10 @@ def show_dialog():
         channels = n.channels()
         if not ("forward.u" in channels and "forward.v" in channels):
             nuke.message(
-                cast.binary("节点 {} 缺少 forward.u 和 forward.v 通道，将跳过")
-                .format(n.name())
+                cast.binary(
+                    "节点 {} 缺少 forward.u 和 forward.v 通道，将跳过"
+                    .format(n.name()),
+                )
             )
             continue
         create_rotopaint_motion_distort(n, base, start, end, interval)

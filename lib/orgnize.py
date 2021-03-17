@@ -2,6 +2,8 @@
 """Orgnize nodes layout.  """
 from __future__ import absolute_import, print_function
 
+# TODO: rename to organize
+
 import logging
 import os
 import random
@@ -80,47 +82,51 @@ def is_node_inside(node, backdrop):
 def rename_all_nodes():
     """Rename all nodes by them belonged backdrop node ."""
 
-    for i in nuke.allNodes('BackdropNode'):
+    for i in nuke.allNodes(b'BackdropNode'):
         _nodes = i.getNodes()
-        j = i['label'].value().split('\n')[0].split(' ')[0]
+        j = cast.text(i[b'label'].value()).split('\n')[0].split(' ')[0]
         for k in _nodes:
-            if k.Class() == 'Group' and not '_' in k.name() and not (k['disable'].value()):
-                name = k.name().rstrip('0123456789')
-                k.setName(name + '_' + j + '_1', updateExpressions=True)
-            elif not ('_' in k.name()
-                      or nuke.exists(k.name() + '.disable')
-                      or (k['disable'].value())):
-                k.setName(k.Class() + '_' + j + '_1', updateExpressions=True)
+            if k.Class() == 'Group' and not b'_' in k.name() and not (k[b'disable'].value()):
+                name = cast.text(k.name()).rstrip('0123456789')
+                k.setName(cast.binary(name + '_' + j + '_1'),
+                          updateExpressions=True)
+            elif not (b'_' in k.name()
+                      or nuke.exists(k.name() + b'.disable')
+                      or (k[b'disable'].value())):
+                k.setName(
+                    cast.binary(cast.text(k.Class()) + '_' + j + '_1'),
+                    updateExpressions=True,
+                )
 
 
 def split_by_backdrop():
     # TODO: need refactor and test.
     """Split workfile to multiple file by backdrop."""
 
-    text_saveto = '保存至:'
+    text_save_to = '保存至:'
     text_ask_if_create_new_folder = '目标文件夹不存在, 是否创建?'
 
     # Panel
-    panel = nuke.Panel('splitByBackdrop')
-    panel.addFilenameSearch(text_saveto, os.getenv('TEMP'))
+    panel = nuke.Panel(b'splitByBackdrop')
+    panel.addFilenameSearch(cast.binary(text_save_to), os.getenv('TEMP'))
     panel.show()
 
-    # Save splited .nk file
-    save_path = panel.value(text_saveto).rstrip('\\/')
-    noname_count = 0
-    for i in nuke.allNodes('BackdropNode'):
-        label = repr(i['label'].value()).strip(
+    # Save splitted .nk file
+    save_path = panel.value(cast.binary(text_save_to)).rstrip('\\/')
+    if not os.path.exists(save_path):
+        if not nuke.ask(text_ask_if_create_new_folder):
+            return False
+    dir_ = save_path + '/split_nk/'
+    dir_ = os.path.normcase(dir_)
+    if not os.path.exists(dir_):
+        os.makedirs(dir_)
+    no_name_count = 0
+    for i in nuke.allNodes(b'BackdropNode'):
+        label = repr(i[b'label'].value()).strip(
             "'").replace('\\', '_').replace('/', '_')
         if not label:
-            noname_count += 1
-            label = 'noname_{0:03d}'.format(noname_count)
-        if not os.path.exists(save_path):
-            if not nuke.ask(text_ask_if_create_new_folder):
-                return False
-        dir_ = save_path + '/splitnk/'
-        dir_ = os.path.normcase(dir_)
-        if not os.path.exists(dir_):
-            os.makedirs(dir_)
+            no_name_count += 1
+            label = 'no_name_{0:03d}'.format(no_name_count)
         filename = dir_ + label + '.nk'
         i.selectOnly()
         i.selectNodes()
@@ -177,19 +183,20 @@ def create_backdrop(nodes, autoplace_nodes=False):
     nodes = Nodes(nodes)
 
     z_order = 0
-    selected_backdropnodes = nuke.selectedNodes("BackdropNode")
+    selected_backdropnodes = nuke.selectedNodes(b"BackdropNode")
+    non_selected_backdropnodes = []
     # if there are backdropNodes selected put the new one immediately behind the farthest one
     if selected_backdropnodes:
-        z_order = min([node.knob("z_order").value()
+        z_order = min([node.knob(b"z_order").value()
                        for node in selected_backdropnodes]) - 1
     else:
         # otherwise (no backdrop in selection) find the nearest backdrop
         # if exists and set the new one in front of it
-        non_selected_backdropnodes = nuke.allNodes("BackdropNode")
+        non_selected_backdropnodes = nuke.allNodes(b"BackdropNode")
     for non_backdrop in nodes:
         for backdrop in non_selected_backdropnodes:
             if is_node_inside(non_backdrop, backdrop):
-                z_order = max(z_order, backdrop.knob("z_order").value() + 1)
+                z_order = max(z_order, backdrop.knob(b"z_order").value() + 1)
 
     # Expand the bounds to leave a little border. Elements are offsets for left,
     # top, right and bottom edges respectively
@@ -248,7 +255,7 @@ class Analyser(object):
         ret = 0
 
         counts_dict = self.upstream_counts
-        if counts_dict.has_key(node):
+        if node in counts_dict:
             return counts_dict[node]
 
         if isinstance(node, nuke.BackdropNode):
@@ -264,7 +271,7 @@ class Analyser(object):
                     self._end_nodes.discard(n)
 
         if DEBUG:
-            node['label'].setValue(str(ret))
+            node[b'label'].setValue(str(ret))
 
         counts_dict[node] = ret
         if distinct:
@@ -290,7 +297,7 @@ class Manager(Analyser):
         """Autoplace nodes.  """
 
         backdrops = [n for n in self.nodes if isinstance(n, nuke.BackdropNode)]
-        backdrops.sort(self.get_count)
+        backdrops.sort(key=self.get_count)
         remains_nodes = set(self.nodes)
 
         # TODO
@@ -359,15 +366,15 @@ class Worker(Analyser):
         """Match backdrop size and position to nodes.   """
 
         nodes = Nodes(self.nodes)
-        backdrop = self.backdrop
+        backdrop = cast.instance(self.backdrop, nuke.BackdropNode)
         top, right, bottom, left = self.backdrop_padding
 
         if not backdrop:
             pass
         elif nodes:
             backdrop.setXYpos(nodes.xpos - left, nodes.ypos - top)
-            backdrop['bdwidth'].setValue(nodes.width + right + left)
-            backdrop['bdheight'].setValue(nodes.height + bottom + top)
+            backdrop[b'bdwidth'].setValue(nodes.width + right + left)
+            backdrop[b'bdheight'].setValue(nodes.height + bottom + top)
         else:
             self.autoplace(backdrop)
 

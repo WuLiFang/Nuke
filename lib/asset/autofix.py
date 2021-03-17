@@ -22,7 +22,7 @@ def fix_read():
     """Try fix all nodes that has filename error."""
 
     result = [_fix_one(n, filename_dict=_filename_dict())
-              for n in _errored_nodes()]
+              for n in _nodes_that_has_error()]
     result = {
         'success': result.count(True),
         'fail': result.count(False)
@@ -70,11 +70,11 @@ def _set_filename(n, value):
     k.setValue(value.encode('utf-8'))
 
 
-def _errored_nodes():
+def _nodes_that_has_error():
     ret = set()
     for n in nuke.allNodes():
         try:
-            if not n.hasError() or n['disable'].value():
+            if not n.hasError() or n[b'disable'].value():
                 continue
             ret.add(n)
         except NameError:

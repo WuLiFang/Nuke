@@ -5,5 +5,5 @@
     }
   ],
   "typeCheckingMode": "basic",
-  "reportMissingModuleSource": "information"
+  "reportMissingModuleSource": "none"
 }

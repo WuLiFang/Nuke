@@ -13,6 +13,8 @@
       "cmath": "cpp"
     },
     "cSpell.words": [
+      "Achannels",
+      "Bchannels",
       "Bezier",
       "DONT",
       "Keyer",
@@ -31,6 +33,7 @@
       "imul",
       "inpanel",
       "isub",
+      "itertools",
       "lslope",
       "lvalue",
       "mult",
@@ -39,6 +42,7 @@
       "ocula",
       "or'ed",
       "postchangelog",
+      "psutil",
       "pyblish",
       "pylint",
       "pyright",
@@ -56,7 +60,8 @@
       "vtransform",
       "xpos",
       "xyrt",
-      "ypos"
+      "ypos",
+      "zdefocus"
     ],
     "jupyter.jupyterServerType": "local",
     "python.linting.enabled": false

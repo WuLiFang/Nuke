@@ -39,7 +39,7 @@ class ReadNode(object):
         n = node
 
         self._filename = cast.binary(nuke.filename(n))
-        path = PurePath(self._filename)
+        path = PurePath(cast.text(self._filename))
 
         tag = cast.text(nuke.value(
             '{}.{}'.format(cast.text(n.name()),

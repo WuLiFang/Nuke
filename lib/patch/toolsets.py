@@ -23,7 +23,7 @@ class Patch(BasePatch):
     def func(cls, *args, **kwargs):
 
         cls.orig(*args, **kwargs)
-        m = nuke.menu('Nodes').addMenu('ToolSets')
+        m = nuke.menu(b'Nodes').addMenu(b'ToolSets')
         m.addCommand('刷新'.encode('utf-8'), cls.func)
         m.addCommand(
             '创建共享工具集'.encode('utf-8'), _create_shared_toolsets)
@@ -42,7 +42,7 @@ def _create_shared_toolsets():
     if not nuke.selectedNodes():
         nuke.message('未选中任何节点,不能创建工具集'.encode('utf-8'))
         return
-    toolset_name = nuke.getInput('ToolSet name')
+    toolset_name = nuke.getInput(b'ToolSet name')
     if toolset_name:
         nuke.createToolset(
             filename='Shared/{}'.format(toolset_name),

@@ -6,7 +6,9 @@ from __future__ import (absolute_import, division, print_function,
 
 import cast_unknown as cast
 import nuke
-from nuke.rotopaint import CVec3
+from nuke.curvelib import CVec3
+import nuke.curveknob
+import _rotopaint
 
 from edit import replace_node
 from nuketools import undoable_func
@@ -70,7 +72,7 @@ def _uv_map_rotopaint_shape(uv, shape, u_channel, v_channel):
 
 def _iter_matched_shape(layer, extra):
     for i in iter_layer(layer):
-        if not isinstance(i, nuke.rotopaint.Shape):
+        if not isinstance(i, nuke.curveknob.Shape):
             continue
         attrs = i.getAttributes()
         visible_curve = attrs.getCurve(attrs.kVisibleAttribute)
@@ -84,10 +86,10 @@ def _remove_generated_shape(layer):
     indexes = []
     raw_names = set()
     for index, i in enumerate(iter_layer(layer)):
-        if isinstance(i, nuke.rotopaint.Layer):
+        if isinstance(i, nuke.curveknob.Layer):
             raw_names.update(_remove_generated_shape(layer))
             continue
-        if not isinstance(i, nuke.rotopaint.Shape):
+        if not isinstance(i, nuke.curveknob.Shape):
             continue
         if not i.name.endswith(GENERATED_SHAPE_SUFFIX):
             continue
@@ -116,12 +118,12 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
 
     uv = rotopaint
     channels = uv.channels()
-    rotopaint_output = rotopaint["output"].value()
+    rotopaint_output = rotopaint[b"output"].value()
     if not (u_channel in channels and v_channel in channels):
         uv = nuke.nodes.ShuffleCopy(
             inputs=[rotopaint.input(0), rotopaint.input(0)],
             out=UV_LAYER_NAME,
-            label="uv map",
+            label=b"uv map",
         )
         uv = nuke.nodes.Remove(
             inputs=[uv],
@@ -130,7 +132,7 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
         )
         rotopaint.setInput(0, uv)
 
-    layer = rotopaint["curves"].rootLayer
+    layer = cast.instance(rotopaint[b"curves"], _rotopaint.RotoKnob).rootLayer
     raw_shape_names = _remove_generated_shape(layer)
     _recover_raw_shape_by_name(layer, raw_shape_names)
 
@@ -167,13 +169,13 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
 
 
 def uv_map_selected_rotopaint():
-    nodes = nuke.selectedNodes("RotoPaint")
+    nodes = nuke.selectedNodes(b"RotoPaint")
     if not nodes:
         nuke.message(cast.binary("请选中RotoPaint节点"))
         return
 
     # Node.sample need a transformed position when using proxy
-    nuke.Root()["proxy"].setValue(False)
+    nuke.Root()[b"proxy"].setValue(False)
 
     uv_layer = nuke.Layer(UV_LAYER_NAME)
     if len(uv_layer.channels()) < 2:

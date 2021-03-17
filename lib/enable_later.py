@@ -40,7 +40,7 @@ def marked_nodes():
     ret = set()
     for n in nuke.allNodes():
         try:
-            label = n['label'].value()
+            label = n[b'label'].value()
         except NameError:
             continue
         label = cast.text(label)

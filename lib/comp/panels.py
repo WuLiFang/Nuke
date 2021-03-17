@@ -8,7 +8,7 @@ import webbrowser
 
 import cast_unknown as cast
 import nuke
-import nukescripts  # pylint: disable=import-error
+import nukescripts
 import psutil
 
 from comp.batch import BatchComp
@@ -59,7 +59,7 @@ class CompConfigPanel(nukescripts.PythonPanel):
             self.knobs()[i].setFlag(nuke.STARTLINE)
 
     def knobChanged(self, knob):
-        """Overrride for buttons."""
+        """Override for buttons."""
 
         if knob is self.knobs()['OK']:
             self.update_config()

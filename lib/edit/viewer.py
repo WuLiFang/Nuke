@@ -26,7 +26,7 @@ class CurrentViewer(object):
         if self.viewer:
             n = self.node
         else:
-            viewers = nuke.allNodes('Viewer')
+            viewers = nuke.allNodes(b'Viewer')
             if viewers:
                 n = viewers[0]
             else:
