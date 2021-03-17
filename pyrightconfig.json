@@ -1,9 +1,14 @@
 {
   "executionEnvironments": [
     {
-      "root": "lib"
+      "root": "lib",
     }
   ],
   "typeCheckingMode": "basic",
-  "reportMissingModuleSource": "none"
+  "reportMissingModuleSource": "none",
+  "exclude": [
+    "lib/site-packages",
+    ".venv",
+    "typings",
+  ],
 }
