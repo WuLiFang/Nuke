@@ -6,6 +6,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 import os
 import webbrowser
 
+import cast_unknown as cast
 import nuke
 import nukescripts  # pylint: disable=import-error
 import psutil
@@ -13,7 +14,6 @@ import psutil
 from comp.batch import BatchComp
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, BatchCompConfig,
                          CompConfig)
-from nuketools import iutf8, utf8
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.decorators import run_async, run_in_main_thread
@@ -98,27 +98,27 @@ class BatchCompPanel(nukescripts.PythonPanel):
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, utf8('批量合成'), 'com.wlf.batchcomp')
+            self, cast.binary('批量合成'), b'com.wlf.batchcomp')
         self._shot_list = None
         self.cfg = BatchCompConfig().read()
 
         for i in self.knob_list:
-            k = i[0](*iutf8(i[1:]))
+            k = i[0](*(cast.binary(j) for j in i[1:]))
             try:
-                k.setValue(utf8(self.cfg.get(i[1])))
+                k.setValue(cast.binary(self.cfg.get(i[1])))
             except TypeError:
                 pass
             self.addKnob(k)
         for i in ('exclude_existed',):
             self.knobs()[i].setFlag(nuke.STARTLINE)
         self.knobs()['generate_txt'].setLabel(
-            utf8('生成 {}.txt'.format(self.txt_name)))
+            cast.binary('生成 {}.txt'.format(self.txt_name)))
 
     def __getattr__(self, name):
         return self.knobs()[name].value()
 
     def knobChanged(self, knob):
-        """Overrride for buttons."""
+        """Override for buttons."""
 
         name = knob.name()
 
@@ -183,7 +183,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
 
         for i in ('dir_pat',):
             knob = self.knobs()[i]
-            knob.setValue(utf8(self.cfg.default.get(i)))
+            knob.setValue(cast.binary(self.cfg.default.get(i)))
             self.knobChanged(knob)
 
     def update(self):
@@ -197,7 +197,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
                 _info += u'\n'.join(self._shot_list)
             else:
                 _info = u'找不到镜头'
-            self.knobs()['info'].setValue(utf8(_info))
+            self.knobs()['info'].setValue(cast.binary(_info))
 
         def _button_enabled():
             _knobs = [

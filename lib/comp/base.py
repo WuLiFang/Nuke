@@ -8,12 +8,13 @@ import os
 import re
 import webbrowser
 
+import cast_unknown as cast
 import nuke
 
 from comp.config import BatchCompConfig, CompConfig
 from comp.precomp import Precomp
 from node import ReadNode
-from nuketools import undoable_func, utf8, utf8_dict
+from nuketools import undoable_func
 from orgnize import autoplace
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
@@ -66,7 +67,7 @@ class Comp(object):
                 LOGGER.info('\t不匹配文件夹正则, 跳过')
                 continue
 
-            files = nuke.getFileNameList(utf8(dir_))
+            files = nuke.getFileNameList(cast.binary(dir_))
             footages = [u(i) for i in files if
                         not u(i).endswith(('副本', '.lock'))] if files else []
             if footages:
@@ -77,8 +78,8 @@ class Comp(object):
                     LOGGER.info('\t素材: %s', f)
                     if re.match(CONFIG['footage_pat'], f, flags=re.I):
                         n = nuke.createNode(
-                            'Read', utf8('file {{{}/{}}}'.format(dir_, f)))
-                        n['on_error'].setValue(utf8('nearest frame'))
+                            'Read', cast.binary('file {{{}/{}}}'.format(dir_, f)))
+                        n['on_error'].setValue(cast.binary('nearest frame'))
                     else:
                         LOGGER.info('\t\t不匹配素材正则, 跳过')
         LOGGER.info('{:-^30s}'.format('结束 导入素材'))
@@ -192,14 +193,14 @@ class Comp(object):
             except RuntimeError as ex:
                 LOGGER.error(u(ex))
 
-        n = nuke.nodes.Unpremult(inputs=[n], label=utf8('整体调色开始'))
+        n = nuke.nodes.Unpremult(inputs=[n], label=cast.binary('整体调色开始'))
 
-        n = nuke.nodes.Premult(inputs=[n], label=utf8('整体调色结束'))
+        n = nuke.nodes.Premult(inputs=[n], label=cast.binary('整体调色结束'))
 
         n = nuke.nodes.Reformat(
             inputs=[n],
             resize='none',
-            label=utf8('整体滤镜开始'))
+            label=cast.binary('整体滤镜开始'))
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
@@ -215,12 +216,12 @@ class Comp(object):
                     inputs=[n], uv='motion', scale=1,
                     soft_lines=True, normalize=False, disable=True)
         n = nuke.nodes.Aberration(
-            inputs=[n], distortion1='0 0 0.003', label=utf8('溢色'))
+            inputs=[n], distortion1='0 0 0.003', label=cast.binary('溢色'))
 
         n = nuke.nodes.Reformat(
             inputs=[n],
             resize='none',
-            label=utf8('整体滤镜结束'))
+            label=cast.binary('整体滤镜结束'))
 
         n = nuke.nodes.wlf_Write(inputs=[n])
         n.setName('_Write')
@@ -378,7 +379,7 @@ class Comp(object):
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} main}}'.format(
                         self.tag_metadata_key),
-                    label=utf8('主干开始'))
+                    label=cast.binary('主干开始'))
 
             if i > 0:
                 n = nuke.nodes.Merge2(
@@ -413,7 +414,7 @@ class Comp(object):
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n], metadata='{{set {} {}}}'.format(
                         self.tag_metadata_key, tag),
-                    label=utf8('元数据标签'))
+                    label=cast.binary('元数据标签'))
                 ret.append(n)
             except AssertionError:
                 ret.extend(nodes)
@@ -488,20 +489,20 @@ class Comp(object):
                 contrast=2, center=0.001, soft_clip=1, disable=True)
 
             if tag and tag.startswith('BG'):
-                kwargs = {'in': 'depth', 'label': '远处'}
+                kwargs = {'in': b'depth', 'label': cast.binary('远处')}
                 input_mask = nuke.nodes.PositionKeyer(
-                    inputs=[n], **utf8_dict(kwargs))
+                    inputs=[n], **kwargs)
                 n = nuke.nodes.ColorCorrect(
                     inputs=[n, input_mask], disable=True)
                 n = nuke.nodes.Grade(
                     inputs=[n, input_mask],
                     black=0.05,
                     black_panelDropped=True,
-                    label=utf8('深度雾'),
+                    label=cast.binary('深度雾'),
                     disable=True)
-                kwargs = {'in': 'depth', 'label': '近处'}
+                kwargs = {'in': b'depth', 'label': cast.binary('近处')}
                 input_mask = nuke.nodes.PositionKeyer(
-                    inputs=[n], **utf8_dict(kwargs))
+                    inputs=[n], **kwargs)
                 n = nuke.nodes.ColorCorrect(
                     inputs=[n, input_mask], disable=True)
                 n = nuke.nodes.RolloffContrast(
@@ -722,7 +723,7 @@ class Comp(object):
         # Use for one-node zdefocus control
         n = nuke.nodes.ZDefocus2(
             inputs=[input_node], math='depth', output='focal plane setup',
-            center=0.00234567, blur_dof=False, label=utf8('** 虚焦总控制 **\n在此拖点定虚焦及设置'))
+            center=0.00234567, blur_dof=False, label=cast.binary('** 虚焦总控制 **\n在此拖点定虚焦及设置'))
         n.setName('_ZDefocus')
         return n
 

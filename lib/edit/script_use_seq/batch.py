@@ -11,12 +11,12 @@ import tempfile
 import webbrowser
 from datetime import datetime
 
+import cast_unknown as cast
 import jinja2
 import nuke
 import six
-
-from nuketools import utf8
 from pathlib2_unicode import Path
+
 from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 from wlf.decorators import run_async
@@ -69,8 +69,8 @@ def run(input_dir, output_dir):
                         START_MESSAGE)[2].strip()
                 proc.wait()
                 if proc.returncode:
-                    nuke.tprint(utf8(stdout))
-                    nuke.tprint(utf8(stderr))
+                    nuke.tprint(cast.binary(stdout))
+                    nuke.tprint(cast.binary(stderr))
                     LOGGER.error("Process failed: filename=%s", i)
                 result.append(dict(
                     start_time=start_time.isoformat(),

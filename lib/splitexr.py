@@ -9,6 +9,8 @@ import sys
 import webbrowser
 from subprocess import Popen
 
+import cast_unknown as cast
+
 try:
     _argv = sys.argv  # Nuke will reset sys.argv
     import nuke
@@ -128,7 +130,7 @@ if nuke.GUI:
                     info += '\n'.join(files)
                 else:
                     info = '找不到素材'
-                self.knobs()['info'].setValue(utf8(info))
+                self.knobs()['info'].setValue(cast.binary(info))
 
             def _button_enabled():
 

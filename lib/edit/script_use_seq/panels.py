@@ -3,10 +3,10 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+import cast_unknown as cast
 import nuke
 import nukescripts  # type: ignore # pylint: disable=import-error
 
-from nuketools import iutf8, utf8
 from wlf.decorators import run_async, run_in_main_thread
 
 from . import batch
@@ -16,17 +16,17 @@ from .config import Config
 class ConfigPanel(nukescripts.PythonPanel):
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, utf8('单帧工程转换设置'), 'com.wlf.script_use_seq')
+            self, cast.binary('单帧工程转换设置'), 'com.wlf.script_use_seq')
         self.cfg = Config().read()
 
         self.knob_list = [
             (nuke.Multiline_Eval_String_Knob,
-             'seq_include', utf8('序列查找规则')),
+             'seq_include', cast.binary('序列查找规则')),
             (nuke.Multiline_Eval_String_Knob,
-             'seq_exclude', utf8('序列排除规则')),
-            (nuke.String_Knob, 'override_project_directory', utf8('覆盖工程目录')),
-            (nuke.Boolean_Knob, 'use_wlf_write', utf8('使用 wlf_Write 替换 Write')),
-            (nuke.Boolean_Knob, 'is_auto_frame_range', utf8('自动设置工程帧范围')),
+             'seq_exclude', cast.binary('序列排除规则')),
+            (nuke.String_Knob, 'override_project_directory', cast.binary('覆盖工程目录')),
+            (nuke.Boolean_Knob, 'use_wlf_write', cast.binary('使用 wlf_Write 替换 Write')),
+            (nuke.Boolean_Knob, 'is_auto_frame_range', cast.binary('自动设置工程帧范围')),
         ]
         for i in self.knob_list:
             k = i[0](i[1], i[2])
@@ -63,14 +63,14 @@ class BatchPanel(nukescripts.PythonPanel):
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, utf8('批量单帧工程转换'), 'com.wlf.batch_script_use_seq')
+            self, cast.binary('批量单帧工程转换'), 'com.wlf.batch_script_use_seq')
         self._shot_list = None
         self.cfg = Config().read()
 
         for i in self.knob_list:
-            k = i[0](*iutf8(i[1:]))
+            k = i[0](*(cast.binary(j) for j in i[1:]))
             try:
-                k.setValue(utf8(self.cfg.get(i[1])))
+                k.setValue(cast.binary(self.cfg.get(i[1])))
             except TypeError:
                 pass
             self.addKnob(k)
@@ -104,6 +104,6 @@ class BatchPanel(nukescripts.PythonPanel):
     def confirm(self):
         self.update_config()
         if not self.cfg['input_dir'] or not self.cfg['output_dir']:
-            nuke.message(utf8("未填写输入或输出文件夹"))
+            nuke.message(cast.binary("未填写输入或输出文件夹"))
             raise RuntimeError("cancel")
         batch.run(self.cfg['input_dir'], self.cfg['output_dir'])

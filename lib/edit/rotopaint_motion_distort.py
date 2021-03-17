@@ -4,15 +4,14 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import cast_unknown as cast
 import nuke
 from nuke.rotopaint import CVec3
 from six.moves import range
 
-from nuketools import undoable_func, utf8
-from rotopaint_tools import (LIFETIME_TYPE_ALL, RelativePointProxy, iter_layer,
-                             iter_shape_point)
+from nuketools import undoable_func
+from rotopaint_tools import LIFETIME_TYPE_ALL, iter_layer, iter_shape_point
 from wlf.progress import progress
-from wlf.progress.handlers.nuke import NukeProgressHandler
 from wlf_tools.progress import CustomMessageProgressHandler
 
 
@@ -35,11 +34,11 @@ def _motion_distort_rotopaint_anim_point_frame(
         motion_frame -= 1
     base_pos = point.getPosition(base_frame)
     offset = CVec3(
-        motion.sample(utf8("forward.u"),
+        motion.sample(cast.binary("forward.u"),
                       base_pos.x,
                       base_pos.y,
                       frame=motion_frame),
-        motion.sample(utf8("forward.v"),
+        motion.sample(cast.binary("forward.v"),
                       base_pos.x,
                       base_pos.y,
                       frame=motion_frame),
@@ -152,7 +151,7 @@ def create_rotopaint_motion_distort(
         name = i.name
         is_generated = name.endswith(GENERATED_SHAPE_SUFFIX)
         if not is_generated:
-            name += utf8(GENERATED_SHAPE_SUFFIX)
+            name += cast.binary(GENERATED_SHAPE_SUFFIX)
         v = existed_shape.get(name) or i.clone()
         v.name = name
 
@@ -177,14 +176,14 @@ def show_dialog():
     nodes = nuke.selectedNodes("RotoPaint")
 
     if not nodes:
-        nuke.message(utf8("请选中RotoPaint节点"))
+        nuke.message(cast.binary("请选中RotoPaint节点"))
         return
 
     # Node.sample need a transformed position when using proxy
     nuke.Root()["proxy"].setValue(False)
 
     def _tr(key):
-        return utf8({
+        return cast.binary({
             'start': '起始帧',
             'end': '结束帧',
             'base': '基准帧',
@@ -211,7 +210,7 @@ def show_dialog():
         channels = n.channels()
         if not ("forward.u" in channels and "forward.v" in channels):
             nuke.message(
-                utf8("节点 {} 缺少 forward.u 和 forward.v 通道，将跳过")
+                cast.binary("节点 {} 缺少 forward.u 和 forward.v 通道，将跳过")
                 .format(n.name())
             )
             continue

@@ -7,13 +7,13 @@ from __future__ import (absolute_import, division, print_function,
 import logging
 import re
 
+import cast_unknown as cast
 import nuke
+from pathlib2_unicode import Path
 
 from edit import replace_node
 from edit.script_use_seq import files
 from edit.script_use_seq.config import Config
-from nuketools import utf8
-from pathlib2_unicode import Path
 from wlf.progress import progress
 
 LOGGER = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ def replace_footages(cfg, footages=None):
             continue
         footage = name_footage_map[name]
         seq = get_seq(footage)
-        n[b'file'].fromUserText(utf8(seq))
+        n[b'file'].fromUserText(cast.binary(seq))
         frames = get_seq_frames(seq)
         if frames:
             first = min(frames)

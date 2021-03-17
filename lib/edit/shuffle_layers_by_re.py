@@ -8,11 +8,11 @@ import os
 import re
 import webbrowser
 
+import cast_unknown as cast
 import nuke
-import nukescripts
 
 from filetools import plugin_folder_path
-from nuketools import undoable_func, utf8
+from nuketools import undoable_func
 from orgnize import autoplace
 from panels import PythonPanel
 from wlf.config import Config as BaseConfig
@@ -78,7 +78,7 @@ if nuke.GUI:
 
         nodes = nuke.selectedNodes()
         if not nodes:
-            nuke.message(utf8("请选中要处理的节点"))
+            nuke.message(cast.binary("请选中要处理的节点"))
             return
 
         panel = Panel()

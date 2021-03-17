@@ -10,13 +10,12 @@ import re
 import sys
 from typing import Dict, List, Optional, Set
 
+import cast_unknown as cast
 import nuke
 
 from edit import add_layer, copy_layer, replace_node
 from filetools import get_layer, module_path
-from nuketools import utf8, utf8_dict
 from orgnize import autoplace
-from wlf.codectools import get_encoded as e
 from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.precomp')
@@ -271,8 +270,10 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         setattr(sys.modules['__main__'], '__PrecompSwitch', PrecompSwitch)
         if self.last_node is remove_node:
             kwargs['disable'] = True
+        for i in kwargs:
+            kwargs[i] = cast.binary(kwargs[i])
         self.last_node = PrecompSwitch.init(
-            nuke.nodes.Switch(**utf8_dict(kwargs)))
+            nuke.nodes.Switch(**kwargs))
 
         replace_node(dot_node.input(0), self.last_node)
 
@@ -309,7 +310,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                 )
             except NameError:
                 pass
-            ret = nuke.nodes.Shuffle(**utf8(kwargs))
+            ret = nuke.nodes.Shuffle(**cast.binary(kwargs))
         elif layer in self._config.combine:
             pair = self._config.combine[layer]
             if self.source.get(pair[0])\
@@ -335,7 +336,9 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                     )
                 except NameError:
                     pass
-                n = nuke.nodes.Merge2(**utf8_dict(kwargs))
+                for i in kwargs:
+                    kwargs[i] = cast.binary(kwargs[i])
+                n = nuke.nodes.Merge2(**kwargs)
                 self.source[layer] = n
                 ret = n
             else:
@@ -359,7 +362,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         self.last_node = nuke.nodes.Merge2(
             inputs=[self.last_node, input1], operation='plus',
             also_merge=layer if layer not in self.layers() else 'none',
-            label=utf8(self._config.l10n(layer)),
+            label=cast.binary(self._config.l10n(layer)),
             output='rgb')
 
     def copy(self, layer, output=None):

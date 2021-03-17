@@ -7,11 +7,12 @@ from __future__ import (absolute_import, division, print_function,
 import os
 import re
 
+import cast_unknown as cast
 import nuke
+from pathlib2_unicode import PurePath
 
 from node import wlf_write_node
-from nuketools import undoable_func, utf8
-from pathlib2_unicode import PurePath
+from nuketools import undoable_func
 from wlf.codectools import get_unicode as u
 from wlf.codectools import u_print
 
@@ -82,7 +83,7 @@ def use_relative_path(nodes):
     for n in nodes:
         try:
             path = PurePath(n['file'].value().decode("utf-8"))
-            n['file'].setValue(utf8(path.relative_to(proj_dir).as_posix()))
+            n['file'].setValue(cast.binary(path.relative_to(proj_dir).as_posix()))
         except NameError:
             continue
 

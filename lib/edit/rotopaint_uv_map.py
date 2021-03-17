@@ -4,12 +4,13 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
+import cast_unknown as cast
 import nuke
 from nuke.rotopaint import CVec3
 
 from edit import replace_node
-from nuketools import undoable_func, utf8
-from rotopaint_tools import (RelativePointProxy, iter_layer, iter_shape_point,
+from nuketools import undoable_func
+from rotopaint_tools import (iter_layer, iter_shape_point,
                              iter_shapes_in_layer)
 from wlf.progress import progress
 from wlf_tools.progress import CustomMessageProgressHandler
@@ -141,7 +142,7 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
             ),
     ):
         v = i.clone()
-        v.name = i.name + utf8(GENERATED_SHAPE_SUFFIX)
+        v.name = i.name + cast.binary(GENERATED_SHAPE_SUFFIX)
 
         attrs = i.getAttributes()
         attrs.getCurve(attrs.kVisibleAttribute).constantValue = False
@@ -168,7 +169,7 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
 def uv_map_selected_rotopaint():
     nodes = nuke.selectedNodes("RotoPaint")
     if not nodes:
-        nuke.message(utf8("请选中RotoPaint节点"))
+        nuke.message(cast.binary("请选中RotoPaint节点"))
         return
 
     # Node.sample need a transformed position when using proxy

@@ -9,10 +9,10 @@ import io
 import os
 import sys
 
+import cast_unknown as cast
 import nuke
-
-from nuketools import utf8
 from pathlib2_unicode import Path
+
 from wlf.codectools import u_print
 
 
@@ -36,11 +36,11 @@ def main():
         with io.open(args.footage_list, encoding='utf8') as f:
             footages = f.read().splitlines()
             assert footages
-    nuke.scriptOpen(utf8(args.input))
+    nuke.scriptOpen(cast.binary(args.input))
     _script_use_seq.execute(footages=footages)
     nuke.Root()['name'].setValue(args.output)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
-    nuke.scriptSave(utf8(args.output))
+    nuke.scriptSave(cast.binary(args.output))
 
 
 if __name__ == '__main__':

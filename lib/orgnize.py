@@ -8,11 +8,12 @@ import random
 import threading
 from collections import Iterable, namedtuple
 
+import cast_unknown as cast
 import nuke
 
 import callback
 from nodeutil import Nodes, get_upstream_nodes
-from nuketools import undoable_func, utf8
+from nuketools import undoable_func
 from wlf.decorators import run_async, run_in_main_thread, run_with_clock
 
 LOGGER = logging.getLogger('com.wlf.orgnize')
@@ -30,7 +31,7 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
     # Executing check
     if not LOCK.acquire(False):
         msg = u'不能同时进行两个自动摆放'
-        nuke.message(utf8(msg))
+        nuke.message(cast.binary(msg))
         LOGGER.warning(msg)
         return
     LOCK.release()

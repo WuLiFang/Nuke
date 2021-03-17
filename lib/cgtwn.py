@@ -7,16 +7,14 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import logging
 
+import cast_unknown as cast
 import nuke
+from pathlib2_unicode import Path
 
 import callback
 import cgtwq
 from cgtwq.helper.wlf import get_entry_by_file
 from edit import CurrentViewer
-from nuketools import utf8
-from pathlib2_unicode import Path
-import cast_unknown as cast
-
 
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
@@ -75,12 +73,12 @@ class Task(cgtwq.Entry):
         """
 
         node_name = {'animation_videos': '动画视频'}.get(sign, sign)
-        n = nuke.toNode(utf8(node_name))
+        n = nuke.toNode(cast.binary(node_name))
         if n is None:
             dir_ = self.filebox.get(sign).path
             videos = Path(dir_).glob('{}.*'.format(self.shot))
             for video in videos:
-                n = nuke.nodes.Read(name=utf8(node_name))
+                n = nuke.nodes.Read(name=cast.binary(node_name))
                 k = n[b'file']
                 assert isinstance(k, nuke.File_Knob), k
                 k.fromUserText(cast.binary(video))

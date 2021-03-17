@@ -8,8 +8,9 @@ import os
 import webbrowser
 from itertools import chain
 
+import cast_unknown as cast
 import nuke
-import nukescripts  # type: ignore
+import nukescripts
 import six
 
 import asset
@@ -31,7 +32,6 @@ import nuketools
 import orgnize
 import scanner
 import splitexr
-from nuketools import utf8
 
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
@@ -57,7 +57,7 @@ def add_menu():
         try:
             comp.Comp().create_nodes()
         except comp.FootageError:
-            nuke.message(utf8('请先导入素材'))
+            nuke.message(cast.binary('请先导入素材'))
 
     def _open_help():
         help_page = os.path.join(
