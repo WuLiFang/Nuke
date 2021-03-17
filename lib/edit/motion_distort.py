@@ -8,8 +8,6 @@ import nuke
 from six.moves import range
 
 import nuketools
-from nuketools import utf8 as _
-from orgnize import autoplace
 
 
 def _create_motion_distort_frame(target, source, frame, direction):

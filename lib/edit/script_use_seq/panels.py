@@ -16,7 +16,7 @@ from .config import Config
 class ConfigPanel(nukescripts.PythonPanel):
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, cast.binary('单帧工程转换设置'), 'com.wlf.script_use_seq')
+            self, cast.binary('单帧工程转换设置'), b'com.wlf.script_use_seq')
         self.cfg = Config().read()
 
         self.knob_list = [
@@ -63,7 +63,7 @@ class BatchPanel(nukescripts.PythonPanel):
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, cast.binary('批量单帧工程转换'), 'com.wlf.batch_script_use_seq')
+            self, cast.binary('批量单帧工程转换'), b'com.wlf.batch_script_use_seq')
         self._shot_list = None
         self.cfg = Config().read()
 

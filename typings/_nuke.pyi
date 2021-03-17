@@ -7963,7 +7963,7 @@ def formats() -> list:
     ...
 
 
-def frame(f) -> int:
+def frame(f: int = ...) -> int:
     """
     Return or set the current frame number. Deprecated. Use Root.frame.
 

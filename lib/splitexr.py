@@ -15,7 +15,6 @@ try:
     _argv = sys.argv  # Nuke will reset sys.argv
     import nuke
 
-    from nuketools import utf8
     from wlf.decorators import run_async
     from wlf.progress import progress
     from wlf.codectools import get_encoded as e

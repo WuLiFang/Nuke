@@ -13,10 +13,10 @@ from autolabel import autolabel  # pylint : disable=import-error
 import asset
 import asset.missing_frames
 import cast_unknown as cast
-from nuketools import utf8
 from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger(__name__)
+
 
 def custom_autolabel():
     '''

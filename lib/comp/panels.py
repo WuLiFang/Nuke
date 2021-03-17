@@ -14,34 +14,36 @@ import psutil
 from comp.batch import BatchComp
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, BatchCompConfig,
                          CompConfig)
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
 from wlf.decorators import run_async, run_in_main_thread
+import cast_unknown as cast
 
 
 class CompConfigPanel(nukescripts.PythonPanel):
     """UI of comp config.  """
 
     knob_list = [
-        (nuke.File_Knob, 'mp', b'指定MP'),
-        (nuke.File_Knob, 'mp_lut', 'MP LUT'),
-        (nuke.Tab_Knob, 'parts', b'节点组开关'),
-        (nuke.Boolean_Knob, 'precomp', b'预合成'),
-        (nuke.Boolean_Knob, 'masks', b'预建常用mask'),
-        (nuke.Boolean_Knob, 'colorcorrect', b'预建调色节点'),
-        (nuke.Boolean_Knob, 'filters', b'预建滤镜节点'),
-        (nuke.Boolean_Knob, 'zdefocus', b'预建ZDefocus'),
-        (nuke.Boolean_Knob, 'depth', b'合并depth'),
-        (nuke.Boolean_Knob, 'other', b'合并其他通道'),
-        (nuke.Tab_Knob, 'filter', b'正则过滤'),
-        (nuke.String_Knob, 'footage_pat', b'素材名'),
-        (nuke.String_Knob, 'tag_pat', b'标签'),
-        (nuke.Script_Knob, 'reset', b'重置'),
+        (nuke.File_Knob, 'mp', cast.binary('指定MP')),
+        (nuke.File_Knob, 'mp_lut', cast.binary('MP LUT')),
+        (nuke.Tab_Knob, 'parts', cast.binary('节点组开关')),
+        (nuke.Boolean_Knob, 'precomp', cast.binary('预合成')),
+        (nuke.Boolean_Knob, 'masks', cast.binary('预建常用mask')),
+        (nuke.Boolean_Knob, 'colorcorrect', cast.binary('预建调色节点')),
+        (nuke.Boolean_Knob, 'filters', cast.binary('预建滤镜节点')),
+        (nuke.Boolean_Knob, 'zdefocus', cast.binary('预建ZDefocus')),
+        (nuke.Boolean_Knob, 'depth', cast.binary('合并depth')),
+        (nuke.Boolean_Knob, 'other', cast.binary('合并其他通道')),
+        (nuke.Tab_Knob, 'filter', cast.binary('正则过滤')),
+        (nuke.String_Knob, 'footage_pat', cast.binary('素材名')),
+        (nuke.String_Knob, 'tag_pat', cast.binary('标签')),
+        (nuke.Script_Knob, 'reset', cast.binary('重置')),
     ]
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, b'自动合成设置', 'com.wlf.comp')
+            self,
+            cast.binary('自动合成设置'),
+            b'com.wlf.comp',
+        )
         self._shot_list = None
         self.cfg = CompConfig().read()
 
@@ -151,9 +153,9 @@ class BatchCompPanel(nukescripts.PythonPanel):
         shots = self.batchcomp.get_shot_list()
         path = os.path.join(self.output_dir, '{}.txt'.format(self.txt_name))
         line_width = max(len(i) for i in shots)
-        if os.path.exists(e(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
+        if os.path.exists(cast.binary(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
             return
-        with open(e(path), 'w') as f:
+        with open(cast.binary(path), 'w') as f:
             f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
                                 for i in shots))
         webbrowser.open(path)
@@ -161,7 +163,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
     @property
     def txt_name(self):
         """Output txt name. """
-        return u(self.knobs()['txt_name'].value())
+        return cast.text(self.knobs()['txt_name'].value())
 
     @property
     def batchcomp(self):

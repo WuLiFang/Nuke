@@ -8,7 +8,6 @@ import logging
 import os
 import re
 import sys
-from typing import Dict, List, Optional, Set
 
 import cast_unknown as cast
 import nuke
@@ -16,9 +15,9 @@ import nuke
 from edit import add_layer, copy_layer, replace_node
 from filetools import get_layer, module_path
 from orgnize import autoplace
-from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger('com.wlf.precomp')
+
 
 class __PrecompSwitch(object):
     """Modified switch node for precomp.  """
@@ -37,7 +36,7 @@ class __PrecompSwitch(object):
         if knob_name not in knobs:
             n = node.input(1)
             raw_hash = cls.hash(n)
-            k = nuke.Int_Knob(knob_name)
+            k = nuke.Int_Knob(cast.binary(knob_name))
             k.setValue(raw_hash)
             node.addKnob(k)
         else:
@@ -107,9 +106,9 @@ class __PrecompSwitch(object):
         elif cls.knob_name not in node.knobs():
             ret = True
         else:
-            ret = node[cls.knob_name].value() != cls.hash(n)
+            ret = node[cast.binary(cls.knob_name)].value() != cls.hash(n)
 
-        node['tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
+        node[b'tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
         return ret
 
 
@@ -119,13 +118,13 @@ PrecompSwitch = __PrecompSwitch
 class RendererConfig():
     def __init__(self):
         self.name = ""
-        self.layers = set()  # type: Set[str]
-        self.combine = {}  # type: Dict[str, List[str]]
-        self.combineMode = {}  # type: Dict[str, str]
-        self.translate = {}  # type: Dict[str, str]
-        self.copy = []  # type: List[str]
-        self.rename = {}  # type: Dict[str, str]
-        self.plus = []  # type: List[str]
+        self.layers = set()
+        self.combine = {}
+        self.combineMode = {}
+        self.translate = {}
+        self.copy = []
+        self.rename = {}
+        self.plus = []
 
     def fromJSON(self, data):
         """load data from json.
@@ -154,10 +153,10 @@ class RendererConfig():
         for pat in self.translate:
             if re.match(pat, value):
                 return re.sub(pat, self.translate[pat], value)
-        return u(value)
+        return cast.text(value)
 
 
-RENDERER_REGISTRY = {}  # type: Dict[str, RendererConfig]
+RENDERER_REGISTRY = {}
 
 
 def load_renderer_config():
@@ -175,7 +174,6 @@ load_renderer_config()
 
 
 def detect_renderer(layers):
-    # type: (List[str],) -> RendererConfig
     ret = None
     retLayerMatch = 0
     for i in RENDERER_REGISTRY.values():
@@ -183,6 +181,8 @@ def detect_renderer(layers):
         if layerMatch > retLayerMatch:
             ret = i
             retLayerMatch = layerMatch
+    if ret is None:
+        raise ValueError("detect_renderer: can not detect renderer")
     return ret
 
 
@@ -190,13 +190,13 @@ class Precomp(object):
     """A sequence of merge or copy.  """
 
     def __init__(self, nodes, renderer=None, async_=True):
-        self.last_node = None  # type: Optional[nuke.Node]
-        self.source = {}  # type: Dict[str, nuke.Node]
+        self.last_node = None
+        self.source = {}
 
         assert nodes, 'Can not precomp without node.'
 
         def _get_filename(n):
-            return u(n.metadata('input/filename') or nuke.filename(n) or '')
+            return cast.text(n.metadata('input/filename') or nuke.filename(n) or '')
 
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
@@ -220,7 +220,7 @@ class Precomp(object):
                 'Precomp single node that has this layers:\n%s', layers)
             self.source = {layer: n
                            for layer in layers}
-            self.source['beauty'] = n
+            self.source[b'beauty'] = n
         LOGGER.debug('Source layers:\n%s', self.source.keys())
 
         # load config
@@ -232,10 +232,10 @@ class Precomp(object):
         if len(nodes) > 1:
             for layer, n in self.source.items():
                 _layer = self._config.l10n(layer)
-                _label = u(n['label'].value())
+                _label = cast.text(n[b'label'].value())
                 if _layer not in _label:
                     (
-                        n['label'].
+                        n[b'label'].
                         setValue(
                             '{}\n{}'.
                             format(_label, _layer).
@@ -247,7 +247,7 @@ class Precomp(object):
         self.last_node = self.node('beauty')
         for layer in self._config.copy:
             for i in self.source.keys():
-                if re.match('(?i)^{}\\d*$'.format(layer), i):
+                if re.match('(?i)^{}\\d*$'.format(layer), cast.text(i)):
                     self.copy(i)
         for layer, output in self._config.rename.items():
             self.copy(layer, output)
@@ -262,16 +262,14 @@ class Precomp(object):
 
         # Precomp Switch.
         kwargs = {'which':
-                  '{{[python {__PrecompSwitch.get_which(nuke.thisNode())}]}}',
+                  cast.binary('{{[python {__PrecompSwitch.get_which(nuke.thisNode())}]}}'),
                   'inputs': [dot_node, self.last_node],
-                  'label': '{} 预合成\n自动开关'.format(self._config.name),
-                  'onCreate': inspect.getsource(PrecompSwitch) + """
-__PrecompSwitch.init(nuke.thisNode())"""}
+                  'label': cast.binary('{} 预合成\n自动开关'.format(self._config.name)),
+                  'onCreate': cast.binary(inspect.getsource(PrecompSwitch) + """
+__PrecompSwitch.init(nuke.thisNode())""")}
         setattr(sys.modules['__main__'], '__PrecompSwitch', PrecompSwitch)
         if self.last_node is remove_node:
             kwargs['disable'] = True
-        for i in kwargs:
-            kwargs[i] = cast.binary(kwargs[i])
         self.last_node = PrecompSwitch.init(
             nuke.nodes.Switch(**kwargs))
 
@@ -299,18 +297,18 @@ __PrecompSwitch.init(nuke.thisNode())"""}
         if layer in self.layers():
             kwargs = {
                 'inputs': (self.last_node,),
-                'in': layer,
+                'in': cast.binary(layer),
             }
 
             try:
                 kwargs['postage_stamp'] = (
                     self.
-                    last_node['postage_stamp'].
+                    last_node[b'postage_stamp'].
                     value()
                 )
             except NameError:
                 pass
-            ret = nuke.nodes.Shuffle(**cast.binary(kwargs))
+            ret = nuke.nodes.Shuffle(**kwargs)
         elif layer in self._config.combine:
             pair = self._config.combine[layer]
             if self.source.get(pair[0])\
@@ -327,7 +325,7 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                         get(layer, 'multiply')
                     ),
                     'output': 'rgb',
-                    'label': self._config.l10n(layer),
+                    'label': cast.binary(self._config.l10n(layer)),
                 }
                 try:
                     kwargs['postage_stamp'] = (
@@ -336,8 +334,6 @@ __PrecompSwitch.init(nuke.thisNode())"""}
                     )
                 except NameError:
                     pass
-                for i in kwargs:
-                    kwargs[i] = cast.binary(kwargs[i])
                 n = nuke.nodes.Merge2(**kwargs)
                 self.source[layer] = n
                 ret = n

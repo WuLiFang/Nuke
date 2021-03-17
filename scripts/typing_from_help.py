@@ -12,6 +12,7 @@ import re
 
 _CLASS_MRO_START = 'Method resolution order:'
 _CLASS_METHODS_START = 'Methods defined here:'
+_CLASS_CLASS_METHODS_START = 'Class methods defined here:'
 _CLASS_STATIC_METHODS_START = 'Static methods defined here:'
 _CLASS_DATA_ATTR_START = 'Data and other attributes defined here:'
 _CLASS_DATA_DESC_START = 'Data descriptors defined here:'
@@ -68,6 +69,10 @@ def _iter_class_sections(lines):
         elif re.match(_CLASS_STATIC_METHODS_START, line):
             yield (section_type, section_values)
             section_type = 'static-methods'
+            section_values = []
+        elif re.match(_CLASS_CLASS_METHODS_START, line):
+            yield (section_type, section_values)
+            section_type = 'class-methods'
             section_values = []
         elif re.match(_CLASS_DATA_ATTR_START, line):
             yield (section_type, section_values)
@@ -161,7 +166,7 @@ def _parse_class_method(lines):
     for k, v in _parse_by_indent(
             lines
     ):
-        match = re.match(r"^(.+?)(?:\((.+)\))?$", k)
+        match = re.match(r"^(.+?)(?:\((.+)\))?(?: from (.+))?$", k)
         if not match:
             raise NotImplementedError(k, v)
         name = match.group(1)
@@ -172,7 +177,7 @@ def _parse_class_method(lines):
             r"(?:self\.)?" +
             re.escape(name) +
             r"\((.*)\) ?-> ?(.+?)\.? *:?$",
-            v[0]) or None
+            docstring[0]) or None
         if match:
             docstring = docstring[1:]
             args = _parse_args(match.group(1))
@@ -199,18 +204,29 @@ def _iter_classes(lines):
         if not class_values:
             # Ignore summary list and empty lines
             continue
+
+        match = re.match(r"(.+?) = class (.+?)(?:\((.+)\))?$", class_key)
+        if match:
+            g3 = match.group(3)
+            yield dict(
+                name=match.group(1),
+                inherits=g3.split(",") if g3 else [],
+                real_name=match.group(2),
+            )
+            continue
         match = re.match(r"class (.+?)(?:\((.+)\))?$", class_key)
         if not match:
-            raise NotImplementedError("class: %s: %s" %
+            raise NotImplementedError("_iter_classes: %s: %s" %
                                       (class_key, class_values))
         g2 = match.group(2)
         class_def = dict(
             name=match.group(1),
             inherits=g2.split(",") if g2 else [],
+            static_methods=[],
+            class_methods=[],
             methods=[],
             data=[],
             docstring=[],
-            static_methods=[],
         )
         for (section_key, section_values) in _iter_class_sections(class_values):
             if section_key == '' and section_values == []:
@@ -237,6 +253,10 @@ def _iter_classes(lines):
                 class_def["static_methods"] = list(_parse_class_method(
                     section_values
                 ))
+            elif section_key == 'class-methods':
+                class_def["class_methods"] = list(_parse_class_method(
+                    section_values
+                ))
             else:
                 raise NotImplementedError(section_key, section_values)
         class_def["docstring"] = _strip_lines(class_def["docstring"])
@@ -245,6 +265,16 @@ def _iter_classes(lines):
 
 def _iter_functions(lines):
     for k, v in _parse_by_indent(lines):
+        match = re.match(r"(.+?) = (.+?)(?:\((.+)\))?$", k)
+        if match:
+            g3 = match.group(3)
+            yield dict(
+                name=match.group(1),
+                inherits=g3.split(",") if g3 else [],
+                real_name=match.group(2),
+            )
+            continue
+
         match = re.match(r"(.+?)\((.*)\)$", k)
         if not match:
             raise NotImplementedError(k, v)
@@ -272,11 +302,16 @@ def _iter_functions(lines):
 
 def _typing_from_class(class_def):
     name = class_def["name"]
+    real_name = class_def.get("real_name")
+    if real_name is not None:
+        yield "%s = %s" % (name, real_name)
+        return
     docstring = class_def["docstring"]
     inherits = class_def["inherits"]
     inherits = [TYPE_MAP.get(i, i) for i in inherits]
     inherits = [i for i in inherits if i]
     methods = class_def["methods"]
+    class_methods = class_def["class_methods"]
     static_methods = class_def["static_methods"]
     data = class_def["data"]
     yield "class %s%s:" % (name, "(%s)" % ",".join(inherits) if inherits else "")
@@ -304,6 +339,18 @@ def _typing_from_class(class_def):
             yield '        """'
             yield "        ..."
             yield ""
+    if class_methods:
+        for i in class_methods:
+            if "cls" not in i["args"]:
+                i["args"].insert(0, "cls")
+            yield "    @classmethod"
+            yield "    def %s(%s)%s:" % (i["name"], ", ".join(i["args"]), " -> %s" % i["return_type"] if i["return_type"] else "")
+            yield '        """'
+            for j in i["docstring"]:
+                yield ("        %s" % j).rstrip()
+            yield '        """'
+            yield "        ..."
+            yield ""
     if methods:
         for i in methods:
             if "self" not in i["args"]:
@@ -321,6 +368,10 @@ def _typing_from_class(class_def):
 
 def _typing_from_function(func_def):
     name = func_def["name"]
+    real_name = func_def.get("real_name")
+    if real_name is not None:
+        yield "%s = %s" % (name, real_name)
+        return
     args = func_def["args"]
     return_type = func_def["return_type"]
     docstring = func_def["docstring"]
