@@ -13,7 +13,6 @@ import cast_unknown as cast
 import nuke
 from pathlib2_unicode import Path
 
-from wlf.codectools import u_print
 
 
 def main():
@@ -22,7 +21,7 @@ def main():
 
     import edit.script_use_seq as _script_use_seq
 
-    u_print(_script_use_seq.config.START_MESSAGE)
+    sys.stdout.write(cast.text(_script_use_seq.config.START_MESSAGE))
     parser = argparse.ArgumentParser(
         description='Switch nuke script to use sequence.')
     parser.add_argument('--input', help='.nk input file path')

@@ -10,12 +10,11 @@ from collections import namedtuple
 import nuke
 import pendulum
 import pyblish.api
+import cast_unknown as cast
 
-import callback
 from node import wlf_write_node
 from nuketools import keep_modifield_status
 from pathlib2_unicode import PurePath
-from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
 
 FootageInfo = namedtuple('FootageInfo', ('filename', 'mtime'))
@@ -80,7 +79,7 @@ class CollectMTime(pyblish.api.ContextPlugin):
         assert isinstance(context, pyblish.api.Context)
         footages = set()
         root = nuke.Root()
-        for n in nuke.allNodes('Read', nuke.Root()):
+        for n in nuke.allNodes(b'Read', nuke.Root()):
             if n.hasError():
                 self.log.warning('读取节点出错: %s', n.name())
                 continue
@@ -174,7 +173,7 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
     def process(self, instance):
         filename = instance.data['name']
         if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-            render_dir = u(nuke.value('preferences.wlf_render_dir'))
+            render_dir = cast.text(nuke.value('preferences.wlf_render_dir'))
             copy(filename, render_dir + '/')
         else:
             self.log.info('因为首选项设置而跳过')

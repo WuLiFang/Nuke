@@ -10,10 +10,9 @@ import os
 
 import nuke
 
+import cast_unknown as cast
 import callback
 from node import wlf_write_node
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
 
 LOGGER = logging.getLogger('wlf.render')
 
@@ -23,14 +22,14 @@ def create_out_dirs(node=None):
 
     n = node or nuke.thisNode()
     try:
-        if n['disable'].value():
+        if n[b'disable'].value():
             return
     except NameError:
         pass
 
-    filename = u(nuke.filename(n))
+    filename = cast.text(nuke.filename(n))
     if filename:
-        target_dir = e(os.path.dirname(filename))
+        target_dir = cast.binary(os.path.dirname(filename))
         if not os.path.isdir(target_dir):
             LOGGER.debug('Create dir: %s', target_dir)
             os.makedirs(target_dir)
@@ -45,7 +44,7 @@ def _jump_frame():
             LOGGER.warning('No `wlf_Write` node.')
             return
         if n:
-            nuke.frame(n['frame'].value())
+            nuke.frame(n[b'frame'].value())
             nuke.Root().setModified(False)
 
 

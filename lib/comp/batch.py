@@ -16,8 +16,7 @@ from jinja2 import Environment, FileSystemLoader
 from comp.__main__ import __path__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 from wlf.decorators import run_with_memory_require
 from wlf.progress import CancelledError, progress
 
@@ -71,7 +70,7 @@ class BatchComp(Process):
                              stdout=PIPE,
                              stderr=PIPE)
                 proc_queue.put(proc)
-                stderr = u(proc.communicate()[1])
+                stderr = cast.text(proc.communicate()[1])
 
                 if START_MESSAGE in stderr:
                     stderr = stderr.partition(
@@ -134,8 +133,8 @@ class BatchComp(Process):
         data = template.render(shots_info=sorted(shots_info.items()))
 
         log_path = os.path.join(CONFIG['output_dir'], u'批量合成日志.html')
-        with open(e(log_path), 'w') as f:
-            f.write(data.encode('UTF-8'))
+        with open(cast.binary(log_path), 'w') as f:
+            f.write(cast.text(data))
 
         return log_path
 
@@ -149,7 +148,7 @@ class BatchComp(Process):
 
         _ret = os.listdir(_dir)
         if isinstance(_ret[0], str):
-            _ret = tuple(u(i) for i in _ret)
+            _ret = tuple(cast.text(i) for i in _ret)
         self._all_shots = _ret
         if self.flags & IGNORE_EXISTED:
             _ret = (i for i in _ret

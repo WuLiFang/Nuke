@@ -17,8 +17,6 @@ import nuke
 import six
 from pathlib2_unicode import Path
 
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
 from wlf.decorators import run_async
 from wlf.progress import CancelledError, progress
 
@@ -43,7 +41,7 @@ def run(input_dir, output_dir):
             f.write("\n".join(six.text_type(i) for i in footages))
         result = []
         try:
-            for i in progress(Path(e(input_dir)).glob("**/*.nk"), "转换Nuke文件为序列工程", total=-1):
+            for i in progress(Path(input_dir).glob("**/*.nk"), "转换Nuke文件为序列工程", total=-1):
                 start_time = datetime.now()
                 output = Path(output_dir) / i.name
                 cmd = [nuke.EXE_PATH,
@@ -53,7 +51,7 @@ def run(input_dir, output_dir):
                        '--output', output,
                        '--footage-list', temp_fp,
                        ]
-                cmd = [e(j) for j in cmd]
+                cmd = [cast.binary(j) for j in cmd]
                 LOGGER.debug("command: %s", cmd)
 
                 proc = subprocess.Popen(
@@ -62,8 +60,8 @@ def run(input_dir, output_dir):
                     stderr=subprocess.PIPE,
                 )
                 stdout, stderr = proc.communicate()
-                stdout = u(stdout)
-                stderr = u(stderr)
+                stdout = cast.text(stdout)
+                stderr = cast.text(stderr)
                 if START_MESSAGE in stdout:
                     stdout = stdout.partition(
                         START_MESSAGE)[2].strip()
@@ -92,7 +90,7 @@ def run(input_dir, output_dir):
         report = template.render(
             result=sorted(result, key=lambda v: v['input']))
         with io.open(
-            e(os.path.join(output_dir, '!序列工程转换报告.html')),
+            cast.binary(os.path.join(output_dir, '!序列工程转换报告.html')),
             'w',
                 encoding='utf8') as f:
             f.write(report)

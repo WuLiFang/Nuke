@@ -12,7 +12,7 @@ import Queue
 
 import nuke
 import pyblish.plugin
-from nukescripts.panels import restorePanel  # pylint: disable=import-error
+from nukescripts.panels import restorePanel
 from Qt import QtGui
 from Qt.QtCore import Qt
 from Qt.QtWidgets import QApplication
@@ -24,10 +24,10 @@ import panels
 import pyblish_asset
 import pyblish_cgtwn
 import pyblish_lite
+import pyblish_lite.delegate
 from nuketools import abort_modified, mainwindow
 from pyblish_lite import app, control, settings, util, window
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 from wlf.uitools import Tray
 
 ACTION_QUEUE = multiprocessing.dummy.Queue()
@@ -133,7 +133,9 @@ class Window(window.Window):
     def __new__(cls, parent=None,):
         if not cls.instance:
             LOGGER.debug("create new pyblish window")
-            cls.instance = super(Window, cls).__new__(cls, parent)
+            cls.instance = super(Window, cls).__new__(
+                cls, parent)  # type: ignore
+            # https://github.com/microsoft/pyright/issues/1638
         return cls.instance
 
     def __init__(self, parent=None):
@@ -148,8 +150,8 @@ class Window(window.Window):
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
 
-        with open(e(filetools.module_path("pyblish_lite.css"))) as f:
-            css = u(f.read())
+        with open(cast.binary(filetools.module_path("pyblish_lite.css"))) as f:
+            css = cast.text(f.read())
 
             # Make relative paths absolute
             root = util.get_asset("").replace("\\", "/")
@@ -196,7 +198,7 @@ class Window(window.Window):
                 cls.instance = None
                 cls.dock()
         except:
-            LOGGER.exception()
+            LOGGER.exception("dock failed")
             raise
 
     def get_parent(self, parent_class):

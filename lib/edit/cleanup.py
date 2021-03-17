@@ -5,11 +5,12 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import nuke
-
-from wlf.codectools import get_unicode as u
-from wlf.codectools import u_print
-
+import cast_unknown as cast
 from . import core
+
+
+import logging
+LOGGER = logging.getLogger(__name__)
 
 
 def delete_unused_nodes(nodes=None, message=False):
@@ -23,18 +24,18 @@ def delete_unused_nodes(nodes=None, message=False):
     disabled_nodes = [n for n in nodes if _is_disabled_and_no_expression(n)]
 
     for n in disabled_nodes:
-        node_name = u(n.name())
+        node_name = cast.text(n.name())
         core.replace_node(n, n.input(0))
-        u_print('分离已禁用的节点: {}'.format(node_name))
+        LOGGER.info('分离已禁用的节点: {}'.format(node_name))
 
     # Delete unused nodes.
     is_used_result_cache = {}
     unused_nodes = [n for n in nodes if not _is_used(n, is_used_result_cache)]
     for n in unused_nodes:
-        node_name = u(n.name())
+        node_name = cast.text(n.name())
         nuke.delete(n)
-        u_print('删除节点: {}'.format(node_name))
-    u_print('删除了 {} 个无用节点.'.format(len(unused_nodes)))
+        LOGGER.info('删除节点: {}'.format(node_name))
+    LOGGER.info('删除了 {} 个无用节点.'.format(len(unused_nodes)))
 
     if message:
         nuke.message(
@@ -56,19 +57,20 @@ def _is_disabled_and_no_expression(n):
 
 
 def _is_used(n, cache):
+    assert isinstance(n, nuke.Node)
     assert isinstance(cache, dict)
-    node_name = u(n.name())
-    if cache.has_key(n):
+    node_name = cast.text(n.name())
+    if n in cache:
         return cache[n]
 
     if (node_name.startswith('_')
             or node_name == 'VIEWER_INPUT'
-            or u(n.Class()) in ('BackdropNode',
-                                'Read',
-                                'Write',
-                                'Viewer',
-                                'GenerateLUT',
-                                'wlf_Write')):
+            or cast.text(n.Class()) in ('BackdropNode',
+                                        'Read',
+                                        'Write',
+                                        'Viewer',
+                                        'GenerateLUT',
+                                        'wlf_Write')):
         ret = True
     else:
         ret = (not _is_disabled_and_no_expression(n)

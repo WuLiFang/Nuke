@@ -12,8 +12,7 @@ import nuke
 import dropdata
 import filetools
 from pathlib2_unicode import PurePath
-from wlf.codectools import get_encoded as e
-from wlf.codectools import u_print
+import cast_unknown as cast
 
 LOGGER = logging.getLogger(__name__)
 IS_TESTING = False
@@ -44,7 +43,7 @@ def _fix_one(n, **context):
            or _fix_missing_file(context)
            or _fix_dir(context))
     if not context.get('alter_filename'):
-        u_print('修复读取: 找不到可替换素材: {name}: {filename}'.format(**context))
+        LOGGER.info('修复读取: 找不到可替换素材: {name}: {filename}'.format(**context))
     return ret
 
 
@@ -88,7 +87,7 @@ def _fix_thumbs_db(context):
     filename = context['filename']
     if filename and os.path.basename(filename).lower() == 'thumbs.db':
         nuke.delete(n)
-        u_print('修复读取: 删除读取thumbs.db的节点: {name}'.format(**context))
+        LOGGER.info('修复读取: 删除读取thumbs.db的节点: {name}'.format(**context))
         return True
     return False
 
@@ -103,12 +102,12 @@ def _fix_missing_file(context):
         context['alter_filename'] = value
         _set_filename(n, value)
         if not IS_TESTING and n.hasError():
-            u_print('修复读取: 使用新素材依旧出错, 撤销: '
-                    '{name}: {alter_filename}'.format(**context))
+            LOGGER.info('修复读取: 使用新素材依旧出错, 撤销: '
+                        '{name}: {alter_filename}'.format(**context))
             _set_filename(n, filename)
             return False
-        u_print('修复读取: 使用同名文件: '
-                '{name}: {filename} -> {alter_filename}'.format(**context))
+        LOGGER.info('修复读取: 使用同名文件: '
+                    '{name}: {filename} -> {alter_filename}'.format(**context))
         return True
     return False
 
@@ -116,12 +115,12 @@ def _fix_missing_file(context):
 def _fix_dir(context):
     filename = context['filename']
     n = context['node']
-    if not os.path.isdir(e(filename)):
+    if not os.path.isdir(cast.binary(filename)):
         return False
 
     is_dropped = dropdata.drop('text/plain', filename)
     if is_dropped:
-        u_print('修复读取: 文件夹展开: {name}: {filename}'.format(**context))
+        LOGGER.info('修复读取: 文件夹展开: {name}: {filename}'.format(**context))
         nuke.delete(n)
     return is_dropped
 

@@ -1106,7 +1106,7 @@ class Boolean_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1996,7 +1996,7 @@ class File_Knob(EvalString_Knob):
         """
         ...
 
-    def fromUserText(self, s) -> None:
+    def fromUserText(self, s: six.binary_type) -> None:
         """
         Assign string to knob, parses frame range off the end and opens file to get set the format.
 
@@ -2693,25 +2693,40 @@ class GlobalsEnvironment:
 
 
 class Group(Node):
+    def __enter__(self, *args, **kwargs):
+        """
+        """
+        ...
+
+    def __exit__(self, *args, **kwargs):
+        """
+        """
+        ...
+
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
 
-    def __len__(self) -> int:
+    def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
 
-    def __repr__(self) -> six.binary_type:
+    def __reduce_ex__(self, *args, **kwargs):
+        """
+        """
+        ...
+
+    def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
 
-    def __str__(self) -> six.binary_type:
+    def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
@@ -3762,7 +3777,17 @@ class Menu(MenuItem):
         """
         ...
 
-    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
+    def addCommand(
+        self,
+        name: six.binary_type,
+        command: typing.Union[six.binary_type, typing.Callable] = ...,
+        shortcut: six.binary_type = ...,
+        icon: six.binary_type = ...,
+        tooltip: six.binary_type = ...,
+        index: int = ...,
+        readonly: bool = ...,
+        shortcutContext: int = ...,
+    ) -> typing.Union[MenuItem, ToolBar]:
         """
         Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
 
@@ -4361,7 +4386,7 @@ class Node:
         """
         ...
 
-    def dependent(self, what, forceEvaluate) -> typing.List[Node]:
+    def dependent(self, what: int = ..., forceEvaluate: bool = ...) -> typing.List[Node]:
         """
         List all nodes that read information from this node.  'what' is an optional integer:
 
@@ -5584,7 +5609,7 @@ class PyCustom_Knob(Script_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, content: six.text_type = ..., /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -8037,7 +8062,7 @@ def getDeletedPresets() -> None:
     ...
 
 
-def getFileNameList(dir, splitSequences=False, extraInformation=False, returnDirs=True, returnHidden=False) -> six.binary_type:
+def getFileNameList(dir, splitSequences=False, extraInformation=False, returnDirs=True, returnHidden=False) -> typing.List[six.binary_type]:
     """
     @param dir the directory to get sequences from
     @param splitSequences whether to split sequences or not

@@ -19,8 +19,6 @@ import asset.missing_frames
 import callback
 import cast_unknown as cast
 import templates
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
 from wlf.decorators import run_with_clock
 
 from . import core
@@ -80,7 +78,7 @@ SHOWED_WARNING = []
 def throtted_warning(msg):
     """Only show each warning message once.  """
 
-    msg = u(msg)
+    msg = cast.text(msg)
     if msg not in SHOWED_WARNING:
         nuke.warning(cast.binary(msg))
         SHOWED_WARNING.append(msg)
@@ -103,7 +101,7 @@ def warn_mtime(show_ok=False, since=None):
         if show_ok:
             nuke.message(cast.binary('文件未保存'))
         return
-    script_mtime = os.path.getmtime(e(script_name))
+    script_mtime = os.path.getmtime(cast.binary(script_name))
     since = since or script_mtime
 
     @run_with_clock('检查素材修改日期')
@@ -121,7 +119,7 @@ def warn_mtime(show_ok=False, since=None):
                 ret[nuke.filename(n)] = mtime
                 ftime = time.strftime('%m-%d %H:%M:%S', time.localtime(mtime))
                 throtted_warning(
-                    '{}: [new footage]{}'.format(u(n.name()), ftime))
+                    '{}: [new footage]{}'.format(cast.text(n.name()), ftime))
         return ret
 
     newer_footages = _get_mtime_info()

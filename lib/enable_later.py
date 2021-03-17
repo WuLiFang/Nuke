@@ -8,7 +8,7 @@ import nuke
 
 import callback
 from nodeutil import Nodes
-from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 
 ENABLE_MARK = '_enable_'
 
@@ -21,7 +21,7 @@ def mark_enable(nodes):
     for n in nodes:
         try:
             label_knob = n[b'label']
-            label = u(label_knob.value())
+            label = cast.text(label_knob.value())
             if ENABLE_MARK not in label:
                 label_knob.setValue(
                     '{}\n{}'.format(label, ENABLE_MARK).encode('utf-8'))
@@ -34,7 +34,7 @@ def marked_nodes():
     """ Get marked nodes.
 
     Returns:
-        Nodes: maked nodes.
+        Nodes: marked nodes.
     """
 
     ret = set()
@@ -43,7 +43,7 @@ def marked_nodes():
             label = n['label'].value()
         except NameError:
             continue
-        label = u(label)
+        label = cast.text(label)
         if ENABLE_MARK in label:
             ret.add(n)
     return Nodes(ret)

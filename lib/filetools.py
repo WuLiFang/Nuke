@@ -5,8 +5,8 @@ from __future__ import (absolute_import, division, print_function,
 
 import re
 
+import cast_unknown as cast
 import wlf.path
-from wlf.codectools import get_unicode
 from wlf.pathtools import make_path_finder
 
 module_path = make_path_finder(__file__)  # pylint: disable = invalid-name
@@ -37,7 +37,7 @@ def expand_frame(filename, frame):
     def _hash_repl(matchobj):
         return '%0{}d'.format(len(matchobj.group(0)))
 
-    ret = get_unicode(filename)
+    ret = cast.text(filename)
     ret = re.sub(r'(\#+)', _hash_repl, ret)
     ret = re.sub(r'(%0?\d*d)', _format_repl, ret)
     return ret

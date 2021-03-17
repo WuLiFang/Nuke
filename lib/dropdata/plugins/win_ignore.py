@@ -9,10 +9,26 @@ import os
 import re
 
 import nuke
+import six
 
-from wlf.codectools import is_ascii
 
 from ..core import HOOKIMPL
+
+
+def is_ascii(text):
+    """Return true if @text can be convert to ascii.
+
+    >>> is_ascii('a')
+    True
+    >>> is_ascii('测试')
+    False
+
+    """
+    try:
+        six.text_type(text, 'ascii')
+        return True
+    except UnicodeEncodeError:
+        return False
 
 
 @HOOKIMPL

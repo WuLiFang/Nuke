@@ -8,8 +8,8 @@ import logging
 from itertools import chain
 
 import pluggy
+import cast_unknown as cast
 
-from wlf.codectools import get_unicode as u
 from wlf.progress import CancelledError, progress
 
 PROJECT_NAME = 'com.wlf.nuke.dropdata'
@@ -24,7 +24,7 @@ def dropdata_handler(mime_type, data, hook):
 
     if mime_type != 'text/plain':
         return None
-    data = u(data)
+    data = cast.text(data)
     if hook.is_ignore_data(data=data):
         return None
 

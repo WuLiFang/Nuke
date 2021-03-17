@@ -7,9 +7,9 @@ from __future__ import (absolute_import, division, print_function,
 import os
 
 import filetools
-from wlf.codectools import get_encoded as e
+import cast_unknown as cast
 
 
 def test_plugin_folder_path():
     path = filetools.plugin_folder_path('ToolSets')
-    assert os.path.exists(e(path)), path
+    assert os.path.exists(cast.binary(path)), path

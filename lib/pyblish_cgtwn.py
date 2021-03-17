@@ -10,12 +10,12 @@ import webbrowser
 import nuke
 import pyblish.api
 
+import cast_unknown as cast
 import cgtwq
 import scripttools
 from cgtwn import Task
 from filetools import get_shot
 from node import wlf_write_node
-from wlf.codectools import get_unicode as u
 from wlf.fileutil import copy
 
 # pylint: disable=no-init
@@ -203,7 +203,7 @@ class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):
         dest = instance.context.data['workfileFileboxInfo'].path + '/'
 
         for n in nuke.allNodes('Precomp'):
-            src = u(nuke.filename(n))
+            src = cast.text(nuke.filename(n))
             if src.startswith(dest.replace('\\', '/')):
                 continue
             n['file'].setValue(copy(src, dest))
@@ -238,7 +238,8 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         assert isinstance(task, Task)
 
         n = wlf_write_node()
-        path = u(nuke.filename(n.node('Write_JPG_1')))
+        assert isinstance(n , nuke.Group)
+        path = cast.text(nuke.filename(cast.not_none(n.node(b'Write_JPG_1'))))
         try:
             dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
         except ValueError:

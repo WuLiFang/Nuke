@@ -10,14 +10,14 @@ import webbrowser
 
 import cast_unknown as cast
 import nuke
+from six import text_type
+import six
 
 from comp.config import BatchCompConfig, CompConfig
 from comp.precomp import Precomp
 from node import ReadNode
 from nuketools import undoable_func
 from orgnize import autoplace
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
 from wlf.progress.core import DefaultHandler
 
 CONFIG = CompConfig()
@@ -68,11 +68,11 @@ class Comp(object):
                 continue
 
             files = nuke.getFileNameList(cast.binary(dir_))
-            footages = [u(i) for i in files if
-                        not u(i).endswith(('副本', '.lock'))] if files else []
+            footages = [cast.text(i) for i in files if
+                        not cast.text(i).endswith(('副本', '.lock'))] if files else []
             if footages:
                 for f in footages:
-                    if os.path.isdir(e(os.path.join(dir_, f))):
+                    if os.path.isdir(cast.binary(os.path.join(dir_, f))):
                         LOGGER.info('\t文件夹: %s', f)
                         continue
                     LOGGER.info('\t素材: %s', f)
@@ -191,7 +191,7 @@ class Comp(object):
             try:
                 self._add_zdefocus_control(n)
             except RuntimeError as ex:
-                LOGGER.error(u(ex))
+                LOGGER.error(cast.text(ex))
 
         n = nuke.nodes.Unpremult(inputs=[n], label=cast.binary('整体调色开始'))
 
@@ -294,10 +294,11 @@ class Comp(object):
     @classmethod
     def get_nodes_by_tags(cls, tags):
         """Return nodes that match given tags."""
+        # TODO: use *args
         ret = []
-        if isinstance(tags, (str, unicode)):
+        if isinstance(tags, (six.binary_type, six.text_type)):
             tags = [tags]
-        tags = tuple(unicode(i).upper() for i in tags)
+        tags = tuple(cast.text(i).upper() for i in cast.iterable(tags))
 
         for n in nuke.allNodes('Read'):
             knob_name = '{}.{}'.format(n.name(), ReadNode.tag_knob_name)
@@ -552,8 +553,8 @@ class Comp(object):
                 if not (n.metadata(self.tag_metadata_key) or '').startswith('BG'):
                     n['autoLayerSpacing'].setValue(False)
                     n['layers'].setValue(5)
-            except RuntimeError as ex:
-                LOGGER.error(u(ex))
+            except RuntimeError:
+                LOGGER.exception("create ZDefocus failed")
 
         if CONFIG['filters']:
             if 'motion' in nuke.layers(n):

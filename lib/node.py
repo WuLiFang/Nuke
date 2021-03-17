@@ -3,14 +3,12 @@
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-from filetools import get_tag
 
 import logging
 
 import nuke
 
 from pathlib2_unicode import PurePath
-from wlf.codectools import get_unicode as u
 import cast_unknown as cast
 import filetools
 
@@ -20,11 +18,13 @@ LOGGER = logging.getLogger('com.wlf.node')
 def append_knob(node, knob):
     """Add @knob as @node's last knob.  """
 
-    knob_name = u(knob.name())
-    node_name = u(node.name())
-    if nuke.exists('{}.{}'.format(node_name, knob_name).encode('utf-8')):
-        knob.setValue(node[knob_name.encode('utf-8')].value())
-        node.removeKnob(node[knob_name.encode('utf-8')])
+    assert isinstance(node, nuke.Node)
+    assert isinstance(knob, nuke.Knob)
+    knob_name = knob.name()
+    node_name = node.name()
+    if nuke.exists(b'%s.%s' % (node_name, knob_name)):
+        knob.setValue(node[knob_name].value())
+        node.removeKnob(node[knob_name])
     node.addKnob(knob)
 
 
@@ -42,7 +42,7 @@ class ReadNode(object):
         path = PurePath(self._filename)
 
         tag = cast.text(nuke.value(
-            '{}.{}'.format(u(n.name()),
+            '{}.{}'.format(cast.text(n.name()),
                            self.tag_knob_name).encode('utf-8'),
             '') or filetools.get_tag(cast.text(path)))
 
@@ -70,7 +70,8 @@ def wlf_write_node():
          or nuke.toNode('wlf_Write1'))
     if not n:
         nodes = nuke.allNodes(b'wlf_Write')
-        n = nodes and nodes[0]
+        if nodes:
+            n = nodes[0]
     if not n:
         raise ValueError('Not found wlf_Write Node.')
     return n

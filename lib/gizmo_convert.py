@@ -9,7 +9,6 @@ import nuke
 
 import callback
 import edit
-from wlf.codectools import get_unicode as u
 import cast_unknown as cast
 
 
@@ -32,7 +31,7 @@ def _gizmo_to_group_update_ui():
     n = nuke.thisNode()
     _temp_knob_name = 'wlf_gizmo_to_group'
     _has_temp_knob = nuke.exists(
-        cast.binary('{}.{}'.format(u(n.name()), _temp_knob_name)))
+        cast.binary('{}.{}'.format(cast.text(n.name()), _temp_knob_name)))
 
     if _has_temp_knob:
         n = edit.gizmo_to_group(n)

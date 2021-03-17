@@ -6,8 +6,9 @@ from __future__ import (absolute_import, division, print_function,
 
 import nuke
 
-from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 
+import six
 
 def add_channel(name):
     """Add a channel from `{layer}.{channel}` format string.
@@ -68,7 +69,7 @@ def escape_for_channel(text):
 
     """
 
-    ret = u(text)
+    ret = cast.text(text)
     if '.' not in ret:
         ret = 'mask_extra.{}'.format(ret)
     ret = ret.replace(' ', '_')
@@ -94,7 +95,7 @@ def named_copy(n, names_dict):
         ret = channel
         repl = (('.red', '.0_'), ('.green', '.1_'),
                 ('.blue', '.2_'), ('.alpha', '3_'))
-        ret = reduce(lambda text, repl: text.replace(*repl), repl, ret)
+        ret = six.moves.reduce(lambda text, repl: text.replace(*repl), repl, ret)
         return ret
 
     # For short version channel name.

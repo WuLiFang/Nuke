@@ -11,10 +11,8 @@ import cast_unknown as cast
 import nuke
 from pathlib2_unicode import PurePath
 
-from node import wlf_write_node
+from node import LOGGER, wlf_write_node
 from nuketools import undoable_func
-from wlf.codectools import get_unicode as u
-from wlf.codectools import u_print
 
 from . import core
 
@@ -37,7 +35,8 @@ def replace_sequence():
 
     confirm = panel.show()
     if confirm:
-        render_path = os.path.normcase(u(panel.value(label_path_prefix)))
+        render_path = os.path.normcase(
+            cast.text(panel.value(label_path_prefix)))
 
         first = int(panel.value(label_first))
         last = int(panel.value(label_last))
@@ -48,7 +47,7 @@ def replace_sequence():
         nuke.Root()[b'last_frame'].setValue(last)
 
         for n in nuke.allNodes('Read'):
-            file_path = u(nuke.filename(n))
+            file_path = cast.text(nuke.filename(n))
             if os.path.normcase(file_path).startswith(render_path):
                 search_result = re.search(r'\.([\d]+)\.', file_path)
                 if search_result:
@@ -83,7 +82,8 @@ def use_relative_path(nodes):
     for n in nodes:
         try:
             path = PurePath(n['file'].value().decode("utf-8"))
-            n['file'].setValue(cast.binary(path.relative_to(proj_dir).as_posix()))
+            n['file'].setValue(cast.binary(
+                path.relative_to(proj_dir).as_posix()))
         except NameError:
             continue
 
@@ -135,15 +135,17 @@ def remove_duplicated_read(is_show_result=True):
         if same_node:
             dot = nuke.nodes.Dot(
                 inputs=[same_node],
-                label='代替: {}\n{}'.format(u(n.name()), u(
-                    nuke.filename(n))).encode('utf-8'),
+                label='代替: {}\n{}'.format(
+                    cast.text(n.name()),
+                    cast.text(nuke.filename(n)),
+                ).encode('utf-8'),
                 hide_input=True)
             dot.setXYpos(n.xpos() + 34, n.ypos() + 57)
             core.replace_node(n, dot)
-            n_name = u(n.name())
+            n_name = cast.text(n.name())
             removed_nodes.append(n_name)
-            u_print('用 {0} 代替 {1} , 删除 {1}。'.format(
-                u(same_node.name()), n_name))
+            LOGGER.info('用 {0} 代替 {1} , 删除 {1}。'.format(
+                cast.text(same_node.name()), n_name))
             nuke.delete(n)
         else:
             distinct_read.append(n)

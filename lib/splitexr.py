@@ -5,22 +5,16 @@ from __future__ import absolute_import, print_function, unicode_literals
 import argparse
 import os
 import re
-import sys
 import webbrowser
 from subprocess import Popen
 
 import cast_unknown as cast
+from pathlib2_unicode import PurePath, Path
 
-try:
-    _argv = sys.argv  # Nuke will reset sys.argv
-    import nuke
+import nuke
 
-    from wlf.decorators import run_async
-    from wlf.progress import progress
-    from wlf.codectools import get_encoded as e
-    from pathlib2_unicode import PurePath, Path
-except:
-    raise
+from wlf.decorators import run_async
+from wlf.progress import progress
 
 
 if nuke.GUI:
@@ -107,7 +101,7 @@ if nuke.GUI:
                     continue
 
                 footages = [i for i in nuke.getFileNameList(dir_, True) if
-                            not i.endswith(('副本', '.lock'))]
+                            not cast.text(i).endswith(('副本', '.lock'))]
                 if footages:
                     for f in footages:
                         if os.path.isdir(os.path.join(dir_, f)):
@@ -156,7 +150,7 @@ if nuke.GUI:
                     file_type=self.output_ext,
                     output_dir=self.output_dir
                 )
-                proc = Popen(e(cmd))
+                proc = Popen(cast.binary(cmd))
                 proc.wait()
 
             webbrowser.open(self.output_dir)
@@ -171,15 +165,18 @@ if nuke.GUI:
 def split(filename, output_dir, file_format=None):
     """Render splited files.  """
 
+    filename = cast.text(filename)
+    output_dir = cast.text(output_dir)
     path = PurePath(re.sub(r' [\d -]*$', '', filename))
     output_dir = Path(output_dir)
 
     # Create read node.
     read_node = nuke.nodes.Read()
-    read_node['file'].fromUserText(filename)
+    file_knob = read_node[b'file']
+    assert isinstance(file_knob, nuke.File_Knob)
+    file_knob.fromUserText(cast.binary(filename))
     if file_format:
-        assert isinstance(file_format, (str, unicode))
-        suffix = '.{}'.format(file_format.strip('.'))
+        suffix = '.{}'.format(cast.text(file_format).strip('.'))
     else:
         suffix = path.suffix or '.mov'
 
@@ -193,7 +190,7 @@ def split(filename, output_dir, file_format=None):
         if k in layers:
             for i in v:
                 try:
-                    layers.remove(i)
+                    layers.remove(cast.binary(i))
                 except ValueError:
                     pass
 
@@ -219,7 +216,7 @@ def main():
     parser.add_argument('input', help='输入文件')
     parser.add_argument('output_dir', help='输出路径')
     parser.add_argument('-f', '--format', help='输出文件类型')
-    args = parser.parse_args(_argv[1:])
+    args = parser.parse_args(nuke.rawArgs[3:])
 
     split(args.input, args.output_dir, args.format)
 

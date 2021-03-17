@@ -8,8 +8,7 @@ import os
 
 import nuke
 
-from wlf.codectools import get_encoded as e
-from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 
 from ..core import HOOKIMPL
 
@@ -19,11 +18,11 @@ from ..core import HOOKIMPL
 @HOOKIMPL
 def get_filenames(url):
     ret = []
-    if not os.path.isdir(e(url)):
+    if not os.path.isdir(cast.binary(url)):
         return ret
-    for dirpath, _, _ in os.walk(e(url)):
-        dirpath = u(dirpath.replace('\\', '/'))
-        filenames = nuke.getFileNameList(e(dirpath, 'UTF-8'))
-        filenames = ['{}/{}'.format(dirpath, u(i)) for i in filenames]
+    for dirpath, _, _ in os.walk(cast.binary(url)):
+        dirpath = cast.text(dirpath).replace('\\', '/')
+        filenames = nuke.getFileNameList(cast.binary(dirpath))
+        filenames = ['{}/{}'.format(dirpath, cast.text(i)) for i in filenames]
         ret.extend(filenames)
     return ret

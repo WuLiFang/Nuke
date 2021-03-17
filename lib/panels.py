@@ -6,7 +6,7 @@ from __future__ import absolute_import, unicode_literals
 import nuke
 import nukescripts  # pylint: disable=import-error
 
-from wlf.codectools import get_encoded
+import cast_unknown as cast
 
 
 class PythonPanel(nukescripts.PythonPanel):
@@ -50,20 +50,20 @@ def register(widget, name, widget_id, create=False):
     class _Panel(PythonPanel):
 
         def __init__(self, widget, name, widget_id):
-            name_e = get_encoded(name, 'utf-8')
+            name_e = cast.binary(name)
             super(_Panel, self).__init__(name_e, widget_id)
             self.custom_knob = nuke.PyCustom_Knob(
-                name_e, "",
-                "__import__('nukescripts').panels.WidgetKnob("
-                "__import__('{0.__module__}', globals(), locals(), ['{0.__name__}'])"
-                ".{0.__name__})".format(widget))
+                name_e, b"",
+                ("__import__('nukescripts').panels.WidgetKnob("
+                 "__import__('{0.__module__}', globals(), locals(), ['{0.__name__}'])"
+                 ".{0.__name__})").format(widget))
             self.addKnob(self.custom_knob)
 
     def _add():
         return _Panel(widget, name, widget_id).addToPane()
 
-    menu = nuke.menu('Pane')
-    menu.addCommand(get_encoded(name, 'utf-8'), _add)
+    menu = nuke.menu(b'Pane')
+    menu.addCommand(cast.binary(name), _add)
     nukescripts.registerPanel(widget_id, _add)
 
     if create:

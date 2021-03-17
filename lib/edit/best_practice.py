@@ -6,10 +6,12 @@ from __future__ import (absolute_import, division, print_function,
 
 import nuke
 
-from wlf.codectools import get_unicode as u
-from wlf.codectools import u_print
+import cast_unknown as cast
 
 from . import channel
+
+import logging
+LOGGER = logging.getLogger(__name__)
 
 
 def glow_no_mask(temp_channel='mask.a', is_show_result=True):
@@ -24,7 +26,7 @@ def glow_no_mask(temp_channel='mask.a', is_show_result=True):
     if result:
 
         nuke.message('将{}个Glow节点的mask更改为了width channel:\n{}'.format(
-            len(result), ','.join(u(n.name()) for n in result)
+            len(result), ','.join(cast.text(n.name()) for n in result)
         ).encode('utf-8'))
     else:
         nuke.message('没有发现使用了mask的Glow节点。'.encode('utf-8'))
@@ -32,7 +34,7 @@ def glow_no_mask(temp_channel='mask.a', is_show_result=True):
 
 def _replace_glow_mask(n, temp_channel='mask.a'):
     mask_knob = 'maskChannelMask' if n.input(1) else 'maskChannelInput'
-    mask_channel = u(n[mask_knob].value())
+    mask_channel = cast.text(n[mask_knob].value())
 
     if mask_channel == 'none':
         return False
@@ -57,5 +59,5 @@ def _replace_glow_mask(n, temp_channel='mask.a'):
     n['maskChannelInput'].setValue('none')
     n['W'].setValue(temp_channel)
 
-    u_print('修正Glow节点mask: {}'.format(u(n.name())))
+    LOGGER.info('修正Glow节点mask: {}'.format(cast.text(n.name())))
     return True

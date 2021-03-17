@@ -11,7 +11,7 @@ import six
 
 import edit
 from pathlib2_unicode import PurePath
-from wlf.codectools import get_unicode as u
+import cast_unknown as cast
 
 from .core import BasePatch
 
@@ -47,8 +47,8 @@ class PatchPrecompDialog(BasePatch):
 
 
 def _on_precomp_name_changed(self, knob):
-    rootpath = PurePath(u(nuke.value('root.name')))
-    name = u(knob.value()) or 'precomp1'
+    rootpath = PurePath(cast.text(nuke.value('root.name')))
+    name = cast.text(knob.value()) or 'precomp1'
     script_path = (rootpath.parent /
                    ''.join([rootpath.stem]
                            + ['.{}'.format(name)]
@@ -66,7 +66,7 @@ def _knob_changed(self, knob):
         self.precompName: _on_precomp_name_changed,
     }.get(knob, lambda *_: None)(self, knob)
     options = {name: k.value() for name, k in self.knobs().items()}
-    options = {k: u(v) if isinstance(v, six.binary_type) else v
+    options = {k: cast.text(v) if isinstance(v, six.binary_type) else v
                for k, v in options.items()}
     PatchPrecompSelected.current_options = options
     assert PatchPrecompSelected.current_options
