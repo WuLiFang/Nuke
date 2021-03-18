@@ -7,6 +7,7 @@ from __future__ import (absolute_import, division, print_function,
 import nuke
 
 from ..core import HOOKIMPL
+import cast_unknown as cast
 
 # pylint: disable=missing-docstring
 
@@ -16,4 +17,4 @@ def after_created(nodes):
     if not nodes:
         return
     n = nodes[0]
-    nuke.zoom(nuke.zoom(), (n.xpos(), n.ypos()))
+    nuke.zoom(cast.not_none(nuke.zoom()), (n.xpos(), n.ypos()))

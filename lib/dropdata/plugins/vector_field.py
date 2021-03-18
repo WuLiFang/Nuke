@@ -18,7 +18,7 @@ def create_node(filename, context):
     n = nuke.nodes.Vectorfield(
         vfield_file=filename.encode('utf-8'),
         file_type='vf',
-        label='[value this.vfield_file]'
+        label=b'[value this.vfield_file]'
     )
     context['is_created'] = True
     return [n]

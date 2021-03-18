@@ -117,7 +117,7 @@ def _strip_lines(lines):
 
 
 def _parse_by_indent(lines, indent='    ',):
-    key = ''
+    key = '' # type: str
     values = []
     for line in lines:
         line = cast.text(line)
@@ -138,7 +138,7 @@ def _parse_class_data(lines):
             lines
     ):
         data_def = _parse_data_description(k)
-        if v :
+        if v:
             data_def["docstring"] = _strip_lines(v)
         yield data_def
 
@@ -469,6 +469,7 @@ def _typing_from_data(lines):
 def _fix_nuke_docstring(lines):
     for i in lines:
         i = cast.text(i)
+        # cSpell:ignore rief
         if i.startswith("       rief "):
             yield "        "+i[12:]
             continue

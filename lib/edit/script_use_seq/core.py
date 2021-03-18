@@ -39,7 +39,7 @@ def get_seq_frames(seq_path):
 
 def _non_seq_nodes():
 
-    for n in nuke.allNodes("Read", nuke.Root()):
+    for n in nuke.allNodes(b"Read", nuke.Root()):
         filename = nuke.filename(n)
         if filename == get_seq(filename) and not n.hasError():
             continue
@@ -55,13 +55,17 @@ def replace_footages(cfg, footages=None):
     name_footage_map = {i.name: i for i in (Path(j) for j in footages)}
     LOGGER.info("Got footages: count=%d", len(name_footage_map))
     for n in _non_seq_nodes():
-        name = Path(nuke.filename(n)).name
+        name = Path(cast.text(nuke.filename(n))).name
         if name not in name_footage_map:
             LOGGER.warning("No footage match: filename=%s", name)
             continue
         footage = name_footage_map[name]
         seq = get_seq(footage)
-        n[b'file'].fromUserText(cast.binary(seq))
+        cast.instance(
+            n[b'file'],
+            nuke.File_Knob,
+        ).fromUserText(
+            cast.binary(seq))
         frames = get_seq_frames(seq)
         if frames:
             first = min(frames)
@@ -75,9 +79,9 @@ def replace_footages(cfg, footages=None):
 def _replace_write_node(cfg):
     if not cfg['use_wlf_write']:
         return
-    if len(nuke.allNodes("wlf_Write")) > 0:
+    if len(nuke.allNodes(b"wlf_Write")) > 0:
         return
-    nodes = nuke.allNodes('Write', nuke.Root())
+    nodes = nuke.allNodes(b'Write', nuke.Root())
     if not nodes:
         return
     assert len(nodes) == 1, "Too many write node: count=%d" % len(nodes)
@@ -99,22 +103,22 @@ def replace_nodes(cfg):
 def _config_frame_range(cfg):
     if not cfg['is_auto_frame_range']:
         return
-    nodes = [i for i in nuke.allNodes('Read')
+    nodes = [i for i in nuke.allNodes(b'Read')
              if i.firstFrame() != i.lastFrame() and not i.hasError()]
     if not nodes:
         return
     first = max(i.firstFrame() for i in nodes)
     last = max(i.lastFrame() for i in nodes)
     root = nuke.Root()
-    root['first_frame'].setValue(first)
-    root['last_frame'].setValue(last)
+    root[b'first_frame'].setValue(first)
+    root[b'last_frame'].setValue(last)
 
 
 def _config_project_directory(cfg):
     new_value = cfg['override_project_directory']
     if not new_value:
         return
-    nuke.Root()['project_directory'].setValue(new_value)
+    nuke.Root()[b'project_directory'].setValue(new_value)
 
 
 def config_project(cfg):

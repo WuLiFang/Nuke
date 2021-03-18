@@ -12,13 +12,13 @@ import wlf.path
 from comp import Comp, FootageError, RenderError, _argv
 from comp.config import START_MESSAGE, CompConfig
 
-__path__ = os.path.abspath(__file__).rstrip('c')
+__absfile__ = os.path.abspath(__file__).rstrip('c')
 
 LOGGER = logging.getLogger('com.wlf.comp')
 
 
 def main():
-    """Run this moudule as a script."""
+    """Run this module as a script."""
 
     parser = argparse.ArgumentParser(description='WuLiFang auto comper.')
     parser.add_argument('input_dir', help='Folder that contained footages')

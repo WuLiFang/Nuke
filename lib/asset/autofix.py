@@ -64,7 +64,7 @@ def _u_nuke_filename(node):
 def _set_filename(n, value):
     try:
         k = (n['file'] if not n['proxy'].value()
-             or nuke.value('root.proxy') == 'false' else n['proxy'])
+             or nuke.value(b'root.proxy') == 'false' else n['proxy'])
     except NameError:
         k = n['file']
     k.setValue(value.encode('utf-8'))

@@ -40,11 +40,11 @@ def is_ignore_filename(filename):
             return True
     if filename.lower().endswith('.mov') and not is_ascii(filename):
         nuke.createNode(
-            'StickyNote',
-            'autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
+            b'StickyNote',
+            ('autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
             'label {{{}\n\n'
             '<span style="color:red;text-align:center;font-weight:bold">'
-            'mov格式使用非英文路径将可能导致崩溃</span>}}'.format(filename).encode('utf-8'),
+            'mov格式使用非英文路径将可能导致崩溃</span>}}').format(filename).encode('utf-8'),
             inpanel=False)
         return True
     return None

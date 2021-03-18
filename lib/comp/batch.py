@@ -7,13 +7,14 @@ import os
 import re
 import traceback
 import webbrowser
-from multiprocessing.dummy import Event, Pool, Process, Queue, cpu_count
+from multiprocessing.dummy import Event, Pool, Process, Queue
+from multiprocessing import cpu_count
 from subprocess import PIPE, Popen
 
 import nuke
 from jinja2 import Environment, FileSystemLoader
 
-from comp.__main__ import __path__
+from comp.__main__ import __absfile__
 from comp.config import (IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE,
                          BatchCompConfig)
 import cast_unknown as cast
@@ -58,7 +59,7 @@ class BatchComp(Process):
                 shot) else os.path.join(CONFIG['input_dir'], shot)
             cmd = u'"{nuke}" -t -priority low "{script}" "{input_dir}" "{output}"'.format(
                 nuke=nuke.EXE_PATH,
-                script=__path__,
+                script=__absfile__,
                 input_dir=input_dir,
                 output=output
             )
@@ -96,7 +97,7 @@ class BatchComp(Process):
             return '完成: {}'.format(shot)
 
         if is_multi_threading:
-            _run = run_with_memory_require(8)(_run)
+            _run = run_with_memory_require(8)(_run) # type: ignore
 
         def _oncancel():
             cancel_event.set()

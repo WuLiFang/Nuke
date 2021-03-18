@@ -5,7 +5,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import re
-import urllib
+import six
 
 from ..core import HOOKIMPL
 
@@ -17,6 +17,6 @@ def get_url(data):
     match = re.match(r'file://+([^/].*)', data)
     if match:
         _data = match.group(1)
-        _data = urllib.unquote(_data)
+        _data = six.moves.urllib_parse.unquote(_data)
         return [_data]
     return None

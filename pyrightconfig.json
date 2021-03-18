@@ -2,6 +2,15 @@
   "executionEnvironments": [
     {
       "root": "lib",
+      "extraPaths": [
+        "lib/site-packages"
+      ]
+    },
+    {
+      "root": "tests",
+      "extraPaths": [
+        "lib/site-packages"
+      ]
     }
   ],
   "typeCheckingMode": "basic",
@@ -10,5 +19,6 @@
     "lib/site-packages",
     ".venv",
     "typings",
+    "patches"
   ],
 }

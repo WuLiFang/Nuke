@@ -8,7 +8,7 @@ import nuke
 
 
 def gizmo_to_group(gizmo):
-    """Convert given gizmo node to gruop node."""
+    """Convert given gizmo node to group node."""
 
     if not isinstance(gizmo, nuke.Gizmo):
         return gizmo
@@ -32,7 +32,7 @@ def gizmo_to_group(gizmo):
     _name = gizmo['name'].value()
     nuke.delete(gizmo)
     _group.setName(_name)
-    _group['selected'].setValue(_selected)
+    _group[b'selected'].setValue(_selected)
 
     return _group
 

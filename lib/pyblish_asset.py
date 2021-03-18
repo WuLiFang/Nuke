@@ -31,7 +31,7 @@ class CollectFile(pyblish.api.ContextPlugin):
     def process(self, context):
         context.data['comment'] = ''
         assert isinstance(context, pyblish.api.Context)
-        filename = nuke.value('root.name')
+        filename = nuke.value(b'root.name')
         if not filename:
             raise ValueError('工程尚未保存.')
 
@@ -84,7 +84,7 @@ class CollectMTime(pyblish.api.ContextPlugin):
                 self.log.warning('读取节点出错: %s', n.name())
                 continue
             filename = nuke.filename(n)
-            mtime = n.metadata('input/mtime')
+            mtime = n.metadata(b'input/mtime')
             if not filename or not mtime:
                 continue
 
@@ -96,7 +96,7 @@ class CollectMTime(pyblish.api.ContextPlugin):
             footages.add(footage)
         instance = context.create_instance(
             '{}个 素材'.format(len(footages)),
-            filename=root['name'].value(),
+            filename=root[b'name'].value(),
             family='素材')
         instance.extend(footages)
 
@@ -109,7 +109,7 @@ class CollectMemoryUsage(pyblish.api.ContextPlugin):
 
     def process(self, context):
         assert isinstance(context, pyblish.api.Context)
-        number = nuke.memory('usage')
+        number = int(nuke.memory(b'usage'))
 
         context.create_instance(
             '内存占用: {}GB'.format(round(number / 2.0 ** 30, 2)),
@@ -118,7 +118,7 @@ class CollectMemoryUsage(pyblish.api.ContextPlugin):
 
 
 def _is_local_file(path):
-    path = u(path)
+    path = cast.text(path)
     if sys.platform == 'win32':
         import ctypes
         return ctypes.windll.kernel32.GetDriveTypeW(PurePath(path).drive) == 3
@@ -156,9 +156,10 @@ class ExtractJPG(pyblish.api.InstancePlugin):
             if n:
                 self.log.debug('render_jpg: %s', n.name())
                 try:
-                    n['bt_render_JPG'].execute()
+                    cast.instance(n[b'bt_render_JPG'],
+                                  nuke.Script_Knob).execute()
                 except RuntimeError as ex:
-                    nuke.message(str(ex))
+                    nuke.message(cast.binary(ex))
             else:
                 self.log.warning('工程中缺少wlf_Write节点')
 
@@ -173,7 +174,7 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
     def process(self, instance):
         filename = instance.data['name']
         if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
-            render_dir = cast.text(nuke.value('preferences.wlf_render_dir'))
+            render_dir = cast.text(nuke.value(b'preferences.wlf_render_dir'))
             copy(filename, render_dir + '/')
         else:
             self.log.info('因为首选项设置而跳过')

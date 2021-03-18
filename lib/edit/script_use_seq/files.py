@@ -20,7 +20,6 @@ def _match_rule(v, rule):
 
 
 def _search(path, exclude):
-    # type: (str, list) -> None
     p = Path(path)
     for i in Path(p.parts[0]).glob(Path(*p.parts[1:]).as_posix()):
         if any(_match_rule(i.as_posix(), rule) for rule in exclude):
@@ -29,7 +28,6 @@ def _search(path, exclude):
 
 
 def search(include, exclude):
-    # type: (list, list) -> typing.Set[Path]
     """Search files
 
     Args:

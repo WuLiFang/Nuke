@@ -44,7 +44,7 @@ class ReadNode(object):
         tag = cast.text(nuke.value(
             '{}.{}'.format(cast.text(n.name()),
                            self.tag_knob_name).encode('utf-8'),
-            '') or filetools.get_tag(cast.text(path)))
+            b'') or filetools.get_tag(cast.text(path)))
 
         k = nuke.String_Knob(
             cast.binary(self.tag_knob_name),
@@ -66,8 +66,8 @@ class ReadNode(object):
 def wlf_write_node():
     """Return founded wlf_write node.  """
 
-    n = (nuke.toNode('_Write')
-         or nuke.toNode('wlf_Write1'))
+    n = (nuke.toNode(b'_Write')
+         or nuke.toNode(b'wlf_Write1'))
     if not n:
         nodes = nuke.allNodes(b'wlf_Write')
         if nodes:

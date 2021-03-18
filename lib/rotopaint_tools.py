@@ -4,7 +4,7 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-import nuke.rotopaint
+import nuke.curveknob
 
 LIFETIME_TYPE_ALL = 0
 LIFETIME_TYPE_START_TO_FRAME = 1
@@ -25,7 +25,7 @@ def iter_layer(layer):
     # type: (nuke.rotopaint.Layer,) -> Iterator[nuke.rotopaint.Element]
     for i in layer:
         yield i
-        if isinstance(i, nuke.rotopaint.Layer):
+        if isinstance(i, nuke.curveknob.Layer):
             for j in iter_layer(i):
                 yield j
 
@@ -40,7 +40,7 @@ def iter_shapes_in_layer(layer):
         Iterator[nuke.rotopaint.Shape]: shapes in layer.
     """
     for i in iter_layer(layer):
-        if isinstance(i, nuke.rotopaint.Shape):
+        if isinstance(i, nuke.curveknob.Shape):
             yield i
 
 

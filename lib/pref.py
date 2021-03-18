@@ -1,10 +1,13 @@
 # -*- coding=UTF-8 -*-
 """Custom nuke preference."""
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
 
 import logging
 
 import nuke
-
+import cast_unknown as cast
 LOGGER = logging.getLogger('com.wlf.pref')
 
 
@@ -47,12 +50,13 @@ def set_knob_default():
     nuke.knobDefault('RotoPaint.cliptype', 'no clip')
     nuke.knobDefault('Denoise2.type', 'Digital')
 
-    k = nuke.toNode('preferences')['UIFontSize']
+    k = cast.not_none(nuke.toNode(b'preferences'))[b'UIFontSize']
     if k.value() == 11:
         k.setValue(12)
 
     try:
-        k = nuke.toNode('preferences')['LocalizationPauseOnProjectLoad']
+        k = cast.not_none(nuke.toNode(b'preferences'))[
+            b'LocalizationPauseOnProjectLoad']
         k.setValue(True)
     except NameError:
         LOGGER.debug(
@@ -64,12 +68,12 @@ def set_knob_default():
 def add_preferences():
     """Add a prefrences panel."""
     LOGGER.info(u'添加首选项')
-    pref = nuke.toNode('preferences')
-    k = nuke.Tab_Knob('wlf_tab', '吾立方')
+    pref = nuke.toNode(b'preferences')
+    k = nuke.Tab_Knob(b'wlf_tab',  cast.binary('吾立方'))
     pref.addKnob(k)
 
     def _remove_old():
-        for k in ['wlf_lock_connection', 'wlf_tab']:
+        for k in [b'wlf_lock_connection', b'wlf_tab']:
             try:
                 pref.removeKnob(pref[k])
             except NameError:
@@ -77,7 +81,7 @@ def add_preferences():
 
     def _add_knob(k):
         _knob_tcl_name = 'preferences.{}'.format(k.name())
-        if nuke.exists(_knob_tcl_name):
+        if nuke.exists(cast.binary(_knob_tcl_name)):
             k.setValue(pref[k.name()].value())
             pref.removeKnob(pref[k.name()])
         k.setFlag(nuke.ALWAYS_SAVE)

@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Caculate image value.  """
+"""Calculate image value.  """
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
@@ -23,10 +23,10 @@ def get_min_max(src_node, channel='depth.Z'):
 
     cur_frame = nuke.frame()
     nuke.execute(min_color, cur_frame, cur_frame)
-    min_v = -min_color['pixeldelta'].value()
+    min_v = -min_color[b'pixeldelta'].value()
 
     nuke.execute(max_color, cur_frame, cur_frame)
-    max_v = max_color['pixeldelta'].value() + 1
+    max_v = max_color[b'pixeldelta'].value() + 1
 
     for n in (min_color, max_color, inv):
         nuke.delete(n)
@@ -55,7 +55,7 @@ def get_max(node, channel='rgb'):
             nuke.execute(n, frame, frame)
         except RuntimeError:
             continue
-        ret = max(ret, n['pixeldelta'].value() + 1)
+        ret = max(ret, n[b'pixeldelta'].value() + 1)
         if ret > 0.7:
             break
 

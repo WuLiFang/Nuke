@@ -56,8 +56,9 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
             manager = Manager(nodes)
             manager.autoplace()
         except:
-            LOGGER.error(
-                'Unexcepted excepitoion during autoplace.', exc_info=True)
+            LOGGER.exception(
+                'Unexpected exception during autoplace.',
+            )
             raise
 
 
@@ -496,7 +497,7 @@ class Worker(Analyser):
         if branch_base:
             ret.intersection_update(get_upstream_nodes(
                 branch_base, flags=nuke.INPUTS))
-        ret.difference_update(branch)
+        ret.difference_update(cast.iterable(branch))
         ret.difference_update(self.prev_branch_nodes)
 
         return ret

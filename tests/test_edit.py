@@ -6,9 +6,10 @@ from __future__ import absolute_import, print_function, unicode_literals
 import random
 import sys
 from unittest import TestCase, main
-
+import six
 import nuke
 
+import cast_unknown as cast
 import edit
 
 
@@ -25,7 +26,7 @@ class EditTestCase(TestCase):
         self.assertRaises(ValueError,
                           add_channel, 'test.channel3中文')
         self.assertRaises(ValueError,
-                          add_channel, b'test.channel4中文')
+                          add_channel, cast.binary('test.channel4中文'))
         add_channel('test channel5')
         self.assertIn('other.test channel5', nuke.Root().channels())
         self.assertRaises(ValueError,
@@ -66,7 +67,7 @@ class EditTestCase(TestCase):
         n = named_copy(n, names_dict)
         self.assertIsInstance(n, nuke.Node)
         self.assertEqual(n.Class(), 'Copy')
-        self.assertEqual(len(nuke.allNodes('Copy')),
+        self.assertEqual(len(nuke.allNodes(b'Copy')),
                          ((len(names_dict) - 1) / 4) + 1)
 
         self.assertEqual(n.channels(),
@@ -88,9 +89,9 @@ class EditTestCase(TestCase):
     def test_replace_node(self):
         from edit import replace_node
         const = nuke.nodes.Constant()
-        for _ in xrange(20):
+        for _ in six.moves.range(20):
             nuke.nodes.Grade(inputs=[const])
-        nodes = nuke.allNodes('Grade')
+        nodes = nuke.allNodes(b'Grade')
         self.assertEqual(len(nodes), 20)
         noop = nuke.nodes.NoOp()
         replace_node(const, noop)
@@ -102,7 +103,7 @@ class EditTestCase(TestCase):
 
     def test_get_min_max(self):
         from edit import get_min_max
-        for _ in xrange(5):
+        for _ in six.moves.range(5):
             color = random.random()
             n = nuke.nodes.AddChannels(
                 channels='depth.Z',
@@ -114,14 +115,14 @@ class EditTestCase(TestCase):
     def test_random_glcolor(self):
         from edit import set_random_glcolor
         n = nuke.nodes.NoOp()
-        self.assertFalse(n['gl_color'].value())
-        for _ in xrange(10):
+        self.assertFalse(n[b'gl_color'].value())
+        for _ in six.moves.range(10):
             set_random_glcolor(n)
-            self.assert_(n['gl_color'].value())
+            self.assert_(n[b'gl_color'].value() != 0)
 
     def test_clear_selection(self):
         from edit import clear_selection
-        for _ in xrange(20):
+        for _ in six.moves.range(20):
             nuke.nodes.NoOp(selected=True)
         self.assertEqual(len(nuke.selectedNodes()), 20)
         clear_selection()
@@ -141,7 +142,7 @@ class EditTestCase(TestCase):
         for i in layers:
             n = nuke.nodes.AddChannels(inputs=[n], channels=i)
         for is_postage in (True, False):
-            n['postage_stamp'].setValue(is_postage)
+            n[b'postage_stamp'].setValue(is_postage)
             result = split_layers(n)
             self.assertEqual(len(result), 4)
             for i in result:
@@ -156,7 +157,7 @@ class EditTestCase(TestCase):
 
         n = nuke.nodes.Constant()
         for is_postage in (True, False):
-            n['postage_stamp'].setValue(is_postage)
+            n[b'postage_stamp'].setValue(is_postage)
             result = shuffle_rgba(n)
             self.assertEqual(len(result), 4)
             for i in result:
@@ -172,11 +173,11 @@ class EditTestCase(TestCase):
     def test_use_relative_path(self):
         from edit import use_relative_path
         root = 'A:/test/' if sys.platform == 'win32' else '/tmp/test'
-        nuke.knob('root.project_directory', root)
+        nuke.knob(b'root.project_directory', cast.binary(root))
         n = nuke.nodes.Read(
             file=(root + '/sc01/testfile测试.mov').encode('utf-8'))
         use_relative_path(n)
-        self.assertEqual(n['file'].value(),
+        self.assertEqual(n[b'file'].value(),
                          'sc01/testfile测试.mov'.encode('utf-8'))
 
     def test_gizmo_to_group(self):
@@ -189,11 +190,11 @@ class EditTestCase(TestCase):
             result = gizmo_to_group(gizmo)
             self.assertIsInstance(result, nuke.Group)
             self.assertEqual(result.name(), name)
-            self.assertEqual(result['selected'].value(), is_selected)
+            self.assertEqual(result[b'selected'].value(), is_selected)
 
     def test_enable_later(self):
         from enable_later import mark_enable, marked_nodes
-        for _ in xrange(20):
+        for _ in six.moves.range(20):
             nuke.nodes.Grade()
         nodes = nuke.allNodes()
         self.assertEqual(len(nodes), 20)
@@ -202,10 +203,10 @@ class EditTestCase(TestCase):
         self.assertEqual(len(marked), 20)
         marked.disable()
         for i in nodes:
-            self.assert_(i['disable'].value())
+            self.assert_(i[b'disable'].value())
         marked.enable()
         for i in nodes:
-            self.assertFalse(i['disable'].value())
+            self.assertFalse(i[b'disable'].value())
 
     def test_insert_node(self):
         from edit import insert_node
@@ -214,13 +215,13 @@ class EditTestCase(TestCase):
             return random.choice(nuke.allNodes())
 
         nuke.nodes.NoOp()
-        for _ in xrange(20):
+        for _ in six.moves.range(20):
             nuke.nodes.Grade(inputs=[_random_node(), _random_node()])
             target = _random_node()
             target_dependent = target.dependent()
             state = [(i, j)
                      for i in target_dependent
-                     for j in xrange(i.inputs())
+                     for j in six.moves.range(i.inputs())
                      if i.input(j) is target]
 
             n = nuke.nodes.Grade()
@@ -267,15 +268,15 @@ class EditTestCase(TestCase):
 
         n = nuke.nodes.Grade()
         set_knobs(n, white=8, black=9, hahaha='asd')
-        self.assertEqual(n['white'].value(), 8)
-        self.assertEqual(n['black'].value(), 9)
+        self.assertEqual(n[b'white'].value(), 8)
+        self.assertEqual(n[b'black'].value(), 9)
 
     def test_transfer_flags(self):
         from edit import transfer_flags
 
         all_flags = [pow(2, n) for n in range(31)]
-        src = nuke.Int_Knob('src')
-        dst = nuke.Int_Knob('dst')
+        src = nuke.Int_Knob(b'src')
+        dst = nuke.Int_Knob(b'dst')
         for i in all_flags:
             if random.randint(0, 1):
                 src.setFlag(i)
@@ -297,13 +298,13 @@ class EditTestCase(TestCase):
 
 def test_remove_duplicated_read():
     nuke.scriptClear(True)
-    nodes = [nuke.nodes.Read(file=b'dummy file',) for _ in xrange(10)]
+    nodes = [nuke.nodes.Read(file=b'dummy file',) for _ in six.moves.range(10)]
     downstream_nodes = [nuke.nodes.NoOp(inputs=[n]) for n in nodes]
-    assert len(nuke.allNodes('Read')) == 10
-    assert not nuke.allNodes('Dot')
+    assert len(nuke.allNodes(b'Read')) == 10
+    assert not nuke.allNodes(b'Dot')
     edit.remove_duplicated_read()
-    assert len(nuke.allNodes('Read')) == 1
-    assert len(nuke.allNodes('Dot')) == 9
+    assert len(nuke.allNodes(b'Read')) == 1
+    assert len(nuke.allNodes(b'Dot')) == 9
     for n in downstream_nodes:
         assert n.input(0).Class() in ('Read', 'Dot')
 
@@ -317,24 +318,24 @@ def test_glow_no_mask():
         inputs=(None, nuke.nodes.Constant()),
         W=width_channel, maskChannelMask=mask_channel)
     edit.best_practice.glow_no_mask(temp_channel)
-    assert n['W'].value() == temp_channel
-    assert n['mask'].value() == 'none'
+    assert n[b'W'].value() == temp_channel
+    assert n[b'mask'].value() == 'none'
     assert n.input(1) is None
     n = n.input(0)
     assert n.Class() == 'ChannelMerge'
-    assert n['A'].value() == temp_channel
-    assert n['operation'].value() == 'in'
-    assert n['B'].value() == width_channel
+    assert n[b'A'].value() == temp_channel
+    assert n[b'operation'].value() == 'in'
+    assert n[b'B'].value() == width_channel
     n = n.input(0)
     assert n.Class() == 'Copy'
-    assert n['from0'].value() == mask_channel
-    assert n['to0'].value() == temp_channel
+    assert n[b'from0'].value() == mask_channel
+    assert n[b'to0'].value() == temp_channel
 
 
 def test_delete_unused_node():
     nuke.scriptClear(True)
-    _ = [nuke.nodes.NoOp() for _ in xrange(10)]
-    n = nuke.nodes.NoOp(name='_test')
+    _ = [nuke.nodes.NoOp() for _ in six.moves.range(10)]
+    n = nuke.nodes.NoOp(name=b'_test')
     assert len(nuke.allNodes()) == 11
     edit.delete_unused_nodes()
     assert nuke.allNodes() == [n]

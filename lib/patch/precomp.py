@@ -47,7 +47,7 @@ class PatchPrecompDialog(BasePatch):
 
 
 def _on_precomp_name_changed(self, knob):
-    rootpath = PurePath(cast.text(nuke.value('root.name')))
+    rootpath = PurePath(cast.text(nuke.value(b'root.name')))
     name = cast.text(knob.value()) or 'precomp1'
     script_path = (rootpath.parent /
                    ''.join([rootpath.stem]

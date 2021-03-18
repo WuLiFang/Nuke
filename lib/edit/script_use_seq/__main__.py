@@ -37,7 +37,7 @@ def main():
             assert footages
     nuke.scriptOpen(cast.binary(args.input))
     _script_use_seq.execute(footages=footages)
-    nuke.Root()['name'].setValue(args.output)
+    nuke.Root()[b'name'].setValue(args.output)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     nuke.scriptSave(cast.binary(args.output))
 

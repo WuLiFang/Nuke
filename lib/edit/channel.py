@@ -10,6 +10,7 @@ import cast_unknown as cast
 
 import six
 
+
 def add_channel(name):
     """Add a channel from `{layer}.{channel}` format string.
 
@@ -23,10 +24,10 @@ def add_channel(name):
         raise ValueError('Non-ascii character not acceptable.')
 
     try:
-        layer, channel = name.split('.', 1)
+        layer, channel = name.split(b'.', 1)
     except ValueError:
         layer, channel = 'other', name
-    if '.' in channel:
+    if b'.' in channel:
         raise ValueError('Wrong channel format.', name)
     nuke.Layer(layer, [name])
 
@@ -53,7 +54,7 @@ def escape_for_channel(text):
         text (str): Text for escaped
 
     Returns:
-        str: Esacped text.
+        str: Escaped text.
 
     Example:
         >>> escape_for_channel('apple')
@@ -95,7 +96,8 @@ def named_copy(n, names_dict):
         ret = channel
         repl = (('.red', '.0_'), ('.green', '.1_'),
                 ('.blue', '.2_'), ('.alpha', '3_'))
-        ret = six.moves.reduce(lambda text, repl: text.replace(*repl), repl, ret)
+        ret = six.moves.reduce(
+            lambda text, repl: text.replace(*repl), repl, ret)
         return ret
 
     # For short version channel name.
@@ -121,9 +123,9 @@ def named_copy(n, names_dict):
         index = i % 4
         if not index:
             n = nuke.nodes.Copy(inputs=[n, n])
-        n['from{}'.format(index)].setValue(k)
+        n[cast.binary('from{}'.format(index))].setValue(k)
         add_channel(v)
-        n['to{}'.format(index)].setValue(v)
+        n[cast.binary('to{}'.format(index))].setValue(v)
     return n
 
 
@@ -192,8 +194,8 @@ def copy_layer(input0, input1=None, layer='rgba', output=None):
         return input0
 
     # Choice input channel name.
+    input1_layers = nuke.layers(input1)
     try:
-        input1_layers = nuke.layers(input1)
         input_channel = [i for i in (layer, output, 'rgba')
                          if i in input1_layers][0]
     except IndexError:

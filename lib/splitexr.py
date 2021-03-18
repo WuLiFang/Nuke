@@ -24,16 +24,16 @@ if nuke.GUI:
         """Dialog UI of splitexr."""
 
         knob_list = [
-            (nuke.Tab_Knob, 'general_setting', b'常用设置'),
-            (nuke.File_Knob, 'input_dir', b'输入文件夹'),
-            (nuke.File_Knob, 'output_dir', b'输出文件夹'),
-            (nuke.Enumeration_Knob, 'output_ext', b'输出格式',
+            (nuke.Tab_Knob, 'general_setting', cast.binary('常用设置')),
+            (nuke.File_Knob, 'input_dir', cast.binary('输入文件夹')),
+            (nuke.File_Knob, 'output_dir', cast.binary('输出文件夹')),
+            (nuke.Enumeration_Knob, 'output_ext', cast.binary('输出格式'),
              ['exr', 'png', 'tga', 'jpg', 'mov']),
-            (nuke.Tab_Knob, 'filter', b'正则过滤'),
-            (nuke.String_Knob, 'footage_pat', b'素材名'),
-            (nuke.String_Knob, 'dir_pat', b'路径'),
-            (nuke.EndTabGroup_Knob, 'end_tab', ''),
-            (nuke.Multiline_Eval_String_Knob, 'info', ''),
+            (nuke.Tab_Knob, 'filter', cast.binary('正则过滤')),
+            (nuke.String_Knob, 'footage_pat', cast.binary('素材名')),
+            (nuke.String_Knob, 'dir_pat', cast.binary('路径')),
+            (nuke.EndTabGroup_Knob, 'end_tab', b''),
+            (nuke.Multiline_Eval_String_Knob, 'info', b''),
         ]
         default = {
             'footage_pat': '.+\\.exr[ 0-9-]*',
@@ -43,7 +43,10 @@ if nuke.GUI:
 
         def __init__(self):
             nukescripts.PythonPanel.__init__(
-                self, b'分离exr', 'com.wlf.splitexr')
+                self,
+                cast.binary('分离exr'),
+                b'com.wlf.splitexr',
+            )
             self._files = []
 
             for i in self.knob_list:
@@ -56,7 +59,7 @@ if nuke.GUI:
             self.update()
 
         def knobChanged(self, knob):
-            """Overrride for buttons."""
+            """Override for buttons."""
 
             if knob is self.knobs()['OK']:
                 self.execute()
@@ -163,7 +166,7 @@ if nuke.GUI:
 
 
 def split(filename, output_dir, file_format=None):
-    """Render splited files.  """
+    """Render splitted files.  """
 
     filename = cast.text(filename)
     output_dir = cast.text(output_dir)

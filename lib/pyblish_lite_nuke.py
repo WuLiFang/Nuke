@@ -73,7 +73,7 @@ def pyblish_action(name, is_block=True, is_reset=False):
 
 def _pyblish_action(name, is_reset=True):
 
-    if nuke.value('root.name', None):
+    if nuke.value(b'root.name', None):
         Window.dock()
 
     window_ = Window.instance

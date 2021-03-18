@@ -12,7 +12,7 @@ import pyblish.api
 
 import cast_unknown as cast
 import cgtwq
-import scripttools
+import nuketools
 from cgtwn import Task
 from filetools import get_shot
 from node import wlf_write_node
@@ -131,10 +131,10 @@ class ValidateArtist(TaskMixin, pyblish.api.InstancePlugin):
         task = self.get_task(instance.context)
         assert isinstance(task, Task)
 
-        current_id = context.data['accountID']
-        current_artist = context.data['artist']
+        current_id = cast.text(context.data['accountID'])
+        current_artist = cast.text(context.data['artist'])
 
-        id_ = task['account_id']
+        id_ = cast.text(task['account_id'])
         if current_id not in id_.split(','):
             raise ValueError('用户不匹配: %s -> %s' %
                              (current_artist, task['artist']))
@@ -152,7 +152,7 @@ class ValidateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
         task = self.get_task(instance.context)
         assert isinstance(task, Task)
 
-        with scripttools.keep_modifield_status():
+        with nuketools.keep_modifield_status():
             try:
                 n = task.import_video('animation_videos')
             except ValueError:
@@ -187,7 +187,7 @@ class ValidateFPS(TaskMixin, pyblish.api.InstancePlugin):
             self.log.warning('数据库未设置帧速率: %s', database.name)
         else:
             current_fps = instance.data['fps']
-            if float(fps) != current_fps:
+            if float(cast.text(fps)) != current_fps:
                 raise ValueError('帧速率不一致: %s -> %s', current_fps, fps)
 
 
@@ -238,7 +238,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         assert isinstance(task, Task)
 
         n = wlf_write_node()
-        assert isinstance(n , nuke.Group)
+        assert isinstance(n, nuke.Group)
         path = cast.text(nuke.filename(cast.not_none(n.node(b'Write_JPG_1'))))
         try:
             dest = task.filebox.get('image').path + '/{}.jpg'.format(task.shot)
@@ -266,19 +266,21 @@ class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
             return
 
         note = nuke.getInput(
-            'CGTeamWork任务提交备注(Cancel则不提交)'.encode('utf-8'), '')
+            'CGTeamWork任务提交备注(Cancel则不提交)'.encode('utf-8'),
+            b'',
+        )
 
         if note is None:
             self.log.info('用户选择不提交任务。')
             return
-        note = u(note)
+        note = cast.text(note)
 
         message = cgtwq.Message(note)
         filenames = []
         submit_image = context.data.get('submitImage')
         if submit_image:
             filenames.append(submit_image.path)
-            message.images.append(submit_image)
+            message.images.append(submit_image)  # type: ignore
 
         task.flow.submit(
             filenames=filenames,

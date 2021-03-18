@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Best practice for nuke compositiing.  """
+"""Best practice for nuke compositing.  """
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
@@ -18,7 +18,7 @@ def glow_no_mask(temp_channel='mask.a', is_show_result=True):
     """Use width channel on `Glow2` node, instead of mask.  """
 
     channel.add_channel(temp_channel)
-    nodes = nuke.allNodes('Glow2')
+    nodes = nuke.allNodes(b'Glow2')
     result = [n for n in nodes if _replace_glow_mask(n, temp_channel)]
 
     if not is_show_result:

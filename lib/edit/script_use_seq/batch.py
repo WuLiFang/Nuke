@@ -35,66 +35,67 @@ def run(input_dir, output_dir):
             footages = files.search(
                 include=cfg['seq_include'].splitlines(),
                 exclude=cfg['seq_exclude'].splitlines())
-        if not footages:
-            raise ValueError("No footages")
-        with io.open(temp_fd, 'w', encoding='utf8') as f:
-            f.write("\n".join(six.text_type(i) for i in footages))
-        result = []
-        try:
-            for i in progress(Path(input_dir).glob("**/*.nk"), "转换Nuke文件为序列工程", total=-1):
-                start_time = datetime.now()
-                output = Path(output_dir) / i.name
-                cmd = [nuke.EXE_PATH,
-                       '-t',
-                       __main__.__file__.rstrip('c'),
-                       '--input', i,
-                       '--output', output,
-                       '--footage-list', temp_fp,
-                       ]
-                cmd = [cast.binary(j) for j in cmd]
-                LOGGER.debug("command: %s", cmd)
+            if not footages:
+                    raise ValueError("No footages")
+            with io.open(temp_fd, 'w', encoding='utf8') as f:
+                f.write("\n".join(six.text_type(i) for i in footages))
+            result = []
+            try:
+                for i in progress(Path(input_dir).glob("**/*.nk"), "转换Nuke文件为序列工程", total=-1):
+                    start_time = datetime.now()
+                    output = Path(output_dir) / i.name
+                    cmd = [nuke.EXE_PATH,
+                        '-t',
+                        __main__.__file__.rstrip('c'),
+                        '--input', i,
+                        '--output', output,
+                        '--footage-list', temp_fp,
+                        ]
+                    cmd = [cast.binary(j) for j in cmd]
+                    LOGGER.debug("command: %s", cmd)
 
-                proc = subprocess.Popen(
-                    cmd,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                )
-                stdout, stderr = proc.communicate()
-                stdout = cast.text(stdout)
-                stderr = cast.text(stderr)
-                if START_MESSAGE in stdout:
-                    stdout = stdout.partition(
-                        START_MESSAGE)[2].strip()
-                proc.wait()
-                if proc.returncode:
-                    nuke.tprint(cast.binary(stdout))
-                    nuke.tprint(cast.binary(stderr))
-                    LOGGER.error("Process failed: filename=%s", i)
-                result.append(dict(
-                    start_time=start_time.isoformat(),
-                    end_time=datetime.now().isoformat(),
-                    returncode=proc.returncode,
-                    input=six.text_type(i),
-                    output=six.text_type(output),
-                    cmd=cmd,
-                    stdout=stdout,
-                    stderr=stderr,
-                ))
-        except CancelledError:
-            pass
+                    proc = subprocess.Popen(
+                        cmd,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                    )
+                    stdout, stderr = proc.communicate()
+                    stdout = cast.text(stdout)
+                    stderr = cast.text(stderr)
+                    if START_MESSAGE in stdout:
+                        stdout = stdout.partition(
+                            START_MESSAGE)[2].strip()
+                    proc.wait()
+                    if proc.returncode:
+                        nuke.tprint(cast.binary(stdout))
+                        nuke.tprint(cast.binary(stderr))
+                        LOGGER.error("Process failed: filename=%s", i)
+                    result.append(dict(
+                        start_time=start_time.isoformat(),
+                        end_time=datetime.now().isoformat(),
+                        returncode=proc.returncode,
+                        input=six.text_type(i),
+                        output=six.text_type(output),
+                        cmd=cmd,
+                        stdout=stdout,
+                        stderr=stderr,
+                    ))
+            except CancelledError:
+                pass
 
-        env = jinja2.Environment(
-            loader=jinja2.FileSystemLoader(
-                os.path.abspath(__file__ + '/../../../templates')))
-        template = env.get_template('script_use_seq.html')
-        report = template.render(
-            result=sorted(result, key=lambda v: v['input']))
-        with io.open(
-            cast.binary(os.path.join(output_dir, '!序列工程转换报告.html')),
-            'w',
-                encoding='utf8') as f:
-            f.write(report)
-        webbrowser.open(output_dir)
+            env = jinja2.Environment(
+                loader=jinja2.FileSystemLoader(
+                    os.path.abspath(__file__ + '/../../../templates')))
+            template = env.get_template('script_use_seq.html')
+            report = template.render(
+                result=sorted(result, key=lambda v: v['input']))
+            with io.open(
+                cast.binary(os.path.join(output_dir, '!序列工程转换报告.html')),
+                'w',
+                    encoding='utf8') as f:
+                f.write(report)
+            webbrowser.open(output_dir)
+            break
     finally:
         try:
             os.unlink(temp_fp)

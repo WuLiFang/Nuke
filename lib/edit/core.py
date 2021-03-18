@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Node editing core opearations.  """
+"""Node editing core operations.  """
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
@@ -8,6 +8,7 @@ import logging
 import math
 
 import nuke
+import six
 
 LOGGER = logging.getLogger(__name__)
 
@@ -17,11 +18,11 @@ def clear_selection():
 
     for n in nuke.allNodes():
         try:
-            selected = n['selected'].value()
+            selected = n[b'selected'].value()
         except NameError:
             continue
         if selected:
-            n['selected'].setValue(False)
+            n[b'selected'].setValue(False)
 
 
 def replace_node(node, repl_node):
@@ -48,7 +49,7 @@ def insert_node(node, input_node):
     """
 
     for n in nuke.allNodes():
-        for i in xrange(n.inputs()):
+        for i in six.moves.range(n.inputs()):
             if n.input(i) is input_node:
                 n.setInput(i, node)
 

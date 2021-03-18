@@ -8,61 +8,62 @@ from __future__ import (absolute_import, division, print_function,
 import os
 
 import nuke
+import cast_unknown as cast
 
 import callback
 
 
 def _eval_proj_dir():
     if nuke.numvalue('preferences.wlf_eval_proj_dir', 0.0):
-        attr = 'root.project_directory'
-        nuke.knob(attr, os.path.abspath(nuke.value(attr)).replace('\\', '/'))
+        attr = b'root.project_directory'
+        nuke.knob(attr, os.path.abspath(nuke.value(attr)).replace(b'\\', b'/'))
 
 
 def _add_root_info():
     """add info to root.  """
 
-    artist = nuke.value('preferences.wlf_artist', '')
+    artist = nuke.value(b'preferences.wlf_artist', b'')
     if not artist:
         return
-    if not nuke.exists('root.wlf'):
+    if not nuke.exists(b'root.wlf'):
         n = nuke.Root()
-        k = nuke.Tab_Knob('wlf', b'吾立方')
+        k = nuke.Tab_Knob(b'wlf', cast.binary('吾立方'))
         k.setFlag(nuke.STARTLINE)
         n.addKnob(k)
 
-        k = nuke.String_Knob('wlf_artist', b'制作人')
+        k = nuke.String_Knob(b'wlf_artist', cast.binary('制作人'))
         k.setFlag(nuke.STARTLINE)
         k.setValue(artist)
         n.addKnob(k)
     else:
-        if nuke.exists('root.wlf_artist') and not nuke.value('root.wlf_artist', ''):
-            nuke.knob('root.wlf_artist', artist)
+        if nuke.exists(b'root.wlf_artist') and not nuke.value(b'root.wlf_artist', b''):
+            nuke.knob(b'root.wlf_artist', artist)
 
 
 def _lock_connections():
     if nuke.numvalue('preferences.wlf_lock_connections', 0.0):
-        nuke.Root()['lock_connections'].setValue(1)
+        nuke.Root()[b'lock_connections'].setValue(1)
         nuke.Root().setModified(False)
 
 
 def _check_project():
-    project_directory = nuke.value('root.project_directory')
+    project_directory = nuke.value(b'root.project_directory')
     if not project_directory:
-        _name = nuke.value('root.name', '')
+        _name = nuke.value(b'root.name', b'')
         if _name:
             _dir = os.path.dirname(_name)
-            nuke.knob('root.project_directory', _dir)
-            nuke.message(b'工程目录未设置, 已自动设为: {}'.format(_dir))
+            nuke.knob(b'root.project_directory', _dir)
+            nuke.message(cast.binary('工程目录未设置, 已自动设为: {}'.format(_dir)))
         else:
-            nuke.message(b'工程目录未设置')
+            nuke.message(cast.binary('工程目录未设置'))
     # avoid ValueError of script_directory() when no root.name.
     elif project_directory == r"[python {os.path.abspath(os.path.join("\
-        r"'D:/temp', nuke.value('root.name', ''), '../'"\
+        r"'D:/temp', nuke.value(b'root.name', ''), '../'"\
             r")).replace('\\', '/')}]":
-        nuke.knob('root.project_directory',
-                  r"[python {os.path.join("
-                  r"nuke.value('root.name', ''), '../'"
-                  r").replace('\\', '/')}]")
+        nuke.knob(b'root.project_directory',
+                  cast.binary(r"[python {os.path.join("
+                              r"nuke.value(b'root.name', ''), '../'"
+                              r").replace('\\', '/')}]"))
 
 
 def setup():

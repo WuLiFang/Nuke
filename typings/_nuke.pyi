@@ -1109,7 +1109,7 @@ class Boolean_Knob(Array_Knob):
         """
         ...
 
-    def setValue(self, b) -> bool:
+    def setValue(self, b: bool) -> bool:
         """
         Set the boolean value of this knob.
         @param b: Boolean convertible object.
@@ -4780,7 +4780,7 @@ class Node:
         """
         ...
 
-    def removeKnob(self, k) -> None:
+    def removeKnob(self, k: Knob) -> None:
         """
         Remove knob k from this node or panel. Throws a ValueError exception if k is not found on the node.
 
@@ -5044,6 +5044,7 @@ class NodeConstructor:
     def __call__(
         self,
         *,
+        inputs: typing.Iterable[typing.Optional[Node]] = ...,
         autolabel: six.binary_type = ...,
         gl_color: int = ...,
         help: six.binary_type = ...,
@@ -8524,9 +8525,9 @@ def invertSelection() -> None:
 
 def knob(
     name: six.binary_type,
-    value: typing.Any = ...,
-    getType: bool = ...,
-    getClass: bool = ...,
+    value: six.binary_type = ...,
+    type: bool = ...,
+    class: bool = ...,
 ) -> None:
     """
     Returns or sets the entire state of a knob.
@@ -8573,8 +8574,9 @@ def knob(
     If both the getType and getClass arguments are present and are True, getType takes precedence.
     @param name: The name of the knob.
     @param value: Optional argument. If this is present, the value will be stored into the knob.
-    @param getType: Optional boolean argument. If True, return the class ID for the knob instead of the knob itself. The class ID is an int.
-    @param getClass: Optional boolean argument. If True, return the class name for the knob instead of the knob itself. The class name is a string.
+    @param type: Optional boolean argument. If True, return the class ID for the knob instead of the knob itself. The class ID is an int.
+    @param class: Optional boolean argument. If True, return the class name for the knob instead of the knob itself. The class name is a string.
+        `class` is a python keyword, use **{'class': True} to pass it
     """
     ...
 
@@ -9508,7 +9510,7 @@ def thisView() -> six.binary_type:
     ...
 
 
-def toNode(s) -> Node:
+def toNode(s: six.binary_type) -> typing.Optional[Node]:
     """
     Search for a node in the DAG by name and return it as a Python object.
 
@@ -9582,9 +9584,15 @@ def usingPerformanceTimers() -> bool:
     ...
 
 
-def value(knob, default=...) -> six.binary_type:
+def value(knob: six.binary_type, default: six.binary_type = None) -> six.binary_type:
     """
-    The value function returns the current value of a knob. The knob argument is a string referring to a knob and default is an optional default value to be returned in case of an error. Unlike knob(), this will evaluate animation at the current frame, and expand brackets and dollar signs in string knobs.
+    The value function returns the current value of a knob.
+
+    The knob argument is a string referring to a knob
+    and default is an optional default value to be returned in case of an error.
+
+    Unlike knob(), this will evaluate animation at the current frame,
+    and expand brackets and dollar signs in string knobs.
     """
     ...
 
@@ -9592,8 +9600,6 @@ def value(knob, default=...) -> six.binary_type:
 def views() -> list:
     """
     List of all the globally existing views.
-
-    @return: List
     """
     ...
 

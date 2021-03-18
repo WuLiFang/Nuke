@@ -26,7 +26,7 @@ BATCH_CONFIG = BatchCompConfig()
 
 
 class Comp(object):
-    """Create .nk file from footage that taged in filename."""
+    """Create .nk file from footage that tagged in filename."""
 
     tag_metadata_key = 'comp/tag'
     _attenuation_radial = None
@@ -91,10 +91,10 @@ class Comp(object):
     def setup(self):
         """Add tag knob to read nodes, then set project framerange."""
 
-        if not nuke.value('root.project_directory'):
+        if not nuke.value(b'root.project_directory'):
             nuke.knob(b"root.project_directory",
                       cast.binary(r"[python {os.path.join("
-                                  r"nuke.value('root.name', ''), '../'"
+                                  r"nuke.value(b'root.name', ''), '../'"
                                   r").replace('\\', '/')}]"))
 
         nodes = nuke.allNodes(b'Read')
@@ -212,7 +212,7 @@ class Comp(object):
             label=cast.binary('整体滤镜结束'))
 
         n = nuke.nodes.wlf_Write(inputs=[n])
-        n.setName('_Write')
+        n.setName(b'_Write')
         self.task_step('输出节点创建')
 
         self.task_step('设置查看器')
@@ -230,7 +230,8 @@ class Comp(object):
             n = nuke.nodes.Vectorfield(
                 inputs=[input_node],
                 file_type='vf',
-                label='[basename [value this.knob.vfield_file]]')
+                label=b'[basename [value this.knob.vfield_file]]',
+            )
             cast.instance(n[b'vfield_file'], nuke.File_Knob).fromUserText(lut)
             return n
 
@@ -242,7 +243,7 @@ class Comp(object):
         else:
             n = nuke.nodes.Read(file=mp_file)
             cast.instance(n[b'file'],  nuke.File_Knob).fromUserText(mp_file)
-        n.setName('MP')
+        n.setName(b'MP')
         n = nuke.nodes.ModifyMetaData(
             inputs=[n],
             label=cast.binary('元数据标签'),
@@ -269,7 +270,7 @@ class Comp(object):
         input_node = nuke.nodes.wlf_Lightwrap(inputs=[input_node, n],
                                               label=cast.binary('MP灯光包裹'))
         n = nuke.nodes.Merge2(
-            inputs=[input_node, n], operation='under', bbox='B', label='MP')
+            inputs=[input_node, n], operation=b'under', bbox=b'B', label=b'MP')
 
         return n
 
@@ -290,7 +291,7 @@ class Comp(object):
 
         for n in nuke.allNodes(b'Read'):
             knob_name = '{}.{}'.format(n.name(), ReadNode.tag_knob_name)
-            tag = cast.text(nuke.value(knob_name, ''))
+            tag = cast.text(nuke.value(cast.binary(knob_name), b''))
             if tag.partition('_')[0] in tags:
                 ret.append(n)
 
@@ -308,7 +309,7 @@ class Comp(object):
 
         # Save nk
         LOGGER.info('保存为:\t%s', _path)
-        nuke.Root()['name'].setValue(_path)
+        nuke.Root()[b'name'].setValue(_path)
         nuke.scriptSave(_path)
 
         # Render png
@@ -326,7 +327,7 @@ class Comp(object):
                         continue
 
         # Render Single Frame
-        n = nuke.toNode('_Write')
+        n = nuke.toNode(b'_Write')
         if isinstance(n, nuke.Group):
             n = cast.not_none(n.node('Write_JPG_1'))
             n[b'disable'].setValue(False)
@@ -374,7 +375,7 @@ class Comp(object):
             if i > 0:
                 n = nuke.nodes.Merge2(
                     inputs=[nodes[i - 1], n],
-                    label=n.metadata(cast.binary(self.tag_metadata_key)) or ''
+                    label=cast.binary(n.metadata(cast.binary(self.tag_metadata_key)) or ''),
                 )
 
             nodes[i] = n
@@ -443,7 +444,7 @@ class Comp(object):
             n = nuke.nodes.Merge2(
                 inputs=[n, _constant],
                 also_merge='all',
-                label='add_depth'
+                label=b'add_depth'
             )
         n = nuke.nodes.Reformat(inputs=[n], resize='fit')
 
@@ -721,7 +722,7 @@ class Comp(object):
         n = nuke.nodes.ZDefocus2(
             inputs=[input_node], math='depth', output='focal plane setup',
             center=0.00234567, blur_dof=False, label=cast.binary('** 虚焦总控制 **\n在此拖点定虚焦及设置'))
-        n.setName('_ZDefocus')
+        n.setName(b'_ZDefocus')
         return n
 
 
@@ -729,11 +730,11 @@ def render_png(nodes, frame=None, show=False):
     """create png for given @nodes."""
 
     assert isinstance(nodes, (nuke.Node, list, tuple))
-    assert nuke.value('root.project_directory'), '未设置工程目录'
+    assert nuke.value(b'root.project_directory'), '未设置工程目录'
     if isinstance(nodes, nuke.Node):
         nodes = (nodes,)
     script_name = os.path.join(os.path.splitext(
-        os.path.basename(nuke.value('root.name')))[0])
+        os.path.basename(nuke.value(b'root.name')))[0])
     if frame is None:
         frame = nuke.frame()
     for read_node in nodes:
@@ -743,14 +744,21 @@ def render_png(nodes, frame=None, show=False):
         LOGGER.info('渲染: %s', name)
         n = nuke.nodes.Write(
             inputs=[read_node], channels='rgba')
-        n[b'file'].fromUserText(os.path.join(
-            script_name, '{}.{}.png'.format(name, frame)))
+        cast.instance(
+            n[b'file'],
+            nuke.File_Knob
+        ).fromUserText(cast.binary(os.path.join(
+            cast.text(script_name), '{}.{}.png'.format(name, frame))))
         nuke.execute(n, frame, frame)
 
         nuke.delete(n)
     if show:
-        webbrowser.open(os.path.join(nuke.value(
-            'root.project_directory'), script_name))
+        webbrowser.open(
+            os.path.join(
+                cast.text(nuke.value(b'root.project_directory')),
+                cast.text(script_name),
+            ),
+        )
 
 
 class FootageError(Exception):

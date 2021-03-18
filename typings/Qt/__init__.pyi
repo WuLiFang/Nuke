@@ -56,14 +56,255 @@ from . import QtTest
 from . import QtWidgets
 from . import QtXml
 from . import QtXmlPatterns
+def _apply_site_config():
+    """
+    """
+    ...
+
+
+def _build_compatibility_members(binding, decorators=None):
+    """
+    Apply `binding` to QtCompat
+
+    Arguments:
+        binding (str): Top level binding in _compatibility_members.
+        decorators (dict, optional): Provides the ability to decorate the
+            original Qt methods when needed by a binding. This can be used
+            to change the returned value to a standard value. The key should
+            be the classname, the value is a dict where the keys are the
+            target method names, and the values are the decorator functions.
+    """
+    ...
+
+
+def _cli(args):
+    """
+    Qt.py command-line interface
+    """
+    ...
+
+
+def _convert(lines):
+    """
+    Convert compiled .ui file from PySide2 to Qt.py
+
+    Arguments:
+        lines (list): Each line of of .ui file
+
+    Usage:
+        >> with open("myui.py") as f:
+        ..   lines = _convert(f.readlines())
+    """
+    ...
+
+
+def _import_sub_module(module, name):
+    """
+    import_sub_module will mimic the function of importlib.import_module
+    """
+    ...
+
+
+def _install():
+    """
+    """
+    ...
+
+
+def _loadUi(uifile, baseinstance=None):
+    """
+    Dynamically load a user interface from the given `uifile`
+
+    This function calls `uic.loadUi` if using PyQt bindings,
+    else it implements a comparable binding for PySide.
+
+    Documentation:
+        http://pyqt.sourceforge.net/Docs/PyQt5/designer.html#PyQt5.uic.loadUi
+
+    Arguments:
+        uifile (str): Absolute path to Qt Designer file.
+        baseinstance (QWidget): Instantiated QWidget or subclass thereof
+
+    Return:
+        baseinstance if `baseinstance` is not `None`. Otherwise
+        return the newly created instance of the user interface.
+    """
+    ...
+
+
+def _log(text):
+    """
+    """
+    ...
+
+
+def _new_module(name):
+    """
+    """
+    ...
+
+
+def _none():
+    """
+    Internal option (used in installer)
+    """
+    ...
+
+
+def _pyqt4():
+    """
+    Initialise PyQt4
+    """
+    ...
+
+
+def _pyqt5():
+    """
+    Initialise PyQt5
+    """
+    ...
+
+
+def _pyside():
+    """
+    Initialise PySide
+    """
+    ...
+
+
+def _pyside2():
+    """
+    Initialise PySide2
+
+    These functions serve to test the existence of a binding
+    along with set it up in such a way that it aligns with
+    the final step; adding members from the original binding
+    to Qt.py
+    """
+    ...
+
+
+def _qInstallMessageHandler(handler):
+    """
+    Install a message handler that works in all bindings
+
+    Args:
+        handler: A function that takes 3 arguments, or None
+    """
+    ...
+
+
+def _reassign_misplaced_members(binding):
+    """
+    Apply misplaced members from `binding` to Qt.py
+
+    Arguments:
+        binding (dict): Misplaced members
+    """
+    ...
+
+
+def _setup(module, extras):
+    """
+    Install common submodules
+    """
+    ...
+
+
+def _wrapinstance(func, ptr, base=None):
+    """
+    Enable implicit cast of pointer to most suitable class
+
+    This behaviour is available in sip per default.
+
+    Based on http://nathanhorne.com/pyqtpyside-wrap-instance
+
+    Usage:
+        This mechanism kicks in under these circumstances.
+        1. Qt.py is using PySide 1 or 2.
+        2. A `base` argument is not provided.
+
+        See :func:`QtCompat.wrapInstance()`
+
+    Arguments:
+        func (function): Original function
+        ptr (long): Pointer to QObject in memory
+        base (QObject, optional): Base class to wrap with. Defaults to QObject,
+            which should handle anything.
+    """
+    ...
+
+
+IsPyQt4: bool
+"""
+False
+"""
+
+IsPyQt5: bool
+"""
+False
+"""
+
+IsPySide: bool
+"""
+True
+"""
+
+IsPySide2: bool
+"""
+False
+"""
+
+QT_PREFERRED_BINDING: six.binary_type
+"""
+''
+"""
+
+QT_SIP_API_HINT: ... = None
+
+QT_VERBOSE: bool
+"""
+False
+"""
+
 __all__: ...
+"""
+['IsPyQt4', 'IsPyQt5', 'IsPySide', 'IsPySide2', 'QT_PREFERRE...
+"""
 
 __binding__: six.binary_type
+"""
+'PySide'
+"""
 
 __binding_version__: six.binary_type
+"""
+'1.2.2'
+"""
 
 __qt_version__: six.binary_type
+"""
+'4.8.5'
+"""
 
 __version__: six.binary_type
+"""
+'1.1.0'
+"""
+
+_common_members: ...
+"""
+{'QtCore': ['QAbstractAnimation', 'QAbstractEventDis...
+"""
+
+_compatibility_members: ...
+"""
+{'PyQt4': {'QFileDialog': {'getOpenFileName':...
+"""
+
+_misplaced_members: ...
+"""
+{'PyQt4': {'QtCore.pyqtProperty': 'QtCore.Propert...
+"""
 
 # version: 1.1.0

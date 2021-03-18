@@ -78,7 +78,7 @@ def use_relative_path(nodes):
     if isinstance(nodes, nuke.Node):
         nodes = [nodes]
 
-    proj_dir = PurePath(nuke.value('root.project_directory').decode("utf-8"))
+    proj_dir = PurePath(nuke.value(b'root.project_directory').decode("utf-8"))
     for n in nodes:
         try:
             path = PurePath(n[b'file'].value().decode("utf-8"))
