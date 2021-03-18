@@ -21,12 +21,12 @@ def main():
 
     import edit.script_use_seq as _script_use_seq
 
-    sys.stdout.write(cast.text(_script_use_seq.config.START_MESSAGE))
+    _ = sys.stdout.write(cast.text(_script_use_seq.config.START_MESSAGE))
     parser = argparse.ArgumentParser(
         description='Switch nuke script to use sequence.')
-    parser.add_argument('--input', help='.nk input file path')
-    parser.add_argument('--output', help='.nk output file path.')
-    parser.add_argument('--footage-list', nargs='?',
+    _ = parser.add_argument('--input', help='.nk input file path')
+    _ = parser.add_argument('--output', help='.nk output file path.')
+    _ = parser.add_argument('--footage-list', nargs='?',
                         help='potential footage list file')
     args = parser.parse_args(sys.argv[1:])
 
@@ -39,7 +39,7 @@ def main():
     _script_use_seq.execute(footages=footages)
     nuke.Root()[b'name'].setValue(args.output)
     Path(args.output).parent.mkdir(parents=True, exist_ok=True)
-    nuke.scriptSave(cast.binary(args.output))
+    _ = nuke.scriptSave(cast.binary(args.output))
 
 
 if __name__ == '__main__':

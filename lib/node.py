@@ -23,7 +23,7 @@ def append_knob(node, knob):
     knob_name = knob.name()
     node_name = node.name()
     if nuke.exists(b'%s.%s' % (node_name, knob_name)):
-        knob.setValue(node[knob_name].value())
+        _ = knob.setValue(node[knob_name].value())
         node.removeKnob(node[knob_name])
     node.addKnob(knob)
 
@@ -82,7 +82,8 @@ def parent_backdrop(node):
 
     backdrops = nuke.allNodes(b'BackdropNode')
     nodes = set()
-    list(nodes.union(n.getNodes()) for n in backdrops)
+    for n in backdrops:
+        nodes = nodes.union(n.getNodes())
     backdrops = set(backdrops) - nodes
     for n in backdrops:
         if node in n.getNodes():

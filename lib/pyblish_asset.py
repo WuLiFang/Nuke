@@ -175,6 +175,6 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
         filename = instance.data['name']
         if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
             render_dir = cast.text(nuke.value(b'preferences.wlf_render_dir'))
-            copy(filename, render_dir + '/')
+            _ = copy(filename, render_dir + '/')
         else:
             self.log.info('因为首选项设置而跳过')

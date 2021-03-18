@@ -105,11 +105,11 @@ class PatchPrecompSelected(BasePatch):
                 # precomp node will change the value
                 # so we need a assert node.
                 assert_node = nuke.nodes.Assert()
-                assert_node[b'expression'].setExpression(
+                _ = assert_node[b'expression'].setExpression(
                     '[knob {}.checkHashOnRead 0]\n'
                     '[return 1]'.format(n.name()).encode('utf-8'))
                 edit.insert_node(assert_node, n.input(0))
-            nuke.tcl(b"export_as_precomp",
+            _ = nuke.tcl(b"export_as_precomp",
                      cls.current_options['script'].encode('utf-8'))
             if cls.current_precomp_node:
                 cls.current_precomp_node.reload()

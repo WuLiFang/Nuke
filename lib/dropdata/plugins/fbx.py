@@ -24,12 +24,12 @@ def create_node(filename, context):
     n.setName(b'Camera_3DEnv_1')
     cast.instance(n[b'file'], nuke.File_Knob).fromUserText(filename.encode('utf-8'))
     if nuke.expression('{}.animated'.format(n.name())):
-        n[b'read_from_file'].setValue(False)
+        _ = n[b'read_from_file'].setValue(False)
     else:
         nuke.delete(n)
         n = nuke.nodes.ReadGeo2()
         cast.instance(n[b'file'], nuke.File_Knob).fromUserText(filename.encode('utf-8'))
-        n[b'all_objects'].setValue(True)
+        _ = n[b'all_objects'].setValue(True)
     if n.hasError():
         nuke.delete(n)
         return None

@@ -9,6 +9,11 @@ import nukescripts  # pylint: disable=import-error
 import cast_unknown as cast
 
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import AnyStr
+
+
 class PythonPanel(nukescripts.PythonPanel):
     """Customized python panel.  """
 
@@ -16,11 +21,12 @@ class PythonPanel(nukescripts.PythonPanel):
     pane_name = None
 
     def __getitem__(self, name):
-        return self.knobs()[name]
+        # type: (AnyStr,) -> nuke.Knob
+        return self.knobs()[cast.binary(name)]
 
     def show(self):
         """Show panel.  """
-        pane = nuke.getPaneFor('Properties.1')
+        pane = nuke.getPaneFor(b'Properties.1')
         if pane:
             self.addToPane(pane)
         else:

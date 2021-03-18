@@ -5,39 +5,45 @@ from __future__ import (absolute_import, division, print_function,
 
 import nuke
 
+import cast_unknown as cast
 
-class Nodes(list):
-    """Optmized list for nuke.Node.  """
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import List, Set, Iterable, Union
+
+
+class Nodes(
+    list
+):
+    """Optimized list for nuke.Node.  """
 
     def __init__(self, nodes=None):
-        if nodes is None:
-            nodes = []
-        if isinstance(nodes, nuke.Node):
-            nodes = [nodes]
-
-        list.__init__(self, nodes)
+        super(Nodes, self).__init__(cast.iterable(nodes))   # type: ignore
 
     @property
     def xpos(self):
+        # type: () -> int
         """The x position.  """
-        return min(n.xpos() for n in self)
+        return min(cast.instance(n, nuke.Node).xpos() for n in self)
 
     @xpos.setter
     def xpos(self, value):
         extend_x = value - self.xpos
         for n in self:
+            n = cast.instance(n, nuke.Node)
             xpos = n.xpos() + extend_x
             n.setXpos(xpos)
 
     @property
     def ypos(self):
         """The y position.  """
-        return min([node.ypos() for node in self])
+        return min([cast.instance(node, nuke.Node).ypos() for node in self])
 
     @ypos.setter
     def ypos(self, value):
         extend_y = value - self.ypos
         for n in self:
+            n = cast.instance(n, nuke.Node)
             ypos = n.ypos() + extend_y
             n.setYpos(ypos)
 
@@ -49,7 +55,7 @@ class Nodes(list):
     @property
     def max_width(self):
         """The node width max value in this."""
-        return max(n.screenWidth() for n in self)
+        return max(cast.instance(n, nuke.Node).screenWidth() for n in self)
 
     @property
     def height(self):
@@ -57,20 +63,31 @@ class Nodes(list):
         return self.bottom - self.ypos
 
     @property
-    def bottom(self):
+    def bottom(
+        self,  # type: List[nuke.Node]
+    ):
+        # type: () -> int
         """The bottom border of all nodes.  """
         return max([node.ypos() + node.screenHeight()
-                    for node in self])
+                    for node
+                    in self
+
+                    ])
 
     @bottom.setter
     def bottom(self, value):
         extend_y = value - self.bottom
         for n in self:
+            n = cast.instance(n, nuke.Node)
             ypos = n.ypos() + extend_y
             n.setYpos(ypos)
 
     @property
-    def right(self):
+    def right(
+        self,  # type: List[nuke.Node]
+
+    ):
+        # type: () -> int
         """The right border of all nodes.  """
         return max(n.xpos() + n.screenWidth() for n in self)
 
@@ -78,6 +95,7 @@ class Nodes(list):
     def right(self, value):
         extend_x = value - self.right
         for n in self:
+            n = cast.instance(n, nuke.Node)
             xpos = n.xpos() + extend_x
             n.setXpos(xpos)
 
@@ -92,29 +110,35 @@ class Nodes(list):
         """Auto place nodes."""
 
         from orgnize import autoplace
-        autoplace(self)
+        _ = autoplace(self)
 
     def endnodes(self):
         """Return Nodes that has no downstream founded in given nodes.  """
 
-        ret = set(n for n in self if n.Class() not in ('Viewer',))
-        other = list(n for n in self if n not in ret)
+        ret_set = set(n for n in self if cast.instance(
+            n, nuke.Node).Class() not in ('Viewer',),
 
-        for n in list(ret):
+        )  # type: Set[nuke.Node]
+        other = list(n for n in self if n not in ret_set)
+
+        for n in list(ret_set):
+            n = cast.instance(n, nuke.Node)
             dep = n.dependencies(nuke.INPUTS)
             if set(self).intersection(dep):
-                ret.difference_update(dep)
-        ret = sorted(ret, key=lambda x: len(
+                ret_set.difference_update(dep)
+        ret = sorted(ret_set, key=lambda x: len(
             get_upstream_nodes(x)), reverse=True)
         ret.extend(other)
         return ret
 
-    def disable(self):
+    def disable(
+        self,  # type: List[nuke.Node]
+    ):
         """Disable all.  """
 
         for n in self:
             try:
-                n['disable'].setValue(True)
+                _ = n[b'disable'].setValue(True)
             except NameError:
                 continue
 
@@ -122,13 +146,17 @@ class Nodes(list):
         """Enable all.  """
 
         for n in self:
+            n = cast.instance(n, nuke.Node)
             try:
-                n['disable'].setValue(False)
+                _ = n[b'disable'].setValue(False)
             except NameError:
                 continue
 
 
-def get_upstream_nodes(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
+def get_upstream_nodes(
+    nodes,  # type: Union[Iterable[nuke.Node], nuke.Node]
+    flags=nuke.INPUTS | nuke.HIDDEN_INPUTS,  # type: int
+):
     """ Return all nodes in the tree of the node. """
     ret = set()
     if isinstance(nodes, nuke.Node):
@@ -143,10 +171,11 @@ def get_upstream_nodes(nodes, flags=nuke.INPUTS | nuke.HIDDEN_INPUTS):
 
 
 def is_node_deleted(node):
+    # type: (nuke.Node) -> bool
     """Check if node already deleted.  """
 
     try:
-        repr(node)
+        _ = repr(node)
         return False
     except ValueError:
         return True

@@ -10,6 +10,12 @@ import math
 import nuke
 import six
 
+import cast_unknown as cast
+
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Any
+
 LOGGER = logging.getLogger(__name__)
 
 
@@ -22,10 +28,13 @@ def clear_selection():
         except NameError:
             continue
         if selected:
-            n[b'selected'].setValue(False)
+            _ = n[b'selected'].setValue(False)
 
 
-def replace_node(node, repl_node):
+def replace_node(
+    node,  # type: nuke.Node
+    repl_node,  # type: nuke.Node
+):  # type: (...) -> None
     """Replace a node with another in node graph.
 
     Args:
@@ -37,10 +46,13 @@ def replace_node(node, repl_node):
     for n in nodes:
         for i in range(n.inputs()):
             if n.input(i) is node:
-                n.setInput(i, repl_node)
+                _ = n.setInput(i, repl_node)
 
 
-def insert_node(node, input_node):
+def insert_node(
+    node,  # type: nuke.Node
+    input_node,  # type: nuke.Node
+):  # type: (...) -> None
     """Insert @node after @input_node in node graph
 
     Args:
@@ -51,12 +63,15 @@ def insert_node(node, input_node):
     for n in nuke.allNodes():
         for i in six.moves.range(n.inputs()):
             if n.input(i) is input_node:
-                n.setInput(i, node)
+                _ = n.setInput(i, node)
 
-    node.setInput(0, input_node)
+    _ = node.setInput(0, input_node)
 
 
-def set_knobs(node, **knob_values):
+def set_knobs(
+    node,  # type: nuke.Node
+    **knob_values,  # type: Any
+):
     """Set multiple knobs at once.
 
     Args:
@@ -66,7 +81,7 @@ def set_knobs(node, **knob_values):
 
     for knob_name, value in knob_values.items():
         try:
-            node[knob_name].setValue(value)
+            _ = node[cast.binary(knob_name)].setValue(value)
         except (AttributeError, NameError, TypeError):
             LOGGER.debug('Can not set knob: %s.%s to %s',
                          node.name(), knob_name, value)

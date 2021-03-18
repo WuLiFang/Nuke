@@ -23,8 +23,17 @@ assert isinstance(LOGGER, logging.Logger)
 DEBUG = False
 LOCK = threading.Lock()
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import (Iterable, Optional, Union, List)
 
-def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
+
+def autoplace(
+    nodes=None,  # type: Optional[Union[Iterable[nuke.Node], nuke.Node]]
+    recursive=False,  # type: Optional[bool]
+    undoable=True,  # type: Optional[bool]
+    async_=None,  # type: Optional[bool]
+):  # type: (...) -> Union[None, threading.Thread]
     """Auto place nodes."""
 
     if async_ is None:
@@ -63,6 +72,7 @@ def autoplace(nodes=None, recursive=False, undoable=True, async_=None):
 
 
 def is_node_inside(node, backdrop):
+    # type: (nuke.Node, nuke.Node) -> bool
     """Returns true if node geometry is inside backdropNode otherwise returns false"""
     topleft_node = [node.xpos(), node.ypos()]
     topleft_backdrop = [backdrop.xpos(), backdrop.ypos()]
@@ -109,13 +119,17 @@ def split_by_backdrop():
 
     # Panel
     panel = nuke.Panel(b'splitByBackdrop')
-    panel.addFilenameSearch(cast.binary(text_save_to), os.getenv('TEMP'))
-    panel.show()
+    _ = panel.addFilenameSearch(
+        cast.binary(text_save_to),
+        cast.binary(os.getenv('TEMP') or "")
+    )
+    if not panel.show():
+        return
 
     # Save splitted .nk file
-    save_path = panel.value(cast.binary(text_save_to)).rstrip('\\/')
+    save_path = cast.text(panel.value(cast.binary(text_save_to))).rstrip('\\/')
     if not os.path.exists(save_path):
-        if not nuke.ask(text_ask_if_create_new_folder):
+        if not nuke.ask(cast.binary(text_ask_if_create_new_folder)):
             return False
     dir_ = save_path + '/split_nk/'
     dir_ = os.path.normcase(dir_)
@@ -131,36 +145,42 @@ def split_by_backdrop():
         filename = dir_ + label + '.nk'
         i.selectOnly()
         i.selectNodes()
-        nuke.nodeCopy(filename)
-    os.system('explorer "' + dir_ + '"')
+        _ = nuke.nodeCopy(cast.binary(filename))
+    _ = os.system('explorer "' + dir_ + '"')
     return True
 
 
 def nodes_add_dots(nodes=None):
+    # type: (Optional[Iterable[nuke.Node]]) -> None
     """Add dots to orgnize node tree."""
 
     if not nodes:
         nodes = nuke.selectedNodes()
 
-    def _add_dot(output_node, input_num):
+    def _add_dot(
+        output_node,  # type: nuke.Node
+        input_num,  # type: int
+    ):  # type: (...) -> None
         input_node = output_node.input(input_num)
         if not input_node\
                 or input_node.Class() in ['Dot']\
                 or abs(output_node.xpos() - input_node.xpos()) < output_node.screenWidth()\
                 or abs(output_node.ypos() - input_node.ypos()) <= output_node.screenHeight():
             return None
-        if output_node.Class() in ['Viewer'] or output_node['hide_input'].value():
+        if output_node.Class() in ['Viewer'] or output_node[b'hide_input'].value():
             return None
 
         _dot = nuke.nodes.Dot(inputs=[input_node])
-        output_node.setInput(input_num, _dot)
+        _ = output_node.setInput(input_num, _dot)
         _dot.setXYpos(
-            input_node.xpos() + input_node.screenWidth() / 2 - _dot.screenWidth() / 2,
-            output_node.ypos() + output_node.screenHeight() / 2 - _dot.screenHeight() /
-            2 - (_dot.screenHeight() + 5) * input_num
+            int(input_node.xpos() + input_node.screenWidth() /
+                2 - _dot.screenWidth() / 2),
+            int(output_node.ypos() + output_node.screenHeight() / 2 - _dot.screenHeight() /
+                2 - (_dot.screenHeight() + 5) * input_num)
         )
 
     def _all_input_add_dot(node):
+        # type: (nuke.Node) -> None
         for input_num in range(node.inputs()):
             _add_dot(node, input_num)
 
@@ -178,14 +198,14 @@ def create_backdrop(nodes, autoplace_nodes=False):
     at the top for some text in a large font.
     '''
     if autoplace_nodes:
-        map(nuke.autoplace, nodes)
+        _ = map(nuke.autoplace, nodes)
     if not nodes:
         return nuke.nodes.BackdropNode()
     nodes = Nodes(nodes)
 
     z_order = 0
     selected_backdropnodes = nuke.selectedNodes(b"BackdropNode")
-    non_selected_backdropnodes = []
+    non_selected_backdropnodes = []  # type: List[nuke.BackdropNode]
     # if there are backdropNodes selected put the new one immediately behind the farthest one
     if selected_backdropnodes:
         z_order = min([node.knob(b"z_order").value()

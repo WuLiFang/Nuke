@@ -10,11 +10,16 @@
       "root": "tests",
       "extraPaths": [
         "lib/site-packages"
-      ]
+      ],
     }
   ],
   "typeCheckingMode": "basic",
   "reportMissingModuleSource": "none",
+  "reportUnusedImport": "error",
+  "reportUnusedCallResult": "error",
+  "reportUnknownMemberType": "error",
+  "reportOptionalMemberAccess": "error",
+  "reportOptionalMemberCall": "error",
   "exclude": [
     "lib/site-packages",
     ".venv",

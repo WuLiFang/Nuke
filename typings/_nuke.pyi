@@ -6,8 +6,6 @@ _nuke
 
 
 import typing
-import typing
-import typing
 import six
 import typing
 import _geo
@@ -175,7 +173,7 @@ class AnimationCurve:
         """
         ...
 
-    def keys(self) -> typing.List:
+    def keys(self) -> typing.List[six.binary_type]:
         """
         List of keys.
         """
@@ -403,7 +401,7 @@ class Array_Knob(Knob):
         """
         ...
 
-    def array(self) -> typing.List:
+    def array(self) -> typing.List[typing.Any]:
         """
         List of knob values.
         """
@@ -469,7 +467,7 @@ class Array_Knob(Knob):
         """
         ...
 
-    def dimensions(self) -> typing.List:
+    def dimensions(self) -> typing.List[typing.Any]:
         """
         Dimensions in array.
         """
@@ -849,7 +847,7 @@ class Array_Knob(Knob):
         """
         ...
 
-    def vect(self) -> typing.List:
+    def vect(self) -> typing.List[typing.Any]:
         """
         List of knob values.
         """
@@ -2766,7 +2764,7 @@ class Group(Node):
         """
         ...
 
-    def node(self, s) -> typing.Optional[Node]:
+    def node(self, s: six.binary_type) -> typing.Optional[Node]:
         """
         Locate a node by name.
 
@@ -3080,7 +3078,7 @@ class Int_Knob(Array_Knob):
         """
         ...
 
-    def setValue(self, val) -> bool:
+    def setValue(self, val: int) -> bool:
         """
         Set the integer value of this knob.
 
@@ -3170,7 +3168,7 @@ class Knob:
         """
         ...
 
-    def clearFlag(self, f) -> None:
+    def clearFlag(self, f: int) -> None:
         """
         Clear flag.
 
@@ -3234,7 +3232,7 @@ class Knob:
         """
         ...
 
-    def getFlag(self, f) -> bool:
+    def getFlag(self, f: int) -> bool:
         """
         Returns whether the input flag is set.
 
@@ -3382,7 +3380,7 @@ class Knob:
         """
         ...
 
-    def setFlag(self, f) -> None:
+    def setFlag(self, f: int) -> None:
         """
         Logical OR of the argument and existing knob flags.
 
@@ -3416,7 +3414,7 @@ class Knob:
         """
         ...
 
-    def setValue(self, val, chan: six.binary_type = ...) -> bool:
+    def setValue(self, val: typing.Any, chan: six.binary_type = ...) -> bool:
         """
         Sets the value 'val' at channel 'chan'.
 
@@ -3456,7 +3454,7 @@ class Knob:
         """
         ...
 
-    def value(self, *args, **kwargs):
+    def value(self, index: int = ...) -> typing.Any:
         """
         Return value at the current frame for channel 'c'.
         """
@@ -3492,12 +3490,9 @@ class Layer:
     A layer is a set of channels.
     """
 
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
+    def __new__(cls, name: six.binary_type, channels: typing.List[six.binary_type] = ...): ...
 
-    def channels(self) -> typing.List[six.text_type]:
+    def channels(self) -> typing.List[six.binary_type]:
         """
         Get a list of the channels in this layer.
 
@@ -3774,7 +3769,7 @@ class Menu(MenuItem):
     def addCommand(
         self,
         name: six.binary_type,
-        command: typing.Union[six.binary_type, typing.Callable] = ...,
+        command: typing.Union[six.binary_type, typing.Callable[[], None]] = ...,
         shortcut: six.binary_type = ...,
         icon: six.binary_type = ...,
         tooltip: six.binary_type = ...,
@@ -4296,7 +4291,7 @@ class Node:
         """
         ...
 
-    def allKnobs(self) -> list:
+    def allKnobs(self) -> typing.List[Knob]:
         """
         Get a list of all knobs in this node, including nameless knobs.
 
@@ -4410,7 +4405,7 @@ class Node:
         """
         ...
 
-    def dependencies(self, what) -> typing.List[Node]:
+    def dependencies(self, what: int = ...) -> typing.List[Node]:
         """
         List all nodes referred to by this node. 'what' is an optional integer (see below).
 
@@ -4582,7 +4577,7 @@ class Node:
         """
         ...
 
-    def input(self, i) -> Node:
+    def input(self, i: int) -> Node:
         """
         @param i: Input number.
 
@@ -4616,7 +4611,7 @@ class Node:
         """
         ...
 
-    def knobs(self) -> dict:
+    def knobs(self) -> typing.Dict[six.binary_type, Knob]:
         """
         Get a dictionary of (name, knob) pairs for all knobs in this node.
 
@@ -4680,7 +4675,11 @@ class Node:
         """
         ...
 
-    def metadata(self, key: six.binary_type, time: int = ..., view: six.binary_type = ...) -> typing.Union[six.binary_type, dict, None]:
+    @typing.overload
+    def metadata(self, *, time: int = ..., view: six.binary_type = ...) -> typing.Dict[six.binary_type, typing.Union[six.binary_type, float]]: ...
+
+    @typing.overload
+    def metadata(self, key: six.binary_type, time: int = ..., view: six.binary_type = ...) -> typing.Union[six.binary_type, float, None]:
         """
         Return the metadata item for key on this node at current output context, or at optional time and view.
 
@@ -4856,7 +4855,7 @@ class Node:
         """
         ...
 
-    def setInput(self, i, node) -> bool:
+    def setInput(self, i: int, node: typing.Optional[Node]) -> bool:
         """
         Connect input i to node if canSetInput() returns true.
 
@@ -4900,7 +4899,7 @@ class Node:
         """
         ...
 
-    def setXYpos(self, x, y) -> None:
+    def setXYpos(self, x: int, y: int) -> None:
         """
         Set the (x, y) position of node in node graph.
 
@@ -4912,7 +4911,7 @@ class Node:
         """
         ...
 
-    def setXpos(self, x) -> None:
+    def setXpos(self, x: int) -> None:
         """
         Set the x position of node in node graph.
 
@@ -4922,7 +4921,7 @@ class Node:
         """
         ...
 
-    def setYpos(self, y) -> None:
+    def setYpos(self, y: int) -> None:
         """
         Set the y position of node in node graph.
 
@@ -4986,7 +4985,7 @@ class Node:
         """
         ...
 
-    def writeKnobs(self, i) -> six.binary_type:
+    def writeKnobs(self, i: int) -> six.binary_type:
         """
         Return a tcl list. If TO_SCRIPT | TO_VALUE is not on, this is a simple list
 
@@ -5251,7 +5250,7 @@ class Panel:
         """
         ...
 
-    def addFilenameSearch(self, name: six.binary_type, value) -> bool:
+    def addFilenameSearch(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a filename search knob to the panel.
 
@@ -5928,7 +5927,7 @@ class Root(Group):
         """
         ...
 
-    def channels(self, *args, **kwargs):
+    def channels(self) -> typing.List[six.binary_type]:
         """
         nuke.Root.channels() -> Channel list.
 
@@ -6042,7 +6041,7 @@ class Root(Group):
         """
         ...
 
-    def setFrame(self, n) -> None:
+    def setFrame(self, n: int) -> None:
         """
         Set frame.
 
@@ -6361,7 +6360,7 @@ class String_Knob(Knob):
         """
         ...
 
-    def setValue(self, val, view='default') -> None:
+    def setValue(self, val: typing.Any, view: six.binary_type = ...) -> None:
         """
         Set value of knob.
 
@@ -6815,7 +6814,7 @@ class Unsigned_Knob(Array_Knob):
         """
         ...
 
-    def setValue(self, val) -> bool:
+    def setValue(self, val: int) -> bool:
         """
         Set the unsigned integer value of this knob.
 
@@ -7067,7 +7066,7 @@ class ViewerWindow:
     ViewerWindow
     """
 
-    def activateInput(self, input, secondary=False) -> None:
+    def activateInput(self, input: int, secondary: bool = False) -> None:
         """
         Set the given viewer input to be active - i. e. show its image in the output window.
 
@@ -7370,7 +7369,7 @@ def addFavoriteDir(name, directory, type, icon, tooltip, key) -> None:
     ...
 
 
-def addFormat(s) -> Format or None:
+def addFormat(s: six.binary_type) -> typing.Optional[Format]:
     """
     Create a new image format, which will show up on the pull-down menus for image formats. You must give a width and height and name. The xyrt rectangle describes the image area, if it is smaller than the width and height (for Academy aperture, for example). The pixel aspect is the ratio of the width of a pixel to the height.
 
@@ -7558,7 +7557,7 @@ def applyUserPreset(nodeName, presetName) -> None:
     ...
 
 
-def ask(prompt) -> bool:
+def ask(prompt: six.binary_type) -> bool:
     """
     Show a Yes/No dialog.
 
@@ -7578,7 +7577,7 @@ def askWithCancel(prompt) -> bool:
     ...
 
 
-def autoplace(n) -> None:
+def autoplace(n: Node) -> None:
     """
     Deprecated. Use Node.autoplace.
 
@@ -7641,7 +7640,7 @@ def center() -> typing.List[int]:
     ...
 
 
-def channels(n=None) -> typing.List[six.binary_type]:
+def channels(n: typing.Optional[Node] = None) -> typing.List[six.binary_type]:
     """
     Deprecated. Use Node.channels.
 
@@ -7653,7 +7652,7 @@ def channels(n=None) -> typing.List[six.binary_type]:
     ...
 
 
-def choice(title, prompt, options, default=0) -> int:
+def choice(title: six.binary_type, prompt: six.binary_type, options: typing.List[six.text_type], default: int = 0) -> int:
     """
     Shows a dialog box with the given title and prompt text, and a combo box containing the given options.
 
@@ -7815,7 +7814,7 @@ def defaultNodeColor(s) -> int:
     ...
 
 
-def delete(n) -> None:
+def delete(n: Node) -> None:
     """
     The named node is deleted. It can be recovered with an undo.
 
@@ -8161,7 +8160,13 @@ def getDeletedPresets() -> None:
     ...
 
 
-def getFileNameList(dir, splitSequences=False, extraInformation=False, returnDirs=True, returnHidden=False) -> typing.List[six.binary_type]:
+def getFileNameList(
+    dir: six.binary_type,
+    splitSequences: bool = False,
+    extraInformation: bool = False,
+    returnDirs: bool = True,
+    returnHidden: bool = False,
+) -> typing.List[six.binary_type]:
     """
     @param dir the directory to get sequences from
     @param splitSequences whether to split sequences or not
@@ -8252,10 +8257,10 @@ def getNodePresetID() -> None:
     ...
 
 
-class _Widget:
+@typing.type_check_only
+class Widget:
     """
     Widget. 
-    TYPING ONLY: not avaliable as api.
     """
 
     __new__: ...
@@ -8356,10 +8361,10 @@ class _Widget:
     ...
 
 
-class _Container(_Widget):
+@typing.type_check_only
+class Container(Widget):
     """
     Container
-    TYPING ONLY: not avaliable as api.
     """
 
     __new__: ...
@@ -8382,10 +8387,10 @@ class _Container(_Widget):
     ...
 
 
-class _Dock(_Container):
+@typing.type_check_only
+class Dock(Container):
     """
     Dock
-    TYPING ONLY: not avaliable as api.
     """
 
     __new__: ...
@@ -8408,7 +8413,7 @@ class _Dock(_Container):
     ...
 
 
-def getPaneFor(panelName) -> _Dock:
+def getPaneFor(panelName: six.binary_type) -> Dock:
     """
     Returns the first pane that contains the named panel or None if it can't be found.
     Note that the panelName must be exact as described in the layout.xml file or the panel ID.
@@ -8581,7 +8586,7 @@ def knob(
     ...
 
 
-def knobDefault(classknob, value) -> six.binary_type:
+def knobDefault(classknob: six.binary_type, value: six.binary_type) -> typing.Optional[six.binary_type]:
     """
     Set a default value for knobs in nodes that belong to the
     same class. All knobs with matching names, that are created after this
@@ -8623,7 +8628,7 @@ def knobTooltip(classknob, value) -> None:
     ...
 
 
-def layers(node=None) -> typing.List[six.binary_type]:
+def layers(node: Node = None) -> typing.List[six.binary_type]:
     """
     Lists the layers in a node. If no node is provided this will list all known layer names in this script.
 
@@ -8803,7 +8808,7 @@ def nodesSelected() -> None:
     ...
 
 
-def numvalue(knob, default: float = ...) -> float:
+def numvalue(knob: six.binary_type, default: float = ...) -> float:
     """
     The numvalue function returns the current value of a knob.
 
@@ -9142,9 +9147,10 @@ def saveWindowLayout(i=-1) -> None:
     ...
 
 
-def scriptClear(*args, **kwargs):
+def scriptClear(resetToCompiledDefaults: bool = ...) -> None:
     """
-    Clears a Nuke script and resets all the root knobs to user defined knob defaults. To reset to compiled in defaults only pass in resetToCompiledDefaults=True.
+    Clears a Nuke script and resets all the root knobs to user defined knob defaults.
+    To reset to compiled in defaults only pass in resetToCompiledDefaults=True.
     """
     ...
 
@@ -9198,7 +9204,7 @@ def scriptReadText(*args, **kwargs):
     ...
 
 
-def scriptSave(filename=None) -> bool:
+def scriptSave(filename: six.binary_type = None) -> typing.Literal[True]:
     """
     Saves the current script to the current file name. If there is no current file name and Nuke is running in GUI mode, the user is asked for a name using the file chooser.
 
@@ -9437,7 +9443,7 @@ def tabNext(*args, **kwargs):
     ...
 
 
-def tcl(s, *args) -> six.binary_type:
+def tcl(s: six.binary_type, *args: six.binary_type) -> six.binary_type:
     """
     Run a tcl command. The arguments must be strings and passed to the command. If no arguments are given and the command has whitespace in it then it is instead interpreted as a tcl program (this is deprecated).
 
@@ -9484,7 +9490,7 @@ def thisNode() -> Node:
     ...
 
 
-def thisPane() -> _Dock:
+def thisPane() -> Dock:
     """
     Returns the active pane. This is only valid during a pane menu callback or window layout restoration.
 
@@ -9554,7 +9560,7 @@ def tprint(
     *value,
     sep: six.binary_type = b' ',
     end: six.binary_type = b'\n',
-    file: typing.IO = ...,
+    file: typing.IO[six.binary_type] = ...,
 ) -> None:
     """
     Prints the values to a stream, or to stdout by default.

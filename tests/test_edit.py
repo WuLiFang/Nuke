@@ -19,9 +19,9 @@ class EditTestCase(TestCase):
 
     def test_add_channel(self):
         from edit import add_channel
-        add_channel(b'test.channel')
+        add_channel('test.channel')
         self.assertIn('test.channel', nuke.Root().channels())
-        add_channel(u'test.channel2')
+        add_channel('test.channel2')
         self.assertIn('test.channel2', nuke.Root().channels())
         self.assertRaises(ValueError,
                           add_channel, 'test.channel3中文')
@@ -35,7 +35,7 @@ class EditTestCase(TestCase):
     def test_add_layer(self):
         from edit import add_layer
         self.assertNotIn('test', nuke.layers())
-        add_layer('test')
+        _ = add_layer('test')
         self.assertIn('test', nuke.layers())
         for i in ('test.red', 'test.green', 'test.blue', 'test.alpha'):
             self.assertIn(i, nuke.channels())
@@ -90,7 +90,7 @@ class EditTestCase(TestCase):
         from edit import replace_node
         const = nuke.nodes.Constant()
         for _ in six.moves.range(20):
-            nuke.nodes.Grade(inputs=[const])
+            _ = nuke.nodes.Grade(inputs=[const])
         nodes = nuke.allNodes(b'Grade')
         self.assertEqual(len(nodes), 20)
         noop = nuke.nodes.NoOp()
@@ -123,7 +123,7 @@ class EditTestCase(TestCase):
     def test_clear_selection(self):
         from edit import clear_selection
         for _ in six.moves.range(20):
-            nuke.nodes.NoOp(selected=True)
+            _ = nuke.nodes.NoOp(selected=True)
         self.assertEqual(len(nuke.selectedNodes()), 20)
         clear_selection()
         self.assertFalse(nuke.selectedNodes())
@@ -132,24 +132,25 @@ class EditTestCase(TestCase):
         from edit import split_layers
 
         n = nuke.nodes.Constant()
-        nuke.Layer('test', ['test.red', 'test.green',
-                            'test.blue', 'test.alpha'])
-        nuke.Layer('test2', ['test2.red', 'test2.green', 'test2.blue'])
-        nuke.Layer('test3', ['test3.u', 'test3.v'])
-        nuke.Layer('test4', ['test4.Z'])
+        _ = nuke.Layer(b'test', [b'test.red', b'test.green',
+                            b'test.blue', b'test.alpha'])
+        _ = nuke.Layer(b'test2', [b'test2.red', b'test2.green', b'test2.blue'])
+        _ = nuke.Layer(b'test3', [b'test3.u', b'test3.v'])
+        _ = nuke.Layer(b'test4', [b'test4.Z'])
         layers = ('test', 'test2', 'test3', 'test4')
 
         for i in layers:
             n = nuke.nodes.AddChannels(inputs=[n], channels=i)
         for is_postage in (True, False):
-            n[b'postage_stamp'].setValue(is_postage)
+            _ = n[b'postage_stamp'].setValue(is_postage)
             result = split_layers(n)
             self.assertEqual(len(result), 4)
             for i in result:
                 self.assertIsInstance(i, nuke.Node)
+                assert isinstance(i, nuke.Node)
                 self.assertEqual(i.Class(), 'Shuffle')
-                self.assertIn(i['in'].value(), layers)
-                self.assertEqual(i['postage_stamp'].value(), is_postage)
+                self.assertIn(i[b'in'].value(), layers)
+                self.assertEqual(i[b'postage_stamp'].value(), is_postage)
 
     def test_shuffle_rgba(self):
         from edit import shuffle_rgba
@@ -157,18 +158,20 @@ class EditTestCase(TestCase):
 
         n = nuke.nodes.Constant()
         for is_postage in (True, False):
-            n[b'postage_stamp'].setValue(is_postage)
+            _ = n[b'postage_stamp'].setValue(is_postage)
             result = shuffle_rgba(n)
             self.assertEqual(len(result), 4)
             for i in result:
                 self.assertIsInstance(i, nuke.Node)
+                assert isinstance(i, nuke.Node)
                 self.assertEqual(i.Class(), 'Shuffle')
-                self.assertIn(i['in'].value(), 'rgba')
-                self.assertIn(i['out'].value(), 'rgba')
-                self.assertEqual(i['postage_stamp'].value(), is_postage)
+                self.assertIn(i[b'in'].value(), 'rgba')
+                self.assertIn(i[b'out'].value(), 'rgba')
+                self.assertEqual(i[b'postage_stamp'].value(), is_postage)
                 for k in rgba:
+                    k = cast.binary(k)
                     self.assertIn(i[k].value(), rgba)
-                    self.assertIn(i[k].value(), i[rgba[0]].value())
+                    self.assertIn(i[k].value(), i[cast.binary(rgba[0])].value())
 
     def test_use_relative_path(self):
         from edit import use_relative_path
@@ -195,7 +198,7 @@ class EditTestCase(TestCase):
     def test_enable_later(self):
         from enable_later import mark_enable, marked_nodes
         for _ in six.moves.range(20):
-            nuke.nodes.Grade()
+            _ = nuke.nodes.Grade()
         nodes = nuke.allNodes()
         self.assertEqual(len(nodes), 20)
         mark_enable(nodes)
@@ -214,9 +217,9 @@ class EditTestCase(TestCase):
         def _random_node():
             return random.choice(nuke.allNodes())
 
-        nuke.nodes.NoOp()
+        _ = nuke.nodes.NoOp()
         for _ in six.moves.range(20):
-            nuke.nodes.Grade(inputs=[_random_node(), _random_node()])
+            _ = nuke.nodes.Grade(inputs=[_random_node(), _random_node()])
             target = _random_node()
             target_dependent = target.dependent()
             state = [(i, j)
@@ -342,4 +345,4 @@ def test_delete_unused_node():
 
 
 if __name__ == '__main__':
-    main()
+    _ = main()

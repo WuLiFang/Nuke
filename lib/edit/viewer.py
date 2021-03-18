@@ -6,20 +6,27 @@ from __future__ import (absolute_import, division, print_function,
 
 import nuke
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Dict, Any
+
 
 class CurrentViewer(object):
     """Manipulate currunt viewer."""
 
-    viewer = None
-    node = None
-    inputs = None
-    knob_values = None
-
     def __init__(self):
-        self.knob_values = {}
+        self.knob_values = {}  # type: Dict[nuke.Knob, Any]
         self.record()
+        self.viewer = None
+        self.node = None
+        self.inputs = None
 
-    def link(self, input_node, input_num=0, replace=True):
+    def link(
+        self,
+        input_node,  # type: nuke.Node
+        input_num=0,  # type: int
+        replace=True,  # type: bool
+    ):  # type: (...) -> None
         """Connet input_node to viewer.input0 then activate it,
             create viewer if needed."""
 
@@ -32,9 +39,10 @@ class CurrentViewer(object):
             else:
                 n = nuke.nodes.Viewer()
         self.node = n
-
+        if not n:
+            return
         if replace or not n.input(input_num):
-            n.setInput(input_num, input_node)
+            _ = n.setInput(input_num, input_node)
             try:
                 nuke.activeViewer().activateInput(input_num)
             except AttributeError:
@@ -54,12 +62,12 @@ class CurrentViewer(object):
         """Recover viewer state to last record."""
 
         if self.viewer:
-            self.node.setInput(
-                0, self.inputs)
+            if self.node:
+                _ = self.node.setInput(0, self.inputs)
             for knob, value in self.knob_values.items():
                 try:
-                    knob.setValue(value)
+                    _ = knob.setValue(value)
                 except TypeError:
                     pass
-        else:
+        elif self.node:
             nuke.delete(self.node)

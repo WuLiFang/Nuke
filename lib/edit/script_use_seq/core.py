@@ -70,10 +70,10 @@ def replace_footages(cfg, footages=None):
         if frames:
             first = min(frames)
             last = max(frames)
-            n[b'first'].setValue(first)
-            n[b'origfirst'].setValue(first)
-            n[b'last'].setValue(last)
-            n[b'origlast'].setValue(last)
+            _ = n[b'first'].setValue(first)
+            _ = n[b'origfirst'].setValue(first)
+            _ = n[b'last'].setValue(last)
+            _ = n[b'origlast'].setValue(last)
 
 
 def _replace_write_node(cfg):
@@ -110,15 +110,15 @@ def _config_frame_range(cfg):
     first = max(i.firstFrame() for i in nodes)
     last = max(i.lastFrame() for i in nodes)
     root = nuke.Root()
-    root[b'first_frame'].setValue(first)
-    root[b'last_frame'].setValue(last)
+    _ = root[b'first_frame'].setValue(first)
+    _ = root[b'last_frame'].setValue(last)
 
 
 def _config_project_directory(cfg):
     new_value = cfg['override_project_directory']
     if not new_value:
         return
-    nuke.Root()[b'project_directory'].setValue(new_value)
+    _ = nuke.Root()[b'project_directory'].setValue(new_value)
 
 
 def config_project(cfg):

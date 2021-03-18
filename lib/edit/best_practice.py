@@ -14,7 +14,15 @@ import logging
 LOGGER = logging.getLogger(__name__)
 
 
-def glow_no_mask(temp_channel='mask.a', is_show_result=True):
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text
+
+
+def glow_no_mask(
+    temp_channel='mask.a',  # type: Text
+    is_show_result=True,  # type: bool
+):  # type: (...) -> None
     """Use width channel on `Glow2` node, instead of mask.  """
 
     channel.add_channel(temp_channel)
@@ -32,9 +40,12 @@ def glow_no_mask(temp_channel='mask.a', is_show_result=True):
         nuke.message('没有发现使用了mask的Glow节点。'.encode('utf-8'))
 
 
-def _replace_glow_mask(n, temp_channel='mask.a'):
+def _replace_glow_mask(
+    n,  # type: nuke.Node
+    temp_channel='mask.a',  # type: Text
+):
     mask_knob = 'maskChannelMask' if n.input(1) else 'maskChannelInput'
-    mask_channel = cast.text(n[mask_knob].value())
+    mask_channel = cast.text(n[cast.binary(mask_knob)].value())
 
     if mask_channel == 'none':
         return False
@@ -43,7 +54,7 @@ def _replace_glow_mask(n, temp_channel='mask.a'):
         inputs=(n.input(0), n.input(1)), from0=mask_channel, to0=temp_channel)
     copy_node.setXYpos(n.xpos(),
                        n.ypos() - max(copy_node.screenHeight(), 32) - 10)
-    width_channel = n['W'].value()
+    width_channel = n[b'W'].value()
     if width_channel != 'none':
         input0 = nuke.nodes.ChannelMerge(
             inputs=(copy_node, copy_node),
@@ -53,11 +64,11 @@ def _replace_glow_mask(n, temp_channel='mask.a'):
     else:
         input0 = copy_node
 
-    n.setInput(0, input0)
-    n.setInput(1, None)
-    n['maskChannelMask'].setValue('none')
-    n['maskChannelInput'].setValue('none')
-    n['W'].setValue(temp_channel)
+    _ = n.setInput(0, input0)
+    _ = n.setInput(1, None)
+    _ = n[b'maskChannelMask'].setValue('none')
+    _ = n[b'maskChannelInput'].setValue('none')
+    _ = n[b'W'].setValue(temp_channel)
 
     LOGGER.info('修正Glow节点mask: {}'.format(cast.text(n.name())))
     return True

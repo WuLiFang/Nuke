@@ -18,12 +18,12 @@ def gizmo_to_group(gizmo):
 
     # Set Input.
     for i in range(gizmo.inputs()):
-        _group.setInput(i, gizmo.input(i))
+        _ = _group.setInput(i, gizmo.input(i))
     # Set Output.
     for n in nuke.allNodes():
         for i in range(n.inputs()):
             if n.input(i) is gizmo:
-                n.setInput(i, _group)
+                _ = n.setInput(i, _group)
 
     # Set position and name.
     if gizmo.shown():
@@ -32,7 +32,7 @@ def gizmo_to_group(gizmo):
     _name = gizmo['name'].value()
     nuke.delete(gizmo)
     _group.setName(_name)
-    _group[b'selected'].setValue(_selected)
+    _ = _group[b'selected'].setValue(_selected)
 
     return _group
 
@@ -45,4 +45,4 @@ def all_gizmo_to_group():
         if nuke.knobChangeds.get(n.Class()):
             continue
 
-        gizmo_to_group(n)
+        _ = gizmo_to_group(n)

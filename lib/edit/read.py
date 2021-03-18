@@ -27,10 +27,10 @@ def replace_sequence():
     label_first = cast.binary('设置工程起始帧')
     label_last = cast.binary('设置工程结束帧')
 
-    panel.addFilenameSearch(label_path_prefix, 'z:/')
-    panel.addExpressionInput(label_first, int(
+    _ = panel.addFilenameSearch(label_path_prefix, 'z:/')
+    _ = panel.addExpressionInput(label_first, int(
         nuke.Root()[b'first_frame'].value()))
-    panel.addExpressionInput(label_last, int(
+    _ = panel.addExpressionInput(label_last, int(
         nuke.Root()[b'last_frame'].value()))
 
     confirm = panel.show()
@@ -42,9 +42,9 @@ def replace_sequence():
         last = int(cast.not_none(panel.value(label_last)))
         flag_frame = None
 
-        nuke.Root()[b'proxy'].setValue(False)
-        nuke.Root()[b'first_frame'].setValue(first)
-        nuke.Root()[b'last_frame'].setValue(last)
+        _ = nuke.Root()[b'proxy'].setValue(False)
+        _ = nuke.Root()[b'first_frame'].setValue(first)
+        _ = nuke.Root()[b'last_frame'].setValue(last)
 
         for n in nuke.allNodes(b'Read'):
             file_path = cast.text(nuke.filename(n))
@@ -56,20 +56,20 @@ def replace_sequence():
                     r'\.([\d#]+)\.',
                     lambda matchobj: r'.%0{}d.'.format(len(matchobj.group(1))),
                     file_path)
-                n[b'file'].setValue(file_path.encode('utf-8'))
-                n[b'format'].setValue(b'HD_1080')
-                n[b'first'].setValue(first)
-                n[b'origfirst'].setValue(first)
-                n[b'last'].setValue(last)
-                n[b'origlast'].setValue(last)
+                _ = n[b'file'].setValue(file_path.encode('utf-8'))
+                _ = n[b'format'].setValue(b'HD_1080')
+                _ = n[b'first'].setValue(first)
+                _ = n[b'origfirst'].setValue(first)
+                _ = n[b'last'].setValue(last)
+                _ = n[b'origlast'].setValue(last)
 
         n = wlf_write_node()
         if n:
             if flag_frame:
                 flag_frame = int(flag_frame)
-                n[b'custom_frame'].setValue(flag_frame)
-                nuke.frame(flag_frame)
-            n[b'use_custom_frame'].setValue(True)
+                _ = n[b'custom_frame'].setValue(flag_frame)
+                nuke.root().setFrame(flag_frame)
+            _ = n[b'use_custom_frame'].setValue(True)
 
 
 def use_relative_path(nodes):
@@ -82,7 +82,7 @@ def use_relative_path(nodes):
     for n in nodes:
         try:
             path = PurePath(n[b'file'].value().decode("utf-8"))
-            n[b'file'].setValue(cast.binary(
+            _ = n[b'file'].setValue(cast.binary(
                 path.relative_to(proj_dir).as_posix()))
         except NameError:
             continue
@@ -105,18 +105,18 @@ def set_framerange(first, last, nodes=None):
     first, last = int(first), int(last)
     for n in nodes:
         if n.Class() == 'Read':
-            n[b'first'].setValue(first)
-            n[b'origfirst'].setValue(first)
-            n[b'last'].setValue(last)
-            n[b'origlast'].setValue(last)
+            _ = n[b'first'].setValue(first)
+            _ = n[b'origfirst'].setValue(first)
+            _ = n[b'last'].setValue(last)
+            _ = n[b'origlast'].setValue(last)
 
 
 def dialog_set_framerange():
     """Dialog for set_framerange.  """
 
     panel = nuke.Panel(cast.binary('设置帧范围'))
-    panel.addExpressionInput(b'first', nuke.numvalue('root.first_frame'))
-    panel.addExpressionInput(b'last', nuke.numvalue('root.last_frame'))
+    _ = panel.addExpressionInput(b'first', nuke.numvalue('root.first_frame'))
+    _ = panel.addExpressionInput(b'last', nuke.numvalue('root.last_frame'))
     confirm = panel.show()
 
     if confirm:
@@ -124,7 +124,9 @@ def dialog_set_framerange():
 
 
 @undoable_func('合并重复读取节点')
-def remove_duplicated_read(is_show_result=True):
+def remove_duplicated_read(
+    is_show_result=True,  # type: bool
+): # type: (...) -> None
     """Remove duplicated read to save memory.  """
 
     nodes = nuke.allNodes(b'Read')

@@ -16,48 +16,49 @@ def set_knob_default():
     LOGGER.info(u'设置knob默认值')
 
     def _vectorblur2():
-        nuke.knobDefault("VectorBlur2.uv", "motion")
-        nuke.knobDefault("VectorBlur2.uv_offset", "0")
-        nuke.knobDefault("VectorBlur2.scale", "1")
-        nuke.knobDefault("VectorBlur2.soft_lines", "True")
-        nuke.knobDefault("VectorBlur2.normalize", "True")
+        _ = nuke.knobDefault(b"VectorBlur2.uv", b"motion")
+        _ = nuke.knobDefault(b"VectorBlur2.uv_offset", b"0")
+        _ = nuke.knobDefault(b"VectorBlur2.scale", b"1")
+        _ = nuke.knobDefault(b"VectorBlur2.soft_lines", b"True")
+        _ = nuke.knobDefault(b"VectorBlur2.normalize", b"True")
 
     def _root():
-        nuke.knobDefault("Root.fps", "25")
-        nuke.knobDefault("Root.format", "1920 1080 0 0 1920 1080 1 HD_1080")
+        _ = nuke.knobDefault(b"Root.fps", b"25")
+        _ = nuke.knobDefault(
+            b"Root.format", b"1920 1080 0 0 1920 1080 1 HD_1080")
 
     def _zdefocus2():
-        nuke.knobDefault("ZDefocus2.blur_dof", "0")
-        nuke.knobDefault("ZDefocus2.math", "depth")
+        _ = nuke.knobDefault(b"ZDefocus2.blur_dof", b"0")
+        _ = nuke.knobDefault(b"ZDefocus2.math", b"depth")
 
     def _rolloffcontrast():
-        nuke.knobDefault("RolloffContrast.contrast", "2")
-        nuke.knobDefault("RolloffContrast.center", "0.001")
-        nuke.knobDefault("RolloffContrast.soft_clip", "1")
-        nuke.knobDefault("RolloffContrast.channels", "rgb")
+        _ = nuke.knobDefault(b"RolloffContrast.contrast", b"2")
+        _ = nuke.knobDefault(b"RolloffContrast.center", b"0.001")
+        _ = nuke.knobDefault(b"RolloffContrast.soft_clip", b"1")
+        _ = nuke.knobDefault(b"RolloffContrast.channels", b"rgb")
 
     _root()
     _vectorblur2()
     _zdefocus2()
     _rolloffcontrast()
-    nuke.knobDefault("LayerContactSheet.showLayerNames", "1")
-    nuke.knobDefault("note_font", '微软雅黑')
-    nuke.knobDefault("Switch.which", "1")
-    nuke.knobDefault("Viewer.input_process", "False")
-    nuke.knobDefault("SoftClip.conversion", "3")
-    nuke.knobDefault("PositionToPoints.P_channel", "P")
-    nuke.knobDefault('Roto.cliptype', 'no clip')
-    nuke.knobDefault('RotoPaint.cliptype', 'no clip')
-    nuke.knobDefault('Denoise2.type', 'Digital')
+    _ = nuke.knobDefault(b"LayerContactSheet.showLayerNames", b"1")
+    _ = nuke.knobDefault(b"note_font", cast.binary('微软雅黑'))
+    _ = nuke.knobDefault(b"Switch.which", b"1")
+    _ = nuke.knobDefault(b"Viewer.input_process", b"False")
+    _ = nuke.knobDefault(b"SoftClip.conversion", b"3")
+    _ = nuke.knobDefault(b"PositionToPoints.P_channel", b"P")
+    _ = nuke.knobDefault(b'Roto.cliptype', b'no clip')
+    _ = nuke.knobDefault(b'RotoPaint.cliptype', b'no clip')
+    _ = nuke.knobDefault(b'Denoise2.type', b'Digital')
 
     k = cast.not_none(nuke.toNode(b'preferences'))[b'UIFontSize']
     if k.value() == 11:
-        k.setValue(12)
+        _ = k.setValue(12)
 
     try:
         k = cast.not_none(nuke.toNode(b'preferences'))[
             b'LocalizationPauseOnProjectLoad']
-        k.setValue(True)
+        _ = k.setValue(True)
     except NameError:
         LOGGER.debug(
             'Can not set localization preference, maybe using low version.')
@@ -68,7 +69,7 @@ def set_knob_default():
 def add_preferences():
     """Add a prefrences panel."""
     LOGGER.info(u'添加首选项')
-    pref = nuke.toNode(b'preferences')
+    pref = cast.not_none(nuke.toNode(b'preferences'))
     k = nuke.Tab_Knob(b'wlf_tab',  cast.binary('吾立方'))
     pref.addKnob(k)
 
@@ -80,9 +81,10 @@ def add_preferences():
                 pass
 
     def _add_knob(k):
+        k = cast.instance(k, nuke.Knob)
         _knob_tcl_name = 'preferences.{}'.format(k.name())
         if nuke.exists(cast.binary(_knob_tcl_name)):
-            k.setValue(pref[k.name()].value())
+            _ = k.setValue(pref[k.name()].value())
             pref.removeKnob(pref[k.name()])
         k.setFlag(nuke.ALWAYS_SAVE)
         pref.addKnob(k)

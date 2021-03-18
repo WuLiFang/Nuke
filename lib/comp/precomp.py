@@ -16,16 +16,21 @@ from edit import add_layer, copy_layer, replace_node
 from filetools import get_layer, module_path
 from orgnize import autoplace
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import (Dict, List, Any, Set, Text, Optional)
+
 LOGGER = logging.getLogger('com.wlf.precomp')
 
 
 class __PrecompSwitch(object):
     """Modified switch node for precomp.  """
 
-    knob_name = 'raw_hash'
+    knob_name = b'raw_hash'
 
     @classmethod
     def init(cls, node):
+        # type: (nuke.Node) -> nuke.Node
         """Add necessary knobs.  """
 
         assert isinstance(
@@ -37,7 +42,7 @@ class __PrecompSwitch(object):
             n = node.input(1)
             raw_hash = cls.hash(n)
             k = nuke.Int_Knob(cast.binary(knob_name))
-            k.setValue(raw_hash)
+            _ = k.setValue(raw_hash)
             node.addKnob(k)
         else:
             k = knobs[knob_name]
@@ -46,6 +51,7 @@ class __PrecompSwitch(object):
 
     @classmethod
     def hash(cls, node):
+        # type: (nuke.Node) -> int
         """Node hash result of @node up to upstream start.  """
 
         assert isinstance(
@@ -108,7 +114,7 @@ class __PrecompSwitch(object):
         else:
             ret = node[cast.binary(cls.knob_name)].value() != cls.hash(n)
 
-        node[b'tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
+        _ = node[b'tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
         return ret
 
 
@@ -117,16 +123,17 @@ PrecompSwitch = __PrecompSwitch
 
 class RendererConfig():
     def __init__(self):
-        self.name = ""
-        self.layers = set()
-        self.combine = {}
-        self.combineMode = {}
-        self.translate = {}
-        self.copy = []
-        self.rename = {}
-        self.plus = []
+        self.name = ""  # type: Text
+        self.layers = set()  # type: Set[Text]
+        self.combine = {}  # type: Dict[Text, List[Text]]
+        self.combineMode = {}  # type: Dict[Text, Text]
+        self.translate = {}  # type: Dict[Text, Text]
+        self.copy = []  # type: List[Text]
+        self.rename = {}  # type: Dict[Text, Text]
+        self.plus = []  # type: List[Text]
 
     def fromJSON(self, data):
+        # type: (Dict[Text, Any]) -> RendererConfig
         """load data from json.
 
         Args:
@@ -146,6 +153,7 @@ class RendererConfig():
         return self
 
     def l10n(self, value):
+        # type: (Text) -> Text
         """Return translated value.  """
 
         if not value:
@@ -156,7 +164,7 @@ class RendererConfig():
         return cast.text(value)
 
 
-RENDERER_REGISTRY = {}
+RENDERER_REGISTRY = {}  # type: Dict[Text, RendererConfig]
 
 
 def load_renderer_config():
@@ -190,13 +198,15 @@ class Precomp(object):
     """A sequence of merge or copy.  """
 
     def __init__(self, nodes, renderer=None, async_=True):
-        self.last_node = None
-        self.source = {}
+        # type: (List[nuke.Node], Text, bool) -> None
+        self.last_node = None  # type: Optional[nuke.Node]
+        self.source = {}  # type: Dict[Text, nuke.Node]
 
         assert nodes, 'Can not precomp without node.'
 
         def _get_filename(n):
-            return cast.text(n.metadata('input/filename') or nuke.filename(n) or '')
+            # type: (nuke.Node) -> Text
+            return cast.text(n.metadata(b'input/filename') or nuke.filename(n) or '')
 
         if isinstance(nodes, nuke.Node):
             nodes = [nodes]
@@ -218,9 +228,9 @@ class Precomp(object):
             layers = nuke.layers(n)
             LOGGER.debug(
                 'Precomp single node that has this layers:\n%s', layers)
-            self.source = {layer: n
+            self.source = {cast.text(layer): n
                            for layer in layers}
-            self.source[b'beauty'] = n
+            self.source['beauty'] = n
         LOGGER.debug('Source layers:\n%s', self.source.keys())
 
         # load config
@@ -258,11 +268,12 @@ class Precomp(object):
             inputs=(dot_node,), channels='rgb')
         self.last_node = remove_node
         for layer in self._config.plus:
-            self.plus(layer)
+            _ = self.plus(layer)
 
         # Precomp Switch.
         kwargs = {'which':
-                  cast.binary('{{[python {__PrecompSwitch.get_which(nuke.thisNode())}]}}'),
+                  cast.binary(
+                      '{{[python {__PrecompSwitch.get_which(nuke.thisNode())}]}}'),
                   'inputs': [dot_node, self.last_node],
                   'label': cast.binary('{} 预合成\n自动开关'.format(self._config.name)),
                   'onCreate': cast.binary(inspect.getsource(PrecompSwitch) + """
@@ -275,8 +286,8 @@ __PrecompSwitch.init(nuke.thisNode())""")}
 
         replace_node(dot_node.input(0), self.last_node)
 
-        autoplace(self.last_node, recursive=True,
-                  undoable=False, async_=async_)
+        _ = autoplace(self.last_node, recursive=True,
+                      undoable=False, async_=async_)
 
     def check(self):
         """Check if has all necessary layer.  """
@@ -290,9 +301,10 @@ __PrecompSwitch.init(nuke.thisNode())""")}
         return nuke.layers(self.last_node)
 
     def node(self, layer):
+        # type: (Text) -> Optional[nuke.Node]
         """Return a node that should be treat as @layer.  """
 
-        add_layer(layer)
+        _ = add_layer(layer)
         ret = self.source.get(layer)
         if layer in self.layers():
             kwargs = {
@@ -302,8 +314,8 @@ __PrecompSwitch.init(nuke.thisNode())""")}
 
             try:
                 kwargs['postage_stamp'] = (
-                    self.
-                    last_node[b'postage_stamp'].
+                    cast.not_none(self.
+                                  last_node)[b'postage_stamp'].
                     value()
                 )
             except NameError:
@@ -328,10 +340,11 @@ __PrecompSwitch.init(nuke.thisNode())""")}
                     'label': cast.binary(self._config.l10n(layer)),
                 }
                 try:
-                    kwargs['postage_stamp'] = (
-                        input0['postage_stamp'].value()
-                        and input1['postage_stamp'].value()
-                    )
+                    if input0 and input1:
+                        kwargs['postage_stamp'] = (
+                            input0[b'postage_stamp'].value()
+                            and input1[b'postage_stamp'].value()
+                        )
                 except NameError:
                     pass
                 n = nuke.nodes.Merge2(**kwargs)
@@ -344,6 +357,7 @@ __PrecompSwitch.init(nuke.thisNode())""")}
         return ret
 
     def plus(self, layer):
+        # type: (Text) -> Optional[nuke.Node]
         """Plus a layer to last rgba.  """
 
         input1 = self.node(layer)
@@ -362,6 +376,7 @@ __PrecompSwitch.init(nuke.thisNode())""")}
             output='rgb')
 
     def copy(self, layer, output=None):
+        # type: (Text, Optional[Text]) ->  None
         """Copy a layer to last.  """
 
         if not self.last_node:

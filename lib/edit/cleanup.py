@@ -12,8 +12,15 @@ from . import core
 import logging
 LOGGER = logging.getLogger(__name__)
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Iterable
 
-def delete_unused_nodes(nodes=None, message=False):
+
+def delete_unused_nodes(
+    nodes=None,  # type: Iterable[nuke.Node]
+    message=False,  # type: bool
+):
     """Delete all unused nodes."""
 
     if nodes is None:

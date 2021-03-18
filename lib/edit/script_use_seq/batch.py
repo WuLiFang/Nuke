@@ -38,7 +38,7 @@ def run(input_dir, output_dir):
             if not footages:
                     raise ValueError("No footages")
             with io.open(temp_fd, 'w', encoding='utf8') as f:
-                f.write("\n".join(six.text_type(i) for i in footages))
+                _ = f.write("\n".join(six.text_type(i) for i in footages))
             result = []
             try:
                 for i in progress(Path(input_dir).glob("**/*.nk"), "转换Nuke文件为序列工程", total=-1):
@@ -65,8 +65,7 @@ def run(input_dir, output_dir):
                     if START_MESSAGE in stdout:
                         stdout = stdout.partition(
                             START_MESSAGE)[2].strip()
-                    proc.wait()
-                    if proc.returncode:
+                    if proc.wait():
                         nuke.tprint(cast.binary(stdout))
                         nuke.tprint(cast.binary(stderr))
                         LOGGER.error("Process failed: filename=%s", i)
@@ -93,8 +92,8 @@ def run(input_dir, output_dir):
                 cast.binary(os.path.join(output_dir, '!序列工程转换报告.html')),
                 'w',
                     encoding='utf8') as f:
-                f.write(report)
-            webbrowser.open(output_dir)
+                _ = f.write(report)
+            _ = webbrowser.open(output_dir)
             break
     finally:
         try:

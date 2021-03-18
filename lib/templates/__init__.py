@@ -6,7 +6,6 @@ from __future__ import (absolute_import, division, print_function,
 
 
 from jinja2 import Environment, FileSystemLoader
-from pathlib2_unicode import PurePath
 import os
 
 _ENV = Environment(

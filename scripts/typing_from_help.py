@@ -534,8 +534,8 @@ if __name__ == '__main__':
     import codecs
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--type", dest="type")
-    parser.add_argument("file")
+    _ = parser.add_argument("--type", dest="type")
+    _ = parser.add_argument("file")
     args = parser.parse_args()
     should_close = False
     if args.file == '-':

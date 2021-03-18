@@ -17,4 +17,4 @@ def after_created(nodes):
     if not nodes:
         return
     n = nodes[0]
-    nuke.zoom(cast.not_none(nuke.zoom()), (n.xpos(), n.ypos()))
+    _ = nuke.zoom(cast.not_none(nuke.zoom()), (n.xpos(), n.ypos()))

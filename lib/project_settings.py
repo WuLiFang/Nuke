@@ -42,7 +42,7 @@ def _add_root_info():
 
 def _lock_connections():
     if nuke.numvalue('preferences.wlf_lock_connections', 0.0):
-        nuke.Root()[b'lock_connections'].setValue(1)
+        _ = nuke.Root()[b'lock_connections'].setValue(1)
         nuke.Root().setModified(False)
 
 

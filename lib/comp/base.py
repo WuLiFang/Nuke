@@ -9,8 +9,8 @@ import re
 import webbrowser
 
 import cast_unknown as cast
+import itertools
 import nuke
-from nukescripts import frame
 import six
 
 from comp.config import BatchCompConfig, CompConfig
@@ -24,6 +24,10 @@ CONFIG = CompConfig()
 LOGGER = logging.getLogger('com.wlf.comp')
 BATCH_CONFIG = BatchCompConfig()
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    import typing
+
 
 class Comp(object):
     """Create .nk file from footage that tagged in filename."""
@@ -32,8 +36,8 @@ class Comp(object):
     _attenuation_radial = None
 
     def __init__(self):
-        self._errors = []
-        self._bg_ch_end_nodes = []
+        self._errors = cast.list_([], six.text_type)
+        self._bg_ch_end_nodes = cast.list_([], nuke.Node)
         self._task = DefaultHandler()
         self._task.total = 20
         self._task.on_started()
@@ -44,21 +48,24 @@ class Comp(object):
 
     @property
     def fps(self):
+        # type: () -> int
         """Frame per secondes.  """
-        return CONFIG.get('fps') or nuke.numvalue('root.fps')
+        return int(CONFIG.get('fps') or  # type: ignore
+                   nuke.numvalue(b'root.fps'))
 
     def task_step(self, message=None):
+        # type: (six.text_type) -> None
         """Push task progress bar forward.  """
 
         if message:
             LOGGER.info('{:-^30s}'.format(message))
-        self._task.step(message)
+        self._task.step(message)  # type: ignore
 
     def import_resource(self, dir_path):
         """Import footages from config dictionary."""
 
         # Get all subdir
-        dirs = list(x[0] for x in os.walk(dir_path))
+        dirs = list(cast.text(x[0]) for x in os.walk(dir_path))
         self.task_step('导入素材')
         for dir_ in dirs:
             # Get footage in subdir
@@ -80,7 +87,8 @@ class Comp(object):
                     if re.match(CONFIG['footage_pat'], f, flags=re.I):
                         n = nuke.createNode(
                             b'Read', cast.binary('file {{{}/{}}}'.format(dir_, f)))
-                        n[b'on_error'].setValue(cast.binary('nearest frame'))
+                        _ = n[b'on_error'].setValue(
+                            cast.binary('nearest frame'))
                     else:
                         LOGGER.info('\t\t不匹配素材正则, 跳过')
         LOGGER.info('{:-^30s}'.format('结束 导入素材'))
@@ -103,11 +111,11 @@ class Comp(object):
 
         n = None
 
-        formats = []
+        formats = [(int(i), int(i)) for i in ()]
 
         frame_ranges = nuke.FrameRanges()
         for n in nodes:
-            ReadNode(n)
+            _ = ReadNode(n)
             format_ = n.format()
             assert isinstance(format_, nuke.Format)
             if not n.hasError():
@@ -120,22 +128,24 @@ class Comp(object):
             frame_ranges.add(frame_range)
 
         root = nuke.root()
-        root[b'first_frame'].setValue(frame_ranges.minFrame())
-        root[b'last_frame'].setValue(frame_ranges.maxFrame())
-        nuke.frame(int((frame_ranges.minFrame() + frame_ranges.maxFrame()) / 2))
-        root[b'lock_range'].setValue(True)
+        _ = root[b'first_frame'].setValue(frame_ranges.minFrame())
+        _ = root[b'last_frame'].setValue(frame_ranges.maxFrame())
+        nuke.root().setFrame(int((frame_ranges.minFrame() + frame_ranges.maxFrame()) / 2))
+        _ = root[b'lock_range'].setValue(True)
         try:
             format_ = sorted([(formats.count(i), i)
                               for i in set(formats)])[-1][1]
-            root[b'format'].setValue(nuke.addFormat('{} {}'.format(*format_)))
+            _ = root[b'format'].setValue(
+                nuke.addFormat(cast.binary('{} {}'.format(*format_))))
         except IndexError:
-            root[b'format'].setValue(b'HD_1080')
+            _ = root[b'format'].setValue(b'HD_1080')
             LOGGER.warning('不能获取工程格式, 使用默认值HD_1080')
 
-        root[b'fps'].setValue(self.fps)
+        _ = root[b'fps'].setValue(self.fps)
 
     def _attenuation_adjust(self, input_node):
-        n = input_node
+        # type: (nuke.Node) -> nuke.Node
+        n = cast.instance(input_node, nuke.Node)
         if self._attenuation_radial is None:
             radial_node = nuke.nodes.Radial(
                 area='0 0 {} {}'.format(n.width(), n.height()))
@@ -177,7 +187,7 @@ class Comp(object):
         if CONFIG['zdefocus']:
             self.task_step('添加虚焦控制')
             try:
-                self._add_zdefocus_control(n)
+                _ = self._add_zdefocus_control(n)
             except RuntimeError as ex:
                 LOGGER.error(cast.text(ex))
 
@@ -192,7 +202,7 @@ class Comp(object):
 
         n = nuke.nodes.SoftClip(
             inputs=[n], conversion='logarithmic compress')
-        if CONFIG.get('filters'):
+        if CONFIG.get('filters'):  # type: ignore
             n = nuke.nodes.Glow2(inputs=[n],
                                  tolerance=0.6,
                                  saturation=0.5,
@@ -216,13 +226,14 @@ class Comp(object):
         self.task_step('输出节点创建')
 
         self.task_step('设置查看器')
-        map(nuke.delete, nuke.allNodes(b'Viewer'))
-        nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
+        _ = map(nuke.delete, nuke.allNodes(b'Viewer'))
+        _ = nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
-        autoplace(undoable=False)
+        _ = autoplace(undoable=False)
 
     @staticmethod
     def _merge_mp(input_node, mp_file='', lut=''):
+        # type: (nuke.Node, six.text_type, six.text_type) -> nuke.Node
         def _add_lut(input_node):
             if not lut:
                 return input_node
@@ -232,7 +243,8 @@ class Comp(object):
                 file_type='vf',
                 label=b'[basename [value this.knob.vfield_file]]',
             )
-            cast.instance(n[b'vfield_file'], nuke.File_Knob).fromUserText(lut)
+            cast.instance(n[b'vfield_file'], nuke.File_Knob).fromUserText(
+                cast.binary(lut))
             return n
 
         mp_file = mp_file.replace('\\', '/')
@@ -242,7 +254,8 @@ class Comp(object):
                                    postage_stamp=True)
         else:
             n = nuke.nodes.Read(file=mp_file)
-            cast.instance(n[b'file'],  nuke.File_Knob).fromUserText(mp_file)
+            cast.instance(n[b'file'],  nuke.File_Knob).fromUserText(
+                cast.binary(mp_file))
         n.setName(b'MP')
         n = nuke.nodes.ModifyMetaData(
             inputs=[n],
@@ -276,18 +289,20 @@ class Comp(object):
 
     @classmethod
     def _nodes_order(cls, n):
-        tag = n.metadata(
-            cls.tag_metadata_key) or n[ReadNode.tag_knob_name].value()
+        # type: (nuke.Node) -> six.text_type
+        tag = cast.text(
+            n.metadata(cast.binary(cls.tag_metadata_key)) or
+            n[cast.binary(ReadNode.tag_knob_name)].value(),
+        )
         return ('_' + tag.replace('_BG', '1_').replace('_CH', '0_'))
 
     @classmethod
     def get_nodes_by_tags(cls, tags):
+        # type: (typing.Union[typing.Tuple[six.text_type, ...], six.text_type]) -> typing.List[nuke.Node]
         """Return nodes that match given tags."""
-        # TODO: use *args
-        ret = []
-        if isinstance(tags, (six.binary_type, six.text_type)):
-            tags = [tags]
-        tags = tuple(cast.text(i).upper() for i in cast.iterable(tags))
+        ret = []  # type: typing.List[nuke.Node]
+        tags = tuple(cast.text(i).upper()
+                     for i in cast.list_(tags, (six.text_type, six.binary_type)))
 
         for n in nuke.allNodes(b'Read'):
             knob_name = '{}.{}'.format(n.name(), ReadNode.tag_knob_name)
@@ -299,6 +314,7 @@ class Comp(object):
         return ret
 
     def output(self, filename):
+        # type: (six.text_type) -> None
         """Save .nk file and render .jpg file."""
 
         LOGGER.info('{:-^30s}'.format('开始 输出'))
@@ -310,16 +326,16 @@ class Comp(object):
         # Save nk
         LOGGER.info('保存为:\t%s', _path)
         nuke.Root()[b'name'].setValue(_path)
-        nuke.scriptSave(_path)
+        _ = nuke.scriptSave(cast.binary(_path))
 
         # Render png
-        if CONFIG.get('RENDER_JPG'):
+        if CONFIG.get('RENDER_JPG'):  # type: ignore
             for n in nuke.allNodes(b'Read'):
                 name = n.name()
                 if name in ('MP', 'Read_Write_JPG'):
                     continue
                 for frame in (n.firstFrame(), n.lastFrame(),
-                              int(nuke.numvalue('_Write.knob.frame'))):
+                              int(nuke.numvalue(b'_Write.knob.frame'))):
                     try:
                         render_png(n, frame)
                         break
@@ -329,9 +345,9 @@ class Comp(object):
         # Render Single Frame
         n = nuke.toNode(b'_Write')
         if isinstance(n, nuke.Group):
-            n = cast.not_none(n.node('Write_JPG_1'))
-            n[b'disable'].setValue(False)
-            for frame in (int(nuke.numvalue('_Write.knob.frame')), n.firstFrame(), n.lastFrame()):
+            n = cast.not_none(n.node(b'Write_JPG_1'))
+            _ = n[b'disable'].setValue(False)
+            for frame in (int(nuke.numvalue(b'_Write.knob.frame')), n.firstFrame(), n.lastFrame()):
                 try:
                     nuke.execute(n, frame, frame)
                     break
@@ -344,6 +360,7 @@ class Comp(object):
             LOGGER.info('{:-^30s}'.format('结束 输出'))
 
     def _bg_ch_nodes(self):
+        # type: () -> nuke.Node
         nodes = self._precomp()
 
         if not nodes:
@@ -351,15 +368,19 @@ class Comp(object):
 
         n = None
         for i, n in enumerate(nodes):
+            n = cast.instance(n, nuke.Node)
             self.task_step('创建{}'.format(
-                n.metadata(self.tag_metadata_key) or n.name()))
+                n.metadata(cast.binary(self.tag_metadata_key)) or n.name()))
             n = self._prepare_channels(n)
             n = self._add_colorcorrect_nodes(n)
 
             if i == 0:
                 self.task_step('创建MP')
                 n = self._merge_mp(
-                    n, mp_file=CONFIG['mp'], lut=CONFIG.get('mp_lut'))
+                    n,
+                    mp_file=CONFIG['mp'],
+                    lut=CONFIG.get('mp_lut'),  # type: ignore
+                )
                 n = self._merge_occ(n)
                 n = self._merge_shadow(n)
                 n = self._merge_screen(n)
@@ -375,22 +396,27 @@ class Comp(object):
             if i > 0:
                 n = nuke.nodes.Merge2(
                     inputs=[nodes[i - 1], n],
-                    label=cast.binary(n.metadata(cast.binary(self.tag_metadata_key)) or ''),
+                    label=cast.binary(n.metadata(
+                        cast.binary(self.tag_metadata_key)) or ''),
                 )
 
             nodes[i] = n
-        return n
+        return cast.not_none(n)
 
     def _precomp(self):
-        tag_nodes_dict = {}
-        ret = []
+        tag_nodes_dict = (
+            {}
+        )  # type: typing.Dict[six.text_type, typing.List[nuke.Node]]
+
+        ret = []  # type: typing.List[nuke.Node]
 
         def _tag_order(tag):
+            # type: (six.text_type) -> six.text_type
             return ('_' + tag.replace('_BG', '1_').replace('_CH', '0_'))
 
-        for n in self.get_nodes_by_tags(['BG', 'CH']):
-            tag = n[ReadNode.tag_knob_name].value()
-            tag_nodes_dict.setdefault(tag, [])
+        for n in self.get_nodes_by_tags(('BG', 'CH')):
+            tag = n[cast.binary(ReadNode.tag_knob_name)].value()
+            _ = tag_nodes_dict.setdefault(tag, [])
             tag_nodes_dict[tag].append(n)
 
         tags = sorted(tag_nodes_dict.keys(), key=_tag_order)
@@ -398,7 +424,7 @@ class Comp(object):
             nodes = tag_nodes_dict[tag]
             try:
                 LOGGER.debug('Precomp: %s', tag)
-                if len(nodes) == 1 and not CONFIG.get('precomp'):
+                if len(nodes) == 1 and not CONFIG.get('precomp'):  # type: ignore
                     n = nodes[0]
                 else:
                     n = Precomp(nodes, async_=False).last_node
@@ -414,6 +440,7 @@ class Comp(object):
 
     @classmethod
     def _prepare_channels(cls, input_node):
+        # type: (nuke.Node) -> nuke.Node
         n = input_node
         if CONFIG['masks']:
             if 'SSS.alpha' in input_node.channels():
@@ -452,8 +479,10 @@ class Comp(object):
         return n
 
     def _add_colorcorrect_nodes(self, input_node):
-
-        tag = input_node.metadata(self.tag_metadata_key)
+        # type: (nuke.Node) -> nuke.Node
+        tag = cast.text(
+            input_node.metadata(cast.binary(self.tag_metadata_key))
+        )
         n = input_node
 
         # if CONFIG['autograde']:
@@ -510,6 +539,7 @@ class Comp(object):
         return n
 
     def _add_filter_nodes(self, input_node):
+        # type: (nuke.Node) -> nuke.Node
         n = nuke.nodes.Reformat(
             inputs=[input_node],
             resize='none',
@@ -543,8 +573,8 @@ class Comp(object):
                     '|| [value _ZDefocus.disable]} {return True} else {return False}]}}'
                 )
                 if not cast.text(n.metadata(cast.binary(self.tag_metadata_key)) or '').startswith('BG'):
-                    n[b'autoLayerSpacing'].setValue(False)
-                    n[b'layers'].setValue(5)
+                    _ = n[b'autoLayerSpacing'].setValue(False)
+                    _ = n[b'layers'].setValue(5)
             except RuntimeError:
                 LOGGER.exception("create ZDefocus failed")
 
@@ -596,11 +626,12 @@ class Comp(object):
 
     @staticmethod
     def _merge_depth(input_node, nodes):
+        # type: (nuke.Node, typing.List[nuke.Node]) -> nuke.Node
         if len(nodes) < 2:
             return input_node
 
         merge_node = nuke.nodes.Merge2(
-            inputs=nodes[:2] + [None] + nodes[2:],
+            inputs=itertools.chain(nodes[:2], [None], nodes[2:]),
             tile_color=2184871423,
             operation='min',
             Achannels='depth', Bchannels='depth', output='depth',
@@ -610,8 +641,9 @@ class Comp(object):
             inputs=[input_node, merge_node], from0='depth.Z', to0='depth.Z')
         return copy_node
 
-    @classmethod
+    @ classmethod
     def _merge_other(cls, input_node, nodes):
+        # type: (nuke.Node, typing.List[nuke.Node]) -> nuke.Node
         nodes.sort(key=cls._nodes_order)
         if not nodes:
             return input_node
@@ -642,8 +674,9 @@ class Comp(object):
         )
         return n
 
-    @staticmethod
+    @ staticmethod
     def _merge_occ(input_node):
+        # type: (nuke.Node) -> nuke.Node
         _nodes = Comp.get_nodes_by_tags(('OC', 'OCC', 'AO'))
         n = input_node
         for _read_node in _nodes:
@@ -658,9 +691,10 @@ class Comp(object):
             )
         return n
 
-    @staticmethod
+    @ staticmethod
     def _merge_shadow(input_node):
-        _nodes = Comp.get_nodes_by_tags(['SH', 'SD'])
+        # type: (nuke.Node) -> nuke.Node
+        _nodes = Comp.get_nodes_by_tags(('SH', 'SD'))
         n = input_node
         for _read_node in _nodes:
             _reformat_node = nuke.nodes.Reformat(
@@ -668,8 +702,9 @@ class Comp(object):
             n = Comp._grade_shadow([n, _reformat_node])
         return n
 
-    @staticmethod
+    @ staticmethod
     def _grade_shadow(inputs):
+        # type: (typing.List[nuke.Node]) -> nuke.Node
         n = nuke.nodes.Grade(
             inputs=inputs,
             white="0.08420000225 0.1441999972 0.2041999996 0.0700000003",
@@ -678,7 +713,7 @@ class Comp(object):
         )
         return n
 
-    @staticmethod
+    @ staticmethod
     def _merge_occsh(input_node):
         nodes = Comp.get_nodes_by_tags(('OCCSH',))
         n = input_node
@@ -696,8 +731,9 @@ class Comp(object):
             )
         return n
 
-    @classmethod
+    @ classmethod
     def _merge_screen(cls, input_node):
+        # type: (nuke.Node) -> nuke.Node
         _nodes = Comp.get_nodes_by_tags('FOG')
         n = input_node
         for _read_node in _nodes:
@@ -712,12 +748,13 @@ class Comp(object):
                 output='rgb',
                 operation='screen',
                 maskChannelInput='rgba.alpha',
-                label=_read_node[ReadNode.tag_knob_name].value(),
+                label=_read_node[cast.binary(ReadNode.tag_knob_name)].value(),
             )
         return n
 
-    @staticmethod
+    @ staticmethod
     def _add_zdefocus_control(input_node):
+        # type: (nuke.Node) -> nuke.Node
         # Use for one-node zdefocus control
         n = nuke.nodes.ZDefocus2(
             inputs=[input_node], math='depth', output='focal plane setup',
@@ -727,6 +764,7 @@ class Comp(object):
 
 
 def render_png(nodes, frame=None, show=False):
+    # type: (typing.Union[typing.Tuple[nuke.Node], nuke.Node], int, bool) -> None
     """create png for given @nodes."""
 
     assert isinstance(nodes, (nuke.Node, list, tuple))
@@ -753,7 +791,7 @@ def render_png(nodes, frame=None, show=False):
 
         nuke.delete(n)
     if show:
-        webbrowser.open(
+        _ = webbrowser.open(
             os.path.join(
                 cast.text(nuke.value(b'root.project_directory')),
                 cast.text(script_name),
@@ -766,7 +804,7 @@ class FootageError(Exception):
 
     def __init__(self, *args):
         super(FootageError, self).__init__()
-        self.tags = args
+        self.tags = args  # type: typing.Tuple[typing.Any, ...]
 
     def __str__(self):
         return ' # '.join(self.tags)
@@ -777,7 +815,7 @@ class RenderError(Exception):
 
     def __init__(self, *args):
         super(RenderError, self).__init__()
-        self.tags = args
+        self.tags = args  # type: typing.Tuple[typing.Any, ...]
 
     def __str__(self):
         return ' # '.join(self.tags)

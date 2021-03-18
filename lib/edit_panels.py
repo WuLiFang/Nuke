@@ -14,14 +14,24 @@ from wlf.progress import CancelledError, progress
 import six
 import cast_unknown as cast
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text, Tuple, Iterable, Any, Dict
+
 
 class ChannelsRename(PythonPanel):
     """Dialog UI of channel_rename."""
 
     widget_id = 'com.wlf.channels_rename'
 
-    def __init__(self, prefix=('PuzzleMatte', 'ID'), node=None):
-        def _pannel_order(name):
+    def __init__(
+        self,
+        prefix=('PuzzleMatte', 'ID'),  # type: Tuple[Text, ...]
+        node=None,  # type: nuke.Node
+    ):
+        def _pannel_order(
+            name,  # type: Text
+        ):
             return (
                 name.endswith('.alpha'),
                 name.startswith(prefix),
@@ -32,6 +42,7 @@ class ChannelsRename(PythonPanel):
             )
 
         def _stylize(text):
+            # type: (Text) -> Text
             ret = text
             repl = {'.red': '.<span style=\"color:#FF4444\">red</span>',
                     '.green':  '.<span style=\"color:#44FF44\">green</span>',
@@ -45,8 +56,8 @@ class ChannelsRename(PythonPanel):
 
         viewer = CurrentViewer()
         n = node or nuke.selectedNode()
-        self._channels = sorted((channel for channel in n.channels()
-                                 if channel.startswith(prefix)),
+        self._channels = sorted((cast.text(channel) for channel in n.channels()
+                                 if cast.text(channel).startswith(prefix)),
                                 key=_pannel_order) + ['rgba.alpha']
         self._node = n
         self._viewer = viewer
@@ -57,12 +68,13 @@ class ChannelsRename(PythonPanel):
         self._layercontactsheet = n
 
         viewer.link(n)
-        viewer.node[b'channels'].setValue('rgba')
+        if viewer.node:
+            _ = cast.not_none(viewer.node[b'channels']).setValue('rgba')
 
         for channel in self._channels:
             self.addKnob(nuke.String_Knob(
-                channel, _stylize(channel), b''))
-            if channel.endswith(b'.blue'):
+                cast.binary(channel), cast.binary(_stylize(channel)), b''))
+            if channel.endswith('.blue'):
                 self.addKnob(nuke.Text_Knob(b''))
         self.addKnob(nuke.Text_Knob(b''))
         k = nuke.Script_Knob(b'ok', b'OK')
@@ -78,14 +90,14 @@ class ChannelsRename(PythonPanel):
     def add_callbacks(self):
         """Add nuke callbacks.  """
 
-        nuke.removeOnDestroy(ChannelsRename.hide, args=(self))
-        nuke.addOnUserCreate(ChannelsRename.hide, args=(self))
+        nuke.removeOnDestroy(ChannelsRename.hide, args=(self,))
+        nuke.addOnUserCreate(ChannelsRename.hide, args=(self,))
 
     def remove_callbacks(self):
         """Remove nuke callbacks.  """
 
-        nuke.removeOnDestroy(ChannelsRename.hide, args=(self))
-        nuke.removeOnUserCreate(ChannelsRename.hide, args=(self))
+        nuke.removeOnDestroy(ChannelsRename.hide, args=(self,))
+        nuke.removeOnUserCreate(ChannelsRename.hide, args=(self,))
 
     def destroy(self):
         """Destroy the panel.  """
@@ -123,7 +135,10 @@ class MultiEdit(PythonPanel):
     nodes = None
     widget_id = 'com.wlf.multiedit'
 
-    def __init__(self, nodes=None):
+    def __init__(
+        self,
+        nodes=None,  # type: Iterable[nuke.Node]
+    ):
         super(MultiEdit, self).__init__(
             cast.binary('多节点编辑'), cast.binary(self.widget_id))
 
@@ -131,7 +146,7 @@ class MultiEdit(PythonPanel):
         assert nodes, 'Nodes not given. '
         nodes = same_class_filter(nodes)
         self.nodes = nodes
-        self._values = {}
+        self._values = {}  # type: Dict[Text, Any]
 
         knobs = nodes[0].allKnobs()
 
@@ -213,11 +228,14 @@ class MultiEdit(PythonPanel):
                     nuke.message(cast.binary('非法名称, 已忽略'))
 
 
-def same_class_filter(nodes, node_class=None):
+def same_class_filter(
+    nodes,  # type: Iterable[nuke.Node]
+    node_class=None,  # type: Text
+):
     """Filter nodes to one class."""
 
     classes = list(
-        set([n.Class() for n in nodes if not node_class or n.Class() == node_class]))
+        set([n.Class() for n in nodes if not node_class or n.Class() == cast.binary(node_class)]))
     classes.sort()
     if len(classes) > 1:
         choice = nuke.choice(cast.binary('选择节点分类'),

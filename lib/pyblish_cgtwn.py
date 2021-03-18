@@ -115,7 +115,7 @@ class OpenFolder(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         if os.listdir(instance.data['folder']):
-            webbrowser.open(instance.data['folder'])
+            _ = webbrowser.open(instance.data['folder'])
 
 
 class ValidateArtist(TaskMixin, pyblish.api.InstancePlugin):
@@ -207,7 +207,7 @@ class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):
             if src.startswith(dest.replace('\\', '/')):
                 continue
             n['file'].setValue(copy(src, dest))
-        nuke.scriptSave()
+        _ = nuke.scriptSave()
 
 
 class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
@@ -222,7 +222,7 @@ class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
         dest = instance.context.data['workfileFileboxInfo'].path + '/'
         workfile = instance.data['name']
 
-        copy(workfile, dest)
+        _ = copy(workfile, dest)
 
 
 class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
@@ -246,7 +246,7 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
             raise ValueError('找不到标识为 image 的文件框，请联系管理员进行设置。')
 
         # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
-        copy(path, dest)
+        _ = copy(path, dest)
 
         context.data['submitImage'] = task.set_image(dest)
 
