@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.0.1](https://github.com/WuLiFang/Nuke/compare/v2021.0.0...v2021.0.1) (2021-03-22)
+
+### Bug Fixes
+
+- **deps:** update package jinja2 to 2.11.3 ([7deb77a](https://github.com/WuLiFang/Nuke/commit/7deb77a0eb8a97a4c3de7d53afbd9341c8454a33))
+- **deps:** update package psutil to 5.8.0 ([06e617f](https://github.com/WuLiFang/Nuke/commit/06e617f04347552af2387b3f1e737c0b0dd0a652))
+- error when autoplace ([77b3a5a](https://github.com/WuLiFang/Nuke/commit/77b3a5a2f5cb7aa2a35879cafe9ea5bbcd0eae8f))
+
 ## [2021.0.0](https://github.com/WuLiFang/Nuke/compare/v0.20.25...v2021.0.0) (2021-03-22)
 
 ## [0.20.25](https://github.com/WuLiFang/Nuke/compare/v0.20.24...v0.20.25) (2021-03-12)
