@@ -3,13 +3,15 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+import nuke
 import argparse
 import logging
 import logging.config
 import os
 
 import wlf.path
-from comp import Comp, FootageError, RenderError, _argv
+import cast_unknown as cast
+from comp import Comp, FootageError, RenderError
 from comp.config import START_MESSAGE, CompConfig
 
 __absfile__ = os.path.abspath(__file__).rstrip('c')
@@ -23,7 +25,7 @@ def main():
     parser = argparse.ArgumentParser(description='WuLiFang auto comper.')
     _ = parser.add_argument('input_dir', help='Folder that contained footages')
     _ = parser.add_argument('output', help='Script output path.')
-    args = parser.parse_args(_argv[1:])
+    args = parser.parse_args([cast.text(i) for i in nuke.rawArgs[5:]])
 
     try:
         LOGGER.info(START_MESSAGE)
