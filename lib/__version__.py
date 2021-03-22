@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '0.20.25'
-RELEASE_DATE = datetime.fromtimestamp(1615540367)
-LAST_GIT_COMMIT_DESCRIBE = 'v0.20.24-2-ga0a9d64'
-LAST_GIT_COMMIT_HASH = 'a0a9d64ca92a4f91d85fc981bcc07176626cd10d'
+VERSION = '2021.0.0'
+RELEASE_DATE = datetime.fromtimestamp(1616398075)
+LAST_GIT_COMMIT_DESCRIBE = 'v0.20.25-25-gca61b86'
+LAST_GIT_COMMIT_HASH = 'ca61b863dc00ec6e1b6325b44714662dbd1b49ae'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1615538057)
-LAST_GIT_COMMIT_SUBJECT = 'ci: support PIP_INDEX_URL'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1616397911)
+LAST_GIT_COMMIT_SUBJECT = 'refactor: fix type errors'
 LAST_GIT_COMMIT_BODY = ''

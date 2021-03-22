@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.0.0](https://github.com/WuLiFang/Nuke/compare/v0.20.25...v2021.0.0) (2021-03-22)
+
 ## [0.20.25](https://github.com/WuLiFang/Nuke/compare/v0.20.24...v0.20.25) (2021-03-12)
 
 ### Bug Fixes
