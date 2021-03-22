@@ -126,8 +126,8 @@ def dialog_set_framerange():
 
     if confirm:
         set_framerange(
-            int(cast.text(panel.value(b'first'))),
-            int(cast.text(panel.value(b'last'))),
+            int(cast.not_none(panel.value(b'first'))),
+            int(cast.not_none(panel.value(b'last'))),
         )
 
 

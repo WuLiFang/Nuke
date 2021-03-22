@@ -118,9 +118,9 @@ def show_dialog():
     if not panel.show():
         return
 
-    start = int(cast.text(panel.value(_tr('start'))))
-    end = int(cast.text(panel.value(_tr('end'))))
-    tolerance = float(cast.text(panel.value(_tr('tolerance'))))
+    start = int(cast.not_none(panel.value(_tr('start'))))
+    end = int(cast.not_none(panel.value(_tr('end'))))
+    tolerance = float(cast.not_none(panel.value(_tr('tolerance'))))
 
     data = get_timewarp_data(n, start, end, tolerance)
 
