@@ -16,6 +16,10 @@ from nuketools import undoable_func
 
 from . import core
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text,  Iterable, List
+
 
 def replace_sequence():
     # TODO: Need refactor and test.
@@ -27,10 +31,10 @@ def replace_sequence():
     label_first = cast.binary('设置工程起始帧')
     label_last = cast.binary('设置工程结束帧')
 
-    _ = panel.addFilenameSearch(label_path_prefix, 'z:/')
-    _ = panel.addExpressionInput(label_first, int(
+    _ = panel.addFilenameSearch(label_path_prefix, b'z:/')
+    _ = panel.addExpressionInput(label_first, (
         nuke.Root()[b'first_frame'].value()))
-    _ = panel.addExpressionInput(label_last, int(
+    _ = panel.addExpressionInput(label_last, (
         nuke.Root()[b'last_frame'].value()))
 
     confirm = panel.show()
@@ -98,6 +102,7 @@ def reload_all_read_node():
 
 
 def set_framerange(first, last, nodes=None):
+    # type: (int, int, Iterable[nuke.Node]) -> None
     """Set read nodes framerange.  """
 
     if nodes is None:
@@ -115,24 +120,27 @@ def dialog_set_framerange():
     """Dialog for set_framerange.  """
 
     panel = nuke.Panel(cast.binary('设置帧范围'))
-    _ = panel.addExpressionInput(b'first', nuke.numvalue('root.first_frame'))
-    _ = panel.addExpressionInput(b'last', nuke.numvalue('root.last_frame'))
+    _ = panel.addExpressionInput(b'first', nuke.value(b'root.first_frame'))
+    _ = panel.addExpressionInput(b'last', nuke.value(b'root.last_frame'))
     confirm = panel.show()
 
     if confirm:
-        set_framerange(panel.value(b'first'), panel.value(b'last'))
+        set_framerange(
+            int(cast.text(panel.value(b'first'))),
+            int(cast.text(panel.value(b'last'))),
+        )
 
 
 @undoable_func('合并重复读取节点')
 def remove_duplicated_read(
     is_show_result=True,  # type: bool
-): # type: (...) -> None
+):  # type: (...) -> None
     """Remove duplicated read to save memory.  """
 
     nodes = nuke.allNodes(b'Read')
     nodes.sort(key=lambda n: n.ypos())
-    distinct_read = []
-    removed_nodes = []
+    distinct_read = []  # type: List[nuke.Node]
+    removed_nodes = []  # type: List[Text]
 
     for n in nodes:
         same_node = _find_same(n, distinct_read)

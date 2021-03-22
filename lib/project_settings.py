@@ -14,7 +14,7 @@ import callback
 
 
 def _eval_proj_dir():
-    if nuke.numvalue('preferences.wlf_eval_proj_dir', 0.0):
+    if nuke.numvalue(b'preferences.wlf_eval_proj_dir', 0.0):
         attr = b'root.project_directory'
         nuke.knob(attr, os.path.abspath(nuke.value(attr)).replace(b'\\', b'/'))
 
@@ -41,7 +41,7 @@ def _add_root_info():
 
 
 def _lock_connections():
-    if nuke.numvalue('preferences.wlf_lock_connections', 0.0):
+    if nuke.numvalue(b'preferences.wlf_lock_connections', 0.0):
         _ = nuke.Root()[b'lock_connections'].setValue(1)
         nuke.Root().setModified(False)
 

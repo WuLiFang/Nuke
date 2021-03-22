@@ -25,7 +25,8 @@ class ConfigPanel(nukescripts.PythonPanel):
             (nuke.Multiline_Eval_String_Knob,
              'seq_exclude', cast.binary('序列排除规则')),
             (nuke.String_Knob, 'override_project_directory', cast.binary('覆盖工程目录')),
-            (nuke.Boolean_Knob, 'use_wlf_write', cast.binary('使用 wlf_Write 替换 Write')),
+            (nuke.Boolean_Knob, 'use_wlf_write',
+             cast.binary('使用 wlf_Write 替换 Write')),
             (nuke.Boolean_Knob, 'is_auto_frame_range', cast.binary('自动设置工程帧范围')),
         ]
         for i in self.knob_list:
@@ -36,12 +37,12 @@ class ConfigPanel(nukescripts.PythonPanel):
                 pass
             self.addKnob(k)
         for i in ('seq_include', 'seq_exclude', 'use_wlf_write', 'is_auto_frame_range', 'override_project_directory'):
-            self.knobs()[i].setFlag(nuke.STARTLINE)
+            self.knobs()[cast.binary(i)].setFlag(nuke.STARTLINE)
 
     def knobChanged(self, knob):
         """Override for buttons."""
 
-        if knob is self.knobs()['OK']:
+        if knob is self.knobs()[b'OK']:
             self.update_config()
 
     def update_config(self):
@@ -68,13 +69,13 @@ class BatchPanel(nukescripts.PythonPanel):
         self.cfg = Config().read()
 
         for i in self.knob_list:
-            k = i[0](*(cast.binary(j) for j in i[1:]))
+            k = i[0](*(cast.binary(j) for j in i[1:]))  # type: nuke.Knob
             try:
-                k.setValue(cast.binary(self.cfg.get(i[1])))
+                _ = k.setValue(cast.binary(self.cfg.get(i[1])))
             except TypeError:
                 pass
             self.addKnob(k)
-        for i in ('input_dir', 'output_dir', 'setting'):
+        for i in (b'input_dir', b'output_dir', b'setting'):
             self.knobs()[i].setFlag(nuke.STARTLINE)
 
     def knobChanged(self, knob):
@@ -86,7 +87,7 @@ class BatchPanel(nukescripts.PythonPanel):
             self.confirm()
 
         if name == 'setting':
-            self.show_setting()
+            _ = self.show_setting()
 
     @run_async
     @run_in_main_thread
@@ -98,8 +99,8 @@ class BatchPanel(nukescripts.PythonPanel):
     def update_config(self):
         """Write all setting to config.  """
 
-        self.cfg['input_dir'] = self.knobs()['input_dir'].value()
-        self.cfg['output_dir'] = self.knobs()['output_dir'].value()
+        self.cfg['input_dir'] = self.knobs()[b'input_dir'].value()
+        self.cfg['output_dir'] = self.knobs()[b'output_dir'].value()
 
     def confirm(self):
         self.update_config()

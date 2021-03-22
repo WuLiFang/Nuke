@@ -54,24 +54,25 @@ class CompConfigPanel(nukescripts.PythonPanel):
             except TypeError:
                 pass
             self.addKnob(k)
-        for i in ('reset', 'precomp', 'masks', 'colorcorrect', 'filters', 'zdefocus',
-                  'depth', 'other'):
+        for i in (b'reset', b'precomp', b'masks', b'colorcorrect', b'filters', b'zdefocus',
+                  b'depth', b'other'):
             self.knobs()[i].setFlag(nuke.STARTLINE)
 
     def knobChanged(self, knob):
+        # type: (nuke.Knob) -> None
         """Override for buttons."""
 
-        if knob is self.knobs()['OK']:
+        if knob is self.knobs()[b'OK']:
             self.update_config()
-        elif knob is self.knobs()['reset']:
+        elif knob is self.knobs()[b'reset']:
             self.reset()
 
     def reset(self):
         """Reset re pattern.  """
 
         for i in ('footage_pat', 'tag_pat'):
-            knob = self.knobs()[i]
-            knob.setValue(self.cfg.default.get(i))
+            knob = self.knobs()[cast.binary(i)]
+            _ = knob.setValue(self.cfg.default.get(i))
             self.knobChanged(knob)
 
     def update_config(self):
@@ -111,15 +112,15 @@ class BatchCompPanel(nukescripts.PythonPanel):
             except TypeError:
                 pass
             self.addKnob(k)
-        for i in ('exclude_existed',):
-            self.knobs()[i].setFlag(nuke.STARTLINE)
-        self.knobs()['generate_txt'].setLabel(
+        self.knobs()[b'exclude_existed'].setFlag(nuke.STARTLINE)
+        self.knobs()[b'generate_txt'].setLabel(
             cast.binary('生成 {}.txt'.format(self.txt_name)))
 
     def __getattr__(self, name):
         return self.knobs()[name].value()
 
     def knobChanged(self, knob):
+        # type: (nuke.Knob) -> None
         """Override for buttons."""
 
         name = knob.name()
@@ -131,10 +132,10 @@ class BatchCompPanel(nukescripts.PythonPanel):
         elif name == 'generate_txt':
             self.generate_txt()
         elif name == 'setting':
-            self.show_setting()
+            _ = self.show_setting()
         elif name == 'txt_name':
-            self.knobs()['generate_txt'].setLabel(
-                '生成 {}.txt'.format(self.txt_name))
+            self.knobs()[b'generate_txt'].setLabel(
+                cast.binary('生成 {}.txt'.format(self.txt_name)))
         elif name in self.knobs():
             self.cfg[name] = knob.value()
 
@@ -153,17 +154,17 @@ class BatchCompPanel(nukescripts.PythonPanel):
         shots = self.batchcomp.get_shot_list()
         path = os.path.join(self.output_dir, '{}.txt'.format(self.txt_name))
         line_width = max(len(i) for i in shots)
-        if os.path.exists(cast.binary(path)) and not nuke.ask('文件已存在, 是否覆盖?'):
+        if os.path.exists(cast.binary(path)) and not nuke.ask(cast.binary('文件已存在, 是否覆盖?')):
             return
         with open(cast.binary(path), 'w') as f:
-            f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
-                                for i in shots))
-        webbrowser.open(path)
+            _ = f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
+                                    for i in shots))
+        _ = webbrowser.open(path)
 
     @property
     def txt_name(self):
         """Output txt name. """
-        return cast.text(self.knobs()['txt_name'].value())
+        return cast.text(self.knobs()[b'txt_name'].value())
 
     @property
     def batchcomp(self):
@@ -173,7 +174,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
         o_dir = self.output_dir
 
         flags = 0
-        if self.knobs()['exclude_existed'].value():
+        if self.knobs()[b'exclude_existed'].value():
             flags |= IGNORE_EXISTED
         if psutil.virtual_memory().free > 16 * 1024 ** 3:
             flags |= MULTI_THREADING
@@ -183,10 +184,9 @@ class BatchCompPanel(nukescripts.PythonPanel):
     def reset(self):
         """Reset re pattern.  """
 
-        for i in ('dir_pat',):
-            knob = self.knobs()[i]
-            knob.setValue(cast.binary(self.cfg.default.get(i)))
-            self.knobChanged(knob)
+        knob = self.knobs()[b'dir_pat']
+        _ = knob.setValue(cast.binary(self.cfg.default.get('dir_pat')))
+        self.knobChanged(knob)
 
     def update(self):
         """Update ui info and button enabled."""
@@ -199,25 +199,25 @@ class BatchCompPanel(nukescripts.PythonPanel):
                 _info += u'\n'.join(self._shot_list)
             else:
                 _info = u'找不到镜头'
-            self.knobs()['info'].setValue(cast.binary(_info))
+            _ = self.knobs()[b'info'].setValue(cast.binary(_info))
 
         def _button_enabled():
             _knobs = [
-                'output_dir',
-                'exclude_existed',
-                'info',
-                'OK',
+                b'output_dir',
+                b'exclude_existed',
+                b'info',
+                b'OK',
             ]
 
             _isdir = os.path.isdir(self.cfg['input_dir'])
             if _isdir:
-                for k in ['exclude_existed', 'info']:
+                for k in [b'exclude_existed', b'info']:
                     self.knobs()[k].setEnabled(True)
                 if self._shot_list:
                     for k in _knobs:
                         self.knobs()[k].setEnabled(True)
                 else:
-                    for k in set(_knobs) - set(['exclude_existed']):
+                    for k in set(_knobs) - set([b'exclude_existed']):
                         self.knobs()[k].setEnabled(False)
             else:
                 for k in _knobs:

@@ -11,7 +11,7 @@ import cast_unknown as cast
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import AnyStr
+    from typing import AnyStr, Any
 
 
 class PythonPanel(nukescripts.PythonPanel):
@@ -43,6 +43,7 @@ class PythonPanel(nukescripts.PythonPanel):
 
 
 def register(widget, name, widget_id, create=False):
+    # type: (bytes, bytes, bytes, bool) -> Any
     """registerWidgetAsPanel(widget, name, id, create) -> PythonPanel
 
       Wraps and registers a widget to be used in a Nuke panel.
@@ -69,7 +70,7 @@ def register(widget, name, widget_id, create=False):
         return _Panel(widget, name, widget_id).addToPane()
 
     menu = nuke.menu(b'Pane')
-    menu.addCommand(cast.binary(name), _add)
+    _ = menu.addCommand(cast.binary(name), _add)
     nukescripts.registerPanel(widget_id, _add)
 
     if create:

@@ -16,8 +16,8 @@ def get_plugin_manager():
     plugin_manager = pluggy.PluginManager(core.PROJECT_NAME)
     plugin_manager.add_hookspecs(spec)
     for module in plugins.ALL:
-        plugin_manager.register(module)
-    plugin_manager.load_setuptools_entrypoints(core.PROJECT_NAME)
+        _ = plugin_manager.register(module)
+    _ = plugin_manager.load_setuptools_entrypoints(core.PROJECT_NAME)
     return plugin_manager
 
 

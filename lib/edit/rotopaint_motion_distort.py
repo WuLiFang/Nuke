@@ -183,7 +183,7 @@ def show_dialog():
         return
 
     # Node.sample need a transformed position when using proxy
-    nuke.Root()[b"proxy"].setValue(False)
+    _ = nuke.Root()[b"proxy"].setValue(False)
 
     def _tr(key):
         return cast.binary({
@@ -194,10 +194,12 @@ def show_dialog():
         }.get(key, key))
 
     panel = nuke.Panel("创建 RotoPaint 运动扭曲".encode("utf8"))
-    panel.addExpressionInput(_tr('base'), nuke.frame())
-    panel.addExpressionInput(_tr('start'), nuke.numvalue("root.first_frame"))
-    panel.addExpressionInput(_tr('end'), nuke.numvalue("root.last_frame"))
-    panel.addExpressionInput(_tr('interval'), 1)
+    _ = panel.addExpressionInput(_tr('base'), cast.binary(nuke.frame()))
+    _ = panel.addExpressionInput(
+        _tr('start'), cast.binary(nuke.numvalue(b"root.first_frame")))
+    _ = panel.addExpressionInput(
+        _tr('end'), cast.binary(nuke.numvalue(b"root.last_frame")))
+    _ = panel.addExpressionInput(_tr('interval'), b'1')
     if not panel.show():
         return
     base = int(cast.not_none(panel.value(_tr('base'))))

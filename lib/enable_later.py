@@ -23,9 +23,9 @@ def mark_enable(nodes):
             label_knob = n[b'label']
             label = cast.text(label_knob.value())
             if ENABLE_MARK not in label:
-                label_knob.setValue(
+                _ = label_knob.setValue(
                     '{}\n{}'.format(label, ENABLE_MARK).encode('utf-8'))
-            n[b'disable'].setValue(True)
+            _ = n[b'disable'].setValue(True)
         except NameError:
             continue
 
@@ -51,7 +51,7 @@ def marked_nodes():
 
 def setup():
     def _enable_node():
-        if nuke.numvalue('preferences.wlf_enable_node', 0.0):
+        if nuke.numvalue(b'preferences.wlf_enable_node', 0.0):
             marked_nodes().enable()
 
     callback.CALLBACKS_ON_SCRIPT_SAVE.append(_enable_node)

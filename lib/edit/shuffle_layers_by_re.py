@@ -60,7 +60,7 @@ if nuke.GUI:
                 b"pattern",
                 "正则匹配规则".encode("utf8")))
 
-            self["pattern"].setValue(
+            _ = self["pattern"].setValue(
                 Config()["pattern"].encode("utf8"))
 
         def get_patterns(self):
@@ -68,7 +68,7 @@ if nuke.GUI:
 
         def knobChanged(self, knob):
             if knob is self['help']:
-                webbrowser.open(
+                _ = webbrowser.open(
                     plugin_folder_path(
                         "docs/build/html/features/shuffle_layers_by_re.html"
                     )
@@ -93,4 +93,4 @@ if nuke.GUI:
             for i in patterns
             for j in shuffle_layers_by_re(nodes, i)
         ]
-        autoplace(created, recursive=True, )
+        _ = autoplace(created, recursive=True, )

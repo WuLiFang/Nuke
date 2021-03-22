@@ -2,5 +2,9 @@
 """Nuke init file.  """
 import nuke
 
-nuke.pluginAddPath('lib')
-nuke.pluginAddPath('plugins')
+import six
+print("six path: %s" % six.__file__)
+
+nuke.pluginAddPath(b'lib')
+nuke.pluginAddPath(b'plugins')
+

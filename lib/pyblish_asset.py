@@ -46,8 +46,8 @@ class CollectFrameRange(pyblish.api.ContextPlugin):
     label = '获取帧范围'
 
     def process(self, context):
-        first = nuke.numvalue('root.first_frame')
-        last = nuke.numvalue('root.last_frame')
+        first = nuke.numvalue(b'root.first_frame')
+        last = nuke.numvalue(b'root.last_frame')
         context.create_instance(
             '帧范围: {:.0f}-{:.0f}'.format(first, last),
             first=first,
@@ -62,7 +62,7 @@ class CollectFPS(pyblish.api.ContextPlugin):
     label = '获取帧速率'
 
     def process(self, context):
-        fps = nuke.numvalue('root.fps')
+        fps = nuke.numvalue(b'root.fps')
         context.create_instance(
             name='帧速率: {:.0f}'.format(fps),
             fps=fps,
@@ -148,7 +148,7 @@ class ExtractJPG(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         with keep_modifield_status():
-            if not nuke.numvalue('preferences.wlf_render_jpg', 0.0):
+            if not nuke.numvalue(b'preferences.wlf_render_jpg', 0.0):
                 self.log.info('因首选项而跳过生成JPG')
                 return
 
@@ -173,7 +173,7 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
 
     def process(self, instance):
         filename = instance.data['name']
-        if nuke.numvalue('preferences.wlf_send_to_dir', 0.0):
+        if nuke.numvalue(b'preferences.wlf_send_to_dir', 0.0):
             render_dir = cast.text(nuke.value(b'preferences.wlf_render_dir'))
             _ = copy(filename, render_dir + '/')
         else:

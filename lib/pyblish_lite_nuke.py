@@ -186,12 +186,12 @@ class Window(window.Window):
         try:
             window_ = cls.instance
             if not cls.instance:
-                pane = nuke.getPaneFor('Properties.1')
+                pane = nuke.getPaneFor(b'Properties.1')
                 if pane:
-                    panel = restorePanel('com.wlf.pyblish')
+                    panel = restorePanel(b'com.wlf.pyblish')
                     panel.addToPane(pane)
                 else:
-                    Window(mainwindow() or QApplication.activeWindow())
+                    _ = Window(mainwindow() or QApplication.activeWindow())
             try:
                 cls.instance.activate()
             except RuntimeError:
@@ -236,7 +236,7 @@ def set_preferred_fonts(font, scale_factor=None):
 
 
 def setup():
-    panels.register(Window, '发布', 'com.wlf.pyblish')
+    panels.register(Window, cast.binary('发布'), b'com.wlf.pyblish')
 
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(
         lambda: pyblish_action('validate', is_block=True, is_reset=True))

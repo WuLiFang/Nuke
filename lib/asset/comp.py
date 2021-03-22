@@ -13,4 +13,4 @@ from wlf.fileutil import copy
 def sent_to_dir(dir_):
     """Send current working file to dir."""
 
-    copy(nuke.value(b'root.name'), dir_, threading=True)
+    _ = copy(nuke.value(b'root.name'), dir_, threading=True)

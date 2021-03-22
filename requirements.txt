@@ -1,5 +1,5 @@
 ./vendor/cgtwq_uploader-3.6.3-py2.py3-none-any.whl
-./vendor/cgtwq-3.0.2-py2.py3-none-any.whl
+./vendor/cgtwq-3.1.1-py2.py3-none-any.whl
 ./vendor/wlf-0.6.0-py2.py3-none-any.whl
 cast-unknown==0.1.4
 pathlib2-unicode==3.0.0

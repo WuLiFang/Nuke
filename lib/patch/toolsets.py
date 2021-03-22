@@ -8,6 +8,7 @@ import webbrowser
 
 import nuke
 import nukescripts  # pylint: disable=import-error
+import cast_unknown as cast
 
 import filetools
 
@@ -24,10 +25,10 @@ class Patch(BasePatch):
 
         cls.orig(*args, **kwargs)
         m = nuke.menu(b'Nodes').addMenu(b'ToolSets')
-        m.addCommand('刷新'.encode('utf-8'), cls.func)
-        m.addCommand(
+        _ = m.addCommand('刷新'.encode('utf-8'), cls.func)
+        _ = m.addCommand(
             '创建共享工具集'.encode('utf-8'), _create_shared_toolsets)
-        m.addCommand(
+        _ = m.addCommand(
             '打开共享工具集文件夹'.encode('utf-8'),
             lambda: webbrowser.open(
                 filetools.plugin_folder_path('ToolSets', 'Shared')))
@@ -45,8 +46,8 @@ def _create_shared_toolsets():
     toolset_name = nuke.getInput(b'ToolSet name')
     if toolset_name:
         nuke.createToolset(
-            filename='Shared/{}'.format(toolset_name),
-            rootPath=filetools.plugin_folder_path())
+            filename=cast.binary('Shared/{}'.format(toolset_name)),
+            rootPath=cast.binary(filetools.plugin_folder_path()))
     nukescripts.toolsets.refreshToolsetsMenu()
 
 

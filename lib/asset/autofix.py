@@ -93,7 +93,7 @@ def _fix_thumbs_db(context):
 
 
 def _fix_missing_file(context):
-    n = context['node']
+    n = cast.instance(context['node'], nuke.Node)
     filename = context['filename']
     filename_dict = context['filename_dict']
     key = _current_basename(filename)

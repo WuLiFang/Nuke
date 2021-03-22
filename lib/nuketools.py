@@ -23,19 +23,19 @@ def undoable_func(name=None):
         @wraps(func)
         def _func(*args, **kwargs):
             _name = name if name is not None else func.__name__
-            run_in_main_thread(nuke.Undo.begin)(cast.binary(_name))
+            _ = run_in_main_thread(nuke.Undo.begin)(cast.binary(_name))
 
             try:
                 ret = func(*args, **kwargs)
                 if not isinstance(ret, threading.Thread):
                     # Async function should call nuke.Undo.end by itself.
-                    run_in_main_thread(nuke.Undo.end)()
+                    _ = run_in_main_thread(nuke.Undo.end)()
                 else:
                     LOGGER.warning(
                         'Async function should implement undoable itself.')
                 return ret
             except:
-                run_in_main_thread(nuke.Undo.cancel)()
+                _ = run_in_main_thread(nuke.Undo.cancel)()
                 raise
 
         return _func

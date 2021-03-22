@@ -165,8 +165,8 @@ class MainWindow(QtWidgets.QMainWindow):
         """Generate txt."""
         path = os.path.expanduser('~/wlf.scanner.txt')
         with open(path, 'w') as f:
-            f.write('\n'.join(self._result))
-        webbrowser.open(path)
+            _ = f.write('\n'.join(self._result))
+        _ = webbrowser.open(path)
 
 def call_from_nuke():
     """Run this script standaloe.  """

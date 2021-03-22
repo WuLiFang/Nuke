@@ -9,6 +9,10 @@ import nuke
 
 LOGGER = logging.getLogger('com.wlf.callback')
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Any, Callable, List
+
 
 class Callbacks(list):
     """Failsafe callbacks executor.  """
@@ -25,12 +29,17 @@ class Callbacks(list):
             if Callbacks.current is self:
                 Callbacks.current = None
 
-    def execute(self, *args, **kwargs):
+    def execute(
+        self,
+        *args,  # type: Any
+        **kwargs  # type: Any
+    ):  # type: (...) -> Any
         """Execute callbacks.   """
 
         with self.set_current():
             ret = None
             for i in self:
+                i = i  # type: Callable[..., Any]
                 try:
                     ret = i(*args, **kwargs) or ret
                 except:
@@ -45,6 +54,12 @@ class Callbacks(list):
 
                     continue
         return ret
+
+    def append(
+        self,
+        callback,  # type: Callable[..., Any]
+    ):  # type: (...) -> None
+        super(Callbacks, self).append(callback)  # type: ignore
 
 
 CALLBACKS_BEFORE_RENDER = Callbacks()
@@ -73,9 +88,10 @@ def clean():
         if not isinstance(group, dict):
             continue
         for callbacks in group.values():
+            callbacks = callbacks  # type: List[Callable[..., Any]]
             for callback in callbacks:
                 try:
-                    str(callback)
+                    _ = str(callback)
                 except ValueError:
                     callbacks.remove(callback)
 

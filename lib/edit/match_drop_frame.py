@@ -111,9 +111,9 @@ def show_dialog():
 
     title = '抽帧匹配: {}'.format(n.name())
     panel = nuke.Panel(cast.binary(title))
-    panel.addExpressionInput(_tr('start'), n.firstFrame())
-    panel.addExpressionInput(_tr('end'), n.lastFrame())
-    panel.addExpressionInput(_tr('tolerance'), 0.001)
+    _ = panel.addExpressionInput(_tr('start'), cast.binary(n.firstFrame()))
+    _ = panel.addExpressionInput(_tr('end'), cast.binary(n.lastFrame()))
+    _ = panel.addExpressionInput(_tr('tolerance'), b'0.001')
 
     if not panel.show():
         return
@@ -130,5 +130,5 @@ def show_dialog():
 
     n_timewarp = create_timewarp(data, start)
     n_timewarp[b'label'].setValue(cast.binary(title))
-    nuke.zoom(nuke.zoom() or 1, (n_timewarp.xpos(), n_timewarp.ypos()))
+    _ = nuke.zoom(nuke.zoom() or 1, (n_timewarp.xpos(), n_timewarp.ypos()))
     return n_timewarp

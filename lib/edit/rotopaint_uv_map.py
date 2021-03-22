@@ -130,7 +130,7 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
             channels=rotopaint_output,
             label=rotopaint_output
         )
-        rotopaint.setInput(0, uv)
+        _ = rotopaint.setInput(0, uv)
 
     layer = cast.instance(rotopaint[b"curves"], _rotopaint.RotoKnob).rootLayer
     raw_shape_names = _remove_generated_shape(layer)
@@ -175,13 +175,14 @@ def uv_map_selected_rotopaint():
         return
 
     # Node.sample need a transformed position when using proxy
-    nuke.Root()[b"proxy"].setValue(False)
+    _ = nuke.Root()[b"proxy"].setValue(False)
 
-    uv_layer = nuke.Layer(UV_LAYER_NAME)
+    uv_layer = nuke.Layer(cast.binary(UV_LAYER_NAME))
     if len(uv_layer.channels()) < 2:
         uv_layer = nuke.Layer(
-            UV_LAYER_NAME,
-            ["{}.{}".format(UV_LAYER_NAME, i) for i in ("u", "v")],
+            cast.binary(UV_LAYER_NAME),
+            [cast.binary("{}.{}".format(UV_LAYER_NAME, i))
+             for i in ("u", "v")],
         )
     uv_channels = uv_layer.channels()
     assert len(uv_channels) >= 2, \

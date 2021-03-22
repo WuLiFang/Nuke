@@ -367,7 +367,7 @@ class Array_Knob(Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def animation(self, chan, view) -> AnimationCurve or None:
+    def animation(self, chan, view) -> typing.Optional[AnimationCurve]:
         """
         Return the AnimationCurve for the  channel 'chan' and view 'view'. The view argument is optional.
 
@@ -1101,7 +1101,11 @@ class Boolean_Knob(Array_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: bool = ..., /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -1828,7 +1832,11 @@ class Enumeration_Knob(Unsigned_Knob):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
+
+    @typing.overload
+    def __init__(self, name: six.binary_type, label: six.binary_type = None, options: typing.Iterable[bytes] = ..., /, ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2790,7 +2798,7 @@ class Group(Node):
         """
         ...
 
-    def output(self) -> Node or None:
+    def output(self) -> typing.Optional[Node]:
         """
         Return output node of group.
 
@@ -2808,7 +2816,7 @@ class Group(Node):
         """
         ...
 
-    def selectedNode(self) -> Node or None:
+    def selectedNode(self) -> typing.Optional[Node]:
         """
         Returns the node the user is most likely thinking about. This is the last node the user clicked on, if it is selected.  Otherwise it is an 'output' (one with no selected outputs) of the set of selected nodes. If no nodes are selected then None is returned.
 
@@ -2816,7 +2824,7 @@ class Group(Node):
         """
         ...
 
-    def selectedNodes(self) -> Node or None:
+    def selectedNodes(self) -> typing.Optional[Node]:
         """
         Selected nodes.
 
@@ -3356,7 +3364,7 @@ class Knob:
         """
         ...
 
-    def setEnabled(self, enabled) -> None:
+    def setEnabled(self, enabled: bool) -> None:
         """
         Enable or disable the knob.
 
@@ -3364,7 +3372,7 @@ class Knob:
         """
         ...
 
-    def setExpression(self, expression, channel=-1, view=None) -> bool:
+    def setExpression(self, expression: bytes, channel: int = -1, view: typing.Union[int, bytes] = None) -> bool:
         """
         Set the expression for a knob. You can optionally specify a channel to set the expression for.
 
@@ -3390,7 +3398,7 @@ class Knob:
         """
         ...
 
-    def setLabel(self, s) -> None:
+    def setLabel(self, s: bytes) -> None:
         """
         @param s: New label.
 
@@ -3769,7 +3777,7 @@ class Menu(MenuItem):
     def addCommand(
         self,
         name: six.binary_type,
-        command: typing.Union[six.binary_type, typing.Callable[[], None]] = ...,
+        command: typing.Union[six.binary_type, typing.Callable[[], typing.Any]] = ...,
         shortcut: six.binary_type = ...,
         icon: six.binary_type = ...,
         tooltip: six.binary_type = ...,
@@ -3838,7 +3846,7 @@ class Menu(MenuItem):
         """
         ...
 
-    def addSeparator(self, **kwargs) -> ...:
+    def addSeparator(self, index: int = ...) -> ...:
         """
         Add a separator to this menu/toolbar.
 
@@ -3864,7 +3872,7 @@ class Menu(MenuItem):
         """
         ...
 
-    def findItem(self, name) -> Menu or None:
+    def findItem(self, name: bytes) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -3880,7 +3888,7 @@ class Menu(MenuItem):
         """
         ...
 
-    def menu(self, name) -> Menu or None:
+    def menu(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -3979,7 +3987,7 @@ class MenuBar:
         """
         ...
 
-    def findItem(self, name) -> Menu or None:
+    def findItem(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
         @param name: The name to search for.
@@ -3993,7 +4001,7 @@ class MenuBar:
         """
         ...
 
-    def menu(self, name) -> Menu or None:
+    def menu(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
         @param name: The name to search for.
@@ -4087,7 +4095,7 @@ class MenuItem:
         """
         ...
 
-    def setShortcut(self, keySequence) -> None:
+    def setShortcut(self, keySequence: bytes) -> None:
         """
         Set the keyboard shortcut on this menu item.
 
@@ -4095,7 +4103,7 @@ class MenuItem:
         """
         ...
 
-    def setVisible(self, visible) -> None:
+    def setVisible(self, visible: bool) -> None:
         """
         Show or hide the item.
 
@@ -5238,7 +5246,7 @@ class Panel:
         """
         ...
 
-    def addExpressionInput(self, name: six.binary_type, value) -> bool:
+    def addExpressionInput(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add an expression evaluator to the panel.
 
@@ -5286,7 +5294,7 @@ class Panel:
         """
         ...
 
-    def addPasswordInput(self, name: six.binary_type, value) -> bool:
+    def addPasswordInput(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a password input knob to the panel.
 
@@ -5322,7 +5330,7 @@ class Panel:
         """
         ...
 
-    def addSingleLineInput(self, name: six.binary_type, value) -> bool:
+    def addSingleLineInput(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a single-line input knob to the panel.
 
@@ -5334,7 +5342,7 @@ class Panel:
         """
         ...
 
-    def addTextFontPulldown(self, name: six.binary_type, value) -> bool:
+    def addTextFontPulldown(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a font chooser to the panel.
 
@@ -6558,7 +6566,7 @@ class ToolBar:
         """
         ...
 
-    def findItem(self, name) -> Menu or None:
+    def findItem(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -6574,7 +6582,7 @@ class ToolBar:
         """
         ...
 
-    def menu(self, name) -> Menu or None:
+    def menu(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -7652,7 +7660,7 @@ def channels(n: typing.Optional[Node] = None) -> typing.List[six.binary_type]:
     ...
 
 
-def choice(title: six.binary_type, prompt: six.binary_type, options: typing.List[six.text_type], default: int = 0) -> int:
+def choice(title: six.binary_type, prompt: six.binary_type, options: typing.List[six.binary_type], default: int = 0) -> int:
     """
     Shows a dialog box with the given title and prompt text, and a combo box containing the given options.
 
@@ -7765,7 +7773,7 @@ def createScenefileBrowser(fileName, nodeName) -> None:
     ...
 
 
-def createToolset(filename=None, overwrite=-1, rootPath=None) -> None:
+def createToolset(filename: bytes = ..., overwrite: bool = ..., rootPath: bytes = ...) -> None:
     """
     Creates a tool preset based on the currently selected nodes. 
 
@@ -7775,7 +7783,7 @@ def createToolset(filename=None, overwrite=-1, rootPath=None) -> None:
     ...
 
 
-def critical(message) -> None:
+def critical(message: bytes) -> None:
     """
     Puts the message into the error console, treating it like an error. Also pops up an alert dialog to the user, immediately.
 
@@ -7785,7 +7793,7 @@ def critical(message) -> None:
     ...
 
 
-def debug(message) -> None:
+def debug(message: bytes) -> None:
     """
     Puts the message into the error console, treating it like a debug message, which only shows up when the verbosity level is high enough.
 
@@ -7804,7 +7812,7 @@ def defaultFontPathname() -> six.binary_type:
     ...
 
 
-def defaultNodeColor(s) -> int:
+def defaultNodeColor(s: bytes) -> int:
     """
     Get the default node colour.
 
@@ -8280,7 +8288,7 @@ class Widget:
         """
         ...
 
-    def destroy(self, *args, **kwargs):
+    def destroy(self) -> None:
         """
         Destroy the widget.
         """
@@ -8442,7 +8450,7 @@ def getPresets() -> None:
     ...
 
 
-def getPresetsMenu(Node) -> Menu or None:
+def getPresetsMenu(Node) -> typing.Optional[Menu]:
     """
     Gets the presets menu for the currently selected node.
     @return: The menu, or None if it doesn't exist.
@@ -9190,7 +9198,7 @@ def scriptOpen(*args, **kwargs):
     ...
 
 
-def scriptReadFile(*args, **kwargs):
+def scriptReadFile(path: bytes, /, ) -> None:
     """
     Read nodes from a file.
     """
@@ -9862,7 +9870,7 @@ nodes: Nodes
 <Nodes object>
 """
 
-rawArgs: list
+rawArgs: typing.List[bytes]
 """
 [r'C:\\Program Files\\Nuke10.5v7\\python.exe']
 """

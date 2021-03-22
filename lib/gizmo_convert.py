@@ -14,7 +14,7 @@ import cast_unknown as cast
 
 def _gizmo_to_group_on_create():
     n = nuke.thisNode()
-    if not nuke.numvalue('preferences.wlf_gizmo_to_group', 0.0):
+    if not nuke.numvalue(b'preferences.wlf_gizmo_to_group', 0.0):
         return
 
     if not isinstance(n, nuke.Gizmo):

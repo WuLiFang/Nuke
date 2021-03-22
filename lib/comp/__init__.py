@@ -7,3 +7,13 @@ from ._argv import _argv
 from .base import Comp, FootageError, RenderError, render_png
 from .batch import BatchComp
 from .precomp import Precomp
+
+__all__ = [
+    "_argv",
+    "Comp",
+    "FootageError",
+    "RenderError",
+    "render_png",
+    "BatchComp",
+    "Precomp",
+]

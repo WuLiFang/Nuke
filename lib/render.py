@@ -18,6 +18,7 @@ LOGGER = logging.getLogger('wlf.render')
 
 
 def create_out_dirs(node=None):
+    # type: (nuke.Node) -> None
     """Create this read node's output dir if need."""
 
     n = node or nuke.thisNode()
@@ -36,7 +37,7 @@ def create_out_dirs(node=None):
 
 
 def _jump_frame():
-    if nuke.numvalue('preferences.wlf_jump_frame', 0.0):
+    if nuke.numvalue(b'preferences.wlf_jump_frame', 0.0):
         LOGGER.debug('Jump frame')
         try:
             n = wlf_write_node()
@@ -44,7 +45,7 @@ def _jump_frame():
             LOGGER.warning('No `wlf_Write` node.')
             return
         if n:
-            nuke.frame(n[b'frame'].value())
+            _ = nuke.frame(n[b'frame'].value())
             nuke.Root().setModified(False)
 
 

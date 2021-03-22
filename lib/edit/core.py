@@ -70,7 +70,7 @@ def insert_node(
 
 def set_knobs(
     node,  # type: nuke.Node
-    **knob_values,  # type: Any
+    **knob_values  # type: Any
 ):
     """Set multiple knobs at once.
 

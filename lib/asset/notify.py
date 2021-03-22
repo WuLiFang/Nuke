@@ -68,8 +68,8 @@ def warn_missing_frames(nodes=None, show_ok=False):
     else:
         fd, _ = mkstemp('.html', text=True)
         with io.open(fd, 'w', encoding='utf-8') as f:
-            f.write(html)
-        webbrowser.open(html)
+            _ = f.write(html)
+        _ = webbrowser.open(html)
 
 
 SHOWED_WARNING = []

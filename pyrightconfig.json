@@ -3,7 +3,7 @@
     {
       "root": "lib",
       "extraPaths": [
-        "lib/site-packages"
+        "lib/site-packages",
       ]
     },
     {
@@ -17,13 +17,12 @@
   "reportMissingModuleSource": "none",
   "reportUnusedImport": "error",
   "reportUnusedCallResult": "error",
-  "reportUnknownMemberType": "error",
-  "reportOptionalMemberAccess": "error",
-  "reportOptionalMemberCall": "error",
+  "reportUnknownMemberType": "information",
+  "include": [
+    "lib",
+    "*.py"
+  ],
   "exclude": [
     "lib/site-packages",
-    ".venv",
-    "typings",
-    "patches"
   ],
 }

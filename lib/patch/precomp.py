@@ -42,7 +42,7 @@ class PatchPrecompDialog(BasePatch):
         nuke.addKnobChanged(
             lambda self: _knob_changed(self, nuke.thisKnob()),
             args=self,
-            nodeClass='PanelNode',
+            nodeClass=b'PanelNode',
             node=self._PythonPanel__node)  # pylint: disable=protected-access
 
 
@@ -133,7 +133,7 @@ def enable():
 
     PatchPrecompDialog.enable()
     PatchPrecompSelected.enable()
-    nuke.addOnCreate(_on_precomp_create, nodeClass='Precomp')
+    nuke.addOnCreate(_on_precomp_create, nodeClass=b'Precomp')
 
 
 def disable():
@@ -141,4 +141,4 @@ def disable():
 
     PatchPrecompDialog.disable()
     PatchPrecompSelected.disable()
-    nuke.removeOnCreate(_on_precomp_create, nodeClass='Precomp')
+    nuke.removeOnCreate(_on_precomp_create, nodeClass=b'Precomp')

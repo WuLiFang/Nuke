@@ -17,7 +17,7 @@ LOGGER = logging.getLogger(__name__)
 
 @HOOKIMPL
 def after_created(nodes):
-    first_frame = nuke.numvalue('root.first_frame')
+    first_frame = nuke.numvalue(b'root.first_frame')
     # Skip when no need to offset frame range.
     if first_frame == 1:
         return

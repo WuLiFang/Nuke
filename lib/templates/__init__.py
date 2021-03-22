@@ -17,4 +17,4 @@ _ENV = Environment(
 
 def render(name, context=None):
     template = _ENV.get_template(name)
-    return template.render(context)
+    return template.render(context) # type: ignore

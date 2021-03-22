@@ -90,10 +90,10 @@ class Panel(PythonPanel):
                          for i in _rotopaint_keyframes(rotopaint))
             ),
         )
-        self.timewarp[b"lookup"].setExpression("floor(curve)")
+        _ = self.timewarp[b"lookup"].setExpression(b"floor(curve)")
         self.timewarp.showControlPanel()
         viewer = nuke.activeViewer()
-        viewer.node().setInput(viewer.activeInput() or 0, self.timewarp)
+        _ = viewer.node().setInput(viewer.activeInput() or 0, self.timewarp)
 
         k = nuke.Text_Knob(
             b"",

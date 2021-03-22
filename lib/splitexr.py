@@ -61,7 +61,7 @@ if nuke.GUI:
         def knobChanged(self, knob):
             """Override for buttons."""
 
-            if knob is self.knobs()['OK']:
+            if knob is self.knobs()[b'OK']:
                 self.execute()
             else:
                 self.update()
@@ -69,27 +69,27 @@ if nuke.GUI:
         @property
         def input_dir(self):
             """Input footage directory. """
-            return self.knobs()['input_dir'].value()
+            return self.knobs()[b'input_dir'].value()
 
         @property
         def output_dir(self):
             """Output save path. """
-            return self.knobs()['output_dir'].value()
+            return self.knobs()[b'output_dir'].value()
 
         @property
         def output_ext(self):
             """Output file type.  """
-            return self.knobs()['output_ext'].value()
+            return self.knobs()[b'output_ext'].value()
 
         @property
         def footage_pat(self):
             """Footage regular expression match pattern. """
-            return self.knobs()['footage_pat'].value()
+            return self.knobs()[b'footage_pat'].value()
 
         @property
         def dir_pat(self):
             """Directory regular expression match pattern. """
-            return self.knobs()['dir_pat'].value()
+            return self.knobs()[b'dir_pat'].value()
 
         def files(self):
             """Return files in input dir. """
@@ -126,11 +126,11 @@ if nuke.GUI:
                     info += '\n'.join(files)
                 else:
                     info = '找不到素材'
-                self.knobs()['info'].setValue(cast.binary(info))
+                _ = self.knobs()[b'info'].setValue(cast.binary(info))
 
             def _button_enabled():
 
-                k = self.knobs().get('OK')
+                k = self.knobs().get(b'OK')
                 if k:
                     if files:
                         k.setEnabled(True)
@@ -154,9 +154,9 @@ if nuke.GUI:
                     output_dir=self.output_dir
                 )
                 proc = Popen(cast.binary(cmd))
-                proc.wait()
+                _ = proc.wait()
 
-            webbrowser.open(self.output_dir)
+            _ = webbrowser.open(self.output_dir)
 
         @staticmethod
         def show():
@@ -216,10 +216,10 @@ def split(filename, output_dir, file_format=None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('input', help='输入文件')
-    parser.add_argument('output_dir', help='输出路径')
-    parser.add_argument('-f', '--format', help='输出文件类型')
-    args = parser.parse_args(nuke.rawArgs[3:])
+    _ = parser.add_argument('input', help='输入文件')
+    _ = parser.add_argument('output_dir', help='输出路径')
+    _ = parser.add_argument('-f', '--format', help='输出文件类型')
+    args = parser.parse_args([cast.text(i) for i in nuke.rawArgs[3:]])
 
     split(args.input, args.output_dir, args.format)
 

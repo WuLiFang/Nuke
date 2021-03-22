@@ -11,7 +11,7 @@ class CustomMessageProgressHandler(NukeProgressHandler):
     """Progress message from object.  """
 
     def __init__(self, message_factory, **kwargs):
-        super(CustomMessageProgressHandler, self).__init__(**kwargs)
+        super(CustomMessageProgressHandler, self).__init__(**kwargs) # type: ignore
         self._message_factory = message_factory
 
     def message_factory(self, item):
@@ -22,4 +22,4 @@ class NodeProgressHandler(NukeProgressHandler):
     """Progress message from node name.  """
 
     def message_factory(self, item):
-        return item.name()
+        return item.name() # type: ignore

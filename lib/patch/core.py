@@ -31,6 +31,7 @@ class BasePatch(object):
 
     @classmethod
     def enable(cls, is_strict=True):
+        # type: (bool) -> None
         """Enabled patch.
 
             Args:

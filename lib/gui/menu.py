@@ -33,6 +33,11 @@ import orgnize
 import scanner
 import splitexr
 
+
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text
+
 WINDOW_CONTEXT = 0
 APPLICATION_CONTEXT = 1
 DAG_CONTEXT = 2
@@ -62,7 +67,7 @@ def add_menu():
     def _open_help():
         help_page = os.path.join(
             RESOURCE_DIR, 'docs/build/html/index.html')
-        webbrowser.open(help_page)
+        _ = webbrowser.open(help_page)
 
     def concat_list(a, b):
         ret = []
@@ -186,7 +191,7 @@ def add_menu():
                 _('登录', cgtwn_panels.dialog_login),
                 _('创建项目文件夹', cgtwn_panels.dialog_create_dirs),
                 _('上传工具', lambda: nukescripts.panels.restorePanel(
-                    'com.wlf.uploader')),
+                    b'com.wlf.uploader')),
             ]}
         )
 
@@ -201,25 +206,31 @@ def add_menu():
 
     # Add all menu.
     def _add_menu(menu, parent=nuke.menu(b"Nuke")):
+        # type: (..., nuke.Menu) -> None
         assert isinstance(menu, dict)
 
         for k, v in menu.items():
             m = parent.addMenu(*k[0], **dict(k[1]))
             for i in v:
                 if i is None:
-                    m.addSeparator()
+                    _ = m.addSeparator()
                 elif isinstance(i, dict):
                     _add_menu(i, m)
                 elif isinstance(i, tuple):
-                    m.addCommand(*i[0], **dict(i[1]))
+                    _ = m.addCommand(*i[0], **dict(i[1]))
 
     for menu in all_menu:
         _add_menu(menu)
 
     # Set old autoplace shortcut.
     try:
-        nuke.menu(b"Nuke").findItem('Edit').findItem(
-            'Node').findItem('Autoplace').setShortcut("Ctrl+L")
+        (
+            nuke.menu(b"Nuke").
+            findItem(b'Edit').
+            findItem(b'Node').
+            findItem(b'Autoplace').
+            setShortcut(b"Ctrl+L")
+        )
     except AttributeError as ex:
         print(ex)
 
@@ -228,15 +239,18 @@ def add_menu():
 
     m = nuke.menu(b"Nodes")
     m = m.addMenu('吾立方'.encode('utf-8'), icon=b'Modify.png')
-    create_menu_by_dir(m, os.path.abspath(
-        os.path.join(__file__, _plugin_path)))
+    create_menu_by_dir(
+        m,
+        os.path.abspath(os.path.join(__file__, _plugin_path)),
+    )
 
 
 def create_menu_by_dir(parent, dir_):
-    """Create menus by given folder structrue."""
+    # type: (nuke.Menu, Text) -> None
+    """Create menus by given folder structure."""
 
     if not os.path.isdir(dir_):
-        return False
+        return
     _dir = os.path.abspath(dir_)
 
     def _order(name):
@@ -245,20 +259,28 @@ def create_menu_by_dir(parent, dir_):
 
     _listdir = sorted(os.listdir(_dir), key=_order)
     for i in _listdir:
+        i = cast.text(i)
         if i in ['icons', 'Obsolete']:
             continue
         _abspath = os.path.join(_dir, i)
         if os.path.isdir(_abspath):
-            m = nuke.menu(b'Nodes').findItem(
-                i) or parent.addMenu(i, icon='{}.png'.format(i))
+            m = (
+                nuke.menu(b'Nodes').
+                findItem(cast.binary(i)) or
+                parent.addMenu(
+                    cast.binary(i),
+                    icon=cast.binary('{}.png'.format(i)),
+                )
+            )
             create_menu_by_dir(m, _abspath)
         else:
             _name, _ext = os.path.splitext(i)
             if _ext.lower() == '.gizmo':
-                parent.addCommand(
-                    _name,
+                _ = parent.addCommand(
+                    cast.binary(_name),
                     lambda name=_name: nuke.createNode(name),
-                    icon='{}.png'.format(_name))
+                    icon=cast.binary('{}.png'.format(_name)),
+                )
 
 
 def panel_show(keyword):
@@ -266,7 +288,7 @@ def panel_show(keyword):
 
     nodes = sorted((n for n in nuke.allNodes()
                     if keyword in n.name()
-                    and not nuke.numvalue('{}.disable'.format(n.name()), 0)),
+                    and not nuke.numvalue(b'%s.disable' % n.name(), 0)),
                    key=lambda n: n.name(),
                    reverse=True)
     for n in nodes:

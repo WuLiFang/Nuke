@@ -16,6 +16,10 @@ import cgtwq
 from cgtwq.helper.wlf import get_entry_by_file
 from edit import CurrentViewer
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text
+
 LOGGER = logging.getLogger('com.wlf.cgtwn')
 
 
@@ -85,15 +89,19 @@ class Task(cgtwq.Entry):
                 break
             if not n:
                 raise ValueError('No matched upstream video.')
-        n[b'frame_mode'].setValue(b'start_at')
-        n[b'frame'].setValue(
-            cast.binary('{:.0f}'.format(nuke.numvalue('root.first_frame'))),
+        _ = n[b'frame_mode'].setValue(b'start_at')
+        _ = n[b'frame'].setValue(
+            cast.binary('{:.0f}'.format(nuke.numvalue(b'root.first_frame'))),
         )
         CurrentViewer().link(n, 4, replace=False)
         return n
 
     @classmethod
-    def from_shot(cls, shot, pipeline='合成'):
+    def from_shot(
+        cls,
+        shot,  # type: Text
+        pipeline='合成',  # type: Text
+    ):  # type: (...) -> Task
         """Get task entry from shot name.
 
         Args:

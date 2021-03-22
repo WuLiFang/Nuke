@@ -248,7 +248,7 @@ class Analyser(object):
         self.counted_nodes = set()
         self.upstream_counts = {}
 
-        self.count()
+        _ = self.count()
 
     @run_in_main_thread
     def count(self):
@@ -259,7 +259,7 @@ class Analyser(object):
         self.upstream_counts.clear()
 
         for n in nodes:
-            self.get_count(n, True)
+            _ = self.get_count(n, True)
 
     @property
     def end_nodes(self):
@@ -280,7 +280,8 @@ class Analyser(object):
             return counts_dict[node]
 
         if isinstance(node, nuke.BackdropNode):
-            map(ret.__add__, [self.get_count(n) for n in node.getNodes()])
+            _ = list(map(ret.__add__, [self.get_count(n)
+                                       for n in node.getNodes()]))
         else:
             for n in node.dependencies(nuke.INPUTS):
                 if n not in self.nodes:
@@ -367,7 +368,7 @@ class Worker(Analyser):
         for n in self.end_nodes:
             self.autoplace_from(n)
 
-        self.autoplace_backdrop()
+        _ = self.autoplace_backdrop()
 
     def autoplace_from(self, node):
         """Autoplace @node and it's upstream.  """
@@ -375,7 +376,7 @@ class Worker(Analyser):
         assert isinstance(node, nuke.Node)
         rim = run_in_main_thread
 
-        self.autoplace(node)
+        _ = self.autoplace(node)
 
         if rim(node.Class)() not in self.non_base_node_classes:
             for n in rim(node.dependencies)(nuke.INPUTS) or tuple():
@@ -394,10 +395,10 @@ class Worker(Analyser):
             pass
         elif nodes:
             backdrop.setXYpos(nodes.xpos - left, nodes.ypos - top)
-            backdrop[b'bdwidth'].setValue(nodes.width + right + left)
-            backdrop[b'bdheight'].setValue(nodes.height + bottom + top)
+            _ = backdrop[b'bdwidth'].setValue(nodes.width + right + left)
+            _ = backdrop[b'bdheight'].setValue(nodes.height + bottom + top)
         else:
-            self.autoplace(backdrop)
+            _ = self.autoplace(backdrop)
 
     @run_in_main_thread
     def autoplace(self, node):
@@ -478,10 +479,10 @@ class Worker(Analyser):
         if DEBUG:
             # node.selectOnly()
             nuke.zoomToFitSelected()
-            if not nuke.ask('{}:\nbase:{}\nup count:{}\nmethod:{}\nx: {} y: {}'.format(
+            if not nuke.ask(cast.binary('{}:\nbase:{}\nup count:{}\nmethod:{}\nx: {} y: {}'.format(
                     self.get_count(node),
                     method.__name__,
-                    *pos)):
+                    *pos))):
                 raise RuntimeError
 
     @run_in_main_thread
@@ -549,13 +550,14 @@ class Worker(Analyser):
 
 
 def _autoplace():
-    if nuke.numvalue('preferences.wlf_autoplace', 0.0) and nuke.Root().modified():
-        autoplace_type = nuke.numvalue('preferences.wlf_autoplace_type', 0.0)
+    if nuke.numvalue(b'preferences.wlf_autoplace', 0.0) and nuke.Root().modified():
+        autoplace_type = nuke.numvalue(b'preferences.wlf_autoplace_type', 0.0)
         LOGGER.debug('Autoplace. type: %s', autoplace_type)
         if autoplace_type == 0.0:
-            autoplace(async_=False)
+            _ = autoplace(async_=False)
         else:
-            map(nuke.autoplace, nuke.allNodes())
+            for i in nuke.allNodes():
+                nuke.autoplace(i)
 
 
 def setup():

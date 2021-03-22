@@ -21,8 +21,8 @@ def main():
     """Run this module as a script."""
 
     parser = argparse.ArgumentParser(description='WuLiFang auto comper.')
-    parser.add_argument('input_dir', help='Folder that contained footages')
-    parser.add_argument('output', help='Script output path.')
+    _ = parser.add_argument('input_dir', help='Folder that contained footages')
+    _ = parser.add_argument('output', help='Script output path.')
     args = parser.parse_args(_argv[1:])
 
     try:

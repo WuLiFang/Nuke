@@ -112,9 +112,9 @@ def show_motion_distort_dialog():
         }.get(key, key))
 
     panel = nuke.Panel("创建运动扭曲".encode("utf8"))
-    panel.addExpressionInput(_tr('base'), nuke.frame())
-    panel.addExpressionInput(_tr('start'), nuke.numvalue("root.first_frame"))
-    panel.addExpressionInput(_tr('end'), nuke.numvalue("root.last_frame"))
+    _ = panel.addExpressionInput(_tr('base'), cast.binary(nuke.frame()))
+    _ = panel.addExpressionInput(_tr('start'), nuke.value(b"root.first_frame"))
+    _ = panel.addExpressionInput(_tr('end'), nuke.value(b"root.last_frame"))
     if not panel.show():
         return
     base = int(cast.not_none(panel.value(_tr('base'))))
@@ -123,4 +123,4 @@ def show_motion_distort_dialog():
     group = create_motion_distrot(base, start, end)
     group[b"label"].setValue("{}({}-{})".format(base, start, end))
     for i, n in enumerate(nuke.selectedNodes()[:2]):
-        group.setInput(i, n)
+        _ = group.setInput(i, n)

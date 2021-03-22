@@ -764,13 +764,11 @@ class Comp(object):
 
 
 def render_png(nodes, frame=None, show=False):
-    # type: (typing.Union[typing.Tuple[nuke.Node], nuke.Node], int, bool) -> None
+    # type: (typing.Union[typing.Iterable[nuke.Node], nuke.Node], int, bool) -> None
     """create png for given @nodes."""
 
-    assert isinstance(nodes, (nuke.Node, list, tuple))
+    nodes = cast.list_(nodes, nuke.Node)
     assert nuke.value(b'root.project_directory'), '未设置工程目录'
-    if isinstance(nodes, nuke.Node):
-        nodes = (nodes,)
     script_name = os.path.join(os.path.splitext(
         os.path.basename(nuke.value(b'root.name')))[0])
     if frame is None:

@@ -97,7 +97,7 @@ class BatchComp(Process):
             return '完成: {}'.format(shot)
 
         if is_multi_threading:
-            _run = run_with_memory_require(8)(_run) # type: ignore
+            _run = run_with_memory_require(8)(_run)  # type: ignore
 
         def _oncancel():
             cancel_event.set()
@@ -120,8 +120,8 @@ class BatchComp(Process):
         except (CancelledError, RuntimeError):
             pass
 
-        webbrowser.open(self.generate_report(shots_info))
-        webbrowser.open(CONFIG['output_dir'])
+        _ = webbrowser.open(self.generate_report(shots_info))
+        _ = webbrowser.open(CONFIG['output_dir'])
 
     @classmethod
     def generate_report(cls, shots_info):
@@ -135,7 +135,7 @@ class BatchComp(Process):
 
         log_path = os.path.join(CONFIG['output_dir'], u'批量合成日志.html')
         with open(cast.binary(log_path), 'w') as f:
-            f.write(cast.text(data))
+            _ = f.write(cast.text(data))
 
         return log_path
 

@@ -63,7 +63,7 @@ def set_knob_default():
         LOGGER.debug(
             'Can not set localization preference, maybe using low version.')
 
-    nuke.untitled = '未命名'
+    nuke.untitled = cast.binary('未命名')
 
 
 def add_preferences():
@@ -80,39 +80,78 @@ def add_preferences():
             except NameError:
                 pass
 
-    def _add_knob(k):
+    def _add_knob(k, inline=False):
         k = cast.instance(k, nuke.Knob)
         _knob_tcl_name = 'preferences.{}'.format(k.name())
         if nuke.exists(cast.binary(_knob_tcl_name)):
             _ = k.setValue(pref[k.name()].value())
             pref.removeKnob(pref[k.name()])
         k.setFlag(nuke.ALWAYS_SAVE)
-        pref.addKnob(k)
-
-    knob_list = [
-        (nuke.String_Knob, ('wlf_artist', '制作人信息')),
-        (nuke.Boolean_Knob, ('wlf_gizmo_to_group', '创建Gizmo时尝试转换为Group')),
-        (nuke.Boolean_Knob, ('wlf_eval_proj_dir', '读取时工程目录自动转换为绝对路径', True)),
-        (nuke.Text_Knob, ('wlf_on_script_save', '保存时')),
-        (nuke.Boolean_Knob, ('wlf_autoplace', '自动摆放节点')),
-        (nuke.Enumeration_Knob,
-         ('wlf_autoplace_type', '风格', ['竖式', '横式(Nuke)'])),
-        (nuke.Boolean_Knob, ('wlf_lock_connections', '锁定节点连接')),
-        (nuke.Boolean_Knob, ('wlf_enable_node', '启用被标记为稍后启用的节点', True)),
-        (nuke.Boolean_Knob, ('wlf_jump_frame', '跳至_Write节点指定的帧', True)),
-        (nuke.Text_Knob, ('wlf_on_script_close', '保存并退出时')),
-        (nuke.Boolean_Knob, ('wlf_render_jpg', '渲染_Write节点单帧', True)),
-        (nuke.Boolean_Knob, ('wlf_send_to_dir', '发送至渲染文件夹')),
-        (nuke.File_Knob, ('wlf_render_dir', '')),
-    ]
-
-    for i in knob_list:
-        k = i[0](*i[1])
-        if i[1][0] in ('wlf_render_dir', 'wlf_autoplace_type'):
+        if inline:
             k.clearFlag(nuke.STARTLINE)
         else:
             k.setFlag(nuke.STARTLINE)
-        _add_knob(k)
+        pref.addKnob(k)
+
+    _add_knob(nuke.String_Knob(
+        b'wlf_artist',
+        cast.binary('制作人信息'),
+    ))
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_gizmo_to_group',
+        cast.binary('创建Gizmo时尝试转换为Group')),
+    )
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_eval_proj_dir',
+        cast.binary('读取时工程目录自动转换为绝对路径')
+    ), True)
+    _add_knob(nuke.Text_Knob(
+        b'wlf_on_script_save',
+        cast.binary('保存时'),
+    )),
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_autoplace',
+        cast.binary('自动摆放节点'),
+    ), True)
+    _add_knob(nuke.Enumeration_Knob(
+        b'wlf_autoplace_type',
+        cast.binary('风格'),
+        [
+            cast.binary('竖式'),
+            cast.binary('横式(Nuke)'),
+        ],
+    ))
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_lock_connections',
+        cast.binary('锁定节点连接'),
+    ))
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_enable_node',
+        cast.binary('启用被标记为稍后启用的节点'),
+        True,
+    ))
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_jump_frame',
+        cast.binary('跳至_Write节点指定的帧'),
+        True,
+    ))
+    _add_knob(nuke.Text_Knob(
+        b'wlf_on_script_close',
+        cast.binary('保存并退出时'),
+    ))
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_render_jpg',
+        cast.binary('渲染_Write节点单帧'),
+        True,
+    ))
+    _add_knob(nuke.Boolean_Knob(
+        b'wlf_send_to_dir',
+        cast.binary('发送至渲染文件夹'),
+    ))
+    _add_knob(nuke.File_Knob(
+        b'wlf_render_dir',
+        cast.binary(''),
+    ), True)
 
     _remove_old()
 

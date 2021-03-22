@@ -2,7 +2,7 @@ import typing
 import nuke
 
 
-def pluginAddPath(args, addToSysPath=...):
+def pluginAddPath(args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...) -> None:
     """ Adds all the paths to the beginning of the Nuke plugin path.
         If the path already exists in the list of plugin paths, it is moved
         to the start. If this command is executed inside an init.py then
@@ -11,7 +11,7 @@ def pluginAddPath(args, addToSysPath=...):
     ...
 
 
-def pluginAppendPath(args, addToSysPath=...):
+def pluginAppendPath(args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...):
     """ Add a filepath to the end of the Nuke plugin path.  If the path
         already exists in the list of plugin paths, it will remain at its
         current position.

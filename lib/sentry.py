@@ -14,7 +14,7 @@ import __version__
 def setup():
     if os.getenv("SENTRY_DSN"):
         import sentry_sdk
-        sentry_sdk.init(
+        _ = sentry_sdk.init(
             os.getenv("SENTRY_DSN"),
             release=__version__.VERSION,
             debug=os.getenv("DEBUG") == "sentry",

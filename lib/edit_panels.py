@@ -16,7 +16,7 @@ import cast_unknown as cast
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text, Tuple, Iterable, Any, Dict
+    from typing import Text, Tuple, Iterable, Any, Dict, List
 
 
 class ChannelsRename(PythonPanel):
@@ -142,7 +142,7 @@ class MultiEdit(PythonPanel):
         super(MultiEdit, self).__init__(
             cast.binary('多节点编辑'), cast.binary(self.widget_id))
 
-        nodes = nodes or nuke.selectedNodes()
+        nodes = cast.list_(nodes or nuke.selectedNodes(), nuke.Node)
         assert nodes, 'Nodes not given. '
         nodes = same_class_filter(nodes)
         self.nodes = nodes
@@ -157,7 +157,7 @@ class MultiEdit(PythonPanel):
         def _tab_knob():
             if label is None:
                 new_k = nuke.Tab_Knob(name, label, nuke.TABENDGROUP)
-            elif label.startswith('@b;'):
+            elif label.startswith(b'@b;'):
                 new_k = nuke.Tab_Knob(name, label, nuke.TABBEGINGROUP)
             else:
                 new_k = knob_class(name, label)
@@ -187,7 +187,7 @@ class MultiEdit(PythonPanel):
                 new_k = knob_class(name, label)
             transfer_flags(k, new_k)
             try:
-                new_k.setValue(k.value())
+                _ = new_k.setValue(k.value())
             except TypeError:
                 pass
 
@@ -231,9 +231,10 @@ class MultiEdit(PythonPanel):
 def same_class_filter(
     nodes,  # type: Iterable[nuke.Node]
     node_class=None,  # type: Text
-):
+):  # type: (...) -> List[nuke.Node]
     """Filter nodes to one class."""
 
+    nodes = cast.list_(nodes, nuke.Node)
     classes = list(
         set([n.Class() for n in nodes if not node_class or n.Class() == cast.binary(node_class)]))
     classes.sort()

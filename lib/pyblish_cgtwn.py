@@ -18,7 +18,9 @@ from filetools import get_shot
 from node import wlf_write_node
 from wlf.fileutil import copy
 
-# pylint: disable=no-init
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text, List
 
 
 class TaskMixin(object):
@@ -276,12 +278,12 @@ class SubmitTask(TaskMixin, pyblish.api.ContextPlugin):
         note = cast.text(note)
 
         message = cgtwq.Message(note)
-        filenames = []
+        filenames = []  # type: List[Text]
         submit_image = context.data.get('submitImage')
         if submit_image:
-            filenames.append(submit_image.path)
+            filenames.append(cast.text(submit_image.path))
             message.images.append(submit_image)  # type: ignore
 
         task.flow.submit(
-            filenames=filenames,
+            filenames=tuple(filenames),
             message=message)
