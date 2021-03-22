@@ -4,7 +4,7 @@
 cast-unknown==0.1.4
 pathlib2-unicode==3.0.0
 futures==3.3.0
-jinja2==2.11.2
+jinja2==2.11.3
 # https://github.com/sdispater/pendulum/issues/338
 pendulum==1.4.2
 pluggy==0.12.0
