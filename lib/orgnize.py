@@ -387,13 +387,13 @@ class Worker(Analyser):
     def autoplace_backdrop(self):
         """Match backdrop size and position to nodes.   """
 
+        if not self.backdrop:
+            return
         nodes = Nodes(self.nodes)
         backdrop = cast.instance(self.backdrop, nuke.BackdropNode)
         top, right, bottom, left = self.backdrop_padding
 
-        if not backdrop:
-            pass
-        elif nodes:
+        if nodes:
             backdrop.setXYpos(nodes.xpos - left, nodes.ypos - top)
             _ = backdrop[b'bdwidth'].setValue(nodes.width + right + left)
             _ = backdrop[b'bdheight'].setValue(nodes.height + bottom + top)
