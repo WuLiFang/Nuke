@@ -13,7 +13,7 @@ import nuke
 
 from filetools import plugin_folder_path
 from nuketools import undoable_func
-from orgnize import autoplace
+from organize import autoplace
 from panels import PythonPanel
 from wlf.config import Config as BaseConfig
 

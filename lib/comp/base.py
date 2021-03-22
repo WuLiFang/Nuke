@@ -17,7 +17,7 @@ from comp.config import BatchCompConfig, CompConfig
 from comp.precomp import Precomp
 from node import ReadNode
 from nuketools import undoable_func
-from orgnize import autoplace
+from organize import autoplace
 from wlf.progress.core import DefaultHandler
 
 CONFIG = CompConfig()

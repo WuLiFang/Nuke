@@ -109,7 +109,7 @@ class Nodes(
     def autoplace(self):
         """Auto place nodes."""
 
-        from orgnize import autoplace
+        from organize import autoplace
         _ = autoplace(self)
 
     def endnodes(self):

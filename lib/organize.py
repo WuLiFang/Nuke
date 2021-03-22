@@ -2,7 +2,6 @@
 """Orgnize nodes layout.  """
 from __future__ import absolute_import, print_function
 
-# TODO: rename to organize
 
 import logging
 import os
@@ -18,7 +17,7 @@ from nodeutil import Nodes, get_upstream_nodes
 from nuketools import undoable_func
 from wlf.decorators import run_async, run_in_main_thread, run_with_clock
 
-LOGGER = logging.getLogger('com.wlf.orgnize')
+LOGGER = logging.getLogger('com.wlf.organize')
 assert isinstance(LOGGER, logging.Logger)
 DEBUG = False
 LOCK = threading.Lock()
@@ -152,7 +151,7 @@ def split_by_backdrop():
 
 def nodes_add_dots(nodes=None):
     # type: (Optional[Iterable[nuke.Node]]) -> None
-    """Add dots to orgnize node tree."""
+    """Add dots to organize node tree."""
 
     if not nodes:
         nodes = nuke.selectedNodes()

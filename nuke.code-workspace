@@ -1,12 +1,12 @@
 {
   "folders": [
-	{
-		"path": "."
-	},
-	{
-		"path": "docs"
-	}
-],
+    {
+      "path": "."
+    },
+    {
+      "path": "docs"
+    }
+  ],
   "settings": {
     "files.associations": {
       "*.spec": "python",
@@ -52,7 +52,6 @@
       "ocula",
       "oncancel",
       "or'ed",
-      "orgnize",
       "postchangelog",
       "psutil",
       "pyblish",

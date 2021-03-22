@@ -14,7 +14,7 @@ import nuke
 
 from edit import add_layer, copy_layer, replace_node
 from filetools import get_layer, module_path
-from orgnize import autoplace
+from organize import autoplace
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:

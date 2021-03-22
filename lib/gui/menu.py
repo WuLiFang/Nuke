@@ -29,7 +29,7 @@ import edit.shuffle_layers_by_re
 import edit_panels
 import enable_later
 import nuketools
-import orgnize
+import organize
 import scanner
 import splitexr
 
@@ -141,16 +141,16 @@ def add_menu():
             ]},
             {_('整理'): [
                 _("整理所选节点(竖式摆放)",
-                  lambda: orgnize.autoplace(nuke.selectedNodes()),
+                  lambda: organize.autoplace(nuke.selectedNodes()),
                   "L", shortcutContext=DAG_CONTEXT),
                 _("所有Gizmo转Group",
                   edit.all_gizmo_to_group),
                 _("根据背板重命名所有节点",
-                  orgnize.rename_all_nodes),
+                  organize.rename_all_nodes),
                 _("节点添加Dots变成90度",
-                  lambda: orgnize.nodes_add_dots(nuke.selectedNodes())),
+                  lambda: organize.nodes_add_dots(nuke.selectedNodes())),
                 _("所有节点添加Dots变成90度",
-                  lambda: orgnize.nodes_add_dots(nuke.allNodes()))
+                  lambda: organize.nodes_add_dots(nuke.allNodes()))
             ]}
         ]},
         {_('合成'): chain(
@@ -177,7 +177,7 @@ def add_menu():
               icon='autocomp.png'),
             _('扫描空文件夹', scanner.call_from_nuke),
             _('分离exr', splitexr.Dialog.show),
-            _("分割当前文件(根据背板)", orgnize.split_by_backdrop)
+            _("分割当前文件(根据背板)", organize.split_by_backdrop)
         ]},
         {_('帮助'): [
             _('吾立方插件 文档', _open_help),
