@@ -8,7 +8,7 @@ jinja2==2.11.3
 # https://github.com/sdispater/pendulum/issues/338
 pendulum==1.4.2
 pluggy==0.12.0
-psutil==5.4.8
+psutil==5.8.0
 pyblish-lite==0.8.7
 qt.py==1.1.0
 six==1.15.0
