@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2021.0.3](https://github.com/WuLiFang/Nuke/compare/v2021.0.2...v2021.0.3) (2021-03-23)
+
+### 修复
+
+- **转为序列工程:** 在批量处理面板中点击设置按钮时出错 ([59693aa](https://github.com/WuLiFang/Nuke/commit/59693aa358e4665aad059a0c9df16820ea2a31d7))
+
 ## [2021.0.2](https://github.com/WuLiFang/Nuke/compare/v2021.0.1...v2021.0.2) (2021-03-23)
 
 ### 修复
