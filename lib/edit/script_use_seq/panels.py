@@ -56,37 +56,43 @@ class ConfigPanel(nukescripts.PythonPanel):
 class BatchPanel(nukescripts.PythonPanel):
     """Dialog UI of class BatchComp."""
 
-    knob_list = [
-        (nuke.File_Knob, 'input_dir', '输入文件夹'),
-        (nuke.File_Knob, 'output_dir', '输出文件夹'),
-        (nuke.Script_Knob, 'setting', '设置'),
-    ]
-
     def __init__(self):
         nukescripts.PythonPanel.__init__(
             self, cast.binary('批量单帧工程转换'), b'com.wlf.batch_script_use_seq')
         self._shot_list = None
         self.cfg = Config().read()
 
-        for i in self.knob_list:
-            k = i[0](*(cast.binary(j) for j in i[1:]))  # type: nuke.Knob
-            try:
-                _ = k.setValue(cast.binary(self.cfg.get(i[1])))
-            except TypeError:
-                pass
-            self.addKnob(k)
-        for i in (b'input_dir', b'output_dir', b'setting'):
-            self.knobs()[i].setFlag(nuke.STARTLINE)
+        k = nuke.File_Knob(
+            b"input_dir",
+            cast.binary("输入文件夹"),
+        )
+        k.setValue(cast.binary(self.cfg.get("input_dir")))
+        k.setFlag(nuke.STARTLINE)
+        self.addKnob(k)
+        k = nuke.File_Knob(
+            b"output_dir",
+            cast.binary("输出文件夹"),
+        )
+        k.setValue(cast.binary(self.cfg.get("output_dir")))
+        k.setFlag(nuke.STARTLINE)
+        self.addKnob(k)
+        k = nuke.Script_Knob(
+            b"setting",
+            cast.binary("设置"),
+        )
+        k.setFlag(nuke.STARTLINE)
+        self.addKnob(k)
 
     def knobChanged(self, knob):
+        # type: (nuke.Knob) -> None
         """Override for buttons."""
 
         name = knob.name()
 
-        if name == 'OK':
+        if name == b'OK':
             self.confirm()
 
-        if name == 'setting':
+        if name == b'setting':
             _ = self.show_setting()
 
     @run_async

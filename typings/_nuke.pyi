@@ -2031,7 +2031,7 @@ class File_Knob(EvalString_Knob):
         """
         ...
 
-    def setValue(self, *args, **kwargs):
+    def setValue(self, s: six.binary_type, /, ) -> None:
         """
         self.fromScript(s) -> None.
 
