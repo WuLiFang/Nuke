@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2021.0.2'
-RELEASE_DATE = datetime.fromtimestamp(1616465956)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.1-3-gbb86340'
-LAST_GIT_COMMIT_HASH = 'bb863406026dfa0ff564b535f7237f607f8eddea'
+VERSION = '2021.0.3'
+RELEASE_DATE = datetime.fromtimestamp(1616488342)
+LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.2-1-g59693aa'
+LAST_GIT_COMMIT_HASH = '59693aa358e4665aad059a0c9df16820ea2a31d7'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1616409108)
-LAST_GIT_COMMIT_SUBJECT = 'fix: error when cast panel value to int'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1616488282)
+LAST_GIT_COMMIT_SUBJECT = 'fix(script_use_seq): error when click settings button batch panel'
 LAST_GIT_COMMIT_BODY = ''

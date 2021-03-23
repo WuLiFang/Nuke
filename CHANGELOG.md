@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.0.3](https://github.com/WuLiFang/Nuke/compare/v2021.0.2...v2021.0.3) (2021-03-23)
+
+### Bug Fixes
+
+- **script_use_seq:** error when click settings button batch panel ([59693aa](https://github.com/WuLiFang/Nuke/commit/59693aa358e4665aad059a0c9df16820ea2a31d7))
+
 ## [2021.0.2](https://github.com/WuLiFang/Nuke/compare/v2021.0.1...v2021.0.2) (2021-03-23)
 
 ### Bug Fixes
