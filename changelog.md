@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2021.0.2](https://github.com/WuLiFang/Nuke/compare/v2021.0.1...v2021.0.2) (2021-03-23)
+
+### 修复
+
+- 将面板数值转换为整数时出错 ([bb86340](https://github.com/WuLiFang/Nuke/commit/bb863406026dfa0ff564b535f7237f607f8eddea))
+
 ## [2021.0.1](https://github.com/WuLiFang/Nuke/compare/v2021.0.0...v2021.0.1) (2021-03-22)
 
 ### 修复
