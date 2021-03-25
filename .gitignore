@@ -83,3 +83,5 @@ node_modules
 
 #worktree
 /docs
+
+*.local
