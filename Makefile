@@ -27,9 +27,7 @@ lib/site-packages/.sentinel: requirements.txt patches/* patches/*/*
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
 	# https://github.com/python/typing/issues/582
 	cp -rvf patches/typing/* lib/site-packages/
-	# fix unicode issue
-	rm -rvf lib/site-packages/importlib_metadata/*
-	cp -rvf patches/importlib_metadata/* lib/site-packages/importlib_metadata/
+	patch -d lib/site-packages/importlib_metadata < patches/importlib-metadata-fix-unicode.patch
 	cp patches/sitecustomize.py lib/site-packages/
 	touch $@
 

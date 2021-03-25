@@ -1,0 +1,85 @@
+diff -ruN a/__init__.py b/__init__.py
+--- a/__init__.py	2021-03-25 14:09:25.376324000 +0800
++++ b/__init__.py	2021-03-25 14:44:04.550325600 +0800
+@@ -12,6 +12,7 @@
+ import itertools
+ import posixpath
+ import collections
++import six
+ 
+ from ._compat import (
+     install,
+@@ -431,6 +432,11 @@
+         a DistributionFinder.Context instance.
+         """
+ 
++def _cast_text(v):
++    if isinstance(v, six.binary_type):
++        import chardet
++        return v.decode(chardet.detect(v)["encoding"] or 'ascii')
++    return six.text_type(v)
+ 
+ class FastPath:
+     """
+@@ -439,11 +445,11 @@
+     """
+ 
+     def __init__(self, root):
+-        self.root = str(root)
++        self.root = _cast_text(root)
+         self.base = os.path.basename(self.root).lower()
+ 
+     def joinpath(self, child):
+-        return pathlib.Path(self.root, child)
++        return pathlib.Path(self.root, _cast_text(child))
+ 
+     def children(self):
+         with suppress(Exception):
+@@ -458,7 +464,7 @@
+         self.joinpath = zip_path.joinpath
+ 
+         return unique_ordered(
+-            child.split(posixpath.sep, 1)[0]
++            _cast_text(child).split(posixpath.sep, 1)[0]
+             for child in names
+             )
+ 
+@@ -491,7 +497,7 @@
+         """
+         PEP 503 normalization plus dashes as underscores.
+         """
+-        return re.sub(r"[-_.]+", "-", name).lower().replace('-', '_')
++        return re.sub(r"[-_.]+", "-", _cast_text(name)).lower().replace('-', '_')
+ 
+     @staticmethod
+     def legacy_normalize(name):
+@@ -499,12 +505,15 @@
+         Normalize the package name as found in the convention in
+         older packaging tools versions and specs.
+         """
+-        return name.lower().replace('-', '_')
++        return _cast_text(name).lower().replace('-', '_')
+ 
+     def matches(self, cand, base):
+         low = cand.lower()
+         pre, ext = os.path.splitext(low)
+-        name, sep, rest = pre.partition('-')
++        try:
++            name, sep, rest = pre.partition('-')
++        except UnicodeDecodeError as ex:
++            return False
+         return (
+             low in self.exact_matches
+             or ext in self.suffixes and (
+diff -ruN a/_compat.py b/_compat.py
+--- a/_compat.py	2021-03-25 14:09:25.376825000 +0800
++++ b/_compat.py	2021-03-25 14:44:04.553325600 +0800
+@@ -33,7 +33,7 @@
+ if sys.version_info > (3, 5):  # pragma: nocover
+     import pathlib
+ else:  # pragma: nocover
+-    import pathlib2 as pathlib
++    import pathlib2_unicode as pathlib
+ 
+ try:
+     ModuleNotFoundError = builtins.FileNotFoundError
