@@ -1,6 +1,6 @@
-diff -ruN a/__init__.py b/__init__.py
---- a/__init__.py	2021-03-25 14:09:25.376324000 +0800
-+++ b/__init__.py	2021-03-25 14:44:04.550325600 +0800
+diff -ruN a/lib/site-packages/importlib_metadata/__init__.py b/lib/site-packages/importlib_metadata/__init__.py
+--- a/lib/site-packages/importlib_metadata/__init__.py	2021-03-25 14:09:25.376324000 +0800
++++ b/lib/site-packages/importlib_metadata/__init__.py	2021-03-25 14:44:04.550325600 +0800
 @@ -12,6 +12,7 @@
  import itertools
  import posixpath
@@ -71,9 +71,9 @@ diff -ruN a/__init__.py b/__init__.py
          return (
              low in self.exact_matches
              or ext in self.suffixes and (
-diff -ruN a/_compat.py b/_compat.py
---- a/_compat.py	2021-03-25 14:09:25.376825000 +0800
-+++ b/_compat.py	2021-03-25 14:44:04.553325600 +0800
+diff -ruN a/lib/site-packages/importlib_metadata/_compat.py b/lib/site-packages/importlib_metadata/_compat.py
+--- a/lib/site-packages/importlib_metadata/_compat.py	2021-03-25 14:09:25.376825000 +0800
++++ b/lib/site-packages/importlib_metadata/_compat.py	2021-03-25 14:44:04.553325600 +0800
 @@ -33,7 +33,7 @@
  if sys.version_info > (3, 5):  # pragma: nocover
      import pathlib

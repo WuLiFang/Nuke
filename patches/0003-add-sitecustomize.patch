@@ -1,0 +1,23 @@
+diff -ruN a/lib/site-packages/sitecustomize.py b/lib/site-packages/sitecustomize.py
+--- a/lib/site-packages/sitecustomize.py	1970-01-01 08:00:00.000000000 +0800
++++ b/lib/site-packages/sitecustomize.py	2021-03-25 14:44:04.555825600 +0800
+@@ -0,0 +1,19 @@
++# -*- coding=UTF-8 -*-
++"""
++site customize script.
++https://docs.python.org/2/tutorial/appendix.html#the-customization-modules
++"""
++
++from __future__ import (absolute_import, division, print_function,
++                        unicode_literals)
++
++def _enable_windows_unicode_console():
++    import sys
++    if sys.platform != 'win32':
++        return
++    import win_unicode_console
++    import warnings
++    warnings.filterwarnings("ignore", "readline hook consumer may assume they are the same", RuntimeWarning)
++    win_unicode_console.enable()
++
++_enable_windows_unicode_console()

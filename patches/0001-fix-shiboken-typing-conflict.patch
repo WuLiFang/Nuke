@@ -1,3 +1,5 @@
+https://github.com/python/typing/issues/582
+
 diff -ruN a/lib/site-packages/_typing.py b/lib/site-packages/_typing.py
 --- a/lib/site-packages/_typing.py	1970-01-01 08:00:00.000000000 +0800
 +++ b/lib/site-packages/_typing.py	2021-03-25 15:07:13.493325000 +0800
