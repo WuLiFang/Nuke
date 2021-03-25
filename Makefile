@@ -26,7 +26,8 @@ lib/site-packages/.sentinel: requirements.txt patches/* patches/*/*
 	rm -rf lib/site-packages
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
 	# https://github.com/python/typing/issues/582
-	cp -rvf patches/typing/* lib/site-packages/
+	# cp -rvf patches/typing/* lib/site-packages/
+	patch -p1 < patches/fix-shiboken-typing-conflict.patch
 	patch -d lib/site-packages/importlib_metadata < patches/importlib-metadata-fix-unicode.patch
 	cp patches/sitecustomize.py lib/site-packages/
 	touch $@
