@@ -1,21 +1,25 @@
 # -*- coding=UTF-8 -*-
+# pyright: strict
 """Windows ignore file.  """
 
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
-# pylint: disable=missing-docstring
 import os
 import re
 
 import nuke
-import six
 
-
+import cast_unknown as cast
 from ..core import HOOKIMPL
+
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text, AnyStr, Optional
 
 
 def is_ascii(text):
+    # type: (AnyStr) -> bool
     """Return true if @text can be convert to ascii.
 
     >>> is_ascii('a')
@@ -25,14 +29,15 @@ def is_ascii(text):
 
     """
     try:
-        _ = six.text_type(text, 'ascii')
+        _ = cast.binary(text, 'ascii')
         return True
-    except UnicodeEncodeError:
+    except (UnicodeEncodeError, UnicodeDecodeError):
         return False
 
 
 @HOOKIMPL
 def is_ignore_filename(filename):
+    # type: (Text) -> Optional[bool]
     ignore_pat = (r'thumbs\.db$', r'.*\.lock$', r'.* - 副本\b')
     basename = os.path.basename(filename)
     for pat in ignore_pat:

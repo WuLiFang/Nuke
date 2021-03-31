@@ -12,10 +12,17 @@ import cast_unknown as cast
 
 from wlf.progress import CancelledError, progress
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Any, Text, Union, TypeVar, Callable
+    T = TypeVar("T", bound=Callable)
+
+
 PROJECT_NAME = 'com.wlf.nuke.dropdata'
 HOOKSPEC = pluggy.HookspecMarker(PROJECT_NAME)
-HOOKIMPL = pluggy.HookimplMarker(PROJECT_NAME)
-
+HOOKIMPL = pluggy.HookimplMarker(
+    PROJECT_NAME
+)  # type: Callable[[Callable[..., Any]], Callable[..., Any]]
 LOGGER = logging.getLogger(__name__)
 
 
