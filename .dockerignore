@@ -12,4 +12,3 @@ node_modules/
 /docs/build/*
 !/docs/build/html/.git
 /lib/site-packages
-.env
