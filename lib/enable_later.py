@@ -1,4 +1,5 @@
 # -*- coding=UTF-8 -*-
+# pyright: strict
 """For disable nodes then enable them on script save.  """
 
 from __future__ import (absolute_import, division, print_function,
@@ -12,8 +13,13 @@ import cast_unknown as cast
 
 ENABLE_MARK = '_enable_'
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Union, Iterable, Set
+
 
 def mark_enable(nodes):
+    # type: (Union[Iterable[nuke.Node], nuke.Node]) -> None
     """Mark nodes enable later then disabled them.  """
 
     if isinstance(nodes, nuke.Node):
@@ -37,7 +43,7 @@ def marked_nodes():
         Nodes: marked nodes.
     """
 
-    ret = set()
+    ret = set()  # type: Set[nuke.Node]
     for n in nuke.allNodes():
         try:
             label = n[b'label'].value()
