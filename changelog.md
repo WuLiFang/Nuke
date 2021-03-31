@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2021.0.4](https://github.com/WuLiFang/Nuke/compare/v2021.0.3...v2021.0.4) (2021-03-31)
+
+### 修复
+
+- 拖放文件时出现 UnicodeDecodeError ([391c82e](https://github.com/WuLiFang/Nuke/commit/391c82e378bdb4410d29e026fbae651e3e4f8bf6))
+
 ## [2021.0.3](https://github.com/WuLiFang/Nuke/compare/v2021.0.2...v2021.0.3) (2021-03-23)
 
 ### 修复
