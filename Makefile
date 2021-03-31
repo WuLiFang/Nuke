@@ -25,7 +25,7 @@ lib/site-packages/.sentinel: export PIP_NO_BUILD_ISOLATION=false
 lib/site-packages/.sentinel: requirements.txt patches/*.patch
 	rm -rf lib/site-packages
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
-	for file in patches/*.patch; do patch -p1 < $$file; done
+	for file in patches/*.patch; do patch -Z -p1 < $$file; done
 	touch $@
 
 docs/.git:
