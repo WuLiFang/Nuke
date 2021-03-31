@@ -94,17 +94,17 @@ def rename_all_nodes():
 
     for i in nuke.allNodes(b'BackdropNode'):
         _nodes = i.getNodes()
-        j = cast.text(i[b'label'].value()).split('\n')[0].split(' ')[0]
+        j = i[b'label'].value().split(b'\n')[0].split(b' ')[0]
         for k in _nodes:
             if k.Class() == 'Group' and not b'_' in k.name() and not (k[b'disable'].value()):
-                name = cast.text(k.name()).rstrip('0123456789')
-                k.setName(cast.binary(name + '_' + j + '_1'),
+                name = k.name().rstrip(b'0123456789')
+                k.setName(name + b'_' + j + b'_1',
                           updateExpressions=True)
             elif not (b'_' in k.name()
                       or nuke.exists(k.name() + b'.disable')
                       or (k[b'disable'].value())):
                 k.setName(
-                    cast.binary(cast.text(k.Class()) + '_' + j + '_1'),
+                    k.Class() + b'_' + j + b'_1',
                     updateExpressions=True,
                 )
 
@@ -292,7 +292,7 @@ class Analyser(object):
                     self._end_nodes.discard(n)
 
         if DEBUG:
-            node[b'label'].setValue(str(ret))
+            node[b'label'].setValue(cast.binary(ret))
 
         counts_dict[node] = ret
         if distinct:

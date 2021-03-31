@@ -6368,7 +6368,7 @@ class String_Knob(Knob):
         """
         ...
 
-    def setValue(self, val: typing.Any, view: six.binary_type = ...) -> None:
+    def setValue(self, val: six.binary_type, view: six.binary_type = ...) -> None:
         """
         Set value of knob.
 

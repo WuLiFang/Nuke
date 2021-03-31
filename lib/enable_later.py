@@ -9,9 +9,8 @@ import nuke
 
 import callback
 from nodeutil import Nodes
-import cast_unknown as cast
 
-ENABLE_MARK = '_enable_'
+ENABLE_MARK = b'_enable_'
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -27,10 +26,9 @@ def mark_enable(nodes):
     for n in nodes:
         try:
             label_knob = n[b'label']
-            label = cast.text(label_knob.value())
+            label = label_knob.value()
             if ENABLE_MARK not in label:
-                _ = label_knob.setValue(
-                    '{}\n{}'.format(label, ENABLE_MARK).encode('utf-8'))
+                _ = label_knob.setValue(label + b"\n" + ENABLE_MARK)
             _ = n[b'disable'].setValue(True)
         except NameError:
             continue
@@ -47,11 +45,10 @@ def marked_nodes():
     for n in nuke.allNodes():
         try:
             label = n[b'label'].value()
+            if ENABLE_MARK in label:
+                ret.add(n)
         except NameError:
             continue
-        label = cast.text(label)
-        if ENABLE_MARK in label:
-            ret.add(n)
     return Nodes(ret)
 
 

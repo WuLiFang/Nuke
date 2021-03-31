@@ -104,7 +104,7 @@ class ChannelsRename(PythonPanel):
 
         if not is_node_deleted(self._layercontactsheet):
             nuke.Undo.disable()
-            self._layercontactsheet[b'label'].setValue('[delete this]')
+            self._layercontactsheet[b'label'].setValue(b'[delete this]')
             nuke.Undo.enable()
         self.remove_callbacks()
         super(ChannelsRename, self).destroy()

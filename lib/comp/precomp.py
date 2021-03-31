@@ -241,16 +241,13 @@ class Precomp(object):
         # set label for nodes
         if len(nodes) > 1:
             for layer, n in self.source.items():
-                _layer = self._config.l10n(layer)
-                _label = cast.text(n[b'label'].value())
+                _layer = cast.binary(self._config.l10n(layer))
+                _label = n[b'label'].value()
                 if _layer not in _label:
                     (
                         n[b'label'].
                         setValue(
-                            '{}\n{}'.
-                            format(_label, _layer).
-                            strip().
-                            encode('utf-8')
+                            (_label + b"\n" + _layer).strip(),
                         )
                     )
 
