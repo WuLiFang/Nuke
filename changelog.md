@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2021.0.5](https://github.com/WuLiFang/Nuke/compare/v2021.0.4...v2021.0.5) (2021-03-31)
+
+### 修复
+
+- 处理标签文本不使用 utf8 编码的节点 ([5bf2d08](https://github.com/WuLiFang/Nuke/commit/5bf2d084f3350b4a11fdd119f897ad078eb8ab16))
+
 ## [2021.0.4](https://github.com/WuLiFang/Nuke/compare/v2021.0.3...v2021.0.4) (2021-03-31)
 
 ### 修复
