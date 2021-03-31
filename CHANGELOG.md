@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.0.5](https://github.com/WuLiFang/Nuke/compare/v2021.0.4...v2021.0.5) (2021-03-31)
+
+### Bug Fixes
+
+- handle node label use encoding other than utf8 ([5bf2d08](https://github.com/WuLiFang/Nuke/commit/5bf2d084f3350b4a11fdd119f897ad078eb8ab16))
+
 ## [2021.0.4](https://github.com/WuLiFang/Nuke/compare/v2021.0.3...v2021.0.4) (2021-03-31)
 
 ### Bug Fixes

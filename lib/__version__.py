@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2021.0.4'
-RELEASE_DATE = datetime.fromtimestamp(1617175456)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.3-7-g391c82e'
-LAST_GIT_COMMIT_HASH = '391c82e378bdb4410d29e026fbae651e3e4f8bf6'
+VERSION = '2021.0.5'
+RELEASE_DATE = datetime.fromtimestamp(1617181352)
+LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.4-6-g5bf2d08'
+LAST_GIT_COMMIT_HASH = '5bf2d084f3350b4a11fdd119f897ad078eb8ab16'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1617175435)
-LAST_GIT_COMMIT_SUBJECT = 'fix: UnicodeDecodeError when drop file'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1617180786)
+LAST_GIT_COMMIT_SUBJECT = 'fix: handle node label use encoding other than utf8'
 LAST_GIT_COMMIT_BODY = ''
