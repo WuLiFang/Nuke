@@ -7,6 +7,7 @@ RUN set -ex ;\
         make \
         gcc \
         python-devel \
+        patch \
     ;\
     yum -y clean all ;\
     rm -rf /var/cache
