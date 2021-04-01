@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.0.7](https://github.com/WuLiFang/Nuke/compare/v2021.0.6...v2021.0.7) (2021-04-01)
+
+### Bug Fixes
+
+- **script_use_seq:** TypeError when run on folder ([725c8bd](https://github.com/WuLiFang/Nuke/commit/725c8bd3dbf43c2e646a22b3ee85bc022b113dce))
+
 ## [2021.0.6](https://github.com/WuLiFang/Nuke/compare/v2021.0.5...v2021.0.6) (2021-04-01)
 
 ### Bug Fixes

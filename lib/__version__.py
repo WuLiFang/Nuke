@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2021.0.6'
-RELEASE_DATE = datetime.fromtimestamp(1617258642)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.5-1-g374c7c9'
-LAST_GIT_COMMIT_HASH = '374c7c9a97f74c217e675549413637b2e69feefc'
+VERSION = '2021.0.7'
+RELEASE_DATE = datetime.fromtimestamp(1617261882)
+LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.6-1-g725c8bd'
+LAST_GIT_COMMIT_HASH = '725c8bd3dbf43c2e646a22b3ee85bc022b113dce'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1617258612)
-LAST_GIT_COMMIT_SUBJECT = 'fix: NameError in __PrecompSwitch'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1617261874)
+LAST_GIT_COMMIT_SUBJECT = 'fix(script_use_seq): TypeError when run on folder'
 LAST_GIT_COMMIT_BODY = ''
