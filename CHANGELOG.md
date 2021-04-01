@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.0.6](https://github.com/WuLiFang/Nuke/compare/v2021.0.5...v2021.0.6) (2021-04-01)
+
+### Bug Fixes
+
+- NameError in \_\_PrecompSwitch ([374c7c9](https://github.com/WuLiFang/Nuke/commit/374c7c9a97f74c217e675549413637b2e69feefc))
+
 ## [2021.0.5](https://github.com/WuLiFang/Nuke/compare/v2021.0.4...v2021.0.5) (2021-03-31)
 
 ### Bug Fixes

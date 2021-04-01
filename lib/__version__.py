@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2021.0.5'
-RELEASE_DATE = datetime.fromtimestamp(1617181352)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.4-6-g5bf2d08'
-LAST_GIT_COMMIT_HASH = '5bf2d084f3350b4a11fdd119f897ad078eb8ab16'
+VERSION = '2021.0.6'
+RELEASE_DATE = datetime.fromtimestamp(1617258642)
+LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.5-1-g374c7c9'
+LAST_GIT_COMMIT_HASH = '374c7c9a97f74c217e675549413637b2e69feefc'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1617180786)
-LAST_GIT_COMMIT_SUBJECT = 'fix: handle node label use encoding other than utf8'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1617258612)
+LAST_GIT_COMMIT_SUBJECT = 'fix: NameError in __PrecompSwitch'
 LAST_GIT_COMMIT_BODY = ''
