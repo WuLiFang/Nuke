@@ -41,7 +41,7 @@ class __PrecompSwitch(object):
         if knob_name not in knobs:
             n = node.input(1)
             raw_hash = cls.hash(n)
-            k = nuke.Int_Knob(cast.binary(knob_name))
+            k = nuke.Int_Knob(knob_name)
             _ = k.setValue(raw_hash)
             node.addKnob(k)
         else:
@@ -112,7 +112,7 @@ class __PrecompSwitch(object):
         elif cls.knob_name not in node.knobs():
             ret = True
         else:
-            ret = node[cast.binary(cls.knob_name)].value() != cls.hash(n)
+            ret = node[cls.knob_name].value() != cls.hash(n)
 
         _ = node[b'tile_color'].setValue(0xFFFFFFFF if ret else 0x000000FF)
         return ret
