@@ -18,6 +18,10 @@ from wlf.progress import progress
 
 LOGGER = logging.getLogger(__name__)
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text, Iterable
+
 
 def get_seq(file_path):
     return re.sub(
@@ -127,6 +131,7 @@ def config_project(cfg):
 
 
 def execute(footages=None):
+    # type: (Iterable[Text]) -> None
     cfg = Config()
     replace_footages(cfg, footages=footages)
     replace_nodes(cfg)

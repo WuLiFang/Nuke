@@ -11,6 +11,10 @@ from pathlib2_unicode import Path
 
 LOGGER = logging.getLogger(__name__)
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text, List, Set
+
 
 def _match_rule(v, rule):
     pattern = (re.escape(rule)
@@ -28,6 +32,7 @@ def _search(path, exclude):
 
 
 def search(include, exclude):
+    # type: (List[Text], List[Text]) -> Set[Path]
     """Search files
 
     Args:

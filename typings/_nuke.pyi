@@ -9191,7 +9191,7 @@ def scriptNew(*args, **kwargs):
     ...
 
 
-def scriptOpen(*args, **kwargs):
+def scriptOpen(filePath: bytes) -> None:
     """
     Opens a new script containing the contents of the named file.
     """
