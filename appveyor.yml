@@ -10,6 +10,7 @@ artifacts:
   - path: build\WuLiFang-Nuke-*.zip
     name: Built package
 before_deploy:
+  - git checkout origin/master -- ./docs/changelog.md
   - ps: |
       ${env:APPVEYOR_RELEASE_DESCRIPTION} = ./scripts/get_changelog.ps1 -Version $env:APPVEYOR_REPO_TAG_NAME
 deploy:

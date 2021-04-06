@@ -29,12 +29,7 @@ lib/site-packages/.sentinel: requirements.txt patches/*.patch
 	for file in patches/*.patch; do patch -p1 < $$file; done
 	touch $@
 
-docs/.git:
-	git fetch -fn origin docs:docs
-	git worktree add -f docs docs
-
-docs/build/html/.git: docs/.git
-	git fetch -fn origin gh-pages:gh-pages
+docs/build/html/.git:
 	rm -rf docs/build/html
 	git worktree add -f docs/build/html gh-pages
 
