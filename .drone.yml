@@ -100,6 +100,7 @@ steps:
         from_secret: foundry_LICENSE
     commands:
       - git checkout origin/master -- ./docs/changelog.md
+      - git fetch -fn origin gh-pages:gh-pages
       - git worktree add -f docs/build/html gh-pages
       - rm -r docs/build/html/*
       - >-
