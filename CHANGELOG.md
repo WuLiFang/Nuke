@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.1.0](https://github.com/WuLiFang/Nuke/compare/v2021.0.7...v2021.1.0) (2021-04-12)
+
+### Features
+
+- add confirm on drag non-ascii file ([e6d6614](https://github.com/WuLiFang/Nuke/commit/e6d6614ace1b59b09a0a2b0338c677498e6d397a))
+
 ## [2021.0.7](https://github.com/WuLiFang/Nuke/compare/v2021.0.6...v2021.0.7) (2021-04-01)
 
 ### Bug Fixes
