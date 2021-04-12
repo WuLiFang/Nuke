@@ -43,13 +43,16 @@ def is_ignore_filename(filename):
     for pat in ignore_pat:
         if re.match(pat, basename, flags=re.I | re.U):
             return True
-    if filename.lower().endswith('.mov') and not is_ascii(filename):
-        _ = nuke.createNode(
-            b'StickyNote',
-            ('autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
-             'label {{{}\n\n'
-             '<span style="color:red;text-align:center;font-weight:bold">'
-             'mov格式使用非英文路径将可能导致崩溃</span>}}').format(filename).encode('utf-8'),
-            inpanel=False)
-        return True
+    if not is_ascii(filename):
+        if filename.lower().endswith(('.mov', '.mp4')):
+            _ = nuke.createNode(
+                b'StickyNote',
+                ('autolabel {{\'<div align="center">\'+autolabel()+\'</div>\'}} '
+                 'label {{{}\n\n'
+                 '<span style="color:red;text-align:center;font-weight:bold">'
+                 'mov,mp4格式使用非英文路径将可能导致崩溃</span>}}').format(filename).encode('utf-8'),
+                inpanel=False)
+            return True
+        else:
+            return nuke.ask(("使用非英文路径可能导致Nuke出错，忽略此文件？\n%s" % filename).encode("utf-8"))
     return None
