@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Viewer control.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import nuke
 
@@ -28,12 +27,12 @@ class CurrentViewer(object):
         replace=True,  # type: bool
     ):  # type: (...) -> None
         """Connet input_node to viewer.input0 then activate it,
-            create viewer if needed."""
+        create viewer if needed."""
 
         if self.viewer:
             n = self.node
         else:
-            viewers = nuke.allNodes(b'Viewer')
+            viewers = nuke.allNodes(b"Viewer")
             if viewers:
                 n = viewers[0]
             else:

@@ -7,7 +7,7 @@ import logging
 
 import nuke
 
-LOGGER = logging.getLogger('com.wlf.callback')
+LOGGER = logging.getLogger("com.wlf.callback")
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -15,12 +15,13 @@ if TYPE_CHECKING:
 
 
 class Callbacks(list):
-    """Failsafe callbacks executor.  """
+    """Failsafe callbacks executor."""
+
     current = None
 
     @contextlib.contextmanager
     def set_current(self):
-        """Set current object during context.  """
+        """Set current object during context."""
 
         Callbacks.current = self
         try:
@@ -34,7 +35,7 @@ class Callbacks(list):
         *args,  # type: Any
         **kwargs  # type: Any
     ):  # type: (...) -> Any
-        """Execute callbacks.   """
+        """Execute callbacks."""
 
         with self.set_current():
             ret = None
@@ -44,13 +45,15 @@ class Callbacks(list):
                     ret = i(*args, **kwargs) or ret
                 except:
                     import inspect
+
                     LOGGER.error(
-                        'Error during execute callback: %s(%s,%s):'
-                        '\nfrom %s',
+                        "Error during execute callback: %s(%s,%s):" "\nfrom %s",
                         i.__name__,
-                        args, kwargs,
+                        args,
+                        kwargs,
                         inspect.getsourcefile(i),
-                        exc_info=True)
+                        exc_info=True,
+                    )
 
                     continue
         return ret
@@ -73,16 +76,28 @@ CALLBACKS_UPDATE_UI = Callbacks()
 
 
 def clean():
-    """Remove error callback.  """
+    """Remove error callback."""
 
-    groups = ('onScriptLoads', 'onScriptSaves', 'onScriptCloses',
-              'onDestroys', 'onCreates', 'onUserCreates', 'knobChangeds',
-              'updateUIs', 'renderProgresses',
-              'beforeBackgroundRenders', 'afterBackgroundRenders',
-              'beforeBackgroundFrameRenders', 'afterBackgroundFrameRenders',
-              'beforeRenders', 'afterRenders',
-              'beforeFrameRenders', 'afterFrameRenders',
-              'validateFilenames')
+    groups = (
+        "onScriptLoads",
+        "onScriptSaves",
+        "onScriptCloses",
+        "onDestroys",
+        "onCreates",
+        "onUserCreates",
+        "knobChangeds",
+        "updateUIs",
+        "renderProgresses",
+        "beforeBackgroundRenders",
+        "afterBackgroundRenders",
+        "beforeBackgroundFrameRenders",
+        "afterBackgroundFrameRenders",
+        "beforeRenders",
+        "afterRenders",
+        "beforeFrameRenders",
+        "afterFrameRenders",
+        "validateFilenames",
+    )
     for group in groups:
         group = getattr(nuke, group, None)
         if not isinstance(group, dict):
@@ -106,4 +121,5 @@ def setup():
     nuke.addUpdateUI(CALLBACKS_UPDATE_UI.execute)
     if nuke.GUI:
         import nukescripts
+
         nukescripts.addDropDataCallback(CALLBACKS_ON_DROP_DATA.execute)

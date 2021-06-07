@@ -8,6 +8,7 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QAbstractVideoBuffer(Shiboken.Object):
     CoreImageHandle: ...
     """
@@ -69,33 +70,23 @@ class QAbstractVideoBuffer(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def handle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handleType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractVideoSurface(PySide.QtCore.QObject):
@@ -152,63 +143,41 @@ class QAbstractVideoSurface(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFormatSupported(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nearestFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def present(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def start(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedPixelFormats(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def surfaceFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAudio(Shiboken.Object):
@@ -278,107 +247,70 @@ class QAudioDeviceInfo(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def availableDevices(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def defaultInputDevice(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def defaultOutputDevice(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def deviceName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFormatSupported(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nearestFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preferredFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedByteOrders(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedChannelCounts(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedChannels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedCodecs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedFrequencies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedSampleRates(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedSampleSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedSampleTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAudioFormat(Shiboken.Object):
@@ -420,139 +352,95 @@ class QAudioFormat(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def byteOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def channelCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def channels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def codec(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frequency(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sampleRate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sampleSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sampleType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setByteOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChannelCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChannels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCodec(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrequency(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSampleRate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSampleSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSampleType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAudioInput(PySide.QtCore.QObject):
@@ -575,93 +463,59 @@ class QAudioInput(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesReady(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elapsedUSecs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notifyInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def periodSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def processedUSecs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resume(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNotifyInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def start(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def suspend(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAudioOutput(PySide.QtCore.QObject):
@@ -684,93 +538,59 @@ class QAudioOutput(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesFree(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elapsedUSecs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notifyInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def periodSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def processedUSecs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resume(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNotifyInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def start(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def suspend(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QVideoFrame(Shiboken.Object):
@@ -949,135 +769,85 @@ class QVideoFrame(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def imageFormatFromPixelFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def pixelFormatFromImageFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bits(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesPerLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fieldType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handleType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMapped(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isWritable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def map(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mappedBytes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEndTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFieldType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStartTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QVideoSurfaceFormat(Shiboken.Object):
@@ -1140,169 +910,115 @@ class QVideoSurfaceFormat(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def frameHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameRate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handleType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelAspectRatio(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def property(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def propertyNames(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scanLineDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameRate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixelAspectRatio(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScanLineDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setYCbCrColorSpace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yCbCrColorSpace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QAbstractVideoBuffer', 'QAbstractVideoSurface', 'QAudio', ...
 """
-

@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Modify nuke localization functionality.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 from functools import wraps
@@ -15,13 +14,13 @@ LOGGER = logging.getLogger(__name__)
 
 
 def is_support_localization():
-    """Return is nuke supported localization feature.  """
+    """Return is nuke supported localization feature."""
 
-    return nuke.env['NukeVersionMajor'] < 10
+    return nuke.env["NukeVersionMajor"] < 10
 
 
 def need_localization_support(func):
-    """Decorator.  """
+    """Decorator."""
 
     @wraps(func)
     def _func(*args, **kwargs):
@@ -36,8 +35,9 @@ def need_localization_support(func):
 def update():
     """Update localized files"""
 
-    LOGGER.info('清理素材缓存')
+    LOGGER.info("清理素材缓存")
     import nuke.localization as l10n
+
     l10n.clearUnusedFiles()
     l10n.pauseLocalization()
     l10n.forceUpdateAll()

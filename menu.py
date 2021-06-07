@@ -2,4 +2,4 @@
 """Nuke menu file."""
 import nuke
 
-nuke.pluginAddPath(b'plugins/icons')
+nuke.pluginAddPath(b"plugins/icons")

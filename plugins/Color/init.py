@@ -2,4 +2,4 @@
 
 import nuke
 
-nuke.pluginAddPath('Math')
+nuke.pluginAddPath("Math")

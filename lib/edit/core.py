@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Node editing core operations.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import math
@@ -20,15 +19,15 @@ LOGGER = logging.getLogger(__name__)
 
 
 def clear_selection():
-    """Clear node selection.  """
+    """Clear node selection."""
 
     for n in nuke.allNodes():
         try:
-            selected = n[b'selected'].value()
+            selected = n[b"selected"].value()
         except NameError:
             continue
         if selected:
-            _ = n[b'selected'].setValue(False)
+            _ = n[b"selected"].setValue(False)
 
 
 def replace_node(
@@ -83,8 +82,7 @@ def set_knobs(
         try:
             _ = node[cast.binary(knob_name)].setValue(value)
         except (AttributeError, NameError, TypeError):
-            LOGGER.debug('Can not set knob: %s.%s to %s',
-                         node.name(), knob_name, value)
+            LOGGER.debug("Can not set knob: %s.%s to %s", node.name(), knob_name, value)
 
 
 def transfer_flags(src, dst):

@@ -8,6 +8,7 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QGL(Shiboken.Object):
     AccumBuffer: ... = PySide.QtOpenGL.QGL.FormatOption.AccumBuffer
     """
@@ -108,13 +109,10 @@ class QGL(Shiboken.Object):
     StereoBuffers: ... = PySide.QtOpenGL.QGL.FormatOption.StereoBuffers
     """
     """
-
     @staticmethod
     def setPreferredPaintEngine(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGLContext(Shiboken.Object):
@@ -176,162 +174,102 @@ class QGLContext(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def areSharing(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def currentContext(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setTextureCacheLimit(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def textureCacheLimit(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bindTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def chooseContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def colorIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def create(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deviceIsPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doneCurrent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getProcAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initialized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSharing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def makeCurrent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overlayTransparentColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def requestedFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInitialized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowCreated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swapBuffers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowCreated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGLFormat(Shiboken.Object):
@@ -458,337 +396,218 @@ class QGLFormat(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def defaultFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def defaultOverlayFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def hasOpenGL(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def hasOpenGLOverlays(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def openGLVersionFlags(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setDefaultFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setDefaultOverlayFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def accum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def accumBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alpha(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alphaBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blueBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def depth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def depthBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def directRendering(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleBuffer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def greenBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasOverlay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def majorVersion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minorVersion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def plane(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def profile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rgba(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sampleBuffers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def samples(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccumBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlpha(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlphaBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlueBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDepth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDepthBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDirectRendering(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleBuffer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGreenBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOverlay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPlane(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProfile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRedBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRgba(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSampleBuffers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSamples(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStencil(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStencilBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStereo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSwapInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVersion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stencil(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stencilBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stereo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swapInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGLWidget(PySide.QtGui.QWidget):
@@ -801,208 +620,129 @@ class QGLWidget(PySide.QtGui.QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def convertToGLFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def autoBufferSwap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bindTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def colormap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def context(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doneCurrent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleBuffer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def glDraw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def glInit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabFrameBuffer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initializeGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initializeOverlayGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSharing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def makeCurrent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def makeOverlayCurrent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overlayContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintOverlayGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def qglClearColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def qglColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def renderPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def renderText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeOverlayGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoBufferSwap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColormap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMouseTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swapBuffers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateOverlayGL(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QGL', 'QGLContext', 'QGLFormat', 'QGLWidget', '__doc__', '...
 """
-

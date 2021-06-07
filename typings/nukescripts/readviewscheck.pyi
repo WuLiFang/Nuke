@@ -11,31 +11,31 @@ is changed.  If there are multiple views, and they do not exist on the
 root node, the user is asked if they should be created.
 """
 UserAlreadySaidNo = False
+
 def createViews(views):
-  """ Add the views in a list to the root node. """
-  ...
+    """Add the views in a list to the root node."""
+    ...
 
 def getViews(read):
-  """ Attempt to get the views from a read node's metadata.  Returns an
-  empty list if no views were found or if the node is disabled. """
-  ...
+    """Attempt to get the views from a read node's metadata.  Returns an
+    empty list if no views were found or if the node is disabled."""
+    ...
 
 def checkReadNodeViews(read):
-  """ Check if a read has multiple views, and if so, ask the user if they
-  want to add them to the root node. """
-  ...
+    """Check if a read has multiple views, and if so, ask the user if they
+    want to add them to the root node."""
+    ...
 
 def onReadNodeCreated():
-  """ Callback when a Read node is created.  Note that the knob values
-  don't seem to be set when this callback occurs.  Defer the check with
-  a QTimer, which will cause the views check to be done when the Qt event
-  loop next sends events.
-  """
-  ...
+    """Callback when a Read node is created.  Note that the knob values
+    don't seem to be set when this callback occurs.  Defer the check with
+    a QTimer, which will cause the views check to be done when the Qt event
+    loop next sends events.
+    """
+    ...
 
 def onReadNodeKnobChanged():
-  """ Callback when a Read node knob changes.  If it's the file knob,
-  check for multi views.
-  """
-  ...
-
+    """Callback when a Read node knob changes.  If it's the file knob,
+    check for multi views.
+    """
+    ...

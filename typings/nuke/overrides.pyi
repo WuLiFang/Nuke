@@ -1,26 +1,29 @@
 import typing
 import nuke
 
-
-def pluginAddPath(args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...) -> None:
-    """ Adds all the paths to the beginning of the Nuke plugin path.
-        If the path already exists in the list of plugin paths, it is moved
-        to the start. If this command is executed inside an init.py then
-        the init.py in the path will be executed.
-        It also adds the paths to the sys.path, if addToSysPath is True."""
+def pluginAddPath(
+    args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...
+) -> None:
+    """Adds all the paths to the beginning of the Nuke plugin path.
+    If the path already exists in the list of plugin paths, it is moved
+    to the start. If this command is executed inside an init.py then
+    the init.py in the path will be executed.
+    It also adds the paths to the sys.path, if addToSysPath is True."""
     ...
 
-
-def pluginAppendPath(args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...):
-    """ Add a filepath to the end of the Nuke plugin path.  If the path
-        already exists in the list of plugin paths, it will remain at its
-        current position.
-        It also appends the paths to the sys.path, if addToSysPath is True."""
+def pluginAppendPath(
+    args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...
+):
+    """Add a filepath to the end of the Nuke plugin path.  If the path
+    already exists in the list of plugin paths, it will remain at its
+    current position.
+    It also appends the paths to the sys.path, if addToSysPath is True."""
     ...
 
-
-def dependencies(nodes: typing.Iterable[nuke.Node], what: int = ...) -> typing.List[nuke.Node]:
-    """ List all nodes referred to by the nodes argument. 'what' is an optional integer (see below).
+def dependencies(
+    nodes: typing.Iterable[nuke.Node], what: int = ...
+) -> typing.List[nuke.Node]:
+    """List all nodes referred to by the nodes argument. 'what' is an optional integer (see below).
     You can use the following constants or'ed together to select the types of dependencies that are looked for:
     \t nuke.EXPRESSIONS = expressions
     \t nuke.INPUTS = visible input pipes
@@ -33,9 +36,8 @@ def dependencies(nodes: typing.Iterable[nuke.Node], what: int = ...) -> typing.L
     deps = nuke.dependencies([n2], nuke.INPUTS | nuke.HIDDEN_INPUTS | nuke.EXPRESSIONS)"""
     ...
 
-
 def dependentNodes(what=..., nodes=..., evaluateAll=...):
-    """ List all nodes referred to by the nodes argument. 'what' is an optional integer (see below).
+    """List all nodes referred to by the nodes argument. 'what' is an optional integer (see below).
     You can use the following constants or'ed together to select what types of dependent nodes are looked for:
     \t nuke.EXPRESSIONS = expressions
     \t nuke.INPUTS = visible input pipes
@@ -53,10 +55,9 @@ def dependentNodes(what=..., nodes=..., evaluateAll=...):
 
     @param what: Or'ed constant of nuke.EXPRESSIONS, nuke.INPUTS and nuke.HIDDEN_INPUTS to select the types of dependent nodes. The default is to look for all types of connections.
     @param evaluateAll: Specifies whether a full tree evaluation will take place. Defaults to True.
-    @return: List of nodes. """
+    @return: List of nodes."""
     ...
 
-
 def selectConnectedNodes():
-    """ Selects all nodes in the tree of the selected node. """
+    """Selects all nodes in the tree of the selected node."""
     ...

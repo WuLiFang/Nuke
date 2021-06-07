@@ -7,7 +7,6 @@ QtCompat
 import six
 import typing
 
-
 class QFileDialog(QtCompat):
     getOpenFileName: ...
     """
@@ -26,47 +25,32 @@ class QFileDialog(QtCompat):
 
     ...
 
-
 class QHeaderView(QtCompat):
     def sectionResizeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionsClickable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionsMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSectionResizeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSectionsClickable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSectionsMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
-
 
 def _cli(args):
     """
     Qt.py command-line interface
     """
     ...
-
 
 def _convert(lines):
     """
@@ -80,7 +64,6 @@ def _convert(lines):
         ..   lines = _convert(f.readlines())
     """
     ...
-
 
 loadUi = _loadUi
 

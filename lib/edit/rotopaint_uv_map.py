@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Map rotopaint shape by uv and append a STMap.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import cast_unknown as cast
 import nuke
@@ -12,8 +11,7 @@ import _rotopaint
 
 from edit import replace_node
 from nuketools import undoable_func
-from rotopaint_tools import (iter_layer, iter_shape_point,
-                             iter_shapes_in_layer)
+from rotopaint_tools import iter_layer, iter_shape_point, iter_shapes_in_layer
 from wlf.progress import progress
 from wlf_tools.progress import CustomMessageProgressHandler
 
@@ -24,21 +22,17 @@ GENERATED_SHAPE_SUFFIX = ".UVMap"
 def _uv_map_rotopaint_anim_point_time(uv, point, u_channel, v_channel, frame):
     pos_before = point.getPosition(frame)
     w, h = uv.width(), uv.height()
-    u, v = uv.sample(
-        u_channel,
-        pos_before.x,
-        pos_before.y,
-        frame=frame,
-    ), uv.sample(
+    u, v = uv.sample(u_channel, pos_before.x, pos_before.y, frame=frame,), uv.sample(
         v_channel,
         pos_before.x,
         pos_before.y,
         frame=frame,
     )
-    pos_after = CVec3(u*w, v*h)
+    pos_after = CVec3(u * w, v * h)
 
     def _job():
         point.addPositionKey(frame, pos_after)
+
     return _job
 
 
@@ -46,7 +40,11 @@ def _uv_map_rotopaint_anim_point(uv, point, u_channel, v_channel):
     times = point.getControlPointKeyTimes()
     for i in times:
         yield _uv_map_rotopaint_anim_point_time(
-            uv, point, u_channel, v_channel, i,
+            uv,
+            point,
+            u_channel,
+            v_channel,
+            i,
         )
 
 
@@ -56,9 +54,7 @@ def _uv_map_rotopaint_shape_point(uv, point, u_channel, v_channel):
     deferred_jobs = []
     for i in iter_shape_point(point):
         deferred_jobs.extend(
-            _uv_map_rotopaint_anim_point(
-                uv, i, u_channel, v_channel
-            ),
+            _uv_map_rotopaint_anim_point(uv, i, u_channel, v_channel),
         )
 
     for i in deferred_jobs:
@@ -76,8 +72,7 @@ def _iter_matched_shape(layer, extra):
             continue
         attrs = i.getAttributes()
         visible_curve = attrs.getCurve(attrs.kVisibleAttribute)
-        if (not visible_curve.constantValue
-                or visible_curve.getNumberOfKeys() > 0):
+        if not visible_curve.constantValue or visible_curve.getNumberOfKeys() > 0:
             continue
         yield i
 
@@ -94,7 +89,7 @@ def _remove_generated_shape(layer):
         if not i.name.endswith(GENERATED_SHAPE_SUFFIX):
             continue
         indexes.append(index)
-        raw_names.add(i.name[:-len(GENERATED_SHAPE_SUFFIX)])
+        raw_names.add(i.name[: -len(GENERATED_SHAPE_SUFFIX)])
     indexes.reverse()
     for i in indexes:
         layer.remove(i)
@@ -113,8 +108,9 @@ def _recover_raw_shape_by_name(layer, names):
 @undoable_func("RotoPaint UVMap")
 def uv_map_rotopaint(rotopaint, u_channel, v_channel):
     assert isinstance(rotopaint, nuke.Node)
-    assert rotopaint.Class() == "RotoPaint", (
-        "should be rotopaint, got {}".format(rotopaint.Class()))
+    assert rotopaint.Class() == "RotoPaint", "should be rotopaint, got {}".format(
+        rotopaint.Class()
+    )
 
     uv = rotopaint
     channels = uv.channels()
@@ -126,9 +122,7 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
             label=b"uv map",
         )
         uv = nuke.nodes.Remove(
-            inputs=[uv],
-            channels=rotopaint_output,
-            label=rotopaint_output
+            inputs=[uv], channels=rotopaint_output, label=rotopaint_output
         )
         _ = rotopaint.setInput(0, uv)
 
@@ -137,11 +131,11 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
     _recover_raw_shape_by_name(layer, raw_shape_names)
 
     for i in progress(
-            list(_iter_matched_shape(layer, raw_shape_names)),
-            rotopaint.name(),
-            handler=CustomMessageProgressHandler(
-                lambda i: i.name,
-            ),
+        list(_iter_matched_shape(layer, raw_shape_names)),
+        rotopaint.name(),
+        handler=CustomMessageProgressHandler(
+            lambda i: i.name,
+        ),
     ):
         v = i.clone()
         v.name = i.name + cast.binary(GENERATED_SHAPE_SUFFIX)
@@ -164,7 +158,7 @@ def uv_map_rotopaint(rotopaint, u_channel, v_channel):
                 inputs=[rotopaint, rotopaint],
                 channels=rotopaint_output,
                 uv=UV_LAYER_NAME,
-            )
+            ),
         )
 
 
@@ -181,19 +175,18 @@ def uv_map_selected_rotopaint():
     if len(uv_layer.channels()) < 2:
         uv_layer = nuke.Layer(
             cast.binary(UV_LAYER_NAME),
-            [cast.binary("{}.{}".format(UV_LAYER_NAME, i))
-             for i in ("u", "v")],
+            [cast.binary("{}.{}".format(UV_LAYER_NAME, i)) for i in ("u", "v")],
         )
     uv_channels = uv_layer.channels()
-    assert len(uv_channels) >= 2, \
-        "uv layer should has >=2 channels, got {}".format(uv_channels)
+    assert len(uv_channels) >= 2, "uv layer should has >=2 channels, got {}".format(
+        uv_channels
+    )
     u_channel = uv_channels[0]
     v_channel = uv_channels[1]
 
     for n in progress(
-            nodes, "RotoPaint UV映射",
-            handler=CustomMessageProgressHandler(
-                lambda i: i.name()
-            ),
+        nodes,
+        "RotoPaint UV映射",
+        handler=CustomMessageProgressHandler(lambda i: i.name()),
     ):
         uv_map_rotopaint(n, u_channel, v_channel)

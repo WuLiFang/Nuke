@@ -4,4 +4,4 @@
 from . import config, files
 from .core import execute
 
-__all__ = ['config', "files", "execute"]
+__all__ = ["config", "files", "execute"]

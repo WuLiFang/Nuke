@@ -1,7 +1,6 @@
 # -*- coding=UTF-8 -*-
 """Tools for file operations.   """
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import re
 
@@ -10,8 +9,7 @@ import wlf.path
 from wlf.pathtools import make_path_finder
 
 module_path = make_path_finder(__file__)  # pylint: disable = invalid-name
-plugin_folder_path = make_path_finder(  # pylint: disable = invalid-name
-    module_path())
+plugin_folder_path = make_path_finder(module_path())  # pylint: disable = invalid-name
 
 
 def expand_frame(filename, frame):
@@ -35,11 +33,11 @@ def expand_frame(filename, frame):
         return matchobj.group(0) % frame
 
     def _hash_repl(matchobj):
-        return '%0{}d'.format(len(matchobj.group(0)))
+        return "%0{}d".format(len(matchobj.group(0)))
 
     ret = cast.text(filename)
-    ret = re.sub(r'(\#+)', _hash_repl, ret)
-    ret = re.sub(r'(%0?\d*d)', _format_repl, ret)
+    ret = re.sub(r"(\#+)", _hash_repl, ret)
+    ret = re.sub(r"(%0?\d*d)", _format_repl, ret)
     return ret
 
 

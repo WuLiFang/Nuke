@@ -20,17 +20,16 @@ class Config(wlf.config.Config):
     """A disk config can be manipulated like a dict."""
 
     default = {
-        'patterns': 'E:/example/*',
-        'regex_pattern': '',
+        "patterns": "E:/example/*",
+        "regex_pattern": "",
     }
-    path = os.path.expanduser('~/.wlf.scanner.json')
+    path = os.path.expanduser("~/.wlf.scanner.json")
 
 
 class MainWindow(QtWidgets.QMainWindow):
-    """Main dialog.  """
+    """Main dialog."""
 
     def __init__(self, parent=None):
-
         def _icon():
             _stdicon = self.style().standardIcon
 
@@ -64,10 +63,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     )
                 elif isinstance(edit, QtWidgets.QComboBox):
                     edit.currentIndexChanged.connect(
-                        lambda index, ex=edit, k=key: _set_config(
-                            k,
-                            ex.itemText(index)
-                        )
+                        lambda index, ex=edit, k=key: _set_config(k, ex.itemText(index))
                     )
 
             for qt_edit, k in self.edits_key.items():
@@ -76,20 +72,16 @@ class MainWindow(QtWidgets.QMainWindow):
                 if isinstance(qt_edit, QtWidgets.QTextEdit):
                     qt_edit.setText(self._config[k])
                 elif isinstance(qt_edit, QtWidgets.QCheckBox):
-                    qt_edit.setCheckState(
-                        QtCore.Qt.CheckState(self._config[k])
-                    )
+                    qt_edit.setCheckState(QtCore.Qt.CheckState(self._config[k]))
                 elif isinstance(qt_edit, QtWidgets.QComboBox):
-                    qt_edit.setCurrentIndex(
-                        qt_edit.findText(self._config[k]))
-
+                    qt_edit.setCurrentIndex(qt_edit.findText(self._config[k]))
 
         super(MainWindow, self).__init__(parent)
-        self._ui = QtCompat.loadUi(os.path.join(__file__, '../scanner.ui'))
+        self._ui = QtCompat.loadUi(os.path.join(__file__, "../scanner.ui"))
         self.setCentralWidget(self._ui)
         self.edits_key = {
-            self.textEditPatterns: 'patterns',
-            self.lineEditRegexPattern: 'regex_pattern'
+            self.textEditPatterns: "patterns",
+            self.lineEditRegexPattern: "regex_pattern",
         }
 
         self.textEditPatterns.textChanged.connect(
@@ -99,8 +91,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.reset_status_bar,
         )
         self._config = Config()
-        self.labelVersion.setText('v{}'.format(__version__.VERSION))
-        self.setWindowTitle(u'空文件夹扫描')
+        self.labelVersion.setText("v{}".format(__version__.VERSION))
+        self.setWindowTitle(u"空文件夹扫描")
         self.resize(500, 600)
 
         _icon()
@@ -110,35 +102,35 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reset_status_bar()
 
     def reset_status_bar(self):
-        self.statusBar().showMessage(u"点击刷新按钮更新结果".encode('utf-8'))
+        self.statusBar().showMessage(u"点击刷新按钮更新结果".encode("utf-8"))
 
     def __getattr__(self, name):
         return getattr(self._ui, name)
 
     @property
     def patterns(self):
-        """Current pattern to scan.  """
+        """Current pattern to scan."""
         return self.textEditPatterns.toPlainText().split("\n")
 
     @patterns.setter
     def patterns(self, value):
-        """Current pattern to scan.  """
+        """Current pattern to scan."""
         return self.textEditPatterns.setText("\n".join(value))
 
     @property
     def regex_pattern(self):
-        """re match pattern.  """
+        """re match pattern."""
         return self.lineEditRegexPattern.text()
 
     def ask_path(self):
-        """Show a dialog ask user self._config['DIR'].  """
+        """Show a dialog ask user self._config['DIR']."""
 
         _dir = QFileDialog.getExistingDirectory(self, dir="/")
         if _dir:
             self.patterns += [_dir + "/*"]
 
     def result(self):
-        """match result.  """
+        """match result."""
         ret = set()
 
         for pattern in self.patterns:
@@ -151,25 +143,26 @@ class MainWindow(QtWidgets.QMainWindow):
                 if os.listdir(i):
                     continue
                 ret.add(i)
-        self.statusBar().showMessage(u"扫描完毕".encode('utf-8'))
+        self.statusBar().showMessage(u"扫描完毕".encode("utf-8"))
 
         return sorted(ret)
 
     def update_ui(self):
-        """Update dialog UI content.  """
+        """Update dialog UI content."""
 
         self._result = self.result()
         self.listView.setModel(QtCore.QStringListModel(self._result))
 
     def generate_txt(self):
         """Generate txt."""
-        path = os.path.expanduser('~/wlf.scanner.txt')
-        with open(path, 'w') as f:
-            _ = f.write('\n'.join(self._result))
+        path = os.path.expanduser("~/wlf.scanner.txt")
+        with open(path, "w") as f:
+            _ = f.write("\n".join(self._result))
         _ = webbrowser.open(path)
 
+
 def call_from_nuke():
-    """Run this script standaloe.  """
+    """Run this script standaloe."""
     nuke_window = QtWidgets.QApplication.activeWindow()
     frame = MainWindow(nuke_window)
     geo = frame.geometry()
@@ -179,7 +172,7 @@ def call_from_nuke():
 
 
 def main():
-    """Run this script standalone.  """
+    """Run this script standalone."""
 
     app = QtWidgets.QApplication(sys.argv)
     frame = MainWindow()
@@ -187,5 +180,5 @@ def main():
     sys.exit(app.exec_())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

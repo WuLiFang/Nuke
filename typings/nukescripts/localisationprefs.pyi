@@ -7,19 +7,19 @@ Code for handling changes in the localization default in the preferences
 and applying that as knob defaults on Read nodes.
 """
 kLocalizationPolicyDefaultKnob = "LocalizationPolicyDefault"
+
 def updateReadKnobLocalisationDefaults(value):
-  """ Set the knob defaults for the nodes with the cacheLocal knob. """
-  ...
+    """Set the knob defaults for the nodes with the cacheLocal knob."""
+    ...
 
 def onPrefsKnobChanged():
-  """ Callback from the preferences node.  If the default localisation 
-  policy has changed, update it on the read nodes.
-  """
-  ...
+    """Callback from the preferences node.  If the default localisation
+    policy has changed, update it on the read nodes.
+    """
+    ...
 
 def initCallbacks():
-  """ Get the default localisation policy from the preferences node and set
-  up the knob changed callback.
-  """
-  ...
-
+    """Get the default localisation policy from the preferences node and set
+    up the knob changed callback.
+    """
+    ...

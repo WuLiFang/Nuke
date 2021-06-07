@@ -8,6 +8,7 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QAbstractTextDocumentLayout(PySide.QtCore.QObject):
     PaintContext: ...
     """
@@ -48,103 +49,65 @@ class QAbstractTextDocumentLayout(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def anchorAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawInlineObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def formatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handlerForObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitTest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def positionInlineObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def registerHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeInlineObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPaintDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QActionEvent(PySide.QtCore.QEvent):
@@ -152,23 +115,17 @@ class QActionEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def action(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def before(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QBitmap(QPixmap):
@@ -176,51 +133,36 @@ class QBitmap(QPixmap):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromData(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromImage(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QBrush(Shiboken.Object):
@@ -228,159 +170,114 @@ class QBrush(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def color(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gradient(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOpaque(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def matrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTexture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextureImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def texture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textureImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QClipboard(PySide.QtCore.QObject):
@@ -429,87 +326,54 @@ class QClipboard(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectNotify(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def image(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ownsClipboard(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ownsFindBuffer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ownsSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsFindBuffer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCloseEvent(PySide.QtCore.QEvent):
@@ -517,13 +381,11 @@ class QCloseEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QColor(Shiboken.Object):
@@ -556,521 +418,337 @@ class QColor(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def colorNames(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromCmyk(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromCmykF(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromHsl(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromHslF(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromHsv(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromHsvF(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromRgb(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromRgbF(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromRgba(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def isValidColor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __setstate__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def alpha(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alphaF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def black(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blackF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blueF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def convertTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cyan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cyanF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def darker(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getCmyk(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getCmykF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getHsl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getHslF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getHsv(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getHsvF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getRgb(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getRgbF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def green(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def greenF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hslHue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hslHueF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hslSaturation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hslSaturationF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hsvHue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hsvHueF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hsvSaturation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hsvSaturationF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hueF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lighter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lightness(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lightnessF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def magenta(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def magentaF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def red(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rgb(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rgba(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saturation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saturationF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlpha(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlphaF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlueF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCmyk(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCmykF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGreen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGreenF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHsl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHslF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHsv(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHsvF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNamedColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRedF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRgb(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRgbF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRgba(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spec(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toCmyk(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toHsl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toHsv(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toRgb(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTuple(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def valueF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yellow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yellowF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QConicalGradient(QGradient):
@@ -1078,38 +756,26 @@ class QConicalGradient(QGradient):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def angle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def center(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCenter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QContextMenuEvent(QInputEvent):
@@ -1134,48 +800,32 @@ class QContextMenuEvent(QInputEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def globalPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reason(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCursor(Shiboken.Object):
@@ -1183,84 +833,60 @@ class QCursor(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def pos(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setPos(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def bitmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDesktopServices(Shiboken.Object):
@@ -1328,43 +954,31 @@ class QDesktopServices(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def displayName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def openUrl(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setUrlHandler(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def storageLocation(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def unsetUrlHandler(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QDoubleValidator(QValidator):
@@ -1392,63 +1006,41 @@ class QDoubleValidator(QValidator):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bottom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def decimals(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBottom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDecimals(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNotation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def top(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDrag(PySide.QtCore.QObject):
@@ -1471,68 +1063,44 @@ class QDrag(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def source(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def start(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def target(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDragEnterEvent(QDragMoveEvent):
@@ -1540,13 +1108,11 @@ class QDragEnterEvent(QDragMoveEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QDragLeaveEvent(PySide.QtCore.QEvent):
@@ -1554,13 +1120,11 @@ class QDragLeaveEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QDragMoveEvent(QDropEvent):
@@ -1568,28 +1132,20 @@ class QDragMoveEvent(QDropEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def accept(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def answerRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ignore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDropEvent(PySide.QtCore.QEvent):
@@ -1597,63 +1153,41 @@ class QDropEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def acceptProposedAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyboardModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def possibleActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proposedAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDropAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def source(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFileOpenEvent(PySide.QtCore.QEvent):
@@ -1661,28 +1195,20 @@ class QFileOpenEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def file(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def url(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFocusEvent(PySide.QtCore.QEvent):
@@ -1690,28 +1216,20 @@ class QFocusEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def gotFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lostFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reason(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFont(Shiboken.Object):
@@ -1975,418 +1493,273 @@ class QFont(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def cacheStatistics(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def cleanup(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def initialize(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def insertSubstitution(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def insertSubstitutions(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def removeSubstitution(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def substitute(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def substitutes(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def substitutions(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def bold(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def capitalization(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exactMatch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def family(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixedPitch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fromString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hintingPreference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCopyOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def italic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def kerning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def key(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastResortFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastResortFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def letterSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def letterSpacingType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointSizeF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolve(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBold(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCapitalization(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFixedPitch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHintingPreference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItalic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKerning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLetterSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOverline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixelSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPointSizeF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRawMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRawName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStrikeOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyleName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyleStrategy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUnderline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def strikeOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleStrategy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def weight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFontDatabase(Shiboken.Object):
@@ -2546,147 +1919,95 @@ class QFontDatabase(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def addApplicationFont(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def addApplicationFontFromData(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def applicationFontFamilies(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def removeAllApplicationFonts(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def removeApplicationFont(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def standardSizes(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def supportsThreadedFontRendering(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def writingSystemName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def writingSystemSample(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bold(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def families(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isBitmapScalable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFixedPitch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isScalable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSmoothlyScalable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def italic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def smoothSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styles(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def weight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def writingSystems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFontInfo(Shiboken.Object):
@@ -2694,98 +2015,62 @@ class QFontInfo(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bold(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exactMatch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def family(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixedPitch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def italic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointSizeF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def strikeOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def weight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFontMetrics(Shiboken.Object):
@@ -2793,184 +2078,122 @@ class QFontMetrics(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def ascent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def averageCharWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRectChar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def charWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def descent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elidedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inFontUcs4(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leading(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minLeftBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minRightBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overlinePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def strikeOutPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tightBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underlinePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widthChar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFontMetricsF(Shiboken.Object):
@@ -2978,179 +2201,119 @@ class QFontMetricsF(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def ascent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def averageCharWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRectChar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def descent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elidedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inFontUcs4(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leading(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minLeftBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minRightBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overlinePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightBearing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def strikeOutPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tightBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underlinePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widthChar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGradient(Shiboken.Object):
@@ -3230,104 +2393,74 @@ class QGradient(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def coordinateMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def interpolationMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColorAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCoordinateMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInterpolationMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpread(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStops(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spread(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stops(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpEvent(PySide.QtCore.QEvent):
@@ -3335,43 +2468,29 @@ class QHelpEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def globalPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHideEvent(PySide.QtCore.QEvent):
@@ -3379,13 +2498,11 @@ class QHideEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QHoverEvent(PySide.QtCore.QEvent):
@@ -3393,23 +2510,17 @@ class QHoverEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def oldPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QIcon(Shiboken.Object):
@@ -3451,134 +2562,93 @@ class QIcon(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromTheme(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def hasThemeIcon(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setThemeName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setThemeSearchPaths(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def themeName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def themeSearchPaths(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def actualSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def availableSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QIconDragEvent(PySide.QtCore.QEvent):
@@ -3586,13 +2656,11 @@ class QIconDragEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QIconEngine(Shiboken.Object):
@@ -3600,38 +2668,26 @@ class QIconEngine(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actualSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QImage(QPaintDevice):
@@ -3730,406 +2786,263 @@ class QImage(QPaintDevice):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromData(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def trueMatrix(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def allGray(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alphaChannel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bitPlaneCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bits(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def byteCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesPerLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def color(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def colorCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def colorTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def constBits(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def constScanLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def convertToFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createAlphaMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createHeuristicMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createMaskFromColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def depth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def devType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dotsPerMeterX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dotsPerMeterY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAlphaChannel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invertPixels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isGrayscale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def load(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loadFromData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mirrored(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numBytes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numColors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def offset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rgbSwapped(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def save(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledToHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledToWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scanLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlphaChannel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColorCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColorTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDotsPerMeterX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDotsPerMeterY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumColors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textKeys(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def valid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QImageIOHandler(Shiboken.Object):
@@ -4206,98 +3119,62 @@ class QImageIOHandler(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def canRead(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentImageNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentImageRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def imageCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def jumpToImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def jumpToNextImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loopCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextImageDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def option(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QImageReader(Shiboken.Object):
@@ -4333,211 +3210,132 @@ class QImageReader(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def imageFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def supportedImageFormats(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def autoDetectImageFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canRead(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentImageNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentImageRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def decideFormatFromContent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def imageCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def jumpToImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def jumpToNextImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loopCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextImageDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def quality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledClipRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoDetectImageFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClipRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDecideFormatFromContent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScaledClipRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScaledSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsAnimation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textKeys(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QImageWriter(Shiboken.Object):
@@ -4563,109 +3361,69 @@ class QImageWriter(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def supportedImageFormats(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def canWrite(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def compression(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gamma(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def quality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompression(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGamma(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QInputEvent(PySide.QtCore.QEvent):
@@ -4673,23 +3431,17 @@ class QInputEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QInputMethodEvent(PySide.QtCore.QEvent):
@@ -4727,43 +3479,29 @@ class QInputMethodEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def attributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def commitString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preeditString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replacementLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replacementStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCommitString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QIntValidator(QValidator):
@@ -4776,48 +3514,32 @@ class QIntValidator(QValidator):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bottom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBottom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def top(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QKeyEvent(QInputEvent):
@@ -4825,105 +3547,75 @@ class QKeyEvent(QInputEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def createExtendedKeyEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasExtendedInfo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAutoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def key(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def matches(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nativeModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nativeScanCode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nativeVirtualKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QKeySequence(Shiboken.Object):
@@ -5255,138 +3947,104 @@ class QKeySequence(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromString(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyBindings(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mnemonic(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def matches(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLinearGradient(QGradient):
@@ -5394,38 +4052,26 @@ class QLinearGradient(QGradient):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def finalStop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFinalStop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def start(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix2x2(Shiboken.Object):
@@ -5433,116 +4079,91 @@ class QMatrix2x2(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix2x3(Shiboken.Object):
@@ -5550,116 +4171,91 @@ class QMatrix2x3(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix2x4(Shiboken.Object):
@@ -5667,116 +4263,91 @@ class QMatrix2x4(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix3x2(Shiboken.Object):
@@ -5784,116 +4355,91 @@ class QMatrix3x2(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix3x3(Shiboken.Object):
@@ -5901,116 +4447,91 @@ class QMatrix3x3(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix3x4(Shiboken.Object):
@@ -6018,116 +4539,91 @@ class QMatrix3x4(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix4x2(Shiboken.Object):
@@ -6135,116 +4631,91 @@ class QMatrix4x2(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix4x3(Shiboken.Object):
@@ -6252,116 +4723,91 @@ class QMatrix4x3(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMatrix4x4(Shiboken.Object):
@@ -6369,308 +4815,223 @@ class QMatrix4x4(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __neg__(self, *args, **kwargs):
         """
         x.__neg__() <==> -x
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rtruediv__(self, *args, **kwargs):
         """
         x.__rtruediv__(y) <==> y/x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __truediv__(self, *args, **kwargs):
         """
         x.__truediv__(y) <==> x/y
         """
         ...
-
     def column(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copyDataTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def determinant(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flipCoordinates(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frustum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inverted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIdentity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lookAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def map(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapVector(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def optimize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ortho(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def perspective(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToIdentity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toAffine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMouseEvent(QInputEvent):
@@ -6678,69 +5039,45 @@ class QMouseEvent(QInputEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def createExtendedMouseEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasExtendedInfo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def posF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMoveEvent(PySide.QtCore.QEvent):
@@ -6748,23 +5085,17 @@ class QMoveEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def oldPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMovie(PySide.QtCore.QObject):
@@ -6842,159 +5173,99 @@ class QMovie(PySide.QtCore.QObject):
     """
     Signal
     """
-
     @staticmethod
     def supportedFormats(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def backgroundColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentFrameNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def jumpToFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def jumpToNextFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loopCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextFrameDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCacheMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPaused(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScaledSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpeed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def speed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def start(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPaintDevice(Shiboken.Object):
@@ -7050,88 +5321,56 @@ class QPaintDevice(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def colorCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def depth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def devType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightMM(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def logicalDpiX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def logicalDpiY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numColors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintingActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def physicalDpiX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def physicalDpiY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widthMM(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPaintEngine(Shiboken.Object):
@@ -7415,158 +5654,98 @@ class QPaintEngine(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearDirty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def coordinateOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawEllipse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawLines(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPoints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawRects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTextItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTiledPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isExtended(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def painter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDirty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSystemClip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSystemRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def syncState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemClip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testDirty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPaintEngineState(Shiboken.Object):
@@ -7574,108 +5753,68 @@ class QPaintEngineState(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def backgroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brushNeedsResolving(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brushOrigin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipOperation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def compositionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isClipEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def matrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def painter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def penNeedsResolving(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def renderHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPaintEvent(PySide.QtCore.QEvent):
@@ -7683,23 +5822,17 @@ class QPaintEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def region(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPainter(Shiboken.Object):
@@ -7929,495 +6062,301 @@ class QPainter(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def restoreRedirected(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setRedirected(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def beginNativePainting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brushOrigin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def combinedMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def combinedTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def compositionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deviceMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deviceTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawArc(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawChord(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawConvexPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawEllipse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawLines(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPicture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPie(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPixmapFragments(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPoints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPolyline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawRects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawRoundRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawRoundedRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTextItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTiledPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endNativePainting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eraseRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fillPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fillRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontInfo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontMetrics(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasClipping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initFrom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def renderHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def save(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBrushOrigin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClipPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClipRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClipRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClipping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompositionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRenderHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRenderHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewTransformEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWorldMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWorldMatrixEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWorldTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def strokePath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testRenderHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewTransformEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def window(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def worldMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def worldMatrixEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def worldTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPainterPath(Shiboken.Object):
@@ -8452,388 +6391,271 @@ class QPainterPath(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __and__(self, *args, **kwargs):
         """
         x.__and__(y) <==> x&y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __iand__(self, *args, **kwargs):
         """
         x.__iand__(y) <==> x&=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __ior__(self, *args, **kwargs):
         """
         x.__ior__(y) <==> x|=y
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __or__(self, *args, **kwargs):
         """
         x.__or__(y) <==> x|y
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rand__(self, *args, **kwargs):
         """
         x.__rand__(y) <==> y&x
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __ror__(self, *args, **kwargs):
         """
         x.__ror__(y) <==> y|x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def addEllipse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addRoundRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addRoundedRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def angleAtPercent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def arcMoveTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def arcTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeSubpath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def controlPointRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cubicTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fillRule(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intersected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intersects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def percentAtLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointAtPercent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def quadTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setElementPositionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFillRule(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def simplified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def slopeAtPercent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subtracted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subtractedInverted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toFillPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toFillPolygons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toReversed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toSubpathPolygons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def united(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPainterPathStroker(Shiboken.Object):
@@ -8841,88 +6663,56 @@ class QPainterPathStroker(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def capStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createStroke(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def curveThreshold(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dashOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dashPattern(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def joinStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def miterLimit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCapStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurveThreshold(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDashOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDashPattern(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setJoinStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMiterLimit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPalette(Shiboken.Object):
@@ -9060,233 +6850,157 @@ class QPalette(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def alternateBase(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def base(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brightText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def color(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentColorGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dark(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def highlight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def highlightedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isBrushSet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCopyOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEqual(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def light(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def link(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def linkVisited(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def midlight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolve(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColorGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentColorGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shadow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTipBase(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTipText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def window(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPen(Shiboken.Object):
@@ -9294,204 +7008,141 @@ class QPen(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def brush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def capStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def color(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dashOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dashPattern(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCosmetic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSolid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def joinStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def miterLimit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCapStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCosmetic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDashOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDashPattern(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setJoinStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMiterLimit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidthF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widthF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPicture(QPaintDevice):
@@ -9499,113 +7150,78 @@ class QPicture(QPaintDevice):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def devType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def load(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def play(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def save(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPictureIO(Shiboken.Object):
@@ -9613,131 +7229,83 @@ class QPictureIO(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def inputFormats(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def outputFormats(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def pictureFormat(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def description(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gamma(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ioDevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parameters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def picture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def quality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDescription(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGamma(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIODevice(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setParameters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPicture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def status(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPixmap(QPaintDevice):
@@ -9763,244 +7331,159 @@ class QPixmap(QPaintDevice):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def defaultDepth(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromImage(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromImageReader(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def grabWidget(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def grabWindow(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def trueMatrix(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def alphaChannel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def convertFromImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createHeuristicMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createMaskFromColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def depth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def devType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAlpha(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAlphaChannel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isQBitmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def load(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loadFromData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def save(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledToHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaledToWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlphaChannel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPixmapCache(Shiboken.Object):
@@ -10013,61 +7496,44 @@ class QPixmapCache(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def cacheLimit(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def clear(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def find(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def insert(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def remove(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def replace(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setCacheLimit(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QPolygon(Shiboken.Object):
@@ -10075,369 +7541,253 @@ class QPolygon(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromList(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __delitem__(self, *args, **kwargs):
         """
         x.__delitem__(y) <==> del x[y]
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __setitem__(self, *args, **kwargs):
         """
         x.__setitem__(i, y) <==> x[i]=y
         """
         ...
-
     def append(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def at(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def capacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def constData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def containsPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def empty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endsWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def erase(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def first(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def front(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intersected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSharedWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def last(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastIndexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pop_back(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pop_front(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepend(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def push_back(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def push_front(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reserve(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSharable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def squeeze(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startsWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subtracted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def united(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPolygonF(Shiboken.Object):
@@ -10445,374 +7795,256 @@ class QPolygonF(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromList(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __delitem__(self, *args, **kwargs):
         """
         x.__delitem__(y) <==> del x[y]
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __setitem__(self, *args, **kwargs):
         """
         x.__setitem__(i, y) <==> x[i]=y
         """
         ...
-
     def append(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def at(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def capacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def constData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def containsPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def empty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endsWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def erase(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fill(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def first(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def front(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intersected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isClosed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSharedWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def last(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastIndexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pop_back(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pop_front(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepend(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def push_back(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def push_front(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reserve(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSharable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def squeeze(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startsWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subtracted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def united(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QQuaternion(Shiboken.Object):
@@ -10820,286 +8052,211 @@ class QQuaternion(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromAxisAndAngle(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def nlerp(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def slerp(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __neg__(self, *args, **kwargs):
         """
         x.__neg__() <==> -x
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rtruediv__(self, *args, **kwargs):
         """
         x.__rtruediv__(y) <==> y/x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __truediv__(self, *args, **kwargs):
         """
         x.__truediv__(y) <==> x/y
         """
         ...
-
     def conjugate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIdentity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lengthSquared(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotatedVector(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scalar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScalar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVector(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZ(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector4D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def vector(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def z(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QRadialGradient(QGradient):
@@ -11107,68 +8264,44 @@ class QRadialGradient(QGradient):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def center(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def centerRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focalPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focalRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def radius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCenter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCenterRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocalPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocalRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QRegExpValidator(QValidator):
@@ -11181,28 +8314,20 @@ class QRegExpValidator(QValidator):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def regExp(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRegExp(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QRegion(Shiboken.Object):
@@ -11223,255 +8348,194 @@ class QRegion(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __and__(self, *args, **kwargs):
         """
         x.__and__(y) <==> x&y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __ior__(self, *args, **kwargs):
         """
         x.__ior__(y) <==> x|=y
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __ixor__(self, *args, **kwargs):
         """
         x.__ixor__(y) <==> x^=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __or__(self, *args, **kwargs):
         """
         x.__or__(y) <==> x|y
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rand__(self, *args, **kwargs):
         """
         x.__rand__(y) <==> y&x
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __ror__(self, *args, **kwargs):
         """
         x.__ror__(y) <==> y|x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rxor__(self, *args, **kwargs):
         """
         x.__rxor__(y) <==> y^x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __xor__(self, *args, **kwargs):
         """
         x.__xor__(y) <==> x^y
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intersected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intersects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numRects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rectCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRects(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subtracted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def united(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xored(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QResizeEvent(PySide.QtCore.QEvent):
@@ -11479,23 +8543,17 @@ class QResizeEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def oldSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSessionManager(PySide.QtCore.QObject):
@@ -11526,82 +8584,51 @@ class QSessionManager(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def allowsErrorInteraction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def allowsInteraction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cancel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def discardCommand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isPhase2(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def release(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def requestPhase2(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restartCommand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restartHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sessionId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sessionKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDiscardCommand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setManagerProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRestartCommand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRestartHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QShortcutEvent(PySide.QtCore.QEvent):
@@ -11609,28 +8636,20 @@ class QShortcutEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def isAmbiguous(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def key(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shortcutId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QShowEvent(PySide.QtCore.QEvent):
@@ -11638,13 +8657,11 @@ class QShowEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStandardItem(Shiboken.Object):
@@ -11665,453 +8682,289 @@ class QStandardItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def accessibleDescription(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def accessibleText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def child(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clone(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def column(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def emitDataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foreground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDragEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDropEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEditable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelectable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTristate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def model(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccessibleDescription(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccessibleText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDropEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTristate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStandardItemModel(PySide.QtCore.QAbstractItemModel):
@@ -12129,258 +8982,158 @@ class QStandardItemModel(PySide.QtCore.QAbstractItemModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def appendColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexFromItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invisibleRootItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def item(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemFromIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemPrototype(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalHeaderLabels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemPrototype(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalHeaderLabels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedDropActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeHorizontalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeVerticalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStatusTipEvent(PySide.QtCore.QEvent):
@@ -12388,18 +9141,14 @@ class QStatusTipEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def tip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSyntaxHighlighter(PySide.QtCore.QObject):
@@ -12412,78 +9161,50 @@ class QSyntaxHighlighter(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def currentBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentBlockState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentBlockUserData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def highlightBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previousBlockState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rehighlight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rehighlightBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentBlockState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentBlockUserData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTabletEvent(QInputEvent):
@@ -12545,103 +9266,65 @@ class QTabletEvent(QInputEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def device(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hiResGlobalPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hiResGlobalX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hiResGlobalY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pointerType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pressure(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tangentialPressure(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def uniqueId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xTilt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yTilt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def z(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextBlock(Shiboken.Object):
@@ -12654,215 +9337,142 @@ class QTextBlock(Shiboken.Object):
     """
     <type 'PySide.QtGui.QTextBlock.iterator'>
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __iter__(self, *args, **kwargs):
         """
         x.__iter__() <==> iter(x)
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockFormatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def charFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def charFormatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstLineNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fragmentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def next(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previous(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revision(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRevision(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUserData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUserState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def userData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def userState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextBlockFormat(QTextFormat):
@@ -12900,138 +9510,86 @@ class QTextBlockFormat(QTextFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bottomMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineHeightType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nonBreakableLines(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageBreakPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBottomMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLeftMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNonBreakableLines(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageBreakPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRightMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabPositions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextIndent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTopMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabPositions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textIndent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextBlockGroup(QTextObject):
@@ -13044,33 +9602,23 @@ class QTextBlockGroup(QTextObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def blockFormatChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextBlockUserData(Shiboken.Object):
@@ -13078,13 +9626,11 @@ class QTextBlockUserData(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QTextCharFormat(QTextFormat):
@@ -13173,283 +9719,173 @@ class QTextCharFormat(QTextFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def anchorHref(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def anchorNames(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontCapitalization(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontFixedPitch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontHintingPreference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontItalic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontKerning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontLetterSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontOverline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontPointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontStrikeOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontStyleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontStyleStrategy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontUnderline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontWeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontWordSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAnchorHref(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAnchorNames(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontCapitalization(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontFixedPitch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontHintingPreference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontItalic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontKerning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontLetterSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontOverline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontPointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontStrikeOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontStyleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontStyleStrategy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontUnderline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontWeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontWordSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTableCellColumnSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTableCellRowSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextOutline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUnderlineColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUnderlineStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tableCellColumnSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tableCellRowSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textOutline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underlineColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underlineStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextCursor(Shiboken.Object):
@@ -13600,345 +10036,220 @@ class QTextCursor(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def anchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def atBlockEnd(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def atBlockStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def atEnd(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def atStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def beginEditBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def block(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def charFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteChar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deletePreviousChar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endEditBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasComplexSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertFragment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertImage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCopyOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def joinPreviousEditBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keepPositionOnInsert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeBlockCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeBlockFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def movePosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def positionInBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeSelectedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def select(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedTableCells(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionEnd(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlockCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlockFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKeepPositionOnInsert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalMovementX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisualNavigation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalMovementX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualNavigation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextDocument(PySide.QtCore.QObject):
@@ -14073,368 +10384,224 @@ class QTextDocument(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addResource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def adjustSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def allFormats(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def availableRedoSteps(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def availableUndoSteps(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def characterAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def characterCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearUndoRedoStacks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clone(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultCursorMoveStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultStyleSheet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultTextOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def find(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findBlockByLineNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findBlockByNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def idealWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indentWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRedoAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isUndoAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isUndoRedoEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loadResource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def markContentsDirty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumBlockCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metaInformation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def object(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def objectForFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def print_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revision(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultCursorMoveStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultStyleSheet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultTextOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndentWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumBlockCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMetaInformation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUndoRedoEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUseDesignMetrics(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def useDesignMetrics(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextDocumentFragment(Shiboken.Object):
@@ -14442,45 +10609,31 @@ class QTextDocumentFragment(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromHtml(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromPlainText(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextFormat(Shiboken.Object):
@@ -14918,298 +11071,196 @@ class QTextFormat(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boolProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def brushProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def colorProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foreground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isBlockFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFrameFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isImageFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isListFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTableCellFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTableFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lengthProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lengthVectorProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def merge(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def objectIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def objectType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def penProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def properties(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def property(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def propertyCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setObjectIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setObjectType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stringProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toBlockFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toFrameFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toImageFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toListFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTableCellFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTableFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextFragment(Shiboken.Object):
@@ -15217,89 +11268,65 @@ class QTextFragment(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def charFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def charFormatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextFrame(QTextObject):
@@ -15317,69 +11344,46 @@ class QTextFrame(QTextObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __iter__(self, *args, **kwargs):
         """
         x.__iter__() <==> iter(x)
         """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childFrames(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextFrameFormat(QTextFormat):
@@ -15464,153 +11468,95 @@ class QTextFrameFormat(QTextFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def border(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def borderBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def borderStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bottomMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def margin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def padding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageBreakPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBorder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBorderBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBorderStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBottomMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLeftMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageBreakPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRightMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTopMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextImageFormat(QTextCharFormat):
@@ -15618,53 +11564,35 @@ class QTextImageFormat(QTextCharFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextInlineObject(Shiboken.Object):
@@ -15672,83 +11600,53 @@ class QTextInlineObject(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def ascent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def descent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def formatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAscent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDescent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextItem(Shiboken.Object):
@@ -15786,43 +11684,29 @@ class QTextItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def ascent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def descent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def renderFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextLayout(Shiboken.Object):
@@ -15848,193 +11732,119 @@ class QTextLayout(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def additionalFormats(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def beginLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearAdditionalFormats(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorMoveStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValidCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineForTextPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preeditAreaPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preeditAreaText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previousCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAdditionalFormats(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCacheEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorMoveStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPreeditArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextLength(Shiboken.Object):
@@ -16059,93 +11869,73 @@ class QTextLength(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def rawValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextLine(Shiboken.Object):
@@ -16181,138 +11971,86 @@ class QTextLine(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def ascent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorToX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def descent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalAdvance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leading(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leadingIncluded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def naturalTextRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def naturalTextWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLeadingIncluded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xToCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextList(QTextBlockGroup):
@@ -16325,58 +12063,38 @@ class QTextList(QTextBlockGroup):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def add(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def item(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextListFormat(QTextFormat):
@@ -16426,63 +12144,41 @@ class QTextListFormat(QTextFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def indent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numberPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numberSuffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumberPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumberSuffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextObject(PySide.QtCore.QObject):
@@ -16495,38 +12191,26 @@ class QTextObject(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def formatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def objectIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextObjectInterface(Shiboken.Object):
@@ -16534,23 +12218,17 @@ class QTextObjectInterface(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def drawObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intrinsicSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextOption(Shiboken.Object):
@@ -16643,98 +12321,62 @@ class QTextOption(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabArray(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabStop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUseDesignMetrics(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabArray(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabStop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def useDesignMetrics(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextTable(QTextFrame):
@@ -16747,93 +12389,59 @@ class QTextTable(QTextFrame):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def appendColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cellAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeCells(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowEnd(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def splitCell(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextTableCell(Shiboken.Object):
@@ -16841,124 +12449,86 @@ class QTextTableCell(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def column(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tableCellFormatIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextTableCellFormat(QTextCharFormat):
@@ -16966,68 +12536,44 @@ class QTextTableCellFormat(QTextCharFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bottomPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBottomPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLeftPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRightPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTopPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextTableFormat(QTextFrameFormat):
@@ -17035,88 +12581,56 @@ class QTextTableFormat(QTextFrameFormat):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cellPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cellSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearColumnWidthConstraints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnWidthConstraints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerRowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCellPadding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCellSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnWidthConstraints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderRowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTouchEvent(QInputEvent):
@@ -17137,37 +12651,24 @@ class QTouchEvent(QInputEvent):
     TouchScreen: ... = PySide.QtGui.QTouchEvent.DeviceType.TouchScreen
     """
     """
-
     def deviceType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDeviceType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTouchPoints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def touchPoints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTransform(Shiboken.Object):
@@ -17204,367 +12705,259 @@ class QTransform(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def fromScale(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromTranslate(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def quadToQuad(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def quadToSquare(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def squareToQuad(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rtruediv__(self, *args, **kwargs):
         """
         x.__rtruediv__(y) <==> y/x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __truediv__(self, *args, **kwargs):
         """
         x.__truediv__(y) <==> x/y
         """
         ...
-
     def adjoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def det(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def determinant(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dx(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inverted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAffine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIdentity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isInvertible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRotating(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isScaling(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTranslating(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m11(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m12(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m13(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m21(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m22(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m23(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m31(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m32(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def m33(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def map(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotateRadians(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toAffine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transposed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QValidator(PySide.QtCore.QObject):
@@ -17594,33 +12987,23 @@ class QValidator(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def fixup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def locale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLocale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QVector2D(Shiboken.Object):
@@ -17628,249 +13011,188 @@ class QVector2D(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def dotProduct(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __neg__(self, *args, **kwargs):
         """
         x.__neg__() <==> -x
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rtruediv__(self, *args, **kwargs):
         """
         x.__rtruediv__(y) <==> y/x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __truediv__(self, *args, **kwargs):
         """
         x.__truediv__(y) <==> x/y
         """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lengthSquared(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPointF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTuple(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector3D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector4D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QVector3D(Shiboken.Object):
@@ -17878,281 +13200,208 @@ class QVector3D(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def crossProduct(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def dotProduct(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def normal(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __neg__(self, *args, **kwargs):
         """
         x.__neg__() <==> -x
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rtruediv__(self, *args, **kwargs):
         """
         x.__rtruediv__(y) <==> y/x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __truediv__(self, *args, **kwargs):
         """
         x.__truediv__(y) <==> x/y
         """
         ...
-
     def distanceToLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def distanceToPlane(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lengthSquared(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZ(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPointF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTuple(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector2D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector4D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def z(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QVector4D(Shiboken.Object):
@@ -18160,279 +13409,206 @@ class QVector4D(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def dotProduct(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __add__(self, *args, **kwargs):
         """
         x.__add__(y) <==> x+y
         """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __div__(self, *args, **kwargs):
         """
         x.__div__(y) <==> x/y
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __mul__(self, *args, **kwargs):
         """
         x.__mul__(y) <==> x*y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __neg__(self, *args, **kwargs):
         """
         x.__neg__() <==> -x
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __radd__(self, *args, **kwargs):
         """
         x.__radd__(y) <==> y+x
         """
         ...
-
     def __rdiv__(self, *args, **kwargs):
         """
         x.__rdiv__(y) <==> y/x
         """
         ...
-
     def __reduce__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rmul__(self, *args, **kwargs):
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def __rsub__(self, *args, **kwargs):
         """
         x.__rsub__(y) <==> y-x
         """
         ...
-
     def __rtruediv__(self, *args, **kwargs):
         """
         x.__rtruediv__(y) <==> y/x
         """
         ...
-
     def __sub__(self, *args, **kwargs):
         """
         x.__sub__(y) <==> x-y
         """
         ...
-
     def __truediv__(self, *args, **kwargs):
         """
         x.__truediv__(y) <==> x/y
         """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lengthSquared(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setW(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZ(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPointF(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toTuple(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector2D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector2DAffine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector3D(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toVector3DAffine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def w(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def z(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWhatsThisClickedEvent(PySide.QtCore.QEvent):
@@ -18440,18 +13616,14 @@ class QWhatsThisClickedEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def href(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWheelEvent(QInputEvent):
@@ -18459,58 +13631,38 @@ class QWheelEvent(QInputEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def delta(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def globalY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWindowStateChangeEvent(PySide.QtCore.QEvent):
@@ -18518,69 +13670,48 @@ class QWindowStateChangeEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def isOverride(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def oldState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 def qAlpha(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def qBlue(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def qGray(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def qGreen(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def qIsGray(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def qRed(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def qRgb(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 __all__: ...
 """
 ['QAbstractTextDocumentLayout', 'QActionEvent', 'QBitmap', '...
 """
-

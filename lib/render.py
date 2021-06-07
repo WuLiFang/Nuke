@@ -2,8 +2,7 @@
 """Convert gizmo to group.  """
 
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import os
@@ -14,7 +13,7 @@ import cast_unknown as cast
 import callback
 from node import wlf_write_node
 
-LOGGER = logging.getLogger('wlf.render')
+LOGGER = logging.getLogger("wlf.render")
 
 
 def create_out_dirs(node=None):
@@ -23,7 +22,7 @@ def create_out_dirs(node=None):
 
     n = node or nuke.thisNode()
     try:
-        if n[b'disable'].value():
+        if n[b"disable"].value():
             return
     except NameError:
         pass
@@ -32,20 +31,20 @@ def create_out_dirs(node=None):
     if filename:
         target_dir = cast.binary(os.path.dirname(filename))
         if not os.path.isdir(target_dir):
-            LOGGER.debug('Create dir: %s', target_dir)
+            LOGGER.debug("Create dir: %s", target_dir)
             os.makedirs(target_dir)
 
 
 def _jump_frame():
-    if nuke.numvalue(b'preferences.wlf_jump_frame', 0.0):
-        LOGGER.debug('Jump frame')
+    if nuke.numvalue(b"preferences.wlf_jump_frame", 0.0):
+        LOGGER.debug("Jump frame")
         try:
             n = wlf_write_node()
         except ValueError:
-            LOGGER.warning('No `wlf_Write` node.')
+            LOGGER.warning("No `wlf_Write` node.")
             return
         if n:
-            _ = nuke.frame(n[b'frame'].value())
+            _ = nuke.frame(n[b"frame"].value())
             nuke.Root().setModified(False)
 
 

@@ -20,6 +20,7 @@ without breaking any of your tools.
     to be used by end-users of the library and from
     integrations/extensions of Pyblish.
 """
+
 class Action:
     """
     User-supplied interactive action
@@ -73,26 +74,18 @@ class Action:
     """
     <logging.Logger object>
     """
-
     def __repr__(self):
-        """
-        """
+        """ """
         ...
-
     def __str__(self):
-        """
-        """
+        """ """
         ...
-
     id: six.binary_type
     """
     """
-
     def process(self):
-        """
-        """
+        """ """
         ...
-
     ...
 
 Asset = Instance
@@ -157,7 +150,6 @@ class Context(AbstractEntity):
             False
         """
         ...
-
     def __getitem__(self, item):
         """
         Enable support for dict-like getting of children by id
@@ -169,22 +161,15 @@ class Context(AbstractEntity):
             >>> assert context[0].name == "MyInstance"
         """
         ...
-
-    def __init__(self, name='Context', parent=None):
-        """
-        """
+    def __init__(self, name="Context", parent=None):
+        """ """
         ...
-
     def add(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def create_asset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def create_instance(self, name, **kwargs):
         """
         Convenience method of the following.
@@ -197,7 +182,6 @@ class Context(AbstractEntity):
             >>> inst = ctx.create_instance(name="Name")
         """
         ...
-
     def get(self, key, default=None):
         """
         Enable support for dict-like getting of children by id
@@ -208,7 +192,6 @@ class Context(AbstractEntity):
             >>> assert context.get(instance.id).name == "MyInstance"
         """
         ...
-
     ...
 
 class ContextPlugin(Plugin):
@@ -231,9 +214,6 @@ class ContextPlugin(Plugin):
     """
     <logging.Logger object>
     """
-
-
-
     def process(self, context):
         """
         Primary processing method
@@ -242,7 +222,6 @@ class ContextPlugin(Plugin):
             context (Context): Context with which to process
         """
         ...
-
     ...
 
 class ExtractionError(PyblishError):
@@ -301,32 +280,21 @@ class Instance(AbstractEntity):
     """
     <logging.Logger object>
     """
-
     def __eq__(self, other):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, name, parent=None):
-        """
-        """
+        """ """
         ...
-
     def __ne__(self, other):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self):
-        """
-        """
+        """ """
         ...
-
     def __str__(self):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class InstancePlugin(Plugin):
@@ -353,7 +321,6 @@ class InstancePlugin(Plugin):
     id: six.binary_type
     """
     """
-
     def process(self, instance):
         """
         Primary processing method
@@ -362,7 +329,6 @@ class InstancePlugin(Plugin):
             instance (Instance): Instance with which to process
         """
         ...
-
     ...
 
 class Integrator(Plugin):
@@ -507,21 +473,15 @@ class Plugin:
     """
     ['default']
     """
-
     def __repr__(self):
-        """
-        """
+        """ """
         ...
-
     def __str__(self):
-        """
-        """
+        """ """
         ...
-
     id: six.binary_type
     """
     """
-
     def process(self):
         """
         Primary processing method
@@ -542,13 +502,11 @@ class Plugin:
             Any error
         """
         ...
-
     def repair(self):
         """
         DEPRECATED
         """
         ...
-
     ...
 
 class PyblishError(Exception):
@@ -623,10 +581,8 @@ class Validator(Plugin):
     ...
 
 def Category(label):
-    """
-    """
+    """ """
     ...
-
 
 __default_test = default_test
 
@@ -638,7 +594,6 @@ def __init__():
     hosts and tests. It is idempotent and thread-safe.
     """
     ...
-
 
 __main_package_path = main_package_path()
 
@@ -664,18 +619,13 @@ def current_host():
     """
     ...
 
-
 def current_target():
-    """
-    """
+    """ """
     ...
-
 
 def deregister_all(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def deregister_all_callbacks():
     """
@@ -683,19 +633,15 @@ def deregister_all_callbacks():
     """
     ...
 
-
 def deregister_all_discovery_filters():
     """
     Deregisters all plugin filters
     """
     ...
 
-
 def deregister_all_hosts():
-    """
-    """
+    """ """
     ...
-
 
 def deregister_all_paths():
     """
@@ -703,13 +649,11 @@ def deregister_all_paths():
     """
     ...
 
-
 def deregister_all_plugins():
     """
     De-register all plug-ins
     """
     ...
-
 
 def deregister_all_services(*args, **kwargs):
     """
@@ -717,12 +661,9 @@ def deregister_all_services(*args, **kwargs):
     """
     ...
 
-
 def deregister_all_targets():
-    """
-    """
+    """ """
     ...
-
 
 def deregister_callback(signal, callback):
     """
@@ -738,7 +679,6 @@ def deregister_callback(signal, callback):
     """
     ...
 
-
 def deregister_discovery_filter(callback):
     """
     Deregister a plugin filter
@@ -751,12 +691,9 @@ def deregister_discovery_filter(callback):
     """
     ...
 
-
 def deregister_gui(package):
-    """
-    """
+    """ """
     ...
-
 
 def deregister_host(host, quiet=False):
     """
@@ -770,7 +707,6 @@ def deregister_host(host, quiet=False):
     """
     ...
 
-
 def deregister_plugin(plugin):
     """
     De-register an existing plug-in
@@ -779,7 +715,6 @@ def deregister_plugin(plugin):
         plugin (Plugin): Existing plug-in to de-register
     """
     ...
-
 
 def deregister_plugin_path(path):
     """
@@ -790,7 +725,6 @@ def deregister_plugin_path(path):
     """
     ...
 
-
 def deregister_service(*args, **kwargs):
     """
     De-register an existing service by name
@@ -799,7 +733,6 @@ def deregister_service(*args, **kwargs):
         name (str): Name of service
     """
     ...
-
 
 def deregister_target(target, quiet=False):
     """
@@ -813,13 +746,11 @@ def deregister_target(target, quiet=False):
     """
     ...
 
-
 def deregister_test():
     """
     Restore default test
     """
     ...
-
 
 def discover(type=None, regex=None, paths=None):
     """
@@ -847,7 +778,6 @@ def discover(type=None, regex=None, paths=None):
     """
     ...
 
-
 def emit(signal, **kwargs):
     """
     Trigger registered callbacks
@@ -868,19 +798,15 @@ def emit(signal, **kwargs):
     """
     ...
 
-
 def environment_paths():
     """
     Return paths added via environment variable
     """
     ...
 
-
 def format_filename(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 def instances_by_plugin(instances, plugin):
     """
@@ -904,7 +830,6 @@ def instances_by_plugin(instances, plugin):
     """
     ...
 
-
 def log(cls):
     """
     Decorator for attaching a logger to the class `cls`
@@ -920,7 +845,6 @@ def log(cls):
         >>> myclass.log.info('Hello World')
     """
     ...
-
 
 def plugin_paths():
     """
@@ -939,7 +863,6 @@ def plugin_paths():
     """
     ...
 
-
 def plugins_by_family(plugins, family):
     """
     Convenience function to :func:`plugins_by_families`
@@ -952,7 +875,6 @@ def plugins_by_family(plugins, family):
         List of compatible plugins.
     """
     ...
-
 
 def plugins_by_host(plugins, host):
     """
@@ -967,7 +889,6 @@ def plugins_by_host(plugins, host):
     """
     ...
 
-
 def plugins_by_instance(plugins, instance):
     """
     Conveinence function for :func:`plugins_by_family`
@@ -980,7 +901,6 @@ def plugins_by_instance(plugins, instance):
         List of compatible plugins
     """
     ...
-
 
 def plugins_by_targets(plugins, targets):
     """
@@ -995,7 +915,6 @@ def plugins_by_targets(plugins, targets):
     """
     ...
 
-
 def register_callback(signal, callback):
     """
     Register a new callback
@@ -1009,7 +928,6 @@ def register_callback(signal, callback):
     """
     ...
 
-
 def register_discovery_filter(callback):
     """
     Register a new plugin filter
@@ -1022,7 +940,6 @@ def register_discovery_filter(callback):
         ValueError if `callback` is not callable.
     """
     ...
-
 
 def register_gui(package):
     """
@@ -1051,7 +968,6 @@ def register_gui(package):
     """
     ...
 
-
 def register_host(host):
     """
     Register a new host
@@ -1066,7 +982,6 @@ def register_host(host):
     """
     ...
 
-
 def register_plugin(plugin):
     """
     Register a new plug-in
@@ -1078,7 +993,6 @@ def register_plugin(plugin):
         TypeError if `plugin` is not callable
     """
     ...
-
 
 def register_plugin_path(path):
     """
@@ -1098,7 +1012,6 @@ def register_plugin_path(path):
     """
     ...
 
-
 def register_service(*args, **kwargs):
     """
     Register a new service
@@ -1108,7 +1021,6 @@ def register_service(*args, **kwargs):
         obj (any): Any object
     """
     ...
-
 
 def register_target(target):
     """
@@ -1124,7 +1036,6 @@ def register_target(target):
         'Studio'
     """
     ...
-
 
 def register_test(test):
     """
@@ -1152,13 +1063,11 @@ def register_test(test):
     """
     ...
 
-
 def registered_callbacks():
     """
     Returns registered callbacks
     """
     ...
-
 
 def registered_discovery_filters():
     """
@@ -1166,20 +1075,17 @@ def registered_discovery_filters():
     """
     ...
 
-
 def registered_guis():
     """
     Return registered GUIs
     """
     ...
 
-
 def registered_hosts():
     """
     Return the currently registered hosts
     """
     ...
-
 
 def registered_paths():
     """
@@ -1190,7 +1096,6 @@ def registered_paths():
     """
     ...
 
-
 def registered_plugins():
     """
     Return plug-ins added via :func:`register_plugin`
@@ -1199,7 +1104,6 @@ def registered_plugins():
         and can therefore not be modified directly
     """
     ...
-
 
 def registered_services(*args, **kwargs):
     """
@@ -1210,13 +1114,11 @@ def registered_services(*args, **kwargs):
     """
     ...
 
-
 def registered_targets():
     """
     Return the currently registered targets
     """
     ...
-
 
 def registered_test():
     """
@@ -1224,12 +1126,9 @@ def registered_test():
     """
     ...
 
-
 def sort(*args, **kwargs):
-    """
-    """
+    """ """
     ...
-
 
 sort_plugins = sort
 
@@ -1261,4 +1160,3 @@ version: six.binary_type
 """
 '1.8.8'
 """
-

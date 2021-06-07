@@ -6,17 +6,16 @@ import os
 import nuke
 
 def autolabel() -> str:
-  """This function is run automatically by Nuke during idle, and the return
-  text is drawn on the box of the node. It can also have side effects by
-  setting knobs. Currently two knobs are provided that are useful:
+    """This function is run automatically by Nuke during idle, and the return
+    text is drawn on the box of the node. It can also have side effects by
+    setting knobs. Currently two knobs are provided that are useful:
 
-  indicators = integer bit flags to turn icons on/off. The icons
-  named indicator1, indicator2, indicator4, indicator8, etc are
-  drawn if the corresponding bit is on. By default these are loaded
-  from the path as indicator1.xpm, etc, but you can use the load_icon
-  command to load other files.
+    indicators = integer bit flags to turn icons on/off. The icons
+    named indicator1, indicator2, indicator4, indicator8, etc are
+    drawn if the corresponding bit is on. By default these are loaded
+    from the path as indicator1.xpm, etc, but you can use the load_icon
+    command to load other files.
 
-  icon = name of a whole extra image you can draw, but it replaces
-  any previous one."""
-  ...
-
+    icon = name of a whole extra image you can draw, but it replaces
+    any previous one."""
+    ...

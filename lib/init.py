@@ -1,32 +1,33 @@
 # -*- coding: UTF-8 -*-
 """Nuke init file.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 _GLOBAL_BEFORE_INIT = dict(globals())
 
 
 def setup_site():
-    """Add local site-packages to python.  """
+    """Add local site-packages to python."""
     import site
     import os
 
-    site.addsitedir(os.path.abspath(
-        os.path.join(__file__, '../site-packages')))
+    site.addsitedir(os.path.abspath(os.path.join(__file__, "../site-packages")))
 
 
 def _enable_windows_unicode_console():
     import sys
-    if sys.platform != 'win32':
+
+    if sys.platform != "win32":
         return
     import win_unicode_console
+
     win_unicode_console.enable()
 
 
 def main():
     setup_site()
     import sentry
+
     sentry.setup()
 
     _enable_windows_unicode_console()
@@ -42,8 +43,11 @@ def main():
     try:
         import validation
     except ImportError:
-        __import__('nuke').message('Plugin\n {} crushed.'.format(
-            os.path.normpath(os.path.join(__file__, '../../'))))
+        __import__("nuke").message(
+            "Plugin\n {} crushed.".format(
+                os.path.normpath(os.path.join(__file__, "../../"))
+            )
+        )
         sys.exit(1)
 
     wlf.mp_logging.basic_config()
@@ -60,5 +64,5 @@ def main():
     globals().update(_GLOBAL_BEFORE_INIT)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """File protocol dropdata handle.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import re
 import six
@@ -14,7 +13,7 @@ from ..core import HOOKIMPL
 
 @HOOKIMPL
 def get_url(data):
-    match = re.match(r'file://+([^/].*)', data)
+    match = re.match(r"file://+([^/].*)", data)
     if match:
         _data = match.group(1)
         _data = six.moves.urllib_parse.unquote(_data)

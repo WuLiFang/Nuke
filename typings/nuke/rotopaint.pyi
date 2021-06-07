@@ -8,21 +8,21 @@ from .curveknob import *
 
 Use help('_rotopaint') to get detailed help on the classes exposed here.
 """
+
 def convertToNuke6(fromScript, toScript, overwrite=...):
-  """Convert a script containing NUKE 7 roto in one containing the old format."""
-  ...
+    """Convert a script containing NUKE 7 roto in one containing the old format."""
+    ...
 
 def convertToNuke7(fromScript, toScript, overwrite=...):
-  """Convert a script containing NUKE 6 roto in one containing the new format."""
-  ...
+    """Convert a script containing NUKE 6 roto in one containing the new format."""
+    ...
 
 def convertDirectoryToNuke6(fromDir, toDir, matchPattern=..., overwrite=...):
-  """Convert a directory containing NUKE 7 roto scripts in one containing the old format.
-     Note that the pattern is a regular expression."""
-  ...
+    """Convert a directory containing NUKE 7 roto scripts in one containing the old format.
+    Note that the pattern is a regular expression."""
+    ...
 
 def convertDirectoryToNuke7(fromDir, toDir, matchPattern=..., overwrite=...):
-  """Convert a directory containing NUKE 6 roto scripts in one containing the new format.
-     Note that the pattern is a regular expression."""
-  ...
-
+    """Convert a directory containing NUKE 6 roto scripts in one containing the new format.
+    Note that the pattern is a regular expression."""
+    ...

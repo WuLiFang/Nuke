@@ -15,7 +15,7 @@ if TYPE_CHECKING:
 
 
 class PythonPanel(nukescripts.PythonPanel):
-    """Customized python panel.  """
+    """Customized python panel."""
 
     is_dialog = False
     pane_name = None
@@ -25,8 +25,8 @@ class PythonPanel(nukescripts.PythonPanel):
         return self.knobs()[cast.binary(name)]
 
     def show(self):
-        """Show panel.  """
-        pane = nuke.getPaneFor(b'Properties.1')
+        """Show panel."""
+        pane = nuke.getPaneFor(b"Properties.1")
         if pane:
             self.addToPane(pane)
         else:
@@ -34,7 +34,7 @@ class PythonPanel(nukescripts.PythonPanel):
             super(PythonPanel, self).show()
 
     def destroy(self):
-        """Destroy panel.  """
+        """Destroy panel."""
 
         self.removeCallback()
         if self.is_dialog:
@@ -46,30 +46,33 @@ def register(widget, name, widget_id, create=False):
     # type: (bytes, bytes, bytes, bool) -> Any
     """registerWidgetAsPanel(widget, name, id, create) -> PythonPanel
 
-      Wraps and registers a widget to be used in a Nuke panel.
+    Wraps and registers a widget to be used in a Nuke panel.
 
-      widget - should be a string of the class for the widget
-      name - is is the name as it will appear on the Pane menu
-      widget_id - should the the unique ID for this widget panel
-      create - if this is set to true a new NukePanel will be returned that wraps this widget
+    widget - should be a string of the class for the widget
+    name - is is the name as it will appear on the Pane menu
+    widget_id - should the the unique ID for this widget panel
+    create - if this is set to true a new NukePanel will be returned that wraps this widget
     """
 
     class _Panel(PythonPanel):
-
         def __init__(self, widget, name, widget_id):
             name_e = cast.binary(name)
             super(_Panel, self).__init__(name_e, widget_id)
             self.custom_knob = nuke.PyCustom_Knob(
-                name_e, b"",
-                ("__import__('nukescripts').panels.WidgetKnob("
-                 "__import__('{0.__module__}', globals(), locals(), ['{0.__name__}'])"
-                 ".{0.__name__})").format(widget))
+                name_e,
+                b"",
+                (
+                    "__import__('nukescripts').panels.WidgetKnob("
+                    "__import__('{0.__module__}', globals(), locals(), ['{0.__name__}'])"
+                    ".{0.__name__})"
+                ).format(widget),
+            )
             self.addKnob(self.custom_knob)
 
     def _add():
         return _Panel(widget, name, widget_id).addToPane()
 
-    menu = nuke.menu(b'Pane')
+    menu = nuke.menu(b"Pane")
     _ = menu.addCommand(cast.binary(name), _add)
     nukescripts.registerPanel(widget_id, _add)
 

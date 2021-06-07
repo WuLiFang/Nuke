@@ -7,7 +7,6 @@ _nuke_localization - Internal module for Nuke's localization functionality.
 import six
 import typing
 
-
 def alwaysUseSourceFiles() -> bool:
     """
     Check if Nuke is currently set to read source files instead of localized copies
@@ -15,13 +14,11 @@ def alwaysUseSourceFiles() -> bool:
     """
     ...
 
-
 def clearUnusedFiles() -> None:
     """
     Clears unused files in the localisation folder
     """
     ...
-
 
 def forceUpdateAll() -> None:
     """
@@ -29,13 +26,11 @@ def forceUpdateAll() -> None:
     """
     ...
 
-
 def forceUpdateSelectedNodes() -> None:
     """
     Update all localized files used by nodes that are currently selected
     """
     ...
-
 
 def isLocalizationPaused() -> bool:
     """
@@ -43,13 +38,11 @@ def isLocalizationPaused() -> bool:
     """
     ...
 
-
 def pauseLocalization() -> None:
     """
     Pause the localization background thread if it was running
     """
     ...
-
 
 def resumeLocalization() -> None:
     """
@@ -57,13 +50,11 @@ def resumeLocalization() -> None:
     """
     ...
 
-
 def setAlwaysUseSourceFiles(v: bool) -> None:
     """
     Set whether Nuke should always read source files instead of localized copies
     """
     ...
-
 
 __all__: ...
 """

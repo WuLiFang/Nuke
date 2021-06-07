@@ -8,6 +8,7 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QTest(Shiboken.Object):
     AI_Description: ... = PySide.QtTest.QTest.AttributeIndex.AI_Description
     """
@@ -230,191 +231,129 @@ class QTest(Shiboken.Object):
     """
     PySide.QtTest.QTest.QBenchmarkMetric.WalltimeMi...
     """
-
     @staticmethod
     def addColumnInternal(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def asciiToKey(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def compare_ptr_helper(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def compare_string_helper(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def currentDataTag(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def currentTestFailed(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def currentTestFunction(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def ignoreMessage(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyClick(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyClicks(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyPress(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyRelease(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyToAscii(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseClick(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseDClick(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseMove(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mousePress(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseRelease(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def qElementData(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def qExpectFail(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def qGlobalData(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def qSkip(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def qWaitForWindowShown(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def sendKeyEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setBenchmarkResult(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def simulateEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def testObject(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def touchEvent(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: list
 """
 ['QTest', '__doc__', '__name__']
 """
-

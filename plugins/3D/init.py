@@ -2,4 +2,4 @@
 
 import nuke
 
-nuke.pluginAddPath('Tangent_Space_Normals')
+nuke.pluginAddPath("Tangent_Space_Normals")

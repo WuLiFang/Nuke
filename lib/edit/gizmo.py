@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Convert nuke gizmo.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import nuke
 
@@ -13,7 +12,7 @@ def gizmo_to_group(gizmo):
     if not isinstance(gizmo, nuke.Gizmo):
         return gizmo
 
-    _selected = gizmo['selected'].value()
+    _selected = gizmo["selected"].value()
     _group = gizmo.makeGroup()
 
     # Set Input.
@@ -29,10 +28,10 @@ def gizmo_to_group(gizmo):
     if gizmo.shown():
         _group.showControlPanel()
     _group.setXYpos(gizmo.xpos(), gizmo.ypos())
-    _name = gizmo['name'].value()
+    _name = gizmo["name"].value()
     nuke.delete(gizmo)
     _group.setName(_name)
-    _ = _group[b'selected'].setValue(_selected)
+    _ = _group[b"selected"].setValue(_selected)
 
     return _group
 

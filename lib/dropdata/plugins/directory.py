@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Directory dropdata handle.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
 
@@ -21,8 +20,8 @@ def get_filenames(url):
     if not os.path.isdir(cast.binary(url)):
         return ret
     for dirpath, _, _ in os.walk(cast.binary(url)):
-        dirpath = cast.text(dirpath).replace('\\', '/')
+        dirpath = cast.text(dirpath).replace("\\", "/")
         filenames = nuke.getFileNameList(cast.binary(dirpath))
-        filenames = ['{}/{}'.format(dirpath, cast.text(i)) for i in filenames]
+        filenames = ["{}/{}".format(dirpath, cast.text(i)) for i in filenames]
         ret.extend(filenames)
     return ret

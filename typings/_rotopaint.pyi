@@ -8,7 +8,6 @@ import six
 import typing
 import _curveknob
 
-
 class FrameRangeType:
     """
     Constants for use in parameters which require a FrameRange type.
@@ -16,24 +15,20 @@ class FrameRangeType:
 
     ...
 
-
 class RotoKnob(_curveknob.CurveKnob):
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     ...

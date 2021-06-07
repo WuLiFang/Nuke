@@ -2,7 +2,6 @@
 This module provides all the Nuke-specific functions and Classes.
 """
 
-
 import _nukemath as math
 import _geo as geo
 from _nuke import *

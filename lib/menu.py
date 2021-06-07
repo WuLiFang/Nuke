@@ -37,6 +37,7 @@ def main():
             # pylint: disable=bare-except
             except:
                 import traceback
+
                 traceback.print_exc()
 
     _setup_cgtw()
@@ -51,6 +52,6 @@ def main():
     patch.toolsets.enable()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
     del main  # Clean namespace for script editor.

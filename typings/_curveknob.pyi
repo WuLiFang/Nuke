@@ -9,7 +9,6 @@ import typing
 import _curvelib
 import _curveknob
 
-
 class CurveKnob:
     """
     The knob which holds the tree of paint elements (Layers, Shapes and Strokes).
@@ -34,31 +33,26 @@ class CurveKnob:
     """
     The root layer.
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def changed(self) -> None:
         """
         Call this after performing updates on the tree, to tell it that it's been updated. For many operations this is called automatically, but you can call it manually for those cases where it isn't.
         """
         ...
-
     def getSelected(self) -> ...:
         """
         Returns list of all selected items in a curve knob
@@ -68,7 +62,6 @@ class CurveKnob:
         >>> selected[0].name
         """
         ...
-
     def toElement(self, path) -> Element:
         """
         Takes a path which identifies a particular element in the curve tree and returns the corresponding Layer, Stroke or Shape object.
@@ -79,9 +72,7 @@ class CurveKnob:
         'Shape1'
         """
         ...
-
     ...
-
 
 class CurveWidget(Element):
     """
@@ -97,45 +88,37 @@ class CurveWidget(Element):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def add(self) -> None:
         """
         Add a new group layer under the selected item's parent
         """
         ...
-
     def getSelectedItems(self) -> ...:
         """
         List of strings of selected item namesGets a list of the selected items in the CurveTreeWidget
         """
         ...
-
     def remove(self) -> None:
         """
         Remove the selected items in the CurveTreeList
         """
         ...
-
     ...
-
 
 class Element:
     """
@@ -146,51 +129,42 @@ class Element:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def clone(self) -> ...:
         """
         elementCreate clone of element
         """
         ...
-
     def getVisible(self, time) -> bool:
         """
         Get the value of the visible attribute at a particular time.
         """
         ...
-
     def serialise(self) -> six.binary_type:
         """
         Returns a string representation of the given element.
         """
         ...
-
     def setVisible(self, time, value) -> None:
         """
         Set the value of the visible attribute at a particular time. value must be a bool.
         """
         ...
-
     ...
-
 
 class Layer(Element):
     """
@@ -205,93 +179,77 @@ class Layer(Element):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def append(self, element) -> None:
         """
         Add a new element inside this layer. The element must be an instance of either the Shape, Stroke or Layer classes. Note that an element cannot be in more than one place in the tree, so if you try to add an element that is already in the tree somewhere else, it'll be removed from its old location first.
         """
         ...
-
     def getAttributes(self) -> _curvelib.AnimAttributes:
         """
         Gets the collection of attributes for this stroke.
         """
         ...
-
     def getFlag(self, flag) -> bool:
         """
         Check whether a particular flag is set or not. The flag parameter should be one of the constants from the FlagType class. The return value will be True if the flag is set, False if it isn't.
         """
         ...
-
     def getTransform(self) -> _curvelib.AnimCTransform:
         """
         Gets the transform for this shape.
         """
         ...
-
     def insert(self, index, element) -> None:
         """
         Insert a new element inside this layer at the given index. The element must be an instance of either the Shape, Stroke or Layer classes. Note that an element cannot be in more than one place in the tree, so if you try to add an element that is already in the tree somewhere else, it'll be removed from its old location first.
         """
         ...
-
     def remove(self, index) -> None:
         """
         Remove the element at the given index from this layer. If the index is out of bounds, an IndexError will be raised.
         """
         ...
-
     def removeAll(self) -> None:
         """
         Remove all elements from this layer.
         """
         ...
-
     def setFlag(self, flag, value) -> None:
         """
         Set a particular flag. The flag parameter specifies which flag to set and should be one of the constants from the FlagType class. The value parameter is a boolean value; True will set the flag, False will clear it.
         """
         ...
-
     def setTransform(self, transform) -> None:
         """
         Replace the existing transform for this shape with a new one. The transform parameter must be an instance of the AnimTransform class.
         """
         ...
-
     ...
-
 
 class Shape(Element):
     """
@@ -316,44 +274,37 @@ class Shape(Element):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def append(self, shapeControlPoint) -> None:
         """
         Add a new control point to the shape. The shapeControlPoint parameter must be either an instance of the ShapeControlPoint class, or something we can convert to a ShapeControlPoint. This includes a sequence of 2, 3 or 4 floats; a CVec2, CVec3 or CVec4 object; or an AnimControlPoint object.
         """
         ...
-
-    def evaluate(self, curveNum, time, viewName='default') -> _curvelib.CubicCurve:
+    def evaluate(self, curveNum, time, viewName="default") -> _curvelib.CubicCurve:
         """
         Bake out a curve for the outline of this shape at the specified time.
 
@@ -373,45 +324,37 @@ class Shape(Element):
         @param viewName: Optional parameter specifying which view to bake the curve from. If omitted, the default view will be used.
         """
         ...
-
     def getAttributes(self) -> _curvelib.AnimAttributes:
         """
         Gets the collection of attributes for this shape.
         """
         ...
-
     def getFlag(self, flag) -> bool:
         """
         Check whether a particular flag is set or not. The flag parameter should be one of the constants from the FlagType class. The return value will be True if the flag is set, False if it isn't.
         """
         ...
-
     def getTransform(self) -> _curvelib.AnimCTransform:
         """
         Gets the transform for this shape.
         """
         ...
-
     def insert(self, index, shapeControlPoint) -> None:
         """
         Insert a new control point in the shape before the given index. The shapeControlPoint parameter must be either an instance of the ShapeControlPoint class, or something we can convert to a ShapeControlPoint. This includes a sequence of 2, 3 or 4 floats; a CVec2, CVec3 or CVec4 object; or an AnimControlPoint object.
         """
         ...
-
     def remove(self, index) -> None:
         """
         Remove the control point at the given index. This removes any associated tangent and feather point data as well. If the index is out of bounds, an IndexError will be raised.
         """
         ...
-
     def setFlag(self, flag, value) -> None:
         """
         Set a particular flag. The flag parameter specifies which flag to set and should be one of the constants from the FlagType class. The value parameter is a boolean value; True will set the flag, False will clear it.
         """
         ...
-
     ...
-
 
 class ShapeControlPoint:
     """
@@ -424,27 +367,22 @@ class ShapeControlPoint:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     ...
-
 
 class Stroke(Element):
     """
@@ -457,85 +395,71 @@ class Stroke(Element):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def append(self, controlPoint) -> None:
         """
         Add a new control point to the stroke. The controlPoint parameter must be either an instance of the AnimControlPoint class, or something we can convert to an AnimControlPoint. This includes a sequence of 2, 3 or 4 floats; or a CVec2, CVec3 or CVec4 object.
         """
         ...
-
-    def evaluate(self, time, viewName='default') -> _curvelib.CubicCurve:
+    def evaluate(self, time, viewName="default") -> _curvelib.CubicCurve:
         """
         Bake out a curve for the path of this stroke at the specified time.
         @param time: The (floating point) frame number to bake the curve from.
         @param viewName: Optional parameter specifying which view to bake the curve from. If omitted, the default view will be used.
         """
         ...
-
     def getAttributes(self) -> _curvelib.AnimAttributes:
         """
         Gets the collection of attributes for this stroke.
         """
         ...
-
     def getFlag(self, flag) -> bool:
         """
         Check whether a particular flag is set or not. The flag parameter should be one of the constants from the FlagType class. The return value will be True if the flag is set, False if it isn't.
         """
         ...
-
     def getTransform(self) -> _curvelib.AnimCTransform:
         """
         Gets the transform for this shape.
         """
         ...
-
     def insert(self, index, controlPoint) -> None:
         """
         Insert a new control point in the stroke before the given index. The controlPoint parameter must be either an instance of the AnimControlPoint class, or something we can convert to an AnimControlPoint. This includes a sequence of 2, 3 or 4 floats; or a CVec2, CVec3 or CVec4 object.
         """
         ...
-
     def remove(self, index) -> None:
         """
         Remove the control point at the given index. If the index is out of bounds, an IndexError will be raised.
         """
         ...
-
     def setFlag(self, flag, value) -> None:
         """
         Set a particular flag. The flag parameter specifies which flag to set and should be one of the constants from the FlagType class. The value parameter is a boolean value; True will set the flag, False will clear it.
         """
         ...
-
     ...

@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """File discovering that use glob-like include and exclude rules .  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import re
@@ -17,9 +16,7 @@ if TYPE_CHECKING:
 
 
 def _match_rule(v, rule):
-    pattern = (re.escape(rule)
-               .replace("\\*\\*", ".*")
-               .replace("\\*", "[^\\/]*"))
+    pattern = re.escape(rule).replace("\\*\\*", ".*").replace("\\*", "[^\\/]*")
     return re.match(v, pattern)
 
 

@@ -12,37 +12,36 @@ import nukescripts
 import psutil
 
 from comp.batch import BatchComp
-from comp.config import (IGNORE_EXISTED, MULTI_THREADING, BatchCompConfig,
-                         CompConfig)
+from comp.config import IGNORE_EXISTED, MULTI_THREADING, BatchCompConfig, CompConfig
 from wlf.decorators import run_async, run_in_main_thread
 import cast_unknown as cast
 
 
 class CompConfigPanel(nukescripts.PythonPanel):
-    """UI of comp config.  """
+    """UI of comp config."""
 
     knob_list = [
-        (nuke.File_Knob, 'mp', cast.binary('指定MP')),
-        (nuke.File_Knob, 'mp_lut', cast.binary('MP LUT')),
-        (nuke.Tab_Knob, 'parts', cast.binary('节点组开关')),
-        (nuke.Boolean_Knob, 'precomp', cast.binary('预合成')),
-        (nuke.Boolean_Knob, 'masks', cast.binary('预建常用mask')),
-        (nuke.Boolean_Knob, 'colorcorrect', cast.binary('预建调色节点')),
-        (nuke.Boolean_Knob, 'filters', cast.binary('预建滤镜节点')),
-        (nuke.Boolean_Knob, 'zdefocus', cast.binary('预建ZDefocus')),
-        (nuke.Boolean_Knob, 'depth', cast.binary('合并depth')),
-        (nuke.Boolean_Knob, 'other', cast.binary('合并其他通道')),
-        (nuke.Tab_Knob, 'filter', cast.binary('正则过滤')),
-        (nuke.String_Knob, 'footage_pat', cast.binary('素材名')),
-        (nuke.String_Knob, 'tag_pat', cast.binary('标签')),
-        (nuke.Script_Knob, 'reset', cast.binary('重置')),
+        (nuke.File_Knob, "mp", cast.binary("指定MP")),
+        (nuke.File_Knob, "mp_lut", cast.binary("MP LUT")),
+        (nuke.Tab_Knob, "parts", cast.binary("节点组开关")),
+        (nuke.Boolean_Knob, "precomp", cast.binary("预合成")),
+        (nuke.Boolean_Knob, "masks", cast.binary("预建常用mask")),
+        (nuke.Boolean_Knob, "colorcorrect", cast.binary("预建调色节点")),
+        (nuke.Boolean_Knob, "filters", cast.binary("预建滤镜节点")),
+        (nuke.Boolean_Knob, "zdefocus", cast.binary("预建ZDefocus")),
+        (nuke.Boolean_Knob, "depth", cast.binary("合并depth")),
+        (nuke.Boolean_Knob, "other", cast.binary("合并其他通道")),
+        (nuke.Tab_Knob, "filter", cast.binary("正则过滤")),
+        (nuke.String_Knob, "footage_pat", cast.binary("素材名")),
+        (nuke.String_Knob, "tag_pat", cast.binary("标签")),
+        (nuke.Script_Knob, "reset", cast.binary("重置")),
     ]
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
             self,
-            cast.binary('自动合成设置'),
-            b'com.wlf.comp',
+            cast.binary("自动合成设置"),
+            b"com.wlf.comp",
         )
         self._shot_list = None
         self.cfg = CompConfig().read()
@@ -54,29 +53,37 @@ class CompConfigPanel(nukescripts.PythonPanel):
             except TypeError:
                 pass
             self.addKnob(k)
-        for i in (b'reset', b'precomp', b'masks', b'colorcorrect', b'filters', b'zdefocus',
-                  b'depth', b'other'):
+        for i in (
+            b"reset",
+            b"precomp",
+            b"masks",
+            b"colorcorrect",
+            b"filters",
+            b"zdefocus",
+            b"depth",
+            b"other",
+        ):
             self.knobs()[i].setFlag(nuke.STARTLINE)
 
     def knobChanged(self, knob):
         # type: (nuke.Knob) -> None
         """Override for buttons."""
 
-        if knob is self.knobs()[b'OK']:
+        if knob is self.knobs()[b"OK"]:
             self.update_config()
-        elif knob is self.knobs()[b'reset']:
+        elif knob is self.knobs()[b"reset"]:
             self.reset()
 
     def reset(self):
-        """Reset re pattern.  """
+        """Reset re pattern."""
 
-        for i in ('footage_pat', 'tag_pat'):
+        for i in ("footage_pat", "tag_pat"):
             knob = self.knobs()[cast.binary(i)]
             _ = knob.setValue(self.cfg.default.get(i))
             self.knobChanged(knob)
 
     def update_config(self):
-        """Write all setting to config.  """
+        """Write all setting to config."""
 
         for i in self.knob_list:
             if i[1] in self.cfg:
@@ -87,21 +94,22 @@ class BatchCompPanel(nukescripts.PythonPanel):
     """Dialog UI of class BatchComp."""
 
     knob_list = [
-        (nuke.File_Knob, 'input_dir', '输入文件夹'),
-        (nuke.File_Knob, 'output_dir', '输出文件夹'),
-        (nuke.Boolean_Knob, 'exclude_existed', '排除已输出镜头'),
-        (nuke.Script_Knob, 'setting', '合成设置'),
-        (nuke.Text_Knob, '', ''),
-        (nuke.String_Knob, 'txt_name', ''),
-        (nuke.Script_Knob, 'generate_txt', '生成'),
-        (nuke.Multiline_Eval_String_Knob, 'info', ''),
-        (nuke.String_Knob, 'dir_pat', '文件夹正则'),
-        (nuke.Script_Knob, 'reset', '重置'),
+        (nuke.File_Knob, "input_dir", "输入文件夹"),
+        (nuke.File_Knob, "output_dir", "输出文件夹"),
+        (nuke.Boolean_Knob, "exclude_existed", "排除已输出镜头"),
+        (nuke.Script_Knob, "setting", "合成设置"),
+        (nuke.Text_Knob, "", ""),
+        (nuke.String_Knob, "txt_name", ""),
+        (nuke.Script_Knob, "generate_txt", "生成"),
+        (nuke.Multiline_Eval_String_Knob, "info", ""),
+        (nuke.String_Knob, "dir_pat", "文件夹正则"),
+        (nuke.Script_Knob, "reset", "重置"),
     ]
 
     def __init__(self):
         nukescripts.PythonPanel.__init__(
-            self, cast.binary('批量合成'), b'com.wlf.batchcomp')
+            self, cast.binary("批量合成"), b"com.wlf.batchcomp"
+        )
         self._shot_list = None
         self.cfg = BatchCompConfig().read()
 
@@ -112,9 +120,10 @@ class BatchCompPanel(nukescripts.PythonPanel):
             except TypeError:
                 pass
             self.addKnob(k)
-        self.knobs()[b'exclude_existed'].setFlag(nuke.STARTLINE)
-        self.knobs()[b'generate_txt'].setLabel(
-            cast.binary('生成 {}.txt'.format(self.txt_name)))
+        self.knobs()[b"exclude_existed"].setFlag(nuke.STARTLINE)
+        self.knobs()[b"generate_txt"].setLabel(
+            cast.binary("生成 {}.txt".format(self.txt_name))
+        )
 
     def __getattr__(self, name):
         return self.knobs()[name].value()
@@ -125,17 +134,18 @@ class BatchCompPanel(nukescripts.PythonPanel):
 
         name = knob.name()
 
-        if name == 'OK':
+        if name == "OK":
             self.batchcomp.start()
-        elif name == 'reset':
+        elif name == "reset":
             self.reset()
-        elif name == 'generate_txt':
+        elif name == "generate_txt":
             self.generate_txt()
-        elif name == 'setting':
+        elif name == "setting":
             _ = self.show_setting()
-        elif name == 'txt_name':
-            self.knobs()[b'generate_txt'].setLabel(
-                cast.binary('生成 {}.txt'.format(self.txt_name)))
+        elif name == "txt_name":
+            self.knobs()[b"generate_txt"].setLabel(
+                cast.binary("生成 {}.txt".format(self.txt_name))
+            )
         elif name in self.knobs():
             self.cfg[name] = knob.value()
 
@@ -144,37 +154,42 @@ class BatchCompPanel(nukescripts.PythonPanel):
     @run_async
     @run_in_main_thread
     def show_setting(self):
-        """Show comp setting.  """
+        """Show comp setting."""
 
         CompConfigPanel().showModalDialog()
 
     def generate_txt(self):
-        """Generate txt contain shot list.  """
+        """Generate txt contain shot list."""
 
         shots = self.batchcomp.get_shot_list()
-        path = os.path.join(self.output_dir, '{}.txt'.format(self.txt_name))
+        path = os.path.join(self.output_dir, "{}.txt".format(self.txt_name))
         line_width = max(len(i) for i in shots)
-        if os.path.exists(cast.binary(path)) and not nuke.ask(cast.binary('文件已存在, 是否覆盖?')):
+        if os.path.exists(cast.binary(path)) and not nuke.ask(
+            cast.binary("文件已存在, 是否覆盖?")
+        ):
             return
-        with open(cast.binary(path), 'w') as f:
-            _ = f.write('\n\n'.join('{: <{width}s}: '.format(i, width=line_width)
-                                    for i in shots))
+        with open(cast.binary(path), "w") as f:
+            _ = f.write(
+                "\n\n".join(
+                    "{: <{width}s}: ".format(i, width=line_width) for i in shots
+                )
+            )
         _ = webbrowser.open(path)
 
     @property
     def txt_name(self):
-        """Output txt name. """
-        return cast.text(self.knobs()[b'txt_name'].value())
+        """Output txt name."""
+        return cast.text(self.knobs()[b"txt_name"].value())
 
     @property
     def batchcomp(self):
-        """Batch comp object related to current setting. """
+        """Batch comp object related to current setting."""
 
         i_dir = self.input_dir
         o_dir = self.output_dir
 
         flags = 0
-        if self.knobs()[b'exclude_existed'].value():
+        if self.knobs()[b"exclude_existed"].value():
             flags |= IGNORE_EXISTED
         if psutil.virtual_memory().free > 16 * 1024 ** 3:
             flags |= MULTI_THREADING
@@ -182,42 +197,42 @@ class BatchCompPanel(nukescripts.PythonPanel):
         return BatchComp(i_dir, o_dir, flags=flags)
 
     def reset(self):
-        """Reset re pattern.  """
+        """Reset re pattern."""
 
-        knob = self.knobs()[b'dir_pat']
-        _ = knob.setValue(cast.binary(self.cfg.default.get('dir_pat')))
+        knob = self.knobs()[b"dir_pat"]
+        _ = knob.setValue(cast.binary(self.cfg.default.get("dir_pat")))
         self.knobChanged(knob)
 
     def update(self):
         """Update ui info and button enabled."""
 
         def _info():
-            _info = u'测试'
+            _info = "测试"
             self._shot_list = list(self.batchcomp.get_shot_list())
             if self._shot_list:
-                _info = u'# 共{}个镜头\n'.format(len(self._shot_list))
-                _info += u'\n'.join(self._shot_list)
+                _info = "# 共{}个镜头\n".format(len(self._shot_list))
+                _info += "\n".join(self._shot_list)
             else:
-                _info = u'找不到镜头'
-            _ = self.knobs()[b'info'].setValue(cast.binary(_info))
+                _info = "找不到镜头"
+            _ = self.knobs()[b"info"].setValue(cast.binary(_info))
 
         def _button_enabled():
             _knobs = [
-                b'output_dir',
-                b'exclude_existed',
-                b'info',
-                b'OK',
+                b"output_dir",
+                b"exclude_existed",
+                b"info",
+                b"OK",
             ]
 
-            _isdir = os.path.isdir(self.cfg['input_dir'])
+            _isdir = os.path.isdir(self.cfg["input_dir"])
             if _isdir:
-                for k in [b'exclude_existed', b'info']:
+                for k in [b"exclude_existed", b"info"]:
                     self.knobs()[k].setEnabled(True)
                 if self._shot_list:
                     for k in _knobs:
                         self.knobs()[k].setEnabled(True)
                 else:
-                    for k in set(_knobs) - set([b'exclude_existed']):
+                    for k in set(_knobs) - set([b"exclude_existed"]):
                         self.knobs()[k].setEnabled(False)
             else:
                 for k in _knobs:

@@ -9,6 +9,7 @@ import typing
 import PySide
 import Shiboken
 from . import QtWidgets, QtGui
+
 class QAbstractPrintDialog(QtWidgets.QDialog):
     AllPages: ... = PySide.QtGui.QAbstractPrintDialog.PrintRange.AllPages
     """
@@ -87,88 +88,56 @@ class QAbstractPrintDialog(QtWidgets.QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addEnabledOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def enabledOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fromPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOptionEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabledOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFromTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinMax(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptionTabs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrintRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPageSetupDialog(QAbstractPageSetupDialog):
@@ -203,63 +172,41 @@ class QPageSetupDialog(QAbstractPageSetupDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addEnabledOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def enabledOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOptionEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabledOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPrintDialog(QAbstractPrintDialog):
@@ -277,48 +224,32 @@ class QPrintDialog(QAbstractPrintDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPrintEngine(Shiboken.Object):
@@ -476,43 +407,29 @@ class QPrintEngine(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def abort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def newPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printerState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def property(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPrintPreviewDialog(QDialog):
@@ -530,33 +447,23 @@ class QPrintPreviewDialog(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPrintPreviewWidget(QtWidgets.QWidget):
@@ -615,133 +522,83 @@ class QPrintPreviewWidget(QtWidgets.QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def currentPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fitInView(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fitToWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numPages(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def print_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAllPagesViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFacingPagesViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLandscapeOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPortraitOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSinglePageViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZoomFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZoomMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updatePreview(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zoomFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zoomIn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zoomMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zoomOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPrinter(QtGui.QPaintDevice):
@@ -1117,333 +974,203 @@ class QPrinter(QtGui.QPaintDevice):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def abort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actualNumCopies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collateCopies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def colorMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copyCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def creator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def devType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def docName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleSidedPrinting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def duplex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontEmbeddingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fromPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fullPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getPageMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def newPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numCopies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def outputFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def outputFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paperRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paperSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paperSource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printProgram(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printerState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolution(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCollateCopies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColorMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCopyCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCreator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleSidedPrinting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDuplex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEngines(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontEmbeddingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFromTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFullPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumCopies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOutputFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOutputFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPaperSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPaperSource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrintProgram(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrintRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrinterName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResolution(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWinPageSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedPaperSources(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedResolutions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportsMultipleCopies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def winPageSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPrinterInfo(Shiboken.Object):
@@ -1451,60 +1178,42 @@ class QPrinterInfo(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def availablePrinters(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def defaultPrinter(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def isDefault(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def printerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedPaperSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QAbstractPrintDialog', 'QPageSetupDialog', 'QPrintDialog',...
 """
-

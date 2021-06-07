@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Dropdata hook spec.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from .core import HOOKSPEC
 
@@ -13,11 +12,11 @@ from .core import HOOKSPEC
 def is_ignore_data(data):
     """Check if data should be ignore.
 
-        Args:
-            data(unicode): dropdata.
+    Args:
+        data(unicode): dropdata.
 
-        Returns:
-            bool: check result.
+    Returns:
+        bool: check result.
     """
 
 
@@ -25,11 +24,11 @@ def is_ignore_data(data):
 def get_url(data):
     """Get url from dropdata.
 
-        Args:
-            data(unicode): dropdata.
+    Args:
+        data(unicode): dropdata.
 
-        Returns:
-            list(unicode): File url list.
+    Returns:
+        list(unicode): File url list.
     """
 
 
@@ -37,8 +36,8 @@ def get_url(data):
 def get_filenames(url):
     """Get filename list from url.
 
-        Returns:
-            list: filename list.
+    Returns:
+        list: filename list.
     """
 
 
@@ -46,23 +45,23 @@ def get_filenames(url):
 def is_ignore_filename(filename):
     """Check if filename should be ignore.
 
-        Args:
-            filename(unicode): filename.
+    Args:
+        filename(unicode): filename.
 
-        Returns:
-            bool: check result.
+    Returns:
+        bool: check result.
     """
 
 
 @HOOKSPEC
 def create_node(filename, context):
     """Create node for filename.
-        Args:
-            filename(unicode): filename
-            context(dict): Dictionary shared between plugins.
-                is_created(bool): If already created nodes.
-        Returns:
-            list[nuke.Node]: Created nodes.
+    Args:
+        filename(unicode): filename
+        context(dict): Dictionary shared between plugins.
+            is_created(bool): If already created nodes.
+    Returns:
+        list[nuke.Node]: Created nodes.
     """
 
 

@@ -12,6 +12,5 @@ rgbColorChip = 0
 enumerationPulldown = "first second third"
 textFontPulldown = None
 expressionInput = "[python -eval 3*2]"
-def panel_example():
-  ...
 
+def panel_example(): ...

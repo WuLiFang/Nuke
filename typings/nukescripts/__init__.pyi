@@ -41,9 +41,9 @@ from .renderdialog import *
 from .framerangepanel import *
 
 if nuke.GUI:
-    from .script import * # Changed after install
-    from .scripteditorknob import * # Changed after install
-    from .udim import * # Changed after install
+    from .script import *  # Changed after install
+    from .scripteditorknob import *  # Changed after install
+    from .udim import *  # Changed after install
     from .panels import *
     from .toolbars import *
     from .toolsets import *

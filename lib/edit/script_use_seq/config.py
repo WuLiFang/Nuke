@@ -2,7 +2,7 @@ import os
 
 import wlf.config
 
-START_MESSAGE = '{:-^50s}'.format('SCRIPT USE SEQUENCE CONVERT START')
+START_MESSAGE = "{:-^50s}".format("SCRIPT USE SEQUENCE CONVERT START")
 
 
 class Config(wlf.config.Config):
@@ -15,4 +15,4 @@ class Config(wlf.config.Config):
         "input_dir": "",
         "output_dir": "",
     }
-    path = os.path.expanduser('~/.nuke/wlf.script_use_seq.json')
+    path = os.path.expanduser("~/.nuke/wlf.script_use_seq.json")

@@ -9,26 +9,22 @@ import six
 import typing
 import _curveknob
 
-
 class SplineKnob(_curveknob.CurveKnob):
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def defaultJoin(self, AShape, BShape) -> ...:
         """
         Joins the two given SplineWarp elements.
@@ -37,15 +33,17 @@ class SplineKnob(_curveknob.CurveKnob):
         Returns: CorrespondencePoints
         """
         ...
-
     def getAB(self, shapeObj) -> typing.Literal["A", "B", "UNDEFINED"]:
         """
         Returns a string denoting the channel the given shape is in.
         A utility function wrapping the attribute getter for the ABAttribute
         """
         ...
-
-    def getCorrespondencePoints(self, path_to_element, /, ) -> ...:
+    def getCorrespondencePoints(
+        self,
+        path_to_element,
+        /,
+    ) -> ...:
         """
         Gets the collection of correspondence point collection for the element
         specified by the path.
@@ -53,13 +51,16 @@ class SplineKnob(_curveknob.CurveKnob):
         Returns: CorrespondencePoints
         """
         ...
-
-    def setAB(self, shapeObj, ab: typing.Literal["A", "B"], /, ) -> None:
+    def setAB(
+        self,
+        shapeObj,
+        ab: typing.Literal["A", "B"],
+        /,
+    ) -> None:
         """
         Puts the given shape into the 'A' or the 'B' channel.
         A utility function wrapping the attribute setter for the ABAttribute
         Does not create an undo nor call knob.changed on the spline knob
         """
         ...
-
     ...

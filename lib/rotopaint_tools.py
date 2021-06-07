@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Rotopaint scripting tools.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import nuke.curveknob
 
@@ -45,7 +44,7 @@ def iter_shapes_in_layer(layer):
 
 
 class PointProxy(object):
-    """Abstract proxy for nuke.rotopaint.AnimControlPoint. """
+    """Abstract proxy for nuke.rotopaint.AnimControlPoint."""
 
     def __init__(self, point):
         self.point = point
@@ -68,8 +67,7 @@ class RelativePointProxy(PointProxy):
         return self.center.getPosition(frame) + self.point.getPosition(frame)
 
     def addPositionKey(self, frame, position):
-        self.point.addPositionKey(
-            frame, position-self.center.getPosition(frame))
+        self.point.addPositionKey(frame, position - self.center.getPosition(frame))
 
 
 def iter_shape_point(point):

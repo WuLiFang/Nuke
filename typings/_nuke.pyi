@@ -4,13 +4,11 @@
 _nuke
 """
 
-
 import typing
 import six
 import typing
 import _geo
 import _nukemath
-
 
 class AColor_Knob(Color_Knob):
     """
@@ -21,15 +19,17 @@ class AColor_Knob(Color_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class AnimationCurve:
     """
@@ -40,7 +40,6 @@ class AnimationCurve:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def addKey(self, keys) -> None:
         """
         Insert a sequence of keys.
@@ -50,7 +49,6 @@ class AnimationCurve:
         @return: None.
         """
         ...
-
     def changeInterpolation(self, keys, type) -> None:
         """
         Change interpolation (and extrapolation) type for the keys.
@@ -74,7 +72,6 @@ class AnimationCurve:
         @return: None.
         """
         ...
-
     def clear(self) -> None:
         """
         Delete all keys.
@@ -82,7 +79,6 @@ class AnimationCurve:
         @return: None.
         """
         ...
-
     def constant(self) -> bool:
         """
         True if the animation appears to be a horizontal line, is a simple
@@ -92,7 +88,6 @@ class AnimationCurve:
         have 0 slopes. False otherwise.
         """
         ...
-
     def derivative(self, t, n) -> float:
         """
         The n'th derivative at time 't'. If n is less than 1 it returns evaluate(t).
@@ -104,7 +99,6 @@ class AnimationCurve:
         @return: The value of the derivative.
         """
         ...
-
     def evaluate(self, t) -> float:
         """
         Value at time 't'.
@@ -114,19 +108,16 @@ class AnimationCurve:
         @return: The value of the animation at time 't'.
         """
         ...
-
     def expression(self) -> six.binary_type:
         """
         Get the expression.@return: String.
         """
         ...
-
     def fixSlopes(self) -> None:
         """
         None.
         """
         ...
-
     def fromScript(self, s) -> None:
         """
         @param s: String.
@@ -134,7 +125,6 @@ class AnimationCurve:
         @return: None.
         """
         ...
-
     def identity(self) -> bool:
         """
         True if the animation appears to be such that y == x everywhere. This
@@ -144,7 +134,6 @@ class AnimationCurve:
         having y == x and slope == 1. Extrapolation is ignored.
         """
         ...
-
     def integrate(self, t1, t2) -> float:
         """
         Calculate the area underneath the curve from t1 to t2.
@@ -156,7 +145,6 @@ class AnimationCurve:
         @return: The result of the integration.
         """
         ...
-
     def inverse(self, y) -> float:
         """
         The inverse function at value y. This is the value of x such that evaluate(x)
@@ -172,19 +160,16 @@ class AnimationCurve:
         @return: Float.
         """
         ...
-
     def keys(self) -> typing.List[six.binary_type]:
         """
         List of keys.
         """
         ...
-
     def knob(self) -> Knob:
         """
         Return knob this animation belongs to.@return: Knob.
         """
         ...
-
     def knobAndFieldName(self) -> six.binary_type:
         """
         Knob and field name combined (e.g. 'translate.x').
@@ -192,13 +177,11 @@ class AnimationCurve:
         @return: string.
         """
         ...
-
     def knobIndex(self) -> int:
         """
         Return the knob index this animation belongs to.@return: Int.
         """
         ...
-
     def noExpression(self) -> bool:
         """
         True if the expression is the default expression (i.e. the keys
@@ -206,7 +189,6 @@ class AnimationCurve:
         control the curve), False otherwise.
         """
         ...
-
     def removeKey(self, keys) -> None:
         """
         Remove some keys from the curve.
@@ -216,13 +198,11 @@ class AnimationCurve:
         @return: None.
         """
         ...
-
     def selected(self) -> bool:
         """
         True if selected, False otherwise.
         """
         ...
-
     def setExpression(self, s) -> None:
         """
         Set expression.
@@ -232,7 +212,6 @@ class AnimationCurve:
         @return: None.
         """
         ...
-
     def setKey(self, t, y) -> ...:
         """
         Set a key at time t and value y. If there is no key
@@ -254,13 +233,11 @@ class AnimationCurve:
         @return: The new key.
         """
         ...
-
     def size(self) -> int:
         """
         Number of keys.
         """
         ...
-
     def toScript(self, selected) -> six.binary_type:
         """
         @param selected: Optional parameter. If this is given and is True, then only
@@ -270,7 +247,6 @@ class AnimationCurve:
         @return: A string containing the curves.
         """
         ...
-
     def view(self) -> six.binary_type:
         """
         The view this AnimationCurve object is associated with.
@@ -278,9 +254,7 @@ class AnimationCurve:
         @return: String.
         """
         ...
-
     ...
-
 
 class AnimationKey:
     """
@@ -347,15 +321,12 @@ class AnimationKey:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Array_Knob(Knob):
     """
@@ -366,7 +337,6 @@ class Array_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def animation(self, chan, view) -> typing.Optional[AnimationCurve]:
         """
         Return the AnimationCurve for the  channel 'chan' and view 'view'. The view argument is optional.
@@ -378,7 +348,6 @@ class Array_Knob(Knob):
         @return: AnimationCurve or None.
         """
         ...
-
     def animations(self, view) -> typing.List[AnimationCurve]:
         """
         @param view: Optional view.
@@ -400,19 +369,16 @@ class Array_Knob(Knob):
         a[0].setKey(10, 20)
         """
         ...
-
     def array(self) -> typing.List[typing.Any]:
         """
         List of knob values.
         """
         ...
-
     def arraySize(self) -> int:
         """
         Number of elements in array.
         """
         ...
-
     def clearAnimated(self, index, view) -> bool:
         """
         Delete animation.
@@ -424,7 +390,6 @@ class Array_Knob(Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def copyAnimation(self, channel, curve, view) -> None:
         """
         Copies the i'th channel of the AnimationCurve curve to this object. The view is optional and defaults to the current view.
@@ -438,7 +403,6 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def copyAnimations(self, curves, view) -> None:
         """
         Copies the AnimationCurves from curves to this object. The view is optional and defaults to the current view.
@@ -450,13 +414,11 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def defaultValue(self) -> ...:
         """
         Default value.
         """
         ...
-
     def deleteAnimation(self, curve) -> None:
         """
         Deletes the AnimationCurve.
@@ -466,19 +428,16 @@ class Array_Knob(Knob):
         @return: None. Raises ValueError if not found.
         """
         ...
-
     def dimensions(self) -> typing.List[typing.Any]:
         """
         Dimensions in array.
         """
         ...
-
     def frame(self) -> int:
         """
         Frame number.
         """
         ...
-
     def fromScript(self, s: six.binary_type) -> bool:
         """
         Set value of the knob to a user defined script (TCL syntax, as in .nk file). Return True if successful.
@@ -488,43 +447,36 @@ class Array_Knob(Knob):
         @return: True if successful, False otherwise.
         """
         ...
-
     def getDerivative(self, *args, **kwargs):
         """
         Return derivative at time 't' and index 'i'.
         """
         ...
-
     def getIntegral(self, *args, **kwargs):
         """
         Return integral at time interval [t1, t2] and index 'i'.
         """
         ...
-
     def getKeyIndex(self, *args, **kwargs):
         """
         Return index of the keyframe at time 't' and channel 'c'.
         """
         ...
-
     def getKeyTime(self, *args, **kwargs):
         """
         Return time of the keyframe at time 't' and channel 'c'.
         """
         ...
-
     def getNthDerivative(self, *args, **kwargs):
         """
         Return n'th derivative at time 't' and index 'i'.
         """
         ...
-
     def getNumKeys(self, *args, **kwargs):
         """
         Return number of keys at channel 'c'.
         """
         ...
-
     def getValue(self, *args, **kwargs):
         """
         self.value(index, view, time) -> Floating point or List of floating point values (in case some are different).
@@ -538,7 +490,6 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-
     def getValueAt(self, *args, **kwargs):
         """
         self.valueAt(time, index, view) -> Floating point or List of floating point values (in case some are different).
@@ -554,7 +505,6 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-
     def hasExpression(self, index) -> bool:
         """
         @param index: Optional index.
@@ -562,13 +512,11 @@ class Array_Knob(Knob):
         @return: True if has expression, False otherwise.
         """
         ...
-
     def height(self) -> int:
         """
         Height of array of values.
         """
         ...
-
     def isAnimated(self, index, view) -> bool:
         """
         @param index: Optional index.
@@ -578,7 +526,6 @@ class Array_Knob(Knob):
         @return: True if animated, False otherwise.
         """
         ...
-
     def isKey(self, index, view) -> bool:
         """
         @param index: Optional index.
@@ -588,7 +535,6 @@ class Array_Knob(Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def isKeyAt(self, time, index, view) -> bool:
         """
         Returns True if there is a keyframe at specified time, optional index and view, otherwise returns False.
@@ -602,13 +548,11 @@ class Array_Knob(Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def max(self) -> ...:
         """
         Maximum value.
         """
         ...
-
     def maximum(self, *args, **kwargs):
         """
         self.max() -> Maximum value.
@@ -616,13 +560,11 @@ class Array_Knob(Knob):
         @return: Maximum value.
         """
         ...
-
     def min(self) -> ...:
         """
         Minimum value.
         """
         ...
-
     def minimum(self, *args, **kwargs):
         """
         self.min() -> Minimum value.
@@ -630,13 +572,11 @@ class Array_Knob(Knob):
         @return: Minimum value.
         """
         ...
-
     def notDefault(self) -> bool:
         """
         True if any of the values is not set to the default, False otherwise.
         """
         ...
-
     def removeKey(self, index, view) -> bool:
         """
         Remove key.
@@ -648,7 +588,6 @@ class Array_Knob(Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def removeKeyAt(self, time, index, view) -> bool:
         """
         Remove keyframe at specified time, optional index and view. Return True if successful.
@@ -662,7 +601,6 @@ class Array_Knob(Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def resize(self, w, h) -> bool:
         """
         Resize the array.
@@ -674,7 +612,6 @@ class Array_Knob(Knob):
         @return: True if successful, False otherwise.
         """
         ...
-
     def setAnimated(self, index, view) -> bool:
         """
         Create an Animation object. Return True if successful, in which case caller must initialise it by calling setValue() or setValueAt().
@@ -686,7 +623,6 @@ class Array_Knob(Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def setDefaultValue(self, s) -> None:
         """
         @param s: Sequence of floating-point values.
@@ -694,7 +630,6 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def setExpression(self, expression, channel=-1, view=None) -> bool:
         """
         Set the expression for a knob. You can optionally specify a channel to set the expression for.
@@ -710,7 +645,6 @@ class Array_Knob(Knob):
         @return: True if successful, False if not.
         """
         ...
-
     def setKeyAt(self, time, index, view) -> None:
         """
         Set a key on element 'index', at time and view.
@@ -724,7 +658,6 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def setRange(self, f1, f2) -> None:
         """
         Set range of values.
@@ -736,7 +669,6 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def setSingleValue(self, b, view) -> None:
         """
         Set to just hold a single value or not.
@@ -748,7 +680,6 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def setValue(self, value, index, time, view) -> bool:
         """
         Set index to value at time and view.
@@ -764,7 +695,6 @@ class Array_Knob(Knob):
         @return: True if value changed, False otherwise. Safe to ignore.
         """
         ...
-
     def setValueAt(self, value, time, index, view) -> bool:
         """
         Set value of element 'index' at time for view. If the knob is animated, it will set a new keyframe or change an existing one. Index and view are optional. Return True if successful.
@@ -780,7 +710,6 @@ class Array_Knob(Knob):
         @return: True if value changed, False otherwise. Safe to ignore.
         """
         ...
-
     def singleValue(self, view) -> bool:
         """
         @param view: Optional view. Default is current view.
@@ -788,7 +717,6 @@ class Array_Knob(Knob):
         @return: True if holds a single value.
         """
         ...
-
     def splitView(self, view) -> None:
         """
         Split the view away from the current knob value.
@@ -798,7 +726,6 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
     def toScript(self, quote, context) -> six.binary_type:
         """
         Return the value of the knob in script syntax.
@@ -810,7 +737,6 @@ class Array_Knob(Knob):
         @return: String.
         """
         ...
-
     def unsplitView(self, view) -> None:
         """
         Unsplit the view so that it shares a value with other views.
@@ -820,8 +746,9 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-
-    def value(self, index: int = 0, view=..., time: int = ...) -> typing.Union[float, typing.List[float]]:
+    def value(
+        self, index: int = 0, view=..., time: int = ...
+    ) -> typing.Union[float, typing.List[float]]:
         """
         @param index: Optional index. Default is 0.
 
@@ -832,7 +759,6 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-
     def valueAt(self, time, index, view) -> typing.Union[typing.List[float], float]:
         """
         Return value for this knob at specified time, optional index and view.
@@ -846,21 +772,17 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-
     def vect(self) -> typing.List[typing.Any]:
         """
         List of knob values.
         """
         ...
-
     def width(self) -> int:
         """
         Width of array of values.
         """
         ...
-
     ...
-
 
 class Axis_Knob(Knob):
     """
@@ -871,57 +793,52 @@ class Axis_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def pivot(self) -> XYZ_Knob:
         """
         Return pivot knob.
         """
         ...
-
     def rotate(self) -> XYZ_Knob:
         """
         Return rotation knob.
         """
         ...
-
     def scale(self) -> Scale_Knob:
         """
         Return scale knob.
         """
         ...
-
     def skew(self) -> XYZ_Knob:
         """
         Return skew knob.
         """
         ...
-
     def translate(self) -> XYZ_Knob:
         """
         Return translation knob.
         """
         ...
-
     def uniformScale(self) -> Double_Knob:
         """
         Return uniform scale knob.
         """
         ...
-
     def value(self) -> _nukemath.Matrix4:
         """
         Return the transform matrix formed by combining the input knob values for translate, rotate, scale, skew and pivot.
         """
         ...
-
     ...
-
 
 class BBox_Knob(Array_Knob):
     """
@@ -932,13 +849,16 @@ class BBox_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def fromDict(self, box) -> None:
         """
         Set the bounding box from the given box.
@@ -948,49 +868,41 @@ class BBox_Knob(Array_Knob):
         @return: None
         """
         ...
-
     def names(self, *args, **kwargs):
         """
         Return name for dimension 'i'
         """
         ...
-
     def r(self, *args, **kwargs):
         """
         Return value for R extent.
         """
         ...
-
     def setR(self, *args, **kwargs):
         """
         Set value for R extent.
         """
         ...
-
     def setT(self, *args, **kwargs):
         """
         Set value for T extent.
         """
         ...
-
     def setX(self, *args, **kwargs):
         """
         Set value for X position.
         """
         ...
-
     def setY(self, *args, **kwargs):
         """
         Set value for Y position.
         """
         ...
-
     def t(self, *args, **kwargs):
         """
         Return value for T extent.
         """
         ...
-
     def toDict(self) -> dict:
         """
         Returns the bounding box as a dict with x, y, r, and t keys.
@@ -998,48 +910,39 @@ class BBox_Knob(Array_Knob):
         @return: dict with x, y, r and t keys
         """
         ...
-
     def value(self, *args, **kwargs):
         """
         Return value for dimension 'i'
         """
         ...
-
     def x(self, *args, **kwargs):
         """
         Return value for X position.
         """
         ...
-
     def y(self, *args, **kwargs):
         """
         Return value for Y position.
         """
         ...
-
     ...
 
-
 class BackdropNode(Node):
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def getNodes(self) -> typing.List[Node]:
         """
         Get the nodes contained inside a backdrop node
@@ -1050,7 +953,6 @@ class BackdropNode(Node):
         @return: a list of nodes contained inside the backdrop.
         """
         ...
-
     def selectNodes(self, selectNodes: bool = ...) -> None:
         """
         Select or deselect all nodes in backdrop node
@@ -1061,9 +963,7 @@ class BackdropNode(Node):
         @return: None.
         """
         ...
-
     ...
-
 
 class BeginTabGroup_Knob(Knob):
     """
@@ -1077,7 +977,6 @@ class BeginTabGroup_Knob(Knob):
 
     ...
 
-
 class Bitmask_Knob(Enumeration_Knob):
     """
     Bitmask_Knob
@@ -1090,7 +989,6 @@ class Bitmask_Knob(Enumeration_Knob):
 
     ...
 
-
 class Boolean_Knob(Array_Knob):
     """
     A knob which holds a boolean value. This appears in a Node panel as a check box.
@@ -1100,17 +998,25 @@ class Boolean_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: bool = ..., /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        value: bool = ...,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def setValue(self, b: bool) -> bool:
         """
         Set the boolean value of this knob.
@@ -1118,16 +1024,13 @@ class Boolean_Knob(Array_Knob):
         @return: True if modified, False otherwise.
         """
         ...
-
     def value(self) -> bool:
         """
         Get the boolean value for this knob.
         @return: True or False.
         """
         ...
-
     ...
-
 
 class Box:
     """
@@ -1138,153 +1041,127 @@ class Box:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def centerX(self) -> float:
         """
         Return center in X.
         """
         ...
-
     def centerY(self) -> float:
         """
         Return height in Y.
         """
         ...
-
     def clampX(self, x) -> int:
         """
         Return x restricted to pointing at a pixel in the box.
         """
         ...
-
     def clampY(self, y) -> int:
         """
         Return y restricted to pointing at a pixel in the box.
         """
         ...
-
     def clear(self) -> None:
         """
         Set to is_constant().
         """
         ...
-
     def h(self) -> int:
         """
         Return height.
         """
         ...
-
     def intersect(self, x, y, r, t) -> None:
         """
         Intersect with the given edges.
         """
         ...
-
     def isConstant(self) -> bool:
         """
         True if box is 1x1 in both directions, False otherwise
         """
         ...
-
     def merge(self, x, y, r, t) -> None:
         """
         Merge with the given edges.
         """
         ...
-
     def move(self, dx, dy) -> None:
         """
         Move all the sides and thus the entire box by the given deltas.
         """
         ...
-
     def pad(self, dx, dy, dr, dt) -> None:
         """
         Move all the sides and thus the entire box by the given deltas.
         """
         ...
-
     def r(self) -> int:
         """
         Return the right edge of the box.
         """
         ...
-
     def set(self, x, y, r, t) -> None:
         """
         Set all values at once.
         """
         ...
-
     def setH(self, n) -> None:
         """
         Set height by moving top edge.
         """
         ...
-
     def setR(self, n) -> None:
         """
         Set the right edge. The parameter n is an integer.
         """
         ...
-
     def setT(self, n) -> None:
         """
         Set top edge.
         """
         ...
-
     def setW(self, n) -> None:
         """
         Set width by moving right edge.
         """
         ...
-
     def setX(self, n) -> None:
         """
         Set the left edge. The parameter n is an integer.
         """
         ...
-
     def setY(self, n) -> None:
         """
         Set the bottom edge. The parameter n is an integer.
         """
         ...
-
     def t(self) -> int:
         """
         Return top edge.
         """
         ...
-
     def w(self) -> int:
         """
         Return width.
         """
         ...
-
     def x(self) -> int:
         """
         The left edge of the box.
         """
         ...
-
     def y(self) -> int:
         """
         Return the bottom edge.
         """
         ...
-
     ...
-
 
 class Box3_Knob(Array_Knob):
     """
@@ -1295,99 +1172,87 @@ class Box3_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def f(self, *args, **kwargs):
         """
         Return value for F extent. F (far) is the maximum Z extent of the box.
         """
         ...
-
     def n(self, *args, **kwargs):
         """
         Return value for N position. N (near) is the minimum Z extent of the box.
         """
         ...
-
     def names(self, *args, **kwargs):
         """
         Return name for dimension 'i'
         """
         ...
-
     def r(self, *args, **kwargs):
         """
         Return value for R extent. R (right) is the right extent of the box.
         """
         ...
-
     def setF(self, *args, **kwargs):
         """
         Set value for F extent. F (far) is the maximum Z extent of the box.
         """
         ...
-
     def setN(self, *args, **kwargs):
         """
         Set value for N position. N (near) is the minimum Z extent of the box.
         """
         ...
-
     def setR(self, *args, **kwargs):
         """
         Set value for R extent. R (right) is the right extent of the box.
         """
         ...
-
     def setT(self, *args, **kwargs):
         """
         Set value for T extent. T (top) is the maximum vertical extent of the box.
         """
         ...
-
     def setX(self, *args, **kwargs):
         """
         Set value for X position. X is the minimum horizontal extent of the box.
         """
         ...
-
     def setY(self, *args, **kwargs):
         """
         Set value for Y position. Y is the minimum vertical extent of the box.
         """
         ...
-
     def t(self, *args, **kwargs):
         """
         Return value for T extent. T (top) is the maximum vertical extent of the box.
         """
         ...
-
     def value(self, *args, **kwargs):
         """
         Return value for dimension 'i'
         """
         ...
-
     def x(self, *args, **kwargs):
         """
         Return value for X position. X is the minimum horizontal extent of the box.
         """
         ...
-
     def y(self, *args, **kwargs):
         """
         Return value for Y position. Y is the minimum vertical extent of the box.
         """
         ...
-
     ...
-
 
 class CancelledError(Exception):
     __weakref__: ...
@@ -1396,7 +1261,6 @@ class CancelledError(Exception):
     """
 
     ...
-
 
 class CascadingEnumeration_Knob(Enumeration_Knob):
     """
@@ -1427,15 +1291,17 @@ class CascadingEnumeration_Knob(Enumeration_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class ChannelMask_Knob(Channel_Knob):
     """
@@ -1446,15 +1312,17 @@ class ChannelMask_Knob(Channel_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Channel_Knob(Knob):
     """
@@ -1475,27 +1343,31 @@ class Channel_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, depth: int = ..., /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        depth: int = ...,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def channelSelector(self) -> bool:
-        """
-        """
+        """ """
         ...
-
     def checkMarks(self) -> bool:
-        """
-        """
+        """ """
         ...
-
     def depth(self) -> int:
         """
         Get the channel depth.
@@ -1503,7 +1375,6 @@ class Channel_Knob(Knob):
         @return: The depth of the channel as an int.
         """
         ...
-
     def enableChannel(self, name, b) -> None:
         """
         Enable or disable a channel.
@@ -1515,17 +1386,12 @@ class Channel_Knob(Knob):
         @return: None
         """
         ...
-
     def inputKnob(self) -> bool:
-        """
-        """
+        """ """
         ...
-
     def inputNumber(self) -> int:
-        """
-        """
+        """ """
         ...
-
     def isChannelEnabled(self, name) -> bool:
         """
         Test if a channel is enabled.
@@ -1533,12 +1399,9 @@ class Channel_Knob(Knob):
         @param name: The name of the channel.@return: True if the channel is enabled, False otherwise.
         """
         ...
-
     def layerSelector(self) -> bool:
-        """
-        """
+        """ """
         ...
-
     def setEnable(self, name) -> None:
         """
         Enable a channel.
@@ -1548,7 +1411,6 @@ class Channel_Knob(Knob):
         @return: None
         """
         ...
-
     def setInput(self, num) -> None:
         """
         Set the input number for this knob.@param num: The number of the new input.
@@ -1556,7 +1418,6 @@ class Channel_Knob(Knob):
         @return: None
         """
         ...
-
     def setValue(self, name) -> None:
         """
         Set the selected channel using the channel name.
@@ -1568,7 +1429,6 @@ class Channel_Knob(Knob):
         @raise ValueError exception if the channel doesn't exist.
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Get the name of the selected channel.
@@ -1576,9 +1436,7 @@ class Channel_Knob(Knob):
         @return: The name of the channel as a string.
         """
         ...
-
     ...
-
 
 class ColorChip_Knob(Unsigned_Knob):
     """
@@ -1589,15 +1447,17 @@ class ColorChip_Knob(Unsigned_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Color_Knob(Array_Knob):
     """
@@ -1608,27 +1468,27 @@ class Color_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def inputNumber(self) -> int:
         """
         Return input number.
         """
         ...
-
     def names(self, n) -> six.binary_type:
         """
         Return name for dimension n. The argument n is an integer.
         """
         ...
-
     ...
-
 
 class Disable_Knob(Boolean_Knob):
     """
@@ -1639,13 +1499,16 @@ class Disable_Knob(Boolean_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def setValue(self, b) -> bool:
         """
         Set the boolean value of this knob.
@@ -1655,7 +1518,6 @@ class Disable_Knob(Boolean_Knob):
         @return: True if modified, False otherwise.
         """
         ...
-
     def value(self) -> bool:
         """
         Get the boolean value for this knob.
@@ -1663,9 +1525,7 @@ class Disable_Knob(Boolean_Knob):
         @return: True or False.
         """
         ...
-
     ...
-
 
 class Double_Knob(Array_Knob):
     """
@@ -1676,15 +1536,17 @@ class Double_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class EditableEnumeration_Knob(Enumeration_Knob):
     """
@@ -1699,25 +1561,26 @@ class EditableEnumeration_Knob(Enumeration_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def enumName(self, n) -> six.binary_type:
         """
         Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
         """
         ...
-
     def numValues(self) -> int:
         """
         Return number of values. Deprecated.
         """
         ...
-
     def setValue(self, item) -> None:
         """
         Set the current value. item will first be converted into a string and matched against the enum values.
@@ -1737,7 +1600,6 @@ class EditableEnumeration_Knob(Enumeration_Knob):
         k.setValue('exr')
         """
         ...
-
     def setValues(self, items) -> None:
         """
         (Re)initialise knob to the supplied list of items.
@@ -1755,7 +1617,6 @@ class EditableEnumeration_Knob(Enumeration_Knob):
         k.setValues(['exr'])
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Current value.
@@ -1771,7 +1632,6 @@ class EditableEnumeration_Knob(Enumeration_Knob):
         k.value()
         """
         ...
-
     def values(self) -> typing.List[six.binary_type]:
         """
         Return list of items.
@@ -1787,9 +1647,7 @@ class EditableEnumeration_Knob(Enumeration_Knob):
         k.values()
         """
         ...
-
     ...
-
 
 class EndTabGroup_Knob(Knob):
     """
@@ -1802,7 +1660,6 @@ class EndTabGroup_Knob(Knob):
     """
 
     ...
-
 
 class Enumeration_Knob(Unsigned_Knob):
     """
@@ -1831,29 +1688,35 @@ class Enumeration_Knob(Unsigned_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, options: typing.Iterable[bytes] = ..., /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        options: typing.Iterable[bytes] = ...,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def enumName(self, n) -> six.binary_type:
         """
         Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
         """
         ...
-
     def numValues(self) -> int:
         """
         Return number of values. Deprecated.
         """
         ...
-
     def setValue(self, item) -> None:
         """
         Set the current value. item will first be converted into a string and matched against the enum values.
@@ -1873,7 +1736,6 @@ class Enumeration_Knob(Unsigned_Knob):
         k.setValue('exr')
         """
         ...
-
     def setValues(self, items) -> None:
         """
         (Re)initialise knob to the supplied list of items.
@@ -1891,7 +1753,6 @@ class Enumeration_Knob(Unsigned_Knob):
         k.setValues(['exr'])
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Current value.
@@ -1907,7 +1768,6 @@ class Enumeration_Knob(Unsigned_Knob):
         k.value()
         """
         ...
-
     def values(self) -> typing.List[six.binary_type]:
         """
         Return list of items.
@@ -1923,9 +1783,7 @@ class Enumeration_Knob(Unsigned_Knob):
         k.values()
         """
         ...
-
     ...
-
 
 class EvalString_Knob(String_Knob):
     """
@@ -1936,13 +1794,16 @@ class EvalString_Knob(String_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def evaluate(self) -> six.binary_type:
         """
         Evaluate the string, performing substitutions.
@@ -1950,9 +1811,7 @@ class EvalString_Knob(String_Knob):
         @return: String.
         """
         ...
-
     ...
-
 
 class Eyedropper_Knob(AColor_Knob):
     """
@@ -1963,15 +1822,12 @@ class Eyedropper_Knob(AColor_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class File_Knob(EvalString_Knob):
     """
@@ -1982,13 +1838,16 @@ class File_Knob(EvalString_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def fromScript(self, s) -> None:
         """
         Assign string to knob.
@@ -1998,7 +1857,6 @@ class File_Knob(EvalString_Knob):
         @return: None.
         """
         ...
-
     def fromUserText(self, s: six.binary_type) -> None:
         """
         Assign string to knob, parses frame range off the end and opens file to get set the format.
@@ -2008,7 +1866,6 @@ class File_Knob(EvalString_Knob):
         @return: None.
         """
         ...
-
     def getEvaluatedValue(self, *args, **kwargs):
         """
         self.getValue(oc) -> String.
@@ -2020,7 +1877,6 @@ class File_Knob(EvalString_Knob):
         @return: String.
         """
         ...
-
     def getValue(self, *args, **kwargs):
         """
         self.getEvaluatedValue() -> String.
@@ -2030,8 +1886,11 @@ class File_Knob(EvalString_Knob):
         @return: String.
         """
         ...
-
-    def setValue(self, s: six.binary_type, /, ) -> None:
+    def setValue(
+        self,
+        s: six.binary_type,
+        /,
+    ) -> None:
         """
         self.fromScript(s) -> None.
 
@@ -2042,7 +1901,6 @@ class File_Knob(EvalString_Knob):
         @return: None.
         """
         ...
-
     def value(self, *args, **kwargs):
         """
         self.getEvaluatedValue() -> String.
@@ -2052,9 +1910,7 @@ class File_Knob(EvalString_Knob):
         @return: String.
         """
         ...
-
     ...
-
 
 class Format:
     """
@@ -2065,7 +1921,6 @@ class Format:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(
         self,
         width: int,
@@ -2080,13 +1935,11 @@ class Format:
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def add(self, name) -> None:
         """
         Add this instance to a list of "named" formats. The name parameter is the name of the list to add the format to.
         """
         ...
-
     def fromUV(self, u, v) -> typing.List[int]:
         """
         Transform a UV coordinate in the range 0-1 into the format's XY range. Returns a list containing the x and y coordinates.
@@ -2098,31 +1951,26 @@ class Format:
         @return: [x, y]
         """
         ...
-
     def height(self) -> int:
         """
         Return the height of image file in pixels.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Returns the user-visible name of the format.
         """
         ...
-
     def pixelAspect(self) -> float:
         """
         Returns the pixel aspect ratio (pixel width divided by pixel height) for this format.
         """
         ...
-
     def r(self) -> int:
         """
         Return the right edge of image file in pixels.
         """
         ...
-
     def scaled(self, sx, sy, tx, ty) -> Format:
         """
         Scale and translate this format by sx, sy, tx and ty.
@@ -2132,61 +1980,51 @@ class Format:
         @param sx: Scale factor in X.@param sy: Scale factor in Y.@param tx: Offset factor in X.@param ty: Offset factor in Y.@return: Format.
         """
         ...
-
     def setHeight(self, newHeight) -> None:
         """
         Set the height of image file in pixels. newHeight is the new height for the image; it should be a positive integer.
         """
         ...
-
     def setName(self, name) -> None:
         """
         Set name of this format. The name parameter is the new name for the format.
         """
         ...
-
     def setPixelAspect(self, aspectRatio) -> None:
         """
         Set a new pixel aspect ratio for this format. The aspectRatio parameter is the new ratio, found by dividing the desired pixel width by the desired pixel height.
         """
         ...
-
     def setR(self, newR) -> None:
         """
         Set the right edge of image file in pixels. newR is the new right edge for the image; it should be a positive integer.
         """
         ...
-
     def setT(self, newT) -> None:
         """
         Set the top edge of image file in pixels. newY is the new top edge for the image; it should be a positive integer.
         """
         ...
-
     def setWidth(self, newWidth) -> None:
         """
         Set the width of image file in pixels.newWidth is the new width for the image; it should be a positive integer.
         """
         ...
-
     def setX(self, newX) -> None:
         """
         Set the left edge of image file in pixels. newX is the new left edge for the  image; it should be a positive integer.
         """
         ...
-
     def setY(self, newY) -> None:
         """
         Set the bottom edge of image file in pixels. newY is the new bottom edge for the image; it should be a positive integer.
         """
         ...
-
     def t(self) -> int:
         """
         Return the top edge of image file in pixels.
         """
         ...
-
     def toUV(self, x, y) -> typing.List[int]:
         """
         Back-transform an XY coordinate in the format's space into UV space.
@@ -2200,27 +2038,22 @@ class Format:
         @return: [u, v].
         """
         ...
-
     def width(self) -> int:
         """
         Return the width of image file in pixels.
         """
         ...
-
     def x(self) -> int:
         """
         Return the left edge of image file in pixels.
         """
         ...
-
     def y(self) -> int:
         """
         Return the bottom edge of image file in pixels.
         """
         ...
-
     ...
-
 
 class Font_Knob(Knob):
     """
@@ -2231,15 +2064,17 @@ class Font_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Format_Knob(Knob):
     """
@@ -2250,45 +2085,38 @@ class Format_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, name: six.binary_type, label: six.binary_type = None, /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actualValue(self) -> Format:
         """
         Return value of knob.
         """
         ...
-
     def fromScript(self, s) -> bool:
         """
         Initialise from script s.
         True if succeeded, False otherwise
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Return name of knob.
         """
         ...
-
     def notDefault(self) -> bool:
         """
         True if set to its default value, False otherwise
         """
         ...
-
     def setValue(self, format) -> bool:
         """
         Set value of knob to format (either a Format object or a name of a format, e.g. "NTSC").
         True if succeeded, False otherwise
         """
         ...
-
     def toScript(self, quote, context=...) -> six.binary_type:
         """
         Return the value of the knob in script syntax.
@@ -2298,15 +2126,12 @@ class Format_Knob(Knob):
         Pass None for context to get results for all views and key times (as stored in a .nk file).
         """
         ...
-
     def value(self) -> Format:
         """
         Return value of knob.
         """
         ...
-
     ...
-
 
 class FrameRange:
     """
@@ -2317,109 +2142,90 @@ class FrameRange:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
     def __init__(self, first: int, last: int, increment: int) -> None: ...
-
     @typing.overload
     def __init__(self, s: six.binary_type) -> None:
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __iter__(self) -> int:
         """
         x.__iter__() <==> iter(x)
         """
         ...
-
     def __str__(self) -> six.binary_type:
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def first(self) -> int:
         """
         return the first frame of the range.
         """
         ...
-
     def frames(self) -> int:
         """
         return the numbers of frames defined in the range.
         """
         ...
-
     def getFrame(self, n: int) -> int:
         """
         return the frame according to the index, parameter n must be between 0 and frames().
         """
         ...
-
     def increment(self) -> int:
         """
         return the increment between two frames.
         """
         ...
-
     def isInRange(self, n: int) -> bool:
         """
         return if the frame is inside the range.
         """
         ...
-
     def last(self) -> int:
         """
         return the last frame of the range.
         """
         ...
-
     def maxFrame(self) -> int:
         """
         return the maximun frame define in the range.
         """
         ...
-
     def minFrame(self) -> int:
         """
         return the minimun frame define in the range.
         """
         ...
-
     def next(self) -> int:
         """
         x.next() -> the next value, or raise StopIteration
         """
         ...
-
     def setFirst(self, n: int) -> None:
         """
         set the first frame of the range.
         """
         ...
-
     def setIncrement(self, n: int) -> None:
         """
         set the increment between two frames.
         """
         ...
-
     def setLast(self, n: int) -> None:
         """
         set the last frame of the range.
         """
         ...
-
     def stepFrame(self) -> int:
         """
         return the absolute increment between two frames.
         """
         ...
-
     ...
-
 
 class FrameRanges:
     """
@@ -2430,7 +2236,6 @@ class FrameRanges:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(
         self,
         o: typing.Union[
@@ -2444,75 +2249,62 @@ class FrameRanges:
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __iter__(self) -> FrameRange:
         """
         x.__iter__() <==> iter(x)
         """
         ...
-
     def __str__(self) -> six.binary_type:
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def add(self, r: FrameRange) -> None:
         """
         add a new frame range.
         """
         ...
-
     def clear(self) -> None:
         """
         reset all store frame ranges.
         """
         ...
-
     def compact(self) -> None:
         """
         compact all the frame ranges.
         """
         ...
-
     def getRange(self) -> FrameRange:
         """
         return a range from the list
         """
         ...
-
     def maxFrame(self) -> int:
         """
         get maximun frame of all ranges.
         """
         ...
-
     def minFrame(self) -> int:
         """
         get minimun frame of all ranges.
         """
         ...
-
     def next(self) -> FrameRange:
         """
         x.next() -> the next value, or raise StopIteration
         """
         ...
-
     def size(self) -> int:
         """
         return the ranges number.
         """
         ...
-
     def toFrameList(self) -> typing.List[int]:
         """
         return a list of frames in a vector
         """
         ...
-
     ...
-
 
 class FreeType_Knob(Knob):
     """
@@ -2523,13 +2315,11 @@ class FreeType_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, name: six.binary_type, label: six.binary_type = None, /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def getValue(self) -> typing.List[six.binary_type]:
         """
         Returns the font family/style on this knob.
@@ -2537,7 +2327,6 @@ class FreeType_Knob(Knob):
         @return: [String, String].
         """
         ...
-
     def setValue(self, family, style) -> None:
         """
         self.setValue(filename,index) -> None.
@@ -2557,9 +2346,7 @@ class FreeType_Knob(Knob):
         @return: None.
         """
         ...
-
     ...
-
 
 class GeoSelect_Knob(Knob):
     """
@@ -2571,33 +2358,27 @@ class GeoSelect_Knob(Knob):
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def getGeometry(self) -> _geo.GeometryList:
         """
         Get the geometry which this knob can select from.
         """
         ...
-
     def getSelection(self) -> typing.List[typing.List[float]]:
         """
         Returns the selection weights for each vertex as a float. If you access the result as selection[obj][pt], then obj is the index of the object in the input geometry and pt is the index of the point in that object.
         """
         ...
-
     ...
-
 
 class Gizmo(Group):
     def __getitem__(self, *args, **kwargs):
@@ -2605,25 +2386,21 @@ class Gizmo(Group):
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def command(self) -> six.binary_type:
         """
         Gizmo command.
@@ -2631,7 +2408,6 @@ class Gizmo(Group):
         @return: String.
         """
         ...
-
     def filename(self) -> six.binary_type:
         """
         Gizmo filename.
@@ -2639,7 +2415,6 @@ class Gizmo(Group):
         @return: String.
         """
         ...
-
     def makeGroup(self) -> Group:
         """
         Creates a Group node copy of the Gizmo node.
@@ -2647,9 +2422,7 @@ class Gizmo(Group):
         @return: Group.
         """
         ...
-
     ...
-
 
 class GlobalsEnvironment:
     """
@@ -2664,74 +2437,58 @@ class GlobalsEnvironment:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delitem__(self, *args, **kwargs):
         """
         x.__delitem__(y) <==> del x[y]
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __setitem__(self, *args, **kwargs):
         """
         x.__setitem__(i, y) <==> x[i]=y
         """
         ...
-
     ...
-
 
 class Group(Node):
     def __enter__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __exit__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __reduce_ex__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def begin(self) -> Group:
         """
         All python code that follows will be executed in the context of node. All names are evaluated relative to this object. Must be paired with end.
@@ -2739,7 +2496,6 @@ class Group(Node):
         @return: Group.
         """
         ...
-
     def connectSelectedNodes(self, backward, inputA) -> None:
         """
         Connect the selected nodes.
@@ -2751,7 +2507,6 @@ class Group(Node):
         @return: None.
         """
         ...
-
     def end(self) -> None:
         """
         All python code that follows will no longer be executed in the context of node. Must be paired with begin.
@@ -2759,7 +2514,6 @@ class Group(Node):
         @return: None.
         """
         ...
-
     def expand(self) -> None:
         """
         Moves all nodes from the group node into its parent group, maintaining node input
@@ -2771,7 +2525,6 @@ class Group(Node):
         @return: None.
         """
         ...
-
     def node(self, s: six.binary_type) -> typing.Optional[Node]:
         """
         Locate a node by name.
@@ -2781,7 +2534,6 @@ class Group(Node):
         @return: Node with name s or None.
         """
         ...
-
     def nodes(self) -> typing.List[Node]:
         """
         List of nodes in group.
@@ -2789,7 +2541,6 @@ class Group(Node):
         @return: List of nodes
         """
         ...
-
     def numNodes(self) -> int:
         """
         Number of nodes in group.
@@ -2797,7 +2548,6 @@ class Group(Node):
         @return: Number of nodes
         """
         ...
-
     def output(self) -> typing.Optional[Node]:
         """
         Return output node of group.
@@ -2805,7 +2555,6 @@ class Group(Node):
         @return: Node or None.
         """
         ...
-
     def run(self, callable) -> ...:
         """
         Execute in the context of node. All names are evaluated relative to this object.
@@ -2815,7 +2564,6 @@ class Group(Node):
         @return: Result of callable.
         """
         ...
-
     def selectedNode(self) -> typing.Optional[Node]:
         """
         Returns the node the user is most likely thinking about. This is the last node the user clicked on, if it is selected.  Otherwise it is an 'output' (one with no selected outputs) of the set of selected nodes. If no nodes are selected then None is returned.
@@ -2823,7 +2571,6 @@ class Group(Node):
         @return: Node or None.
         """
         ...
-
     def selectedNodes(self) -> typing.Optional[Node]:
         """
         Selected nodes.
@@ -2831,7 +2578,6 @@ class Group(Node):
         @return: Node or None.
         """
         ...
-
     def splaySelectedNodes(self, backward, inputA) -> None:
         """
         Splay the selected nodes.
@@ -2843,9 +2589,7 @@ class Group(Node):
         @return: None.
         """
         ...
-
     ...
-
 
 class Hash:
     """
@@ -2858,93 +2602,77 @@ class Hash:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __hash__(self, *args, **kwargs):
         """
         x.__hash__() <==> hash(x)
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def append(self, *args, **kwargs):
         """
         Add another value to the hash.
         """
         ...
-
     def getHash(self, *args, **kwargs):
         """
         Get the current value of the hash.
         """
         ...
-
     def reset(self, *args, **kwargs):
         """
         Reset the hash.
         """
         ...
-
     def setHash(self, *args, **kwargs):
         """
         Set the current value of the hash.
         """
         ...
-
     ...
-
 
 class Help_Knob(Knob):
     """
@@ -2955,15 +2683,17 @@ class Help_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Histogram_Knob(Knob):
     """
@@ -2974,15 +2704,17 @@ class Histogram_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class IArray_Knob(Array_Knob):
     """
@@ -2993,39 +2725,37 @@ class IArray_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def dimensions(self, *args, **kwargs):
         """
         Return number of dimensions.
         """
         ...
-
     def height(self, *args, **kwargs):
         """
         Return height of the array.
         """
         ...
-
     def value(self, *args, **kwargs):
         """
         Return value of the array at position (x, y).
         """
         ...
-
     def width(self, *args, **kwargs):
         """
         Return width of the array.
         """
         ...
-
     ...
-
 
 class Info:
     """
@@ -3036,39 +2766,32 @@ class Info:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def h(self) -> float:
         """
         Return height.
         """
         ...
-
     def w(self) -> float:
         """
         Return width.
         """
         ...
-
     def x(self) -> float:
         """
         Return left edge.
         """
         ...
-
     def y(self) -> float:
         """
         Return the bottom edge.
         """
         ...
-
     ...
-
 
 class Int_Knob(Array_Knob):
     """
@@ -3079,13 +2802,16 @@ class Int_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def setValue(self, val: int) -> bool:
         """
         Set the integer value of this knob.
@@ -3095,7 +2821,6 @@ class Int_Knob(Array_Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def value(self) -> int:
         """
         Get the integer value of this knob.
@@ -3103,9 +2828,7 @@ class Int_Knob(Array_Knob):
         @return: The value of this knob as an int.
         """
         ...
-
     ...
-
 
 class Keyer_Knob(Array_Knob):
     """
@@ -3116,13 +2839,16 @@ class Keyer_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def names(self, n) -> six.binary_type:
         """
         @param n: The index of the name to return.
@@ -3130,7 +2856,6 @@ class Keyer_Knob(Array_Knob):
         @return: The name at position n.
         """
         ...
-
     def value(self, outputCtx, n) -> float:
         """
         Get the value of argument n.
@@ -3142,9 +2867,7 @@ class Keyer_Knob(Array_Knob):
         @return: The value of argument n.
         """
         ...
-
     ...
-
 
 class Knob:
     """
@@ -3158,24 +2881,24 @@ class Knob:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def Class(self) -> six.binary_type:
         """
         Class name.
         """
         ...
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
-        """
-        """
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
+        """ """
         ...
-
     def clearAnimated(self, *args, **kwargs):
         """
         Clear animation for channel 'c'. Return True if successful.
         """
         ...
-
     def clearFlag(self, f: int) -> None:
         """
         Clear flag.
@@ -3185,7 +2908,6 @@ class Knob:
         @return: None.
         """
         ...
-
     def critical(self, message) -> None:
         """
         @param message: message to put the knob in error, and do a popup.
@@ -3193,7 +2915,6 @@ class Knob:
         @return: None.
         """
         ...
-
     def debug(self, message) -> None:
         """
         @param message: message to put out to the error console, attached to the knob, if the verbosity level is set high enough.
@@ -3201,13 +2922,11 @@ class Knob:
         @return: None.
         """
         ...
-
     def enabled(self) -> bool:
         """
         True if the knob is enabled, False if it's disabled.
         """
         ...
-
     def error(self, message) -> None:
         """
         @param message: message to put the knob in error.
@@ -3215,13 +2934,11 @@ class Knob:
         @return: None.
         """
         ...
-
     def fromScript(self, *args, **kwargs):
         """
         Initialise from script.
         """
         ...
-
     def fullyQualifiedName(self, channel=-1) -> six.binary_type:
         """
         Returns the fully-qualified name of the knob within the node. This can be useful for expression linking.
@@ -3233,13 +2950,11 @@ class Knob:
         @return: The string of the qualified knob or sub-knob, which can be used directly in expression links.
         """
         ...
-
     def getDerivative(self, *args, **kwargs):
         """
         Return derivative at time 't' for channel 'c'.
         """
         ...
-
     def getFlag(self, f: int) -> bool:
         """
         Returns whether the input flag is set.
@@ -3249,55 +2964,46 @@ class Knob:
         @return: True if set, False otherwise.
         """
         ...
-
     def getIntegral(self, *args, **kwargs):
         """
         Return integral at the interval [t1, t2] for channel 'c'.
         """
         ...
-
     def getKeyIndex(self, *args, **kwargs):
         """
         Return keyframe index at time 't' for channel 'c'.
         """
         ...
-
     def getKeyList(self, *args, **kwargs):
         """
         Get all unique keys on the knob.  Returns list.
         """
         ...
-
     def getKeyTime(self, *args, **kwargs):
         """
         Return index of the keyframe at time 't' for channel 'c'.
         """
         ...
-
     def getNthDerivative(self, *args, **kwargs):
         """
         Return nth derivative at time 't' for channel 'c'.
         """
         ...
-
     def getNumKeys(self, *args, **kwargs):
         """
         Return number of keyframes for channel 'c'.
         """
         ...
-
     def getValue(self, *args, **kwargs):
         """
         Return value at the current frame for channel 'c'.
         """
         ...
-
     def getValueAt(self, *args, **kwargs):
         """
         Return value at time 't' for channel 'c'.
         """
         ...
-
     def hasExpression(self, index=-1) -> bool:
         """
         Return True if animation at index 'index' has an expression.
@@ -3307,37 +3013,31 @@ class Knob:
         @return: True if has expression, False otherwise.
         """
         ...
-
     def isAnimated(self, *args, **kwargs):
         """
         Return True if channel 'c' is animated.
         """
         ...
-
     def isKey(self, *args, **kwargs):
         """
         Return True if there is a keyframe at the current frame for channel 'c'.
         """
         ...
-
     def isKeyAt(self, *args, **kwargs):
         """
         Return True if there is a keyframe at time 't' for channel 'c'.
         """
         ...
-
     def label(self) -> six.binary_type:
         """
         label.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         name.
         """
         ...
-
     def node(self) -> Node:
         """
         Return the node that this knob belongs to. If the node has been cloned, we'll always return a reference to the original.
@@ -3345,25 +3045,21 @@ class Knob:
         @return: The node which owns this knob, or None if the knob has no owner yet.
         """
         ...
-
     def removeKey(self, *args, **kwargs):
         """
         Remove key for channel 'c'. Return True if successful.
         """
         ...
-
     def removeKeyAt(self, *args, **kwargs):
         """
         Remove key at time 't' for channel 'c'. Return True if successful.
         """
         ...
-
     def setAnimated(self, *args, **kwargs):
         """
         Set channel 'c' to be animated.
         """
         ...
-
     def setEnabled(self, enabled: bool) -> None:
         """
         Enable or disable the knob.
@@ -3371,8 +3067,12 @@ class Knob:
         @param enabled: True to enable the knob, False to disable it.
         """
         ...
-
-    def setExpression(self, expression: bytes, channel: int = -1, view: typing.Union[int, bytes] = None) -> bool:
+    def setExpression(
+        self,
+        expression: bytes,
+        channel: int = -1,
+        view: typing.Union[int, bytes] = None,
+    ) -> bool:
         """
         Set the expression for a knob. You can optionally specify a channel to set the expression for.
 
@@ -3387,7 +3087,6 @@ class Knob:
         @return: True if successful, False if not.
         """
         ...
-
     def setFlag(self, f: int) -> None:
         """
         Logical OR of the argument and existing knob flags.
@@ -3397,7 +3096,6 @@ class Knob:
         @return: None.
         """
         ...
-
     def setLabel(self, s: bytes) -> None:
         """
         @param s: New label.
@@ -3405,7 +3103,6 @@ class Knob:
         @return: None.
         """
         ...
-
     def setName(self, s) -> None:
         """
         @param s: New name.
@@ -3413,7 +3110,6 @@ class Knob:
         @return: None.
         """
         ...
-
     def setTooltip(self, s) -> None:
         """
         @param s: New tooltip.
@@ -3421,7 +3117,6 @@ class Knob:
         @return: None.
         """
         ...
-
     def setValue(self, val: typing.Any, chan: six.binary_type = ...) -> bool:
         """
         Sets the value 'val' at channel 'chan'.
@@ -3429,7 +3124,6 @@ class Knob:
         @return: True if successful, False if not.
         """
         ...
-
     def setValueAt(self, val, time, chan) -> bool:
         """
         Sets the value 'val' at channel 'chan' for time 'time'.
@@ -3437,7 +3131,6 @@ class Knob:
         @return: True if successful, False if not.
         """
         ...
-
     def setVisible(self, visible) -> None:
         """
         Show or hide the knob.
@@ -3445,7 +3138,6 @@ class Knob:
         @param visible: True to show the knob, False to hide it.
         """
         ...
-
     def toScript(self, quote, context=...) -> six.binary_type:
         """
         Return the value of the knob in script syntax.
@@ -3455,25 +3147,21 @@ class Knob:
         Pass None for context to get results for all views and key times (as stored in a .nk file).
         """
         ...
-
     def tooltip(self) -> six.binary_type:
         """
         tooltip.
         """
         ...
-
     def value(self, index: int = ...) -> typing.Any:
         """
         Return value at the current frame for channel 'c'.
         """
         ...
-
     def visible(self) -> bool:
         """
         True if the knob is visible, False if it's hidden.
         """
         ...
-
     def warning(self, message) -> None:
         """
         @param message: message to put a warning on the knob.
@@ -3481,9 +3169,7 @@ class Knob:
         @return: None.
         """
         ...
-
     ...
-
 
 class KnobType:
     """
@@ -3492,14 +3178,14 @@ class KnobType:
 
     ...
 
-
 class Layer:
     """
     A layer is a set of channels.
     """
 
-    def __new__(cls, name: six.binary_type, channels: typing.List[six.binary_type] = ...): ...
-
+    def __new__(
+        cls, name: six.binary_type, channels: typing.List[six.binary_type] = ...
+    ): ...
     def channels(self) -> typing.List[six.binary_type]:
         """
         Get a list of the channels in this layer.
@@ -3507,7 +3193,6 @@ class Layer:
         @return: A list of strings, where each string is the name of a channel in this layer.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Get the layer name.
@@ -3515,7 +3200,6 @@ class Layer:
         @return: The layer name, as a string.
         """
         ...
-
     def setName(self, newName) -> None:
         """
         Set the name of this layer.
@@ -3523,7 +3207,6 @@ class Layer:
         @param newName: The new name for this layer.
         """
         ...
-
     def visible(self) -> bool:
         """
         Check whether the layer is visible.
@@ -3531,9 +3214,7 @@ class Layer:
         @return: True if visible, False if not.
         """
         ...
-
     ...
-
 
 class Link_Knob(Knob):
     """
@@ -3544,48 +3225,41 @@ class Link_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def getLink(self) -> ...:
         """
         s
         """
         ...
-
     def getLinkedKnob(self) -> Knob:
-        """
-        """
+        """ """
         ...
-
     def makeLink(self, s, t) -> None:
-        """
-        """
+        """ """
         ...
-
     def setLink(self, s) -> None:
-        """
-        """
+        """ """
         ...
-
     def setValue(self) -> None:
         """
         Set value of knob.
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Return value of knob.
         """
         ...
-
     ...
-
 
 class LinkableKnobInfo:
     """
@@ -3597,51 +3271,42 @@ class LinkableKnobInfo:
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def absolute(self) -> bool:
         """
         Returns whether the values of this knob should be treated as absolute or relative. This may be useful for positions.
         """
         ...
-
     def displayName(self) -> six.binary_type:
         """
         Returns the custom display name that will appear in Link-to menus.
         """
         ...
-
     def enabled(self) -> bool:
         """
         Returns whether the knob is currently enabled or not.
         """
         ...
-
     def indices(self) -> list:
         """
         Returns a list of the knob channels that should be used with this linkable knob.
         """
         ...
-
     def knob(self) -> Knob:
         """
         Returns the knob that may be linked to.
         """
         ...
-
     ...
-
 
 class LookupCurves_Knob(Knob):
     """
@@ -3652,13 +3317,16 @@ class LookupCurves_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addCurve(self, curve, expr=None) -> None:
         """
         Adds a curve.
@@ -3670,7 +3338,6 @@ class LookupCurves_Knob(Knob):
         @return: None
         """
         ...
-
     def delCurve(self, curve) -> None:
         """
         Deletes a curve.
@@ -3680,7 +3347,6 @@ class LookupCurves_Knob(Knob):
         @return: None
         """
         ...
-
     def editCurve(self, curve, expr=None) -> None:
         """
         Edits an existing curve.
@@ -3692,9 +3358,7 @@ class LookupCurves_Knob(Knob):
         @return: None
         """
         ...
-
     ...
-
 
 class Lut:
     """
@@ -3705,13 +3369,11 @@ class Lut:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def fromByte(self, float) -> float:
         """
         Converts byte values in the range 0-255 to floating point.
         """
         ...
-
     def fromByteSingle(self, *args, **kwargs):
         """
         self.fromByte(float) -> float.
@@ -3719,32 +3381,27 @@ class Lut:
         Converts byte values in the range 0-255 to floating point.
         """
         ...
-
     def fromFloat(self, src, alpha) -> typing.List[float]:
         """
         Convert a sequence of floating-point values to from_byte(x*255).
         Alpha is an optional argument and if present unpremultiply by alpha, convert, and then multiply back.
         """
         ...
-
     def isLinear(self) -> bool:
         """
         True if toByte(x) appears to return x*255, False otherwise
         """
         ...
-
     def isZero(self) -> bool:
         """
         True if toByte(0) returns a value <= 0, False otherwise
         """
         ...
-
     def toByte(self, float) -> float:
         """
         Converts floating point values to byte values in the range 0-255.
         """
         ...
-
     def toByteSingle(self, *args, **kwargs):
         """
         self.toByte(float) -> float.
@@ -3752,16 +3409,13 @@ class Lut:
         Converts floating point values to byte values in the range 0-255.
         """
         ...
-
     def toFloat(self, src, alpha) -> typing.List[float]:
         """
         Convert a sequence of floating-point values to to_byte(x)/255.
         Alpha is an optional argument and if present unpremultiply by alpha, convert, and then multiply back.
         """
         ...
-
     ...
-
 
 class Menu(MenuItem):
     """
@@ -3773,7 +3427,6 @@ class Menu(MenuItem):
         Adds the QAction to the menu.
         """
         ...
-
     def addCommand(
         self,
         name: six.binary_type,
@@ -3821,7 +3474,6 @@ class Menu(MenuItem):
         @return: The menu/toolbar item that was added to hold the command.
         """
         ...
-
     def addMenu(
         self,
         name: six.binary_type,
@@ -3845,7 +3497,6 @@ class Menu(MenuItem):
         @return: The submenu that was added.
         """
         ...
-
     def addSeparator(self, index: int = ...) -> ...:
         """
         Add a separator to this menu/toolbar.
@@ -3857,10 +3508,9 @@ class Menu(MenuItem):
         @return: The separator that was created.
         """
         ...
-
     def clearMenu(self, *args, **kwargs):
         """
-        self.clearMenu() 
+        self.clearMenu()
 
         Clears a menu.
 
@@ -3871,7 +3521,6 @@ class Menu(MenuItem):
         @return: true if cleared, false if menu not found
         """
         ...
-
     def findItem(self, name: bytes) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
@@ -3881,13 +3530,11 @@ class Menu(MenuItem):
         @return: The submenu or command we found, or None if we could not find anything.
         """
         ...
-
     def items(self) -> None:
         """
         Returns a list of sub menu items.
         """
         ...
-
     def menu(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
@@ -3897,13 +3544,11 @@ class Menu(MenuItem):
         @return: The submenu or command we found, or None if we could not find anything.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Returns the name of the menu item.
         """
         ...
-
     def removeItem(self, name) -> None:
         """
         Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
@@ -3913,15 +3558,12 @@ class Menu(MenuItem):
         @return: true if removed, false if menu not found
         """
         ...
-
     def updateMenuItems(self) -> None:
         """
         Updates menu items' states. Call on about to show menu.
         """
         ...
-
     ...
-
 
 class MenuBar:
     """
@@ -3933,8 +3575,9 @@ class MenuBar:
         Adds the QAction to the menu.
         """
         ...
-
-    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
+    def addCommand(
+        self, name, command, shortcut, icon, tooltip, index, readonly
+    ) -> typing.Union[Menu, ToolBar]:
         """
         Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
         Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
@@ -3955,7 +3598,6 @@ class MenuBar:
         @return: The menu/toolbar item that was added to hold the command.
         """
         ...
-
     def addMenu(self, **kwargs) -> Menu:
         """
         Add a new submenu.
@@ -3967,7 +3609,6 @@ class MenuBar:
         @return: The submenu that was added.
         """
         ...
-
     def addSeparator(self, **kwargs) -> ...:
         """
         Add a separator to this menu/toolbar.
@@ -3976,7 +3617,6 @@ class MenuBar:
         @return: The separator that was created.
         """
         ...
-
     def clearMenu(self, *args, **kwargs):
         """
         self.clearMenu()
@@ -3986,7 +3626,6 @@ class MenuBar:
         @return: true if cleared, false if menu not found
         """
         ...
-
     def findItem(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
@@ -3994,13 +3633,11 @@ class MenuBar:
         @return: The submenu or command we found, or None if we could not find anything.
         """
         ...
-
     def items(self) -> None:
         """
         Returns a list of sub menu items.
         """
         ...
-
     def menu(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
@@ -4008,13 +3645,11 @@ class MenuBar:
         @return: The submenu or command we found, or None if we could not find anything.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Returns the name of the menu item.
         """
         ...
-
     def removeItem(self, name) -> None:
         """
         Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
@@ -4022,15 +3657,12 @@ class MenuBar:
         @return: true if removed, false if menu not found
         """
         ...
-
     def updateMenuItems(self) -> None:
         """
         Updates menu items' states. Call on about to show menu.
         """
         ...
-
     ...
-
 
 class MenuItem:
     """
@@ -4042,31 +3674,26 @@ class MenuItem:
         Get the action associated with this menu item.
         """
         ...
-
     def icon(self) -> six.binary_type:
         """
         Returns the name of the icon on this menu item as path of the icon.
         """
         ...
-
     def invoke(self) -> None:
         """
         Perform the action associated with this menu item.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Returns the name of the menu item.
         """
         ...
-
     def script(self) -> six.binary_type:
         """
         Returns the script that gets executed for this menu item.
         """
         ...
-
     def setEnabled(self, enabled, recursive) -> None:
         """
         Enable or disable the item.
@@ -4076,7 +3703,6 @@ class MenuItem:
         @param recursive: True to also setEnabled on submenu actions.
         """
         ...
-
     def setIcon(self, icon) -> None:
         """
         Set the icon on this menu item.
@@ -4084,7 +3710,6 @@ class MenuItem:
         @param icon: the new icon as a path
         """
         ...
-
     def setScript(self, script) -> None:
         """
         Set the script to be executed for this menu item.
@@ -4094,7 +3719,6 @@ class MenuItem:
         menu.setScript("execfile('script.py')")
         """
         ...
-
     def setShortcut(self, keySequence: bytes) -> None:
         """
         Set the keyboard shortcut on this menu item.
@@ -4102,7 +3726,6 @@ class MenuItem:
         @param keySequence: the new shortcut in PortableText format, e.g. "Ctrl+Shift+P"
         """
         ...
-
     def setVisible(self, visible: bool) -> None:
         """
         Show or hide the item.
@@ -4110,15 +3733,12 @@ class MenuItem:
         @param visible: True to show the object; False to hide it.
         """
         ...
-
     def shortcut(self) -> six.binary_type:
         """
         Returns the keyboard shortcut on this menu item. The format of this is the PortableText format. It will return a string such as "Ctrl+Shift+P". Note that on Mac OS X the Command key is equivalent to Ctrl.
         """
         ...
-
     ...
-
 
 class MultiView_Knob(Knob):
     """
@@ -4129,26 +3749,27 @@ class MultiView_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def fromScript(self, s) -> bool:
         """
         Initialise from script s.
         True if succeeded, False otherwise
         """
         ...
-
     def notDefault(self) -> bool:
         """
         True if set to its default value, False otherwise
         """
         ...
-
     def setValue(self, *args, **kwargs):
         """
         fromScript(s) -> True if succeeded, False otherwise.
@@ -4158,7 +3779,6 @@ class MultiView_Knob(Knob):
         Initialise from script s.
         """
         ...
-
     def toScript(self, quote, context=...) -> six.binary_type:
         """
         Return the value of the knob in script syntax.
@@ -4168,7 +3788,6 @@ class MultiView_Knob(Knob):
         Pass None for context to get results for all views and key times (as stored in a .nk file).
         """
         ...
-
     def value(self, *args, **kwargs):
         """
         toScript(quote, context=current) -> string.
@@ -4180,9 +3799,7 @@ class MultiView_Knob(Knob):
         Pass None for context to get results for all views and key times (as stored in a .nk file).
         """
         ...
-
     ...
-
 
 class Multiline_Eval_String_Knob(EvalString_Knob):
     """
@@ -4193,15 +3810,17 @@ class Multiline_Eval_String_Knob(EvalString_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Node:
     def __new__(
@@ -4216,79 +3835,156 @@ class Node:
         seems same as `createNode`
         """
         ...
-
     def Class(self) -> six.binary_type:
         """
         Class of node.
         """
         ...
-
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'autolabel'], /, ) -> PythonKnob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"autolabel"],
+        /,
+    ) -> PythonKnob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'gl_color'], /, ) -> ColorChip_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"gl_color"],
+        /,
+    ) -> ColorChip_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'help'], /, ) -> EvalString_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"help"],
+        /,
+    ) -> EvalString_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'hide_input'], /, ) -> Boolean_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"hide_input"],
+        /,
+    ) -> Boolean_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'icon'], /, ) -> File_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"icon"],
+        /,
+    ) -> File_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'indicators'], /, ) -> Array_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"indicators"],
+        /,
+    ) -> Array_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'knobChanged'], /, ) -> PythonKnob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"knobChanged"],
+        /,
+    ) -> PythonKnob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'label'], /, ) -> Multiline_Eval_String_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"label"],
+        /,
+    ) -> Multiline_Eval_String_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'name'], /, ) -> String_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"name"],
+        /,
+    ) -> String_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'note_font'], /, ) -> Font_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"note_font"],
+        /,
+    ) -> Font_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'note_font_color'], /, ) -> ColorChip_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"note_font_color"],
+        /,
+    ) -> ColorChip_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'note_font_size'], /, ) -> Array_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"note_font_size"],
+        /,
+    ) -> Array_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'onCreate'], /, ) -> PythonKnob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"onCreate"],
+        /,
+    ) -> PythonKnob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'onDestroy'], /, ) -> PythonKnob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"onDestroy"],
+        /,
+    ) -> PythonKnob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'panel'], /, ) -> Obsolete_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"panel"],
+        /,
+    ) -> Obsolete_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'selected'], /, ) -> Boolean_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"selected"],
+        /,
+    ) -> Boolean_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'tile_color'], /, ) -> ColorChip_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"tile_color"],
+        /,
+    ) -> ColorChip_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'updateUI'], /, ) -> PythonKnob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"updateUI"],
+        /,
+    ) -> PythonKnob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'xpos'], /, ) -> Array_Knob: ...
+    def __getitem__(
+        self,
+        name: typing.Literal[b"xpos"],
+        /,
+    ) -> Array_Knob: ...
     @typing.overload
-    def __getitem__(self, name: typing.Literal[b'ypos'], /, ) -> Array_Knob: ...
-
+    def __getitem__(
+        self,
+        name: typing.Literal[b"ypos"],
+        /,
+    ) -> Array_Knob: ...
     @typing.overload
-    def __getitem__(self, name: six.binary_type, /, ) -> Knob:
+    def __getitem__(
+        self,
+        name: six.binary_type,
+        /,
+    ) -> Knob:
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self) -> int:
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self) -> six.binary_type:
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self) -> six.binary_type:
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def addKnob(self, k: Knob) -> None:
         """
         Add knob k to this node or panel.
@@ -4298,7 +3994,6 @@ class Node:
         @return: None.
         """
         ...
-
     def allKnobs(self) -> typing.List[Knob]:
         """
         Get a list of all knobs in this node, including nameless knobs.
@@ -4322,7 +4017,6 @@ class Node:
         Note that this doesn't follow the links for Link_Knobs
         """
         ...
-
     def autoplace(self) -> None:
         """
         Automatically place nodes, so they do not overlap.
@@ -4330,7 +4024,6 @@ class Node:
         @return: None.
         """
         ...
-
     def bbox(self) -> Info:
         """
         Bounding box of the node.
@@ -4338,10 +4031,9 @@ class Node:
         @return: List of x, y, w, h.
         """
         ...
-
     def canSetInput(self, i: int, node: Node) -> bool:
         """
-        Check whether the output of 'node' can be connected to input i. 
+        Check whether the output of 'node' can be connected to input i.
 
         @param i: Input number.
 
@@ -4350,7 +4042,6 @@ class Node:
         @return: True if node can be connected, False otherwise.
         """
         ...
-
     def channels(self) -> typing.List[six.binary_type]:
         """
         List channels output by this node.
@@ -4358,13 +4049,11 @@ class Node:
         @return: String list.
         """
         ...
-
     def clones(self) -> int:
         """
         Number of clones.
         """
         ...
-
     def connectInput(self, i, node) -> bool:
         """
         Connect the output of 'node' to the i'th input or the next available unconnected input. The requested input is tried first, but if it is already set then subsequent inputs are tried until an unconnected one is found, as when you drop a connection arrow onto a node in the GUI.
@@ -4376,7 +4065,6 @@ class Node:
         @return: True if a connection is made, False otherwise.
         """
         ...
-
     def deepSample(self, c, x, y, n) -> float:
         """
         Return pixel values from a deep image.
@@ -4396,7 +4084,6 @@ class Node:
         @return: Floating point value.
         """
         ...
-
     def deepSampleCount(self, x, y) -> int:
         """
         Return number of samples for a pixel on a deep image.
@@ -4412,7 +4099,6 @@ class Node:
         @return: Integer value.
         """
         ...
-
     def dependencies(self, what: int = ...) -> typing.List[Node]:
         """
         List all nodes referred to by this node. 'what' is an optional integer (see below).
@@ -4438,8 +4124,9 @@ class Node:
         @return: List of nodes.
         """
         ...
-
-    def dependent(self, what: int = ..., forceEvaluate: bool = ...) -> typing.List[Node]:
+    def dependent(
+        self, what: int = ..., forceEvaluate: bool = ...
+    ) -> typing.List[Node]:
         """
         List all nodes that read information from this node.  'what' is an optional integer:
 
@@ -4455,9 +4142,9 @@ class Node:
 
 
 
-        forceEvaluate is an optional boolean defaulting to True. When this parameter is true, it forces a re-evaluation of the entire tree. 
+        forceEvaluate is an optional boolean defaulting to True. When this parameter is true, it forces a re-evaluation of the entire tree.
 
-        This can be expensive, but otherwise could give incorrect results if nodes are expression-linked. 
+        This can be expensive, but otherwise could give incorrect results if nodes are expression-linked.
 
 
 
@@ -4472,7 +4159,6 @@ class Node:
         @return: List of nodes.
         """
         ...
-
     def error(self) -> bool:
         """
         True if the node or any in its input tree have an error, or False otherwise.
@@ -4484,8 +4170,9 @@ class Node:
         Note that this will always return false for viewers, which cannot generate their input trees.  Instead, choose an input of the viewer (e.g. the active one), and call treeHasError() on that.
         """
         ...
-
-    def fileDependencies(self, start, end) -> typing.List[typing.Union[Node, typing.List[six.binary_type]]]:
+    def fileDependencies(
+        self, start, end
+    ) -> typing.List[typing.Union[Node, typing.List[six.binary_type]]]:
         """
         @param start: first frame
 
@@ -4506,7 +4193,6 @@ class Node:
         Eg.  [Read1, ['file1.dpx, file2.dpx'] ], [Read2, ['file3.dpx', 'file4.dpx'] ] ]
         """
         ...
-
     def firstFrame(self) -> int:
         """
         First frame in frame range for this node.
@@ -4514,13 +4200,11 @@ class Node:
         @return: int.
         """
         ...
-
     def forceValidate(self) -> None:
         """
         Force the node to validate itself, updating its hash.
         """
         ...
-
     def format(self) -> Format:
         """
         Format of the node.
@@ -4528,7 +4212,6 @@ class Node:
         @return: Format.
         """
         ...
-
     def frameRange(self) -> FrameRange:
         """
         Frame range for this node.
@@ -4536,7 +4219,6 @@ class Node:
         @return: FrameRange.
         """
         ...
-
     def fullName(self) -> six.binary_type:
         """
         Get the name of this node and any groups enclosing it in 'group.group.name' form.
@@ -4544,7 +4226,6 @@ class Node:
         @return: The fully-qualified name of this node, as a string.
         """
         ...
-
     def getNumKnobs(self) -> int:
         """
         self.numKnobs() -> The number of knobs.
@@ -4552,7 +4233,6 @@ class Node:
         @return: The number of knobs.
         """
         ...
-
     def hasError(self) -> bool:
         """
         True if the node itself has an error, regardless of the state of the ops in its input tree, or False otherwise.
@@ -4564,7 +4244,6 @@ class Node:
         Note that an error on a node may not appear if there is an error somewhere in its input tree, because it may not be possible to validate the node itself correctly in that case.
         """
         ...
-
     def height(self) -> int:
         """
         Height of the node.
@@ -4572,19 +4251,16 @@ class Node:
         @return: int.
         """
         ...
-
     def help(self) -> six.binary_type:
         """
         Help for the node.
         """
         ...
-
     def hideControlPanel(self) -> None:
         """
         None
         """
         ...
-
     def input(self, i: int) -> Node:
         """
         @param i: Input number.
@@ -4592,13 +4268,11 @@ class Node:
         @return: The i'th input.
         """
         ...
-
     def inputs(self) -> int:
         """
         Number of the highest connected input + 1. If inputs 0, 1, and 3 are connected, this will return 4.
         """
         ...
-
     def isSelected(self) -> bool:
         """
         Returns the current selection state of the node.  This is the same as checking the 'selected' knob.
@@ -4606,7 +4280,6 @@ class Node:
         @return: True if selected, or False if not.
         """
         ...
-
     def knob(self, p: typing.Union[int, six.binary_type]) -> Knob:
         """
         @param p: A string or an integer.
@@ -4618,7 +4291,6 @@ class Node:
         Note that this follows the links for Link_Knobs
         """
         ...
-
     def knobs(self) -> typing.Dict[six.binary_type, Knob]:
         """
         Get a dictionary of (name, knob) pairs for all knobs in this node.
@@ -4642,7 +4314,6 @@ class Node:
         Note that this doesn't follow the links for Link_Knobs
         """
         ...
-
     def lastFrame(self) -> int:
         """
         Last frame in frame range for this node.
@@ -4650,7 +4321,6 @@ class Node:
         @return: int.
         """
         ...
-
     def linkableKnobs(self, knobType) -> list:
         """
         Returns a list of any knobs that may be linked to from the node as well as some meta information about the knob. This may include whether the knob is enabled and whether it should be used for absolute or relative values. Not all of these variables may make sense for all knobs..
@@ -4658,36 +4328,34 @@ class Node:
         @param knobType A KnobType describing the type of knobs you want.@return: A list of LinkableKnobInfo that may be empty .
         """
         ...
-
     def maxInputs(self) -> int:
         """
         Maximum number of inputs this node can have.
         """
         ...
-
     def maxOutputs(self) -> int:
         """
         Maximum number of outputs this node can have.
         """
         ...
-
     def maximumInputs(self) -> int:
         """
         Maximum number of inputs this node can have.
         """
         ...
-
     def maximumOutputs(self) -> int:
         """
         Maximum number of outputs this node can have.
         """
         ...
-
     @typing.overload
-    def metadata(self, *, time: int = ..., view: six.binary_type = ...) -> typing.Dict[six.binary_type, typing.Union[six.binary_type, float]]: ...
-
+    def metadata(
+        self, *, time: int = ..., view: six.binary_type = ...
+    ) -> typing.Dict[six.binary_type, typing.Union[six.binary_type, float]]: ...
     @typing.overload
-    def metadata(self, key: six.binary_type, time: int = ..., view: six.binary_type = ...) -> typing.Union[six.binary_type, float, None]:
+    def metadata(
+        self, key: six.binary_type, time: int = ..., view: six.binary_type = ...
+    ) -> typing.Union[six.binary_type, float, None]:
         """
         Return the metadata item for key on this node at current output context, or at optional time and view.
 
@@ -4704,43 +4372,36 @@ class Node:
         @return: The requested metadata value, a dictionary containing all keys if a key name is not provided, or None if the specified key is not matched.
         """
         ...
-
     def minInputs(self) -> int:
         """
         Minimum number of inputs this node can have.
         """
         ...
-
     def minimumInputs(self) -> int:
         """
         Minimum number of inputs this node can have.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Name of node.
         """
         ...
-
     def numKnobs(self) -> int:
         """
         The number of knobs.
         """
         ...
-
     def opHashes(self) -> typing.List[int]:
         """
         Returns a list of hash values, one for each op in this node.
         """
         ...
-
     def optionalInput(self) -> int:
         """
         Number of first optional input.
         """
         ...
-
     def performanceInfo(self, category) -> ...:
         """
         @category: performance category ( optional ).A performance category, must be either nuke.PROFILE_STORE, nuke.PROFILE_VALIDATE, nuke.PROFILE_REQUEST or nuke.PROFILE_ENGINE The default is nuke.PROFILE_ENGINE which gives the performance info of the render engine.
@@ -4754,7 +4415,6 @@ class Node:
         timeTakenWall = the actual time ( wall time ) spent in microseconds
         """
         ...
-
     def pixelAspect(self) -> int:
         """
         Pixel Aspect ratio of the node.
@@ -4762,13 +4422,11 @@ class Node:
         @return: float.
         """
         ...
-
     def proxy(self) -> bool:
         """
         True if proxy is enabled, False otherwise.
         """
         ...
-
     def readKnobs(self, s) -> None:
         """
         Read the knobs from a string (TCL syntax).
@@ -4778,7 +4436,6 @@ class Node:
         @return: None.
         """
         ...
-
     def redraw(self) -> None:
         """
         Force a redraw of the node.
@@ -4786,7 +4443,6 @@ class Node:
         @return: None.
         """
         ...
-
     def removeKnob(self, k: Knob) -> None:
         """
         Remove knob k from this node or panel. Throws a ValueError exception if k is not found on the node.
@@ -4796,13 +4452,11 @@ class Node:
         @return: None.
         """
         ...
-
     def resetKnobsToDefault(self) -> None:
         """
         Reset all the knobs to their default values.
         """
         ...
-
     def running(self) -> ...:
         """
         Class method.
@@ -4810,7 +4464,6 @@ class Node:
         @return: Node rendering when paralleled threads are running or None.
         """
         ...
-
     def sample(self, c, x, y, dx, dy) -> float:
         """
         Return pixel values from an image.
@@ -4838,7 +4491,6 @@ class Node:
         @return: Floating point value.
         """
         ...
-
     def screenHeight(self) -> int:
         """
         Height of the node when displayed on screen in the DAG, at 1:1 zoom, in pixels.
@@ -4846,7 +4498,6 @@ class Node:
         @return: int.
         """
         ...
-
     def screenWidth(self) -> int:
         """
         Width of the node when displayed on screen in the DAG, at 1:1 zoom, in pixels.
@@ -4854,7 +4505,6 @@ class Node:
         @return: int.
         """
         ...
-
     def selectOnly(self) -> None:
         """
         Set this node to be the only selection, as if it had been clicked in the DAG.
@@ -4862,7 +4512,6 @@ class Node:
         @return: None.
         """
         ...
-
     def setInput(self, i: int, node: typing.Optional[Node]) -> bool:
         """
         Connect input i to node if canSetInput() returns true.
@@ -4874,8 +4523,12 @@ class Node:
         @return: True if canSetInput() returns true, or if the input is already correct.
         """
         ...
-
-    def setName(self, name: six.binary_type, uncollide: bool = True, updateExpressions: bool = False) -> None:
+    def setName(
+        self,
+        name: six.binary_type,
+        uncollide: bool = True,
+        updateExpressions: bool = False,
+    ) -> None:
         """
         Set name of the node and resolve name collisions if optional named argument 'uncollide' is True.
 
@@ -4888,7 +4541,6 @@ class Node:
         @return: None
         """
         ...
-
     def setSelected(self, selected) -> None:
         """
         Set the selection state of the node.  This is the same as changing the 'selected' knob.
@@ -4898,7 +4550,6 @@ class Node:
         @return: None.
         """
         ...
-
     def setTab(self, tabIndex) -> None:
         """
         @param tabIndex: The tab to show (first is 0).
@@ -4906,7 +4557,6 @@ class Node:
         @return: None
         """
         ...
-
     def setXYpos(self, x: int, y: int) -> None:
         """
         Set the (x, y) position of node in node graph.
@@ -4918,7 +4568,6 @@ class Node:
         @return: None.
         """
         ...
-
     def setXpos(self, x: int) -> None:
         """
         Set the x position of node in node graph.
@@ -4928,7 +4577,6 @@ class Node:
         @return: None.
         """
         ...
-
     def setYpos(self, y: int) -> None:
         """
         Set the y position of node in node graph.
@@ -4938,7 +4586,6 @@ class Node:
         @return: None.
         """
         ...
-
     def showControlPanel(self, forceFloat: bool = False) -> None:
         """
         @param forceFloat: Optional python object. If it evaluates to True the control panel will always open as a floating panel. Default is False.
@@ -4946,7 +4593,6 @@ class Node:
         @return: None
         """
         ...
-
     def showInfo(self, s) -> None:
         """
         Creates a dialog box showing the result of script s.
@@ -4956,13 +4602,11 @@ class Node:
         @return: None.
         """
         ...
-
     def shown(self) -> bool:
         """
         true if the properties panel is open. This can be used to skip updates that are not visible to the user.
         """
         ...
-
     def treeHasError(self) -> bool:
         """
         True if the node or any in its input tree have an error, or False otherwise.
@@ -4974,7 +4618,6 @@ class Node:
         Note that this will always return false for viewers, which cannot generate their input trees.  Instead, choose an input of the viewer (e.g. the active one), and call treeHasError() on that.
         """
         ...
-
     def upstreamFrameRange(self, i) -> FrameRange:
         """
         Frame range for the i'th input of this node.
@@ -4984,7 +4627,6 @@ class Node:
         @return: FrameRange. Returns None when querying an invalid input.
         """
         ...
-
     def width(self) -> int:
         """
         Width of the node.
@@ -4992,7 +4634,6 @@ class Node:
         @return: int.
         """
         ...
-
     def writeKnobs(self, i: int) -> six.binary_type:
         """
         Return a tcl list. If TO_SCRIPT | TO_VALUE is not on, this is a simple list
@@ -5022,21 +4663,17 @@ class Node:
         @return: String in .nk form.
         """
         ...
-
     def xpos(self) -> int:
         """
         X position of node in node graph.
         """
         ...
-
     def ypos(self) -> int:
         """
         Y position of node in node graph.
         """
         ...
-
     ...
-
 
 class NodeConstructor:
     """
@@ -5047,7 +4684,6 @@ class NodeConstructor:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __call__(
         self,
         *,
@@ -5078,9 +4714,7 @@ class NodeConstructor:
         Construct a node and assign knob values to it.
         """
         ...
-
     ...
-
 
 class Nodes:
     """
@@ -5091,25 +4725,25 @@ class Nodes:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __getattribute__(self, name: six.binary_type) -> NodeConstructor:
-        ...
+    def __getattribute__(self, name: six.binary_type) -> NodeConstructor: ...
     ...
-
 
 class Obsolete_Knob(Knob):
     """
     For internal use only.
     """
 
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class OneView_Knob(Enumeration_Knob):
     """
@@ -5123,7 +4757,6 @@ class OneView_Knob(Enumeration_Knob):
 
     ...
 
-
 class OutputContext:
     """
     Describes a context in which expressions can be evaluated.
@@ -5133,57 +4766,47 @@ class OutputContext:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def frame(self) -> float:
         """
         Return frame value.
         """
         ...
-
     def setFrame(self, f) -> bool:
         """
         Set frame value. The f argument is a float.
         """
         ...
-
     def setView(self, n) -> bool:
         """
         Set view number. The n argument is an integer in the range of 0 to number of views.
         """
         ...
-
     def view(self) -> int:
         """
         Return view number.
         """
         ...
-
     def viewFromName(self, name) -> int:
         """
         Returns the index of the view with name matching the argument name or -1 if there is no match.
         """
         ...
-
     def viewcount(self) -> int:
         """
         Return number of views.
         """
         ...
-
     def viewname(self, n) -> six.binary_type:
         """
         Return name of the view. The n argument is an integer in the range of 0 to number of views.
         """
         ...
-
     def viewshort(self, n) -> six.binary_type:
         """
         Return short name of the view. The n argument is an integer in the range of 0 to number of views.
         """
         ...
-
     ...
-
 
 class Panel:
     """
@@ -5194,10 +4817,12 @@ class Panel:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, arg2: int = ..., /, ):
-        ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        arg2: int = ...,
+        /,
+    ): ...
     def addBooleanCheckBox(self, name: six.binary_type, value) -> bool:
         """
         Add a boolean check box knob to the panel.
@@ -5209,7 +4834,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addButton(self, name: six.binary_type, value) -> bool:
         """
         Add a button to the panel.
@@ -5221,7 +4845,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addClipnameSearch(self, name: six.binary_type, value) -> bool:
         """
         Add a clipname search knob to the panel.
@@ -5233,7 +4856,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addEnumerationPulldown(self, name: six.binary_type, value) -> bool:
         """
         Add a pulldown menu to the panel.
@@ -5245,7 +4867,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addExpressionInput(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add an expression evaluator to the panel.
@@ -5257,7 +4878,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addFilenameSearch(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a filename search knob to the panel.
@@ -5269,7 +4889,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addMultilineTextInput(self, name: six.binary_type, value) -> bool:
         """
         Add a multi-line text knob to the panel.
@@ -5281,7 +4900,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addNotepad(self, name: six.binary_type, value) -> bool:
         """
         Add a text edit widget to the panel.
@@ -5293,7 +4911,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addPasswordInput(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a password input knob to the panel.
@@ -5305,7 +4922,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addRGBColorChip(self, name: six.binary_type, value) -> bool:
         """
         Add a color chooser to the panel.
@@ -5317,7 +4933,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addScriptCommand(self, name: six.binary_type, value) -> bool:
         """
         Add a script command evaluator to the panel.
@@ -5329,7 +4944,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def addSingleLineInput(self, name: six.binary_type, value: six.binary_type) -> bool:
         """
         Add a single-line input knob to the panel.
@@ -5341,8 +4955,9 @@ class Panel:
         @return: True if successful.
         """
         ...
-
-    def addTextFontPulldown(self, name: six.binary_type, value: six.binary_type) -> bool:
+    def addTextFontPulldown(
+        self, name: six.binary_type, value: six.binary_type
+    ) -> bool:
         """
         Add a font chooser to the panel.
 
@@ -5353,13 +4968,11 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def clear(self) -> None:
         """
         Clear all panel attributes.
         """
         ...
-
     def execute(self, name: six.binary_type) -> typing.Optional[six.binary_type]:
         """
         Execute the script command associated with a particular label and return the result as a string.
@@ -5369,7 +4982,6 @@ class Panel:
         @return: The result of the script as a string, or None if it fails.
         """
         ...
-
     def setTitle(self, val: six.binary_type) -> bool:
         """
         Set the current title for the panel.
@@ -5379,7 +4991,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def setWidth(self, val: int) -> bool:
         """
         Set the width of the panel.
@@ -5389,7 +5000,6 @@ class Panel:
         @return: True if successful.
         """
         ...
-
     def show(self) -> int:
         """
         Display the panel.
@@ -5397,7 +5007,6 @@ class Panel:
         @return: An int value indicating how the dialog was closed (normally, or cancelled).
         """
         ...
-
     def title(self) -> six.binary_type:
         """
         Get the current title for the panel.
@@ -5405,7 +5014,6 @@ class Panel:
         @return: The title as a string.
         """
         ...
-
     def value(self, name: six.binary_type) -> typing.Optional[typing.Any]:
         """
         Get the value of a particular control in the panel.
@@ -5415,7 +5023,6 @@ class Panel:
         @return: The value for the field if any, otherwise None.
         """
         ...
-
     def width(self) -> int:
         """
         Get the width of the panel.
@@ -5423,9 +5030,7 @@ class Panel:
         @return: The width as an int.
         """
         ...
-
     ...
-
 
 class PanelNode:
     """
@@ -5436,13 +5041,11 @@ class PanelNode:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def addKnob(self, k) -> None:
         """
         Add knob k to this node or panel.
@@ -5450,13 +5053,11 @@ class PanelNode:
         @return: None.
         """
         ...
-
     def createWidget(self, *args, **kwargs):
         """
         Create the widget for the panel
         """
         ...
-
     def knobs(self) -> dict:
         """
         Get a dictionary of (name, knob) pairs for all knobs in this node.
@@ -5471,7 +5072,6 @@ class PanelNode:
         Note that this doesn't follow the links for Link_Knobs
         """
         ...
-
     def readKnobs(self, s) -> None:
         """
         Read the knobs from a string (TCL syntax).
@@ -5479,7 +5079,6 @@ class PanelNode:
         @return: None.
         """
         ...
-
     def removeKnob(self, k) -> None:
         """
         Remove knob k from this node or panel. Throws a ValueError exception if k is not found on the node.
@@ -5487,7 +5086,6 @@ class PanelNode:
         @return: None.
         """
         ...
-
     def writeKnobs(self, i) -> six.text_type:
         """
         Return a tcl list. If TO_SCRIPT | TO_VALUE is not on, this is a simple list
@@ -5505,9 +5103,7 @@ class PanelNode:
         @return: String in .nk form.
         """
         ...
-
     ...
-
 
 class Password_Knob(Knob):
     """
@@ -5518,20 +5114,22 @@ class Password_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def getText(self) -> six.binary_type:
         """
         Return text associated with knob.
         """
         ...
-
-    def setValue(self, val, view='default') -> None:
+    def setValue(self, val, view="default") -> None:
         """
         Set value of knob.
 
@@ -5542,7 +5140,6 @@ class Password_Knob(Knob):
         @return: None
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Get the value of this knob as a string.
@@ -5550,9 +5147,7 @@ class Password_Knob(Knob):
         @return: String value.
         """
         ...
-
     ...
-
 
 class Precomp(Group):
     def __getitem__(self, *args, **kwargs):
@@ -5560,34 +5155,28 @@ class Precomp(Group):
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def reload(self) -> None:
         """
         Precomp Node reload()
         @return: None
         """
         ...
-
     ...
-
 
 class ProgressTask:
     """
@@ -5598,27 +5187,22 @@ class ProgressTask:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def isCancelled(self) -> bool:
         """
         True if the user has requested the task to be cancelled
         """
         ...
-
     def setMessage(self, s) -> None:
         """
         set the message for the progress task
         """
         ...
-
     def setProgress(self, i) -> None:
         """
         i is an integer representing the current progress
         """
         ...
-
     ...
-
 
 class Pulldown_Knob(Enumeration_Knob):
     """
@@ -5629,31 +5213,31 @@ class Pulldown_Knob(Enumeration_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def commands(self, n) -> six.binary_type:
         """
         Return command n. The argument n is an integer and in the range of 0 and numValues.
         """
         ...
-
     def itemName(self, n) -> six.binary_type:
         """
         Return name of item n. The argument n is an integer and in the range of 0 and numValues.
         """
         ...
-
     def numValues(self) -> int:
         """
         Return number of values.
         """
         ...
-
     def setValues(self, items) -> None:
         """
         (Re)initialise knob to the list of items.
@@ -5677,9 +5261,7 @@ class Pulldown_Knob(Enumeration_Knob):
         k = w['knob_name']
         """
         ...
-
     ...
-
 
 class PyCustom_Knob(Script_Knob):
     """
@@ -5690,21 +5272,23 @@ class PyCustom_Knob(Script_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, content: six.text_type = ..., /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        content: six.text_type = ...,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def getObject(self, *args, **kwargs):
         """
         Returns the custom knob object as created in the by the 'command' argument to the PyCustom_Knob constructor.
         """
         ...
-
     ...
-
 
 class PyScript_Knob(Script_Knob):
     """
@@ -5717,19 +5301,26 @@ class PyScript_Knob(Script_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        value: six.binary_type = ...,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class PythonCustomKnob(Script_Knob):
     """
@@ -5740,21 +5331,22 @@ class PythonCustomKnob(Script_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def getObject(self, *args, **kwargs):
         """
         Returns the custom knob object as created in the by the 'command' argument to the PyCustom_Knob constructor.
         """
         ...
-
     ...
-
 
 class PythonKnob(String_Knob):
     """
@@ -5765,15 +5357,17 @@ class PythonKnob(String_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Radio_Knob(Enumeration_Knob):
     """
@@ -5788,25 +5382,26 @@ class Radio_Knob(Enumeration_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def enumName(self, n) -> six.binary_type:
         """
         Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
         """
         ...
-
     def numValues(self) -> int:
         """
         Return number of values. Deprecated.
         """
         ...
-
     def setValue(self, item) -> None:
         """
         Set the current value. item will first be converted into a string and matched against the enum values.
@@ -5826,7 +5421,6 @@ class Radio_Knob(Enumeration_Knob):
         k.setValue('exr')
         """
         ...
-
     def setValues(self, items) -> None:
         """
         (Re)initialise knob to the supplied list of items.
@@ -5844,7 +5438,6 @@ class Radio_Knob(Enumeration_Knob):
         k.setValues(['exr'])
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Current value.
@@ -5860,7 +5453,6 @@ class Radio_Knob(Enumeration_Knob):
         k.value()
         """
         ...
-
     def values(self) -> typing.List[six.binary_type]:
         """
         Return list of items.
@@ -5876,9 +5468,7 @@ class Radio_Knob(Enumeration_Knob):
         k.values()
         """
         ...
-
     ...
-
 
 class Range_Knob(Array_Knob):
     """
@@ -5889,40 +5479,38 @@ class Range_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Root(Group):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __len__(self) -> int:
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self) -> six.binary_type:
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self) -> six.binary_type:
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def addView(self, name, color) -> None:
         """
         Add view.
@@ -5934,7 +5522,6 @@ class Root(Group):
         @return: None.
         """
         ...
-
     def channels(self) -> typing.List[six.binary_type]:
         """
         nuke.Root.channels() -> Channel list.
@@ -5944,7 +5531,6 @@ class Root(Group):
         @return: Channel list.
         """
         ...
-
     def deleteView(self, s) -> None:
         """
         Delete view.
@@ -5954,7 +5540,6 @@ class Root(Group):
         @return: None.
         """
         ...
-
     def firstFrame(self) -> int:
         """
         First frame.
@@ -5962,13 +5547,11 @@ class Root(Group):
         @return: Integer.
         """
         ...
-
     def fps(self) -> int:
         """
         Return the FPS rounded to an int. This is deprecated. Please use real_fps().
         """
         ...
-
     def getOCIOColorspaceFamily(self, *args, **kwargs):
         """
         nuke.root.getOCIOColorspaceFamily(colorspace) -> Family of colorspace
@@ -5982,7 +5565,6 @@ class Root(Group):
         @return: Family name, may be an empty string.
         """
         ...
-
     def getOCIOColorspaceFromViewTransform(self, *args, **kwargs):
         """
         nuke.root.getOCIOColorspaceFromViewTransform(display, view) -> Colorspace name
@@ -5998,7 +5580,6 @@ class Root(Group):
         @return: The corresponding colorspace name.
         """
         ...
-
     def lastFrame(self) -> int:
         """
         Last frame.
@@ -6006,7 +5587,6 @@ class Root(Group):
         @return: Integer.
         """
         ...
-
     def layers(self, *args, **kwargs):
         """
         nuke.Root.layers() -> Layer list.
@@ -6016,7 +5596,6 @@ class Root(Group):
         @return: Layer list.
         """
         ...
-
     def mergeFrameRange(self, a, b) -> None:
         """
         Merge frame range.
@@ -6028,7 +5607,6 @@ class Root(Group):
         @return: None.
         """
         ...
-
     def modified(self) -> bool:
         """
         Get or set the 'modified' flag in a script
@@ -6036,19 +5614,16 @@ class Root(Group):
         @return: True if modified, False otherwise.
         """
         ...
-
     def proxy(self) -> bool:
         """
         True if proxy is set, False otherwise.
         """
         ...
-
     def realFps(self) -> float:
         """
         The global frames per second setting.
         """
         ...
-
     def setFrame(self, n: int) -> None:
         """
         Set frame.
@@ -6058,7 +5633,6 @@ class Root(Group):
         @return: None.
         """
         ...
-
     def setModified(self, b) -> None:
         """
         Set the 'modified' flag in a script.
@@ -6070,7 +5644,6 @@ class Root(Group):
         @return: None.
         """
         ...
-
     def setProxy(self, b) -> None:
         """
         Set proxy.
@@ -6080,7 +5653,6 @@ class Root(Group):
         @return: None.
         """
         ...
-
     def setView(self, s) -> None:
         """
         Set view.
@@ -6090,9 +5662,7 @@ class Root(Group):
         @return: None.
         """
         ...
-
     ...
-
 
 class RunInMainThread:
     """
@@ -6100,12 +5670,9 @@ class RunInMainThread:
     """
 
     def request(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
-
 
 class Scale_Knob(Array_Knob):
     """
@@ -6116,45 +5683,42 @@ class Scale_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def names(self, n) -> six.binary_type:
         """
         Return name for dimension n. The argument n is an integer.
         """
         ...
-
     def value(self, n, oc) -> float:
         """
         Return value for dimension n. The optional argument oc is an OutputContext.
         """
         ...
-
     def x(self, oc) -> float:
         """
         Return value for x. The optional oc argument is an OutputContext
         """
         ...
-
     def y(self, oc) -> float:
         """
         Return value for y. The optional oc argument is an OutputContext
         """
         ...
-
     def z(self, oc) -> float:
         """
         Return value for z. The optional oc argument is an OutputContext
         """
         ...
-
     ...
-
 
 class SceneView_Knob(Unsigned_Knob):
     """
@@ -6169,49 +5733,46 @@ class SceneView_Knob(Unsigned_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItems(self) -> None:
         """
         Adds a list of string items to the knob. New items are automatically set as imported and selected.
         """
         ...
-
     def getAllItems(self) -> list:
         """
         Returns a list of strings containing all items that the knob can import.
         """
         ...
-
     def getHighlightedItem(self) -> six.binary_type:
         """
         Returns a string containing the item which is currently highlighted.
         """
         ...
-
     def getImportedItems(self) -> list:
         """
         Returns a list of strings containing all items imported into the knob.
         """
         ...
-
     def getSelectedItems(self) -> list:
         """
         Returns a list of strings containing all currently selected items in the knob.
         """
         ...
-
     def removeItems(self) -> None:
         """
         Removes a list of string items from the knob.
         """
         ...
-
     def setAllItems(self, items, autoSelect) -> None:
         """
         Sets a list of strings containing all items that the knob can import.
@@ -6225,7 +5786,6 @@ class SceneView_Knob(Unsigned_Knob):
         @return: None.
         """
         ...
-
     def setImportedItems(self, items) -> None:
         """
         Sets a list of strings containing all items imported into the knob. This will overwrite the current imported items list.@param items: List of imported items.
@@ -6233,15 +5793,12 @@ class SceneView_Knob(Unsigned_Knob):
         @return: None.
         """
         ...
-
     def setSelectedItems(self) -> None:
         """
         Takes a list of strings of items contained in the knob and sets them as selected.
         """
         ...
-
     ...
-
 
 class Script_Knob(String_Knob):
     """
@@ -6252,13 +5809,16 @@ class Script_Knob(String_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def command(self) -> six.binary_type:
         """
         Get the current command.
@@ -6266,7 +5826,6 @@ class Script_Knob(String_Knob):
         @return: The current command as a string, or None if there is no current command.
         """
         ...
-
     def execute(self) -> None:
         """
         Execute the command.
@@ -6274,7 +5833,6 @@ class Script_Knob(String_Knob):
         @return: None.
         """
         ...
-
     def setCommand(self, cmd) -> None:
         """
         Set the new command for this knob.
@@ -6284,7 +5842,6 @@ class Script_Knob(String_Knob):
         @return: None.
         """
         ...
-
     def setValue(self, cmd) -> None:
         """
         Set the new command for this knob.
@@ -6294,7 +5851,6 @@ class Script_Knob(String_Knob):
         @return: None.
         """
         ...
-
     def value(self) -> six.binary_type:
         """
         Get the current command.
@@ -6302,9 +5858,7 @@ class Script_Knob(String_Knob):
         @return: The current command as a string, or None if there is no current command.
         """
         ...
-
     ...
-
 
 class String_Knob(Knob):
     """
@@ -6315,19 +5869,31 @@ class String_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
-    def __init__(self, name: six.binary_type, /, ): ...
+    def __init__(
+        self,
+        name: six.binary_type,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, value: six.binary_type = ..., /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        value: six.binary_type = ...,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def getText(self, oc) -> six.binary_type:
         """
         Get the non-evaluated value of this knob - also see `value()`
@@ -6337,7 +5903,6 @@ class String_Knob(Knob):
         Return text associated with knob.
         """
         ...
-
     def getValue(self, *args, **kwargs):
         """
         self.value(oc) -> str
@@ -6351,7 +5916,6 @@ class String_Knob(Knob):
         @return: String value.
         """
         ...
-
     def setText(self, *args, **kwargs):
         """
         self.setValue(val, view='default') -> None
@@ -6367,7 +5931,6 @@ class String_Knob(Knob):
         @return: None
         """
         ...
-
     def setValue(self, val: six.binary_type, view: six.binary_type = ...) -> None:
         """
         Set value of knob.
@@ -6379,7 +5942,6 @@ class String_Knob(Knob):
         @return: None
         """
         ...
-
     def splitView(self, view) -> None:
         """
         Split the view away from the current knob value.
@@ -6389,7 +5951,6 @@ class String_Knob(Knob):
         @return: None.
         """
         ...
-
     def unsplitView(self, view) -> None:
         """
         Unsplit the view so that it shares a value with other views.
@@ -6399,7 +5960,6 @@ class String_Knob(Knob):
         @return: None.
         """
         ...
-
     def value(self, oc: OutputContext = ...) -> six.binary_type:
         """
         Get the evaluated value of this knob as a string - also see `getText()`.
@@ -6409,9 +5969,7 @@ class String_Knob(Knob):
         @return: String value.
         """
         ...
-
     ...
-
 
 class Tab_Knob(Knob):
     """
@@ -6422,17 +5980,28 @@ class Tab_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
-    def __init__(self, name: six.binary_type, /, ): ...
+    def __init__(
+        self,
+        name: six.binary_type,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ): ...
-
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ): ...
     @typing.overload
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, flags: int = ..., /, ):
-        ...
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        flags: int = ...,
+        /,
+    ): ...
     ...
-
 
 class Text_Knob(Knob):
     """
@@ -6443,7 +6012,6 @@ class Text_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @typing.overload
     def __init__(
         self,
@@ -6451,7 +6019,6 @@ class Text_Knob(Knob):
         label: six.binary_type = None,
         /,
     ): ...
-
     @typing.overload
     def __init__(
         self,
@@ -6464,9 +6031,7 @@ class Text_Knob(Knob):
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class ToolBar:
     """
@@ -6477,14 +6042,14 @@ class ToolBar:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def addAction(self, action) -> bool:
         """
         Adds the QAction to the menu.
         """
         ...
-
-    def addCommand(self, name, command, shortcut, icon, tooltip, index, readonly) -> typing.Union[Menu, ToolBar]:
+    def addCommand(
+        self, name, command, shortcut, icon, tooltip, index, readonly
+    ) -> typing.Union[Menu, ToolBar]:
         """
         Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
 
@@ -6521,7 +6086,6 @@ class ToolBar:
         @return: The menu/toolbar item that was added to hold the command.
         """
         ...
-
     def addMenu(self, **kwargs) -> Menu:
         """
         Add a new submenu.
@@ -6539,7 +6103,6 @@ class ToolBar:
         @return: The submenu that was added.
         """
         ...
-
     def addSeparator(self, **kwargs) -> ...:
         """
         Add a separator to this menu/toolbar.
@@ -6551,10 +6114,9 @@ class ToolBar:
         @return: The separator that was created.
         """
         ...
-
     def clearMenu(self, *args, **kwargs):
         """
-        self.clearMenu() 
+        self.clearMenu()
 
         Clears a menu.
 
@@ -6565,7 +6127,6 @@ class ToolBar:
         @return: true if cleared, false if menu not found
         """
         ...
-
     def findItem(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
@@ -6575,13 +6136,11 @@ class ToolBar:
         @return: The submenu or command we found, or None if we could not find anything.
         """
         ...
-
     def items(self) -> None:
         """
         Returns a list of sub menu items.
         """
         ...
-
     def menu(self, name) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
@@ -6591,13 +6150,11 @@ class ToolBar:
         @return: The submenu or command we found, or None if we could not find anything.
         """
         ...
-
     def name(self) -> six.binary_type:
         """
         Returns the name of the menu item.
         """
         ...
-
     def removeItem(self, name) -> None:
         """
         Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
@@ -6607,15 +6164,12 @@ class ToolBar:
         @return: true if removed, false if menu not found
         """
         ...
-
     def updateMenuItems(self) -> None:
         """
         Updates menu items' states. Call on about to show menu.
         """
         ...
-
     ...
-
 
 class Transform2d_Knob(Knob):
     """
@@ -6626,21 +6180,22 @@ class Transform2d_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def value(self, oc) -> ...:
         """
         Return transformation matrix. The argument oc is an OutputContext. Both arguments are optional.
         """
         ...
-
     ...
-
 
 class UV_Knob(Array_Knob):
     """
@@ -6651,21 +6206,22 @@ class UV_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def names(self, n) -> six.binary_type:
         """
         Return name for dimension n. The argument n is an integer.
         """
         ...
-
     ...
-
 
 class Undo:
     """
@@ -6676,135 +6232,136 @@ class Undo:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
-    def begin(name: six.binary_type, /, ) -> None:
+    def begin(
+        name: six.binary_type,
+        /,
+    ) -> None:
         """
         Begin a new user-visible group of undo actions.
         """
         ...
-
     @staticmethod
     def cancel() -> None:
         """
         Undoes any actions recorded in the current set and throws it away.
         """
         ...
-
     @staticmethod
     def disable() -> None:
         """
         Prevent recording undo until matching enable()
         """
         ...
-
     @staticmethod
     def disabled() -> None:
         """
         True if disable() has been called
         """
         ...
-
     @staticmethod
     def enable() -> None:
         """
         Undoes the previous disable()
         """
         ...
-
     @staticmethod
     def end() -> None:
         """
         Complete current undo set and add it to the undo list.
         """
         ...
-
     @staticmethod
-    def name(v: six.binary_type, /, ) -> None:
+    def name(
+        v: six.binary_type,
+        /,
+    ) -> None:
         """
         Name current undo set.
         """
         ...
-
     @staticmethod
     def new() -> None:
         """
         Same as end();begin().
         """
         ...
-
     @staticmethod
     def redo() -> None:
         """
         Redoes 0'th redo.
         """
         ...
-
     @staticmethod
-    def redoDescribe(n: int, /, ) -> six.binary_type:
+    def redoDescribe(
+        n: int,
+        /,
+    ) -> six.binary_type:
         """
         Return short description of redo n.
         """
         ...
-
     @staticmethod
-    def redoDescribeFully(n: int, /, ) -> six.binary_type:
+    def redoDescribeFully(
+        n: int,
+        /,
+    ) -> six.binary_type:
         """
         Return long description of redo n.
         """
         ...
-
     @staticmethod
     def redoSize() -> int:
         """
         Number of redo's that can be done.
         """
         ...
-
     @staticmethod
-    def redoTruncate(n: int, /, ) -> None:
+    def redoTruncate(
+        n: int,
+        /,
+    ) -> None:
         """
         Destroy any redo's greater or equal to n.
         """
         ...
-
     @staticmethod
     def undo() -> None:
         """
         Undoes 0'th undo.
         """
         ...
-
     @staticmethod
-    def undoDescribe(n: int, /, ) -> None:
+    def undoDescribe(
+        n: int,
+        /,
+    ) -> None:
         """
         Return short description of undo n.
         """
         ...
-
     @staticmethod
-    def undoDescribeFully(n: int, /, ) -> None:
+    def undoDescribeFully(
+        n: int,
+        /,
+    ) -> None:
         """
         Return long description of undo n.
         """
         ...
-
     @staticmethod
     def undoSize() -> int:
         """
         Number of undo that can be done.
         """
         ...
-
     @staticmethod
     def undoTruncate() -> None:
         """
         Destroy any undo greater or equal to n.
         """
         ...
-
     ...
-
 
 class Unsigned_Knob(Array_Knob):
     """
@@ -6815,13 +6372,16 @@ class Unsigned_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def setValue(self, val: int) -> bool:
         """
         Set the unsigned integer value of this knob.
@@ -6831,7 +6391,6 @@ class Unsigned_Knob(Array_Knob):
         @return: True if succeeded, False otherwise.
         """
         ...
-
     def value(self) -> int:
         """
         Get the value of this knob as an integer.
@@ -6839,9 +6398,7 @@ class Unsigned_Knob(Array_Knob):
         @return: int
         """
         ...
-
     ...
-
 
 class View:
     """
@@ -6852,33 +6409,27 @@ class View:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def string(self) -> six.binary_type:
         """
         @return: Name of view.
         """
         ...
-
     def value(self) -> ...:
         """
         @return: Value of view.
         """
         ...
-
     ...
-
 
 class ViewView_Knob(Knob):
     """
@@ -6889,15 +6440,17 @@ class ViewView_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
-
 
 class Viewer(Node):
     def __getitem__(self, *args, **kwargs):
@@ -6905,55 +6458,46 @@ class Viewer(Node):
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __str__(self, *args, **kwargs):
         """
         x.__str__() <==> str(x)
         """
         ...
-
     def capture(self, file) -> None:
         """
         Capture the viewer image to a file.  Only jpg files are supported at present.  The image is captured immediately even if the viewer is mid-render.To capture a fully rendered image at a frame or frame range use nuke.render passing in the viewer node you want to capture.When using nuke.render the filename is specified by the 'file' knob on the viewer node.
         """
         ...
-
     def frameCached(self, f) -> bool:
         """
         Determine whether frame /f/ is known to be in the memory cache.
         """
         ...
-
     def isPlayingOrRecording(self) -> bool:
         """
         @return: Is a recording being made or played?
         """
         ...
-
     def playbackRange(self) -> FrameRange:
         """
         Return the frame range that's currently set to be played back in the viewer.@return: FrameRange.
         """
         ...
-
     def recordMouse(self) -> bool:
         """
         Start viewer window mouse recording.@return: Recording started?
         """
         ...
-
     def recordMouseStop(self, *args, **kwargs):
         """
         recordMouseStop()
@@ -6961,19 +6505,16 @@ class Viewer(Node):
         Stop viewer window mouse recording.
         """
         ...
-
     def replayMouseAsync(self, xmlRecordingFilename) -> bool:
         """
         Start timer based (asynchronous) playback of a viewer window mouse recording.@param: Name of recording xml file to play@return: Replay started?
         """
         ...
-
     def replayMouseSync(self, xmlRecordingFilename) -> bool:
         """
         Start direct (synchronous) playback of a viewer window mouse recording.@param: Name of recording xml file to play@return: Replay succeeded?
         """
         ...
-
     def roi(self) -> dict:
         """
         Region of interest set in the viewer in pixel space coordinates.
@@ -6981,7 +6522,6 @@ class Viewer(Node):
         @return: Dict with keys x, y, r and t or None.
         """
         ...
-
     def roiEnabled(self) -> bool:
         """
         Whether the viewing of just a region of interest is enabled.
@@ -6989,27 +6529,23 @@ class Viewer(Node):
         @return: Boolean or None.
         """
         ...
-
     def sendMouseEvent(self) -> bool:
         """
         Temporary:
         Post a mouse event to the viewer window.
         """
         ...
-
     def setRoi(self, box) -> None:
         """
         Set the region of interest in pixel space.
         @param box: A dictionary with the x, y, r and t keys.@return: None.
         """
         ...
-
     def toggleMouseTrails(self) -> bool:
         """
         Toggle mouse trails in the viewer window on/off.@return: Trails now showing?
         """
         ...
-
     def toggleWaitOnReplayEvents(self, *args, **kwargs):
         """
         toggleWaitOnEvents() -> Bool
@@ -7018,9 +6554,7 @@ class Viewer(Node):
         Otherwise events will be handled by the next nuke update.@return: Now waiting?
         """
         ...
-
     ...
-
 
 class ViewerProcess:
     """
@@ -7036,7 +6570,6 @@ class ViewerProcess:
         @return: Node.
         """
         ...
-
     def register(self, *args, **kwargs):
         """
         nuke.ViewerProcess.register(name, call, args, kwargs) -> None.
@@ -7048,7 +6581,6 @@ class ViewerProcess:
         @return: None.
         """
         ...
-
     def registeredNames(self, *args, **kwargs):
         """
         nuke.ViewerProcess.registeredNames() -> List.
@@ -7056,7 +6588,6 @@ class ViewerProcess:
         @return: List.
         """
         ...
-
     def unregister(self, *args, **kwargs):
         """
         nuke.ViewerProcess.unregister(name) -> None.
@@ -7065,9 +6596,7 @@ class ViewerProcess:
         @return: None.
         """
         ...
-
     ...
-
 
 class ViewerWindow:
     """
@@ -7089,7 +6618,6 @@ class ViewerWindow:
         @return: None
         """
         ...
-
     def activeInput(self, secondary=False) -> int:
         """
         Returns the currently active input of the viewer - i. e. the one with its image in the output window.
@@ -7101,7 +6629,6 @@ class ViewerWindow:
         @return: int: The currently active input of the viewer, starting with 0 for the first, or None if no input is active.
         """
         ...
-
     def frameControl(self, i) -> bool:
         """
         i is an integer indicating viewer frame control 'button' to execute:
@@ -7139,7 +6666,6 @@ class ViewerWindow:
            +6 go to end
         """
         ...
-
     def getGLCameraMatrix(self) -> _nukemath.Matrix4:
         """
         Return the world transformations of the current GL viewer camera.
@@ -7147,7 +6673,6 @@ class ViewerWindow:
         @return: Matrix4: GL camera world transformation.
         """
         ...
-
     def getGeometryNodes(self, *args, **kwargs):
         """
         self.getGeometry() -> None
@@ -7157,13 +6682,11 @@ class ViewerWindow:
         @return: Nodes: a list of the geometry nodes.
         """
         ...
-
     def nextView(self) -> ...:
         """
         switch to next view in settings Views list
         """
         ...
-
     def node(self) -> Node:
         """
         Returns the Viewer node currently associated with this window.
@@ -7171,39 +6694,32 @@ class ViewerWindow:
         @return: Node.
         """
         ...
-
     def play(self, *args, **kwargs):
         """
         Play forward (1) or reverse (0).
         """
         ...
-
     def previousView(self) -> ...:
         """
         switch to previous view in settings Views list
         """
         ...
-
     def setView(self, s) -> ...:
         """
         set 'current' multi-view view to 's'
         """
         ...
-
     def stop(self, *args, **kwargs):
         """
         Stop playing.
         """
         ...
-
     def view(self) -> six.binary_type:
         """
         string name of 'current' multi-view view
         """
         ...
-
     ...
-
 
 class WH_Knob(Array_Knob):
     """
@@ -7214,45 +6730,42 @@ class WH_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def names(self, *args, **kwargs):
         """
         Return name for dimension 'i'.
         """
         ...
-
     def x(self, *args, **kwargs):
         """
         Return value for X position.
         """
         ...
-
     def x_at(self, *args, **kwargs):
         """
         Return value for X position at time 't'.
         """
         ...
-
     def y(self, *args, **kwargs):
         """
         Return value for Y position.
         """
         ...
-
     def y_at(self, *args, **kwargs):
         """
         Return value for Y position at time 't'.
         """
         ...
-
     ...
-
 
 class XYZ_Knob(Array_Knob):
     """
@@ -7263,51 +6776,47 @@ class XYZ_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def names(self, n) -> six.binary_type:
         """
         Return name for dimension n. The argument n is an integer.
         """
         ...
-
     def parent(self) -> XYZ_Knob:
         """
         Return parent.
         """
         ...
-
     def value(self, n, oc) -> float:
         """
         Return value for dimension n. The optional argument oc is an OutputContext.
         """
         ...
-
     def x(self, oc) -> float:
         """
         Return value for x. The optional oc argument is an OutputContext
         """
         ...
-
     def y(self, oc) -> float:
         """
         Return value for y. The optional oc argument is an OutputContext
         """
         ...
-
     def z(self, oc) -> float:
         """
         Return value for z. The optional oc argument is an OutputContext
         """
         ...
-
     ...
-
 
 class XY_Knob(Array_Knob):
     """
@@ -7318,39 +6827,37 @@ class XY_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
-    def __init__(self, name: six.binary_type, label: six.binary_type = None, /, ):
+    def __init__(
+        self,
+        name: six.binary_type,
+        label: six.binary_type = None,
+        /,
+    ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def names(self, n) -> six.binary_type:
         """
         Return name for dimension n. The argument n is an integer.
         """
         ...
-
     def value(self, n, oc) -> float:
         """
         Return value for dimension n. The optional argument oc is an OutputContext.
         """
         ...
-
     def x(self, oc) -> float:
         """
         Return value for x. The optional oc argument is an OutputContext
         """
         ...
-
     def y(self, oc) -> float:
         """
         Return value for y. The optional oc argument is an OutputContext
         """
         ...
-
     ...
-
 
 def activeViewer() -> ViewerWindow:
     """
@@ -7360,7 +6867,6 @@ def activeViewer() -> ViewerWindow:
     @return: Object representing the active ViewerWindow
     """
     ...
-
 
 def addFavoriteDir(name, directory, type, icon, tooltip, key) -> None:
     """
@@ -7376,7 +6882,6 @@ def addFavoriteDir(name, directory, type, icon, tooltip, key) -> None:
     """
     ...
 
-
 def addFormat(s: six.binary_type) -> typing.Optional[Format]:
     """
     Create a new image format, which will show up on the pull-down menus for image formats. You must give a width and height and name. The xyrt rectangle describes the image area, if it is smaller than the width and height (for Academy aperture, for example). The pixel aspect is the ratio of the width of a pixel to the height.
@@ -7386,7 +6891,6 @@ def addFormat(s: six.binary_type) -> typing.Optional[Format]:
     """
     ...
 
-
 def addNodePresetExcludePaths(paths) -> None:
     """
     @param paths Sequence of paths to exclude
@@ -7394,7 +6898,6 @@ def addNodePresetExcludePaths(paths) -> None:
     @return: None.
     """
     ...
-
 
 def addSequenceFileExtension(*args, **kwargs):
     """
@@ -7404,7 +6907,6 @@ def addSequenceFileExtension(*args, **kwargs):
     """
     ...
 
-
 def addToolsetExcludePaths(paths) -> None:
     """
     @param paths Sequence of paths to exclude
@@ -7412,7 +6914,6 @@ def addToolsetExcludePaths(paths) -> None:
     @return: None.
     """
     ...
-
 
 def addView(s) -> None:
     """
@@ -7425,21 +6926,30 @@ def addView(s) -> None:
     """
     ...
 
-
 @typing.overload
-def allNodes(filter: typing.Literal[b"BackdropNode"] = ..., group: Group = ...) -> typing.List[BackdropNode]: ...
+def allNodes(
+    filter: typing.Literal[b"BackdropNode"] = ..., group: Group = ...
+) -> typing.List[BackdropNode]: ...
 @typing.overload
-def allNodes(filter: typing.Literal[b"Group"] = ..., group: Group = ...) -> typing.List[Group]: ...
+def allNodes(
+    filter: typing.Literal[b"Group"] = ..., group: Group = ...
+) -> typing.List[Group]: ...
 @typing.overload
-def allNodes(filter: typing.Literal[b"Viewer"] = ..., group: Group = ...) -> typing.List[Viewer]: ...
+def allNodes(
+    filter: typing.Literal[b"Viewer"] = ..., group: Group = ...
+) -> typing.List[Viewer]: ...
 @typing.overload
-def allNodes(filter: typing.Literal[b"Gizmo"] = ..., group: Group = ...) -> typing.List[Gizmo]: ...
+def allNodes(
+    filter: typing.Literal[b"Gizmo"] = ..., group: Group = ...
+) -> typing.List[Gizmo]: ...
 @typing.overload
-def allNodes(filter: typing.Literal[b"Root"] = ..., group: Group = ...) -> typing.List[Root]: ...
+def allNodes(
+    filter: typing.Literal[b"Root"] = ..., group: Group = ...
+) -> typing.List[Root]: ...
 @typing.overload
-def allNodes(filter: typing.Literal[b"Precomp"] = ..., group: Group = ...) -> typing.List[Precomp]: ...
-
-
+def allNodes(
+    filter: typing.Literal[b"Precomp"] = ..., group: Group = ...
+) -> typing.List[Precomp]: ...
 @typing.overload
 def allNodes(filter: six.binary_type = ..., group: Group = ...) -> typing.List[Node]:
     """
@@ -7453,7 +6963,6 @@ def allNodes(filter: six.binary_type = ..., group: Group = ...) -> typing.List[N
     @return: List
     """
     ...
-
 
 def animation(*commands) -> None:
     """
@@ -7494,7 +7003,6 @@ def animation(*commands) -> None:
     """
     ...
 
-
 def animationEnd() -> float:
     """
     Returns the last frame (or x value) for the currently selected animations.
@@ -7502,7 +7010,6 @@ def animationEnd() -> float:
     @return: The end frame.
     """
     ...
-
 
 def animationIncrement() -> float:
     """
@@ -7512,7 +7019,6 @@ def animationIncrement() -> float:
     """
     ...
 
-
 def animationStart() -> float:
     """
     Returns the starting frame (or x value) for the currently selected animations.
@@ -7520,7 +7026,6 @@ def animationStart() -> float:
     @return: The start frame.
     """
     ...
-
 
 def animations() -> tuple:
     """
@@ -7542,7 +7047,6 @@ def animations() -> tuple:
     """
     ...
 
-
 def applyPreset(nodeName, presetName) -> None:
     """
     Applies a given preset to the current node.
@@ -7552,7 +7056,6 @@ def applyPreset(nodeName, presetName) -> None:
     @return: bool.
     """
     ...
-
 
 def applyUserPreset(nodeName, presetName) -> None:
     """
@@ -7564,7 +7067,6 @@ def applyUserPreset(nodeName, presetName) -> None:
     """
     ...
 
-
 def ask(prompt: six.binary_type) -> bool:
     """
     Show a Yes/No dialog.
@@ -7574,7 +7076,6 @@ def ask(prompt: six.binary_type) -> bool:
     """
     ...
 
-
 def askWithCancel(prompt) -> bool:
     """
     Show a Yes/No/Cancel dialog.
@@ -7583,7 +7084,6 @@ def askWithCancel(prompt) -> bool:
     @return: True if Yes, False if No, an exception is thrown if Cancel.
     """
     ...
-
 
 def autoplace(n: Node) -> None:
     """
@@ -7596,7 +7096,6 @@ def autoplace(n: Node) -> None:
     """
     ...
 
-
 def autoplaceSnap(n) -> None:
     """
     Move node to the closest grid position.
@@ -7606,7 +7105,6 @@ def autoplaceSnap(n) -> None:
     """
     ...
 
-
 def cacheUsage() -> int:
     """
     Get the total amount of memory currently used by the cache.
@@ -7614,7 +7112,6 @@ def cacheUsage() -> int:
     @return: Current memory usage in bytes.
     """
     ...
-
 
 def canCreateNode(name) -> bool:
     """
@@ -7624,7 +7121,6 @@ def canCreateNode(name) -> bool:
     """
     ...
 
-
 def cancel() -> None:
     """
     Cancel an in-progress operation. This has the same effect as hitting cancel on the progress panel.
@@ -7632,7 +7128,6 @@ def cancel() -> None:
     @return: None
     """
     ...
-
 
 def center() -> typing.List[int]:
     """
@@ -7647,7 +7142,6 @@ def center() -> typing.List[int]:
     """
     ...
 
-
 def channels(n: typing.Optional[Node] = None) -> typing.List[six.binary_type]:
     """
     Deprecated. Use Node.channels.
@@ -7659,8 +7153,12 @@ def channels(n: typing.Optional[Node] = None) -> typing.List[six.binary_type]:
     """
     ...
 
-
-def choice(title: six.binary_type, prompt: six.binary_type, options: typing.List[six.binary_type], default: int = 0) -> int:
+def choice(
+    title: six.binary_type,
+    prompt: six.binary_type,
+    options: typing.List[six.binary_type],
+    default: int = 0,
+) -> int:
     """
     Shows a dialog box with the given title and prompt text, and a combo box containing the given options.
 
@@ -7672,20 +7170,17 @@ def choice(title: six.binary_type, prompt: six.binary_type, options: typing.List
     """
     ...
 
-
 def clearDiskCache() -> None:
     """
     Clear the disk cache of all files.
     """
     ...
 
-
 def clearRAMCache() -> None:
     """
     Clear the RAM cache of all files.
     """
     ...
-
 
 def clone(n, args, inpanel) -> Node:
     """
@@ -7700,7 +7195,6 @@ def clone(n, args, inpanel) -> Node:
     """
     ...
 
-
 def cloneSelected(action) -> bool:
     """
     This makes a clone of all selected nodes, preserving connections between them, and makes only the clones be selected.
@@ -7709,7 +7203,6 @@ def cloneSelected(action) -> bool:
     @return: True if succeeded, False otherwise.
     """
     ...
-
 
 def collapseToGroup(show=True) -> Group:
     """
@@ -7720,7 +7213,6 @@ def collapseToGroup(show=True) -> Group:
     """
     ...
 
-
 def connectNodes() -> None:
     """
     Deprecated. Use Group.connectSelectedNodes.
@@ -7728,7 +7220,6 @@ def connectNodes() -> None:
     @return: None
     """
     ...
-
 
 def connectViewer(inputNum, node) -> None:
     """
@@ -7740,7 +7231,6 @@ def connectViewer(inputNum, node) -> None:
     @return: None
     """
     ...
-
 
 def createNode(
     node: six.binary_type,
@@ -7758,30 +7248,29 @@ def createNode(
     """
     ...
 
-
 def createScenefileBrowser(fileName, nodeName) -> None:
     """
-    Pops up a scene browser dialog box. 
-    Receives the path to an Alembic (abc) file, and displays a hierarchical tree of the nodes within the file. 
+    Pops up a scene browser dialog box.
+    Receives the path to an Alembic (abc) file, and displays a hierarchical tree of the nodes within the file.
     The user can select which nodes they are interseted in, and nodes of the appropriate type will automatically.
     be created.
-    If a valid scene file nodeName is specified, this node will be populated with the selected tree. 
+    If a valid scene file nodeName is specified, this node will be populated with the selected tree.
 
     @param fileName: Path and filename for an alembic file.
     @param nodeName: name of a valid scene file node to populate. If the node is invalid, new nodes will be automatically created
     """
     ...
 
-
-def createToolset(filename: bytes = ..., overwrite: bool = ..., rootPath: bytes = ...) -> None:
+def createToolset(
+    filename: bytes = ..., overwrite: bool = ..., rootPath: bytes = ...
+) -> None:
     """
-    Creates a tool preset based on the currently selected nodes. 
+    Creates a tool preset based on the currently selected nodes.
 
     @param filename: Saves the preset as a script with the given file name.
      @param overwrite: If 1 (true) always overwrite; if 0 (false) never overwrite; @param rootPath: If specified, use this as the root path to save the Toolset to. If not specified, save to the user's .nuke/Toolsets folder.  otherwise, in GUI mode ask the user, in terminal do same as False. Default  is -1, meaning 'ask the user'.
     """
     ...
-
 
 def critical(message: bytes) -> None:
     """
@@ -7792,7 +7281,6 @@ def critical(message: bytes) -> None:
     """
     ...
 
-
 def debug(message: bytes) -> None:
     """
     Puts the message into the error console, treating it like a debug message, which only shows up when the verbosity level is high enough.
@@ -7802,7 +7290,6 @@ def debug(message: bytes) -> None:
     """
     ...
 
-
 def defaultFontPathname() -> six.binary_type:
     """
     Get the path to Nukes default font.
@@ -7810,7 +7297,6 @@ def defaultFontPathname() -> six.binary_type:
     @return: Path to the font.
     """
     ...
-
 
 def defaultNodeColor(s: bytes) -> int:
     """
@@ -7821,7 +7307,6 @@ def defaultNodeColor(s: bytes) -> int:
     """
     ...
 
-
 def delete(n: Node) -> None:
     """
     The named node is deleted. It can be recovered with an undo.
@@ -7830,7 +7315,6 @@ def delete(n: Node) -> None:
     @return: None
     """
     ...
-
 
 def deletePreset(nodeClassName, presetName) -> None:
     """
@@ -7841,7 +7325,6 @@ def deletePreset(nodeClassName, presetName) -> None:
     """
     ...
 
-
 def deleteUserPreset(nodeClassName, presetName) -> None:
     """
     Deletes a pre-created user node preset
@@ -7850,7 +7333,6 @@ def deleteUserPreset(nodeClassName, presetName) -> None:
     @return: bool.
     """
     ...
-
 
 def deleteView(s) -> None:
     """
@@ -7862,7 +7344,6 @@ def deleteView(s) -> None:
     @return: None
     """
     ...
-
 
 def display(
     s: six.binary_type,
@@ -7885,7 +7366,6 @@ def display(
     """
     ...
 
-
 def endGroup() -> None:
     """
     Deprecated. Use Group.run, Group.begin/Group.end pairs or (preferably) the with statement.
@@ -7896,7 +7376,6 @@ def endGroup() -> None:
     """
     ...
 
-
 def error(message) -> None:
     """
     Puts the message into the error console, treating it like an error.
@@ -7905,7 +7384,6 @@ def error(message) -> None:
     @return: None.
     """
     ...
-
 
 def execute(
     nameOrNode: typing.Union[six.binary_type, Node],
@@ -7934,8 +7412,16 @@ def execute(
     """
     ...
 
-
-def executeBackgroundNuke(exe_path, nodes, frameRange, views, limits, continueOnError=False, flipbookToRun=..., flipbookOptions={}) -> None:
+def executeBackgroundNuke(
+    exe_path,
+    nodes,
+    frameRange,
+    views,
+    limits,
+    continueOnError=False,
+    flipbookToRun=...,
+    flipbookOptions={},
+) -> None:
     """
     Run an instance of Nuke as a monitored sub process. Returns an integer that's used as unique id for the started task. If it failed to launch this will be -1.
     @param exe_path: Path to Nuke or a script that can take Nuke arguments. You probably want to supply nuke.EXE_PATH.
@@ -7948,7 +7434,6 @@ def executeBackgroundNuke(exe_path, nodes, frameRange, views, limits, continueOn
     @return: Int.
     """
     ...
-
 
 def executeMultiple(nodes, ranges, views, continueOnError=False) -> None:
     """
@@ -7966,7 +7451,6 @@ def executeMultiple(nodes, ranges, views, continueOnError=False) -> None:
     """
     ...
 
-
 def executing() -> bool:
     """
     Returns whether an Executable Node is currently active or not.
@@ -7974,7 +7458,6 @@ def executing() -> bool:
     @return: Current bool.
     """
     ...
-
 
 def exists(s: six.binary_type) -> bool:
     """
@@ -7986,7 +7469,6 @@ def exists(s: six.binary_type) -> bool:
     """
     ...
 
-
 def expandSelectedGroup() -> None:
     """
     Moves all nodes from the currently selected group node into its parent group, maintaining node input and output connections, and deletes the group. Returns the nodes that were moved, which will also be selected.
@@ -7994,7 +7476,6 @@ def expandSelectedGroup() -> None:
     @return: None
     """
     ...
-
 
 def expr(*args, **kwargs):
     """
@@ -8014,7 +7495,6 @@ def expr(*args, **kwargs):
     """
     ...
 
-
 def expression(s) -> float:
     """
     Parse a Nuke expression. Runs the same expression parser as is used by animations. This is not the same as the tcl expr parser. The main differences are:
@@ -8031,7 +7511,6 @@ def expression(s) -> float:
     """
     ...
 
-
 def extractSelected() -> None:
     """
     Disconnects the selected nodes in the group from the tree, and shifts them to the side.
@@ -8039,7 +7518,6 @@ def extractSelected() -> None:
     @return: None
     """
     ...
-
 
 def filename(node: Node, i: int = ...) -> six.binary_type:
     """
@@ -8062,13 +7540,11 @@ def filename(node: Node, i: int = ...) -> six.binary_type:
     """
     ...
 
-
 def forceClone() -> bool:
     """
     @return: True if succeeded, False otherwise.
     """
     ...
-
 
 def forceLoad(n) -> None:
     """
@@ -8079,20 +7555,17 @@ def forceLoad(n) -> None:
     """
     ...
 
-
 def fork(*args, **kwargs):
     """
     Forks a new instance of Nuke optionally with the contents of the named file.
     """
     ...
 
-
 def formats() -> list:
     """
     @return: List of all available formats.
     """
     ...
-
 
 def frame(f: int = ...) -> int:
     """
@@ -8107,7 +7580,6 @@ def frame(f: int = ...) -> int:
     """
     ...
 
-
 def fromNode(n) -> six.binary_type:
     """
     Return the Node n as a string.
@@ -8118,7 +7590,6 @@ def fromNode(n) -> six.binary_type:
     """
     ...
 
-
 def getAllUserPresets() -> None:
     """
     gets a list of all current user presets
@@ -8126,14 +7597,14 @@ def getAllUserPresets() -> None:
     """
     ...
 
-
 @typing.overload
-def getClipname(prompt, pattern=None, default=None, multiple: typing.Literal[False] = False) -> six.binary_type:
-    ...
-
-
+def getClipname(
+    prompt, pattern=None, default=None, multiple: typing.Literal[False] = False
+) -> six.binary_type: ...
 @typing.overload
-def getClipname(prompt, pattern=None, default=None, multiple: typing.Literal[True] = ...) -> typing.List[six.binary_type]:
+def getClipname(
+    prompt, pattern=None, default=None, multiple: typing.Literal[True] = ...
+) -> typing.List[six.binary_type]:
     """
     Pops up a file chooser dialog box. You can use the pattern to restrict the displayed choices to matching filenames,
     normal Unix glob rules are used here. getClipname compresses lists of filenames that only differ by an index number
@@ -8147,7 +7618,6 @@ def getClipname(prompt, pattern=None, default=None, multiple: typing.Literal[Tru
     """
     ...
 
-
 def getColor(initial) -> int:
     """
     Show a color chooser dialog and return the selected color as an int.
@@ -8159,14 +7629,12 @@ def getColor(initial) -> int:
     """
     ...
 
-
 def getDeletedPresets() -> None:
     """
     gets a list of all currently deleted presets
     @return: a pyDict containing all nodename/presetname pairs.
     """
     ...
-
 
 def getFileNameList(
     dir: six.binary_type,
@@ -8186,14 +7654,24 @@ def getFileNameList(
     """
     ...
 
-
 @typing.overload
-def getFilename(message, pattern=None, default=None, favorites=None, type=None, multiple: typing.Literal[False] = False) -> six.binary_type:
-    ...
-
-
+def getFilename(
+    message,
+    pattern=None,
+    default=None,
+    favorites=None,
+    type=None,
+    multiple: typing.Literal[False] = False,
+) -> six.binary_type: ...
 @typing.overload
-def getFilename(message, pattern=None, default=None, favorites=None, type=None, multiple: typing.Literal[True] = ...) -> typing.List[six.binary_type]:
+def getFilename(
+    message,
+    pattern=None,
+    default=None,
+    favorites=None,
+    type=None,
+    multiple: typing.Literal[True] = ...,
+) -> typing.List[six.binary_type]:
     """
     Pops up a file chooser dialog box. You can use the pattern to restrict the displayed choices to matching filenames, normal Unix glob rules are used here.
 
@@ -8202,20 +7680,18 @@ def getFilename(message, pattern=None, default=None, favorites=None, type=None, 
     @param default: Optional default filename and path.
     @param favorites: Optional. Restrict favorites to this set. Must be one of  'image', 'script', or 'font'.
     @param type: Optional the type of browser, to define task-specific behaviors;  currently only 'save' is recognised.
-    @param multiple: Optional boolean convertible object to allow for multiple  selection. If this is True, the return value will be a list of strings; if  not, it will be a single string. The default is 
+    @param multiple: Optional boolean convertible object to allow for multiple  selection. If this is True, the return value will be a list of strings; if  not, it will be a single string. The default is
     @return: If multiple is True, the user input is returned as a list of  strings, otherwise as a single string. If the dialog was cancelled, the  return value will be None.
     """
     ...
 
-
 def getFonts() -> typing.List[six.binary_type]:
     """
-    Return a list of all available font families and styles 
+    Return a list of all available font families and styles
 
     @return: List of font families and style.
     """
     ...
-
 
 def getFramesAndViews(label, default=None, maxviews=0) -> ...:
     """
@@ -8228,8 +7704,9 @@ def getFramesAndViews(label, default=None, maxviews=0) -> ...:
     """
     ...
 
-
-def getInput(prompt: six.binary_type, default: six.binary_type = ...) -> typing.Optional[six.binary_type]:
+def getInput(
+    prompt: six.binary_type, default: six.binary_type = ...
+) -> typing.Optional[six.binary_type]:
     """
     Pops up a dialog box with a text field for an arbitrary string.
 
@@ -8239,14 +7716,12 @@ def getInput(prompt: six.binary_type, default: six.binary_type = ...) -> typing.
     """
     ...
 
-
 def getNodeClassName() -> None:
     """
     gets the class name for the currently selected node
     @return: a string containing the name.
     """
     ...
-
 
 def getNodePresetExcludePaths() -> typing.List[six.binary_type]:
     """
@@ -8256,7 +7731,6 @@ def getNodePresetExcludePaths() -> typing.List[six.binary_type]:
     """
     ...
 
-
 def getNodePresetID() -> None:
     """
     gets the node preset identifier for the currently selected node
@@ -8264,110 +7738,92 @@ def getNodePresetID() -> None:
     """
     ...
 
-
 @typing.type_check_only
 class Widget:
     """
-    Widget. 
+    Widget.
     """
 
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def close(self, *args, **kwargs):
         """
         Called when the widget is asked to be closed.
         """
         ...
-
     def destroy(self) -> None:
         """
         Destroy the widget.
         """
         ...
-
     def height(self, *args, **kwargs):
         """
         Get the height.
         """
         ...
-
     def hide(self, *args, **kwargs):
         """
         Hide the widget.
         """
         ...
-
     def isEnabled(self, *args, **kwargs):
         """
         Return the enabled state.
         """
         ...
-
     def isValid(self, *args, **kwargs):
         """
         Returns true if the widget still exists. i.e. has not been closed by the user.
         """
         ...
-
     def setEnabled(self, *args, **kwargs):
         """
         Enable or disable the widget.
         """
         ...
-
     def setMaximumSize(self, *args, **kwargs):
         """
         Set the maximum size.
         """
         ...
-
     def setMinimumSize(self, *args, **kwargs):
         """
         Set the minimum size.
         """
         ...
-
     def setTooltip(self, *args, **kwargs):
         """
         Set the tooltip.
         """
         ...
-
     def setVisible(self, *args, **kwargs):
         """
         Show or hide the widget.
         """
         ...
-
     def show(self, *args, **kwargs):
         """
         Show the widget.
         """
         ...
-
     def tooltip(self, *args, **kwargs):
         """
         Get the tooltip.
         """
         ...
-
     def width(self, *args, **kwargs):
         """
         Get the width.
         """
         ...
-
     ...
-
 
 @typing.type_check_only
 class Container(Widget):
@@ -8379,21 +7835,17 @@ class Container(Widget):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def add(self, *args, **kwargs):
         """
         Add a child widget.
         """
         ...
-
     ...
-
 
 @typing.type_check_only
 class Dock(Container):
@@ -8405,21 +7857,17 @@ class Dock(Container):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def add(self, *args, **kwargs):
         """
         Add a widget to the dock. Set persistent = True to ensure that the widget is never destroyed.
         """
         ...
-
     ...
-
 
 def getPaneFor(panelName: six.binary_type) -> Dock:
     """
@@ -8431,7 +7879,6 @@ def getPaneFor(panelName: six.binary_type) -> Dock:
     """
     ...
 
-
 def getPresetKnobValues() -> None:
     """
     gets a list of knob values for a given preset
@@ -8441,7 +7888,6 @@ def getPresetKnobValues() -> None:
     """
     ...
 
-
 def getPresets() -> None:
     """
     gets a list of all presets for the currently selected node's class
@@ -8449,14 +7895,12 @@ def getPresets() -> None:
     """
     ...
 
-
 def getPresetsMenu(Node) -> typing.Optional[Menu]:
     """
     Gets the presets menu for the currently selected node.
     @return: The menu, or None if it doesn't exist.
     """
     ...
-
 
 def getReadFileKnob(node) -> Knob:
     """
@@ -8468,13 +7912,11 @@ def getReadFileKnob(node) -> Knob:
     """
     ...
 
-
 def getRenderProgress() -> int:
     """
     @return: The progress of the render.  Can be 0 if there is no progress to report.
     """
     ...
-
 
 def getToolsetExcludePaths() -> typing.List[six.binary_type]:
     """
@@ -8483,7 +7925,6 @@ def getToolsetExcludePaths() -> typing.List[six.binary_type]:
     @return: List of paths.
     """
     ...
-
 
 def getUserPresetKnobValues() -> None:
     """
@@ -8494,14 +7935,12 @@ def getUserPresetKnobValues() -> None:
     """
     ...
 
-
 def getUserPresets(Node) -> None:
     """
     gets a list of all user presets for the currently selected node's class
     @return: a pyList containing all nodename/presetname pairs.
     """
     ...
-
 
 def hotkeys() -> six.binary_type:
     """
@@ -8510,7 +7949,6 @@ def hotkeys() -> six.binary_type:
     @return: A formatted string.
     """
     ...
-
 
 def inputs(n, i) -> int:
     """
@@ -8526,7 +7964,6 @@ def inputs(n, i) -> int:
     """
     ...
 
-
 def invertSelection() -> None:
     """
     Selects all unselected nodes, and deselects all selected ones.
@@ -8535,12 +7972,11 @@ def invertSelection() -> None:
     """
     ...
 
-
 def knob(
     name: six.binary_type,
     value: six.binary_type = ...,
     type: bool = ...,
-    class: bool = ...,
+    **kwargs: typing.Dict[typing.Literal["class"], typing.Optional[bool]],
 ) -> None:
     """
     Returns or sets the entire state of a knob.
@@ -8593,8 +8029,9 @@ def knob(
     """
     ...
 
-
-def knobDefault(classknob: six.binary_type, value: six.binary_type) -> typing.Optional[six.binary_type]:
+def knobDefault(
+    classknob: six.binary_type, value: six.binary_type
+) -> typing.Optional[six.binary_type]:
     """
     Set a default value for knobs in nodes that belong to the
     same class. All knobs with matching names, that are created after this
@@ -8603,9 +8040,9 @@ def knobDefault(classknob: six.binary_type, value: six.binary_type) -> typing.Op
     If several values are supplied, the first value which is valid will be
     used as the default.
     knobDefault can be used to specify file format specific knobs.
-    These are knobs that are added to Read, Write and other file format 
-    dependent nodes when the file name changes. To specify defaults, use 
-    the class name, followed by the file format extension, followed by the knob name, 
+    These are knobs that are added to Read, Write and other file format
+    dependent nodes when the file name changes. To specify defaults, use
+    the class name, followed by the file format extension, followed by the knob name,
     all separated by periods. An example is shown below.
 
     Example:
@@ -8619,7 +8056,6 @@ def knobDefault(classknob: six.binary_type, value: six.binary_type) -> typing.Op
     @return: None or String with the default value.
     """
     ...
-
 
 def knobTooltip(classknob, value) -> None:
     """
@@ -8635,7 +8071,6 @@ def knobTooltip(classknob, value) -> None:
     """
     ...
 
-
 def layers(node: Node = None) -> typing.List[six.binary_type]:
     """
     Lists the layers in a node. If no node is provided this will list all known layer names in this script.
@@ -8645,13 +8080,11 @@ def layers(node: Node = None) -> typing.List[six.binary_type]:
     """
     ...
 
-
 def licenseInfo() -> None:
     """
     Shows information about licenses used by nuke
     """
     ...
-
 
 def load(s) -> None:
     """
@@ -8667,15 +8100,13 @@ def load(s) -> None:
     """
     ...
 
-
 def loadToolset(filename=None, overwrite=-1) -> None:
     """
-    Loads the tool preset with the given file name. 
+    Loads the tool preset with the given file name.
 
     @param filename: name of preset script file to load
     """
     ...
-
 
 def localisationEnabled(knob) -> bool:
     """
@@ -8687,14 +8118,12 @@ def localisationEnabled(knob) -> bool:
     """
     ...
 
-
 def localiseFiles(readKnobs) -> None:
     """
     This functionality has been removed, please check the documentation
     @return: None.
     """
     ...
-
 
 def makeGroup(show=True) -> Group:
     """
@@ -8705,7 +8134,6 @@ def makeGroup(show=True) -> Group:
     """
     ...
 
-
 def maxPerformanceInfo(*args, **kwargs):
     """
     maxPerformanceInfo -> Get the max performance info for this session.
@@ -8713,7 +8141,6 @@ def maxPerformanceInfo(*args, **kwargs):
     Returns a struct containing the max performance info if performance timers are in use, otherwise returns None.
     """
     ...
-
 
 def memory(cmd: six.binary_type, value=...) -> typing.Union[six.binary_type, int]:
     """
@@ -8735,7 +8162,6 @@ def memory(cmd: six.binary_type, value=...) -> typing.Union[six.binary_type, int
     """
     ...
 
-
 def menu(name: six.binary_type) -> Menu:
     """
     Find and return the Menu object with the given name. Current valid menus are:
@@ -8755,7 +8181,6 @@ def menu(name: six.binary_type) -> Menu:
     """
     ...
 
-
 def message(prompt: six.binary_type) -> None:
     """
     Show an info dialog box. Pops up an info box (with a 'i' and the text message) and waits for the user to hit the OK button.
@@ -8764,7 +8189,6 @@ def message(prompt: six.binary_type) -> None:
     @return: None
     """
     ...
-
 
 def modified(status: bool = ...) -> bool:
     """
@@ -8777,7 +8201,6 @@ def modified(status: bool = ...) -> bool:
     """
     ...
 
-
 def nodeCopy(s: six.binary_type) -> bool:
     """
     Copy all selected nodes into a file or the clipboard.
@@ -8787,7 +8210,6 @@ def nodeCopy(s: six.binary_type) -> bool:
     """
     ...
 
-
 def nodeDelete(s) -> bool:
     """
     Removes all selected nodes from the DAG.
@@ -8795,7 +8217,6 @@ def nodeDelete(s) -> bool:
     @return: True if any nodes were deleted, False otherwise.
     """
     ...
-
 
 def nodePaste(s) -> Node:
     """
@@ -8808,13 +8229,11 @@ def nodePaste(s) -> Node:
     """
     ...
 
-
 def nodesSelected() -> None:
     """
     returns true if any nodes are currently selected
     """
     ...
-
 
 def numvalue(knob: six.binary_type, default: float = ...) -> float:
     """
@@ -8827,7 +8246,6 @@ def numvalue(knob: six.binary_type, default: float = ...) -> float:
     """
     ...
 
-
 def oculaPresent() -> bool:
     """
     Check whether Ocula is present.
@@ -8835,7 +8253,6 @@ def oculaPresent() -> bool:
     @return: True if Ocula is present, False if not.
     """
     ...
-
 
 def ofxAddPluginAliasExclusion(fullOfxEffectName) -> None:
     """
@@ -8850,7 +8267,6 @@ def ofxAddPluginAliasExclusion(fullOfxEffectName) -> None:
     """
     ...
 
-
 def ofxMenu() -> bool:
     """
     Find all the OFX plugins (by searching all the directories below $OFX_PLUGIN_PATH,
@@ -8860,7 +8276,6 @@ def ofxMenu() -> bool:
     @return: True if succeeded, False otherwise.
     """
     ...
-
 
 def ofxPluginPath(*args, **kwargs):
     """
@@ -8872,7 +8287,6 @@ def ofxPluginPath(*args, **kwargs):
     """
     ...
 
-
 def ofxRemovePluginAliasExclusion(fullOfxEffectName) -> None:
     """
     Remove an ofx plugin alias exclusion that was previously added with .
@@ -8882,7 +8296,6 @@ def ofxRemovePluginAliasExclusion(fullOfxEffectName) -> None:
     """
     ...
 
-
 def openPanels(*args, **kwargs):
     """
     nodesSelected() -> List
@@ -8890,7 +8303,6 @@ def openPanels(*args, **kwargs):
     returns a list of Nodes which have panels open.The last item in the list is the currently active Node panel.
     """
     ...
-
 
 def pan() -> typing.List[int]:
     """
@@ -8905,13 +8317,11 @@ def pan() -> typing.List[int]:
     """
     ...
 
-
 def performanceProfileFilename() -> six.binary_type:
     """
     Returns the profile filename if performance timers are in use, otherwise returns None.
     """
     ...
-
 
 def pluginAddPath(*args, **kwargs):
     """
@@ -8926,7 +8336,6 @@ def pluginAddPath(*args, **kwargs):
     """
     ...
 
-
 def pluginAppendPath(s) -> None:
     """
     Add a filepath to the end of the Nuke plugin path.  If the path
@@ -8936,7 +8345,6 @@ def pluginAppendPath(s) -> None:
     @return: None.
     """
     ...
-
 
 def pluginExists(name) -> bool:
     """
@@ -8951,7 +8359,6 @@ def pluginExists(name) -> bool:
     """
     ...
 
-
 def pluginInstallLocation() -> typing.List[six.binary_type]:
     """
     The system-specific locations that Nuke will look in for third-party plugins.
@@ -8959,7 +8366,6 @@ def pluginInstallLocation() -> typing.List[six.binary_type]:
     @return: List of paths.
     """
     ...
-
 
 def pluginPath() -> typing.List[six.binary_type]:
     """
@@ -8970,7 +8376,6 @@ def pluginPath() -> typing.List[six.binary_type]:
     @return: List of paths.
     """
     ...
-
 
 def plugins(switches=0, *pattern) -> typing.List[six.binary_type]:
     """
@@ -8995,7 +8400,6 @@ def plugins(switches=0, *pattern) -> typing.List[six.binary_type]:
     """
     ...
 
-
 def recentFile(index) -> six.binary_type:
     """
     Returns a filename from the recent-files list.
@@ -9007,7 +8411,6 @@ def recentFile(index) -> six.binary_type:
     """
     ...
 
-
 def redo() -> None:
     """
     Perform the most recent redo.
@@ -9015,7 +8418,6 @@ def redo() -> None:
     @return: None
     """
     ...
-
 
 def removeFavoriteDir(name, type) -> None:
     """
@@ -9026,7 +8428,6 @@ def removeFavoriteDir(name, type) -> None:
     @return: None
     """
     ...
-
 
 def render(*args, **kwargs):
     """
@@ -9049,7 +8450,6 @@ def render(*args, **kwargs):
     """
     ...
 
-
 def rescanFontFolders() -> None:
     """
     Rebuild the font cache scanning all available font directories.
@@ -9058,13 +8458,11 @@ def rescanFontFolders() -> None:
     """
     ...
 
-
 def resetPerformanceTimers() -> None:
     """
     Clears the accumulated time on the performance timers.
     """
     ...
-
 
 def restoreWindowLayout(i) -> None:
     """
@@ -9074,7 +8472,6 @@ def restoreWindowLayout(i) -> None:
     """
     ...
 
-
 def resumePathProcessing() -> None:
     """
     Resume path processing.
@@ -9083,7 +8480,6 @@ def resumePathProcessing() -> None:
     """
     ...
 
-
 def root() -> Root:
     """
     Get the DAG's root node. Always succeeds.
@@ -9091,7 +8487,6 @@ def root() -> Root:
     @return: The root node. This will never be None.
     """
     ...
-
 
 def runIn(cmd) -> bool:
     """
@@ -9103,7 +8498,6 @@ def runIn(cmd) -> bool:
     @return: True if succeeded, False otherwise.
     """
     ...
-
 
 def sample(n, c, x, y, dx, dy) -> float:
     """
@@ -9121,20 +8515,17 @@ def sample(n, c, x, y, dx, dy) -> float:
     """
     ...
 
-
 def saveEventGraphTimers() -> None:
     """
     Save events in the event graph.
     """
     ...
 
-
 def saveToScript(filename, fileContent) -> None:
     """
     Saves the fileContent with the given filename.
     """
     ...
-
 
 def saveUserPreset(node, presetName) -> None:
     """
@@ -9143,7 +8534,6 @@ def saveUserPreset(node, presetName) -> None:
     @return: bool.
     """
     ...
-
 
 def saveWindowLayout(i=-1) -> None:
     """
@@ -9154,7 +8544,6 @@ def saveWindowLayout(i=-1) -> None:
     """
     ...
 
-
 def scriptClear(resetToCompiledDefaults: bool = ...) -> None:
     """
     Clears a Nuke script and resets all the root knobs to user defined knob defaults.
@@ -9162,13 +8551,11 @@ def scriptClear(resetToCompiledDefaults: bool = ...) -> None:
     """
     ...
 
-
 def scriptClose(*args, **kwargs):
     """
     Close the current script or group. Returns True if successful.
     """
     ...
-
 
 def scriptExit(*args, **kwargs):
     """
@@ -9176,13 +8563,11 @@ def scriptExit(*args, **kwargs):
     """
     ...
 
-
 def scriptName() -> six.binary_type:
     """
     Return the current script's file name
     """
     ...
-
 
 def scriptNew(*args, **kwargs):
     """
@@ -9190,27 +8575,26 @@ def scriptNew(*args, **kwargs):
     """
     ...
 
-
 def scriptOpen(filePath: bytes) -> None:
     """
     Opens a new script containing the contents of the named file.
     """
     ...
 
-
-def scriptReadFile(path: bytes, /, ) -> None:
+def scriptReadFile(
+    path: bytes,
+    /,
+) -> None:
     """
     Read nodes from a file.
     """
     ...
-
 
 def scriptReadText(*args, **kwargs):
     """
     Read nodes from a string.
     """
     ...
-
 
 def scriptSave(filename: six.binary_type = None) -> typing.Literal[True]:
     """
@@ -9221,7 +8605,6 @@ def scriptSave(filename: six.binary_type = None) -> typing.Literal[True]:
     """
     ...
 
-
 def scriptSaveAs(filename=None, overwrite=-1) -> None:
     """
     Saves the current script with the given file name if supplied, or (in GUI mode) asks the user for one using the file chooser. If Nuke is not running in GUI mode, you must supply a filename.
@@ -9231,13 +8614,11 @@ def scriptSaveAs(filename=None, overwrite=-1) -> None:
     """
     ...
 
-
 def scriptSource(*args, **kwargs):
     """
     Same as scriptReadFile().
     """
     ...
-
 
 def selectAll() -> None:
     """
@@ -9247,7 +8628,6 @@ def selectAll() -> None:
     """
     ...
 
-
 def selectPattern() -> None:
     """
     Selects nodes according to a regular expression matching pattern, entered through an input dialog. The pattern can include wildcards ('?' and '*') as well as regular expressions. The expressions are checked against the node name, label, class, and associated file names.
@@ -9255,7 +8635,6 @@ def selectPattern() -> None:
     @return: None
     """
     ...
-
 
 def selectSimilar(matchType) -> None:
     """
@@ -9265,7 +8644,6 @@ def selectSimilar(matchType) -> None:
     @return: None.
     """
     ...
-
 
 def selectedNode() -> Node:
     """
@@ -9278,7 +8656,6 @@ def selectedNode() -> Node:
     """
     ...
 
-
 def selectedNodes(filter: six.binary_type = ...) -> typing.List[Node]:
     """
     Returns a list of all selected nodes in the current group. An attempt is made to return them in 'useful' order where inputs are done before the final node, so commands applied to this list go from top-down.
@@ -9287,7 +8664,6 @@ def selectedNodes(filter: six.binary_type = ...) -> typing.List[Node]:
     @return: The list of selected nodes.
     """
     ...
-
 
 def setPreset(nodeClassName, presetName, knobValues) -> None:
     """
@@ -9299,14 +8675,12 @@ def setPreset(nodeClassName, presetName, knobValues) -> None:
     """
     ...
 
-
 def setReadOnlyPresets(readOnly) -> None:
     """
     Sets whether newly created presets should be added in read-only mode.
     Read-only presets can be applied to a node, but can't be overwritten or deleted.
     """
     ...
-
 
 def setUserPreset(nodeClassName, presetName, knobValues) -> None:
     """
@@ -9317,7 +8691,6 @@ def setUserPreset(nodeClassName, presetName, knobValues) -> None:
     @return: bool.
     """
     ...
-
 
 def show(n, forceFloat) -> None:
     """
@@ -9330,7 +8703,6 @@ def show(n, forceFloat) -> None:
     """
     ...
 
-
 def showBookmarkChooser(n) -> None:
     """
     Show bookmark chooser search box.
@@ -9338,7 +8710,6 @@ def showBookmarkChooser(n) -> None:
     @return: None
     """
     ...
-
 
 def showCreateViewsDialog(views) -> None:
     """
@@ -9349,7 +8720,6 @@ def showCreateViewsDialog(views) -> None:
     """
     ...
 
-
 def showDag(n) -> None:
     """
     Show the tree view of a group node or opens a node control panel.
@@ -9358,7 +8728,6 @@ def showDag(n) -> None:
     @return: None
     """
     ...
-
 
 def showInfo(n) -> six.binary_type:
     """
@@ -9371,7 +8740,6 @@ def showInfo(n) -> six.binary_type:
     """
     ...
 
-
 def showSettings() -> None:
     """
     Show the settings of the current group.
@@ -9379,7 +8747,6 @@ def showSettings() -> None:
     @return: None
     """
     ...
-
 
 def splayNodes() -> None:
     """
@@ -9389,13 +8756,11 @@ def splayNodes() -> None:
     """
     ...
 
-
 def startEventGraphTimers() -> None:
     """
     Start keeping track of events in the event graph.
     """
     ...
-
 
 def startPerformanceTimers() -> None:
     """
@@ -9403,20 +8768,17 @@ def startPerformanceTimers() -> None:
     """
     ...
 
-
 def stopEventGraphTimers() -> None:
     """
     Stop keeping track of events in the event graph.
     """
     ...
 
-
 def stopPerformanceTimers() -> None:
     """
     Stop keeping track of accumulated time on the performance timers, and cease displaying the accumulated time in the DAG.
     """
     ...
-
 
 def stripFrameRange(clipname) -> six.binary_type:
     """
@@ -9427,7 +8789,6 @@ def stripFrameRange(clipname) -> six.binary_type:
     """
     ...
 
-
 def suspendPathProcessing() -> None:
     """
     Suspend path processing.
@@ -9436,20 +8797,17 @@ def suspendPathProcessing() -> None:
     """
     ...
 
-
 def tabClose(*args, **kwargs):
     """
     Close the active dock tab. Returns True if successful.
     """
     ...
 
-
 def tabNext(*args, **kwargs):
     """
     Make the next tab in this dock active. Returns True if successful.
     """
     ...
-
 
 def tcl(s: six.binary_type, *args: six.binary_type) -> six.binary_type:
     """
@@ -9461,7 +8819,6 @@ def tcl(s: six.binary_type, *args: six.binary_type) -> six.binary_type:
     """
     ...
 
-
 def thisClass() -> None:
     """
     Get the class name of the current node. This equivalent to calling nuke.thisNode().Class(), only faster.
@@ -9469,7 +8826,6 @@ def thisClass() -> None:
     @return: The class name for the current node.
     """
     ...
-
 
 def thisGroup() -> Group:
     """
@@ -9479,7 +8835,6 @@ def thisGroup() -> Group:
     """
     ...
 
-
 def thisKnob() -> Knob:
     """
     Returns the current context knob if any.
@@ -9487,7 +8842,6 @@ def thisKnob() -> Knob:
     @return: Knob or None
     """
     ...
-
 
 def thisNode() -> Node:
     """
@@ -9497,7 +8851,6 @@ def thisNode() -> Node:
     """
     ...
 
-
 def thisPane() -> Dock:
     """
     Returns the active pane. This is only valid during a pane menu callback or window layout restoration.
@@ -9505,7 +8858,6 @@ def thisPane() -> Dock:
     @return: The active pane.
     """
     ...
-
 
 def thisParent() -> Node:
     """
@@ -9515,14 +8867,12 @@ def thisParent() -> Node:
     """
     ...
 
-
 def thisView() -> six.binary_type:
     """
     Get the name of the current view.
     @return: The current view name as a string.
     """
     ...
-
 
 def toNode(s: six.binary_type) -> typing.Optional[Node]:
     """
@@ -9533,7 +8883,6 @@ def toNode(s: six.binary_type) -> typing.Optional[Node]:
     """
     ...
 
-
 def toggleFullscreen() -> None:
     """
     Toggles between windowed and fullscreen mode.
@@ -9542,7 +8891,6 @@ def toggleFullscreen() -> None:
     """
     ...
 
-
 def toggleViewers() -> None:
     """
     Toggles all the viewers on and off.
@@ -9550,7 +8898,6 @@ def toggleViewers() -> None:
     @return: None
     """
     ...
-
 
 def toolbar(name: six.binary_type, create: bool = True) -> ToolBar:
     """
@@ -9563,11 +8910,10 @@ def toolbar(name: six.binary_type, create: bool = True) -> ToolBar:
     """
     ...
 
-
 def tprint(
     *value,
-    sep: six.binary_type = b' ',
-    end: six.binary_type = b'\n',
+    sep: six.binary_type = b" ",
+    end: six.binary_type = b"\n",
     file: typing.IO[six.binary_type] = ...,
 ) -> None:
     """
@@ -9581,7 +8927,6 @@ def tprint(
     """
     ...
 
-
 def undo() -> None:
     """
     Perform the most recent undo.
@@ -9590,13 +8935,11 @@ def undo() -> None:
     """
     ...
 
-
 def usingPerformanceTimers() -> bool:
     """
     Return true if performance timers are in use.
     """
     ...
-
 
 def value(knob: six.binary_type, default: six.binary_type = None) -> six.binary_type:
     """
@@ -9610,13 +8953,11 @@ def value(knob: six.binary_type, default: six.binary_type = None) -> six.binary_
     """
     ...
 
-
 def views() -> list:
     """
     List of all the globally existing views.
     """
     ...
-
 
 def waitForThreadsToFinish() -> six.binary_type:
     """
@@ -9624,7 +8965,6 @@ def waitForThreadsToFinish() -> six.binary_type:
     @return: True or False.
     """
     ...
-
 
 def warning(message) -> None:
     """
@@ -9635,8 +8975,9 @@ def warning(message) -> None:
     """
     ...
 
-
-def zoom(scale: float = ..., center: typing.Tuple[int, int] = ..., group: Group = ...) -> typing.Optional[float]:
+def zoom(
+    scale: float = ..., center: typing.Tuple[int, int] = ..., group: Group = ...
+) -> typing.Optional[float]:
     """
     Change the zoom and pan of a group's display. The scale argument is the new zoom factor.
     If the scale is given, but not the center, the zoom is set to that factor and the view is
@@ -9655,14 +8996,12 @@ def zoom(scale: float = ..., center: typing.Tuple[int, int] = ..., group: Group 
     """
     ...
 
-
 def zoomToFitSelected() -> None:
     """
     Does a zoom to fit on the selected nodes in the DAG
     @return: None.
     """
     ...
-
 
 ADD_VIEWS: int = 0
 

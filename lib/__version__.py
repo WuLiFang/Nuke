@@ -4,17 +4,16 @@
 version info.
 """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 from datetime import datetime
 
-VERSION = '2021.1.0'
+VERSION = "2021.1.0"
 RELEASE_DATE = datetime.fromtimestamp(1618215129)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.0.7-158-ge6d6614'
-LAST_GIT_COMMIT_HASH = 'e6d6614ace1b59b09a0a2b0338c677498e6d397a'
-LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
-LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
+LAST_GIT_COMMIT_DESCRIBE = "v2021.0.7-158-ge6d6614"
+LAST_GIT_COMMIT_HASH = "e6d6614ace1b59b09a0a2b0338c677498e6d397a"
+LAST_GIT_COMMIT_AUTHOR_NAME = "NateScarlet"
+LAST_GIT_COMMIT_AUTHOR_EMAIL = "NateScarlet@Gmail.com"
 LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1618215101)
-LAST_GIT_COMMIT_SUBJECT = 'feat: add confirm on drag non-ascii file'
-LAST_GIT_COMMIT_BODY = ''
+LAST_GIT_COMMIT_SUBJECT = "feat: add confirm on drag non-ascii file"
+LAST_GIT_COMMIT_BODY = ""

@@ -2,5 +2,5 @@
 """Nuke init file.  """
 import nuke
 
-nuke.pluginAddPath(b'lib')
-nuke.pluginAddPath(b'plugins')
+nuke.pluginAddPath(b"lib")
+nuke.pluginAddPath(b"plugins")

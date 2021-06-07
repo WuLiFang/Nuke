@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Match drop frame from a node.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 
 import nuke
@@ -31,26 +30,21 @@ def get_timewarp_data(n, start, end, tolerance=0.001):
     ret = []
     try:
 
-        n_time_offset = nuke.nodes.TimeOffset(
-            inputs=[n],
-            time_offset=1
-        )
+        n_time_offset = nuke.nodes.TimeOffset(inputs=[n], time_offset=1)
         nodes.append(n_time_offset)
-        n_merge = nuke.nodes.Merge2(
-            inputs=[n, n_time_offset],
-            operation='difference')
+        n_merge = nuke.nodes.Merge2(inputs=[n, n_time_offset], operation="difference")
         nodes.append(n_merge)
         n_curve_tool = nuke.nodes.CurveTool(
             inputs=[n_merge],
             avgframes=0,
-            ROI='{} {} {} {}'.format(0, 0, n.width(), n.height())
+            ROI="{} {} {} {}".format(0, 0, n.width(), n.height()),
         )
         nodes.append(n_curve_tool)
 
         nuke.execute(n_curve_tool, start, end)
-        k = n_curve_tool[b'intensitydata']  # type: nuke.Knob
+        k = n_curve_tool[b"intensitydata"]  # type: nuke.Knob
         source_f = start
-        for f in range(start, end+1):
+        for f in range(start, end + 1):
             v = sum(k.getValueAt(f)[:3]) / 3
             if v > tolerance:
                 source_f = f
@@ -81,15 +75,15 @@ def create_timewarp(data, start=1):
         curve_points.append((f, i))
 
     n = nuke.nodes.TimeWarp(
-        lookup='{{ curve K {}}}'.format(
-            ' '.join('x{} {}'.format(i[0], i[1])
-                     for i in curve_points))
+        lookup="{{ curve K {}}}".format(
+            " ".join("x{} {}".format(i[0], i[1]) for i in curve_points)
+        )
     )
 
     return n
 
 
-@nuketools.undoable_func('匹配抽帧')
+@nuketools.undoable_func("匹配抽帧")
 def show_dialog():
     """GUI dialog for `get_timewarp_data`
 
@@ -99,36 +93,38 @@ def show_dialog():
     try:
         n = nuke.selectedNode()
     except ValueError:
-        nuke.message(cast.binary('请先选择节点'))
+        nuke.message(cast.binary("请先选择节点"))
         return
 
     def _tr(key):
-        return cast.binary({
-            'start': '起始帧',
-            'end': '结束帧',
-            'tolerance': '阈值',
-        }.get(cast.text(key), key))
+        return cast.binary(
+            {
+                "start": "起始帧",
+                "end": "结束帧",
+                "tolerance": "阈值",
+            }.get(cast.text(key), key)
+        )
 
-    title = '抽帧匹配: {}'.format(n.name())
+    title = "抽帧匹配: {}".format(n.name())
     panel = nuke.Panel(cast.binary(title))
-    _ = panel.addExpressionInput(_tr('start'), cast.binary(n.firstFrame()))
-    _ = panel.addExpressionInput(_tr('end'), cast.binary(n.lastFrame()))
-    _ = panel.addExpressionInput(_tr('tolerance'), b'0.001')
+    _ = panel.addExpressionInput(_tr("start"), cast.binary(n.firstFrame()))
+    _ = panel.addExpressionInput(_tr("end"), cast.binary(n.lastFrame()))
+    _ = panel.addExpressionInput(_tr("tolerance"), b"0.001")
 
     if not panel.show():
         return
 
-    start = int(cast.not_none(panel.value(_tr('start'))))
-    end = int(cast.not_none(panel.value(_tr('end'))))
-    tolerance = float(cast.not_none(panel.value(_tr('tolerance'))))
+    start = int(cast.not_none(panel.value(_tr("start"))))
+    end = int(cast.not_none(panel.value(_tr("end"))))
+    tolerance = float(cast.not_none(panel.value(_tr("tolerance"))))
 
     data = get_timewarp_data(n, start, end, tolerance)
 
     if len(set(data)) == len(data):
-        nuke.message(cast.binary('未检测到抽帧'))
+        nuke.message(cast.binary("未检测到抽帧"))
         return
 
     n_timewarp = create_timewarp(data, start)
-    n_timewarp[b'label'].setValue(cast.binary(title))
+    n_timewarp[b"label"].setValue(cast.binary(title))
     _ = nuke.zoom(nuke.zoom() or 1, (n_timewarp.xpos(), n_timewarp.ypos()))
     return n_timewarp

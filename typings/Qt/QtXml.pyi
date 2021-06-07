@@ -12,54 +12,37 @@ class QDomAttr(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ownerElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def specified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomCDATASection(QDomText):
@@ -67,29 +50,22 @@ class QDomCDATASection(QDomText):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomCharacterData(QDomNode):
@@ -97,69 +73,46 @@ class QDomCharacterData(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def appendData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replaceData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def substringData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomComment(QDomCharacterData):
@@ -167,29 +120,22 @@ class QDomComment(QDomCharacterData):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomDocument(QDomNode):
@@ -197,129 +143,82 @@ class QDomDocument(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def createAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createAttributeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createCDATASection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createComment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createDocumentFragment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createElementNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createEntityReference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createProcessingInstruction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createTextNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doctype(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementById(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementsByTagName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementsByTagNameNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def implementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def importNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toByteArray(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomDocumentFragment(QDomNode):
@@ -327,29 +226,22 @@ class QDomDocumentFragment(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomDocumentType(QDomNode):
@@ -357,59 +249,40 @@ class QDomDocumentType(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def entities(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def internalSubset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notations(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def publicId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomElement(QDomNode):
@@ -417,124 +290,79 @@ class QDomElement(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def attribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def attributeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def attributeNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def attributeNodeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def attributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementsByTagName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elementsByTagNameNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAttributeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAttributeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAttributeNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttributeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttributeNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttributeNodeNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTagName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tagName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomEntity(QDomNode):
@@ -542,44 +370,31 @@ class QDomEntity(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notationName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def publicId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomEntityReference(QDomNode):
@@ -587,29 +402,22 @@ class QDomEntityReference(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomImplementation(Shiboken.Object):
@@ -637,86 +445,64 @@ class QDomImplementation(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def invalidDataPolicy(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setInvalidDataPolicy(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def createDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createDocumentType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomNamedNodeMap(Shiboken.Object):
@@ -724,114 +510,80 @@ class QDomNamedNodeMap(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def item(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def namedItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def namedItemNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeNamedItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeNamedItemNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNamedItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNamedItemNS(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomNode(Shiboken.Object):
@@ -918,382 +670,245 @@ class QDomNode(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def appendChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def attributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childNodes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cloneNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstChildElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAttributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasChildNodes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertAfter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertBefore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAttr(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCDATASection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCharacterData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isComment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDocumentFragment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDocumentType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEntityReference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNotation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isProcessingInstruction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSupported(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastChildElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def localName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def namedItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def namespaceURI(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextSibling(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextSiblingElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ownerDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentNode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previousSibling(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previousSiblingElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replaceChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def save(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNodeValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toAttr(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toCDATASection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toCharacterData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toComment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toDocumentFragment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toDocumentType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toEntityReference(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toNotation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toProcessingInstruction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomNodeList(Shiboken.Object):
@@ -1301,84 +916,62 @@ class QDomNodeList(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def at(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def item(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomNotation(QDomNode):
@@ -1386,39 +979,28 @@ class QDomNotation(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def publicId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomProcessingInstruction(QDomNode):
@@ -1426,44 +1008,31 @@ class QDomProcessingInstruction(QDomNode):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def target(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDomText(QDomCharacterData):
@@ -1471,34 +1040,25 @@ class QDomText(QDomCharacterData):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def nodeType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def splitText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlAttributes(Shiboken.Object):
@@ -1506,68 +1066,44 @@ class QXmlAttributes(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def append(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def localName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def qName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def uri(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlContentHandler(Shiboken.Object):
@@ -1575,73 +1111,47 @@ class QXmlContentHandler(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def characters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endPrefixMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ignorableWhitespace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def processingInstruction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentLocator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def skippedEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startPrefixMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlDTDHandler(Shiboken.Object):
@@ -1649,28 +1159,20 @@ class QXmlDTDHandler(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notationDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unparsedEntityDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlDeclHandler(Shiboken.Object):
@@ -1678,187 +1180,126 @@ class QXmlDeclHandler(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def attributeDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def externalEntityDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def internalEntityDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
-class QXmlDefaultHandler(QXmlContentHandler, QXmlErrorHandler, QXmlDTDHandler, QXmlEntityResolver, QXmlLexicalHandler, QXmlDeclHandler):
+class QXmlDefaultHandler(
+    QXmlContentHandler,
+    QXmlErrorHandler,
+    QXmlDTDHandler,
+    QXmlEntityResolver,
+    QXmlLexicalHandler,
+    QXmlDeclHandler,
+):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def attributeDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def characters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def comment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endCDATA(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endDTD(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endPrefixMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def externalEntityDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fatalError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ignorableWhitespace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def internalEntityDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notationDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def processingInstruction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolveEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentLocator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def skippedEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startCDATA(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startDTD(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startElement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startPrefixMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unparsedEntityDecl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def warning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlEntityResolver(Shiboken.Object):
@@ -1866,23 +1307,17 @@ class QXmlEntityResolver(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolveEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlErrorHandler(Shiboken.Object):
@@ -1890,33 +1325,23 @@ class QXmlErrorHandler(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fatalError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def warning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlInputSource(Shiboken.Object):
@@ -1924,43 +1349,29 @@ class QXmlInputSource(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fromRawData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def next(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlLexicalHandler(Shiboken.Object):
@@ -1968,53 +1379,35 @@ class QXmlLexicalHandler(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def comment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endCDATA(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endDTD(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startCDATA(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startDTD(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startEntity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlLocator(Shiboken.Object):
@@ -2022,23 +1415,17 @@ class QXmlLocator(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def columnNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlNamespaceSupport(Shiboken.Object):
@@ -2046,58 +1433,38 @@ class QXmlNamespaceSupport(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def popContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prefixes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def processName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pushContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def splitName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def uri(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlParseException(Shiboken.Object):
@@ -2105,38 +1472,26 @@ class QXmlParseException(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def columnNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def message(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def publicId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlReader(Shiboken.Object):
@@ -2144,108 +1499,68 @@ class QXmlReader(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def DTDHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contentHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def declHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def entityResolver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def feature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lexicalHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def property(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContentHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDTDHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDeclHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEntityResolver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setErrorHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLexicalHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QXmlSimpleReader(QXmlReader):
@@ -2253,117 +1568,74 @@ class QXmlSimpleReader(QXmlReader):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def DTDHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contentHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def declHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def entityResolver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def feature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lexicalHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parseContinue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def property(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContentHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDTDHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDeclHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEntityResolver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setErrorHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLexicalHandler(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QDomAttr', 'QDomCDATASection', 'QDomCharacterData', 'QDomC...
 """
-

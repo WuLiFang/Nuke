@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Rotopaint dope sheet.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import re
 
@@ -49,9 +48,9 @@ def apply_timewarp(rotopaint, timewarp, all_stroke=False):
         input_time = int(attrs.getValue(0, key))
         if input_time not in time_map:
             nuke.message(
-                "在 {}.input 中找不到值为 {} 的关键帧"
-                .format(timewarp.name(), input_time)
-                .encode("utf-8")
+                "在 {}.input 中找不到值为 {} 的关键帧".format(timewarp.name(), input_time).encode(
+                    "utf-8"
+                )
             )
             raise ValueError("timewarp lookup failed")
         output_time = time_map[int(input_time)]
@@ -65,29 +64,27 @@ def apply_timewarp(rotopaint, timewarp, all_stroke=False):
         if lifetime_type == LIFETIME_TYPE_ALL:
             continue
 
-        if (not all_stroke and
-                not attrs.getValue(nuke.frame(), attrs.kVisibleAttribute)):
+        if not all_stroke and not attrs.getValue(nuke.frame(), attrs.kVisibleAttribute):
             continue
         apply_lookup(attrs, attrs.kLifeTimeNAttribute)
         apply_lookup(attrs, attrs.kLifeTimeMAttribute)
 
 
 class Panel(PythonPanel):
-    """Panel for rotopaint dopesheet command.  """
-    widget_id = b'com.wlf.rotopaint_dopesheet'
+    """Panel for rotopaint dopesheet command."""
+
+    widget_id = b"com.wlf.rotopaint_dopesheet"
 
     def __init__(self, rotopaint):
-        super(Panel, self).__init__(
-            'RotoPaint摄影表'.encode("utf-8"), self.widget_id)
+        super(Panel, self).__init__("RotoPaint摄影表".encode("utf-8"), self.widget_id)
         if rotopaint.Class() != "RotoPaint":
             nuke.message("请选中RotoPaint节点".encode("utf-8"))
             raise ValueError("require roto paint node")
         self.rotopaint = rotopaint
         self.timewarp = nuke.nodes.TimeWarp(
             inputs=[rotopaint],
-            lookup='{{ curve L l {}}}'.format(
-                ' '.join('x{} {}'.format(i, i)
-                         for i in _rotopaint_keyframes(rotopaint))
+            lookup="{{ curve L l {}}}".format(
+                " ".join("x{} {}".format(i, i) for i in _rotopaint_keyframes(rotopaint))
             ),
         )
         _ = self.timewarp[b"lookup"].setExpression(b"floor(curve)")
@@ -98,15 +95,14 @@ class Panel(PythonPanel):
         k = nuke.Text_Knob(
             b"",
             "说明".encode("utf-8"),
-            ("请在摄影表中编辑 {} 然后选择以下操作"
-             .format(self.timewarp.name())
-             .encode("utf-8")))
+            ("请在摄影表中编辑 {} 然后选择以下操作".format(self.timewarp.name()).encode("utf-8")),
+        )
         self.addKnob(k)
         k = nuke.Script_Knob(b"apply", "应用至可见笔画".encode("utf-8"))
         self.addKnob(k)
         k = nuke.Script_Knob(b"apply_all", "应用至所有笔画".encode("utf-8"))
         self.addKnob(k)
-        k = nuke.Script_Knob(b'cancel', 'Cancel'.encode("utf-8"))
+        k = nuke.Script_Knob(b"cancel", "Cancel".encode("utf-8"))
         self.addKnob(k)
 
     def show(self):
@@ -114,9 +110,9 @@ class Panel(PythonPanel):
         nuketools.raise_panel("DopeSheet.1")
 
     def knobChanged(self, knob):
-        """Override. """
+        """Override."""
         is_finished = False
-        if knob is self['apply']:
+        if knob is self["apply"]:
             apply_timewarp(self.rotopaint, self.timewarp)
             is_finished = True
         elif knob is self["apply_all"]:

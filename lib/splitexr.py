@@ -24,28 +24,32 @@ if nuke.GUI:
         """Dialog UI of splitexr."""
 
         knob_list = [
-            (nuke.Tab_Knob, 'general_setting', cast.binary('常用设置')),
-            (nuke.File_Knob, 'input_dir', cast.binary('输入文件夹')),
-            (nuke.File_Knob, 'output_dir', cast.binary('输出文件夹')),
-            (nuke.Enumeration_Knob, 'output_ext', cast.binary('输出格式'),
-             ['exr', 'png', 'tga', 'jpg', 'mov']),
-            (nuke.Tab_Knob, 'filter', cast.binary('正则过滤')),
-            (nuke.String_Knob, 'footage_pat', cast.binary('素材名')),
-            (nuke.String_Knob, 'dir_pat', cast.binary('路径')),
-            (nuke.EndTabGroup_Knob, 'end_tab', b''),
-            (nuke.Multiline_Eval_String_Knob, 'info', b''),
+            (nuke.Tab_Knob, "general_setting", cast.binary("常用设置")),
+            (nuke.File_Knob, "input_dir", cast.binary("输入文件夹")),
+            (nuke.File_Knob, "output_dir", cast.binary("输出文件夹")),
+            (
+                nuke.Enumeration_Knob,
+                "output_ext",
+                cast.binary("输出格式"),
+                ["exr", "png", "tga", "jpg", "mov"],
+            ),
+            (nuke.Tab_Knob, "filter", cast.binary("正则过滤")),
+            (nuke.String_Knob, "footage_pat", cast.binary("素材名")),
+            (nuke.String_Knob, "dir_pat", cast.binary("路径")),
+            (nuke.EndTabGroup_Knob, "end_tab", b""),
+            (nuke.Multiline_Eval_String_Knob, "info", b""),
         ]
         default = {
-            'footage_pat': '.+\\.exr[ 0-9-]*',
-            'output_ext': 'exr',
-            'output_dir': 'E:/splitexr'
+            "footage_pat": ".+\\.exr[ 0-9-]*",
+            "output_ext": "exr",
+            "output_dir": "E:/splitexr",
         }
 
         def __init__(self):
             nukescripts.PythonPanel.__init__(
                 self,
-                cast.binary('分离exr'),
-                b'com.wlf.splitexr',
+                cast.binary("分离exr"),
+                b"com.wlf.splitexr",
             )
             self._files = []
 
@@ -61,38 +65,38 @@ if nuke.GUI:
         def knobChanged(self, knob):
             """Override for buttons."""
 
-            if knob is self.knobs()[b'OK']:
+            if knob is self.knobs()[b"OK"]:
                 self.execute()
             else:
                 self.update()
 
         @property
         def input_dir(self):
-            """Input footage directory. """
-            return self.knobs()[b'input_dir'].value()
+            """Input footage directory."""
+            return self.knobs()[b"input_dir"].value()
 
         @property
         def output_dir(self):
-            """Output save path. """
-            return self.knobs()[b'output_dir'].value()
+            """Output save path."""
+            return self.knobs()[b"output_dir"].value()
 
         @property
         def output_ext(self):
-            """Output file type.  """
-            return self.knobs()[b'output_ext'].value()
+            """Output file type."""
+            return self.knobs()[b"output_ext"].value()
 
         @property
         def footage_pat(self):
-            """Footage regular expression match pattern. """
-            return self.knobs()[b'footage_pat'].value()
+            """Footage regular expression match pattern."""
+            return self.knobs()[b"footage_pat"].value()
 
         @property
         def dir_pat(self):
-            """Directory regular expression match pattern. """
-            return self.knobs()[b'dir_pat'].value()
+            """Directory regular expression match pattern."""
+            return self.knobs()[b"dir_pat"].value()
 
         def files(self):
-            """Return files in input dir. """
+            """Return files in input dir."""
             ret = []
 
             if not os.path.isdir(self.input_dir):
@@ -100,11 +104,14 @@ if nuke.GUI:
             dirs = list(x[0] for x in os.walk(self.input_dir))
             for dir_ in dirs:
                 # Get footage in subdir
-                if not re.match(self.dir_pat, os.path.basename(dir_.rstrip('\\/'))):
+                if not re.match(self.dir_pat, os.path.basename(dir_.rstrip("\\/"))):
                     continue
 
-                footages = [i for i in nuke.getFileNameList(dir_, True) if
-                            not cast.text(i).endswith(('副本', '.lock'))]
+                footages = [
+                    i
+                    for i in nuke.getFileNameList(dir_, True)
+                    if not cast.text(i).endswith(("副本", ".lock"))
+                ]
                 if footages:
                     for f in footages:
                         if os.path.isdir(os.path.join(dir_, f)):
@@ -120,17 +127,17 @@ if nuke.GUI:
             files = self.files()
 
             def _info():
-                info = '测试'
+                info = "测试"
                 if files:
-                    info = '# 共{}个素材\n'.format(len(files))
-                    info += '\n'.join(files)
+                    info = "# 共{}个素材\n".format(len(files))
+                    info += "\n".join(files)
                 else:
-                    info = '找不到素材'
-                _ = self.knobs()[b'info'].setValue(cast.binary(info))
+                    info = "找不到素材"
+                _ = self.knobs()[b"info"].setValue(cast.binary(info))
 
             def _button_enabled():
 
-                k = self.knobs().get(b'OK')
+                k = self.knobs().get(b"OK")
                 if k:
                     if files:
                         k.setEnabled(True)
@@ -142,16 +149,16 @@ if nuke.GUI:
 
         @run_async
         def execute(self):
-            """Start task.  """
+            """Start task."""
 
             files = self._files
-            for f in progress(files, '分离exr'):
-                cmd = u'"{nuke}" -t "{script}" "{file_path}" "{output_dir}" -f "{file_type}"'.format(
+            for f in progress(files, "分离exr"):
+                cmd = '"{nuke}" -t "{script}" "{file_path}" "{output_dir}" -f "{file_type}"'.format(
                     nuke=nuke.EXE_PATH,
                     script=__file__,
                     file_path=os.path.join(self.input_dir, f),
                     file_type=self.output_ext,
-                    output_dir=self.output_dir
+                    output_dir=self.output_dir,
                 )
                 proc = Popen(cast.binary(cmd))
                 _ = proc.wait()
@@ -166,29 +173,27 @@ if nuke.GUI:
 
 
 def split(filename, output_dir, file_format=None):
-    """Render splitted files.  """
+    """Render splitted files."""
 
     filename = cast.text(filename)
     output_dir = cast.text(output_dir)
-    path = PurePath(re.sub(r' [\d -]*$', '', filename))
+    path = PurePath(re.sub(r" [\d -]*$", "", filename))
     output_dir = Path(output_dir)
 
     # Create read node.
     read_node = nuke.nodes.Read()
-    file_knob = read_node[b'file']
+    file_knob = read_node[b"file"]
     assert isinstance(file_knob, nuke.File_Knob)
     file_knob.fromUserText(cast.binary(filename))
     if file_format:
-        suffix = '.{}'.format(cast.text(file_format).strip('.'))
+        suffix = ".{}".format(cast.text(file_format).strip("."))
     else:
-        suffix = path.suffix or '.mov'
+        suffix = path.suffix or ".mov"
 
     # Get layers for render.
     layers = nuke.layers(read_node)
     assert isinstance(layers, list)
-    layers_overlap = {
-        'rgba': ('rgb', 'alpha')
-    }
+    layers_overlap = {"rgba": ("rgb", "alpha")}
     for k, v in layers_overlap.items():
         if k in layers:
             for i in v:
@@ -199,30 +204,28 @@ def split(filename, output_dir, file_format=None):
 
     # Create write nodes.
     for layer in layers:
-        _kwargs = {'in': layer}  # Avoid use of python keyword 'in'.
+        _kwargs = {"in": layer}  # Avoid use of python keyword 'in'.
         n = nuke.nodes.Shuffle(inputs=[read_node], label=layer, **_kwargs)
-        n = nuke.nodes.Write(inputs=[n],
-                             file=((output_dir
-                                    / '{}.{}{}'.format(path.stem, layer, suffix))
-                                   .as_posix()),
-                             channels='rgba')
+        n = nuke.nodes.Write(
+            inputs=[n],
+            file=((output_dir / "{}.{}{}".format(path.stem, layer, suffix)).as_posix()),
+            channels="rgba",
+        )
 
     # Render.
     output_dir.mkdir(parents=True, exist_ok=True)
-    nuke.render(nuke.Root(),
-                start=read_node.firstFrame(),
-                end=read_node.lastFrame())
+    nuke.render(nuke.Root(), start=read_node.firstFrame(), end=read_node.lastFrame())
 
 
 def main():
     parser = argparse.ArgumentParser()
-    _ = parser.add_argument('input', help='输入文件')
-    _ = parser.add_argument('output_dir', help='输出路径')
-    _ = parser.add_argument('-f', '--format', help='输出文件类型')
+    _ = parser.add_argument("input", help="输入文件")
+    _ = parser.add_argument("output_dir", help="输出路径")
+    _ = parser.add_argument("-f", "--format", help="输出文件类型")
     args = parser.parse_args([cast.text(i) for i in nuke.rawArgs[3:]])
 
     split(args.input, args.output_dir, args.format)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

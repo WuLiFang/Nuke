@@ -8,6 +8,7 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QAbstractNetworkCache(PySide.QtCore.QObject):
     __new__: ...
     """
@@ -18,53 +19,35 @@ class QAbstractNetworkCache(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cacheSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metaData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepare(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateMetaData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractSocket(PySide.QtCore.QIODevice):
@@ -324,223 +307,137 @@ class QAbstractSocket(PySide.QtCore.QIODevice):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def abort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def atEnd(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesToWrite(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canReadLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectToHost(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectToHostImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def disconnectFromHost(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def disconnectFromHostImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSequential(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def localAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def localPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def peerAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def peerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def peerPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readLineData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLocalAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLocalPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPeerAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPeerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPeerPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSocketDescriptor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSocketError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSocketOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSocketState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def socketDescriptor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def socketOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def socketType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForBytesWritten(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForConnected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForDisconnected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForReadyRead(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def writeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAuthenticator(Shiboken.Object):
@@ -548,105 +445,76 @@ class QAuthenticator(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def option(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def password(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def realm(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPassword(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUser(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def user(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHostAddress(Shiboken.Object):
@@ -684,152 +552,113 @@ class QHostAddress(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def parseSubnet(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __hash__(self, *args, **kwargs):
         """
         x.__hash__() <==> hash(x)
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isInSubnet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def protocol(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scopeId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScopeId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toIPv4Address(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toIPv6Address(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHostInfo(Shiboken.Object):
@@ -854,92 +683,60 @@ class QHostInfo(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def abortHostLookup(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fromName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def localDomainName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def localHostName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addresses(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lookupId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAddresses(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setErrorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLookupId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLocalServer(PySide.QtCore.QObject):
@@ -957,79 +754,51 @@ class QLocalServer(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def removeServer(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fullServerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasPendingConnections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isListening(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def listen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxPendingConnections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextPendingConnection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def serverError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def serverName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaxPendingConnections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForNewConnection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLocalSocket(PySide.QtCore.QIODevice):
@@ -1142,118 +911,74 @@ class QLocalSocket(PySide.QtCore.QIODevice):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def abort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesToWrite(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canReadLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectToServer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def disconnectFromServer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fullServerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSequential(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def serverName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForBytesWritten(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForConnected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForDisconnected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForReadyRead(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def writeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkAccessManager(PySide.QtCore.QObject):
@@ -1356,113 +1081,71 @@ class QNetworkAccessManager(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def activeConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cache(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def configuration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cookieJar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createRequest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteResource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def get(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def head(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def networkAccessible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def post(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proxyFactory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def put(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sendCustomRequest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCache(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCookieJar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNetworkAccessible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProxyFactory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkAddressEntry(Shiboken.Object):
@@ -1470,94 +1153,68 @@ class QNetworkAddressEntry(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def broadcast(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def netmask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prefixLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBroadcast(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIp(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNetmask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrefixLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkCacheMetaData(Shiboken.Object):
@@ -1565,143 +1222,103 @@ class QNetworkCacheMetaData(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def attributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expirationDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawHeaders(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveToDisk(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExpirationDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRawHeaders(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSaveToDisk(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def url(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkConfiguration(Shiboken.Object):
@@ -1833,109 +1450,77 @@ class QNetworkConfiguration(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def bearerName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bearerType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bearerTypeName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def children(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def identifier(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRoamingAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def purpose(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkConfigurationManager(PySide.QtCore.QObject):
@@ -2018,43 +1603,29 @@ class QNetworkConfigurationManager(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def allConfigurations(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def capabilities(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def configurationFromIdentifier(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOnline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateConfigurations(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkCookie(Shiboken.Object):
@@ -2076,146 +1647,101 @@ class QNetworkCookie(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def parseCookies(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def domain(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expirationDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isHttpOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSecure(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSessionCookie(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def path(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDomain(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExpirationDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHttpOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSecure(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toRawForm(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkCookieJar(PySide.QtCore.QObject):
@@ -2228,33 +1754,23 @@ class QNetworkCookieJar(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def allCookies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cookiesForUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAllCookies(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCookiesFromUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkDiskCache(QAbstractNetworkCache):
@@ -2267,83 +1783,53 @@ class QNetworkDiskCache(QAbstractNetworkCache):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cacheDirectory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expire(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileMetaData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumCacheSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metaData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepare(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCacheDirectory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumCacheSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateMetaData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkInterface(Shiboken.Object):
@@ -2389,83 +1875,56 @@ class QNetworkInterface(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def allAddresses(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def allInterfaces(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def interfaceFromIndex(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def interfaceFromName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def addressEntries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hardwareAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def humanReadableName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkProxy(Shiboken.Object):
@@ -2539,136 +1998,94 @@ class QNetworkProxy(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def applicationProxy(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setApplicationProxy(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def capabilities(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCachingProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTransparentProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def password(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def port(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCapabilities(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPassword(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUser(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def user(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkProxyFactory(Shiboken.Object):
@@ -2676,42 +2093,30 @@ class QNetworkProxyFactory(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def proxyForQuery(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setApplicationProxyFactory(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setUseSystemConfiguration(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def systemProxyForQuery(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def queryProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkProxyQuery(Shiboken.Object):
@@ -2740,124 +2145,86 @@ class QNetworkProxyQuery(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def localPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def networkConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def peerHostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def peerPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def protocolTag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def queryType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLocalPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNetworkConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPeerHostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPeerPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProtocolTag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQueryType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def url(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkReply(PySide.QtCore.QIODevice):
@@ -3024,158 +2391,98 @@ class QNetworkReply(PySide.QtCore.QIODevice):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def abort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def attribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasRawHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def header(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ignoreSslErrors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFinished(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRunning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSequential(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def manager(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def operation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawHeaderList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawHeaderPairs(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def request(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFinished(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOperation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRawHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadBufferSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRequest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSslConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sslConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def url(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def writeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkRequest(Shiboken.Object):
@@ -3377,134 +2684,92 @@ class QNetworkRequest(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def attribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasRawHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def header(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def originatingObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def priority(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rawHeaderList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOriginatingObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPriority(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRawHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSslConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sslConfiguration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def url(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QNetworkSession(PySide.QtCore.QObject):
@@ -3610,113 +2875,71 @@ class QNetworkSession(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def accept(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activeTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesReceived(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bytesWritten(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def configuration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectNotify(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def disconnectNotify(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ignore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def interface(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOpen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def migrate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sessionProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSessionProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForOpened(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSsl(Shiboken.Object):
@@ -3822,103 +3045,65 @@ class QTcpServer(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addPendingConnection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def errorString(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasPendingConnections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def incomingConnection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isListening(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def listen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxPendingConnections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextPendingConnection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def serverAddress(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def serverError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def serverPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaxPendingConnections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSocketDescriptor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def socketDescriptor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def waitForNewConnection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTcpSocket(QAbstractSocket):
@@ -3931,13 +3116,11 @@ class QTcpSocket(QAbstractSocket):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QUdpSocket(QAbstractSocket):
@@ -3979,62 +3162,41 @@ class QUdpSocket(QAbstractSocket):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bind(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasPendingDatagrams(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def joinMulticastGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leaveMulticastGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def multicastInterface(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pendingDatagramSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def readDatagram(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMulticastInterface(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def writeDatagram(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QAbstractNetworkCache', 'QAbstractSocket', 'QAuthenticator...
 """
-

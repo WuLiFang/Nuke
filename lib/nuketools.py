@@ -12,14 +12,13 @@ import nuke
 
 from wlf.decorators import run_in_main_thread
 
-LOGGER = logging.getLogger('com.wlf.nuketools')
+LOGGER = logging.getLogger("com.wlf.nuketools")
 
 
 def undoable_func(name=None):
-    """(Decorator)Record nuke undo set for @func.   """
+    """(Decorator)Record nuke undo set for @func."""
 
     def _wrap(func):
-
         @wraps(func)
         def _func(*args, **kwargs):
             _name = name if name is not None else func.__name__
@@ -31,8 +30,7 @@ def undoable_func(name=None):
                     # Async function should call nuke.Undo.end by itself.
                     _ = run_in_main_thread(nuke.Undo.end)()
                 else:
-                    LOGGER.warning(
-                        'Async function should implement undoable itself.')
+                    LOGGER.warning("Async function should implement undoable itself.")
                 return ret
             except:
                 _ = run_in_main_thread(nuke.Undo.cancel)()
@@ -51,6 +49,7 @@ def abort_modified(func):
         if nuke.Root().modified():
             return False
         return func(*args, **kwargs)
+
     return _func
 
 
@@ -62,6 +61,7 @@ def mainwindow():
     """
 
     from Qt import QtWidgets
+
     for i in QtWidgets.QApplication.topLevelWidgets():
         if isinstance(i, QtWidgets.QMainWindow):
             return i
@@ -79,6 +79,7 @@ def raise_panel(name):
     """
 
     from Qt import QtWidgets
+
     for i in QtWidgets.QApplication.topLevelWidgets():
         panel = i.findChild(QtWidgets.QWidget, name)
         if not panel:
@@ -103,8 +104,7 @@ def raise_panel(name):
 
 @contextmanager
 def keep_modifield_status():
-    """Restore modifield status after action finished.
-    """
+    """Restore modifield status after action finished."""
 
     root = nuke.Root()
     assert isinstance(root, nuke.Root)

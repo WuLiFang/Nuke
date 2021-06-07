@@ -8,6 +8,7 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QSql(Shiboken.Object):
     AfterLastRow: ... = PySide.QtSql.QSql.Location.AfterLastRow
     """
@@ -106,228 +107,145 @@ class QSqlDatabase(Shiboken.Object):
     """
     'qt_sql_default_connection'
     """
-
     @staticmethod
     def addDatabase(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def cloneDatabase(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def connectionNames(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def contains(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def database(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def drivers(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def isDriverAvailable(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def registerSqlDriver(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def removeDatabase(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def commit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def connectionName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def databaseName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def driver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def driverName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOpen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOpenError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def password(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def port(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def primaryIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def record(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rollback(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setConnectOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDatabaseName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHostName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPassword(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUserName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tables(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transaction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def userName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlDriver(PySide.QtCore.QObject):
@@ -455,168 +373,104 @@ class QSqlDriver(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def beginTransaction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def commitTransaction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createResult(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def escapeIdentifier(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def formatValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFeature(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIdentifierEscaped(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIdentifierEscapedImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOpen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isOpenError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def primaryIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def record(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rollbackTransaction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpenError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sqlStatement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stripDelimiters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stripDelimitersImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subscribeToNotification(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subscribeToNotificationImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subscribedToNotifications(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subscribedToNotificationsImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tables(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsubscribeFromNotification(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsubscribeFromNotificationImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlDriverCreatorBase(Shiboken.Object):
@@ -624,18 +478,14 @@ class QSqlDriverCreatorBase(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlError(Shiboken.Object):
@@ -668,74 +518,49 @@ class QSqlError(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def databaseText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def driverText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def number(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDatabaseText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDriverText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlField(Shiboken.Object):
@@ -760,196 +585,132 @@ class QSqlField(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __nonzero__(self, *args, **kwargs):
         """
         x.__nonzero__() <==> x != 0
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAutoValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isGenerated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def precision(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def requiredStatus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGenerated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrecision(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRequired(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRequiredStatus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSqlType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def typeID(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlIndex(QSqlRecord):
@@ -957,53 +718,35 @@ class QSqlIndex(QSqlRecord):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def append(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDescending(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def name(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDescending(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlQuery(Shiboken.Object):
@@ -1025,188 +768,116 @@ class QSqlQuery(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addBindValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def at(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bindValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundValues(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def driver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def execBatch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def executedQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def finish(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def first(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isForwardOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def last(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastInsertId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def next(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextResult(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numRowsAffected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepare(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previous(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def record(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def result(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def seek(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForwardOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlQueryModel(PySide.QtCore.QAbstractTableModel):
@@ -1219,98 +890,62 @@ class QSqlQueryModel(PySide.QtCore.QAbstractTableModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def canFetchMore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchMore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexInQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def query(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def queryChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def record(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlRecord(Shiboken.Object):
@@ -1318,150 +953,103 @@ class QSqlRecord(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def append(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearValues(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def field(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fieldName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isGenerated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def replace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGenerated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlRelation(Shiboken.Object):
@@ -1469,38 +1057,26 @@ class QSqlRelation(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def displayColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tableName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlRelationalDelegate(PySide.QtGui.QItemDelegate):
@@ -1513,28 +1089,20 @@ class QSqlRelationalDelegate(PySide.QtGui.QItemDelegate):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditorData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlRelationalTableModel(QSqlTableModel):
@@ -1547,83 +1115,53 @@ class QSqlRelationalTableModel(QSqlTableModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRowIntoTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orderByClause(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def relation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def relationModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revertRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def select(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectStatement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRelation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateRowInTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlResult(Shiboken.Object):
@@ -1669,243 +1207,149 @@ class QSqlResult(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addBindValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def at(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bindValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bindValueType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bindingSyntax(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundValueCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundValueName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundValues(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def detachFromResultSet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def driver(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def execBatch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def executedQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchFirst(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchLast(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchNext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchPrevious(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasOutValues(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isForwardOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNull(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isValid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastInsertId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextResult(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numRowsAffected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepare(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def record(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def savePrepare(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForwardOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastError(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumericalPrecisionPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSqlTableModel(QSqlQueryModel):
@@ -1956,202 +1400,125 @@ class QSqlTableModel(QSqlQueryModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def database(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteRowFromTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editStrategy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fieldIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexInQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRecord(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRowIntoTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDirty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orderByClause(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def primaryKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumns(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeRows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revertAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revertRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def select(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectStatement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditStrategy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrimaryKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRecord(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def submit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def submitAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tableName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateRowInTable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QSql', 'QSqlDatabase', 'QSqlDriver', 'QSqlDriverCreatorBas...
 """
-

@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Asset notify.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import io
 import logging
@@ -28,11 +27,11 @@ LOGGER = logging.getLogger(__name__)
 
 def warn_missing_frames(nodes=None, show_ok=False):
     """Show missing frames to user
-        Args:
-            assets (any, optional): Defaults to None.
-            object contains assets, None mean all Assets.
-            show_ok (bool, optional): Defaults to False.
-            If show message for no missing frames.
+    Args:
+        assets (any, optional): Defaults to None.
+        object contains assets, None mean all Assets.
+        show_ok (bool, optional): Defaults to False.
+        If show message for no missing frames.
     """
     if nodes is None:
         nodes = nuke.allNodes(b"Read")
@@ -40,23 +39,27 @@ def warn_missing_frames(nodes=None, show_ok=False):
     result = []
     for n in nodes:
         filename = cast.text(nuke.filename(n))
-        frame_ranges = asset.missing_frames.get(
-            filename, n.firstFrame(), n.lastFrame())
+        frame_ranges = asset.missing_frames.get(filename, n.firstFrame(), n.lastFrame())
         if not frame_ranges:
             continue
-        result.append(dict(
-            nodename=cast.text(n.name()),
-            filename=filename,
-            frame_ranges=nuke.FrameRanges(frame_ranges),
-        ))
+        result.append(
+            dict(
+                nodename=cast.text(n.name()),
+                filename=filename,
+                frame_ranges=nuke.FrameRanges(frame_ranges),
+            )
+        )
 
-    html = templates.render("missing_frames.tmpl", dict(
-        result=result,
-    ))
+    html = templates.render(
+        "missing_frames.tmpl",
+        dict(
+            result=result,
+        ),
+    )
 
     if not result:
         if show_ok:
-            nuke.message(cast.binary('没有发现缺帧素材'))
+            nuke.message(cast.binary("没有发现缺帧素材"))
         return
 
     if not nuke.GUI:
@@ -64,10 +67,10 @@ def warn_missing_frames(nodes=None, show_ok=False):
         return
 
     if len(result) < 10:
-        nuke.message(cast.binary(html.replace('\n', '')))
+        nuke.message(cast.binary(html.replace("\n", "")))
     else:
-        fd, _ = mkstemp('.html', text=True)
-        with io.open(fd, 'w', encoding='utf-8') as f:
+        fd, _ = mkstemp(".html", text=True)
+        with io.open(fd, "w", encoding="utf-8") as f:
             _ = f.write(html)
         _ = webbrowser.open(html)
 
@@ -76,7 +79,7 @@ SHOWED_WARNING = []
 
 
 def throtted_warning(msg):
-    """Only show each warning message once.  """
+    """Only show each warning message once."""
 
     msg = cast.text(msg)
     if msg not in SHOWED_WARNING:
@@ -85,41 +88,44 @@ def throtted_warning(msg):
 
 
 def reset_warning_history():
-    """Forget showed warning.  """
+    """Forget showed warning."""
 
     del SHOWED_WARNING[:]
 
 
 def warn_mtime(show_ok=False, since=None):
-    """Show footage that mtime newer than script mtime. """
+    """Show footage that mtime newer than script mtime."""
 
-    LOGGER.debug('Check warn_mtime')
+    LOGGER.debug("Check warn_mtime")
 
     try:
         script_name = nuke.scriptName()
     except RuntimeError:
         if show_ok:
-            nuke.message(cast.binary('文件未保存'))
+            nuke.message(cast.binary("文件未保存"))
         return
     script_mtime = os.path.getmtime(cast.binary(script_name))
     since = since or script_mtime
 
-    @run_with_clock('检查素材修改日期')
+    @run_with_clock("检查素材修改日期")
     def _get_mtime_info():
         ret = {}
-        for n in nuke.allNodes(b'Read', nuke.Root()):
-            mtime_text = n.metadata(b'input/mtime')
+        for n in nuke.allNodes(b"Read", nuke.Root()):
+            mtime_text = n.metadata(b"input/mtime")
             if mtime_text is None:
                 continue
-            mtime = time.mktime(time.strptime(
-                cast.text(mtime_text),
-                '%Y-%m-%d %H:%M:%S',
-            ))
+            mtime = time.mktime(
+                time.strptime(
+                    cast.text(mtime_text),
+                    "%Y-%m-%d %H:%M:%S",
+                )
+            )
             if mtime > since:
                 ret[nuke.filename(n)] = mtime
-                ftime = time.strftime('%m-%d %H:%M:%S', time.localtime(mtime))
+                ftime = time.strftime("%m-%d %H:%M:%S", time.localtime(mtime))
                 throtted_warning(
-                    '{}: [new footage]{}'.format(cast.text(n.name()), ftime))
+                    "{}: [new footage]{}".format(cast.text(n.name()), ftime)
+                )
         return ret
 
     newer_footages = _get_mtime_info()
@@ -128,18 +134,21 @@ def warn_mtime(show_ok=False, since=None):
         return
 
     env = Environment(loader=FileSystemLoader(core.TEMPLATES_DIR))
-    template = env.get_template('mtime.html')
-    data = [(k, pendulum.from_timestamp(v).diff_for_humans())
-            for k, v in newer_footages.items()]
-    msg = template.render(script_name=script_name,
-                          script_mtime=pendulum.from_timestamp(
-                              script_mtime).diff_for_humans(),
-                          data=data)
+    template = env.get_template("mtime.html")
+    data = [
+        (k, pendulum.from_timestamp(v).diff_for_humans())
+        for k, v in newer_footages.items()
+    ]
+    msg = template.render(
+        script_name=script_name,
+        script_mtime=pendulum.from_timestamp(script_mtime).diff_for_humans(),
+        data=data,
+    )
     nuke.message(cast.binary(msg))
 
 
 def setup():
-    pendulum.set_locale('zh')
+    pendulum.set_locale("zh")
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(reset_warning_history)
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_missing_frames)
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_mtime)

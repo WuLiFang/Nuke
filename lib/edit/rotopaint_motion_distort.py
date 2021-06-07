@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Do motion distort for rotopaint strokes.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import cast_unknown as cast
 import nuke
@@ -17,34 +16,28 @@ from wlf_tools.progress import CustomMessageProgressHandler
 
 
 def _is_point_single_key(point):
-    return all(
-        len(p.getControlPointKeyTimes()) == 1
-        for p in iter_shape_point(point)
-    )
+    return all(len(p.getControlPointKeyTimes()) == 1 for p in iter_shape_point(point))
 
 
 def _is_shape_single_key(shape):
     return all(_is_point_single_key(p) for p in shape)
 
 
-def _motion_distort_rotopaint_anim_point_frame(
-        motion, point, frame, direction):
-    base_frame = frame-direction
+def _motion_distort_rotopaint_anim_point_frame(motion, point, frame, direction):
+    base_frame = frame - direction
     motion_frame = base_frame
     if direction < 0:
         motion_frame -= 1
     base_pos = point.getPosition(base_frame)
     offset = CVec3(
-        motion.sample(cast.binary("forward.u"),
-                      base_pos.x,
-                      base_pos.y,
-                      frame=motion_frame),
-        motion.sample(cast.binary("forward.v"),
-                      base_pos.x,
-                      base_pos.y,
-                      frame=motion_frame),
+        motion.sample(
+            cast.binary("forward.u"), base_pos.x, base_pos.y, frame=motion_frame
+        ),
+        motion.sample(
+            cast.binary("forward.v"), base_pos.x, base_pos.y, frame=motion_frame
+        ),
     )
-    computed_pos = base_pos + offset*direction
+    computed_pos = base_pos + offset * direction
 
     def _job():
         point.addPositionKey(frame, computed_pos)
@@ -52,8 +45,7 @@ def _motion_distort_rotopaint_anim_point_frame(
     return _job
 
 
-def _motion_distort_rotopaint_shape_point_frame(
-        motion, point, frame, direction):
+def _motion_distort_rotopaint_shape_point_frame(motion, point, frame, direction):
     # we should change center after sample finished.
     deferred_jobs = []
     for i in iter_shape_point(point):
@@ -75,17 +67,16 @@ def _remove_shape_point_position_key(point, frame):
 
 
 def _motion_distort_rotopaint_shape_point(
-        motion, point, base_frame, frame_gte, frame_lte, interval):
+    motion, point, base_frame, frame_gte, frame_lte, interval
+):
     # base
     _motion_distort_rotopaint_shape_point_frame(motion, point, base_frame, 0)
     # backward
-    for i in range(base_frame-1, frame_gte-1, -1):
-        _motion_distort_rotopaint_shape_point_frame(
-            motion, point, i, -1)
+    for i in range(base_frame - 1, frame_gte - 1, -1):
+        _motion_distort_rotopaint_shape_point_frame(motion, point, i, -1)
     # forward
-    for i in range(base_frame+1, frame_lte+1):
-        _motion_distort_rotopaint_shape_point_frame(
-            motion, point, i, 1)
+    for i in range(base_frame + 1, frame_lte + 1):
+        _motion_distort_rotopaint_shape_point_frame(motion, point, i, 1)
     # interval
     for i in range(frame_gte, frame_lte + 1):
         if (i - base_frame) % interval != 0:
@@ -93,10 +84,12 @@ def _motion_distort_rotopaint_shape_point(
 
 
 def _motion_distort_rotopaint_shape(
-        motion, shape, base_frame, frame_gte, frame_lte, interval):
+    motion, shape, base_frame, frame_gte, frame_lte, interval
+):
     for i in shape:
         _motion_distort_rotopaint_shape_point(
-            motion, i, base_frame, frame_gte, frame_lte, interval)
+            motion, i, base_frame, frame_gte, frame_lte, interval
+        )
 
 
 GENERATED_SHAPE_SUFFIX = ".MotionDistort"
@@ -108,24 +101,20 @@ def _iter_matched_shape(layer):
             continue
         attrs = i.getAttributes()
         visible_curve = attrs.getCurve(attrs.kVisibleAttribute)
-        if (not visible_curve.constantValue
-                or visible_curve.getNumberOfKeys() > 0):
+        if not visible_curve.constantValue or visible_curve.getNumberOfKeys() > 0:
             continue
-        lifetime_type = attrs.getCurve(
-            attrs.kLifeTimeTypeAttribute).constantValue
+        lifetime_type = attrs.getCurve(attrs.kLifeTimeTypeAttribute).constantValue
         if lifetime_type != LIFETIME_TYPE_ALL:
             continue
-        if not (
-                i.name.endswith(GENERATED_SHAPE_SUFFIX)
-                or _is_shape_single_key(i)
-        ):
+        if not (i.name.endswith(GENERATED_SHAPE_SUFFIX) or _is_shape_single_key(i)):
             continue
         yield i
 
 
 @undoable_func("RotoPaint 运动扭曲")
 def create_rotopaint_motion_distort(
-        rotopaint, base_frame, frame_gte, frame_lte, interval):
+    rotopaint, base_frame, frame_gte, frame_lte, interval
+):
     """Create motion distort shape for condition matched shape.
 
     Args:
@@ -138,18 +127,19 @@ def create_rotopaint_motion_distort(
             for generated shape, remove others.
     """
     assert isinstance(rotopaint, nuke.Node)
-    assert rotopaint.Class() == "RotoPaint", (
-        "should be rotopaint, got {}".format(rotopaint.Class()))
+    assert rotopaint.Class() == "RotoPaint", "should be rotopaint, got {}".format(
+        rotopaint.Class()
+    )
     k = rotopaint[b"curves"]
     assert isinstance(k, _rotopaint.RotoKnob)
     layer = k.rootLayer
     existed_shape = {i.name: i for i in iter_layer(layer)}
     for i in progress(
-            list(_iter_matched_shape(layer)),
-            rotopaint.name(),
-            handler=CustomMessageProgressHandler(
-                lambda i: i.name,
-            ),
+        list(_iter_matched_shape(layer)),
+        rotopaint.name(),
+        handler=CustomMessageProgressHandler(
+            lambda i: i.name,
+        ),
     ):
         name = i.name
         is_generated = name.endswith(GENERATED_SHAPE_SUFFIX)
@@ -186,38 +176,40 @@ def show_dialog():
     _ = nuke.Root()[b"proxy"].setValue(False)
 
     def _tr(key):
-        return cast.binary({
-            'start': '起始帧',
-            'end': '结束帧',
-            'base': '基准帧',
-            "interval": "间隔",
-        }.get(key, key))
+        return cast.binary(
+            {
+                "start": "起始帧",
+                "end": "结束帧",
+                "base": "基准帧",
+                "interval": "间隔",
+            }.get(key, key)
+        )
 
     panel = nuke.Panel("创建 RotoPaint 运动扭曲".encode("utf8"))
-    _ = panel.addExpressionInput(_tr('base'), cast.binary(nuke.frame()))
+    _ = panel.addExpressionInput(_tr("base"), cast.binary(nuke.frame()))
     _ = panel.addExpressionInput(
-        _tr('start'), cast.binary(nuke.numvalue(b"root.first_frame")))
+        _tr("start"), cast.binary(nuke.numvalue(b"root.first_frame"))
+    )
     _ = panel.addExpressionInput(
-        _tr('end'), cast.binary(nuke.numvalue(b"root.last_frame")))
-    _ = panel.addExpressionInput(_tr('interval'), b'1')
+        _tr("end"), cast.binary(nuke.numvalue(b"root.last_frame"))
+    )
+    _ = panel.addExpressionInput(_tr("interval"), b"1")
     if not panel.show():
         return
-    base = int(cast.not_none(panel.value(_tr('base'))))
-    start = int(cast.not_none(panel.value(_tr('start'))))
-    end = int(cast.not_none(panel.value(_tr('end'))))
-    interval = int(cast.not_none(panel.value(_tr('interval'))))
+    base = int(cast.not_none(panel.value(_tr("base"))))
+    start = int(cast.not_none(panel.value(_tr("start"))))
+    end = int(cast.not_none(panel.value(_tr("end"))))
+    interval = int(cast.not_none(panel.value(_tr("interval"))))
     for n in progress(
-            nodes, "RotoPaint 运动扭曲",
-            handler=CustomMessageProgressHandler(
-                lambda i: i.name()
-            ),
+        nodes,
+        "RotoPaint 运动扭曲",
+        handler=CustomMessageProgressHandler(lambda i: i.name()),
     ):
         channels = n.channels()
         if not ("forward.u" in channels and "forward.v" in channels):
             nuke.message(
                 cast.binary(
-                    "节点 {} 缺少 forward.u 和 forward.v 通道，将跳过"
-                    .format(n.name()),
+                    "节点 {} 缺少 forward.u 和 forward.v 通道，将跳过".format(n.name()),
                 )
             )
             continue

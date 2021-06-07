@@ -40,213 +40,131 @@ class QAbstractButton(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def animateClick(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoExclusive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoRepeatDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoRepeatInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkStateSet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def click(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def group(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isChecked(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoExclusive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoRepeatDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoRepeatInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChecked(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toggle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractGraphicsShapeItem(QGraphicsItem):
@@ -254,43 +172,29 @@ class QAbstractGraphicsShapeItem(QGraphicsItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def brush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractItemDelegate(PySide.QtCore.QObject):
@@ -347,53 +251,35 @@ class QAbstractItemDelegate(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editorEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def helpEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditorData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateEditorGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractItemView(QAbstractScrollArea):
@@ -701,608 +587,368 @@ class QAbstractItemView(QAbstractScrollArea):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alternatingRowColors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoScrollMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closePersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def commitData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultDropAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dirtyRegionOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doAutoScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragDropMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragDropOverwriteMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropIndicatorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def edit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editTriggers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editorDestroyed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def executeDelayedItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAutoScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollbarAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollbarValueChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIndexHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemDelegateForColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemDelegateForRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyboardSearch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def model(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openPersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsAboutToBeRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scheduleDelayedItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollDirtyRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollToBottom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollToTop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedIndexes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionBehavior(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionCommand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlternatingRowColors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoScrollMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultDropAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDirtyRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragDropMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragDropOverwriteMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDropIndicatorShown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditTriggers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalScrollMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndexWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemDelegateForColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemDelegateForRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionBehavior(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabKeyNavigation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextElideMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalScrollMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showDropIndicator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHintForColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHintForIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHintForRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startAutoScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startDrag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stopAutoScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabKeyNavigation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textElideMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateEditorData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateEditorGeometries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalScrollMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalScrollbarAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalScrollbarValueChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRegionForSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractScrollArea(QFrame):
@@ -1315,188 +961,116 @@ class QAbstractScrollArea(QFrame):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addScrollBarWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cornerWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollBarPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumViewportSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollBarWidgets(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCornerWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalScrollBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalScrollBarPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalScrollBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalScrollBarPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewportMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setupViewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalScrollBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalScrollBarPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractSlider(QWidget):
@@ -1608,173 +1182,107 @@ class QAbstractSlider(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invertedAppearance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invertedControls(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSliderDown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def repeatAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInvertedAppearance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInvertedControls(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPageStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRepeatAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSingleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSliderDown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSliderPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def singleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sliderChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sliderPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def triggerAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAbstractSpinBox(QWidget):
@@ -1849,273 +1357,167 @@ class QAbstractSpinBox(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonSymbols(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def correctionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAcceptableInput(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def interpretText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAccelerated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyboardTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineEdit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccelerated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonSymbols(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCorrectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKeyboardTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineEdit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpecialValueText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWrapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def specialValueText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stepBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stepDown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stepEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stepUp(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wrapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QAction(PySide.QtCore.QObject):
@@ -2238,293 +1640,179 @@ class QAction(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actionGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def associatedGraphicsWidgets(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def associatedWidgets(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hover(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isChecked(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIconVisibleInMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menuRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def priority(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActionGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChecked(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDisabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconVisibleInMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenuRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPriority(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcutContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcuts(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSoftKeyRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shortcutContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shortcuts(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showStatusText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def softKeyRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toggle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def trigger(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QActionGroup(PySide.QtCore.QObject):
@@ -2552,68 +1840,44 @@ class QActionGroup(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkedAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isExclusive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDisabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExclusive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QApplication(PySide.QtCore.QCoreApplication):
@@ -2685,467 +1949,309 @@ class QApplication(PySide.QtCore.QCoreApplication):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def aboutQt(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def activeModalWidget(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def activePopupWidget(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def activeWindow(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def alert(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def allWidgets(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def beep(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def changeOverrideCursor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def clipboard(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def closeAllWindows(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def colorSpec(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def cursorFlashTime(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def desktop(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def desktopSettingsAware(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def doubleClickInterval(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def exec_(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def focusWidget(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def font(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def fontMetrics(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def globalStrut(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def isEffectEnabled(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def isLeftToRight(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def isRightToLeft(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyboardInputDirection(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyboardInputInterval(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyboardInputLocale(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keyboardModifiers(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def layoutDirection(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseButtons(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def overrideCursor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def palette(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def queryKeyboardModifiers(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def quitOnLastWindowClosed(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def restoreOverrideCursor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setActiveWindow(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setColorSpec(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setCursorFlashTime(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setDesktopSettingsAware(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setDoubleClickInterval(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setEffectEnabled(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setFont(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setGlobalStrut(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setGraphicsSystem(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setKeyboardInputInterval(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setLayoutDirection(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setOverrideCursor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setPalette(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setQuitOnLastWindowClosed(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setStartDragDistance(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setStartDragTime(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setStyle(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setWheelScrollLines(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setWindowIcon(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def startDragDistance(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def startDragTime(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def style(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def syncX(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def topLevelAt(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def topLevelWidgets(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def type(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def wheelScrollLines(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def widgetAt(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def winMouseButtonUp(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def windowIcon(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def autoSipEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def commitData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSessionRestored(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notify(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sessionId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sessionKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoSipEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInputContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyleSheet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleSheet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def winFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QBoxLayout(QLayout):
@@ -3187,173 +2293,107 @@ class QBoxLayout(QLayout):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSpacerItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addStrut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def direction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertSpacerItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QButtonGroup(PySide.QtCore.QObject):
@@ -3381,63 +2421,41 @@ class QButtonGroup(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkedButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkedId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exclusive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def id(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExclusive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCalendarWidget(QWidget):
@@ -3524,253 +2542,155 @@ class QCalendarWidget(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def dateEditAcceptDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dateTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstDayOfWeek(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalHeaderFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDateEditEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isGridVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNavigationBarVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def monthShown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintCell(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateEditAcceptDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateEditEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFirstDayOfWeek(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGridVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalHeaderFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNavigationBarVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectedDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalHeaderFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWeekdayTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showNextMonth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showNextYear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showPreviousMonth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showPreviousYear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showSelectedDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showToday(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateCell(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateCells(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalHeaderFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def weekdayTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yearShown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCheckBox(QAbstractButton):
@@ -3788,78 +2708,50 @@ class QCheckBox(QAbstractButton):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def checkState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkStateSet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTristate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTristate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QColorDialog(QDialog):
@@ -3906,98 +2798,64 @@ class QColorDialog(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def customColor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def customCount(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getColor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setCustomColor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setStandardColor(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QColumnView(QAbstractItemView):
@@ -4015,143 +2873,89 @@ class QColumnView(QAbstractItemView):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def columnWidths(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initializeColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIndexHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previewWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeGripsVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnWidths(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPreviewWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResizeGripsVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRegionForSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QComboBox(QWidget):
@@ -4250,393 +3054,239 @@ class QComboBox(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearEditText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def duplicatesEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hidePopup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEditable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineEdit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxVisibleItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumContentsLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def model(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modelColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootModelIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompleter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDuplicatesEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInsertPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineEdit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaxCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaxVisibleItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumContentsLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootModelIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeAdjustPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValidator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setView(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showPopup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeAdjustPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def view(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCommandLinkButton(QPushButton):
@@ -4649,48 +3299,32 @@ class QCommandLinkButton(QPushButton):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def description(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDescription(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCommonStyle(QStyle):
@@ -4703,78 +3337,50 @@ class QCommonStyle(QStyle):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def drawComplexControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPrimitive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def generatedIconPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitTestComplexControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelMetric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def polish(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeFromContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardIconImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subControlRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subElementRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unpolish(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QCompleter(PySide.QtCore.QObject):
@@ -4836,178 +3442,110 @@ class QCompleter(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def caseSensitivity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def complete(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completionColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completionCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completionPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completionRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentCompletion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxVisibleItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def model(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modelSorting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pathFromIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def popup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCaseSensitivity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompletionColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompletionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompletionPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompletionRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaxVisibleItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelSorting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPopup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWrapAround(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def splitPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wrapAround(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDataWidgetMapper(PySide.QtCore.QObject):
@@ -5039,138 +3577,86 @@ class QDataWidgetMapper(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mappedPropertyName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mappedSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mappedWidgetAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def model(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeMapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def revert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentModelIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSubmitPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def submit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def submitPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toFirst(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toLast(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toNext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPrevious(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDateEdit(QDateTimeEdit):
@@ -5183,13 +3669,11 @@ class QDateEdit(QDateTimeEdit):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QDateTimeEdit(QAbstractSpinBox):
@@ -5273,313 +3757,191 @@ class QDateTimeEdit(QAbstractSpinBox):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def calendarPopup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def calendarWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMaximumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMaximumDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMaximumTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMinimumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMinimumDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMinimumTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentSectionIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def date(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dateTimeFromText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def displayFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def displayedSections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCalendarPopup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCalendarWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentSectionIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDateTimeRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDisplayFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumDate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectedSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTimeRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTimeSpec(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stepBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stepEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textFromDateTime(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def time(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timeSpec(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDesktopWidget(QWidget):
@@ -5607,58 +3969,38 @@ class QDesktopWidget(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def availableGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVirtualDesktop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numScreens(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def primaryScreen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenNumber(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDial(QAbstractSlider):
@@ -5686,98 +4028,62 @@ class QDial(QAbstractSlider):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notchSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notchTarget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def notchesVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNotchTarget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNotchesVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWrapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sliderChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wrapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDialog(QWidget):
@@ -5818,113 +4124,71 @@ class QDialog(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def accept(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def adjustPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def exec_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSizeGripEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def result(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModal(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResult(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeGripEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDialogButtonBox(QWidget):
@@ -6123,88 +4387,56 @@ class QDialogButtonBox(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def centerButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCenterButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStandardButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDirModel(PySide.QtCore.QAbstractItemModel):
@@ -6234,198 +4466,122 @@ class QDirModel(PySide.QtCore.QAbstractItemModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileInfo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filePath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconProvider(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDir(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lazyChildCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mkdir(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nameFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def refresh(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolveSymlinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rmdir(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconProvider(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLazyChildCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNameFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResolveSymlinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSorting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sorting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedDropActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDockWidget(QWidget):
@@ -6512,98 +4668,62 @@ class QDockWidget(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def allowedAreas(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def features(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAreaAllowed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFloating(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAllowedAreas(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFeatures(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFloating(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTitleBarWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def titleBarWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toggleViewAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QDoubleSpinBox(QAbstractSpinBox):
@@ -6621,113 +4741,71 @@ class QDoubleSpinBox(QAbstractSpinBox):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cleanText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def decimals(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDecimals(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSingleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSuffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def singleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def suffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textFromValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def valueFromText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QErrorMessage(QDialog):
@@ -6740,34 +4818,24 @@ class QErrorMessage(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def qtHandler(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFileDialog(QDialog):
@@ -6923,307 +4991,189 @@ class QFileDialog(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def getExistingDirectory(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getOpenFileName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getOpenFileNames(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getSaveFileName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def accept(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def acceptMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def confirmOverwrite(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultSuffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def directory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def history(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconProvider(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNameFilterDetailsVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def labelText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nameFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proxyModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolveSymlinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restoreState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectNameFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedFiles(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedNameFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setConfirmOverwrite(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultSuffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDirectory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFileMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHistory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconProvider(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemDelegate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLabelText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNameFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNameFilterDetailsVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNameFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProxyModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResolveSymlinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSidebarUrls(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sidebarUrls(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFileIconProvider(Shiboken.Object):
@@ -7264,23 +5214,17 @@ class QFileIconProvider(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFileSystemModel(PySide.QtCore.QAbstractItemModel):
@@ -7329,243 +5273,149 @@ class QFileSystemModel(PySide.QtCore.QAbstractItemModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def canFetchMore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fetchMore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileInfo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filePath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconProvider(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDir(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mkdir(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def myComputer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nameFilterDisables(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nameFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def permissions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def remove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resolveSymlinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rmdir(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootDirectory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconProvider(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNameFilterDisables(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNameFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResolveSymlinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sort(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedDropActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFocusFrame(QWidget):
@@ -7578,43 +5428,29 @@ class QFocusFrame(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFontComboBox(QComboBox):
@@ -7665,53 +5501,35 @@ class QFontComboBox(QComboBox):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def currentFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWritingSystem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def writingSystem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFontDialog(QDialog):
@@ -7753,79 +5571,51 @@ class QFontDialog(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def getFont(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFormLayout(QLayout):
@@ -7892,188 +5682,116 @@ class QFormLayout(QLayout):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fieldGrowthPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def formAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getItemPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getLayoutPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getWidgetPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def labelAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def labelForField(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowWrapPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFieldGrowthPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLabelAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowWrapPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QFrame(QWidget):
@@ -8149,103 +5867,65 @@ class QFrame(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameShadow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def midLineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameShadow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrameStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMidLineWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGesture(PySide.QtCore.QObject):
@@ -8272,53 +5952,35 @@ class QGesture(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def gestureCancelPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gestureType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGestureCancelPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def state(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetHotSpot(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGestureEvent(PySide.QtCore.QEvent):
@@ -8326,68 +5988,44 @@ class QGestureEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def accept(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activeGestures(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canceledGestures(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gesture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gestures(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ignore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAccepted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToGraphicsScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccepted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGestureRecognizer(Shiboken.Object):
@@ -8443,40 +6081,28 @@ class QGestureRecognizer(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def registerRecognizer(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def unregisterRecognizer(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def create(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def recognize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsAnchor(PySide.QtCore.QObject):
@@ -8484,32 +6110,21 @@ class QGraphicsAnchor(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def setSizePolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizePolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsAnchorLayout(QGraphicsLayout):
@@ -8517,88 +6132,56 @@ class QGraphicsAnchorLayout(QGraphicsLayout):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAnchors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addCornerAnchors(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def anchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsBlurEffect(QGraphicsEffect):
@@ -8645,43 +6228,29 @@ class QGraphicsBlurEffect(QGraphicsEffect):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def blurHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blurRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRectFor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlurHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlurRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsColorizeEffect(QGraphicsEffect):
@@ -8704,38 +6273,26 @@ class QGraphicsColorizeEffect(QGraphicsEffect):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def color(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStrength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def strength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsDropShadowEffect(QGraphicsEffect):
@@ -8763,73 +6320,47 @@ class QGraphicsDropShadowEffect(QGraphicsEffect):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def blurRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRectFor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def color(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def offset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBlurRadius(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setXOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setYOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsEffect(PySide.QtCore.QObject):
@@ -8896,73 +6427,47 @@ class QGraphicsEffect(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRectFor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawSource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sourceBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sourceChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sourceIsPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sourcePixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsEllipseItem(QAbstractGraphicsShapeItem):
@@ -8970,83 +6475,53 @@ class QGraphicsEllipseItem(QAbstractGraphicsShapeItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpanAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStartAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spanAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsGridLayout(QGraphicsLayout):
@@ -9054,228 +6529,140 @@ class QGraphicsGridLayout(QGraphicsLayout):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnMaximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnMinimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnPreferredWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowMaximumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowMinimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowPreferredHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnFixedWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnMaximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnMinimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnPreferredWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowFixedHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowMaximumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowMinimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowPreferredHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsItem(Shiboken.Object):
@@ -9611,864 +6998,523 @@ class QGraphicsItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def acceptDrops(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def acceptHoverEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def acceptTouchEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def acceptedMouseButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def acceptsHoverEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addToIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def advance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRegionGranularity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childrenBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clipPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collidesWithItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collidesWithPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collidingItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def commonAncestorItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deviceTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def effectiveOpacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filtersChildEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusScopeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabKeyboard(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabMouse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def graphicsEffect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def group(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handlesChildEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hide(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def installSceneEventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAncestorOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isBlockedByModalPanel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isClipped(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscured(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isPanel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isUnderMouse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisibleTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFromItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFromParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFromScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRectFromItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRectFromParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRectFromScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRectToItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRectToParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapRectToScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def panel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def panelModality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prepareGeometryChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeFromIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeSceneEventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneEventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptDrops(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptHoverEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptTouchEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptedMouseButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptsHoverEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBoundingRegionGranularity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCacheMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFiltersChildEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocusProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGraphicsEffect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHandlesChildEvents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInputMethodHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPanelModality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setParentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRotation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransformOriginPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransformations(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setX(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setY(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def show(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stackBefore(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toGraphicsObject(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topLevelItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topLevelWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformOriginPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformations(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabKeyboard(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabMouse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateMicroFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def window(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsItemGroup(QGraphicsItem):
@@ -10476,48 +7522,32 @@ class QGraphicsItemGroup(QGraphicsItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addToGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeFromGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsLayout(QGraphicsLayoutItem):
@@ -10525,80 +7555,52 @@ class QGraphicsLayout(QGraphicsLayoutItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def instantInvalidatePropagation(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setInstantInvalidatePropagation(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def activate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addChildLayoutItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActivated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widgetEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsLayoutItem(Shiboken.Object):
@@ -10606,183 +7608,113 @@ class QGraphicsLayoutItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contentsRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def effectiveSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def graphicsItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ownedByLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentLayoutItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preferredHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preferredSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def preferredWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGraphicsItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOwnedByLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setParentLayoutItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPreferredHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPreferredSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPreferredWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizePolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizePolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsLineItem(QGraphicsItem):
@@ -10790,73 +7722,47 @@ class QGraphicsLineItem(QGraphicsItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def line(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsLinearLayout(QGraphicsLayout):
@@ -10864,123 +7770,77 @@ class QGraphicsLinearLayout(QGraphicsLayout):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dump(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsObject(PySide.QtCore.QObject, QGraphicsItem):
@@ -11053,28 +7913,20 @@ class QGraphicsObject(PySide.QtCore.QObject, QGraphicsItem):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def grabGesture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabGesture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateMicroFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsOpacityEffect(QGraphicsEffect):
@@ -11097,38 +7949,26 @@ class QGraphicsOpacityEffect(QGraphicsEffect):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opacityMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpacityMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsPathItem(QAbstractGraphicsShapeItem):
@@ -11136,63 +7976,41 @@ class QGraphicsPathItem(QAbstractGraphicsShapeItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def path(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsPixmapItem(QGraphicsItem):
@@ -11219,93 +8037,59 @@ class QGraphicsPixmapItem(QGraphicsItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def offset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShapeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransformationMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shapeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformationMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsPolygonItem(QAbstractGraphicsShapeItem):
@@ -11313,73 +8097,47 @@ class QGraphicsPolygonItem(QAbstractGraphicsShapeItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fillRule(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def polygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFillRule(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsProxyWidget(QGraphicsWidget):
@@ -11392,188 +8150,116 @@ class QGraphicsProxyWidget(QGraphicsWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createProxyForChildWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabMouseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def newProxyWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subWidgetRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabMouseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsRectItem(QAbstractGraphicsShapeItem):
@@ -11581,63 +8267,41 @@ class QGraphicsRectItem(QAbstractGraphicsShapeItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsRotation(QGraphicsTransform):
@@ -11665,48 +8329,32 @@ class QGraphicsRotation(QGraphicsTransform):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def angle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def applyTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def axis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def origin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAxis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrigin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsScale(QGraphicsTransform):
@@ -11744,58 +8392,38 @@ class QGraphicsScale(QGraphicsTransform):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def applyTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def origin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrigin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setXScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setYScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setZScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def xScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def yScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zScale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsScene(PySide.QtCore.QObject):
@@ -11865,428 +8493,260 @@ class QGraphicsScene(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def activePanel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activeWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addEllipse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addLine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addPolygon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSimpleText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def advance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def bspTreeDepth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collidingItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createItemGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def destroyItemGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foregroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def helpEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortCacheEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemIndexMethod(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def items(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemsBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseGrabberItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def palette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def render(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sendEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActivePanel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActiveWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBspTreeDepth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocusItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForegroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemIndexMethod(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPalette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSceneRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortCacheEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStickyFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stickyFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def views(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneContextMenuEvent(QGraphicsSceneEvent):
@@ -12311,63 +8771,41 @@ class QGraphicsSceneContextMenuEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reason(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReason(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneDragDropEvent(QGraphicsSceneEvent):
@@ -12375,108 +8813,68 @@ class QGraphicsSceneDragDropEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def acceptProposedAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def possibleActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proposedAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDropAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPossibleActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setProposedAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def source(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneEvent(PySide.QtCore.QEvent):
@@ -12484,18 +8882,14 @@ class QGraphicsSceneEvent(PySide.QtCore.QEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneHelpEvent(QGraphicsSceneEvent):
@@ -12503,33 +8897,23 @@ class QGraphicsSceneHelpEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneHoverEvent(QGraphicsSceneEvent):
@@ -12537,83 +8921,53 @@ class QGraphicsSceneHoverEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def lastPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneMouseEvent(QGraphicsSceneEvent):
@@ -12621,133 +8975,83 @@ class QGraphicsSceneMouseEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonDownPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonDownScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonDownScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonDownPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonDownScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonDownScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneMoveEvent(QGraphicsSceneEvent):
@@ -12755,33 +9059,23 @@ class QGraphicsSceneMoveEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def newPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def oldPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNewPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOldPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneResizeEvent(QGraphicsSceneEvent):
@@ -12789,33 +9083,23 @@ class QGraphicsSceneResizeEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def newSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def oldSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNewSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOldSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSceneWheelEvent(QGraphicsSceneEvent):
@@ -12823,83 +9107,53 @@ class QGraphicsSceneWheelEvent(QGraphicsSceneEvent):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def delta(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def screenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDelta(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifiers(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScenePos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScreenPos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsSimpleTextItem(QAbstractGraphicsShapeItem):
@@ -12907,73 +9161,47 @@ class QGraphicsSimpleTextItem(QAbstractGraphicsShapeItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsTextItem(QGraphicsObject):
@@ -12996,253 +9224,155 @@ class QGraphicsTextItem(QGraphicsObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def adjustSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contains(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultTextColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extension(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isObscuredBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openExternalLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultTextColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpenExternalLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabChangesFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabChangesFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsTransform(PySide.QtCore.QObject):
@@ -13255,23 +9385,17 @@ class QGraphicsTransform(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def applyTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsView(QAbstractScrollArea):
@@ -13399,423 +9523,257 @@ class QGraphicsView(QAbstractScrollArea):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cacheMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def centerOn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fitInView(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foregroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidateScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isInteractive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTransformed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def items(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFromScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def matrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def optimizationFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def render(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def renderHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetCachedContent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rubberBandSelectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCacheMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForegroundBrush(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInteractive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMatrix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptimizationFlag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptimizationFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRenderHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRenderHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResizeAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRubberBandSelectionMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSceneRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTransformationAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewportUpdateMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setupViewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transformationAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def translate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateScene(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateSceneRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportTransform(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportUpdateMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGraphicsWidget(QGraphicsObject, QGraphicsLayoutItem):
@@ -13838,404 +9796,246 @@ class QGraphicsWidget(QGraphicsObject, QGraphicsLayoutItem):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def setTabOrder(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def adjustSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoFillBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def boundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getWindowFrameMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabKeyboardEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabMouseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabShortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hoverMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActiveWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintWindowFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def palette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def polishEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def propertyChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def releaseShortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sceneEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoFillBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocusPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPalette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcutAutoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcutEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowFrameMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabKeyboardEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabMouseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetLayoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetWindowFrameMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFrameEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFrameGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFrameRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFrameSectionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGridLayout(QLayout):
@@ -14248,198 +10048,122 @@ class QGridLayout(QLayout):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cellRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnMinimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getItemPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAtPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def originCorner(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowMinimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnMinimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultPositioning(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOriginCorner(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowMinimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QGroupBox(QWidget):
@@ -14462,118 +10186,74 @@ class QGroupBox(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isChecked(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFlat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChecked(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def title(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHBoxLayout(QBoxLayout):
@@ -14586,13 +10266,11 @@ class QHBoxLayout(QBoxLayout):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QHeaderView(QAbstractItemView):
@@ -14686,443 +10364,269 @@ class QHeaderView(QAbstractItemView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cascadingSectionResizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultSectionSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerDataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hiddenSectionCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def highlightSections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initialize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initializeSections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isClickable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIndexHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSectionHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortIndicatorShown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def length(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def logicalIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def logicalIndexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSectionSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def offset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeSections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restoreState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionSizeFromContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionViewportPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionsAboutToBeRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionsHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionsInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sectionsMoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCascadingSectionResizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClickable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultSectionSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHighlightSections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumSectionSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffsetToLastSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffsetToSectionPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResizeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSectionHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortIndicator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortIndicatorShown(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStretchLastSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortIndicatorOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortIndicatorSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stretchLastSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stretchSectionCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swapSections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateSection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualIndexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRegionForSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QInputDialog(QDialog):
@@ -15196,248 +10700,154 @@ class QInputDialog(QDialog):
     """
     Signal
     """
-
     @staticmethod
     def getDouble(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getInt(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getInteger(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getItem(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def getText(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cancelButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def comboBoxItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleDecimals(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doubleValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isComboBoxEditable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def labelText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def okButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCancelButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setComboBoxEditable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setComboBoxItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleDecimals(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDoubleValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInputMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIntMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIntMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIntRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIntStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIntValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLabelText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOkButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextEchoMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textEchoMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QItemDelegate(QAbstractItemDelegate):
@@ -15450,123 +10860,77 @@ class QItemDelegate(QAbstractItemDelegate):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def check(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def decoration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawCheck(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawDecoration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawDisplay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editorEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasClipping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemEditorFactory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClipping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditorData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemEditorFactory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textRectangle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateEditorGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QItemEditorCreatorBase(Shiboken.Object):
@@ -15574,23 +10938,17 @@ class QItemEditorCreatorBase(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def valuePropertyName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QItemEditorFactory(Shiboken.Object):
@@ -15598,40 +10956,28 @@ class QItemEditorFactory(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def defaultFactory(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setDefaultFactory(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def registerEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def valuePropertyName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QKeyEventTransition(PySide.QtCore.QEventTransition):
@@ -15644,43 +10990,29 @@ class QKeyEventTransition(PySide.QtCore.QEventTransition):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def eventTest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def key(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifierMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def onTransition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifierMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLCDNumber(QFrame):
@@ -15736,118 +11068,74 @@ class QLCDNumber(QFrame):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def checkOverflow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def digitCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def display(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def intValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def numDigits(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def segmentStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBinMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDecMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDigitCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHexMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNumDigits(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOctMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSegmentStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSmallDecimalPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def smallDecimalPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLabel(QFrame):
@@ -15870,243 +11158,149 @@ class QLabel(QFrame):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buddy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasScaledContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasSelectedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def margin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def movie(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openExternalLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def picture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBuddy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMargin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMovie(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpenExternalLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPicture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScaledContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLayout(PySide.QtCore.QObject, QLayoutItem):
@@ -16150,229 +11344,141 @@ class QLayout(PySide.QtCore.QObject, QLayoutItem):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def closestAcceptableSize(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def activate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addChildLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addChildWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def adoptLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alignmentRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentsRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menuBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenuBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeConstraint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeConstraint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalMaximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalMinimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widgetEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLayoutItem(Shiboken.Object):
@@ -16380,98 +11486,62 @@ class QLayoutItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def controlTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invalidate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacerItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QLineEdit(QWidget):
@@ -16541,408 +11611,248 @@ class QLineEdit(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backspace(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def completer(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createStandardContextMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorBackward(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorForward(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorMoveStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorPositionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorWordBackward(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorWordForward(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def del_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deselect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def displayText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def echoMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def end(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getTextMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasAcceptableInput(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasSelectedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def home(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insert(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRedoAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isUndoAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maxLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paste(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def placeholderText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionStart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCompleter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorMoveStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDragEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEchoMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFrame(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInputMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaxLength(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPlaceholderText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValidator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QListView(QAbstractItemView):
@@ -17029,343 +11939,209 @@ class QListView(QAbstractItemView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def batchSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearPropertyFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentsSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gridSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def internalDrag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def internalDrop(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIndexHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRowHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelectionRectVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isWrapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modelColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def movement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rectForIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsAboutToBeRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedIndexes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBatchSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGridSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayoutMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMovement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPositionForIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setResizeMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionRectVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUniformItemSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWrapping(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startDrag(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def uniformItemSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRegionForSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QListWidget(QListView):
@@ -17428,198 +12204,122 @@ class QListWidget(QListView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closePersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexFromItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def item(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemFromIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def items(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openPersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItemWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollToItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedDropActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualItemRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QListWidgetItem(Shiboken.Object):
@@ -17640,248 +12340,166 @@ class QListWidgetItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clone(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foreground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def listWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMainWindow(QWidget):
@@ -17937,258 +12555,158 @@ class QMainWindow(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addDockWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addToolBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addToolBarBreak(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def centralWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def corner(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createPopupMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dockOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dockWidgetArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertToolBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertToolBarBreak(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAnimated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDockNestingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menuBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menuWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeDockWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeToolBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeToolBarBreak(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restoreDockWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restoreState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAnimated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCentralWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCorner(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDockNestingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDockOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenuBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenuWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolButtonStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUnifiedTitleAndToolBarOnMac(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def splitDockWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabifiedDockWidgets(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabifyDockWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolBarArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolBarBreak(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolButtonStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unifiedTitleAndToolBarOnMac(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMdiArea(QAbstractScrollArea):
@@ -18252,223 +12770,137 @@ class QMdiArea(QAbstractScrollArea):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def activateNextSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activatePreviousSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activationOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activeSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cascadeSubWindows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeActiveSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeAllSubWindows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActivationOrder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActiveSubWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabsClosable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabsMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setViewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setupViewport(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subWindowList(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabsClosable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabsMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tileSubWindows(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMdiSubWindow(QWidget):
@@ -18521,203 +12953,125 @@ class QMdiSubWindow(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isShaded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyboardPageStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyboardSingleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximizedButtonsWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximizedSystemMenuIconWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mdiArea(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKeyboardPageStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKeyboardSingleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSystemMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showShaded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showSystemMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def systemMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMenu(QWidget):
@@ -18760,235 +13114,146 @@ class QMenu(QWidget):
     """
     Signal
     """
-
     @staticmethod
     def exec_(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activeAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def enterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideTearOffMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTearOffEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTearOffMenuVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menuAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def popup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def separatorsCollapsible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActiveAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSeparatorsCollapsible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTearOffEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def title(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMenuBar(QWidget):
@@ -19021,188 +13286,116 @@ class QMenuBar(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activeAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cornerWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDefaultUp(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isNativeMenuBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActiveAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCornerWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultUp(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setNativeMenuBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMessageBox(QDialog):
@@ -19413,224 +13606,140 @@ class QMessageBox(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def about(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def aboutQt(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def critical(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def information(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def question(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def warning(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clickedButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def detailedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def escapeButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def informativeText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDetailedText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEscapeButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInformativeText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStandardButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowModality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QMouseEventTransition(PySide.QtCore.QEventTransition):
@@ -19643,53 +13752,35 @@ class QMouseEventTransition(PySide.QtCore.QEventTransition):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventTest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitTestPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def modifierMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def onTransition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHitTestPath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModifierMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPanGesture(QGesture):
@@ -19702,48 +13793,32 @@ class QPanGesture(QGesture):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def acceleration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def delta(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def offset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceleration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPinchGesture(QGesture):
@@ -19781,123 +13856,77 @@ class QPinchGesture(QGesture):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def centerPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastCenterPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastRotationAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lastScaleFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rotationAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scaleFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCenterPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChangeFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastCenterPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastRotationAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLastScaleFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRotationAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setScaleFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStartCenterPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTotalChangeFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTotalRotationAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTotalScaleFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startCenterPoint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalChangeFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalRotationAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def totalScaleFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPlainTextDocumentLayout(QtCore.QAbstractTextDocumentLayout):
@@ -19910,68 +13939,44 @@ class QPlainTextDocumentLayout(QtCore.QAbstractTextDocumentLayout):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def blockBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def draw(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureBlockLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitTest(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def requestUpdate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPlainTextEdit(QAbstractScrollArea):
@@ -20042,468 +14047,284 @@ class QPlainTextEdit(QAbstractScrollArea):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def anchorAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def appendPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockBoundingGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockBoundingRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def blockCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canInsertFromMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canPaste(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def centerCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def centerOnScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createMimeDataFromSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createStandardContextMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorForPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureCursorVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extraSelections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def find(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def firstVisibleBlock(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getPaintContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertFromMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isUndoRedoEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loadResource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumBlockCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeCurrentCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overwriteMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paste(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def print_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCenterOnScroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExtraSelections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumBlockCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOverwriteMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabChangesFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabStopWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUndoRedoEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabChangesFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabStopWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QProgressBar(QWidget):
@@ -20534,143 +14355,89 @@ class QProgressBar(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def format(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invertedAppearance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTextVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInvertedAppearance(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QProgressDialog(QDialog):
@@ -20688,158 +14455,98 @@ class QProgressDialog(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def autoClose(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoReset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cancel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def forceShow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def labelText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumDuration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def open(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoClose(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoReset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCancelButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCancelButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLabel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLabelText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumDuration(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wasCanceled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QPushButton(QAbstractButton):
@@ -20852,98 +14559,62 @@ class QPushButton(QAbstractButton):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def autoDefault(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDefault(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFlat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoDefault(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefault(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QRadioButton(QAbstractButton):
@@ -20956,48 +14627,32 @@ class QRadioButton(QAbstractButton):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QRubberBand(QWidget):
@@ -21023,68 +14678,44 @@ class QRubberBand(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def move(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QScrollArea(QAbstractScrollArea):
@@ -21097,88 +14728,56 @@ class QScrollArea(QAbstractScrollArea):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureWidgetVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidgetResizable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widgetResizable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QScrollBar(QAbstractSlider):
@@ -21191,63 +14790,41 @@ class QScrollBar(QAbstractSlider):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sliderChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QShortcut(PySide.QtCore.QObject):
@@ -21270,78 +14847,50 @@ class QShortcut(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def autoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def context(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def id(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def key(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setKey(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSizeGrip(QWidget):
@@ -21354,73 +14903,47 @@ class QSizeGrip(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def winEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSizePolicy(Shiboken.Object):
@@ -21552,158 +15075,112 @@ class QSizePolicy(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def controlType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasWidthForHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setControlType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWidthForHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def transpose(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalStretch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSlider(QAbstractSlider):
@@ -21745,73 +15222,47 @@ class QSlider(QAbstractSlider):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTickInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTickPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tickInterval(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tickPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSpacerItem(QLayoutItem):
@@ -21819,58 +15270,38 @@ class QSpacerItem(QLayoutItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def spacerItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSpinBox(QAbstractSpinBox):
@@ -21888,108 +15319,68 @@ class QSpinBox(QAbstractSpinBox):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cleanText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fixup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def prefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimum(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPrefix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSingleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSuffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def singleStep(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def suffix(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textFromValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validate(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def valueFromText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSplashScreen(QWidget):
@@ -22007,53 +15398,35 @@ class QSplashScreen(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def clearMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def finish(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSplitter(QFrame):
@@ -22071,202 +15444,130 @@ class QSplitter(QFrame):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childrenCollapsible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closestLegalPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createHandle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getRange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def handleWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCollapsible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveSplitter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueResize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def refresh(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restoreState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChildrenCollapsible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCollapsible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHandleWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpaqueResize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRubberBand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStretchFactor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSplitterHandle(QWidget):
@@ -22279,78 +15580,50 @@ class QSplitterHandle(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def closestLegalPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveSplitter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def opaqueResize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def splitter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStackedLayout(QLayout):
@@ -22386,93 +15659,59 @@ class QStackedLayout(QLayout):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStackingMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stackingMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStackedWidget(QFrame):
@@ -22495,68 +15734,44 @@ class QStackedWidget(QFrame):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStatusBar(QWidget):
@@ -22574,93 +15789,59 @@ class QStatusBar(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addPermanentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideOrShow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertPermanentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSizeGripEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reformat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeGripEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStyle(PySide.QtCore.QObject):
@@ -25288,169 +18469,107 @@ class QStyle(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def alignedRect(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def sliderPositionFromValue(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def sliderValueFromPosition(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def visualAlignment(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def visualPos(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def visualRect(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def combinedLayoutSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawComplexControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawItemPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawItemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPrimitive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def generatedIconPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitTestComplexControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemPixmapRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemTextRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutSpacing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutSpacingImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixelMetric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def polish(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def proxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeFromContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardIconImplementation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardPalette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def standardPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subControlRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subElementRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unpolish(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStyleFactory(Shiboken.Object):
@@ -25458,25 +18577,19 @@ class QStyleFactory(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def create(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def keys(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleHintReturn(Shiboken.Object):
@@ -25519,13 +18632,11 @@ class QStyleHintReturn(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleHintReturnMask(QStyleHintReturn):
@@ -25551,13 +18662,11 @@ class QStyleHintReturnMask(QStyleHintReturn):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleHintReturnVariant(QStyleHintReturn):
@@ -25584,13 +18693,11 @@ class QStyleHintReturnVariant(QStyleHintReturn):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOption(Shiboken.Object):
@@ -25740,24 +18847,19 @@ class QStyleOption(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __repr__(self, *args, **kwargs):
         """
         x.__repr__() <==> repr(x)
         """
         ...
-
     def initFrom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStyleOptionButton(QStyleOption):
@@ -25818,13 +18920,11 @@ class QStyleOptionButton(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionComboBox(QStyleOptionComplex):
@@ -25850,13 +18950,11 @@ class QStyleOptionComboBox(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionComplex(QStyleOption):
@@ -25882,13 +18980,11 @@ class QStyleOptionComplex(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionDockWidget(QStyleOption):
@@ -25915,13 +19011,11 @@ class QStyleOptionDockWidget(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionFocusRect(QStyleOption):
@@ -25948,13 +19042,11 @@ class QStyleOptionFocusRect(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionFrame(QStyleOption):
@@ -25980,13 +19072,11 @@ class QStyleOptionFrame(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionGraphicsItem(QStyleOption):
@@ -26013,19 +19103,15 @@ class QStyleOptionGraphicsItem(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     @staticmethod
     def levelOfDetailFromTransform(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionGroupBox(QStyleOptionComplex):
@@ -26051,13 +19137,11 @@ class QStyleOptionGroupBox(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionHeader(QStyleOption):
@@ -26145,13 +19229,11 @@ class QStyleOptionHeader(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionMenuItem(QStyleOption):
@@ -26234,13 +19316,11 @@ class QStyleOptionMenuItem(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionProgressBar(QStyleOption):
@@ -26267,13 +19347,11 @@ class QStyleOptionProgressBar(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionRubberBand(QStyleOption):
@@ -26300,13 +19378,11 @@ class QStyleOptionRubberBand(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionSizeGrip(QStyleOptionComplex):
@@ -26332,13 +19408,11 @@ class QStyleOptionSizeGrip(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionSlider(QStyleOptionComplex):
@@ -26364,13 +19438,11 @@ class QStyleOptionSlider(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionSpinBox(QStyleOptionComplex):
@@ -26396,13 +19468,11 @@ class QStyleOptionSpinBox(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionTab(QStyleOption):
@@ -26494,13 +19564,11 @@ class QStyleOptionTab(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionTabBarBase(QStyleOption):
@@ -26527,13 +19595,11 @@ class QStyleOptionTabBarBase(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionTabWidgetFrame(QStyleOption):
@@ -26560,13 +19626,11 @@ class QStyleOptionTabWidgetFrame(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionTitleBar(QStyleOptionComplex):
@@ -26592,13 +19656,11 @@ class QStyleOptionTitleBar(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionToolBar(QStyleOption):
@@ -26619,7 +19681,6 @@ class QStyleOptionToolBar(QStyleOption):
     """
 
     # None: ... = PySide.QtGui.QStyleOptionToolBar.ToolBarFeature.None
-
 
     OnlyOne: ... = PySide.QtGui.QStyleOptionToolBar.ToolBarPosition.OnlyOne
     """
@@ -26662,13 +19723,11 @@ class QStyleOptionToolBar(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionToolBox(QStyleOption):
@@ -26694,13 +19753,11 @@ class QStyleOptionToolBox(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionToolButton(QStyleOptionComplex):
@@ -26764,13 +19821,11 @@ class QStyleOptionToolButton(QStyleOptionComplex):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStyleOptionViewItem(QStyleOption):
@@ -26817,18 +19872,14 @@ class QStyleOptionViewItem(QStyleOption):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QStylePainter(QPainter):
@@ -26836,48 +19887,32 @@ class QStylePainter(QPainter):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def begin(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawComplexControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawControl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawItemPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawItemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawPrimitive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QStyledItemDelegate(QAbstractItemDelegate):
@@ -26890,73 +19925,47 @@ class QStyledItemDelegate(QAbstractItemDelegate):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def displayText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editorEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemEditorFactory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEditorData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemEditorFactory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModelData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateEditorGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSwipeGesture(QGesture):
@@ -26994,33 +20003,23 @@ class QSwipeGesture(QGesture):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def horizontalDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSwipeAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def swipeAngle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QSystemTrayIcon(PySide.QtCore.QObject):
@@ -27091,90 +20090,58 @@ class QSystemTrayIcon(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def isSystemTrayAvailable(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def supportsMessages(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contextMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hide(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContextMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def show(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMessage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTabBar(QWidget):
@@ -27275,328 +20242,200 @@ class QTabBar(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawBase(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elideMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expanding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTabEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionBehaviorOnRemove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDrawBase(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setElideMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExpanding(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionBehaviorOnRemove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabTextColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabsClosable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUsesScrollButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def shape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabLayoutChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabTextColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabsClosable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def usesScrollButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTabWidget(QWidget):
@@ -27658,278 +20497,170 @@ class QTabWidget(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cornerWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def elideMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isTabEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeTab(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCornerWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setElideMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabsClosable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUsesScrollButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabBar(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabShape(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabsClosable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def usesScrollButtons(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTableView(QAbstractItemView):
@@ -27942,373 +20673,227 @@ class QTableView(QAbstractItemView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def clearSpans(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCountChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnMoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnResized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnViewportPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def gridStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollbarAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isColumnHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCornerButtonEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIndexHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRowHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeColumnToContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeColumnsToContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeRowToContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeRowsToContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCountChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowMoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowResized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowViewportPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedIndexes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCornerButtonEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGridStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShowGrid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSpan(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showGrid(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHintForColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHintForRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortByColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalScrollbarAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRegionForSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTableWidget(QTableView):
@@ -28396,303 +20981,185 @@ class QTableWidget(QTableView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cellWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closePersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def column(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexFromItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def item(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemFromIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemPrototype(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def items(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openPersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeCellWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollToItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedRanges(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCellWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentCell(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHorizontalHeaderLabels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemPrototype(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRangeSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVerticalHeaderLabels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedDropActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeHorizontalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeVerticalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualItemRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTableWidgetItem(Shiboken.Object):
@@ -28713,248 +21180,166 @@ class QTableWidgetItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clone(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def column(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foreground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tableWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTableWidgetSelectionRange(Shiboken.Object):
@@ -28962,48 +21347,32 @@ class QTableWidgetSelectionRange(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def bottomRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leftColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rightColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTapAndHoldGesture(QGesture):
@@ -29016,35 +21385,25 @@ class QTapAndHoldGesture(QGesture):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def setTimeout(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def timeout(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTapGesture(QGesture):
@@ -29057,23 +21416,17 @@ class QTapGesture(QGesture):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def position(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextBrowser(QTextEdit):
@@ -29116,153 +21469,95 @@ class QTextBrowser(QTextEdit):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def backward(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backwardHistoryCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearHistory(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def forward(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def forwardHistoryCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def historyTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def historyUrl(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def home(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isBackwardAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isForwardAvailable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loadResource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openExternalLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reload(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def searchPaths(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpenExternalLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOpenLinks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSearchPaths(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def source(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTextEdit(QAbstractScrollArea):
@@ -29370,553 +21665,335 @@ class QTextEdit(QAbstractScrollArea):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def acceptRichText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def alignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def anchorAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def append(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoFormatting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canInsertFromMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canPaste(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createMimeDataFromSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createStandardContextMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorForPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursorWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def document(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensureCursorVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def extraSelections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def find(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontItalic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontPointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontUnderline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontWeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertFromMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isUndoRedoEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineWrapColumnOrWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lineWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def loadResource(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeCurrentCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overwriteMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paste(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def print_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollToAnchor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptRichText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoFormatting(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentCharFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursorWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocument(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDocumentTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExtraSelections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontFamily(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontItalic(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontPointSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontUnderline(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFontWeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineWrapColumnOrWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLineWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOverwriteMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setReadOnly(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabChangesFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTabStopWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextBackgroundColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUndoRedoEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabChangesFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabStopWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textBackgroundColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textColor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textInteractionFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toHtml(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toPlainText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordWrapMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zoomIn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def zoomOut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTimeEdit(QDateTimeEdit):
@@ -29929,13 +22006,11 @@ class QTimeEdit(QDateTimeEdit):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QToolBar(QWidget):
@@ -29988,168 +22063,104 @@ class QToolBar(QWidget):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actionAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def allowedAreas(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def iconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertSeparator(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAreaAllowed(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFloatable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFloating(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def orientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAllowedAreas(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFloatable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIconSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMovable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOrientation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolButtonStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toggleViewAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolButtonStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widgetForAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QToolBox(QFrame):
@@ -30167,128 +22178,80 @@ class QToolBox(QFrame):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isItemEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QToolButton(QAbstractButton):
@@ -30326,199 +22289,127 @@ class QToolButton(QAbstractButton):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actionEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def arrowType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoRaise(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def enterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initStyleOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def menu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def popupMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setArrowType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoRaise(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPopupMode(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolButtonStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMenu(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolButtonStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QToolTip(Shiboken.Object):
     @staticmethod
     def font(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def hideText(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def isVisible(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def palette(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setFont(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setPalette(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def showText(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def text(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTreeView(QAbstractItemView):
@@ -30541,473 +22432,287 @@ class QTreeView(QAbstractItemView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def allColumnsShowFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoExpandDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collapse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collapseAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCountChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnMoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnResized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnViewportPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def doItemsLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawBranches(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawRow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def drawTree(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandToDepth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandsOnDoubleClick(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def header(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def horizontalScrollbarAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indentation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAbove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexBelow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexRowSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAnimated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isColumnHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isExpanded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFirstColumnSpanned(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isHeaderHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isIndexHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRowHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemsExpandable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyboardSearch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reexpand(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeColumnToContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rootIsDecorated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsAboutToBeRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsInserted(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowsRemoved(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollContentsBy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectAll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedIndexes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectionChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAllColumnsShowFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAnimated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoExpandDelay(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExpanded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExpandsOnDoubleClick(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFirstColumnSpanned(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeader(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndentation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemsExpandable(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRootIsDecorated(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setRowHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUniformRowHeights(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHintForColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortByColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def timerEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def uniformRowHeights(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometries(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def verticalOffset(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def viewportEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualRegionForSelection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wordWrap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTreeWidget(QTreeView):
@@ -31070,293 +22775,179 @@ class QTreeWidget(QTreeView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addTopLevelItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addTopLevelItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closePersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collapseItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropMimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def editItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def headerItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexFromItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOfTopLevelItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertTopLevelItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertTopLevelItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def invisibleRootItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFirstItemColumnSpanned(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isItemExpanded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isItemHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isItemSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAbove(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemBelow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemFromIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def itemWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mimeTypes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def openPersistentEditor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeItemWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scrollToItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def selectedItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setColumnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFirstItemColumnSpanned(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderLabel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHeaderLabels(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemExpanded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setItemWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelectionModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSortingEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortColumn(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortItems(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def supportedDropActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeTopLevelItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topLevelItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def topLevelItemCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visualItemRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTreeWidgetItem(Shiboken.Object):
@@ -31397,364 +22988,237 @@ class QTreeWidgetItem(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __eq__(self, *args, **kwargs):
         """
         x.__eq__(y) <==> x==y
         """
         ...
-
     def __ge__(self, *args, **kwargs):
         """
         x.__ge__(y) <==> x>=y
         """
         ...
-
     def __gt__(self, *args, **kwargs):
         """
         x.__gt__(y) <==> x>y
         """
         ...
-
     def __hash__(self, *args, **kwargs):
         """
         x.__hash__() <==> hash(x)
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __le__(self, *args, **kwargs):
         """
         x.__le__(y) <==> x<=y
         """
         ...
-
     def __lshift__(self, *args, **kwargs):
         """
         x.__lshift__(y) <==> x<<y
         """
         ...
-
     def __lt__(self, *args, **kwargs):
         """
         x.__lt__(y) <==> x<y
         """
         ...
-
     def __ne__(self, *args, **kwargs):
         """
         x.__ne__(y) <==> x!=y
         """
         ...
-
     def __rlshift__(self, *args, **kwargs):
         """
         x.__rlshift__(y) <==> y<<x
         """
         ...
-
     def __rrshift__(self, *args, **kwargs):
         """
         x.__rrshift__(y) <==> y>>x
         """
         ...
-
     def __rshift__(self, *args, **kwargs):
         """
         x.__rshift__(y) <==> x>>y
         """
         ...
-
     def addChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def background(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def checkState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def child(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childIndicatorPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clone(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def emitDataChanged(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def flags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foreground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def icon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexOfChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isDisabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isExpanded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFirstColumnSpanned(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def read(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCheckState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setChildIndicatorPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDisabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setExpanded(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFirstColumnSpanned(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForeground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSelected(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTextAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sortChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def takeChildren(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def textAlignment(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def treeWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def type(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def write(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QTreeWidgetItemIterator(Shiboken.Object):
@@ -31864,47 +23328,37 @@ class QTreeWidgetItemIterator(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __iadd__(self, *args, **kwargs):
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def __isub__(self, *args, **kwargs):
         """
         x.__isub__(y) <==> x-=y
         """
         ...
-
     def __iter__(self, *args, **kwargs):
         """
         x.__iter__() <==> iter(x)
         """
         ...
-
     def next(self, *args, **kwargs):
         """
         x.next() -> the next value, or raise StopIteration
         """
         ...
-
     def value(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QUndoCommand(Shiboken.Object):
@@ -31912,58 +23366,38 @@ class QUndoCommand(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def actionText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def child(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def id(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mergeWith(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QUndoGroup(PySide.QtCore.QObject):
@@ -32011,83 +23445,53 @@ class QUndoGroup(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def activeStack(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addStack(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canRedo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canUndo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createRedoAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createUndoAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isClean(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redoText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeStack(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActiveStack(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stacks(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undoText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QUndoStack(PySide.QtCore.QObject):
@@ -32130,133 +23534,83 @@ class QUndoStack(PySide.QtCore.QObject):
     """
     Signal
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def beginMacro(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canRedo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def canUndo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cleanIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clear(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def command(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def count(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createRedoAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createUndoAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def endMacro(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isClean(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def push(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def redoText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setActive(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setClean(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUndoLimit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def text(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undoLimit(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def undoText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QUndoView(QListView):
@@ -32269,53 +23623,35 @@ class QUndoView(QListView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cleanIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def emptyLabel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def group(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCleanIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEmptyLabel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGroup(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStack(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stack(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QVBoxLayout(QBoxLayout):
@@ -32328,52 +23664,38 @@ class QVBoxLayout(QBoxLayout):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QWhatsThis(Shiboken.Object):
     @staticmethod
     def createAction(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def enterWhatsThisMode(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def hideText(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def inWhatsThisMode(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def leaveWhatsThisMode(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def showText(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWidget(PySide.QtCore.QObject, QPaintDevice):
@@ -32414,1246 +23736,752 @@ class QWidget(PySide.QtCore.QObject, QPaintDevice):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     @staticmethod
     def keyboardGrabber(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def mouseGrabber(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def setTabOrder(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def acceptDrops(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def accessibleDescription(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def accessibleName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actionEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def actions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def activateWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def addActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def adjustSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoFillBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def backgroundRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def baseSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childrenRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childrenRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def clearMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def close(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def closeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentsRect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contextMenuPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createWinId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def destroy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def devType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragEnterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragLeaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dragMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def dropEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def effectiveWinId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ensurePolished(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def enterEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusNextPrevChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusOutEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusPreviousChild(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def font(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontInfo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fontMetrics(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def foregroundRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def frameSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def getContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabGesture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabKeyboard(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabMouse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def grabShortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def graphicsEffect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def graphicsProxyWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasMouseTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def height(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hide(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hideEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def inputMethodQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def insertActions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isActiveWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isAncestorOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEnabledTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFullScreen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isLeftToRight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMaximized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isMinimized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isModal(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isRightToLeft(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isVisibleTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isWindow(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isWindowModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyPressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def keyReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def languageChange(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def layoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def leaveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def locale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def lower(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFrom(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFromGlobal(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapFromParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapTo(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToGlobal(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mapToParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def metric(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseDoubleClickEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseMoveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mousePressEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def mouseReleaseEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def move(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def moveEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nativeParentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextInFocusChain(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def normalGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overrideWindowFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def overrideWindowState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def palette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pos(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def previousInFocusChain(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def raise_(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def releaseKeyboard(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def releaseMouse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def releaseShortcut(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeAction(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def render(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def repaint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resetInputContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restoreGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def saveGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def scroll(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAcceptDrops(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccessibleDescription(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAccessibleName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoFillBackground(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBackgroundRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setBaseSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContentsMargins(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setContextMenuPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDisabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFixedHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFixedSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFixedWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocusPolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFocusProxy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFont(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setForegroundRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGraphicsEffect(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setHidden(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInputContext(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setInputMethodHints(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLayoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setLocale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMask(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMaximumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumHeight(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMinimumWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setMouseTracking(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPalette(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setParent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcutAutoRepeat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setShortcutEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizeIncrement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSizePolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStatusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStyleSheet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setToolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setUpdatesEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWhatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowFilePath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowIconText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowModality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowModified(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowOpacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWindowTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def show(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showFullScreen(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMaximized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showMinimized(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def showNormal(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def size(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeIncrement(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizePolicy(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def stackUnder(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def statusTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def style(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def styleSheet(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def tabletEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testAttribute(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def toolTip(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def underMouse(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def ungrabGesture(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetCursor(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetLayoutDirection(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unsetLocale(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def update(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updateMicroFocus(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def updatesEnabled(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visibleRegion(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def whatsThis(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wheelEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def width(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def winEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def winId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def window(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFilePath(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowFlags(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowIcon(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowIconText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowModality(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowOpacity(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowRole(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowState(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def windowType(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def x(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def y(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWidgetAction(QAction):
@@ -33666,58 +24494,38 @@ class QWidgetAction(QAction):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def createWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createdWidgets(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def defaultWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def deleteWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def eventFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def releaseWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def requestWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWidgetItem(QLayoutItem):
@@ -33725,63 +24533,41 @@ class QWidgetItem(QLayoutItem):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def expandingDirections(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def geometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasHeightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def heightForWidth(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isEmpty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def maximumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def minimumSize(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setGeometry(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def widget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWizard(QDialog):
@@ -34011,248 +24797,152 @@ class QWizard(QDialog):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def back(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def button(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def buttonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cleanupPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def done(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def event(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def field(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hasVisitedPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initializePage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def next(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def options(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def page(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pageIds(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def paintEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removePage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resizeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def restart(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButton(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonLayout(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setDefaultProperty(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setField(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setOptions(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSideWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setStartId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSubTitleFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTitleFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setVisible(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setWizardStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sideWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def sizeHint(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def startId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subTitleFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def testOption(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def titleFormat(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validateCurrentPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def visitedPages(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def winEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wizardStyle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QWizardPage(QWidget):
@@ -34270,122 +24960,77 @@ class QWizardPage(QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def buttonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cleanupPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def field(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def initializePage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCommitPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isComplete(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isFinalPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def nextId(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def pixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def registerField(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setButtonText(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCommitPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setField(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setFinalPage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setPixmap(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setSubTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def subTitle(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def title(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def validatePage(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def wizard(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QAbstractButton', 'QAbstractGraphicsShapeItem', 'QAbstract...
 """
-

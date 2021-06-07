@@ -56,11 +56,10 @@ from . import QtTest
 from . import QtWidgets
 from . import QtXml
 from . import QtXmlPatterns
-def _apply_site_config():
-    """
-    """
-    ...
 
+def _apply_site_config():
+    """ """
+    ...
 
 def _build_compatibility_members(binding, decorators=None):
     """
@@ -76,13 +75,11 @@ def _build_compatibility_members(binding, decorators=None):
     """
     ...
 
-
 def _cli(args):
     """
     Qt.py command-line interface
     """
     ...
-
 
 def _convert(lines):
     """
@@ -97,19 +94,15 @@ def _convert(lines):
     """
     ...
 
-
 def _import_sub_module(module, name):
     """
     import_sub_module will mimic the function of importlib.import_module
     """
     ...
 
-
 def _install():
-    """
-    """
+    """ """
     ...
-
 
 def _loadUi(uifile, baseinstance=None):
     """
@@ -131,18 +124,13 @@ def _loadUi(uifile, baseinstance=None):
     """
     ...
 
-
 def _log(text):
-    """
-    """
+    """ """
     ...
-
 
 def _new_module(name):
-    """
-    """
+    """ """
     ...
-
 
 def _none():
     """
@@ -150,13 +138,11 @@ def _none():
     """
     ...
 
-
 def _pyqt4():
     """
     Initialise PyQt4
     """
     ...
-
 
 def _pyqt5():
     """
@@ -164,13 +150,11 @@ def _pyqt5():
     """
     ...
 
-
 def _pyside():
     """
     Initialise PySide
     """
     ...
-
 
 def _pyside2():
     """
@@ -183,7 +167,6 @@ def _pyside2():
     """
     ...
 
-
 def _qInstallMessageHandler(handler):
     """
     Install a message handler that works in all bindings
@@ -192,7 +175,6 @@ def _qInstallMessageHandler(handler):
         handler: A function that takes 3 arguments, or None
     """
     ...
-
 
 def _reassign_misplaced_members(binding):
     """
@@ -203,13 +185,11 @@ def _reassign_misplaced_members(binding):
     """
     ...
 
-
 def _setup(module, extras):
     """
     Install common submodules
     """
     ...
-
 
 def _wrapinstance(func, ptr, base=None):
     """
@@ -233,7 +213,6 @@ def _wrapinstance(func, ptr, base=None):
             which should handle anything.
     """
     ...
-
 
 IsPyQt4: bool
 """

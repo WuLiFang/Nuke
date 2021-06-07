@@ -7,44 +7,44 @@ from _nuke_color import *
 """
 A collection of tools and functions to help manage LUTs and color configuration
 """
-defaultLUTMappers = {  }
+defaultLUTMappers = {}
+
 def addDefaultColorspaceMapper(call, args=..., kwargs=..., nodeClass=...):
-  """
-  Add a function to modify default colorspaces before Nuke passes them to
-  Readers or Writers.
+    """
+    Add a function to modify default colorspaces before Nuke passes them to
+    Readers or Writers.
 
-  Functions should have the same positional argument as in the definition of
-  defaultLUTMapper()
+    Functions should have the same positional argument as in the definition of
+    defaultLUTMapper()
 
-  All added functions are called in backwards order.
-  """
-  ...
+    All added functions are called in backwards order.
+    """
+    ...
 
 def removeDefaultColorspaceMapper(call, args=..., kwargs=..., nodeClass=...):
-  """
-  Remove a previously-added callback with the same arguments.
-  """
-  ...
+    """
+    Remove a previously-added callback with the same arguments.
+    """
+    ...
 
 def defaultColorspaceMapper(colorspace, dataTypeHint):
-  """
-  Called by libnuke.
-  Calls into Node-level callbacks first, then global callbacks
+    """
+    Called by libnuke.
+    Calls into Node-level callbacks first, then global callbacks
 
-  Arguments:
-      colorspace   - the name string of the initial colorspace
-      dataTypeHint - sometimes Readers/Writer request the default for a
-                     particular data-type, i.e. int8, in16, float, etc.
-  Return:
-      The return should be the transformed/modified colorspace name.
-      None is the same as returning the string unchanged.
-  """
-  ...
+    Arguments:
+        colorspace   - the name string of the initial colorspace
+        dataTypeHint - sometimes Readers/Writer request the default for a
+                       particular data-type, i.e. int8, in16, float, etc.
+    Return:
+        The return should be the transformed/modified colorspace name.
+        None is the same as returning the string unchanged.
+    """
+    ...
 
 def getColorspaceList(colorspaceKnob):
-  """
-  Get a list of all colorspaces listed in an enumeration knob.
-  This will strip family names if the knob has the STRIP_CASCADE_PREFIX flag set.
-  """
-  ...
-
+    """
+    Get a list of all colorspaces listed in an enumeration knob.
+    This will strip family names if the knob has the STRIP_CASCADE_PREFIX flag set.
+    """
+    ...

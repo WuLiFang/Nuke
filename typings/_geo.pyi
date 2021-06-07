@@ -7,7 +7,6 @@ _geo - The python API for Nuke's core 3D geometry classes.
 import typing
 import _nukemath
 
-
 class AttrGroup:
     """
     The available attribute groups. Use these in conjunction with the Attribute and AttribContext methods.
@@ -15,14 +14,12 @@ class AttrGroup:
 
     ...
 
-
 class AttrType:
     """
     The available attribute types. Used by the Attribute and AttribContext classes. Note that we don't support pointer attributes in python, although we do report their type.
     """
 
     ...
-
 
 class AttribContext:
     """
@@ -63,33 +60,27 @@ class AttribContext:
     """
     Boolean value to indicate whether or not the attribute varies.
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def empty(self) -> bool:
         """
         Whether this attribute is empty, i.e. contains no values, or not.
         """
         ...
-
     ...
-
 
 class Attribute:
     """
@@ -105,51 +96,42 @@ class Attribute:
     """
     The type of the attribute values.
     """
-
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def invalid(self) -> bool:
         """
         Check whether the type for this attribute is valid (i.e. one of the known and supported types). This is equivalent to 'not self.valid()'
         """
         ...
-
     def valid(self) -> bool:
         """
         Check whether the type for this attribute is valid (i.e. one of the known and supported types).
         """
         ...
-
     ...
-
 
 class GeoInfo:
     """
@@ -161,19 +143,16 @@ class GeoInfo:
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def attribContext(self, name, group, type) -> AttribContext:
         """
         Gets an attribute context for the named attribute of this object. If the attribute doesn't exist, returns None.
@@ -199,26 +178,24 @@ class GeoInfo:
           10 Matrix4
         """
         ...
-
     def normals(self) -> typing.List:
         """
         Gets the list of vertex normals for this object.
         """
         ...
-
     def points(self) -> PointList:
         """
         Gets the point list for this object.
         """
         ...
-
     def primitives(self) -> typing.List:
         """
         Gets the list of primitives which make up this object.
         """
         ...
-
-    def transform(self) -> typing.Tuple[
+    def transform(
+        self,
+    ) -> typing.Tuple[
         typing.Tuple[float, float, float, float],
         typing.Tuple[float, float, float, float],
         typing.Tuple[float, float, float, float],
@@ -228,9 +205,7 @@ class GeoInfo:
         Gets the transform matrix from the objects local coordinate system to world coordinates.
         """
         ...
-
     ...
-
 
 class GeometryList:
     """
@@ -242,33 +217,27 @@ class GeometryList:
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     ...
-
 
 class PointList:
     """
@@ -282,33 +251,27 @@ class PointList:
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __getitem__(self, *args, **kwargs):
         """
         x.__getitem__(y) <==> x[y]
         """
         ...
-
     def __len__(self, *args, **kwargs):
         """
         x.__len__() <==> len(x)
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     ...
-
 
 class Primitive:
     """
@@ -320,59 +283,51 @@ class Primitive:
         x.__delattr__('name') <==> del x.name
         """
         ...
-
     def __getattribute__(self, *args, **kwargs):
         """
         x.__getattribute__('name') <==> x.name
         """
         ...
-
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-
     def averageCenter(self, pointlist) -> typing.Tuple:
         """
         Get the average x,y,z location of all points in this primitive. The pointlist parameter should be the result of the points() method on the GeoInfo object which owns this primitive.
         """
         ...
-
     def faceAverageCenter(self, faceIndex, pointlist) -> typing.Tuple:
         """
         Get the average x,y,z location of all points in a particular face. The faceIndex parameter specifies which face to process. The pointlist parameter should be the result of the points() method on the GeoInfo object which owns this primitive.
         """
         ...
-
     def faceVertices(self, faceIndex) -> typing.List[int]:
         """
         Get the list of point indexes for a particular face. The faceIndex parameter specifies which face to process.
         """
         ...
-
     def faces(self) -> int:
         """
         Get the number of sub-faces this primitive generates.
         """
         ...
-
     def normal(self) -> typing.Tuple:
         """
         Get the normal for this primitive.
         """
         ...
-
     def points(self) -> typing.List[int]:
         """
         Get the list of point indexes for this primitive. The indexes refer to the position of the point in the point list of the GeoInfo object which owns this primitive.
         """
         ...
-
     ...
 
-
-def bestFitPlane(*points) -> typing.Tuple[_nukemath.Vector3, _nukemath.Vector3, _nukemath.Vector3]:
+def bestFitPlane(
+    *points,
+) -> typing.Tuple[_nukemath.Vector3, _nukemath.Vector3, _nukemath.Vector3]:
     """
     Find the plane of best fit through a set of 3D points.
 

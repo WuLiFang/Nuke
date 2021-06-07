@@ -1,8 +1,7 @@
 # -*- # -*- coding=UTF-8 -*-
 """Pyblish lite nuke interagation.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import multiprocessing
@@ -53,11 +52,12 @@ def _after_signal(signal, func):
     def _func():
         signal.disconnect(_func)
         func()
+
     signal.connect(_func)
 
 
 def pyblish_action(name, is_block=True, is_reset=False):
-    """Control pyblish. """
+    """Control pyblish."""
 
     if Window.instance and Window.instance.controller.is_running:
         return
@@ -73,7 +73,7 @@ def pyblish_action(name, is_block=True, is_reset=False):
 
 def _pyblish_action(name, is_reset=True):
 
-    if nuke.value(b'root.name', None):
+    if nuke.value(b"root.name", None):
         Window.dock()
 
     window_ = Window.instance
@@ -85,8 +85,10 @@ def _pyblish_action(name, is_reset=True):
     assert isinstance(controller, control.Controller)
 
     start = getattr(window_, name)
-    signal = {'publish': controller.was_published,
-              'validate': controller.was_validated}[name]
+    signal = {
+        "publish": controller.was_published,
+        "validate": controller.was_validated,
+    }[name]
 
     finish_event = multiprocessing.Event()
     _after_signal(signal, finish_event.set)
@@ -100,21 +102,20 @@ def _pyblish_action(name, is_reset=True):
         start()
 
     # Wait finish.
-    while (not finish_event.is_set()
-           or controller.is_running):
+    while not finish_event.is_set() or controller.is_running:
         QApplication.processEvents()
 
 
 def _handle_result(result):
     def _get_text():
-        records = result['records']
+        records = result["records"]
         if records:
-            return '\n'.join(i.getMessage() for i in records)
+            return "\n".join(i.getMessage() for i in records)
 
-        return '请在pyblish窗口中查看详情'
+        return "请在pyblish窗口中查看详情"
 
-    if not result['success']:
-        Tray.critical('发布失败', _get_text())
+    if not result["success"]:
+        Tray.critical("发布失败", _get_text())
 
 
 class Window(window.Window):
@@ -130,11 +131,13 @@ class Window(window.Window):
     _is_initiated = False
     instance = None
 
-    def __new__(cls, parent=None,):
+    def __new__(
+        cls,
+        parent=None,
+    ):
         if not cls.instance:
             LOGGER.debug("create new pyblish window")
-            cls.instance = super(Window, cls).__new__(
-                cls, parent)  # type: ignore
+            cls.instance = super(Window, cls).__new__(cls, parent)  # type: ignore
             # https://github.com/microsoft/pyright/issues/1638
         return cls.instance
 
@@ -144,8 +147,7 @@ class Window(window.Window):
 
         controller = control.Controller()
         controller.was_processed.connect(_handle_result)
-        super(Window, self).__init__(
-            controller, parent)
+        super(Window, self).__init__(controller, parent)
 
         self.resize(*settings.WindowSize)
         self.setWindowTitle(settings.WindowTitle)
@@ -155,23 +157,23 @@ class Window(window.Window):
 
             # Make relative paths absolute
             root = util.get_asset("").replace("\\", "/")
-            css = css.replace("url(\"", "url(\"%s" % root)
-        self.setStyleSheet(css.encode('utf-8'))
+            css = css.replace('url("', 'url("%s' % root)
+        self.setStyleSheet(css.encode("utf-8"))
 
-        self.setObjectName('PyblishWindow')
+        self.setObjectName("PyblishWindow")
         self.setAttribute(Qt.WA_DeleteOnClose, True)
 
         self._is_initiated = True
 
         def _unset():
             Window.instance = None
+
         self.destroyed.connect(_unset)
 
     def activate(self):
-        """Active pyblish window.   """
+        """Active pyblish window."""
 
-        LOGGER.debug("activate pyblish window: is_panel=%s",
-                     not self.isWindow())
+        LOGGER.debug("activate pyblish window: is_panel=%s", not self.isWindow())
         if self.isWindow():
             self.showNormal()
         else:
@@ -180,15 +182,15 @@ class Window(window.Window):
     @classmethod
     def dock(cls):
         """Dock pyblish panel in same pane of properties,
-            or pop it out.
+        or pop it out.
         """
 
         try:
             window_ = cls.instance
             if not cls.instance:
-                pane = nuke.getPaneFor(b'Properties.1')
+                pane = nuke.getPaneFor(b"Properties.1")
                 if pane:
-                    panel = restorePanel(b'com.wlf.pyblish')
+                    panel = restorePanel(b"com.wlf.pyblish")
                     panel.addToPane(pane)
                 else:
                     _ = Window(mainwindow() or QApplication.activeWindow())
@@ -219,31 +221,37 @@ class Window(window.Window):
             parent = parent.parent()
             if isinstance(parent, parent_class):
                 return parent
-        raise ValueError('No such parent')
+        raise ValueError("No such parent")
 
 
 def set_preferred_fonts(font, scale_factor=None):
-    """Set preferred font.  """
+    """Set preferred font."""
 
     if scale_factor:
         pyblish_lite.delegate.scale_factor = scale_factor
     else:
         scale_factor = pyblish_lite.delegate.scale_factor
-    pyblish_lite.delegate.fonts.update({
-        "h3": QtGui.QFont(font, 10 * scale_factor, 900),
-        "h4": QtGui.QFont(font, 8 * scale_factor, 400),
-        "h5": QtGui.QFont(font, 8 * scale_factor, 800)})
+    pyblish_lite.delegate.fonts.update(
+        {
+            "h3": QtGui.QFont(font, 10 * scale_factor, 900),
+            "h4": QtGui.QFont(font, 8 * scale_factor, 400),
+            "h5": QtGui.QFont(font, 8 * scale_factor, 800),
+        }
+    )
 
 
 def setup():
-    panels.register(Window, cast.binary('发布'), b'com.wlf.pyblish')
+    panels.register(Window, cast.binary("发布"), b"com.wlf.pyblish")
 
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(
-        lambda: pyblish_action('validate', is_block=True, is_reset=True))
+        lambda: pyblish_action("validate", is_block=True, is_reset=True)
+    )
     callback.CALLBACKS_ON_SCRIPT_SAVE.append(
-        lambda: pyblish_action('validate', is_block=False, is_reset=True))
-    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(abort_modified(
-        lambda: pyblish_action('publish', is_block=True, is_reset=False)))
+        lambda: pyblish_action("validate", is_block=False, is_reset=True)
+    )
+    callback.CALLBACKS_ON_SCRIPT_CLOSE.append(
+        abort_modified(lambda: pyblish_action("publish", is_block=True, is_reset=False))
+    )
 
     # Remove default plugins.
     pyblish.plugin.deregister_all_paths()
@@ -252,7 +260,7 @@ def setup():
 
     app.install_fonts()
     app.install_translator(QApplication.instance())
-    set_preferred_fonts('微软雅黑', 1.2)
+    set_preferred_fonts("微软雅黑", 1.2)
 
     for mod in (pyblish_cgtwn, pyblish_asset):
         for i in pyblish.plugin.plugins_from_module(mod):

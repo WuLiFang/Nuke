@@ -8,110 +8,145 @@ import six
 
 onUserCreates = {}
 
-
-def addOnUserCreate(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addOnUserCreate(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute when user creates a node"""
     ...
 
-
-def removeOnUserCreate(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeOnUserCreate(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def onUserCreate():
-    ...
-
+def onUserCreate(): ...
 
 onCreates = {}
 
-
-def addOnCreate(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addOnCreate(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute when a node is created or undeleted"""
     ...
 
-
-def removeOnCreate(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeOnCreate(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def onCreate():
-    ...
-
+def onCreate(): ...
 
 onScriptLoads = {}
 
-
-def addOnScriptLoad(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addOnScriptLoad(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute when a script is loaded"""
     ...
 
-
-def removeOnScriptLoad(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeOnScriptLoad(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def onScriptLoad():
-    ...
-
+def onScriptLoad(): ...
 
 onScriptSaves = {}
 
-
-def addOnScriptSave(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addOnScriptSave(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute before a script is saved"""
     ...
 
-
-def removeOnScriptSave(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeOnScriptSave(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def onScriptSave():
-    ...
-
+def onScriptSave(): ...
 
 onScriptCloses = {}
 
-
-def addOnScriptClose(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addOnScriptClose(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute before a script is closed"""
     ...
 
-
-def removeOnScriptClose(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeOnScriptClose(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def onScriptClose():
-    ...
-
+def onScriptClose(): ...
 
 onDestroys = {}
 
-
-def addOnDestroy(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addOnDestroy(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute when a node is destroyed"""
     ...
 
-
-def removeOnDestroy(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeOnDestroy(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def onDestroy():
-    ...
-
+def onDestroy(): ...
 
 knobChangeds = {}
 
-
-def addKnobChanged(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ..., node: nuke.Node = ...) -> None:
+def addKnobChanged(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+    node: nuke.Node = ...,
+) -> None:
     """Add code to execute when the user changes a knob
     The knob is availble in nuke.thisKnob() and the node in nuke.thisNode().
     This is also called with dummy knobs when the control panel is opened
@@ -120,212 +155,272 @@ def addKnobChanged(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg
     should happen even when the panel is closed."""
     ...
 
-
-def removeKnobChanged(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ..., node=...) -> None:
+def removeKnobChanged(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+    node=...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def knobChanged():
-    ...
-
+def knobChanged(): ...
 
 updateUIs = {}
 
-
-def addUpdateUI(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addUpdateUI(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute on every node when things change. This is done
     during idle, you cannot rely on it being done before it starts updating
     the viewer"""
     ...
 
-
-def removeUpdateUI(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeUpdateUI(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def updateUI():
-    ...
-
+def updateUI(): ...
 
 autolabels = {}
 
-
-def addAutolabel(call: Callable[..., Union[None, six.binary_type]], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addAutolabel(
+    call: Callable[..., Union[None, six.binary_type]],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute on every node to produce the text to draw on it
     in the DAG. Any value other than None is converted to a string and used
     as the text. None indicates that previously-added functions should
     be tried"""
     ...
 
-
-def removeAutolabel(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeAutolabel(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def autolabel():
-    ...
-
+def autolabel(): ...
 
 beforeRenders = {}
 
-
-def addBeforeRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addBeforeRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute before starting any renders"""
     ...
 
-
-def removeBeforeRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeBeforeRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def beforeRender():
-    ...
-
+def beforeRender(): ...
 
 beforeFrameRenders = {}
 
-
-def addBeforeFrameRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addBeforeFrameRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute before each frame of a render"""
     ...
 
-
-def removeBeforeFrameRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeBeforeFrameRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def beforeFrameRender():
-    ...
-
+def beforeFrameRender(): ...
 
 afterFrameRenders = {}
 
-
-def addAfterFrameRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addAfterFrameRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute after each frame of a render"""
     ...
 
-
-def removeAfterFrameRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeAfterFrameRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def afterFrameRender():
-    ...
-
+def afterFrameRender(): ...
 
 afterRenders = {}
 
-
-def addAfterRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addAfterRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute after any renders"""
     ...
 
-
-def removeAfterRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeAfterRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def afterRender():
-    ...
-
+def afterRender(): ...
 
 renderProgresses = {}
 
-
-def addRenderProgress(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addRenderProgress(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute when the progress bar updates during any renders"""
     ...
 
-
-def removeRenderProgress(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeRenderProgress(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def renderProgress():
-    ...
-
+def renderProgress(): ...
 
 _beforeRecordings = {}
 
-
-def addBeforeRecording(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addBeforeRecording(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute before viewer recording"""
     ...
 
-
-def removeBeforeRecording(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeBeforeRecording(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def beforeRecording():
-    ...
-
+def beforeRecording(): ...
 
 _afterRecordings = {}
 
-
-def addAfterRecording(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addAfterRecording(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute after viewer recording"""
     ...
 
-
-def removeAfterRecording(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeAfterRecording(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def afterRecording():
-    ...
-
+def afterRecording(): ...
 
 _beforeReplays = {}
 
-
-def addBeforeReplay(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addBeforeReplay(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute before viewer replay"""
     ...
 
-
-def removeBeforeReplay(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeBeforeReplay(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def beforeReplay():
-    ...
-
+def beforeReplay(): ...
 
 _afterReplays = {}
 
-
-def addAfterReplay(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addAfterReplay(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add code to execute after viewer replay"""
     ...
 
-
-def removeAfterReplay(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeAfterReplay(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def afterReplay():
-    ...
-
+def afterReplay(): ...
 
 beforeBackgroundRenders = []
 
-
-def addBeforeBackgroundRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ...,):
+def addBeforeBackgroundRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+):
     """Add code to execute before starting any background renders.
     The call must be in the form of:
     def foo(context):
@@ -338,20 +433,23 @@ def addBeforeBackgroundRender(call: Callable[..., None], args: Tuple[Any, ...] =
     """
     ...
 
-
-def removeBeforeBackgroundRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ...,):
+def removeBeforeBackgroundRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+):
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def beforeBackgroundRender(context):
-    ...
-
+def beforeBackgroundRender(context): ...
 
 afterBackgroundFrameRenders = []
 
-
-def addAfterBackgroundFrameRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ...,):
+def addAfterBackgroundFrameRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+):
     """Add code to execute after each frame of a background render.
     The call must be in the form of:
     def foo(context):
@@ -367,20 +465,23 @@ def addAfterBackgroundFrameRender(call: Callable[..., None], args: Tuple[Any, ..
     """
     ...
 
-
-def removeAfterBackgroundFrameRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ...,):
+def removeAfterBackgroundFrameRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+):
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def afterBackgroundFrameRender(context):
-    ...
-
+def afterBackgroundFrameRender(context): ...
 
 afterBackgroundRenders = []
 
-
-def addAfterBackgroundRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ...,):
+def addAfterBackgroundRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+):
     """Add code to execute after any background renders.
     The call must be in the form of:
     def foo(context):
@@ -393,20 +494,24 @@ def addAfterBackgroundRender(call: Callable[..., None], args: Tuple[Any, ...] = 
     """
     ...
 
-
-def removeAfterBackgroundRender(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ...,):
+def removeAfterBackgroundRender(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+):
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def afterBackgroundRender(context):
-    ...
-
+def afterBackgroundRender(context): ...
 
 filenameFilters = {}
 
-
-def addFilenameFilter(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addFilenameFilter(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add a function to modify filenames before Nuke passes them to
     the operating system. The first argument to the function is the
     filename, and it should return the new filename. None is the same as
@@ -414,38 +519,43 @@ def addFilenameFilter(call: Callable[..., None], args: Tuple[Any, ...] = ..., kw
     in backwards order."""
     ...
 
-
-def removeFilenameFilter(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeFilenameFilter(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback with the same arguments."""
     ...
 
-
-def filenameFilter(filename):
-    ...
-
+def filenameFilter(filename): ...
 
 validateFilenames = {}
 
-
-def addValidateFilename(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def addValidateFilename(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Add a function to validate a filename in Write nodes. The first argument
     is the filename and it should return a Boolean as to whether the filename is valid
     or not. If a callback is provided, it will control whether the Render button of Write nodes
     and the Execute button of WriteGeo nodes is enabled or not."""
     ...
 
-
-def removeFilenameValidate(call: Callable[..., None], args: Tuple[Any, ...] = ..., kwarg: Dict[AnyStr, Any] = ..., nodeClass: six.binary_type = ...) -> None:
+def removeFilenameValidate(
+    call: Callable[..., None],
+    args: Tuple[Any, ...] = ...,
+    kwarg: Dict[AnyStr, Any] = ...,
+    nodeClass: six.binary_type = ...,
+) -> None:
     """Remove a previously-added callback."""
     ...
 
-
-def validateFilename(filename):
-    ...
-
+def validateFilename(filename): ...
 
 autoSaveFilters = {}
-
 
 def addAutoSaveFilter(filter):
     """addAutoSaveFilter(filter) -> None
@@ -458,19 +568,15 @@ def addAutoSaveFilter(filter):
     The filter should return the filename to save the autosave to."""
     ...
 
-
 def removeAutoSaveFilter(filter):
     """Remove a previously-added callback with the same arguments."""
     ...
-
 
 def autoSaveFilter(filename):
     """Internal function.  Use addAutoSaveFilter to add a callback"""
     ...
 
-
 autoSaveRestoreFilters = {}
-
 
 def addAutoSaveRestoreFilter(filter):
     """addAutoSaveRestoreFilter(filter) -> None
@@ -483,19 +589,15 @@ def addAutoSaveRestoreFilter(filter):
     This function should return the filename to load autosave from or it should return None if the autosave file should be ignored."""
     ...
 
-
 def removeAutoSaveRestoreFilter(filter):
     """Remove a previously-added callback with the same arguments."""
     ...
-
 
 def autoSaveRestoreFilter(filename):
     """Internal function.  Use addAutoSaveRestoreFilter to add a callback"""
     ...
 
-
 autoSaveDeleteFilters = {}
-
 
 def addAutoSaveDeleteFilter(filter):
     """addAutoSaveDeleteFilter(filter) -> None
@@ -508,11 +610,9 @@ def addAutoSaveDeleteFilter(filter):
     This function should return the filename to delete or return None if no file should be deleted."""
     ...
 
-
 def removeAutoSaveDeleteFilter(filter):
     """Remove a previously-added callback with the same arguments."""
     ...
-
 
 def autoSaveDeleteFilter(filename):
     """Internal function.  Use addAutoSaveDeleteFilter to add a callback"""

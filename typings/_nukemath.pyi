@@ -12,1859 +12,1714 @@ import Boost.Python
 class Matrix3(Boost.Python.instance):
     def __add__(self, arg1: Matrix3, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __add__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __add__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
         """
         ...
-
     def __div__(self, arg1: Matrix3, arg2: float):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __div__(class DD::Image::Matrix3 {lvalue},double)
+
+        C++ signature :
+            struct _object * __ptr64 __div__(class DD::Image::Matrix3 {lvalue},double)
         """
         ...
-
     def __eq__(self, arg1: Matrix3, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __eq__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __eq__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
         """
         ...
-
     def __getinitargs__(self, arg1: Matrix3) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple __getinitargs__(class DD::Image::Matrix3)
+
+        C++ signature :
+            class boost::python::tuple __getinitargs__(class DD::Image::Matrix3)
         """
         ...
-
     def __getitem__(self, arg1: Matrix3, arg2: int) -> float:
         """
-        
-            C++ signature :
-                double __getitem__(class DD::Image::Matrix3 * __ptr64,int)
+
+        C++ signature :
+            double __getitem__(class DD::Image::Matrix3 * __ptr64,int)
         """
         ...
-
     def __iadd__(self, arg1: object, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,class DD::Image::Matrix3)
         """
         ...
-
     def __idiv__(self, arg1: object, arg2: float):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,double)
+
+        C++ signature :
+            struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,double)
         """
         ...
-
     def __imul__(self, arg1: object, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,class DD::Image::Matrix3)
         """
         ...
-
     def __init__(self, arg1: object) -> None:
         """
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1, (float)arg2, (float)arg3, (float)arg4, (float)arg5, (float)arg6, (float)arg7, (float)arg8, (float)arg9, (float)arg10) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,double,double,double,double,double,double,double,double,double)
-        
+
         __init__( (object)arg1, (Matrix3)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Matrix3)
         """
         ...
-
     def __isub__(self, arg1: object, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Matrix3 & __ptr64>,class DD::Image::Matrix3)
         """
         ...
-
     def __len__(self, arg1: Matrix3) -> int:
         """
-        
-            C++ signature :
-                int __len__(class DD::Image::Matrix3 * __ptr64)
+
+        C++ signature :
+            int __len__(class DD::Image::Matrix3 * __ptr64)
         """
         ...
-
     def __mul__(self, arg1: Matrix3, arg2: float):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Matrix3 {lvalue},double)
-        
+
         __mul__( (Matrix3)arg1, (Vector3)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Matrix3 {lvalue},class DD::Image::Vector3)
-        
+
         __mul__( (Matrix3)arg1, (Matrix3)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
         """
         ...
-
     def __ne__(self, arg1: Matrix3, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __ne__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __ne__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
         """
         ...
-
     def __pos__(self, arg1: Matrix3) -> Matrix3:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix3 __pos__(class DD::Image::Matrix3 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Matrix3 __pos__(class DD::Image::Matrix3 * __ptr64)
         """
         ...
-
     def __repr__(self, arg1: Matrix3) -> six.binary_type:
         """
-        
-            C++ signature :
-                class boost::python::str __repr__(class DD::Image::Matrix3 * __ptr64)
+
+        C++ signature :
+            class boost::python::str __repr__(class DD::Image::Matrix3 * __ptr64)
         """
         ...
-
     def __setitem__(self, arg1: Matrix3, arg2: int, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void __setitem__(class DD::Image::Matrix3 * __ptr64,int,double)
+
+        C++ signature :
+            void __setitem__(class DD::Image::Matrix3 * __ptr64,int,double)
         """
         ...
-
     def __sub__(self, arg1: Matrix3, arg2: Matrix3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __sub__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
+
+        C++ signature :
+            struct _object * __ptr64 __sub__(class DD::Image::Matrix3 {lvalue},class DD::Image::Matrix3)
         """
         ...
-
     def __truediv__(self, arg1: Matrix3, arg2: float) -> Matrix3:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix3 __truediv__(class DD::Image::Matrix3 * __ptr64,float)
+
+        C++ signature :
+            class DD::Image::Matrix3 __truediv__(class DD::Image::Matrix3 * __ptr64,float)
         """
         ...
-
     def determinant(self, arg1: Matrix3) -> float:
         """
-        
-            C++ signature :
-                float determinant(class DD::Image::Matrix3 {lvalue})
+
+        C++ signature :
+            float determinant(class DD::Image::Matrix3 {lvalue})
         """
         ...
-
     def identity(self) -> Matrix3:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix3 identity()
+
+        C++ signature :
+            class DD::Image::Matrix3 identity()
         """
         ...
-
     def inverse(self, arg1: Matrix3) -> Matrix3:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix3 inverse(class DD::Image::Matrix3 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Matrix3 inverse(class DD::Image::Matrix3 * __ptr64)
         """
         ...
-
     def makeIdentity(self, arg1: Matrix3) -> None:
         """
-        
-            C++ signature :
-                void makeIdentity(class DD::Image::Matrix3 {lvalue})
+
+        C++ signature :
+            void makeIdentity(class DD::Image::Matrix3 {lvalue})
         """
         ...
-
-    def rotate(self, arg1: Matrix3, arg2: float, arg3: float, arg4: float, arg5: float) -> None:
+    def rotate(
+        self, arg1: Matrix3, arg2: float, arg3: float, arg4: float, arg5: float
+    ) -> None:
         """
-        
+
             C++ signature :
                 void rotate(class DD::Image::Matrix3 * __ptr64,float,float,float,float)
-        
+
         rotate( (Matrix3)arg1, (float)arg2, (Vector3)arg3) -> None :
-        
+
             C++ signature :
                 void rotate(class DD::Image::Matrix3 * __ptr64,float,class DD::Image::Vector3)
         """
         ...
-
     def rotateX(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotateX(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void rotateX(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
     def rotateY(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotateY(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void rotateY(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
     def rotateZ(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotateZ(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void rotateZ(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
-    def rotation(self, arg1: Matrix3, arg2: float, arg3: float, arg4: float, arg5: float) -> None:
+    def rotation(
+        self, arg1: Matrix3, arg2: float, arg3: float, arg4: float, arg5: float
+    ) -> None:
         """
-        
+
             C++ signature :
                 void rotation(class DD::Image::Matrix3 * __ptr64,float,float,float,float)
-        
+
         rotation( (Matrix3)arg1, (float)arg2, (Vector3)arg3) -> None :
-        
+
             C++ signature :
                 void rotation(class DD::Image::Matrix3 * __ptr64,float,class DD::Image::Vector3)
         """
         ...
-
     def rotationX(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotationX(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void rotationX(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
     def rotationY(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotationY(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void rotationY(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
     def rotationZ(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotationZ(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void rotationZ(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
     def scale(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
+
             C++ signature :
                 void scale(class DD::Image::Matrix3 * __ptr64,float)
-        
+
         scale( (Matrix3)arg1, (float)arg2, (float)arg3, (float)arg4) -> None :
-        
+
             C++ signature :
                 void scale(class DD::Image::Matrix3 * __ptr64,float,float,float)
         """
         ...
-
     def scaling(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
+
             C++ signature :
                 void scaling(class DD::Image::Matrix3 * __ptr64,float)
-        
+
         scaling( (Matrix3)arg1, (float)arg2, (float)arg3, (float)arg4) -> None :
-        
+
             C++ signature :
                 void scaling(class DD::Image::Matrix3 * __ptr64,float,float,float)
-        
+
         scaling( (Matrix3)arg1, (Vector3)arg2) -> None :
-        
+
             C++ signature :
                 void scaling(class DD::Image::Matrix3 * __ptr64,class DD::Image::Vector3)
         """
         ...
-
-    def set(self, arg1: Matrix3, arg2: float, arg3: float, arg4: float, arg5: float, arg6: float, arg7: float, arg8: float, arg9: float, arg10: float) -> None:
+    def set(
+        self,
+        arg1: Matrix3,
+        arg2: float,
+        arg3: float,
+        arg4: float,
+        arg5: float,
+        arg6: float,
+        arg7: float,
+        arg8: float,
+        arg9: float,
+        arg10: float,
+    ) -> None:
         """
-        
-            C++ signature :
-                void set(class DD::Image::Matrix3 {lvalue},float,float,float,float,float,float,float,float,float)
+
+        C++ signature :
+            void set(class DD::Image::Matrix3 {lvalue},float,float,float,float,float,float,float,float,float)
         """
         ...
-
     def skew(self, arg1: Matrix3, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void skew(class DD::Image::Matrix3 {lvalue},float)
+
+        C++ signature :
+            void skew(class DD::Image::Matrix3 {lvalue},float)
         """
         ...
-
     def transform(self, arg1: Matrix3, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 transform(class DD::Image::Matrix3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 transform(class DD::Image::Matrix3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     ...
 
 class Matrix4(Boost.Python.instance):
     def __add__(self, arg1: Matrix4, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __add__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __add__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
         """
         ...
-
     def __div__(self, arg1: Matrix4, arg2: float):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __div__(class DD::Image::Matrix4 {lvalue},double)
+
+        C++ signature :
+            struct _object * __ptr64 __div__(class DD::Image::Matrix4 {lvalue},double)
         """
         ...
-
     def __eq__(self, arg1: Matrix4, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __eq__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __eq__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
         """
         ...
-
     def __getinitargs__(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple __getinitargs__(class DD::Image::Matrix4)
+
+        C++ signature :
+            class boost::python::tuple __getinitargs__(class DD::Image::Matrix4)
         """
         ...
-
     def __getitem__(self, arg1: Matrix4, arg2: int) -> float:
         """
-        
-            C++ signature :
-                double __getitem__(class DD::Image::Matrix4 * __ptr64,int)
+
+        C++ signature :
+            double __getitem__(class DD::Image::Matrix4 * __ptr64,int)
         """
         ...
-
     def __iadd__(self, arg1: object, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,class DD::Image::Matrix4)
         """
         ...
-
     def __idiv__(self, arg1: object, arg2: float):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,double)
+
+        C++ signature :
+            struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,double)
         """
         ...
-
     def __imul__(self, arg1: object, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,class DD::Image::Matrix4)
         """
         ...
-
     def __init__(self, arg1: object) -> None:
         """
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1, (Matrix4)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Matrix4)
         """
         ...
-
     def __isub__(self, arg1: object, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Matrix4 & __ptr64>,class DD::Image::Matrix4)
         """
         ...
-
     def __len__(self, arg1: Matrix4) -> int:
         """
-        
-            C++ signature :
-                int __len__(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            int __len__(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def __mul__(self, arg1: Matrix4, arg2: float):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Matrix4 {lvalue},double)
-        
+
         __mul__( (Matrix4)arg1, (Vector4)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Matrix4 {lvalue},class DD::Image::Vector4)
-        
+
         __mul__( (Matrix4)arg1, (Matrix4)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
         """
         ...
-
     def __ne__(self, arg1: Matrix4, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __ne__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __ne__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
         """
         ...
-
     def __pos__(self, arg1: Matrix4) -> Matrix4:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix4 __pos__(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Matrix4 __pos__(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def __repr__(self, arg1: Matrix4) -> six.binary_type:
         """
-        
-            C++ signature :
-                class boost::python::str __repr__(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::str __repr__(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def __setitem__(self, arg1: Matrix4, arg2: int, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void __setitem__(class DD::Image::Matrix4 * __ptr64,int,double)
+
+        C++ signature :
+            void __setitem__(class DD::Image::Matrix4 * __ptr64,int,double)
         """
         ...
-
     def __sub__(self, arg1: Matrix4, arg2: Matrix4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __sub__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
+
+        C++ signature :
+            struct _object * __ptr64 __sub__(class DD::Image::Matrix4 {lvalue},class DD::Image::Matrix4)
         """
         ...
-
     def __truediv__(self, arg1: Matrix4, arg2: float) -> Matrix4:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix4 __truediv__(class DD::Image::Matrix4 * __ptr64,float)
+
+        C++ signature :
+            class DD::Image::Matrix4 __truediv__(class DD::Image::Matrix4 * __ptr64,float)
         """
         ...
-
     def determinant(self, arg1: Matrix4) -> float:
         """
-        
-            C++ signature :
-                float determinant(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            float determinant(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def identity(self) -> Matrix4:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix4 identity()
+
+        C++ signature :
+            class DD::Image::Matrix4 identity()
         """
         ...
-
     def inverse(self, arg1: Matrix4) -> Matrix4:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix4 inverse(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Matrix4 inverse(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def makeIdentity(self, arg1: Matrix4) -> None:
         """
-        
-            C++ signature :
-                void makeIdentity(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            void makeIdentity(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
-    def mapQuadToUnitSquare(self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: float, arg6: float, arg7: float, arg8: float, arg9: float) -> None:
+    def mapQuadToUnitSquare(
+        self,
+        arg1: Matrix4,
+        arg2: float,
+        arg3: float,
+        arg4: float,
+        arg5: float,
+        arg6: float,
+        arg7: float,
+        arg8: float,
+        arg9: float,
+    ) -> None:
         """
-        
-            C++ signature :
-                void mapQuadToUnitSquare(class DD::Image::Matrix4 {lvalue},float,float,float,float,float,float,float,float)
+
+        C++ signature :
+            void mapQuadToUnitSquare(class DD::Image::Matrix4 {lvalue},float,float,float,float,float,float,float,float)
         """
         ...
-
-    def mapUnitSquareToQuad(self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: float, arg6: float, arg7: float, arg8: float, arg9: float) -> None:
+    def mapUnitSquareToQuad(
+        self,
+        arg1: Matrix4,
+        arg2: float,
+        arg3: float,
+        arg4: float,
+        arg5: float,
+        arg6: float,
+        arg7: float,
+        arg8: float,
+        arg9: float,
+    ) -> None:
         """
-        
-            C++ signature :
-                void mapUnitSquareToQuad(class DD::Image::Matrix4 {lvalue},float,float,float,float,float,float,float,float)
+
+        C++ signature :
+            void mapUnitSquareToQuad(class DD::Image::Matrix4 {lvalue},float,float,float,float,float,float,float,float)
         """
         ...
-
     def ntransform(self, arg1: Matrix4, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 ntransform(class DD::Image::Matrix4 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 ntransform(class DD::Image::Matrix4 {lvalue},class DD::Image::Vector3)
         """
         ...
-
-    def projection(self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: bool) -> None:
+    def projection(
+        self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: bool
+    ) -> None:
         """
-        
-            C++ signature :
-                void projection(class DD::Image::Matrix4 {lvalue},float,float,float,bool)
+
+        C++ signature :
+            void projection(class DD::Image::Matrix4 {lvalue},float,float,float,bool)
         """
         ...
-
-    def rotate(self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: float) -> None:
+    def rotate(
+        self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: float
+    ) -> None:
         """
-        
+
             C++ signature :
                 void rotate(class DD::Image::Matrix4 * __ptr64,float,float,float,float)
-        
+
         rotate( (Matrix4)arg1, (float)arg2, (Vector3)arg3) -> None :
-        
+
             C++ signature :
                 void rotate(class DD::Image::Matrix4 * __ptr64,float,class DD::Image::Vector3)
         """
         ...
-
     def rotateX(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotateX(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void rotateX(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
     def rotateY(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotateY(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void rotateY(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
     def rotateZ(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotateZ(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void rotateZ(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
-    def rotation(self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: float) -> None:
+    def rotation(
+        self, arg1: Matrix4, arg2: float, arg3: float, arg4: float, arg5: float
+    ) -> None:
         """
-        
+
             C++ signature :
                 void rotation(class DD::Image::Matrix4 * __ptr64,float,float,float,float)
-        
+
         rotation( (Matrix4)arg1, (float)arg2, (Vector3)arg3) -> None :
-        
+
             C++ signature :
                 void rotation(class DD::Image::Matrix4 * __ptr64,float,class DD::Image::Vector3)
         """
         ...
-
     def rotationOnly(self, arg1: Matrix4) -> None:
         """
-        
-            C++ signature :
-                void rotationOnly(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            void rotationOnly(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def rotationX(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotationX(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void rotationX(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
     def rotationY(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotationY(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void rotationY(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
     def rotationZ(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void rotationZ(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void rotationZ(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
     def rotationsXYZ(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple rotationsXYZ(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::tuple rotationsXYZ(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def rotationsXZY(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple rotationsXZY(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::tuple rotationsXZY(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def rotationsYXZ(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple rotationsYXZ(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::tuple rotationsYXZ(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def rotationsYZX(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple rotationsYZX(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::tuple rotationsYZX(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def rotationsZXY(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple rotationsZXY(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::tuple rotationsZXY(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def rotationsZYX(self, arg1: Matrix4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple rotationsZYX(class DD::Image::Matrix4 * __ptr64)
+
+        C++ signature :
+            class boost::python::tuple rotationsZYX(class DD::Image::Matrix4 * __ptr64)
         """
         ...
-
     def scale(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
+
             C++ signature :
                 void scale(class DD::Image::Matrix4 * __ptr64,float)
-        
+
         scale( (Matrix4)arg1, (float)arg2, (float)arg3, (float)arg4) -> None :
-        
+
             C++ signature :
                 void scale(class DD::Image::Matrix4 * __ptr64,float,float,float)
         """
         ...
-
     def scaleAndRotationOnly(self, arg1: Matrix4) -> None:
         """
-        
-            C++ signature :
-                void scaleAndRotationOnly(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            void scaleAndRotationOnly(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def scaleOnly(self, arg1: Matrix4) -> None:
         """
-        
-            C++ signature :
-                void scaleOnly(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            void scaleOnly(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def scaling(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
+
             C++ signature :
                 void scaling(class DD::Image::Matrix4 * __ptr64,float)
-        
+
         scaling( (Matrix4)arg1, (float)arg2, (float)arg3, (float)arg4) -> None :
-        
+
             C++ signature :
                 void scaling(class DD::Image::Matrix4 * __ptr64,float,float,float)
-        
+
         scaling( (Matrix4)arg1, (Vector3)arg2) -> None :
-        
+
             C++ signature :
                 void scaling(class DD::Image::Matrix4 * __ptr64,class DD::Image::Vector3)
         """
         ...
-
     def skew(self, arg1: Matrix4, arg2: float) -> None:
         """
-        
-            C++ signature :
-                void skew(class DD::Image::Matrix4 {lvalue},float)
+
+        C++ signature :
+            void skew(class DD::Image::Matrix4 {lvalue},float)
         """
         ...
-
     def skewXY(self, arg1: Matrix4, arg2: float, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void skewXY(class DD::Image::Matrix4 {lvalue},float,float)
+
+        C++ signature :
+            void skewXY(class DD::Image::Matrix4 {lvalue},float,float)
         """
         ...
-
     def transform(self, arg1: Matrix4, arg2: Vector4) -> Vector4:
         """
-        
+
             C++ signature :
                 class DD::Image::Vector4 transform(class DD::Image::Matrix4 * __ptr64,class DD::Image::Vector4)
-        
+
         transform( (Matrix4)arg1, (Vector3)arg2) -> Vector3 :
-        
+
             C++ signature :
                 class DD::Image::Vector3 transform(class DD::Image::Matrix4 * __ptr64,class DD::Image::Vector3)
         """
         ...
-
     def translate(self, arg1: Matrix4, arg2: float, arg3: float, arg4: float) -> None:
         """
-        
+
             C++ signature :
                 void translate(class DD::Image::Matrix4 * __ptr64,float,float,float)
-        
+
         translate( (Matrix4)arg1, (Vector3)arg2) -> None :
-        
+
             C++ signature :
                 void translate(class DD::Image::Matrix4 * __ptr64,class DD::Image::Vector3)
         """
         ...
-
     def translation(self, arg1: Matrix4) -> tuple:
         """
-        
+
             C++ signature :
                 class boost::python::tuple translation(class DD::Image::Matrix4 * __ptr64)
-        
+
         translation( (Matrix4)arg1, (float)arg2, (float)arg3, (float)arg4) -> None :
-        
+
             C++ signature :
                 void translation(class DD::Image::Matrix4 * __ptr64,float,float,float)
-        
+
         translation( (Matrix4)arg1, (Vector3)arg2) -> None :
-        
+
             C++ signature :
                 void translation(class DD::Image::Matrix4 * __ptr64,class DD::Image::Vector3)
         """
         ...
-
     def translationOnly(self, arg1: Matrix4) -> None:
         """
-        
-            C++ signature :
-                void translationOnly(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            void translationOnly(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def transpose(self, arg1: Matrix4) -> None:
         """
-        
-            C++ signature :
-                void transpose(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            void transpose(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def vtransform(self, arg1: Matrix4, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 vtransform(class DD::Image::Matrix4 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 vtransform(class DD::Image::Matrix4 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def xAxis(self, arg1: Matrix4) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 xAxis(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            class DD::Image::Vector3 xAxis(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def yAxis(self, arg1: Matrix4) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 yAxis(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            class DD::Image::Vector3 yAxis(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     def zAxis(self, arg1: Matrix4) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 zAxis(class DD::Image::Matrix4 {lvalue})
+
+        C++ signature :
+            class DD::Image::Vector3 zAxis(class DD::Image::Matrix4 {lvalue})
         """
         ...
-
     ...
 
 class Quaternion(Boost.Python.instance):
     def __add__(self, arg1: Quaternion, arg2: Quaternion):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __add__(class DD::Image::Quaternion {lvalue},class DD::Image::Quaternion)
+
+        C++ signature :
+            struct _object * __ptr64 __add__(class DD::Image::Quaternion {lvalue},class DD::Image::Quaternion)
         """
         ...
-
     def __getinitargs__(self, arg1: Quaternion) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple __getinitargs__(class DD::Image::Quaternion)
+
+        C++ signature :
+            class boost::python::tuple __getinitargs__(class DD::Image::Quaternion)
         """
         ...
-
     def __getitem__(self, arg1: Quaternion, arg2: int) -> float:
         """
-        
-            C++ signature :
-                double __getitem__(class DD::Image::Quaternion * __ptr64,int)
+
+        C++ signature :
+            double __getitem__(class DD::Image::Quaternion * __ptr64,int)
         """
         ...
-
     def __init__(self, arg1: object) -> None:
         """
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1, (float)arg2, (float)arg3, (float)arg4, (float)arg5) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,double,double,double,double)
-        
+
         __init__( (object)arg1, (float)arg2, (Vector3)arg3) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,double,class DD::Image::Vector3)
-        
+
         __init__( (object)arg1, (Quaternion)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Quaternion)
-        
+
         __init__( (object)arg1, (Matrix4)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Matrix4)
-        
+
         __init__( (object)arg1, (Vector3)arg2, (Vector3)arg3) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Vector3,class DD::Image::Vector3)
         """
         ...
-
     def __len__(self, arg1: Quaternion) -> int:
         """
-        
-            C++ signature :
-                int __len__(class DD::Image::Quaternion * __ptr64)
+
+        C++ signature :
+            int __len__(class DD::Image::Quaternion * __ptr64)
         """
         ...
-
     def __mul__(self, arg1: Quaternion, arg2: float):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Quaternion {lvalue},double)
-        
+
         __mul__( (Quaternion)arg1, (Quaternion)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Quaternion {lvalue},class DD::Image::Quaternion)
         """
         ...
-
     def __pos__(self, arg1: Quaternion) -> Quaternion:
         """
-        
-            C++ signature :
-                class DD::Image::Quaternion __pos__(class DD::Image::Quaternion * __ptr64)
+
+        C++ signature :
+            class DD::Image::Quaternion __pos__(class DD::Image::Quaternion * __ptr64)
         """
         ...
-
     def __repr__(self, arg1: Quaternion) -> six.binary_type:
         """
-        
-            C++ signature :
-                class boost::python::str __repr__(class DD::Image::Quaternion * __ptr64)
+
+        C++ signature :
+            class boost::python::str __repr__(class DD::Image::Quaternion * __ptr64)
         """
         ...
-
     def __setitem__(self, arg1: Quaternion, arg2: int, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void __setitem__(class DD::Image::Quaternion * __ptr64,int,double)
+
+        C++ signature :
+            void __setitem__(class DD::Image::Quaternion * __ptr64,int,double)
         """
         ...
-
     def addInverse(self, arg1: Quaternion) -> Quaternion:
         """
-        
-            C++ signature :
-                class DD::Image::Quaternion addInverse(class DD::Image::Quaternion {lvalue})
+
+        C++ signature :
+            class DD::Image::Quaternion addInverse(class DD::Image::Quaternion {lvalue})
         """
         ...
-
     def conjugate(self, arg1: Quaternion) -> Quaternion:
         """
-        
-            C++ signature :
-                class DD::Image::Quaternion conjugate(class DD::Image::Quaternion {lvalue})
+
+        C++ signature :
+            class DD::Image::Quaternion conjugate(class DD::Image::Quaternion {lvalue})
         """
         ...
-
     def magnitude(self, arg1: Quaternion) -> float:
         """
-        
-            C++ signature :
-                double magnitude(class DD::Image::Quaternion {lvalue})
+
+        C++ signature :
+            double magnitude(class DD::Image::Quaternion {lvalue})
         """
         ...
-
     def matrix(self, arg1: Quaternion) -> Matrix4:
         """
-        
-            C++ signature :
-                class DD::Image::Matrix4 matrix(class DD::Image::Quaternion {lvalue})
+
+        C++ signature :
+            class DD::Image::Matrix4 matrix(class DD::Image::Quaternion {lvalue})
         """
         ...
-
     def multInverse(self, arg1: Quaternion) -> Quaternion:
         """
-        
-            C++ signature :
-                class DD::Image::Quaternion multInverse(class DD::Image::Quaternion {lvalue})
+
+        C++ signature :
+            class DD::Image::Quaternion multInverse(class DD::Image::Quaternion {lvalue})
         """
         ...
-
-    def set(self, arg1: Quaternion, arg2: float, arg3: float, arg4: float, arg5: float) -> None:
+    def set(
+        self, arg1: Quaternion, arg2: float, arg3: float, arg4: float, arg5: float
+    ) -> None:
         """
-        
-            C++ signature :
-                void set(class DD::Image::Quaternion {lvalue},double,double,double,double)
+
+        C++ signature :
+            void set(class DD::Image::Quaternion {lvalue},double,double,double,double)
         """
         ...
-
     def slerp(self, arg1: Quaternion, arg2: Quaternion, arg3: float) -> Quaternion:
         """
-        
-            C++ signature :
-                class DD::Image::Quaternion slerp(class DD::Image::Quaternion {lvalue},class DD::Image::Quaternion,double)
+
+        C++ signature :
+            class DD::Image::Quaternion slerp(class DD::Image::Quaternion {lvalue},class DD::Image::Quaternion,double)
         """
         ...
-
     ...
 
 class Vector2(Boost.Python.instance):
     def __abs__(self, arg1: Vector2) -> float:
         """
-        
-            C++ signature :
-                float __abs__(class DD::Image::Vector2 {lvalue})
+
+        C++ signature :
+            float __abs__(class DD::Image::Vector2 {lvalue})
         """
         ...
-
     def __add__(self, arg1: Vector2, arg2: Vector2):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __add__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            struct _object * __ptr64 __add__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def __div__(self, arg1: Vector2, arg2: Vector2):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __div__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
-        
+
         __div__( (Vector2)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __div__(class DD::Image::Vector2 {lvalue},double)
         """
         ...
-
     def __eq__(self, arg1: Vector2, arg2: Vector2):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __eq__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
-        
+
         __eq__( (Vector2)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __eq__(class DD::Image::Vector2 {lvalue},double)
         """
         ...
-
     def __getinitargs__(self, arg1: Vector3) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple __getinitargs__(class DD::Image::Vector3)
+
+        C++ signature :
+            class boost::python::tuple __getinitargs__(class DD::Image::Vector3)
         """
         ...
-
     def __getitem__(self, arg1: Vector2, arg2: int) -> float:
         """
-        
-            C++ signature :
-                double __getitem__(class DD::Image::Vector2 * __ptr64,int)
+
+        C++ signature :
+            double __getitem__(class DD::Image::Vector2 * __ptr64,int)
         """
         ...
-
     def __iadd__(self, arg1: object, arg2: Vector2):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,class DD::Image::Vector2)
+
+        C++ signature :
+            struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,class DD::Image::Vector2)
         """
         ...
-
     def __idiv__(self, arg1: object, arg2: Vector2):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,class DD::Image::Vector2)
-        
+
         __idiv__( (object)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,double)
         """
         ...
-
     def __imul__(self, arg1: object, arg2: Vector2):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,class DD::Image::Vector2)
-        
+
         __imul__( (object)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,double)
         """
         ...
-
     def __init__(self, arg1: object) -> None:
         """
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1, (float)arg2, (float)arg3) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,double,double)
-        
+
         __init__( (object)arg1, (Vector2)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Vector2)
         """
         ...
-
     def __isub__(self, arg1: object, arg2: Vector2):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,class DD::Image::Vector2)
+
+        C++ signature :
+            struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Vector2 & __ptr64>,class DD::Image::Vector2)
         """
         ...
-
     def __len__(self, arg1: Vector2) -> int:
         """
-        
-            C++ signature :
-                int __len__(class DD::Image::Vector2 * __ptr64)
+
+        C++ signature :
+            int __len__(class DD::Image::Vector2 * __ptr64)
         """
         ...
-
     def __lt__(self, arg1: Vector2, arg2: Vector2):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __lt__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            struct _object * __ptr64 __lt__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def __mul__(self, arg1: Vector2, arg2: float):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector2 {lvalue},double)
-        
+
         __mul__( (Vector2)arg1, (Vector2)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
-        
+
         __mul__( (Vector2)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector2 {lvalue},double)
         """
         ...
-
     def __ne__(self, arg1: Vector2, arg2: Vector2):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __ne__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
-        
+
         __ne__( (Vector2)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __ne__(class DD::Image::Vector2 {lvalue},double)
         """
         ...
-
     def __neg__(self, arg1: Vector2):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __neg__(class DD::Image::Vector2 {lvalue})
+
+        C++ signature :
+            struct _object * __ptr64 __neg__(class DD::Image::Vector2 {lvalue})
         """
         ...
-
     def __pos__(self, arg1: Vector2) -> Vector2:
         """
-        
-            C++ signature :
-                class DD::Image::Vector2 __pos__(class DD::Image::Vector2 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Vector2 __pos__(class DD::Image::Vector2 * __ptr64)
         """
         ...
-
     def __repr__(self, arg1: Vector2) -> six.binary_type:
         """
-        
-            C++ signature :
-                class boost::python::str __repr__(class DD::Image::Vector2 * __ptr64)
+
+        C++ signature :
+            class boost::python::str __repr__(class DD::Image::Vector2 * __ptr64)
         """
         ...
-
     def __setitem__(self, arg1: Vector2, arg2: int, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void __setitem__(class DD::Image::Vector2 * __ptr64,int,double)
+
+        C++ signature :
+            void __setitem__(class DD::Image::Vector2 * __ptr64,int,double)
         """
         ...
-
     def __sub__(self, arg1: Vector2, arg2: Vector2):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __sub__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            struct _object * __ptr64 __sub__(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def __truediv__(self, arg1: Vector2, arg2: float) -> Vector2:
         """
-        
+
             C++ signature :
                 class DD::Image::Vector2 __truediv__(class DD::Image::Vector2 * __ptr64,float)
-        
+
         __truediv__( (Vector2)arg1, (Vector2)arg2) -> Vector2 :
-        
+
             C++ signature :
                 class DD::Image::Vector2 __truediv__(class DD::Image::Vector2 * __ptr64,class DD::Image::Vector2 * __ptr64)
         """
         ...
-
     def cross(self, arg1: Vector2, arg2: Vector2) -> float:
         """
-        
-            C++ signature :
-                float cross(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            float cross(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def distanceBetween(self, arg1: Vector2, arg2: Vector2) -> float:
         """
-        
-            C++ signature :
-                float distanceBetween(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            float distanceBetween(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def distanceSquared(self, arg1: Vector2, arg2: Vector2) -> float:
         """
-        
-            C++ signature :
-                float distanceSquared(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            float distanceSquared(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def dot(self, arg1: Vector2, arg2: Vector2) -> float:
         """
-        
-            C++ signature :
-                float dot(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
+
+        C++ signature :
+            float dot(class DD::Image::Vector2 {lvalue},class DD::Image::Vector2)
         """
         ...
-
     def length(self, arg1: Vector2) -> float:
         """
-        
-            C++ signature :
-                float length(class DD::Image::Vector2 {lvalue})
+
+        C++ signature :
+            float length(class DD::Image::Vector2 {lvalue})
         """
         ...
-
     def lengthSquared(self, arg1: Vector2) -> float:
         """
-        
-            C++ signature :
-                float lengthSquared(class DD::Image::Vector2 {lvalue})
+
+        C++ signature :
+            float lengthSquared(class DD::Image::Vector2 {lvalue})
         """
         ...
-
     def negate(self, arg1: Vector2) -> None:
         """
-        
-            C++ signature :
-                void negate(class DD::Image::Vector2 {lvalue})
+
+        C++ signature :
+            void negate(class DD::Image::Vector2 {lvalue})
         """
         ...
-
     def normalize(self, arg1: Vector2) -> float:
         """
-        
-            C++ signature :
-                float normalize(class DD::Image::Vector2 {lvalue})
+
+        C++ signature :
+            float normalize(class DD::Image::Vector2 {lvalue})
         """
         ...
-
     def set(self, arg1: Vector2, arg2: float) -> None:
         """
-        
+
             C++ signature :
                 void set(class DD::Image::Vector2 * __ptr64,float)
-        
+
         set( (Vector2)arg1, (float)arg2, (float)arg3) -> None :
-        
+
             C++ signature :
                 void set(class DD::Image::Vector2 * __ptr64,float,float)
-        
+
         set( (Vector2)arg1, (Vector2)arg2) -> None :
-        
+
             C++ signature :
                 void set(class DD::Image::Vector2 * __ptr64,class DD::Image::Vector2)
         """
         ...
-
     ...
 
 class Vector3(Boost.Python.instance):
     def __abs__(self, arg1: Vector3) -> float:
         """
-        
-            C++ signature :
-                float __abs__(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            float __abs__(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def __add__(self, arg1: Vector3, arg2: Vector3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __add__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            struct _object * __ptr64 __add__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def __div__(self, arg1: Vector3, arg2: Vector3):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __div__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
-        
+
         __div__( (Vector3)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __div__(class DD::Image::Vector3 {lvalue},double)
         """
         ...
-
     def __eq__(self, arg1: Vector3, arg2: Vector3):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __eq__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
-        
+
         __eq__( (Vector3)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __eq__(class DD::Image::Vector3 {lvalue},double)
         """
         ...
-
     def __getinitargs__(self, arg1: Vector3) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple __getinitargs__(class DD::Image::Vector3)
+
+        C++ signature :
+            class boost::python::tuple __getinitargs__(class DD::Image::Vector3)
         """
         ...
-
     def __getitem__(self, arg1: Vector3, arg2: int) -> float:
         """
-        
-            C++ signature :
-                double __getitem__(class DD::Image::Vector3 * __ptr64,int)
+
+        C++ signature :
+            double __getitem__(class DD::Image::Vector3 * __ptr64,int)
         """
         ...
-
     def __iadd__(self, arg1: object, arg2: Vector3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,class DD::Image::Vector3)
+
+        C++ signature :
+            struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,class DD::Image::Vector3)
         """
         ...
-
     def __idiv__(self, arg1: object, arg2: Vector3):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,class DD::Image::Vector3)
-        
+
         __idiv__( (object)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,double)
         """
         ...
-
     def __imul__(self, arg1: object, arg2: Vector3):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,class DD::Image::Vector3)
-        
+
         __imul__( (object)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,double)
         """
         ...
-
     def __init__(self, arg1: object) -> None:
         """
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1, (float)arg2, (float)arg3, (float)arg4) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,double,double,double)
-        
+
         __init__( (object)arg1, (Vector3)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Vector3)
         """
         ...
-
     def __isub__(self, arg1: object, arg2: Vector3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,class DD::Image::Vector3)
+
+        C++ signature :
+            struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Vector3 & __ptr64>,class DD::Image::Vector3)
         """
         ...
-
     def __len__(self, arg1: Vector3) -> int:
         """
-        
-            C++ signature :
-                int __len__(class DD::Image::Vector3 * __ptr64)
+
+        C++ signature :
+            int __len__(class DD::Image::Vector3 * __ptr64)
         """
         ...
-
     def __lt__(self, arg1: Vector3, arg2: Vector3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __lt__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            struct _object * __ptr64 __lt__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def __mul__(self, arg1: Vector3, arg2: float):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector3 {lvalue},double)
-        
+
         __mul__( (Vector3)arg1, (Vector3)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
-        
+
         __mul__( (Vector3)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector3 {lvalue},double)
         """
         ...
-
     def __ne__(self, arg1: Vector3, arg2: Vector3):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __ne__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
-        
+
         __ne__( (Vector3)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __ne__(class DD::Image::Vector3 {lvalue},double)
         """
         ...
-
     def __neg__(self, arg1: Vector3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __neg__(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            struct _object * __ptr64 __neg__(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def __pos__(self, arg1: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 __pos__(class DD::Image::Vector3 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Vector3 __pos__(class DD::Image::Vector3 * __ptr64)
         """
         ...
-
     def __repr__(self, arg1: Vector3) -> six.binary_type:
         """
-        
-            C++ signature :
-                class boost::python::str __repr__(class DD::Image::Vector3 * __ptr64)
+
+        C++ signature :
+            class boost::python::str __repr__(class DD::Image::Vector3 * __ptr64)
         """
         ...
-
     def __setitem__(self, arg1: Vector3, arg2: int, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void __setitem__(class DD::Image::Vector3 * __ptr64,int,double)
+
+        C++ signature :
+            void __setitem__(class DD::Image::Vector3 * __ptr64,int,double)
         """
         ...
-
     def __sub__(self, arg1: Vector3, arg2: Vector3):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __sub__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            struct _object * __ptr64 __sub__(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def __truediv__(self, arg1: Vector3, arg2: float) -> Vector3:
         """
-        
+
             C++ signature :
                 class DD::Image::Vector3 __truediv__(class DD::Image::Vector3 * __ptr64,float)
-        
+
         __truediv__( (Vector3)arg1, (Vector3)arg2) -> Vector3 :
-        
+
             C++ signature :
                 class DD::Image::Vector3 __truediv__(class DD::Image::Vector3 * __ptr64,class DD::Image::Vector3 * __ptr64)
         """
         ...
-
     def cross(self, arg1: Vector3, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 cross(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 cross(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def distanceBetween(self, arg1: Vector3, arg2: Vector3) -> float:
         """
-        
-            C++ signature :
-                float distanceBetween(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            float distanceBetween(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
-    def distanceFromPlane(self, arg1: Vector3, arg2: float, arg3: float, arg4: float, arg5: float) -> float:
+    def distanceFromPlane(
+        self, arg1: Vector3, arg2: float, arg3: float, arg4: float, arg5: float
+    ) -> float:
         """
-        
-            C++ signature :
-                float distanceFromPlane(class DD::Image::Vector3 {lvalue},float,float,float,float)
+
+        C++ signature :
+            float distanceFromPlane(class DD::Image::Vector3 {lvalue},float,float,float,float)
         """
         ...
-
     def distanceSquared(self, arg1: Vector3, arg2: Vector3) -> float:
         """
-        
-            C++ signature :
-                float distanceSquared(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            float distanceSquared(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def dot(self, arg1: Vector3, arg2: Vector3) -> float:
         """
-        
-            C++ signature :
-                float dot(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            float dot(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def fast_normalize(self, arg1: Vector3) -> float:
         """
-        
-            C++ signature :
-                float fast_normalize(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            float fast_normalize(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def length(self, arg1: Vector3) -> float:
         """
-        
-            C++ signature :
-                float length(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            float length(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def lengthSquared(self, arg1: Vector3) -> float:
         """
-        
-            C++ signature :
-                float lengthSquared(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            float lengthSquared(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def maximum(self, arg1: Vector3, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 maximum(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 maximum(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def minimum(self, arg1: Vector3, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 minimum(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 minimum(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def negate(self, arg1: Vector3) -> None:
         """
-        
-            C++ signature :
-                void negate(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            void negate(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def normalize(self, arg1: Vector3) -> float:
         """
-        
-            C++ signature :
-                float normalize(class DD::Image::Vector3 {lvalue})
+
+        C++ signature :
+            float normalize(class DD::Image::Vector3 {lvalue})
         """
         ...
-
     def reflect(self, arg1: Vector3, arg2: Vector3) -> Vector3:
         """
-        
-            C++ signature :
-                class DD::Image::Vector3 reflect(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
+
+        C++ signature :
+            class DD::Image::Vector3 reflect(class DD::Image::Vector3 {lvalue},class DD::Image::Vector3)
         """
         ...
-
     def set(self, arg1: Vector3, arg2: float, arg3: float, arg4: float) -> None:
         """
-        
-            C++ signature :
-                void set(class DD::Image::Vector3 {lvalue},float,float,float)
+
+        C++ signature :
+            void set(class DD::Image::Vector3 {lvalue},float,float,float)
         """
         ...
-
     ...
 
 class Vector4(Boost.Python.instance):
     def __add__(self, arg1: Vector4, arg2: Vector4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __add__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
+
+        C++ signature :
+            struct _object * __ptr64 __add__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
         """
         ...
-
     def __div__(self, arg1: Vector4, arg2: Vector4):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __div__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
-        
+
         __div__( (Vector4)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __div__(class DD::Image::Vector4 {lvalue},double)
         """
         ...
-
     def __eq__(self, arg1: Vector4, arg2: Vector4):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __eq__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
-        
+
         __eq__( (Vector4)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __eq__(class DD::Image::Vector4 {lvalue},double)
         """
         ...
-
     def __getinitargs__(self, arg1: Vector4) -> tuple:
         """
-        
-            C++ signature :
-                class boost::python::tuple __getinitargs__(class DD::Image::Vector4)
+
+        C++ signature :
+            class boost::python::tuple __getinitargs__(class DD::Image::Vector4)
         """
         ...
-
     def __getitem__(self, arg1: Vector4, arg2: int) -> float:
         """
-        
-            C++ signature :
-                double __getitem__(class DD::Image::Vector4 * __ptr64,int)
+
+        C++ signature :
+            double __getitem__(class DD::Image::Vector4 * __ptr64,int)
         """
         ...
-
     def __iadd__(self, arg1: object, arg2: Vector4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,class DD::Image::Vector4)
+
+        C++ signature :
+            struct _object * __ptr64 __iadd__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,class DD::Image::Vector4)
         """
         ...
-
     def __idiv__(self, arg1: object, arg2: Vector4):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,class DD::Image::Vector4)
-        
+
         __idiv__( (object)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __idiv__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,double)
         """
         ...
-
     def __imul__(self, arg1: object, arg2: Vector4):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,class DD::Image::Vector4)
-        
+
         __imul__( (object)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __imul__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,double)
         """
         ...
-
     def __init__(self, arg1: object) -> None:
         """
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64)
-        
+
         __init__( (object)arg1, (float)arg2, (float)arg3, (float)arg4, (float)arg5) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,double,double,double,double)
-        
+
         __init__( (object)arg1, (Vector4)arg2) -> None :
-        
+
             C++ signature :
                 void __init__(struct _object * __ptr64,class DD::Image::Vector4)
         """
         ...
-
     def __isub__(self, arg1: object, arg2: Vector4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,class DD::Image::Vector4)
+
+        C++ signature :
+            struct _object * __ptr64 __isub__(struct boost::python::back_reference<class DD::Image::Vector4 & __ptr64>,class DD::Image::Vector4)
         """
         ...
-
     def __len__(self, arg1: Vector4) -> int:
         """
-        
-            C++ signature :
-                int __len__(class DD::Image::Vector4 * __ptr64)
+
+        C++ signature :
+            int __len__(class DD::Image::Vector4 * __ptr64)
         """
         ...
-
     def __lt__(self, arg1: Vector4, arg2: Vector4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __lt__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
+
+        C++ signature :
+            struct _object * __ptr64 __lt__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
         """
         ...
-
     def __mul__(self, arg1: Vector4, arg2: float):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector4 {lvalue},double)
-        
+
         __mul__( (Vector4)arg1, (Vector4)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
-        
+
         __mul__( (Vector4)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __mul__(class DD::Image::Vector4 {lvalue},double)
         """
         ...
-
     def __ne__(self, arg1: Vector4, arg2: Vector4):
         """
-        
+
             C++ signature :
                 struct _object * __ptr64 __ne__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
-        
+
         __ne__( (Vector4)arg1, (float)arg2) -> object :
-        
+
             C++ signature :
                 struct _object * __ptr64 __ne__(class DD::Image::Vector4 {lvalue},double)
         """
         ...
-
     def __neg__(self, arg1: Vector4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __neg__(class DD::Image::Vector4 {lvalue})
+
+        C++ signature :
+            struct _object * __ptr64 __neg__(class DD::Image::Vector4 {lvalue})
         """
         ...
-
     def __pos__(self, arg1: Vector4) -> Vector4:
         """
-        
-            C++ signature :
-                class DD::Image::Vector4 __pos__(class DD::Image::Vector4 * __ptr64)
+
+        C++ signature :
+            class DD::Image::Vector4 __pos__(class DD::Image::Vector4 * __ptr64)
         """
         ...
-
     def __repr__(self, arg1: Vector4) -> six.binary_type:
         """
-        
-            C++ signature :
-                class boost::python::str __repr__(class DD::Image::Vector4 * __ptr64)
+
+        C++ signature :
+            class boost::python::str __repr__(class DD::Image::Vector4 * __ptr64)
         """
         ...
-
     def __setitem__(self, arg1: Vector4, arg2: int, arg3: float) -> None:
         """
-        
-            C++ signature :
-                void __setitem__(class DD::Image::Vector4 * __ptr64,int,double)
+
+        C++ signature :
+            void __setitem__(class DD::Image::Vector4 * __ptr64,int,double)
         """
         ...
-
     def __sub__(self, arg1: Vector4, arg2: Vector4):
         """
-        
-            C++ signature :
-                struct _object * __ptr64 __sub__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
+
+        C++ signature :
+            struct _object * __ptr64 __sub__(class DD::Image::Vector4 {lvalue},class DD::Image::Vector4)
         """
         ...
-
     def __truediv__(self, arg1: Vector4, arg2: float) -> Vector4:
         """
-        
+
             C++ signature :
                 class DD::Image::Vector4 __truediv__(class DD::Image::Vector4 * __ptr64,float)
-        
+
         __truediv__( (Vector4)arg1, (Vector4)arg2) -> Vector4 :
-        
+
             C++ signature :
                 class DD::Image::Vector4 __truediv__(class DD::Image::Vector4 * __ptr64,class DD::Image::Vector4 * __ptr64)
         """
         ...
-
     ...
-

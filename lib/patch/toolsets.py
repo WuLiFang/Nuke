@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 """Patch nukescript toolset functions.  """
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import webbrowser
 
@@ -16,22 +15,21 @@ from .core import BasePatch
 
 
 class Patch(BasePatch):
-    """Enhance toolsets menu.  """
+    """Enhance toolsets menu."""
 
-    target = 'nukescripts.toolsets.refreshToolsetsMenu'
+    target = "nukescripts.toolsets.refreshToolsetsMenu"
 
     @classmethod
     def func(cls, *args, **kwargs):
 
         cls.orig(*args, **kwargs)
-        m = nuke.menu(b'Nodes').addMenu(b'ToolSets')
-        _ = m.addCommand('刷新'.encode('utf-8'), cls.func)
+        m = nuke.menu(b"Nodes").addMenu(b"ToolSets")
+        _ = m.addCommand("刷新".encode("utf-8"), cls.func)
+        _ = m.addCommand("创建共享工具集".encode("utf-8"), _create_shared_toolsets)
         _ = m.addCommand(
-            '创建共享工具集'.encode('utf-8'), _create_shared_toolsets)
-        _ = m.addCommand(
-            '打开共享工具集文件夹'.encode('utf-8'),
-            lambda: webbrowser.open(
-                filetools.plugin_folder_path('ToolSets', 'Shared')))
+            "打开共享工具集文件夹".encode("utf-8"),
+            lambda: webbrowser.open(filetools.plugin_folder_path("ToolSets", "Shared")),
+        )
 
     @classmethod
     def enable(cls, is_strict=True):
@@ -41,13 +39,14 @@ class Patch(BasePatch):
 
 def _create_shared_toolsets():
     if not nuke.selectedNodes():
-        nuke.message('未选中任何节点,不能创建工具集'.encode('utf-8'))
+        nuke.message("未选中任何节点,不能创建工具集".encode("utf-8"))
         return
-    toolset_name = nuke.getInput(b'ToolSet name')
+    toolset_name = nuke.getInput(b"ToolSet name")
     if toolset_name:
         nuke.createToolset(
-            filename=cast.binary('Shared/{}'.format(toolset_name)),
-            rootPath=cast.binary(filetools.plugin_folder_path()))
+            filename=cast.binary("Shared/{}".format(toolset_name)),
+            rootPath=cast.binary(filetools.plugin_folder_path()),
+        )
     nukescripts.toolsets.refreshToolsetsMenu()
 
 

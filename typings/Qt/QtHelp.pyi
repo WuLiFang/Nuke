@@ -8,47 +8,32 @@ import six
 import typing
 import PySide
 import Shiboken
+
 class QHelpContentItem(Shiboken.Object):
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def child(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def childPosition(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def row(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def title(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def url(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpContentModel(PySide.QtCore.QAbstractItemModel):
@@ -66,47 +51,30 @@ class QHelpContentModel(PySide.QtCore.QAbstractItemModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def columnCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentItemAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def createContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def data(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def index(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCreatingContents(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def parent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def rowCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpContentWidget(PySide.QtGui.QTreeView):
@@ -119,12 +87,9 @@ class QHelpContentWidget(PySide.QtGui.QTreeView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def indexOf(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpEngine(QHelpEngineCore):
@@ -137,38 +102,26 @@ class QHelpEngine(QHelpEngineCore):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def contentModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def contentWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexModel(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def indexWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def searchEngine(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpEngineCore(PySide.QtCore.QObject):
@@ -201,150 +154,94 @@ class QHelpEngineCore(PySide.QtCore.QObject):
     """
     Signal
     """
-
     @staticmethod
     def metaData(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     @staticmethod
     def namespaceName(*args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def addCustomFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def autoSaveFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collectionFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def copyCollectionFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def currentFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def customFilters(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def customValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def documentationFileName(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def error(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def fileData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def files(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filterAttributeSets(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filterAttributes(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def findFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def linksForIdentifier(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def registerDocumentation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def registeredDocumentations(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeCustomFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def removeCustomValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setAutoSaveFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCollectionFile(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCurrentFilter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setCustomValue(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setupData(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def unregisterDocumentation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpIndexModel(PySide.QtGui.QStringListModel):
@@ -362,27 +259,18 @@ class QHelpIndexModel(PySide.QtGui.QStringListModel):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def createIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filter(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def isCreatingIndex(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def linksForKeyword(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpIndexWidget(PySide.QtGui.QListView):
@@ -400,17 +288,12 @@ class QHelpIndexWidget(PySide.QtGui.QListView):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def activateCurrentItem(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def filterIndices(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpSearchEngine(PySide.QtCore.QObject):
@@ -443,63 +326,41 @@ class QHelpSearchEngine(PySide.QtCore.QObject):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def cancelIndexing(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def cancelSearching(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hits(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def hitsCount(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def query(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def queryWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def reindexDocumentation(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def resultWidget(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def search(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpSearchQuery(Shiboken.Object):
@@ -536,18 +397,14 @@ class QHelpSearchQuery(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-
     def __copy__(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     ...
 
 class QHelpSearchQueryWidget(PySide.QtGui.QWidget):
@@ -565,43 +422,29 @@ class QHelpSearchQueryWidget(PySide.QtGui.QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def collapseExtendedSearch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def expandExtendedSearch(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def focusInEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def query(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def setQuery(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 class QHelpSearchResultWidget(PySide.QtGui.QWidget):
@@ -614,21 +457,15 @@ class QHelpSearchResultWidget(PySide.QtGui.QWidget):
     """
     <PySide.QtCore.QMetaObject object>
     """
-
     def changeEvent(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     def linkAt(self, *args, **kwargs):
-        """
-        """
+        """ """
         ...
-
     ...
 
 __all__: ...
 """
 ['QHelpContentItem', 'QHelpContentModel', 'QHelpContentWidge...
 """
-
