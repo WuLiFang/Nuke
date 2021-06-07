@@ -58,9 +58,6 @@ build/
 *.spec
 !scenetools.exe
 
-# vscode
-.vscode
-
 # executable
 !/traytip.exe
 
