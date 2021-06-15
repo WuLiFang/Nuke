@@ -55,7 +55,7 @@ class CollectTask(pyblish.api.InstancePlugin):
             task = Task.from_shot(shot)
             instance.context.data["task"] = task
         except ValueError:
-            raise ValueError("无法在数据库中找到对应任务: %s", shot)
+            raise ValueError("无法在数据库中找到对应任务: %s" % shot)
         self.log.info("任务 %s", task)
 
         try:
@@ -178,7 +178,7 @@ class ValidateFPS(TaskMixin, pyblish.api.InstancePlugin):
         else:
             current_fps = instance.data["fps"]
             if float(cast.text(fps)) != current_fps:
-                raise ValueError("帧速率不一致: %s -> %s", current_fps, fps)
+                raise ValueError("帧速率不一致: %s -> %s" % (current_fps, fps))
 
 
 class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):

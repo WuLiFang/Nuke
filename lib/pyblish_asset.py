@@ -134,7 +134,7 @@ class ValidateFootageStore(pyblish.api.InstancePlugin):
         for i in instance:
             assert isinstance(i, FootageInfo)
             if _is_local_file(i.filename):
-                raise ValueError("使用了本地素材: %s", i.filename)
+                raise ValueError("使用了本地素材: %s" % i.filename)
 
 
 class ExtractJPG(pyblish.api.InstancePlugin):
