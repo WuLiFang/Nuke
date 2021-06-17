@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.2.0](https://github.com/WuLiFang/Nuke/compare/v2021.1.0...v2021.2.0) (2021-06-17)
+
+### Features
+
+- **pyblish:** check leader status ([6c20d90](https://github.com/WuLiFang/Nuke/commit/6c20d908413bbf318e86d5e22f4b1b5ed12b121a))
+
+### Bug Fixes
+
+- **deps:** update package pyblish-lite to 0.8.12 ([06013f5](https://github.com/WuLiFang/Nuke/commit/06013f5350b719d2b59f396bc5b714531bef7227))
+- **publish:** error message not readable in log ([3f8f97e](https://github.com/WuLiFang/Nuke/commit/3f8f97eddb19b4ffb27b4fc75a07e52d1322c1f0))
+
 ## [2021.1.0](https://github.com/WuLiFang/Nuke/compare/v2021.0.7...v2021.1.0) (2021-04-12)
 
 ### Features
