@@ -54,6 +54,9 @@ class CollectTask(pyblish.api.InstancePlugin):
         try:
             task = Task.from_shot(shot)
             instance.context.data["task"] = task
+            instance.context.create_instance(
+                "组长状态: {}".format(task["leader_status"]), family="组长状态"
+            )
         except ValueError:
             raise ValueError("无法在数据库中找到对应任务: %s" % shot)
         self.log.info("任务 %s", task)
@@ -131,6 +134,25 @@ class ValidateArtist(TaskMixin, pyblish.api.InstancePlugin):
         id_ = cast.text(task["account_id"])
         if current_id not in id_.split(","):
             raise ValueError("用户不匹配: %s -> %s" % (current_artist, task["artist"]))
+
+
+class ValidateLeaderStatus(TaskMixin, pyblish.api.InstancePlugin):
+    """检查任务是否允许提交。"""
+
+    order = pyblish.api.ValidatorOrder
+    label = "检查组长状态"
+    families = ["组长状态"]
+
+    def process(self, instance):
+        assert isinstance(instance, pyblish.api.Instance)
+        context = instance.context
+
+        task = self.get_task(instance.context)
+        assert isinstance(task, Task)
+
+        status = task["leader_status"]
+        if status in ("Approve", "Close"):
+            raise ValueError("任务状态为 %s，禁止提交" % status)
 
 
 class ValidateFrameRange(TaskMixin, pyblish.api.InstancePlugin):
