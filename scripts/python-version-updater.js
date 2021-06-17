@@ -30,7 +30,11 @@ function quotePython(text) {
  */
 module.exports = {
   readVersion(content) {
-    return /VERSION = '(.+)'/.exec(content)[1];
+    try {
+      return /VERSION = "(.+)"/.exec(content)[1];
+    } catch {
+      return "unknown";
+    }
   },
   writeVersion(content, version) {
     return `\
