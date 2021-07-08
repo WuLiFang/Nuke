@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-"""Orgnize nodes layout.  """
+"""Organize nodes layout.  """
 from __future__ import absolute_import, print_function
 
 
