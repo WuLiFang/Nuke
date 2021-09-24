@@ -39,7 +39,7 @@ def dialog_login():
                 cgtwq.core.CONFIG["DEFAULT_TOKEN"] = cgtwq.login(
                     panel.value(cast.binary(account)) or "",
                     panel.value(cast.binary(password)) or "",
-                )
+                ).token
             except ValueError:
                 Tray.message("CGTeamWork", "登录失败")
                 continue
@@ -54,7 +54,7 @@ def dialog_create_dirs():
     database_input_name = "数据库"
     prefix_input_name = "镜头名前缀限制"
     panel = nuke.Panel(cast.binary("为项目创建文件夹"))
-    _ = panel.addSingleLineInput(cast.binary(database_input_name), b"proj_qqfc_2017")
+    _ = panel.addSingleLineInput(cast.binary(database_input_name), b"proj_")
     _ = panel.addSingleLineInput(cast.binary(prefix_input_name), b"")
     _ = panel.addFilenameSearch(cast.binary(folder_input_name), b"E:/temp")
     confirm = panel.show()
@@ -75,10 +75,12 @@ def dialog_create_dirs():
             "创建文件夹",
         ):
             try:
-                select = cgtwq.Database(database)["shot_task"].filter(
-                    cgtwq.Field("pipeline") == "合成"
+                select = (
+                    cgtwq.Database(database)
+                    .module("shot")
+                    .filter(cgtwq.Field("pipeline") == "合成")
                 )
-                for name in progress(select["shot.shot"], "创建文件夹"):
+                for name in progress(select["shot.entity"], "创建文件夹"):
                     if not name or not name.startswith(prefix):
                         continue
                     _path = os.path.join(save_path, name)
