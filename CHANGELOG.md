@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.3.0](https://github.com/WuLiFang/Nuke/compare/v2021.2.0...v2021.3.0) (2021-09-24)
+
+### Features
+
+- support cgteamwork6.1 ([0900c96](https://github.com/WuLiFang/Nuke/commit/0900c96beda58b56f9dfb96e29f478be9616841e))
+- update expire time to 2022-06-1 ([1cbd7d3](https://github.com/WuLiFang/Nuke/commit/1cbd7d3c4c1cf9aa412d239773cd3fb6ac8d27f5))
+
+### Bug Fixes
+
+- error after precomp selected ([0e1e75e](https://github.com/WuLiFang/Nuke/commit/0e1e75e8f26af44706937ac96ac9bc7e712391ac))
+
 ## [2021.2.0](https://github.com/WuLiFang/Nuke/compare/v2021.1.0...v2021.2.0) (2021-06-17)
 
 ### Features
