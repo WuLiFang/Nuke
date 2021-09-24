@@ -78,7 +78,4 @@ build/
 # Node packages
 node_modules
 
-#worktree
-/docs
-
 *.local

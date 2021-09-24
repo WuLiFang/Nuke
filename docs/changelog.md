@@ -1,5 +1,27 @@
 # 更新日志
 
+## [2021.3.0](https://github.com/WuLiFang/Nuke/compare/v2021.2.0...v2021.3.0) (2021-09-24)
+
+### 特性
+
+- 支持 cgteamwork6.1 ([0900c96](https://github.com/WuLiFang/Nuke/commit/0900c96beda58b56f9dfb96e29f478be9616841e))
+- 更新过期时间至 2022-06-1 ([1cbd7d3](https://github.com/WuLiFang/Nuke/commit/1cbd7d3c4c1cf9aa412d239773cd3fb6ac8d27f5))
+
+### 修复
+
+- 选择 precomp 后报错 ([0e1e75e](https://github.com/WuLiFang/Nuke/commit/0e1e75e8f26af44706937ac96ac9bc7e712391ac))
+
+## [2021.2.0](https://github.com/WuLiFang/Nuke/compare/v2021.1.0...v2021.2.0) (2021-06-17)
+
+### 特性
+
+- **pyblish:** 检查组长状态 ([6c20d90](https://github.com/WuLiFang/Nuke/commit/6c20d908413bbf318e86d5e22f4b1b5ed12b121a))
+
+### 修复
+
+- **依赖:** 更新 pyblish-lite 至 0.8.12 ([06013f5](https://github.com/WuLiFang/Nuke/commit/06013f5350b719d2b59f396bc5b714531bef7227))
+- **发布:** 日志中的错误信息不可读 ([3f8f97e](https://github.com/WuLiFang/Nuke/commit/3f8f97eddb19b4ffb27b4fc75a07e52d1322c1f0))
+
 ## [2021.1.0](https://github.com/WuLiFang/Nuke/compare/v2021.0.7...v2021.1.0) (2021-04-12)
 
 ### 功能
