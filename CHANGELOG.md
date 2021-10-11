@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.3.1](https://github.com/WuLiFang/Nuke/compare/v2021.3.0...v2021.3.1) (2021-10-11)
+
+### Bug Fixes
+
+- **deps:** update package cgtwq to 3.5.1 ([30ebfda](https://github.com/WuLiFang/Nuke/commit/30ebfda73f715a355d39a51c808b6adc99d1b7ab))
+- **deps:** update package cgtwq to 3.5.2 ([bfcb5d9](https://github.com/WuLiFang/Nuke/commit/bfcb5d9e8185de603e496215622f962d6f14e241))
+- **deps:** update package cgtwq to 3.5.3 ([dbd7e40](https://github.com/WuLiFang/Nuke/commit/dbd7e40dba85cdfff8ce1eacdc763c15d733d9c8))
+- wrong error message when not found animation video ([7e6e574](https://github.com/WuLiFang/Nuke/commit/7e6e574697c52273d9784713454aecbd20eef70b))
+
 ## [2021.3.0](https://github.com/WuLiFang/Nuke/compare/v2021.2.0...v2021.3.0) (2021-09-24)
 
 ### Features

@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2021.3.0'
-RELEASE_DATE = datetime.fromtimestamp(1632456171)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.2.0-7-g1cbd7d3'
-LAST_GIT_COMMIT_HASH = '1cbd7d3c4c1cf9aa412d239773cd3fb6ac8d27f5'
+VERSION = '2021.3.1'
+RELEASE_DATE = datetime.fromtimestamp(1633924432)
+LAST_GIT_COMMIT_DESCRIBE = 'v2021.3.0-6-gdbd7e40'
+LAST_GIT_COMMIT_HASH = 'dbd7e40dba85cdfff8ce1eacdc763c15d733d9c8'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1632456092)
-LAST_GIT_COMMIT_SUBJECT = 'feat: update expire time to 2022-06-1'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1633924093)
+LAST_GIT_COMMIT_SUBJECT = 'fix(deps): update package cgtwq to 3.5.3'
 LAST_GIT_COMMIT_BODY = ''
