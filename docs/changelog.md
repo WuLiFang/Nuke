@@ -1,5 +1,14 @@
 # 更新日志
 
+## [2021.3.1](https://github.com/WuLiFang/Nuke/compare/v2021.3.0...v2021.3.1) (2021-10-11)
+
+### 修复
+
+- **依赖:** 更新包 cgtwq 至 3.5.1 ([30ebfda](https://github.com/WuLiFang/Nuke/commit/30ebfda73f715a355d39a51c808b6adc99d1b7ab))
+- **依赖:** 更新包 cgtwq 至 3.5.2 ([bfcb5d9](https://github.com/WuLiFang/Nuke/commit/bfcb5d9e8185de603e496215622f962d6f14e241))
+- **依赖:** 更新包 cgtwq 至 3.5.3 ([dbd7e40](https://github.com/WuLiFang/Nuke/commit/dbd7e40dba85cdfff8ce1eacdc763c15d733d9c8))
+- 在找不到动画视频时显示的错误信息不对 ([7e6e574](https://github.com/WuLiFang/Nuke/commit/7e6e574697c52273d9784713454aecbd20eef70b))
+
 ## [2021.3.0](https://github.com/WuLiFang/Nuke/compare/v2021.2.0...v2021.3.0) (2021-09-24)
 
 ### 特性
