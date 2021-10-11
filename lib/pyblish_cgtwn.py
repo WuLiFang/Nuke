@@ -254,12 +254,8 @@ class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
         n = wlf_write_node()
         assert isinstance(n, nuke.Group)
         path = cast.text(nuke.filename(cast.not_none(n.node(b"Write_JPG_1"))))
-        try:
-            dest = task.filebox.get("image").path + "/{}.jpg".format(task.shot)
-        except ValueError:
-            raise ValueError("找不到标识为 image 的文件框，请联系管理员进行设置。")
+        dest = task.filebox.get("review").path + "/{}.jpg".format(task.shot)
 
-        # dest = 'E:/test_pyblish/{}.jpg'.format(task.shot)
         _ = copy(path, dest)
 
         context.data["submitImage"] = task.set_image(dest)
