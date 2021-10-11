@@ -18,7 +18,7 @@ from edit import CurrentViewer
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text
+    from typing import Text, Optional
 
 LOGGER = logging.getLogger("com.wlf.cgtwn")
 
@@ -68,13 +68,14 @@ class Task(cgtwq.Entry):
         return "{}: {}".format(project, self.shot)
 
     def import_video(self, sign):
+        # type: (Text) -> Optional[nuke.Node]
         """Import corresponse video by filebox sign.
 
         Args:
             sign (unicode): Server defined fileboxsign
 
         Returns:
-            nuke.Node: Created read node.
+            Optional[nuke.Node]: Created read node.
         """
 
         node_name = {"animation_videos": "动画视频"}.get(sign, sign)
@@ -88,8 +89,8 @@ class Task(cgtwq.Entry):
                 assert isinstance(k, nuke.File_Knob), k
                 k.fromUserText(cast.binary(video))
                 break
-            if not n:
-                raise ValueError("No matched upstream video.")
+        if not n:
+            return
         _ = n[b"frame_mode"].setValue(b"start_at")
         _ = n[b"frame"].setValue(
             cast.binary("{:.0f}".format(nuke.numvalue(b"root.first_frame"))),
