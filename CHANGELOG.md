@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.4.0](https://github.com/WuLiFang/Nuke/compare/v2021.3.1...v2021.4.0) (2021-11-09)
+
+### Features
+
+- use upload image to review filebox ([e949c16](https://github.com/WuLiFang/Nuke/commit/e949c1683ffe425a73b17c6878312f76a4f7f0c5))
+
+### Bug Fixes
+
+- **deps:** update package cgtwq to 3.5.4 ([9815dbf](https://github.com/WuLiFang/Nuke/commit/9815dbf4faa74c9d55ce676f8435d9573d44445a))
+
 ## [2021.3.1](https://github.com/WuLiFang/Nuke/compare/v2021.3.0...v2021.3.1) (2021-10-11)
 
 ### Bug Fixes
