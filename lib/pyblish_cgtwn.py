@@ -15,11 +15,28 @@ import nuketools
 from cgtwn import Task
 from filetools import get_shot
 from node import wlf_write_node
+import shutil
 from wlf.fileutil import copy
+import logging
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, List
+
+
+_LOGGER = logging.getLogger(__name__)
+
+
+def _copy_file(src, dst):
+    src = cast.text(src)
+    dst = cast.text(dst)
+    if os.path.isdir(dst):
+        dst = os.path.join(dst, os.path.basename(dst))
+    _LOGGER.info("复制:\n\t\t%s\n\t->\t%s", src, dst)
+    try:
+        return shutil.copy2(src, dst)
+    except shutil.SameFileError:
+        return dst
 
 
 class TaskMixin(object):
@@ -220,7 +237,7 @@ class UploadPrecompFile(TaskMixin, pyblish.api.InstancePlugin):
             src = cast.text(nuke.filename(n))
             if src.startswith(dest.replace("\\", "/")):
                 continue
-            n["file"].setValue(copy(src, dest))
+            n["file"].setValue(_copy_file(src, dest))
         _ = nuke.scriptSave()
 
 
@@ -236,7 +253,7 @@ class UploadWorkFile(TaskMixin, pyblish.api.InstancePlugin):
         dest = instance.context.data["workfileFileboxInfo"].path + "/"
         workfile = instance.data["name"]
 
-        _ = copy(workfile, dest)
+        _ = _copy_file(workfile, dest)
 
 
 class UploadJPG(TaskMixin, pyblish.api.InstancePlugin):
