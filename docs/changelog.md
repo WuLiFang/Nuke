@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2021.4.1](https://github.com/WuLiFang/Nuke/compare/v2021.4.0...v2021.4.1) (2021-11-12)
+
+### 修复
+
+- **cgteamwork:** 在已上传的工作文件中出错 ([b3ee633](https://github.com/WuLiFang/Nuke/commit/b3ee63311bf1fca32fff0abbba484c5be94a0916))
+
 ## [2021.4.0](https://github.com/WuLiFang/Nuke/compare/v2021.3.1...v2021.4.0) (2021-11-09)
 
 ### 特性
