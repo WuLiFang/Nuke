@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2021.4.1](https://github.com/WuLiFang/Nuke/compare/v2021.4.0...v2021.4.1) (2021-11-12)
+
+### Bug Fixes
+
+- **cgteamwork:** error when workfile already uploaded ([b3ee633](https://github.com/WuLiFang/Nuke/commit/b3ee63311bf1fca32fff0abbba484c5be94a0916))
+
 ## [2021.4.0](https://github.com/WuLiFang/Nuke/compare/v2021.3.1...v2021.4.0) (2021-11-09)
 
 ### Features
