@@ -293,7 +293,10 @@ def add_menu():
         m,
         os.path.abspath(os.path.join(__file__, _plugin_path)),
     )
-
+    create_menu_by_dir(
+        m,
+        os.path.abspath(os.path.join(__file__, _plugin_path, "third_party")),
+    )
 
 def create_menu_by_dir(parent, dir_):
     # type: (nuke.Menu, Text) -> None
@@ -309,7 +312,7 @@ def create_menu_by_dir(parent, dir_):
     _listdir = sorted(os.listdir(_dir), key=_order)
     for i in _listdir:
         i = cast.text(i)
-        if i in ["icons", "Obsolete"]:
+        if i in ["icons", "Obsolete", "third_party"]:
             continue
         _abspath = os.path.join(_dir, i)
         if os.path.isdir(_abspath):
