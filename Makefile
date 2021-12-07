@@ -1,4 +1,4 @@
-.PHONY: default test build docs/_build/html
+.PHONY: default test build docs/_build/html deploy-docs
 
 ifeq ($(OS), Windows_NT)
 PYTHON27?=C:\Python27\python.exe
@@ -31,15 +31,8 @@ lib/site-packages/.sentinel: requirements.txt patches/*.patch
 	for file in patches/*.patch; do patch -p1 < $$file; done
 	touch $@
 
-docs/_build/html/.git:
-	rm -rf docs/_build/html
-	git worktree add -f docs/_build/html gh-pages
-
-docs/*: docs/.git
-
-docs/_build/html: .venv/.sentinel lib/site-packages/.sentinel docs/_build/html/.git
-	. ./scripts/activate-venv.sh &&\
-		"$(MAKE)" -C docs html
+docs/_build/html:
+	"$(MAKE)" -C docs html
 
 .venv:
 	virtualenv --python "$(PYTHON27)" --clear .venv

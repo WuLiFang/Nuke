@@ -90,54 +90,33 @@ name: docs
 
 steps:
   - name: build
-    image: docker:stable-git
+    image: python:3
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
-    environment:
-      PIP_NO_BUILD_ISOLATION: false
-      foundry_LICENSE:
-        from_secret: foundry_LICENSE
     commands:
-      - git checkout origin/master -- ./docs/changelog.md
-      - git fetch -fn origin gh-pages:gh-pages
-      - git worktree add -f docs/_build/html gh-pages
-      - rm -r docs/_build/html/*
+      - pip install -U pip
+      - pip install -r ./dev-requirements.txt
+      - git config --global user.name 'CI User'
+      - git config --global user.email '<>'
       - >-
-        docker build
-        --build-arg HTTP_PROXY
-        --build-arg HTTPS_PROXY
-        --build-arg PIP_INDEX_URL
-        --build-arg PIP_TRUSTED_HOST
-        --build-arg "VERSION=10.5v7"
-        --build-arg foundry_LICENSE
-        --file docs.Dockerfile
-        --tag "temp-image-${DRONE_COMMIT_SHA}"
-        .
-      - >-
-        docker run 
-        -d
-        --rm
-        --name temp-container-${DRONE_COMMIT_SHA}
-        temp-image-${DRONE_COMMIT_SHA}
-        sleep 600
-      - >-
-        docker cp 
-        temp-container-${DRONE_COMMIT_SHA}:/app/docs/.
-        ./docs/
-      - docker container rm -f temp-container-${DRONE_COMMIT_SHA}
-      - docker image rm temp-image-${DRONE_COMMIT_SHA}
-      - git -C docs/_build/html status
+        if [ "${DRONE_BRANCH}" == "master" ]; then 
+          make -C docs deploy;
+        else 
+          make -C docs html;
+        fi
   - name: deploy to github
     image: node:lts
     environment:
       GITHUB_DEPLOY_KEY:
         from_secret: GITHUB_DEPLOY_KEY
+      REMOTE_URL: git@github.com:WuLiFang/Nuke.git
     commands:
-      - cd docs/_build/html
-      - if [ -z "$(git status -s)" ];then exit 0; fi
       - mkdir ~/.ssh/
+      - "cp ./scripts/known_hosts ~/.ssh/"
+      - chmod 644 ~/.ssh/known_hosts
       - echo "$${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
       - |-
         if [ -n "$SSH_PROXY" ]; then
           sed -i "s@http://.\+\.debian\.org/debian@http://ftp.cn.debian.org/debian@g" /etc/apt/sources.list
@@ -145,52 +124,36 @@ steps:
           apt-get -y install connect-proxy
           echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
         fi
-      - chmod 600 ~/.ssh/id_rsa
-      - "cp ../../../scripts/known_hosts ~/.ssh/"
-      - chmod 644 ~/.ssh/known_hosts
-      - git config --global user.name 'CI User'
-      - git config --global user.email '<>'
-      - git checkout --orphan temp-${DRONE_COMMIT_SHA}
-      - git add --all
-      - "git commit -m 'docs: build' -m '[skip ci]'"
-      - git push -f git@github.com:WuLiFang/Nuke.git temp-${DRONE_COMMIT_SHA}:gh-pages
-      - git push -f ${DRONE_GIT_SSH_URL} temp-${DRONE_COMMIT_SHA}:gh-pages
+      - cd docs/_build/html
+      - git fetch ${REMOTE_URL} gh-pages
+      - if [ -z "$(git diff --shortstat FETCH_HEAD)" ]; exit 0; fi
+      - git push -f git@github.com:WuLiFang/Nuke.git HEAD:gh-pages
     when:
       branch:
         - master
-depends_on:
-  - nuke10.0v4
-  - nuke10.5v7
-  - nuke11
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
 ---
 kind: pipeline
 name: notification
 
 clone:
   disable: true
-
 steps:
-  - name: rocket-chat
-    image: mike1pol/drone-rocket
+  - name: youdu
+    image: registry.wlf.com/drone-youdu
+    failure: ignore
     settings:
       url:
-        from_secret: ROCKETCHAT_URL
-      user_id:
-        from_secret: ROCKETCHAT_USER_ID
-      token:
-        from_secret: ROCKETCHAT_TOKEN
-      channel:
-        from_secret: ROCKETCHAT_CHANNEL
-      message:
-        "**{{ build.status }}** {{ repo.fullName }}[#{{ build.number }}]({{ build.link }}) ({{ build.event }})
-
-        [{{ truncate build.commit 8 }}](${DRONE_COMMIT_LINK}) on `{{ build.branch }}` by _{{ build.author }}_
-
-        {{build.message}}"
+        from_secret: YOUDU_URL
+      buin:
+        from_secret: YOUDU_BUIN
+      app_id:
+        from_secret: YOUDU_APP_ID
+      aes_key:
+        from_secret: YOUDU_AES_KEY
+      from:
+        from_secret: YOUDU_FROM
+      to:
+        from_secret: YOUDU_TO
 depends_on:
   - nuke10.0v4
   - nuke10.5v7
