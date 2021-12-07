@@ -68,7 +68,7 @@ def add_menu():
             nuke.message(cast.binary("请先导入素材"))
 
     def _open_help():
-        help_page = os.path.join(RESOURCE_DIR, "docs/build/html/index.html")
+        help_page = os.path.join(RESOURCE_DIR, "docs/_build/html/index.html")
         _ = webbrowser.open(help_page)
 
     def concat_list(a, b):

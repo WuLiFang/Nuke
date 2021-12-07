@@ -1,4 +1,4 @@
-.PHONY: default test build docs/build/html
+.PHONY: default test build docs/_build/html
 
 ifeq ($(OS), Windows_NT)
 PYTHON27?=C:\Python27\python.exe
@@ -13,9 +13,9 @@ VENV_SITEPATH=$(abspath .venv/lib/python2.7/site-packages/)
 PYTHONPATH:=$(PYTHONPATH):$(abspath lib/site-packages):$(abspath lib)
 endif
 
-default: .venv build docs/build/html $(VENV_SITEPATH)/lib.pth
+default: .venv build docs/_build/html $(VENV_SITEPATH)/lib.pth
 
-build: docs/build/html/.git lib/site-packages/.sentinel
+build: docs/_build/html/.git lib/site-packages/.sentinel
 
 export PYTHONPATH
 export PYTHONIOENCODING=UTF-8
@@ -31,13 +31,13 @@ lib/site-packages/.sentinel: requirements.txt patches/*.patch
 	for file in patches/*.patch; do patch -p1 < $$file; done
 	touch $@
 
-docs/build/html/.git:
-	rm -rf docs/build/html
-	git worktree add -f docs/build/html gh-pages
+docs/_build/html/.git:
+	rm -rf docs/_build/html
+	git worktree add -f docs/_build/html gh-pages
 
 docs/*: docs/.git
 
-docs/build/html: .venv/.sentinel lib/site-packages/.sentinel docs/build/html/.git
+docs/_build/html: .venv/.sentinel lib/site-packages/.sentinel docs/_build/html/.git
 	. ./scripts/activate-venv.sh &&\
 		"$(MAKE)" -C docs html
 

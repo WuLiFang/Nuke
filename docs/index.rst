@@ -14,6 +14,5 @@
     env-vars
     development
     re
-    reference
     changelog
   

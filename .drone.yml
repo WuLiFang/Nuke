@@ -101,8 +101,8 @@ steps:
     commands:
       - git checkout origin/master -- ./docs/changelog.md
       - git fetch -fn origin gh-pages:gh-pages
-      - git worktree add -f docs/build/html gh-pages
-      - rm -r docs/build/html/*
+      - git worktree add -f docs/_build/html gh-pages
+      - rm -r docs/_build/html/*
       - >-
         docker build
         --build-arg HTTP_PROXY
@@ -123,18 +123,18 @@ steps:
         sleep 600
       - >-
         docker cp 
-        temp-container-${DRONE_COMMIT_SHA}:/home/nuke/src/github.com/WuLiFang/Nuke/docs/.
+        temp-container-${DRONE_COMMIT_SHA}:/app/docs/.
         ./docs/
       - docker container rm -f temp-container-${DRONE_COMMIT_SHA}
       - docker image rm temp-image-${DRONE_COMMIT_SHA}
-      - git -C docs/build/html status
+      - git -C docs/_build/html status
   - name: deploy to github
     image: node:lts
     environment:
       GITHUB_DEPLOY_KEY:
         from_secret: GITHUB_DEPLOY_KEY
     commands:
-      - cd docs/build/html
+      - cd docs/_build/html
       - if [ -z "$(git status -s)" ];then exit 0; fi
       - mkdir ~/.ssh/
       - echo "$${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa

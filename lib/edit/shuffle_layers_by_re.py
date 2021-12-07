@@ -69,7 +69,7 @@ if nuke.GUI:
             if knob is self["help"]:
                 _ = webbrowser.open(
                     plugin_folder_path(
-                        "docs/build/html/features/shuffle_layers_by_re.html"
+                        "docs/_build/html/features/shuffle_layers_by_re.html"
                     )
                 )
 

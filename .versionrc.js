@@ -24,6 +24,10 @@ module.exports = {
       filename: "lib/__version__.py",
       updater: "scripts/python-version-updater.js",
     },
+    {
+      filename: "version",
+      type: "plain-text",
+    },
   ],
   scripts: {
     postchangelog: "bash scripts/postchangelog.sh",

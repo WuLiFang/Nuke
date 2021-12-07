@@ -1,45 +1,19 @@
-ARG VERSION=10.5v7
-FROM natescarlet/nuke:${VERSION} as base
+FROM python:3 AS build
 
-USER root
-RUN set -ex ;\
-    yum -y --setopt=skip_missing_names_on_install=0 install \
-        make \
-        gcc \
-        python-devel \
-        patch \
-    ;\
-    yum -y clean all ;\
-    rm -rf /var/cache
-
-FROM base as build
-
+ARG DEBIAN_FRONTEND=noninteractive
+RUN set -e
+ENV LANG=C.UTF-8
+ENV PYTHONIOENCODING=utf-8
+# Example: https://mirrors.aliyun.com/pypi/simple
 ARG PIP_INDEX_URL
-ARG PIP_TRUSTED_HOST
-ARG foundry_LICENSE 
+ENV PIP_INDEX_URL=${PIP_INDEX_URL}
 
-USER root
-RUN set -ex ;\
-    yum -y --setopt=skip_missing_names_on_install=0 install \
-        make \
-        gcc \
-        python-devel \
-        git \
-    ;\
-    yum -y clean all ;\
-    rm -rf /var/cache
+WORKDIR /app/docs/
 
-WORKDIR /home/nuke/src/github.com/WuLiFang/Nuke
-RUN chown nuke .
+COPY ./docs/dev-requirements.txt ./
+RUN pip install -U pip && \
+    pip install -r ./dev-requirements.txt
 
-USER nuke
-COPY --chown=nuke ./dev-requirements.txt ./requirements.txt ./
-COPY --chown=nuke ./vendor ./vendor
-COPY --chown=nuke ./Makefile ./
-COPY --chown=nuke ./scripts ./scripts
-COPY --chown=nuke ./patches ./patches
-RUN make .venv/.sentinel lib/site-packages/.sentinel
-COPY --chown=nuke . .
-
+COPY ./docs/ ./
 ARG SPHINXOPTS="-W"
-RUN make docs/build/html
+RUN make html

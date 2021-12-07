@@ -1,5 +1,0 @@
-sphinx == 1.7
-sphinx-git == 10.1
-GitPython == 2.1.14
-recommonmark == 0.4
-jieba==0.39
