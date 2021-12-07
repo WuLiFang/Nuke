@@ -264,36 +264,6 @@ Reload所有
 合成
 ----
 
-.. _自动合成:
-
-|comp_icon| 自动合成
-*******************************
-
-自动合成当前导入的素材
-
-1.
-  .. figure:: /_images/comp_prepare.png
-
-    导入素材
-
-2.
-  .. figure:: /_images/comp_run.png
-
-    执行
-
-3.
-  .. figure:: /_images/comp_result.png
-
-    结果
-
-.. _自动合成设置:
-
-|comp_icon| 自动合成设置
-*******************************************
-
-.. image:: /_images/comp_setting.png
-
-对 :ref:`自动合成` 进行设置。
 
 
 Redshift 预合成
@@ -325,48 +295,6 @@ Arnold 预合成
 - Arnold
 
 
-|cgteamwork_icon| CGTeamWork
----------------------------------
-
-.. image:: /_images/cgtw_menu.png
-
-此菜单只在安装了CGTeamWork之后才会出现
-
-登录
-****
-
-.. image:: /_images/cgtw_login.png
-
-用于自动登录失效时临时进行手动登录, 推荐之后重开Nuke和CGTeamWork使用自动登录
-
-添加note
-*********
-
-.. image:: /_images/cgtw_note.png
-
-为CGTeamWork上的对应镜头添加备注
-
-提交单帧
-*********
-将\ :ref:`wlf_Write`\ 节点输出的单帧提交
-
-.. warning::
-
-    正规的提交不应该是单帧应是mov
-
-提交视频
-********
-
-将\ :ref:`wlf_Write`\ 节点输出的视频提交
-
-
-创建项目文件夹
-******************
-
-.. image:: /_images/cgtw_dir_creation.png
-
-为项目中的每个匹配镜头建立一个空文件夹
-
 帮助
 ----
 
@@ -388,24 +316,6 @@ Arnold 预合成
 .. image:: /_images/tool_menu.png
 
 每次使用前带需要设置的操作
-
-.. _批量自动合成:
-
-|comp_icon| 批量自动合成
-**************************
-
-.. image:: /_images/batchcomp.png
-
-合成/自动合成的批量版本
-直接自动合成大量镜头
-
-.. image:: /_images/batchcomp_run.png
-
-使用多线程, 内存不足时会等待足够的空闲内存再继续。
-
-.. figure:: /_images/batchcomp_result.png
-
-  批量合成日志
 
 .. _上传工具:
 
@@ -439,4 +349,3 @@ Arnold 预合成
 
 .. |comp_icon| image:: /_images/comp_icon.png
 
-.. |cgteamwork_icon| image:: /_images/cgteamwork_icon.png

@@ -8,9 +8,7 @@
     features
     menu
     pref
-    pyblish
     guide
-    spec
     env-vars
     development
     re
