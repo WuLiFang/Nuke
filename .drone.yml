@@ -1,5 +1,52 @@
 ---
 kind: pipeline
+name: docs
+
+steps:
+  - name: build
+    image: python:3
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+    commands:
+      - pip install -U pip
+      - pip install -r ./dev-requirements.txt
+      - git config --global user.name 'CI User'
+      - git config --global user.email '<>'
+      - >-
+        if [ "${DRONE_BRANCH}" == "master" ]; then 
+          make -C docs deploy;
+        else 
+          make -C docs html;
+        fi
+  - name: deploy to github
+    image: node:lts
+    environment:
+      GITHUB_DEPLOY_KEY:
+        from_secret: GITHUB_DEPLOY_KEY
+      REMOTE_URL: git@github.com:WuLiFang/Nuke.git
+    commands:
+      - mkdir ~/.ssh/
+      - "cp ./scripts/known_hosts ~/.ssh/"
+      - chmod 644 ~/.ssh/known_hosts
+      - echo "$${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+      - |-
+        if [ -n "$SSH_PROXY" ]; then
+          sed -i "s@http://.\+\.debian\.org/debian@http://ftp.cn.debian.org/debian@g" /etc/apt/sources.list
+          apt-get update
+          apt-get -y install connect-proxy
+          echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
+        fi
+      - cd docs/_build/html
+      - git fetch ${REMOTE_URL} gh-pages
+      - if [ -z "$(git diff --shortstat FETCH_HEAD)" ]; exit 0; fi
+      - git push -f git@github.com:WuLiFang/Nuke.git HEAD:gh-pages
+    when:
+      branch:
+        - master
+---
+kind: pipeline
 name: nuke10.0v4
 
 steps:
@@ -84,53 +131,6 @@ volumes:
   - name: dockersock
     host:
       path: /var/run/docker.sock
----
-kind: pipeline
-name: docs
-
-steps:
-  - name: build
-    image: python:3
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    commands:
-      - pip install -U pip
-      - pip install -r ./dev-requirements.txt
-      - git config --global user.name 'CI User'
-      - git config --global user.email '<>'
-      - >-
-        if [ "${DRONE_BRANCH}" == "master" ]; then 
-          make -C docs deploy;
-        else 
-          make -C docs html;
-        fi
-  - name: deploy to github
-    image: node:lts
-    environment:
-      GITHUB_DEPLOY_KEY:
-        from_secret: GITHUB_DEPLOY_KEY
-      REMOTE_URL: git@github.com:WuLiFang/Nuke.git
-    commands:
-      - mkdir ~/.ssh/
-      - "cp ./scripts/known_hosts ~/.ssh/"
-      - chmod 644 ~/.ssh/known_hosts
-      - echo "$${GITHUB_DEPLOY_KEY}" > ~/.ssh/id_rsa
-      - chmod 600 ~/.ssh/id_rsa
-      - |-
-        if [ -n "$SSH_PROXY" ]; then
-          sed -i "s@http://.\+\.debian\.org/debian@http://ftp.cn.debian.org/debian@g" /etc/apt/sources.list
-          apt-get update
-          apt-get -y install connect-proxy
-          echo "ProxyCommand connect -H $SSH_PROXY %h %p" > ~/.ssh/config
-        fi
-      - cd docs/_build/html
-      - git fetch ${REMOTE_URL} gh-pages
-      - if [ -z "$(git diff --shortstat FETCH_HEAD)" ]; exit 0; fi
-      - git push -f git@github.com:WuLiFang/Nuke.git HEAD:gh-pages
-    when:
-      branch:
-        - master
 ---
 kind: pipeline
 name: notification
