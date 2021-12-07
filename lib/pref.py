@@ -73,7 +73,7 @@ def add_preferences():
     pref.addKnob(k)
 
     def _remove_old():
-        for k in [b"wlf_lock_connection", b"wlf_tab"]:
+        for k in [b"wlf_lock_connection", b"wlf_tab", b"wlf_create_csheet"]:
             try:
                 pref.removeKnob(pref[k])
             except NameError:
@@ -102,7 +102,7 @@ def add_preferences():
         nuke.Boolean_Knob(b"wlf_gizmo_to_group", cast.binary("创建Gizmo时尝试转换为Group")),
     )
     _add_knob(
-        nuke.Boolean_Knob(b"wlf_eval_proj_dir", cast.binary("读取时工程目录自动转换为绝对路径")), True
+        nuke.Boolean_Knob(b"wlf_eval_proj_dir", cast.binary("读取时工程目录自动转换为绝对路径"))
     )
     _add_knob(
         nuke.Text_Knob(
@@ -125,7 +125,8 @@ def add_preferences():
                 cast.binary("竖式"),
                 cast.binary("横式(Nuke)"),
             ],
-        )
+        ),
+        True,
     )
     _add_knob(
         nuke.Boolean_Knob(

@@ -359,16 +359,6 @@ Arnold 预合成
 
 将\ :ref:`wlf_Write`\ 节点输出的视频提交
 
-.. _创建项目色板:
-
-创建项目色板
-****************
-
-.. image:: /_images/cgtw_csheet.png
-
-为项目创建色板
-
-此功能在CGTeamWork右键菜单中也能访问
 
 创建项目文件夹
 ******************
@@ -416,13 +406,6 @@ Arnold 预合成
 .. figure:: /_images/batchcomp_result.png
 
   批量合成日志
-
-.. _创建色板:
-
-创建色板
-********
-
-为一个文件夹中的图像文件(.jpg, .png, .jpeg)创建html色板
 
 .. _上传工具:
 
