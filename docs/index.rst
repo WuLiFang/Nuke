@@ -1,16 +1,30 @@
-欢迎来到 吾立方Nuke插件 的文档!
+吾立方Nuke插件 用户手册
 =========================================
 
-.. toctree::
-    :maxdepth: 3
+.. only:: not docx
 
-    plug-ins
-    features
-    menu
-    pref
-    guide
-    env-vars
-    development
-    re
-    changelog
-  
+    .. toctree::
+        :maxdepth: 3
+
+        plug-ins
+        features
+        menu
+        pref
+        guide
+        env-vars
+        development
+        re
+        changelog
+
+.. only:: docx
+
+    .. toctree::
+        :maxdepth: 3
+
+        plug-ins
+        features
+        menu
+        pref
+        env-vars
+        development
+    
