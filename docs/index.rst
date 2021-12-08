@@ -12,7 +12,6 @@
         pref
         guide
         env-vars
-        development
         re
         changelog
 
@@ -26,5 +25,3 @@
         menu
         pref
         env-vars
-        development
-    

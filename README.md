@@ -27,7 +27,18 @@ Nuke 内置是 python2，对中文支持很烂。如果处理中文路径时报�
 
 ### 安装依赖
 
-为使用 Nuke 的库, 需添加 nuke.pth 到 .venv/lib/site-packages 下:
+利用 GNU Make 搭建开发环境
+
+Makefile 使用的环境变量:
+
+NUKE_PYTHON
+
+本机 Nuke 内置 python 路径。
+
+PYTHON27
+
+python2.7 路径，用于安装依赖，推荐使用最新版。
+因为 Nuke 内置 python 太老了，不能使用 pip + https。
 
 ```shell
 export NUKE_PYTHON="C:\Program Files\Nuke11.3v3\python.exe"
@@ -35,6 +46,12 @@ make
 ```
 
 替换 `"C:\Program Files\Nuke11.3v3\python.exe"` 路径为你 Nuke 附带 python 的路径
+
+### 测试
+
+```shell
+make test
+```
 
 ## NO LICENSE 版权保留
 
