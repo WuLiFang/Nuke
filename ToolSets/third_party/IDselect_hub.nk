@@ -1,0 +1,654 @@
+#! C:/Program Files/Nuke6.0v4/Nuke6.0.exe -nx
+version 6.0 v4
+Group {
+ name IDselect_hub1
+ tile_color 0xff00ff
+help "- IDpass must be at least twice larger than master format to generate proper antialiasing
+- display mask in RGB can causes color selection to behave wildly.
+So the right procedure is to first sample the chosen color and then tick the \"add color\" checkbox.
+- if some colors can't be selected try to rise the tolerance value and if more than 1 color is selected try lower it.
+- As the downscaling method is far less accurate than using coverage pass, i put in tweak section parameters to adjust it to your needs.
+You can contract/expand it with shrink_size and choose which resize algorithm to use in order to control the crispness.
+"
+ addUserKnob {20 IDselect_hub}
+ addUserKnob {6 put_mask_in_RGB l "display_mask_in_RGB      " +STARTLINE}
+ put_mask_in_RGB true
+ addUserKnob {6 copy_mask_in_RGB -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 add_trigger0 l add +STARTLINE}
+ addUserKnob {41 color l "color : " -STARTLINE T Constant1.color}
+ addUserKnob {6 add_trigger1 l add +STARTLINE}
+ addUserKnob {41 color_1 l "color : " -STARTLINE T Constant2.color}
+ addUserKnob {6 add_trigger2 l add +STARTLINE}
+ addUserKnob {41 color_2 l "color : " -STARTLINE T Constant3.color}
+ addUserKnob {6 add_trigger3 l add +STARTLINE}
+ addUserKnob {41 color_3 l "color : " -STARTLINE T Constant4.color}
+ addUserKnob {6 add_trigger4 l add +STARTLINE}
+ addUserKnob {41 color_4 l "color : " -STARTLINE T Constant5.color}
+ addUserKnob {6 add_trigger5 l add +STARTLINE}
+ addUserKnob {41 color_5 l "color : " -STARTLINE T Constant6.color}
+ addUserKnob {6 add_trigger6 l add +STARTLINE}
+ addUserKnob {41 color_6 l "color : " -STARTLINE T Constant7.color}
+ addUserKnob {6 add_trigger7 l add +STARTLINE}
+ addUserKnob {41 color_7 l "color : " -STARTLINE T Constant8.color}
+ addUserKnob {6 add_trigger8 l add +STARTLINE}
+ addUserKnob {41 color_8 l "color : " -STARTLINE T Constant9.color}
+ addUserKnob {6 add_trigger9 l add +STARTLINE}
+ addUserKnob {41 color_9 l "color : " -STARTLINE T Constant10.color}
+ addUserKnob {20 tweak n 1}
+ tweak 0
+ addUserKnob {41 blackpoint l tolerance T Grade3.blackpoint}
+ addUserKnob {41 size l shrink_size T FilterErode1.size}
+ addUserKnob {41 filter l downsize_filter T ReformatOUT.filter}
+ addUserKnob {41 format l input_format T ReformatIN.format}
+ addUserKnob {41 format_1 l master_format -STARTLINE T ReformatOUT.format}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {20 philhub_2010 n 1}
+ philhub_2010 0
+ addUserKnob {26 philpmaATfreeDOTfr}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -515
+  ypos -272
+ }
+ Reformat {
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  filter Impulse
+  name ReformatIN
+  xpos -515
+  ypos -224
+ }
+set Na763008 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  color {1 0.7969999909 0 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant1
+  xpos -688
+  ypos -124
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff1
+  xpos -515
+  ypos -101
+ }
+set Na76bcb8 [stack 0]
+push $Na76bcb8
+push $Na763008
+ Viewer {
+  inputs 3
+  input_process false
+  name Viewer1
+  xpos 1571
+  ypos 382
+ }
+push $Na763008
+ Dot {
+  name Dot5
+  xpos -196
+  ypos -214
+ }
+set Na7823c0 [stack 0]
+ Dot {
+  name Dot4
+  xpos 71
+  ypos -214
+ }
+set Na77e800 [stack 0]
+ Dot {
+  name Dot2
+  xpos 337
+  ypos -214
+ }
+set Na780988 [stack 0]
+ Dot {
+  name Dot8
+  xpos 596
+  ypos -214
+ }
+set Na784de8 [stack 0]
+ Dot {
+  name Dot9
+  xpos 850
+  ypos -214
+ }
+set Na786ff8 [stack 0]
+ Dot {
+  name Dot7
+  xpos 1139
+  ypos -214
+ }
+set Na789260 [stack 0]
+ Dot {
+  name Dot10
+  xpos 1430
+  ypos -214
+ }
+set Na78b488 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1703
+  ypos -214
+ }
+set Na78d6b0 [stack 0]
+ Dot {
+  name Dot12
+  xpos 1959
+  ypos -214
+ }
+set Na78f8d8 [stack 0]
+ Dot {
+  name Dot6
+  xpos 2123
+  ypos -214
+ }
+ Dot {
+  name Dot1
+  xpos 2123
+  ypos 252
+ }
+set Na793ce0 [stack 0]
+ Dot {
+  name Dot13
+  xpos 2123
+  ypos 315
+ }
+push $Na793ce0
+push $Na78f8d8
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0.5 0.5 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant10
+  xpos 1806
+  ypos -127
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff10
+  xpos 1925
+  ypos -104
+ }
+ Grade {
+  blackpoint 0.01
+  name Grade3
+  xpos 1925
+  ypos -78
+ }
+ set Ca7a1d58 [stack 0]
+ Keyer {
+  invert true
+  operation "luminance key"
+  range {0 0 1 1}
+  name Keyer1
+  xpos 1925
+  ypos -24
+ }
+ set Ca7a7560 [stack 0]
+ FilterErode {
+  size 0
+  name FilterErode1
+  xpos 1925
+  ypos 23
+ }
+ set Ca7ab1d0 [stack 0]
+push $Na78d6b0
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0.5 0.5 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant9
+  xpos 1550
+  ypos -127
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff9
+  xpos 1669
+  ypos -104
+ }
+clone $Ca7a1d58 {
+  xpos 1669
+  ypos -78
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 1669
+  ypos -23
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 1669
+  ypos 24
+  selected false
+ }
+push $Na78b488
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0.5630000234 0.9380000234 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant8
+  xpos 1277
+  ypos -126
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff8
+  xpos 1396
+  ypos -103
+ }
+clone $Ca7a1d58 {
+  xpos 1396
+  ypos -77
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 1396
+  ypos -24
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 1396
+  ypos 22
+  selected false
+ }
+push $Na789260
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.9419999719 0.8130000234 0.06300000101 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant7
+  xpos 986
+  ypos -126
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff7
+  xpos 1105
+  ypos -103
+ }
+clone $Ca7a1d58 {
+  xpos 1105
+  ypos -77
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 1105
+  ypos -24
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 1105
+  ypos 21
+  selected false
+ }
+push $Na786ff8
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0.5630000234 0.9380000234 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant6
+  xpos 697
+  ypos -126
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff6
+  xpos 816
+  ypos -103
+ }
+clone $Ca7a1d58 {
+  xpos 816
+  ypos -77
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 816
+  ypos -25
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 816
+  ypos 24
+  selected false
+ }
+push $Na784de8
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.6880000234 0.6880000234 0.1879999936 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant5
+  xpos 443
+  ypos -126
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff5
+  xpos 562
+  ypos -103
+ }
+clone $Ca7a1d58 {
+  xpos 562
+  ypos -77
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 562
+  ypos -26
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 562
+  ypos 26
+  selected false
+ }
+push $Na780988
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.6880000234 0.8130000234 0.4379999936 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant4
+  xpos 184
+  ypos -126
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff4
+  xpos 303
+  ypos -103
+ }
+clone $Ca7a1d58 {
+  xpos 303
+  ypos -77
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 303
+  ypos -28
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 303
+  ypos 25
+  selected false
+ }
+push $Na77e800
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.9380000234 0.1879999936 0.6880000234 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant3
+  xpos -82
+  ypos -123
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff3
+  xpos 37
+  ypos -100
+ }
+clone $Ca7a1d58 {
+  xpos 37
+  ypos -74
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos 37
+  ypos -27
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos 37
+  ypos 27
+  selected false
+ }
+push $Na7823c0
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.1879999936 0.875 0.375 0}
+  format "3840 2160 0 0 3840 2160 1 HDx2"
+  name Constant2
+  xpos -349
+  ypos -122
+ }
+ Merge2 {
+  inputs 2
+  operation difference
+  name MergeDiff2
+  xpos -230
+  ypos -99
+ }
+clone $Ca7a1d58 {
+  xpos -230
+  ypos -73
+  selected false
+ }
+clone $Ca7a7560 {
+  xpos -230
+  ypos -29
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos -230
+  ypos 29
+  selected false
+ }
+push $Na763008
+push $Na76bcb8
+clone $Ca7a1d58 {
+  xpos -515
+  ypos -75
+  selected true
+ }
+clone $Ca7a7560 {
+  xpos -515
+  ypos -36
+  selected false
+ }
+clone $Ca7ab1d0 {
+  xpos -515
+  ypos 44
+  selected false
+ }
+ Grade {
+  channels alpha
+  white 0
+  name Grade1
+  xpos -515
+  ypos 82
+  disable {{add_trigger0 i}}
+ }
+ Dot {
+  name Dot3
+  xpos -481
+  ypos 120
+ }
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  red2 blue
+  out2 rgb
+  name ShuffleCopy2
+  xpos -387
+  ypos 116
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd1
+  xpos -230
+  ypos 110
+  disable {{1-add_trigger1 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd2
+  xpos 37
+  ypos 110
+  disable {{1-add_trigger2 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd3
+  xpos 303
+  ypos 107
+  disable {{1-add_trigger3 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd4
+  xpos 562
+  ypos 107
+  disable {{1-add_trigger4 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd5
+  xpos 816
+  ypos 107
+  disable {{1-add_trigger5 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd6
+  xpos 1105
+  ypos 107
+  disable {{1-add_trigger6 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd7
+  xpos 1396
+  ypos 107
+  disable {{1-add_trigger7 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd8
+  xpos 1669
+  ypos 106
+  disable {{1-add_trigger8 i}}
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  Achannels alpha
+  Bchannels alpha
+  output alpha
+  name MergeAdd9
+  xpos 1925
+  ypos 106
+  disable {{1-add_trigger9 i}}
+ }
+ ShuffleCopy {
+  inputs 2
+  in rgb
+  in2 alpha
+  black red
+  white green
+  red2 blue
+  out alpha
+  out2 rgb
+  name ShuffleCopy1
+  xpos 1925
+  ypos 248
+ }
+ MergeExpression {
+  inputs 2
+  expr0 A.r+B.a
+  expr1 A.g+B.a
+  expr2 A.b+B.a
+  name MergeExpression1
+  xpos 1925
+  ypos 311
+  disable {{1-put_mask_in_RGB i}}
+ }
+ Expression {
+  channel0 rgba
+  expr0 a
+  mix {{copy_mask_in_RGB i}}
+  name AtoRGB
+  xpos 1925
+  ypos 351
+ }
+ Matrix {
+  channels rgba
+  matrix {
+      {1 2 1}
+      {2 10 2}
+      {1 2 1}
+    }
+  normalize true
+  name Matrix1
+  xpos 1925
+  ypos 403
+ }
+ Reformat {
+  filter Keys
+  name ReformatOUT
+  xpos 1925
+  ypos 451
+ }
+ Output {
+  name Output1
+  xpos 1925
+  ypos 517
+ }
+end_group

@@ -1,0 +1,32 @@
+#! C:/Program Files/Nuke6.0v1/Nuke6.0.exe -nx
+version 6.3 v4
+Group {
+ name dragon_light_gamma1
+ addUserKnob {20 light_gamma_fix l User}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 saturation T Saturation1.saturation}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -184
+  ypos -240
+ }
+ Grade {
+  gamma 1.3
+  name Grade1
+  xpos -184
+  ypos -200
+ }
+ Saturation {
+  saturation 1.15
+  name Saturation1
+  xpos -184
+  ypos -155
+ }
+ Output {
+  name Output1
+  xpos -184
+  ypos -55
+ }
+end_group

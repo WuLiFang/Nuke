@@ -1,0 +1,12 @@
+set cut_paste_input [stack 0]
+version 6.3 v1
+push $cut_paste_input
+NoOp {
+ name Change1
+ selected true
+ xpos -578
+ ypos 189
+ addUserKnob {20 User}
+ addUserKnob {22 changeto540p l 540p t "    " T "import os\nhalf_HD = '960 540 half_HD' \nnuke.addFormat(half_HD)\nn = nuke.allNodes()\nfor i in n:\n  if i.Class() == \"Read\":\n    i\[\"file\"].setValue(i\[\"file\"].value().replace(\"1080p\",\"540p\")) \n    i\[\"format\"].setValue('half_HD')\n    dirpath=os.path.dirname(i\['file'].value())               \n    d=os.path.exists(dirpath)\n    if not d :\n      i\[\"file\"].setValue(i\[\"file\"].value().replace(\"540p\",\"1080p\")) \n      i\[\"format\"].setValue('HD')\n\n\n" +STARTLINE}
+ addUserKnob {22 changeto1080p l 1080p T "import os\nhalf_HD = '960 540 half_HD' \nnuke.addFormat(half_HD)\nn = nuke.allNodes()\nfor i in n:\n  if i.Class() == \"Read\":\n    i\[\"file\"].setValue(i\[\"file\"].value().replace(\"540p\",\"1080p\")) \n    i\[\"format\"].setValue('HD')\n    dirpath=os.path.dirname(i\['file'].value())               \n    d=os.path.exists(dirpath)\n    if not d :\n      i\[\"file\"].setValue(i\[\"file\"].value().replace(\"1080p\",\"540p\")) \n      i\[\"format\"].setValue('half_HD')\n" +STARTLINE}
+}

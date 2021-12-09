@@ -1,0 +1,2259 @@
+#! C:/Program Files/Nuke8.0v5/nuke-8.0.v5.dll -nx
+version 8.0 v5
+Group {
+ name SK_breakdownDesignTool1
+ inputs 6
+ addUserKnob {20 mainOptions l "Main Options"}
+ addUserKnob {41 preview l "preview areas" T controlli.preview}
+ addUserKnob {26 ""}
+ addUserKnob {41 numeroAree l " number of areas" T controlli.numeroAree}
+ addUserKnob {26 ""}
+ addUserKnob {41 mSimmetria l "Use symmetric areas" T controlli.mSimmetria}
+ addUserKnob {41 sbloccaCentro l "Unlock center" -STARTLINE T controlli.sbloccaCentro}
+ addUserKnob {41 consideraPixelAspect l "Adjust for the pixel aspect " T controlli.consideraPixelAspect}
+ addUserKnob {41 distanzaDalCentro l "Extend areas" T controlli.distanzaDalCentro}
+ addUserKnob {41 angolo l Rotate(angle) t "Use this option when possible instead of \"rotate/transform\"" T controlli.angolo}
+ addUserKnob {26 ""}
+ addUserKnob {41 ruota l Rotate/Transform T controlli.ruota}
+ addUserKnob {41 squash l "Erode/Dilate( squash )" T controlli.squash}
+ addUserKnob {26 ""}
+ addUserKnob {41 usaLinee l "Use lines of outline" T controlli.usaLinee}
+ addUserKnob {41 linesThickness l "Lines thickness" T controlli.linesThickness}
+ addUserKnob {41 linesExpand l "Erode/Dilate " T controlli.linesExpand}
+ addUserKnob {41 linesSoftness l Softness T controlli.linesSoftness}
+ addUserKnob {41 linesColour l Color T controlli.linesColour}
+ addUserKnob {26 ""}
+ addUserKnob {41 origine l Origin T controlli.origine}
+ addUserKnob {41 punto1T_User l Point1T_User T controlli.punto1T_User}
+ addUserKnob {41 punto2T_User l Point2T_User T controlli.punto2T_User}
+ addUserKnob {41 punto3T_User l Point3T_User T controlli.punto3T_User}
+ addUserKnob {41 punto4T_User l Point4T_User T controlli.punto4T_User}
+ addUserKnob {41 punto5T_User l Point5T_User T controlli.punto5T_User}
+ addUserKnob {41 punto6T_User l Point6T_User T controlli.punto6T_User}
+ addUserKnob {26 ""}
+ addUserKnob {26 Copyright l "" +STARTLINE T "Salvatore Carvelli -2014- breakdown design tool - V.1.0 "}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {20 coloriAreeTab l Colors}
+ addUserKnob {26 obsolete l "" +STARTLINE T "Obsolete at the moment!"}
+ addUserKnob {41 coloreArea1 l "Colore area 1" T controlli.coloreArea1}
+ addUserKnob {41 coloreArea2 l "Colore area 2" T controlli.coloreArea2}
+ addUserKnob {41 coloreArea3 l "Colore area 3" T controlli.coloreArea3}
+ addUserKnob {41 coloreArea4 l "Colore area 4" T controlli.coloreArea4}
+ addUserKnob {41 coloreArea5 l "Colore area 5" T controlli.coloreArea5}
+ addUserKnob {41 coloreArea6 l "Colore area 6" T controlli.coloreArea6}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -280
+  ypos 26
+ }
+set N423bc1c0 [stack 0]
+ Shuffle {
+  alpha black
+  name Shuffle11
+  xpos -280
+  ypos 166
+ }
+ Reformat {
+  format {{{root.format}}}
+  name Reformat1
+  xpos -280
+  ypos 201
+ }
+ set C423b9f60 [stack 0]
+set N423b9f60 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup tRosso 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.centro.x x440b7999}
+      {=controlli.centro.y x4409c667}}
+        {}
+        {}
+        {{=controlli.punto1T.x x450454f1}
+      {=controlli.punto1T.y x44417e4c}}
+        {}
+        {}
+        {{=controlli.punto2T.x x440ef33a}
+      {=controlli.punto2T.y x44814666}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x44ed8000 x452c6555}
+     {a g
+   {=controlli.coloreArea1.g 0}     b
+   {=controlli.coloreArea1.b 0}     str 1 spx x44fa0000 spy x44bb8000 sb 1 tt x40c00000 ao 1 ro 1 a
+   {=controlli.coloreArea1.a 1}     r
+   {=controlli.coloreArea1.r 1}}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2000 1500}
+  color {{controlli.coloreArea1.r 1} {controlli.coloreArea1.g} {controlli.coloreArea1.b} {controlli.coloreArea1.a}}
+  colorOverlay {1 0 0 1}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area15
+  xpos -520
+  ypos 201
+ }
+ Transform {
+  rotate {{controlli.ruota}}
+  scale {{controlli.squash.w} {controlli.squash.h}}
+  center {{controlli.centro} {controlli.centro}}
+  name Transform2
+  xpos -520
+  ypos 236
+ }
+ set C423bb400 [stack 0]
+set N423bb400 [stack 0]
+ Dot {
+  name Dot28
+  xpos -487
+  ypos 392
+ }
+set N423bc530 [stack 0]
+ Input {
+  inputs 0
+  name Input2
+  xpos 80
+  ypos 102
+  number 1
+ }
+set N423bc8a0 [stack 0]
+ Shuffle {
+  alpha black
+  name Shuffle12
+  xpos 80
+  ypos 166
+ }
+clone $C423b9f60 {
+  xpos 80
+  ypos 201
+  selected false
+ }
+set N423bcf80 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup tVerde 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.centro.x x440b7999}
+	 {=controlli.centro.y x4409c667}}
+        {}
+        {}
+        {{=controlli.punto2T.x x450454f1}
+	 {=controlli.punto2T.y x44417e4c}}
+        {}
+        {}
+        {{=controlli.punto3T.x x440ef33a}
+	 {=controlli.punto3T.y x44814666}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x44ed8000 x452c6555}
+     {a b
+   {=controlli.coloreArea2.b 0}     str 1 spx x44fa0000 spy x44bb8000 sb 1 tt x40c00000 ao 1 r
+   {=controlli.coloreArea2.r 0}     go 1 a
+   {=controlli.coloreArea2.a 1}     g
+   {=controlli.coloreArea2.g 1}}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2000 1500}
+  color {{controlli.coloreArea2.r 0} {controlli.coloreArea2.g} {controlli.coloreArea2.b} {controlli.coloreArea2.a}}
+  colorOverlay {0 1 0 1}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area16
+  xpos -160
+  ypos 201
+ }
+clone $C423bb400 {
+  xpos -160
+  ypos 242
+  selected false
+ }
+set N423b9880 [stack 0]
+ Dot {
+  name Dot12
+  xpos -127
+  ypos 378
+ }
+set N423bd660 [stack 0]
+ Dot {
+  name Dot6
+  xpos -127
+  ypos 553
+ }
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos -520
+  ypos 551
+ }
+ Input {
+  inputs 0
+  name Input3
+  xpos 440
+  ypos 96
+  number 2
+ }
+ Shuffle {
+  alpha black
+  name Shuffle13
+  xpos 440
+  ypos 166
+ }
+clone $C423b9f60 {
+  xpos 440
+  ypos 201
+  selected false
+ }
+set N423be420 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup tBlu 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.centro.x x440b7999}
+	 {=controlli.centro.y x4409c667}}
+        {}
+        {}
+        {{=controlli.punto3T.x x450454f1}
+	 {=controlli.punto3T.y x44417e4c}}
+        {}
+        {}
+        {{"=controlli.numeroAree\ <\ 4\ ?\ controlli.punto1T.x\ :\ controlli.punto4T.x" x440ef33a}
+	 {"=controlli.numeroAree\ <\ 4\ ?\ controlli.punto1T.y\ :\ controlli.punto4T.y" x44814666}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x44ed8000 x452c6555}
+     {a g
+      {=controlli.coloreArea3.g 0}     str 1 spx x44fa0000 spy x44bb8000 sb 1 tt x40c00000 ao 1 r
+      {=controlli.coloreArea3.r 0}     bo 1 a
+      {=controlli.coloreArea3.a 1}     b
+      {=controlli.coloreArea3.b 1}}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2000 1500}
+  color {{controlli.coloreArea3.r 0} {controlli.coloreArea3.g} {controlli.coloreArea3.b} {controlli.coloreArea3.a}}
+  colorOverlay {0 0 1 1}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area17
+  xpos 200
+  ypos 201
+ }
+clone $C423bb400 {
+  xpos 200
+  ypos 236
+  selected false
+ }
+set N423bdd40 [stack 0]
+ Dot {
+  name Dot31
+  xpos 233
+  ypos 378
+ }
+set N423c10d0 [stack 0]
+ Dot {
+  name Dot38
+  xpos 233
+  ypos 693
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos -520
+  ypos 691
+ }
+ Input {
+  inputs 0
+  name Input4
+  xpos 800
+  ypos 96
+  number 3
+ }
+ Shuffle {
+  alpha black
+  name Shuffle14
+  xpos 800
+  ypos 166
+ }
+clone $C423b9f60 {
+  xpos 800
+  ypos 201
+  selected false
+ }
+set N423c0680 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup tGiallo 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.centro.x x440b7999}
+      {=controlli.centro.y x4409c667}}
+        {}
+        {}
+        {{"=controlli.numeroAree\ >\ 3\ ?\ controlli.punto4T.x\ :\ controlli.centro.x" x4500d742}
+	 {"=controlli.numeroAree\ >\ 3\ ?\ controlli.punto4T.y:\ controlli.centro.y" x4407b99b}}
+        {}
+        {}
+        {{"=controlli.numeroAree\ <\ 5\ ?\ controlli.punto1T.x\ :\ controlli.punto5T.x" x423599a0}
+	 {"=controlli.numeroAree\ <\ 5\ ?\ controlli.punto1T.y\ :\ controlli.punto5T.y" x43fa0000}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x44ed8000 x452c6555}
+     {a g
+   {=controlli.coloreArea4.g 1}     b
+   {=controlli.coloreArea4.b 0}     str 1 spx x44fa0000 spy x44bb8000 sb 1 tt x40c00000 ao 1 ro 1 a
+   {=controlli.coloreArea4.a 1}     r
+   {=controlli.coloreArea4.r 1}     go 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2000 1500}
+  color {{controlli.coloreArea4.r 1} {controlli.coloreArea4.g} {controlli.coloreArea4.b} {controlli.coloreArea4.a}}
+  colorOverlay {1 1 0 1}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area18
+  xpos 560
+  ypos 201
+ }
+clone $C423bb400 {
+  xpos 560
+  ypos 236
+  selected false
+ }
+set N423c2200 [stack 0]
+ Dot {
+  name Dot33
+  xpos 593
+  ypos 378
+ }
+set N423beb00 [stack 0]
+ Dot {
+  name Dot39
+  xpos 593
+  ypos 833
+ }
+ Merge2 {
+  inputs 2
+  name Merge7
+  xpos -520
+  ypos 831
+ }
+ Input {
+  inputs 0
+  name Input5
+  xpos 1160
+  ypos 96
+  number 4
+ }
+ Shuffle {
+  alpha black
+  name Shuffle15
+  xpos 1160
+  ypos 166
+ }
+clone $C423b9f60 {
+  xpos 1160
+  ypos 201
+  selected false
+ }
+set N423be790 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup tCiano 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.centro.x x440b7999}
+      {=controlli.centro.y x4409c667}}
+        {}
+        {}
+        {{"=controlli.numeroAree\ >\ 4\ ?\ controlli.punto5T.x\ :\ controlli.centro.x" x44bd4667}
+      {"=controlli.numeroAree\ >\ 4\ ?\ controlli.punto5T.y:\ controlli.centro.y" x448e6cce}}
+        {}
+        {}
+        {{"=controlli.numeroAree\ <\ 6\ ?\ controlli.punto1T.x\ :\ controlli.punto6T.x" x451ed333}
+      {"=controlli.numeroAree\ <\ 6\ ?\ controlli.punto1T.y\ :\ controlli.punto6T.y" x446db336}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x44ed8000 x452c6555}
+     {a b
+   {=controlli.coloreArea5.b 1}     str 1 spx x44fa0000 spy x44bb8000 sb 1 tt x40c00000 ao 1 go 1 a
+   {=controlli.coloreArea5.a 1}     g
+   {=controlli.coloreArea5.g 1}     r
+   {=controlli.coloreArea5.r 0}     bo 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2000 1500}
+  color {{controlli.coloreArea5.r} {controlli.coloreArea5.g} {controlli.coloreArea5.b} {controlli.coloreArea5.a}}
+  colorOverlay {0 1 1 1}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area19
+  xpos 920
+  ypos 201
+ }
+clone $C423bb400 {
+  xpos 920
+  ypos 236
+  selected false
+ }
+set N423c2570 [stack 0]
+ Dot {
+  name Dot32
+  xpos 953
+  ypos 378
+ }
+set N423c2fc0 [stack 0]
+ Dot {
+  name Dot40
+  xpos 953
+  ypos 973
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -520
+  ypos 971
+ }
+ Input {
+  inputs 0
+  name Input6
+  xpos 1520
+  ypos 102
+  number 5
+ }
+ Shuffle {
+  alpha black
+  name Shuffle16
+  xpos 1520
+  ypos 166
+ }
+clone $C423b9f60 {
+  xpos 1520
+  ypos 201
+  selected false
+ }
+set N423bffa0 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup tViola 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.centro.x x440b7999}
+      {=controlli.centro.y x4409c667}}
+        {}
+        {}
+        {{"=controlli.numeroAree\ >\ 5\ ?\ controlli.punto6T.x\ :\ controlli.centro.x" x44bd4667}
+	 {"=controlli.numeroAree\ >\ 5\ ?\ controlli.punto6T.y:\ controlli.centro.y" x448e6cce}}
+        {}
+        {}
+        {{=controlli.punto1T.x x451ed333}
+      {=controlli.punto1T.y x446db336}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x44ed8000 x452c6555}
+     {a str 1 spx x44fa0000 spy x44bb8000 sb 1 tt x40c00000 ao 1 r
+   {=controlli.coloreArea6.r 1}     bo 1 a
+   {=controlli.coloreArea6.a 1}     b
+   {=controlli.coloreArea6.b 1}     g
+   {=controlli.coloreArea6.g 0}     ro 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2000 1500}
+  color {{controlli.coloreArea6.r} {controlli.coloreArea6.g} {controlli.coloreArea6.b} {controlli.coloreArea6.a}}
+  colorOverlay {1 0 1 1}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area20
+  xpos 1280
+  ypos 201
+ }
+clone $C423bb400 {
+  xpos 1280
+  ypos 236
+  selected false
+ }
+set N423c40f0 [stack 0]
+ Dot {
+  name Dot34
+  xpos 1313
+  ypos 378
+ }
+set N423c4460 [stack 0]
+ Dot {
+  name Dot42
+  xpos 1313
+  ypos 1113
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -520
+  ypos 1111
+ }
+set N423c4b40 [stack 0]
+ Dot {
+  name Dot14
+  xpos -2773
+  ypos 1917
+ }
+set N423c4eb0 [stack 0]
+ Dot {
+  name Dot15
+  xpos -2773
+  ypos 1987
+ }
+set N423c5220 [stack 0]
+ Dot {
+  name Dot16
+  xpos -2773
+  ypos 2057
+ }
+set N423c5590 [stack 0]
+ Dot {
+  name Dot17
+  xpos -2773
+  ypos 2127
+ }
+set N423c5900 [stack 0]
+ Dot {
+  name Dot18
+  xpos -2773
+  ypos 2197
+ }
+set N432f0920 [stack 0]
+ Dot {
+  name Dot19
+  xpos -2773
+  ypos 2267
+ }
+ HSVTool {
+  srccolor {1 0 1}
+  huesrcs {300 300}
+  satsrcs {1 1}
+  satrolloffrange 0.3
+  brtsrcs {1 1}
+  brtrolloffrange 0.3
+  Conversion all
+  name HSVTool6
+  xpos -2920
+  ypos 2259
+ }
+ Erode {
+  channels alpha
+  name Erode2
+  xpos -3040
+  ypos 2259
+ }
+ set C432ef480 [stack 0]
+add_layer {breakdownTool1 breakdownTool1.yellow breakdownTool1.cyan breakdownTool1.purple none breackdownTool.cyan breackdownTool.purple}
+ Shuffle {
+  red alpha
+  green black
+  blue alpha
+  alpha black
+  out breakdownTool1
+  name Shuffle7
+  label purple
+  xpos -3172
+  ypos 2260
+ }
+push $N432f0920
+ HSVTool {
+  srccolor {0 1 1}
+  huesrcs {180 180}
+  satsrcs {1 1}
+  satrolloffrange 0.3
+  brtsrcs {1 1}
+  brtrolloffrange 0.3
+  Conversion all
+  name HSVTool5
+  xpos -2920
+  ypos 2189
+ }
+clone $C432ef480 {
+  xpos -3040
+  ypos 2189
+  selected false
+ }
+ Shuffle {
+  red black
+  green alpha
+  blue alpha
+  alpha black
+  out breakdownTool1
+  name Shuffle6
+  label cyan
+  xpos -3179
+  ypos 2189
+ }
+ Dot {
+  name Dot24
+  xpos -3219
+  ypos 2197
+ }
+push $N423c5900
+ HSVTool {
+  srccolor {1 1 0}
+  huesrcs {60 60}
+  satsrcs {1 1}
+  satrolloffrange 0.3
+  brtsrcs {1 1}
+  brtrolloffrange 0.3
+  Conversion all
+  name HSVTool4
+  xpos -2920
+  ypos 2119
+ }
+clone $C432ef480 {
+  xpos -3040
+  ypos 2119
+  selected false
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue black
+  alpha black
+  out breakdownTool1
+  name Shuffle5
+  label yellow
+  xpos -3185
+  ypos 2125
+ }
+ Dot {
+  name Dot23
+  xpos -3219
+  ypos 2133
+ }
+push $N423c5590
+ HSVTool {
+  srccolor {0 0 1}
+  huesrcs {240 240}
+  satsrcs {1 1}
+  satrolloffrange 0.3
+  brtsrcs {1 1}
+  brtrolloffrange 0.3
+  Conversion all
+  name HSVTool3
+  xpos -2920
+  ypos 2049
+ }
+clone $C432ef480 {
+  xpos -3040
+  ypos 2049
+  selected false
+ }
+add_layer {breakdownTool breakdownTool.red breakdownTool.green breakdownTool.blue}
+ Shuffle {
+  red black
+  green black
+  blue alpha
+  alpha black
+  out breakdownTool
+  name Shuffle4
+  label blue
+  xpos -3187
+  ypos 2049
+ }
+ Dot {
+  name Dot22
+  xpos -3219
+  ypos 2057
+ }
+push 0
+push $N423c4eb0
+ HSVTool {
+  srccolor {1 0 0}
+  huesrcs {0 0}
+  satsrcs {1 1}
+  satrolloffrange 0.3
+  brtsrcs {1 1}
+  brtrolloffrange 0.3
+  Conversion all
+  name HSVTool1
+  xpos -2920
+  ypos 1909
+ }
+clone $C432ef480 {
+  xpos -3040
+  ypos 1909
+  selected false
+ }
+ Shuffle {
+  red alpha
+  green black
+  blue black
+  alpha black
+  out breakdownTool
+  name Shuffle2
+  label red
+  xpos -3185
+  ypos 1909
+ }
+ Dot {
+  name Dot20
+  xpos -3487
+  ypos 1917
+ }
+push $N423c5220
+ HSVTool {
+  srccolor {0 1 0}
+  dstcolor {0 1 0}
+  huesrcs {120 120}
+  satsrcs {1 1}
+  satrolloffrange 0.3
+  brtsrcs {1 1}
+  brtrolloffrange 0.3
+  name HSVTool2
+  xpos -2920
+  ypos 1978
+ }
+clone $C432ef480 {
+  xpos -3040
+  ypos 1978
+  selected false
+ }
+ Shuffle {
+  red black
+  green alpha
+  blue black
+  alpha black
+  out breakdownTool
+  name Shuffle3
+  label green
+  xpos -3178
+  ypos 1979
+ }
+ Dot {
+  name Dot21
+  xpos -3276
+  ypos 1987
+ }
+ Merge2 {
+  inputs 6+1
+  Bchannels {-rgba.red -rgba.green -rgba.blue -rgba.alpha}
+  output {-rgba.red rgba.green -rgba.blue -rgba.alpha}
+  also_merge all
+  name Merge11
+  xpos -3520
+  ypos 2265
+ }
+ Dot {
+  name Dot8
+  xpos -3487
+  ypos 2442
+ }
+ RotoPaint {
+  inputs 0
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 0}
+    {t x44000000 x44000000}
+    {a}
+    {curvegroup Ellipse1 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {xc3b5b3a1}
+        {x44030000 xc31a0000}
+        {x43b5b3a0}
+        {0 xc3b5b3a1}
+        {x4493c000 x43fc0000}
+        {0 x43b5b3a0}
+        {x43b5b3a0}
+        {x44030000 x44914000}
+        {xc3b5b3a1}
+        {0 x43b5b3a0}
+        {xc3060000 x43fc0000}
+        {0 xc3b5b3a1}}}
+      {cc
+       {f 8192}
+       {p
+        {xc3b5b3a1}
+        {}
+        {x43b5b3a0}
+        {0 xc3b5b3a1}
+        {}
+        {0 x43b5b3a0}
+        {x43b5b3a0}
+        {}
+        {xc3b5b3a1}
+        {0 x43b5b3a0}
+        {}
+        {0 xc3b5b3a1}}}}
+     {t x44030000 x43fc0000 0 xc13e6666 x41000000 0 0 0 0 x3f3b645a x3f3b645a}
+     {a str 1 spx x44000000 spy x44000000 sb 1 ltn x40000000 ltm x40000000 tt x41000000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 8 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {512 512}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  lifetime_start 2
+  lifetime_end 2
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name RotoPaint1
+  xpos -1120
+  ypos -61
+ }
+ RotoPaint {
+  inputs 0
+  cliptype bbox
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup rRosso 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=0 xc2ac0000}
+	 {"=root.format.t\ " x448b4000}}
+        {}
+        {}
+        {{=root.format.r x4487c000}
+      {=root.format.t x448b4000}}
+        {}
+        {}
+        {{=root.format.r x4488199a}
+      {"=controlli.centro.y\ " x43f20000}}
+        {}
+        {}
+        {{=0 xc2ac0000}
+	 {"=controlli.centro.y\ " x43f20000}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x43fa0000 x4447c000}
+     {a str 1 spx x44700000 spy x44070000 sb 1 ltn x40000000 ltm x40000000 tt x41200000 b 0 g 0 ao 1 ro 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 10 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {960 540}
+  color {1 0 0 1}
+  colorOverlay {1 0 0 1}
+  lifetime_type "all frames"
+  lifetime_start 2
+  lifetime_end 2
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area9
+  xpos -2080
+  ypos -71
+ }
+ NoOp {
+  inputs 0
+  name controlli
+  note_font_size 201
+  note_font_color 0xff0000ff
+  xpos -2560
+  ypos 728
+  addUserKnob {20 mainOptions l "Main Options"}
+  addUserKnob {6 preview +STARTLINE}
+  preview true
+  addUserKnob {6 outputType_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {26 ""}
+  addUserKnob {3 numeroAree l "Numero  Aree (1-6)" t "min 1  - max 6 aree"}
+  numeroAree 3
+  addUserKnob {26 ""}
+  addUserKnob {6 area1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 mSimmetria l "Usa aree simmetriche" +STARTLINE}
+  mSimmetria true
+  addUserKnob {6 sbloccaCentro l "Sblocca Centro" -STARTLINE}
+  addUserKnob {14 pixelAspectComp l INVISIBLE +INVISIBLE R 0 100}
+  pixelAspectComp {{"consideraPixelAspect == 1 ? h/ root.format.pixel_aspect : h"} {root.format.pixel_aspect}}
+  addUserKnob {6 consideraPixelAspect l "Compensa aspetto pixel" +STARTLINE}
+  addUserKnob {7 distanzaDalCentro l "Distanza Dal Centro" R -1000 1000}
+  addUserKnob {7 angolo R 0 360}
+  addUserKnob {26 ""}
+  addUserKnob {7 ruota l Ruota R -180 180}
+  addUserKnob {14 squash l Comprimi/Espandi R 0 100}
+  squash {1 1}
+  addUserKnob {26 ""}
+  addUserKnob {6 usaLinee l "Aggiungi Linee " +STARTLINE}
+  usaLinee true
+  addUserKnob {7 linesThickness l "Spessore Linee" R 0 10}
+  linesThickness 2
+  addUserKnob {7 linesExpand l "Comprimi/Espandi Linee" R -100 0}
+  linesExpand -2
+  addUserKnob {7 linesSoftness l "Morbidezza Linee" R 0 100}
+  addUserKnob {19 linesColour l "Colore Linee"}
+  linesColour {0 0 0 1}
+  addUserKnob {6 linesColour_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {26 ""}
+  addUserKnob {12 origine l Origine}
+  origine {1086 872}
+  addUserKnob {12 centro l INVISIBLE +INVISIBLE}
+  centro {{"sbloccaCentro == 0 ? root.format.w/2 : origine"} {"sbloccaCentro == 0 ? root.format.h/2  : origine"}}
+  addUserKnob {26 punti3Aree l INVISIBLE +INVISIBLE}
+  addUserKnob {12 punto1T l INVISIBLE +INVISIBLE}
+  punto1T {{"mSimmetria == 1  ? (centro.x + (aumentaRaggioCerchio * pixelAspectComp.w) * cos(radians(angolo)))  : punto1T_User.x"} {"mSimmetria == 1  ?  (centro.y - (aumentaRaggioCerchio * pixelAspectComp.h) * sin(radians(angolo)))  : punto1T_User.y "}}
+  addUserKnob {12 punto1T_User}
+  punto1T_User {1134 -205}
+  addUserKnob {12 punto2T l INVISIBLE +INVISIBLE}
+  punto2T {{"mSimmetria == 1  ? (centro.x + (aumentaRaggioCerchio * pixelAspectComp.w) * cos(radians(angolo1))) : punto2T_User.x"} {"mSimmetria == 1  ?  (centro.y - (aumentaRaggioCerchio  *  pixelAspectComp.h) * sin(radians(angolo1)))  : punto2T_User.y"}}
+  addUserKnob {12 punto2T_User}
+  punto2T_User {234 300}
+  addUserKnob {12 punto3T l INVISIBLE +INVISIBLE}
+  punto3T {{"mSimmetria == 1  ? (centro.x + (aumentaRaggioCerchio  *  pixelAspectComp.w)* cos(radians(angolo2))) : punto3T_User.x"} {"mSimmetria == 1  ?  (centro.y - (aumentaRaggioCerchio  *  pixelAspectComp.h) * sin(radians(angolo2)))  : punto3T_User.y"}}
+  addUserKnob {12 punto3T_User}
+  punto3T_User {400 1325}
+  addUserKnob {12 punto4T l INVISIBLE +INVISIBLE}
+  punto4T {{"mSimmetria == 1  ? (centro.x +(aumentaRaggioCerchio  *  pixelAspectComp.w) * cos(radians(angolo3Q))) : punto4T_User.x"} {"mSimmetria == 1  ? (centro.y - (aumentaRaggioCerchio  *  pixelAspectComp.h) * sin(radians(angolo3Q))) : punto4T_User.y"}}
+  addUserKnob {12 punto4T_User}
+  punto4T_User {1178 1475}
+  addUserKnob {12 punto5T l INVISIBLE +INVISIBLE}
+  punto5T {{"mSimmetria == 1  ? (centro.x + (aumentaRaggioCerchio  *  pixelAspectComp.w) * cos(radians(angolo4P)))  : punto5T_User.x"} {"mSimmetria == 1  ?  (centro.y - (aumentaRaggioCerchio  *  pixelAspectComp.h) * sin(radians(angolo4P))) : punto5T_User.y"}}
+  addUserKnob {12 punto5T_User}
+  punto5T_User {1734 885}
+  addUserKnob {12 punto6T l INVISIBLE +INVISIBLE}
+  punto6T {{"mSimmetria == 1  ? (centro.x + (aumentaRaggioCerchio  *  pixelAspectComp.w) * cos(radians(angolo5E))) : punto6T_User.x"} {"mSimmetria == 1  ?  (centro.y - (aumentaRaggioCerchio  *  pixelAspectComp.h) * sin(radians(angolo5E))) : punto6T_User.y"}}
+  addUserKnob {12 punto6T_User}
+  punto6T_User {1798 355}
+  addUserKnob {26 ""}
+  addUserKnob {16 diametroCerchio l INVISIBLE +INVISIBLE}
+  diametroCerchio {{"sqrt(pow2(root.format.w )+ pow2(root.format.h))"}}
+  addUserKnob {16 raggioCerchio l INVISIBLE +INVISIBLE}
+  raggioCerchio {{diametroCerchio/2}}
+  addUserKnob {16 aumentaRaggioCerchio l INVISIBLE +INVISIBLE}
+  aumentaRaggioCerchio {{"raggioCerchio + distanzaDalCentro"}}
+  addUserKnob {16 angolo1 l INVISIBLE +INVISIBLE}
+  angolo1 {{"controlli.numeroAree == 3 ? angolo+120 : angolo1Q"}}
+  addUserKnob {16 angolo2 l INVISIBLE +INVISIBLE}
+  angolo2 {{"controlli.numeroAree == 3 ? angolo+240 : angolo2Q"}}
+  addUserKnob {16 angolo1Q l INVISIBLE +INVISIBLE}
+  angolo1Q {{"controlli.numeroAree < 5? angolo + 90 : angolo1P"}}
+  addUserKnob {16 angolo2Q l INVISIBLE +INVISIBLE}
+  angolo2Q {{"controlli.numeroAree < 5 ? angolo +180 : angolo2P"}}
+  addUserKnob {16 angolo3Q l INVISIBLE +INVISIBLE}
+  angolo3Q {{"controlli.numeroAree < 5 ? angolo +270 : angolo3P"}}
+  addUserKnob {16 angolo1P l INVISIBLE +INVISIBLE}
+  angolo1P {{"controlli.numeroAree < 6 ? angolo + 72 : angolo1E"}}
+  addUserKnob {16 angolo2P l INVISIBLE +INVISIBLE}
+  angolo2P {{"controlli.numeroAree < 6 ? angolo + 144 : angolo2E"}}
+  addUserKnob {16 angolo3P l INVISIBLE +INVISIBLE}
+  angolo3P {{"controlli.numeroAree < 6 ? angolo + 216 : angolo3E"}}
+  addUserKnob {16 angolo4P l INVISIBLE +INVISIBLE}
+  angolo4P {{"controlli.numeroAree < 6 ? angolo + 288 : angolo4E"}}
+  addUserKnob {16 angolo1E l INVISIBLE +INVISIBLE}
+  angolo1E {{"angolo + 60"}}
+  addUserKnob {16 angolo2E l INVISIBLE +INVISIBLE}
+  angolo2E {{"angolo + 120"}}
+  addUserKnob {16 angolo3E l INVISIBLE +INVISIBLE}
+  angolo3E {{"angolo + 180"}}
+  addUserKnob {16 angolo4E l INVISIBLE +INVISIBLE}
+  angolo4E {{"angolo + 240"}}
+  addUserKnob {16 angolo5E l INVISIBLE +INVISIBLE}
+  angolo5E {{"angolo + 300"}}
+  addUserKnob {20 coloriAreeTab l "Colori Aree"}
+  addUserKnob {19 coloreArea1 l "Colore area 1"}
+  coloreArea1 {1 0 0 1}
+  addUserKnob {6 coloreArea1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 coloreArea2 l "Colore area 2"}
+  coloreArea2 {0 1 0 1}
+  addUserKnob {6 coloreArea2_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 coloreArea3 l "Colore area 3"}
+  coloreArea3 {0 0 1 1}
+  addUserKnob {6 coloreArea3_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 coloreArea4 l "Colore area 4"}
+  coloreArea4 {1 1 0 1}
+  addUserKnob {6 coloreArea4_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 coloreArea5 l "Colore area 5"}
+  coloreArea5 {0 1 1 1}
+  addUserKnob {6 coloreArea5_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {19 coloreArea6 l "Colore area 6"}
+  coloreArea6 {1 0 1 1}
+  addUserKnob {6 coloreArea6_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+push $N423c4b40
+ EdgeDetectWrapper {
+  edgedetector simple
+  name EdgeDetect2
+  xpos -760
+  ypos 1105
+ }
+ Dilate {
+  size {{controlli.linesThickness}}
+  name Dilate1
+  xpos -760
+  ypos 1152
+ }
+ Erode {
+  channels all
+  size {{controlli.linesExpand}}
+  name Erode4
+  xpos -760
+  ypos 1199
+ }
+ Blur {
+  size {{controlli.linesSoftness}}
+  name Blur1
+  xpos -760
+  ypos 1246
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle26
+  xpos -760
+  ypos 1293
+ }
+ Grade {
+  multiply {{controlli.linesColour.r} {controlli.linesColour.g} {controlli.linesColour.b} {controlli.linesColour.a}}
+  white_clamp true
+  name linesColourGrade2
+  xpos -760
+  ypos 1349
+ }
+push $N423bc530
+push $N423bb400
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle20
+  xpos -400
+  ypos 236
+ }
+ Erode {
+  channels alpha
+  name Erode3
+  xpos -400
+  ypos 300
+ }
+ set C432f3940 [stack 0]
+push $N423b9f60
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy4
+  xpos -280
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch3
+  xpos -280
+  ypos 390
+ }
+ Premult {
+  name Premult1
+  xpos -280
+  ypos 425
+ }
+ set C432f4700 [stack 0]
+push $N423bd660
+push $N423b9880
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle21
+  xpos -40
+  ypos 242
+ }
+clone $C432f3940 {
+  xpos -40
+  ypos 300
+  selected false
+ }
+push $N423bcf80
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy5
+  xpos 80
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch4
+  xpos 80
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos 80
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot26
+  xpos 113
+  ypos 483
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos -280
+  ypos 481
+ }
+push $N423c10d0
+push $N423bdd40
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle22
+  xpos 320
+  ypos 236
+ }
+clone $C432f3940 {
+  xpos 320
+  ypos 300
+  selected false
+ }
+push $N423be420
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy6
+  xpos 440
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch5
+  xpos 440
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos 440
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot27
+  xpos 473
+  ypos 623
+ }
+ Merge2 {
+  inputs 2
+  name Merge13
+  xpos -280
+  ypos 621
+ }
+push $N423beb00
+push $N423c2200
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle23
+  xpos 680
+  ypos 236
+ }
+clone $C432f3940 {
+  xpos 680
+  ypos 300
+  selected false
+ }
+push $N423c0680
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy7
+  xpos 800
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch6
+  xpos 800
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos 800
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot1
+  xpos 833
+  ypos 763
+ }
+ Dot {
+  name Dot41
+  xpos 373
+  ypos 771
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -280
+  ypos 761
+ }
+push $N423c2fc0
+push $N423c2570
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle24
+  xpos 1040
+  ypos 236
+ }
+clone $C432f3940 {
+  xpos 1040
+  ypos 300
+  selected false
+ }
+push $N423be790
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy8
+  xpos 1160
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch7
+  xpos 1160
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos 1160
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot2
+  xpos 1193
+  ypos 903
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -280
+  ypos 901
+ }
+push $N423c4460
+push $N423c40f0
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle25
+  xpos 1400
+  ypos 236
+ }
+clone $C432f3940 {
+  xpos 1400
+  ypos 300
+  selected false
+ }
+push $N423bffa0
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy9
+  xpos 1520
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch8
+  xpos 1520
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos 1520
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot3
+  xpos 1553
+  ypos 1043
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos -280
+  ypos 1041
+ }
+ Merge2 {
+  inputs 2
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge_linee
+  xpos -280
+  ypos 1349
+  disable {{!controlli.usaLinee}}
+ }
+set N432ff650 [stack 0]
+push $N423bc1c0
+ Dot {
+  name Dot25
+  xpos -1207
+  ypos 28
+ }
+set N432fe520 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1751
+  ypos 28
+ }
+ Shuffle {
+  alpha black
+  name Shuffle9
+  xpos -1784
+  ypos 166
+ }
+clone $C423b9f60 {
+  xpos -1784
+  ypos 201
+  selected false
+ }
+set N432fde40 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup qRosso 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.punto3T.x xc2ac0000}
+	 {=controlli.punto3T.y x448b4000}}
+        {}
+        {}
+        {{=controlli.punto4T.x x4487c000}
+	 {=controlli.punto4T.y x448b4000}}
+        {}
+        {}
+        {{=controlli.punto1T.x x4488199a}
+	 {=controlli.punto1T.y x43f20000}}
+        {}
+        {}
+        {{=controlli.punto2T.x xc2ac0000}
+	 {=controlli.punto2T.y x43f20000}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x43fa0000 x4447c000}
+     {a str 1 spx x44700000 spy x44070000 sb 1 ltn x40000000 ltm x40000000 tt x41200000 b
+      {=controlli.coloreArea1.b 0}     g
+      {=controlli.coloreArea1.g 0}     ao 1 ro 1 a
+      {=controlli.coloreArea1.a 1}     r
+      {=controlli.coloreArea1.r 1}}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 10 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {960 540}
+  color {{controlli.coloreArea1.r 1} {controlli.coloreArea1.g} {controlli.coloreArea1.b} {controlli.coloreArea1.a}}
+  colorOverlay {1 0 0 1}
+  lifetime_type "all frames"
+  lifetime_start 2
+  lifetime_end 2
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area12
+  xpos -2024
+  ypos 201
+ }
+clone $C423bb400 {
+  xpos -2024
+  ypos 242
+  selected false
+ }
+set N432ff2e0 [stack 0]
+ Dot {
+  name Dot13
+  xpos -1991
+  ypos 378
+ }
+set N432fc630 [stack 0]
+ EdgeDetectWrapper {
+  edgedetector simple
+  name EdgeDetect4
+  xpos -2024
+  ypos 1105
+ }
+ Dilate {
+  size {{controlli.linesThickness}}
+  name Dilate4
+  xpos -2024
+  ypos 1152
+ }
+ Erode {
+  channels all
+  size {{controlli.linesExpand}}
+  name Erode6
+  xpos -2024
+  ypos 1199
+ }
+ Blur {
+  size {{controlli.linesSoftness}}
+  name Blur4
+  xpos -2024
+  ypos 1246
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle28
+  xpos -2024
+  ypos 1293
+ }
+ Grade {
+  multiply {{controlli.linesColour.r} {controlli.linesColour.g} {controlli.linesColour.b} {controlli.linesColour.a}}
+  white_clamp true
+  name linesColourGrade4
+  xpos -2024
+  ypos 1349
+ }
+ Dot {
+  name Dot47
+  xpos -1995
+  ypos 2017
+ }
+push $N432fc630
+push $N432ff2e0
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle19
+  xpos -1904
+  ypos 242
+ }
+ Dot {
+  name Dot35
+  xpos -1871
+  ypos 308
+ }
+push $N432fde40
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -1784
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch
+  xpos -1784
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos -1784
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot43
+  xpos -1755
+  ypos 1883
+ }
+push $N432fe520
+ Shuffle {
+  alpha black
+  name Shuffle10
+  xpos -1240
+  ypos 160
+ }
+clone $C423b9f60 {
+  xpos -1240
+  ypos 195
+  selected false
+ }
+set N432e11a0 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup rRosso 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.punto3T.x xc2ac0000}
+      {=controlli.punto3T.y x448b4000}}
+        {}
+        {}
+        {{=controlli.punto4T.x x4487c000}
+      {=controlli.punto4T.y x448b4000}}
+        {}
+        {}
+        {{"=(controlli.punto1T.x\ +\ controlli.punto4T.x)\ /2" x4488199a}
+	 {"=(controlli.punto1T.y\ +\ controlli.punto4T.y)\ /2" x43f20000}}
+        {}
+        {}
+        {{"=(controlli.punto3T.x\ +\ controlli.punto2T.x)\ /2" xc2ac0000}
+      {"=(controlli.punto3T.y\ +\ controlli.punto2T.y)\ /2" x43f20000}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x43fa0000 x4447c000}
+     {a str 1 spx x44700000 spy x44070000 sb 1 ltn x40000000 ltm x40000000 tt x41200000 a
+   {=controlli.coloreArea1.a 1}     b
+   {=controlli.coloreArea1.b 0}     g
+   {=controlli.coloreArea1.g 0}     r
+   {=controlli.coloreArea1.r 1}     ao 1 ro 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 10 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {960 540}
+  color {{controlli.coloreArea1.r} {controlli.coloreArea1.g} {controlli.coloreArea1.b} {controlli.coloreArea1.a}}
+  colorOverlay {1 0 0 1}
+  lifetime_type "all frames"
+  lifetime_start 2
+  lifetime_end 2
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area14
+  xpos -1480
+  ypos 195
+ }
+clone $C423bb400 {
+  xpos -1480
+  ypos 236
+  selected false
+ }
+set N432e3090 [stack 0]
+ Dot {
+  name Dot30
+  xpos -1447
+  ypos 378
+ }
+set N432e3770 [stack 0]
+push $N423bc8a0
+ Dot {
+  name Dot10
+  xpos -847
+  ypos 98
+ }
+ Shuffle {
+  alpha black
+  name Shuffle8
+  xpos -880
+  ypos 160
+ }
+clone $C423b9f60 {
+  xpos -880
+  ypos 195
+  selected false
+ }
+set N432e3ae0 [stack 0]
+ RotoPaint {
+  cliptype none
+  replace true
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 512}
+    {t x44fa0000 x44bb8000}
+    {a}
+    {curvegroup rVerde 512 bezier
+     {{cc
+       {f 8192}
+       {p
+        {}
+        {{=controlli.punto1T.x xc2ac0000}
+	 {=controlli.punto1T.y x448b4000}}
+        {}
+        {}
+        {{"=(controlli.punto1T.x\ +\ controlli.punto4T.x)\ /2" x44806ccd}
+	 {"=(controlli.punto1T.y\ +\ controlli.punto4T.y)\ /2" x44000000}}
+        {}
+        {}
+        {{"=(controlli.punto2T.x\ +\ controlli.punto3T.x)\ /2" x4409b333}
+	 {"=(controlli.punto2T.y\ +\ controlli.punto3T.y)\ /2" x442a199a}}
+        {}
+        {}
+        {{=controlli.punto2T.x xc2b199a0}
+	 {=controlli.punto2T.y x43f20000}}
+        {}}}
+      {cc
+       {f 8192}
+       {p
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}
+        {}}}}
+     {t x43fa0000 x4447c000}
+     {a str 1 spx x44700000 spy x44070000 sb 1 ltn x40000000 ltm x40000000 tt x41200000 b
+      {=controlli.coloreArea2.b 0}     g
+      {=controlli.coloreArea2.g 1}     ao 1 a
+      {=controlli.coloreArea2.a 1}     r
+      {=controlli.coloreArea2.r 0}     go 1}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 tt 9 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 10 }
+  { createOpenSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_autokey false
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {960 540}
+  color {{controlli.coloreArea2.r 0} {controlli.coloreArea2.g} {controlli.coloreArea2.b} {controlli.coloreArea2.a}}
+  colorOverlay {0 1 0 1}
+  lifetime_type "all frames"
+  lifetime_start 2
+  lifetime_end 2
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name area13
+  xpos -1092
+  ypos 195
+ }
+clone $C423bb400 {
+  xpos -1092
+  ypos 230
+  selected false
+ }
+set N432e3e50 [stack 0]
+ Dot {
+  name Dot29
+  xpos -1059
+  ypos 378
+ }
+set N432e41c0 [stack 0]
+ Dot {
+  name Dot44
+  xpos -1059
+  ypos 658
+ }
+ Merge2 {
+  inputs 2
+  name Merge14
+  xpos -1480
+  ypos 656
+ }
+ EdgeDetectWrapper {
+  edgedetector simple
+  name EdgeDetect3
+  xpos -1480
+  ypos 1116
+ }
+ Dilate {
+  size {{controlli.linesThickness}}
+  name Dilate3
+  xpos -1480
+  ypos 1163
+ }
+ Erode {
+  channels all
+  size {{controlli.linesExpand}}
+  name Erode5
+  xpos -1480
+  ypos 1210
+ }
+ Blur {
+  size {{controlli.linesSoftness}}
+  name Blur3
+  xpos -1480
+  ypos 1257
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle27
+  xpos -1480
+  ypos 1304
+ }
+ Grade {
+  multiply {{controlli.linesColour.r} {controlli.linesColour.g} {controlli.linesColour.b} {controlli.linesColour.a}}
+  white_clamp true
+  name linesColourGrade3
+  xpos -1480
+  ypos 1360
+ }
+ Dot {
+  name Dot45
+  xpos -1447
+  ypos 1708
+ }
+push $N432e3770
+push $N432e3090
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle18
+  xpos -1360
+  ypos 236
+ }
+clone $C432f3940 {
+  xpos -1360
+  ypos 300
+  selected false
+ }
+push $N432e11a0
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos -1240
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch2
+  xpos -1240
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos -1240
+  ypos 411
+  selected false
+ }
+push $N432e41c0
+push $N432e3e50
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle17
+  xpos -1000
+  ypos 236
+ }
+clone $C432f3940 {
+  xpos -1000
+  ypos 300
+  selected false
+ }
+push $N432e3ae0
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos -880
+  ypos 300
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.preview == 1 ? 1 : 0"}}
+  name preview_Switch1
+  xpos -880
+  ypos 376
+ }
+clone $C432f4700 {
+  xpos -880
+  ypos 411
+  selected false
+ }
+ Dot {
+  name Dot5
+  xpos -847
+  ypos 483
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos -1240
+  ypos 481
+ }
+ Dot {
+  name Dot4
+  xpos -1207
+  ypos 1568
+ }
+push $N432ff650
+ Switch {
+  inputs 2
+  which {{"controlli.numeroAree < 3 ? 1 : 0"}}
+  name Switch7
+  xpos -280
+  ypos 1566
+ }
+set N4363abe0 [stack 0]
+ Merge2 {
+  inputs 2
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge_linee1
+  xpos -528
+  ypos 1706
+  disable {{!controlli.usaLinee}}
+ }
+push $N4363abe0
+ Switch {
+  inputs 2
+  which {{"controlli.numeroAree < 3 ? 1 : 0"}}
+  name Switch2
+  xpos -280
+  ypos 1706
+ }
+ Switch {
+  inputs 2
+  which {{"controlli.numeroAree < 2 ? 1 : 0"}}
+  name Switch1
+  xpos -284
+  ypos 1881
+ }
+set N43638ee0 [stack 0]
+ Merge2 {
+  inputs 2
+  Bchannels {rgba.red rgba.green rgba.blue -rgba.alpha}
+  name Merge_linee2
+  xpos -524
+  ypos 2015
+  disable {{!controlli.usaLinee}}
+ }
+push $N43638ee0
+ Switch {
+  inputs 2
+  which {{"controlli.numeroAree < 3 ? 1 : 0"}}
+  name Switch3
+  xpos -284
+  ypos 2015
+ }
+ Crop {
+  box {{root.format.x} {root.format.y} {root.format.r} {root.format.t}}
+  intersect true
+  crop false
+  name Crop1
+  xpos -284
+  ypos 2091
+ }
+ Output {
+  name Output1
+  xpos -284
+  ypos 2231
+ }
+ Viewer {
+  inputs 2
+  colour_sample_bbox {0.0145833334 -0.1770833284 0.015625 -0.1760416627}
+  samplepoints {{0.0145833334 -0.1770833284}
+    }
+  input_process false
+  name Viewer1
+  xpos -280
+  ypos 2476
+ }
+end_group

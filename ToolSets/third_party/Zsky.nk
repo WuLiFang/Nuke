@@ -1,0 +1,126 @@
+#! C:/Program Files/Nuke6.0v1/Nuke6.0.exe -nx
+version 6.3 v4
+Group {
+ name Zsky1
+ inputs 2
+ addUserKnob {20 User}
+ addUserKnob {41 p0 l "point 0" T Ramp1.p0}
+ addUserKnob {41 p1 l "point 1" T Ramp1.p1}
+ addUserKnob {41 color T Constant1.color}
+ addUserKnob {41 blackpoint T Grade1.blackpoint}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 whitepoint T Grade1.whitepoint}
+ addUserKnob {41 black l lift T Grade1.black}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {41 add l offset T Grade1.add}
+ addUserKnob {41 gamma_1 l gamma T Grade2.gamma}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  format {{{input1.format}}}
+  name Constant2
+  xpos -221
+  ypos -200
+ }
+ Ramp {
+  p0 {295 679}
+  p1 {295 476}
+  type plinear
+  name Ramp1
+  xpos -190
+  ypos -96
+ }
+set N13089540 [stack 0]
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 90
+  ypos -128
+ }
+ Input {
+  inputs 0
+  name Z
+  label Z
+  xpos -599
+  ypos -121
+ }
+ Grade {
+  blackpoint 0.52
+  gamma 0.2
+  name Grade1
+  xpos -599
+  ypos -81
+ }
+ Invert {
+  name Invert2
+  xpos -599
+  ypos -25
+ }
+ Grade {
+  gamma 0.34
+  name Grade2
+  xpos -599
+  ypos 56
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.8113312125 0.9447383285 0.9750000238 1}
+  format {{{input1.format}}}
+  name Constant1
+  xpos -468
+  ypos -91
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  out alpha
+  name ShuffleCopy1
+  xpos -468
+  ypos 56
+ }
+ Premult {
+  name Premult1
+  xpos -336
+  ypos 56
+ }
+ Input {
+  inputs 0
+  name sky_sea_image
+  label Sky&Sea_image
+  selected true
+  xpos -297
+  ypos -306
+  number 1
+ }
+set N9b2e340 [stack 0]
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge3
+  xpos -336
+  ypos -52
+ }
+push $N13089540
+ Merge2 {
+  inputs 2
+  operation in
+  name In
+  xpos -155
+  ypos -35
+ }
+push $N9b2e340
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos 23
+  ypos -35
+ }
+ Output {
+  name Output1
+  xpos 23
+  ypos 65
+ }
+end_group

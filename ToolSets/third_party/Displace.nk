@@ -1,0 +1,49 @@
+#! C:/Program Files/Nuke6.2v2/Nuke6.2.exe -nx
+version 6.2 v2
+Group {
+ name Displace1
+ inputs 2
+ label displacement
+ addUserKnob {20 displace}
+ addUserKnob {41 uv_offset l offset T IDistort1.uv_offset}
+ addUserKnob {41 uv_scale l scale T IDistort1.uv_scale}
+}
+ Input {
+  inputs 0
+  name map
+  label displacement_map
+  xpos -799
+  ypos -174
+ }
+ Input {
+  inputs 0
+  name souce
+  xpos -514
+  ypos -189
+  number 1
+ }
+add_layer {displace displace.u displace.v}
+ ShuffleCopy {
+  inputs 2
+  alpha alpha2
+  black red
+  white green
+  out2 displace
+  name ShuffleCopy1
+  xpos -608
+  ypos -30
+ }
+ IDistort {
+  uv displace
+  uv_offset 0.126
+  uv_scale 63
+  name IDistort1
+  xpos -608
+  ypos 24
+ }
+ Output {
+  name Output1
+  xpos -608
+  ypos 107
+ }
+end_group

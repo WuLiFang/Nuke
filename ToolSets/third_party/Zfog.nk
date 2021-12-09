@@ -1,0 +1,76 @@
+#! C:/Program Files/Nuke6.3v4/Nuke6.3.exe -nx
+version 6.3 v4
+Group {
+ name Zfog1
+ inputs 2
+ addUserKnob {20 zfog l zFog}
+ addUserKnob {41 color T Constant1.color}
+ addUserKnob {41 gamma T Grade1.gamma}
+ addUserKnob {41 blackpoint T Grade1.blackpoint}
+ addUserKnob {41 whitepoint T Grade1.whitepoint}
+ addUserKnob {41 add l offset T Grade1.add}
+ addUserKnob {41 multiply T Grade1.multiply}
+ addUserKnob {41 black l lift T Grade1.black}
+ addUserKnob {41 white l gain T Grade1.white}
+}
+ Input {
+  inputs 0
+  name Input1
+  label Z_map
+  selected true
+  xpos 334
+  ypos 13
+ }
+ Invert {
+  name Invert1
+  xpos 334
+  ypos 82
+ }
+ Grade {
+  gamma 0.455
+  name Grade1
+  xpos 334
+  ypos 151
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format {{{input1.format}}}
+  name Constant1
+  xpos 142
+  ypos 29
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  out alpha
+  name ShuffleCopy1
+  xpos 200
+  ypos 192
+ }
+ Premult {
+  name Premult1
+  xpos 349
+  ypos 229
+ }
+ Input {
+  inputs 0
+  name Input2
+  xpos 514
+  ypos 127
+  number 1
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge1
+  xpos 514
+  ypos 220
+ }
+ Output {
+  name Output1
+  xpos 507
+  ypos 340
+ }
+end_group

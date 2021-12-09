@@ -1,0 +1,25 @@
+#! C:/Program Files/Nuke6.0v1/Nuke6.0.exe -nx
+version 6.3 v4
+Group {
+ name dragon_red_gamma1
+ addUserKnob {20 red_gamma l User}
+ addUserKnob {41 gamma T Grade1.gamma}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -76
+  ypos -179
+ }
+ Grade {
+  gamma {1.1 0.9 0.9 1}
+  name Grade1
+  xpos -76
+  ypos -139
+ }
+ Output {
+  name Output1
+  xpos -76
+  ypos -39
+ }
+end_group

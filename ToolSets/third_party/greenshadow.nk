@@ -1,0 +1,63 @@
+#! C:/Program Files/Nuke6.0v1/Nuke6.0.exe -nx
+version 6.3 v4
+Group {
+ name greenshadow1
+ inputs 2
+ addUserKnob {20 mixshadow}
+ addUserKnob {41 mix T Merge1.mix}
+ addUserKnob {41 white l gain T Grade1.white}
+ addUserKnob {41 gamma T Grade1.gamma}
+}
+ Input {
+  inputs 0
+  name shadow
+  xpos 451
+  ypos -534
+ }
+ Grade {
+  name Grade1
+  xpos 451
+  ypos -494
+ }
+ Shuffle {
+  red green
+  blue green
+  name Shuffle2
+  xpos 451
+  ypos -408
+ }
+ Constant {
+  inputs 0
+  color 1
+  name Constant3
+  xpos 658
+  ypos -546
+ }
+ Merge2 {
+  inputs 2
+  sRGB true
+  name Merge4
+  xpos 658
+  ypos -408
+ }
+ Input {
+  inputs 0
+  name cha
+  xpos 803
+  ypos -360
+  number 1
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  bbox B
+  name Merge1
+  xpos 658
+  ypos -253
+ }
+ Output {
+  name Output1
+  xpos 658
+  ypos -153
+ }
+end_group
