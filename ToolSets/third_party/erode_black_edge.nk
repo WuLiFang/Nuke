@@ -1,0 +1,783 @@
+#! I:/Nuke6.2v1/Nuke6.2.exe -nx
+version 6.2 v1
+Group {
+ name erode_black_edge1
+ inputs 3
+ addUserKnob {20 kalo}
+ addUserKnob {26 Erod_Black l "Erode Black"}
+ addUserKnob {41 preset T gizmo_control.preset}
+ addUserKnob {41 erode_more l "erode more" T gizmo_control.erode_more}
+ addUserKnob {26 ""}
+ addUserKnob {41 erode_edge l "erode edge" T gizmo_control.erode_edge}
+ addUserKnob {41 edge_protect l "edge protect" T gizmo_control.edge_protect}
+ addUserKnob {26 Alpha_adjust l "Alpha adjust"}
+ addUserKnob {0 alpha_view -STARTLINE +INVISIBLE}
+ addUserKnob {4 view_alpha l "view alpha" M {color alpha merge "" ""}}
+ addUserKnob {41 black T gizmo_control.black}
+ addUserKnob {41 white T gizmo_control.white}
+ addUserKnob {26 ""}
+ addUserKnob {41 mask T matte_alpha.from0}
+ addUserKnob {6 invert -STARTLINE}
+ addUserKnob {41 mix T gizmo_control.mix}
+ addUserKnob {26 kn l "" +STARTLINE T "erode_black_edge version 1.0   arunjrv@ymail.com"}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label PREMULT_WITH_IN_ALPHA
+  note_font_size 42
+  xpos 3493
+  ypos 2438
+  bdwidth 374
+  bdheight 398
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x7171c600
+  label MASK
+  note_font_size 42
+  xpos 4973
+  ypos 3595
+  bdwidth 1821
+  bdheight 1020
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e8e3800
+  label INPUT_PREMULT
+  note_font_size 42
+  xpos 130
+  ypos -1065
+  bdwidth 313
+  bdheight 303
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x8e8e3800
+  label GIZMO_CONTROL
+  note_font_size 42
+  xpos 6028
+  ypos 1564
+  bdwidth 292
+  bdheight 251
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x8e8e3800
+  label ALPHA_VIEW_FOR_BITING_POINT_REF
+  note_font_size 42
+  xpos 3251
+  ypos 5668
+  bdwidth 891
+  bdheight 312
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x8e8e3800
+  label GRAIN
+  note_font_size 42
+  xpos 3165
+  ypos 2581
+  bdwidth 206
+  bdheight 204
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x8e8e3800
+  label REVELING_INNER_EDGE
+  note_font_size 42
+  xpos 3456
+  ypos 3082
+  bdwidth 1032
+  bdheight 584
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode9
+  tile_color 0x7171c600
+  label BITING_POINT_FOR_PIXEL_ERODE
+  note_font_size 42
+  xpos 833
+  ypos -1
+  bdwidth 728
+  bdheight 272
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode5
+  tile_color 0x8e8e3800
+  label OUTPUT_MIX_WITH_INPUT
+  note_font_size 42
+  xpos 3402
+  ypos 4911
+  bdwidth 551
+  bdheight 209
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x8e8e3800
+  label ADDING_INPUT_ALPHA_TO_OUTPUT
+  note_font_size 42
+  xpos 3298
+  ypos 5376
+  bdwidth 751
+  bdheight 246
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 233
+  ypos -963
+ }
+set N2d737e00 [stack 0]
+push $N2d737e00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 233
+  ypos -857
+  disable {{"!\[ exists parent.input\[value Input1.number] ]"}}
+ }
+ Dot {
+  name Dot2
+  xpos 267
+  ypos -630
+ }
+set N15d9c5a0 [stack 0]
+ Dot {
+  name Dot15
+  xpos 1171
+  ypos -630
+ }
+ Unpremult {
+  name Unpremult7
+  xpos 1137
+  ypos -364
+ }
+ Dot {
+  name Dot1
+  xpos 1171
+  ypos -120
+ }
+set N1600b7a0 [stack 0]
+ Erode {
+  size {{gizmo_control.erode_edge i}}
+  name Erode1
+  tile_color 0xff0000ff
+  gl_color 0xff0000ff
+  xpos 1137
+  ypos 116
+ }
+ Dot {
+  name Dot9
+  xpos 1171
+  ypos 426
+ }
+set N1612de50 [stack 0]
+ Dot {
+  name Dot23
+  xpos 5280
+  ypos 426
+ }
+ Clamp {
+  name Clamp6
+  xpos 5246
+  ypos 3815
+ }
+ Grade {
+  channels alpha
+  blackpoint {{gizmo_control.black}}
+  whitepoint {{gizmo_control.white}}
+  white_clamp true
+  name Grade1
+  xpos 5246
+  ypos 4044
+ }
+set N15ff3990 [stack 0]
+ Dot {
+  name Dot6
+  xpos 5612
+  ypos 4054
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle1
+  xpos 5578
+  ypos 5740
+ }
+ Dot {
+  name Dot17
+  xpos 4071
+  ypos 5744
+ }
+set N161588a0 [stack 0]
+ Dot {
+  name Dot21
+  xpos 4071
+  ypos 5917
+ }
+push $N15d9c5a0
+ Dot {
+  name Dot13
+  xpos 267
+  ypos 3533
+ }
+set N1615d2f0 [stack 0]
+ Dot {
+  name Dot11
+  xpos 267
+  ypos 4330
+ }
+set N1615f7d8 [stack 0]
+ Dot {
+  name Dot10
+  xpos 406
+  ypos 4330
+ }
+ Dot {
+  name Dot16
+  xpos 406
+  ypos 4656
+ }
+set N15ffc810 [stack 0]
+ Dot {
+  name Dot12
+  xpos 406
+  ypos 5029
+ }
+set N15ffecf8 [stack 0]
+ Dot {
+  name Dot19
+  xpos 406
+  ypos 5917
+ }
+ Merge2 {
+  inputs 2
+  mix 0.9
+  name Merge3
+  xpos 3343
+  ypos 5913
+ }
+ Dot {
+  name Dot20
+  xpos 3377
+  ypos 5744
+ }
+push $N161588a0
+push $N1615f7d8
+ Expression {
+  expr3 a==0?0:a
+  name Expression1
+  xpos 233
+  ypos 4490
+ }
+ Dot {
+  name Dot4
+  xpos 267
+  ypos 5512
+ }
+ Input {
+  inputs 0
+  name matte
+  xpos 6562
+  ypos 3457
+  number 1
+ }
+ Dot {
+  name Dot7
+  xpos 6596
+  ypos 3878
+ }
+ Expression {
+  expr3 a==0?0:a
+  name Expression3
+  xpos 6562
+  ypos 3943
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 6562
+  ypos 4049
+  disable {{!invert i}}
+ }
+set N2d313838 [stack 0]
+push $N2d313838
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name matte_alpha
+  selected true
+  xpos 6562
+  ypos 4190
+  disable {{"!\[ exists parent.input\[value matte.number] ]"}}
+  addUserKnob {20 User}
+  addUserKnob {26 ""}
+  addUserKnob {41 from0_1 l "Copy channel" T matte_alpha.from0}
+ }
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  xpos 6257
+  ypos 4002
+ }
+ Switch {
+  inputs 2
+  which {{matte_alpha.from0_1 i}}
+  name Switch2
+  xpos 6257
+  ypos 4196
+  disable {{"!\[ exists parent.input\[value matte.number] ]" i}}
+ }
+set N15e52b10 [stack 0]
+ Dot {
+  name Dot5
+  xpos 6291
+  ypos 4527
+ }
+push $N15ff3990
+ Erode {
+  size 10
+  name Erode2
+  xpos 5046
+  ypos 4044
+ }
+ Blur {
+  size 2
+  name Blur2
+  xpos 5046
+  ypos 4202
+ }
+ Dot {
+  name Dot3
+  xpos 5080
+  ypos 4334
+ }
+push $N15ff3990
+ EdgeDetectWrapper {
+  channels alpha
+  blursize 2
+  name EdgeDetect1
+  xpos 5246
+  ypos 4231
+ }
+ Dilate {
+  size {{Switch1.which i}}
+  name Erode3
+  xpos 5246
+  ypos 4409
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+  name Merge1
+  xpos 5046
+  ypos 4409
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge2
+  xpos 5046
+  ypos 4523
+  disable {{"!\[ exists parent.input\[value matte.number] ]" i}}
+ }
+ Dot {
+  name Dot18
+  xpos 5080
+  ypos 4656
+ }
+push $N1600b7a0
+ Dot {
+  name Dot8
+  xpos 4418
+  ypos -120
+ }
+ Expression {
+  expr3 a==0?0:a
+  name Expression2
+  xpos 4384
+  ypos 2541
+ }
+set N2d365e80 [stack 0]
+ FilterErode {
+  size {{gizmo_control.edge_protect}}
+  name Inner_erode
+  xpos 4384
+  ypos 3226
+ }
+ Blur {
+  channels alpha
+  size {{Inner_erode.size+1}}
+  name Blur1
+  xpos 4384
+  ypos 3408
+ }
+ Dot {
+  name Dot14
+  xpos 4418
+  ypos 3533
+ }
+push $N1615d2f0
+ Input {
+  inputs 0
+  name grain
+  xpos 3232
+  ypos 2678
+  number 2
+ }
+push $N2d365e80
+push $N1612de50
+push $N1612de50
+ ShuffleCopy {
+  inputs 2
+  black red
+  white green
+  red2 blue
+  green2 alpha
+  name ShuffleCopy1
+  xpos 1137
+  ypos 491
+ }
+ Premult {
+  name Premult1
+  xpos 1137
+  ypos 576
+ }
+ EdgeBlur {
+  channels rgba
+  size {{gizmo_control.erode_more i}}
+  name EdgeBlur1
+  xpos 1137
+  ypos 671
+ }
+ set C2d398760 [stack 0]
+ Unpremult {
+  name Unpremult2
+  xpos 1137
+  ypos 709
+ }
+set N2d39f678 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp1
+  xpos 1137
+  ypos 818
+ }
+clone $C2d398760 {
+  xpos 1137
+  ypos 856
+  selected false
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 1137
+  ypos 894
+ }
+set N2d3bc160 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp2
+  xpos 1137
+  ypos 1014
+ }
+clone $C2d398760 {
+  xpos 1137
+  ypos 1052
+  selected false
+ }
+ Unpremult {
+  name Unpremult3
+  xpos 1137
+  ypos 1090
+ }
+set N2d3cd520 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp3
+  xpos 1141
+  ypos 1202
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 1240
+  selected false
+ }
+ Unpremult {
+  name Unpremult4
+  xpos 1141
+  ypos 1278
+ }
+set N2d3ddfb8 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp4
+  xpos 1141
+  ypos 1416
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 1454
+  selected false
+ }
+ Unpremult {
+  name Unpremult5
+  xpos 1141
+  ypos 1492
+ }
+set N2d3f0a30 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp5
+  xpos 1141
+  ypos 1646
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 1684
+  selected false
+ }
+ Unpremult {
+  name Unpremult6
+  xpos 1141
+  ypos 1722
+ }
+set N2d401478 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp7
+  xpos 1141
+  ypos 1843
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 1881
+  selected false
+ }
+ Unpremult {
+  name Unpremult8
+  xpos 1141
+  ypos 1919
+ }
+set N2d415f10 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp8
+  xpos 1141
+  ypos 2056
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 2094
+  selected false
+ }
+ Unpremult {
+  name Unpremult9
+  xpos 1141
+  ypos 2132
+ }
+set N2d426980 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp9
+  xpos 1141
+  ypos 2261
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 2299
+  selected false
+ }
+ Unpremult {
+  name Unpremult10
+  xpos 1141
+  ypos 2337
+ }
+set N2d4379f0 [stack 0]
+ Clamp {
+  channels alpha
+  maximum 0
+  MinClampTo_enable true
+  MaxClampTo_enable true
+  name Clamp10
+  xpos 1141
+  ypos 2463
+ }
+clone $C2d398760 {
+  xpos 1141
+  ypos 2501
+  selected false
+ }
+ Unpremult {
+  name Unpremult11
+  xpos 1141
+  ypos 2539
+ }
+push $N2d4379f0
+push $N2d426980
+push $N2d415f10
+push $N2d401478
+push $N2d3f0a30
+push $N2d3ddfb8
+push $N2d3cd520
+push $N2d3bc160
+push $N2d39f678
+push $N1600b7a0
+ Switch {
+  inputs 11
+  which {{gizmo_control.preset i}}
+  name Switch1
+  xpos 3633
+  ypos 1266
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 3633
+  ypos 2535
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge4
+  xpos 3633
+  ypos 2678
+ }
+ Premult {
+  name Premult3
+  xpos 3633
+  ypos 2765
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 3633
+  ypos 3523
+ }
+push $N15ffc810
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 3633
+  ypos 4646
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 3633
+  ypos 4832
+ }
+push $N15ffecf8
+ Dissolve {
+  inputs 2
+  which {{gizmo_control.mix}}
+  name Dissolve1
+  xpos 3633
+  ypos 5019
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 3633
+  ypos 5502
+ }
+ Switch {
+  inputs 3
+  which {{view_alpha i x1 0}}
+  name Switch3
+  xpos 3633
+  ypos 5740
+ }
+ Dot {
+  name Dot22
+  xpos 3667
+  ypos 6082
+ }
+ Output {
+  name Output1
+  xpos 3633
+  ypos 6286
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label PIXEL_EXPANDING_USING_UNPREMULT
+  note_font "Verdana Bold Bold Bold Bold"
+  note_font_size 50
+  xpos 1835
+  ypos 1333
+ }
+ NoOp {
+  inputs 0
+  name gizmo_control
+  xpos 6123
+  ypos 1680
+  addUserKnob {20 User}
+  addUserKnob {3 preset}
+  preset 10
+  addUserKnob {7 erode_more l "erode more" R 1 10}
+  erode_more 3
+  addUserKnob {7 erode_edge l "erode edge" R 0 10}
+  erode_edge 5
+  addUserKnob {7 edge_protect l "edge protect" R 0 10}
+  edge_protect 5
+  addUserKnob {7 black}
+  addUserKnob {7 white}
+  white 1
+  addUserKnob {7 mix}
+  mix 1
+ }
+push $N15e52b10
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 6100
+  ypos 4196
+ }
+end_group

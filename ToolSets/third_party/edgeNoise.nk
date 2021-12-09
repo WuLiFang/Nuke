@@ -1,0 +1,385 @@
+#! C:/Program Files/Nuke9.0v1/nuke-9.0.1.dll -nx
+version 9.0 v1
+Group {
+ name edgeNoise
+ addUserKnob {20 User}
+ addUserKnob {26 t1 l channels}
+ addUserKnob {6 r l red +STARTLINE}
+ addUserKnob {6 g l green -STARTLINE}
+ addUserKnob {6 b l blue -STARTLINE}
+ addUserKnob {6 a l alpha -STARTLINE}
+ a true
+ addUserKnob {26 option l options}
+ addUserKnob {7 blurSize l Size R 0 100}
+ blurSize 1
+ addUserKnob {7 noiseScale l "Noise Scale" R 0 100}
+ noiseScale 14
+ addUserKnob {7 fadeNoise l Mix}
+ fadeNoise 1
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x388e8e00
+  label R
+  note_font_size 42
+  xpos 99
+  ypos 586
+  bdwidth 98
+  bdheight 251
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x388e8e00
+  label G
+  note_font_size 42
+  xpos 218
+  ypos 584
+  bdwidth 98
+  bdheight 251
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x388e8e00
+  label B
+  note_font_size 42
+  xpos 340
+  ypos 585
+  bdwidth 98
+  bdheight 251
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x388e8e00
+  label A
+  note_font_size 42
+  xpos 496
+  ypos 588
+  bdwidth 98
+  bdheight 251
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -33
+  ypos 461
+ }
+ Dot {
+  name Dot1
+  xpos 1
+  ypos 513
+ }
+set Nf0be400 [stack 0]
+ Dot {
+  name Dot2
+  xpos 143
+  ypos 539
+ }
+set Nf0be000 [stack 0]
+ Dot {
+  name Dot3
+  xpos 262
+  ypos 542
+ }
+set N55379c00 [stack 0]
+ Dot {
+  name Dot12
+  xpos 384
+  ypos 542
+ }
+set N6b1f4400 [stack 0]
+ Dot {
+  name Dot13
+  xpos 540
+  ypos 542
+ }
+set N6b1f4000 [stack 0]
+ Dot {
+  name Dot5
+  xpos 654
+  ypos 542
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle2
+  xpos 620
+  ypos 746
+ }
+ Noise {
+  size {{noiseScale}}
+  gain 0.7
+  gamma 0.6
+  center {1024 778}
+  name Noise1
+  selected true
+  xpos 620
+  ypos 772
+ }
+ Grade {
+  channels alpha
+  white 1.6
+  name Grade1
+  xpos 620
+  ypos 798
+ }
+ Dot {
+  name Dot7
+  xpos 654
+  ypos 885
+ }
+ Dot {
+  name Dot11
+  xpos 583
+  ypos 885
+ }
+set N585efc00 [stack 0]
+ Dot {
+  name Dot10
+  xpos 430
+  ypos 885
+ }
+set N7611b000 [stack 0]
+ Dot {
+  name Dot9
+  xpos 305
+  ypos 885
+ }
+set N585ef800 [stack 0]
+ Dot {
+  name Dot6
+  xpos 189
+  ypos 885
+ }
+push $Nf0be000
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha red
+  name Shuffle1
+  xpos 109
+  ypos 666
+ }
+ FilterErode {
+  size {{blurSize}}
+  name FilterErode1
+  xpos 109
+  ypos 692
+ }
+ Blur {
+  size {{blurSize+1}}
+  name Blur1
+  xpos 109
+  ypos 730
+ }
+ Invert {
+  name Invert1
+  xpos 109
+  ypos 768
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name In
+  xpos 109
+  ypos 931
+ }
+push $N585ef800
+push $N55379c00
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha green
+  name Shuffle3
+  xpos 228
+  ypos 664
+ }
+ FilterErode {
+  size {{blurSize}}
+  name FilterErode2
+  xpos 228
+  ypos 690
+ }
+ Blur {
+  size {{blurSize+1}}
+  name Blur2
+  xpos 228
+  ypos 728
+ }
+ Invert {
+  name Invert2
+  xpos 228
+  ypos 766
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name In1
+  xpos 228
+  ypos 929
+ }
+push $N7611b000
+push $N6b1f4400
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha blue
+  name Shuffle4
+  xpos 350
+  ypos 665
+ }
+ FilterErode {
+  size {{blurSize}}
+  name FilterErode3
+  xpos 350
+  ypos 691
+ }
+ Blur {
+  size {{blurSize+1}}
+  name Blur3
+  xpos 350
+  ypos 729
+ }
+ Invert {
+  name Invert3
+  xpos 350
+  ypos 767
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name In2
+  xpos 350
+  ypos 930
+ }
+push $N585efc00
+push $N6b1f4000
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle5
+  xpos 506
+  ypos 668
+ }
+ FilterErode {
+  size {{blurSize}}
+  name FilterErode4
+  xpos 506
+  ypos 694
+ }
+ Blur {
+  size {{blurSize+1}}
+  name Blur4
+  xpos 506
+  ypos 732
+ }
+ Invert {
+  name Invert4
+  xpos 506
+  ypos 770
+ }
+ Merge2 {
+  inputs 2
+  operation in
+  name In3
+  xpos 506
+  ypos 933
+ }
+push $Nf0be400
+ Dot {
+  name Dot4
+  xpos 1
+  ypos 1004
+ }
+ Dot {
+  name Dot8
+  xpos 478
+  ypos 1004
+ }
+ Grade {
+  inputs 1+1
+  channels alpha
+  white 0
+  mix {{fadeNoise}}
+  name Grade3
+  xpos 506
+  ypos 1068
+ }
+set N6b51f400 [stack 0]
+ Grade {
+  inputs 1+1
+  channels {-rgba.red -rgba.green rgba.blue}
+  white 0
+  gamma 0
+  mix {{fadeNoise}}
+  name Grade5
+  xpos 350
+  ypos 1068
+ }
+ Grade {
+  inputs 1+1
+  channels {-rgba.red rgba.green -rgba.blue}
+  white 0
+  gamma 0
+  mix {{fadeNoise}}
+  name Grade4
+  xpos 228
+  ypos 1068
+ }
+ Grade {
+  inputs 1+1
+  channels {rgba.red -rgba.green -rgba.blue}
+  white 0
+  gamma 0
+  mix {{fadeNoise}}
+  name Grade2
+  xpos 109
+  ypos 1068
+ }
+ Dot {
+  name Dot14
+  xpos 1
+  ypos 1078
+ }
+push $N6b51f400
+ Dot {
+  name Dot15
+  xpos 540
+  ypos 1151
+ }
+ Dot {
+  name Dot16
+  xpos 139
+  ypos 1151
+ }
+ Switch {
+  inputs 2
+  which {{"r+g+b > 0   ? 1 : 0"}}
+  name Switch1
+  xpos -33
+  ypos 1223
+ }
+set Nf0bf400 [stack 0]
+ Output {
+  name Output1
+  xpos -33
+  ypos 1271
+ }
+push $Nf0bf400
+ Viewer {
+  frame 20
+  frame_range 1-100
+  name Viewer1
+  xpos 80
+  ypos 1425
+ }
+end_group

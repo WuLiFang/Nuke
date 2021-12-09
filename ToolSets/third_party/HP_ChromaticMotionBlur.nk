@@ -1,0 +1,246 @@
+Group {
+ name HP_ChromaticMotionBlur1
+ icon chromaNode.png
+ inputs 2
+ tile_color 0xff
+ note_font_color 0xff
+ addUserKnob {20 Blur_Controls l "Blur Controls"}
+ addUserKnob {7 BlurAmount l "Blur Amount" R 0 10}
+ addUserKnob {26 ""}
+ addUserKnob {7 Spread l "Color Spread"}
+ Spread 1
+ addUserKnob {26 ""}
+ addUserKnob {20 Offsetgroup l "Shutter Offsets" n 1}
+ addUserKnob {7 RedOffset l "Red Offset" R -1 0}
+ addUserKnob {7 GreenOffset l "Green Offset" R -1 0}
+ GreenOffset -0.5
+ addUserKnob {7 BlueOffset l "Blue Offset" R -1 0}
+ BlueOffset -1
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l "" +STARTLINE T "Chromatic Motion Blur \n© 2018 hellphish\n"}
+ addUserKnob {20 Translation_Controls l "Translation Controls"}
+ addUserKnob {41 translate_2 l "Red Shift" T TransformRed.translate}
+ addUserKnob {41 scale_2 l "Red Scale" T TransformRed.scale}
+ addUserKnob {41 center T TransformRed.center}
+ addUserKnob {26 ""}
+ addUserKnob {41 translate_1 l "Green Shift" T TransformGreen.translate}
+ addUserKnob {41 scale_1 l "Green Scale" T TransformGreen.scale}
+ addUserKnob {41 center_1 l center T TransformGreen.center}
+ addUserKnob {26 ""}
+ addUserKnob {41 translate l "Blue Shift" T TransformBlue.translate}
+ addUserKnob {41 scale l "Blue Scale" T TransformBlue.scale}
+ addUserKnob {41 center_2 l center T TransformBlue.center}
+ addUserKnob {20 Vector_Controls l "Vector Generator"}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T VectorGenerator1.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {41 motionEstimation l Motion T VectorGenerator1.motionEstimation}
+ addUserKnob {41 vectorDetailReg l "Vector Detail" T VectorGenerator1.vectorDetailReg}
+ addUserKnob {41 strengthReg l Strength T VectorGenerator1.strengthReg}
+ addUserKnob {41 matteChannel l "Matte Channel" T VectorGenerator1.matteChannel}
+ addUserKnob {41 output l Output T VectorGenerator1.output}
+ addUserKnob {20 Advanced n 1}
+ addUserKnob {41 flickerCompensation l "Flicker Compensation" -STARTLINE T VectorGenerator1.flickerCompensation}
+ addUserKnob {20 Tolerances n 1}
+ Tolerances 0
+ addUserKnob {41 weightRed l "Weight Red" T VectorGenerator1.weightRed}
+ addUserKnob {41 weightGreen l "Weight Green" T VectorGenerator1.weightGreen}
+ addUserKnob {41 weightBlue l "Weight Blue" T VectorGenerator1.weightBlue}
+ addUserKnob {20 "" n -1}
+ addUserKnob {20 "" n -1}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x3d0000ff
+  note_font_size 42
+  xpos -164
+  ypos -63
+  bdwidth 600
+  bdheight 219
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x380eff
+  gl_color 0xa0054ff
+  note_font_size 42
+  xpos -165
+  ypos 175
+  bdwidth 601
+  bdheight 240
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x1c2133ff
+  note_font_size 42
+  xpos -165
+  ypos 432
+  bdwidth 596
+  bdheight 227
+ }
+ Input {
+  inputs 0
+  name Foreground_Matte
+  xpos 187
+  ypos -188
+  number 1
+ }
+ Input {
+  inputs 0
+  name Source
+  label Source
+  xpos -11
+  ypos -298
+ }
+ VectorGenerator {
+  inputs 2
+  motionEstimation Regularized
+  name VectorGenerator1
+  xpos -13
+  ypos -184
+ }
+ Dot {
+  name Dot1
+  xpos 28
+  ypos 26
+ }
+set Nddb05880 [stack 0]
+ VectorBlur2 {
+  channels {rgba.red -rgba.green -rgba.blue rgba.alpha}
+  uv motion
+  scale {{parent.BlurAmount}}
+  offset {{"parent.RedOffset * Spread" x116005 -0.21}}
+  name VectorBlurRed
+  selected true
+  xpos -154
+  ypos 17
+ }
+ Transform {
+  center {960 520}
+  name TransformRed
+  gl_color 0xff7070ff
+  xpos -154
+  ypos 105
+ }
+push $Nddb05880
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  from1 rgba.red
+  to1 rgba.red
+  to2 rgba.green
+  to3 rgba.blue
+  name CopyRed
+  xpos -11
+  ypos 81
+ }
+ Dot {
+  name Dot6
+  xpos 26
+  ypos 722
+ }
+push 0
+push $Nddb05880
+ Dot {
+  name Dot2
+  xpos 178
+  ypos 26
+ }
+ Dot {
+  name Dot4
+  xpos 178
+  ypos 264
+ }
+set Nddb04380 [stack 0]
+ VectorBlur2 {
+  channels {-rgba.red rgba.green -rgba.blue rgba.alpha}
+  uv motion
+  scale {{parent.BlurAmount}}
+  offset {{"parent.GreenOffset * Spread"}}
+  name VectorBlurGreen
+  gl_color 0x4aad3cff
+  xpos -155
+  ypos 255
+ }
+ Transform {
+  center {960 520}
+  name TransformGreen
+  gl_color 0x419e34ff
+  xpos -154
+  ypos 350
+ }
+push $Nddb04380
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  to1 rgba.red
+  from2 rgba.green
+  to2 rgba.green
+  to3 rgba.blue
+  name CopyGreen
+  xpos 140
+  ypos 326
+ }
+ Dot {
+  name Dot7
+  xpos 177
+  ypos 674
+ }
+push $Nddb04380
+ Dot {
+  name Dot3
+  xpos 369
+  ypos 264
+ }
+ Dot {
+  name Dot5
+  xpos 369
+  ypos 521
+ }
+set Nddb36e00 [stack 0]
+ VectorBlur2 {
+  channels {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  uv motion
+  scale {{parent.BlurAmount}}
+  offset {{"parent.BlueOffset * Spread"}}
+  name VectorBlurBlue
+  xpos -155
+  ypos 512
+ }
+ Transform {
+  center {960 520}
+  name TransformBlue
+  gl_color 0x274fc6ff
+  xpos -155
+  ypos 605
+ }
+push $Nddb36e00
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  to1 rgba.red
+  to2 rgba.green
+  from3 rgba.blue
+  to3 rgba.blue
+  name CopyBlue
+  xpos 331
+  ypos 581
+ }
+ Merge2 {
+  inputs 3+1
+  operation plus
+  name Merge1
+  xpos 331
+  ypos 718
+ }
+ Output {
+  name Output1
+  xpos 331
+  ypos 870
+ }
+end_group

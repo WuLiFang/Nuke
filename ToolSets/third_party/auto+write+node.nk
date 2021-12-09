@@ -1,0 +1,49 @@
+set cut_paste_input [stack 0]
+version 10.5 v5
+push $cut_paste_input
+Write {
+ file "\[value ShotRenderFolder]\[value shotName]/\[value shotVersion]/\[value shotVersion].%04d.exr"
+ colorspace linear
+ file_type exr
+ create_directories true
+ first 1001
+ last 1010
+ on_error "read input"
+ version 128
+ beforeRender "nuke.root().knob(\"project_directory\").setValue(\"\[python \{nuke.script_directory()\}]\")"
+ name auto_write_node
+ label ShotRender
+ selected true
+ xpos -469
+ ypos -189
+ postage_stamp true
+ addUserKnob {20 variables l INVISIBLE +INVISIBLE}
+ addUserKnob {1 shotName l INVISIBLE +INVISIBLE}
+ shotName "\[python \{os.path.basename(nuke.root().name().replace(\".nk\",\"\").split(\"_v\")\[0])\}]"
+ addUserKnob {1 shotVersion l INVISIBLE +INVISIBLE}
+ shotVersion "\[python \{os.path.basename(nuke.root().name().replace(\".nk\",\"\"))\}]"
+ addUserKnob {26 di l INVISIBLE +INVISIBLE}
+ addUserKnob {1 ShotRenderFolder l INVISIBLE +INVISIBLE}
+ addUserKnob {1 PreRenderFolder l INVISIBLE +INVISIBLE}
+ addUserKnob {26 div l INVISIBLE +INVISIBLE}
+ addUserKnob {1 ShotRenderLabel l INVISIBLE +INVISIBLE}
+ ShotRenderLabel ShotRender
+ addUserKnob {1 PreRenderLabel l INVISIBLE +INVISIBLE}
+ PreRenderLabel PreRender
+ addUserKnob {20 auto_write_node l "auto write node"}
+ addUserKnob {26 awn l "" +STARTLINE T "auto write node v1.0 // Lars Wemmje"}
+ addUserKnob {26 ""}
+ addUserKnob {20 SetRenderFolders l "Set Render Folders" n 1}
+ addUserKnob {2 SelectShotRenderFolder}
+ addUserKnob {22 SetShotRenderFolder T "PATH=nuke.thisNode().knob(\"SelectShotRenderFolder\").getValue()\n\nif PATH != \"\":\n    \n    import os\n    root = nuke.root().name()\n    _render = (PATH)\n\n    def getRelativePath(root, target):\n       oldbase = root\n       _base = root\n       backsteps = 0\n    \n       while not _base in target:\n            _base = os.path.dirname(oldbase)\n            oldbase = _base\n            backsteps += 1\n\n       preString = ''\n       for backstep in range(backsteps-1):\n            preString+='/..'\n       preString = preString\[1:]\n    \n       relativePath = preString+target.split(_base)\[-1]\n    \n       return(relativePath)\n\n    nuke.thisNode()\[\"ShotRenderFolder\"].setValue(getRelativePath(root, _render))\n    nuke.message(\"Your have set your ShotRenderFolder successfully!\")\n\nelse:\n    nuke.message(\"Select a ShotRenderFolder you must!\")" +STARTLINE}
+ addUserKnob {2 SelectPreRenderFolder}
+ addUserKnob {22 SetPreRenderFolder T "PATH=nuke.thisNode().knob(\"SelectPreRenderFolder\").getValue()\n\nif PATH != \"\":\n\n    import os\n    root = nuke.root().name()\n    _prerender = (PATH)\n\n    def getRelativePath(root, target):\n       oldbase = root\n       _base = root\n       backsteps = 0\n    \n       while not _base in target:\n            _base = os.path.dirname(oldbase)\n            oldbase = _base\n            backsteps += 1\n\n       preString = ''\n       for backstep in range(backsteps-1):\n            preString+='/..'\n       preString = preString\[1:]\n    \n       relativePath = preString+target.split(_base)\[-1]\n    \n       return(relativePath)\n\n    nuke.thisNode()\[\"PreRenderFolder\"].setValue(getRelativePath(root, _prerender))\n    nuke.message(\"Your have set your PreRenderFolder successfully!\")\n\nelse:\n    nuke.message(\"Select a PreRenderFolder you must!\")" +STARTLINE}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 _ l "" +STARTLINE}
+ addUserKnob {1 SetPreRenderName}
+ addUserKnob {26 ""}
+ addUserKnob {22 ShotRender t "Select this node and click on this button to make your auto write node render your Shot" +DISABLED T "filetype=nuke.selectedNode()\[\"file_type\"].value()\n\nnuke.thisNode().knob(\"file\").setValue(('\[value ShotRenderFolder]')+('\[value shotName]/\[value shotVersion]/\[value shotVersion].%04d.')+(filetype))\n\nPATH=nuke.thisNode().knob(\"ShotRenderLabel\").getValue()\nnuke.thisNode()\[\"label\"].setValue(PATH)\n\nnuke.message(\"Your auto write node is now set to ShotRender\")\n\nnuke.thisKnob().setEnabled(False)\nnuke.thisNode()\['PreRender'].setEnabled(True)" +STARTLINE}
+ addUserKnob {22 PreRender t "Select this node and click on this button to make your auto write node render your PreRenders" -STARTLINE T "filetype=nuke.selectedNode()\[\"file_type\"].value()\n\nnuke.thisNode().knob(\"file\").setValue(('\[value PreRenderFolder]')+('\[value SetPreRenderName]/\[value SetPreRenderName].%04d.')+(filetype))\n\nPATH=nuke.thisNode().knob(\"PreRenderLabel\").getValue()\nnuke.thisNode()\[\"label\"].setValue(PATH)\n\nnuke.message(\"Your auto write node is now set to PreRender\")\n\nnuke.thisKnob().setEnabled(False)\nnuke.thisNode()\['ShotRender'].setEnabled(True)"}
+ addUserKnob {26 divide l "" +STARTLINE}
+ addUserKnob {22 ReadFromWrite T "newfile = nuke.selectedNode()\[\"file\"].value()\ntmp = ''\nelems = newfile.split('\[value ')\[1:]\nfor s in elems:\n    v = s.split(']')\[0]\n    tmp+='nuke.selectedNode()\[\"'+v+'\"].getValue()+'\n    print eval('nuke.selectedNode()\[\"'+v+'\"].getValue()')\n    if not eval('nuke.selectedNode()\[\"'+v+'\"].getValue()').endswith('/') and s != elems\[-1]:\n        tmp+='\"/\"+'\n\n\next = newfile.split(']')\[-1]\nres = tmp\[:-1]+'+\"'+ext+'\"'\n\nresult = eval(res)\n\nnewPosx = nuke.selectedNode().xpos()\nnewPosy = nuke.selectedNode().ypos()\ncolor = nuke.selectedNode().knob(\"colorspace\").value()\nfirstframe = int(nuke.root().knob(\"first_frame\").value())\nlastframe = int(nuke.root().knob(\"last_frame\").value())\n\nnewNode = nuke.nodes.Read(file = result)\nnewNode.setXpos(newPosx+100)\nnewNode.setYpos(newPosy)\nnewNode.knob(\"colorspace\").setValue(color)\nnewNode.knob(\"first\").setValue(firstframe)\nnewNode.knob(\"last\").setValue(lastframe)" +STARTLINE}
+}

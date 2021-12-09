@@ -1,0 +1,736 @@
+#! C:/Program Files/Nuke9.0v8/nuke-9.0.8.dll -nx
+version 9.0 v8
+Group {
+ name ID_ColorMask1
+ inputs 2
+ tile_color 0x7f00ffff
+ addUserKnob {20 ID_colorMask l ID_ColorMask}
+ addUserKnob {41 color_picker l RGB_picker t "Apply only to red, green, blue and black masks." T Expression1.color_picker}
+ addUserKnob {6 Enable_RGB l "Close RGB_picker" -STARTLINE}
+ Enable_RGB true
+ addUserKnob {6 mask_function l "Close mask function" t "To enable this function, you must give it a mask to display normal alpha." -STARTLINE}
+ mask_function true
+ addUserKnob {26 ""}
+ addUserKnob {19 ID_color}
+ ID_color {0 0 0 0}
+ addUserKnob {6 ID_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 Erode_alpha l "Inner edge" R 1 2}
+ Erode_alpha 1
+ addUserKnob {26 ""}
+ addUserKnob {20 Add_ID01 n 1}
+ Add_ID01 0
+ addUserKnob {6 Enable01 l "Close this function" +STARTLINE}
+ Enable01 true
+ addUserKnob {19 Add_color01}
+ Add_color01 {0 0 0 0}
+ addUserKnob {6 Add_color01_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 ID_color02_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Add_ID02 n 1}
+ Add_ID02 0
+ addUserKnob {6 Enable02 l "Close this function" +STARTLINE}
+ Enable02 true
+ addUserKnob {19 Add_color02}
+ Add_color02 {0 0 0 0}
+ addUserKnob {6 Add_color02_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 Add_ID03 n 1}
+ Add_ID03 0
+ addUserKnob {6 Enable03 l "Close this function" +STARTLINE}
+ Enable03 true
+ addUserKnob {19 Add_color03}
+ Add_color03 {0 0 0 0}
+ addUserKnob {6 Add_color03_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {20 Add_ID04 n 1}
+ Add_ID04 0
+ addUserKnob {6 Enable04 l "Close this function" +STARTLINE}
+ Enable04 true
+ addUserKnob {19 Add_color04}
+ Add_color04 {0 0 0 0}
+ addUserKnob {6 Add_color04_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 Add_ID05 n 1}
+ Add_ID05 0
+ addUserKnob {6 Enable05 l "Close this function" +STARTLINE}
+ Enable05 true
+ addUserKnob {19 Add_color05}
+ Add_color05 {0 0 0 0}
+ addUserKnob {6 Add_color05_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_4 l endGroup n -1}
+ addUserKnob {20 Add_ID06 n 1}
+ Add_ID06 0
+ addUserKnob {6 Enable06 l "Close this function" +STARTLINE}
+ Enable06 true
+ addUserKnob {19 Add_color06}
+ Add_color06 {0 0 0 0}
+ addUserKnob {6 Add_color06_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_5 l endGroup n -1}
+ addUserKnob {20 Add_ID07 n 1}
+ Add_ID07 0
+ addUserKnob {6 Enable07 l "Close this function" +STARTLINE}
+ Enable07 true
+ addUserKnob {19 Add_color07}
+ Add_color07 {0 0 0 0}
+ addUserKnob {6 Add_color07_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_6 l endGroup n -1}
+ addUserKnob {20 Add_ID08 n 1}
+ Add_ID08 0
+ addUserKnob {6 Enable08 l "Close this function" +STARTLINE}
+ Enable08 true
+ addUserKnob {19 Add_color08}
+ Add_color08 {0 0 0 0}
+ addUserKnob {6 Add_color08_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 ""}
+ addUserKnob {20 endGroup_7 l endGroup n -1}
+ addUserKnob {20 Add_ID09 n 1}
+ Add_ID09 0
+ addUserKnob {6 Enable09 l "Close this function" +STARTLINE}
+ Enable09 true
+ addUserKnob {19 Add_color09}
+ Add_color09 {0 0 0 0}
+ addUserKnob {6 Add_color09_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {20 endGroup_8 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 Version l "" +STARTLINE T "<b><font color=#70E size=4 face=arial>ID_ColorMask_V3.0</font><b>"}
+ addUserKnob {26 message l "@b;" T "Author: after 94 uncle     Q:1692147818     更多内容请搜索微信公众号:nuke后期部"}
+}
+ Input {
+  inputs 0
+  name mask
+  selected true
+  xpos 1888
+  ypos 2337
+  number 1
+ }
+ Invert {
+  name Invert11
+  xpos 1747
+  ypos 2331
+  disable {{parent.mask_function}}
+ }
+ Input {
+  inputs 0
+  name ID
+  xpos -755
+  ypos -175
+  addUserKnob {20 User}
+  addUserKnob {14 input_format R 0 100}
+  input_format {{input.width} {input.height}}
+ }
+ Dot {
+  name Dot10
+  xpos -418
+  ypos -171
+ }
+set N7e52000 [stack 0]
+ Dot {
+  name Dot35
+  xpos 1091
+  ypos 2107
+ }
+set N5e043c00 [stack 0]
+ Dot {
+  name Dot11
+  xpos 1091
+  ypos 2173
+ }
+set N5e043800 [stack 0]
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue none}
+  channel1 {-rgba.red rgba.green -rgba.blue none}
+  channel2 {-rgba.red -rgba.green rgba.blue none}
+  expr3 "\[value returned_value]==1?r:\[value returned_value]==2?g:\[value returned_value]==3?b:\[value returned_value]==4?r+g:\[value returned_value]==5?r+b:\[value returned_value]==6?g+b:\[value returned_value]==7?r+g+b:\[value returned_value]==8?1-(r+g+b):\[value returned_value]==9?a-(r+g+b):0"
+  name Expression1
+  xpos 1322
+  ypos 2169
+  addUserKnob {20 User}
+  addUserKnob {4 color_picker l RGB_picker M {R G B RG RB GB RGB Black Black(alpha) "" "" "" "" ""}}
+  color_picker Black(alpha)
+  addUserKnob {3 returned_value -STARTLINE}
+  returned_value {{parent.Expression1.color_picker+1}}
+ }
+push $N7e52000
+ Unpremult {
+  name Unpremult1
+  xpos 224
+  ypos -175
+ }
+ Expression {
+  expr3 a>0?1:a
+  name Expression2
+  xpos 552
+  ypos -175
+ }
+ Dot {
+  name Dot6
+  xpos 1517
+  ypos -171
+ }
+ Dot {
+  name Dot7
+  xpos 1517
+  ypos 26
+ }
+set N61123c00 [stack 0]
+ Dot {
+  name Dot18
+  xpos 2686
+  ypos 1336
+ }
+set N61123800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color09.r} {parent.Add_color09.g} {parent.Add_color09.b} {parent.Add_color09.a}}
+  maximum {{parent.Add_color09.r} {parent.Add_color09.g} {parent.Add_color09.b} {parent.Add_color09.a}}
+  name Clamp10
+  xpos 2513
+  ypos 1400
+  disable {{parent.Merge9.disable}}
+ }
+push $N61123800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference10
+  xpos 2652
+  ypos 1394
+  disable {{parent.Merge9.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert10
+  xpos 2652
+  ypos 1486
+  disable {{parent.Merge9.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot17
+  xpos 2383
+  ypos 1194
+ }
+set N61122800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color08.r} {parent.Add_color08.g} {parent.Add_color08.b} {parent.Add_color08.a}}
+  maximum {{parent.Add_color08.r} {parent.Add_color08.g} {parent.Add_color08.b} {parent.Add_color08.a}}
+  name Clamp9
+  xpos 2210
+  ypos 1258
+  disable {{parent.Merge8.disable}}
+ }
+push $N61122800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference9
+  xpos 2349
+  ypos 1252
+  disable {{parent.Merge8.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert9
+  xpos 2349
+  ypos 1344
+  disable {{parent.Merge8.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot16
+  xpos 2105
+  ypos 1062
+ }
+set N6093d800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color07.r} {parent.Add_color07.g} {parent.Add_color07.b} {parent.Add_color07.a}}
+  maximum {{parent.Add_color07.r} {parent.Add_color07.g} {parent.Add_color07.b} {parent.Add_color07.a}}
+  name Clamp8
+  xpos 1932
+  ypos 1126
+  disable {{parent.Merge7.disable}}
+ }
+push $N6093d800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference8
+  xpos 2071
+  ypos 1120
+  disable {{parent.Merge7.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert8
+  xpos 2071
+  ypos 1212
+  disable {{parent.Merge7.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot15
+  xpos 1832
+  ypos 942
+ }
+set N6093c800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color06.r} {parent.Add_color06.g} {parent.Add_color06.b} {parent.Add_color06.a}}
+  maximum {{parent.Add_color06.r} {parent.Add_color06.g} {parent.Add_color06.b} {parent.Add_color06.a}}
+  name Clamp7
+  xpos 1659
+  ypos 1006
+  disable {{parent.Merge6.disable}}
+ }
+push $N6093c800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference7
+  xpos 1798
+  ypos 1000
+  disable {{parent.Merge6.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert7
+  xpos 1798
+  ypos 1092
+  disable {{parent.Merge6.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot14
+  xpos 1517
+  ypos 781
+ }
+set N6a867800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color05.r} {parent.Add_color05.g} {parent.Add_color05.b} {parent.Add_color05.a}}
+  maximum {{parent.Add_color05.r} {parent.Add_color05.g} {parent.Add_color05.b} {parent.Add_color05.a}}
+  name Clamp6
+  xpos 1344
+  ypos 845
+  disable {{parent.Merge5.disable}}
+ }
+push $N6a867800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference6
+  xpos 1483
+  ypos 839
+  disable {{parent.Merge5.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert6
+  xpos 1483
+  ypos 931
+  disable {{parent.Merge5.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot13
+  xpos 1235
+  ypos 636
+ }
+set N6a866800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color04.r} {parent.Add_color04.g} {parent.Add_color04.b} {parent.Add_color04.a}}
+  maximum {{parent.Add_color04.r} {parent.Add_color04.g} {parent.Add_color04.b} {parent.Add_color04.a}}
+  name Clamp5
+  xpos 1062
+  ypos 700
+  disable {{parent.Merge4.disable}}
+ }
+push $N6a866800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference5
+  xpos 1201
+  ypos 694
+  disable {{parent.Merge4.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert5
+  xpos 1201
+  ypos 786
+  disable {{parent.Merge4.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot2
+  xpos 933
+  ypos 484
+ }
+set N6b195800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color03.r} {parent.Add_color03.g} {parent.Add_color03.b} {parent.Add_color03.a}}
+  maximum {{parent.Add_color03.r} {parent.Add_color03.g} {parent.Add_color03.b} {parent.Add_color03.a}}
+  name Clamp4
+  xpos 758
+  ypos 548
+  disable {{parent.Merge3.disable}}
+ }
+push $N6b195800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference4
+  xpos 899
+  ypos 542
+  disable {{parent.Merge3.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert4
+  xpos 899
+  ypos 634
+  disable {{parent.Merge3.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot5
+  xpos 609
+  ypos 356
+ }
+set N6b194800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color02.r} {parent.Add_color02.g} {parent.Add_color02.b} {parent.Add_color02.a}}
+  maximum {{parent.Add_color02.r} {parent.Add_color02.g} {parent.Add_color02.b} {parent.Add_color02.a}}
+  name Clamp3
+  xpos 421
+  ypos 420
+  disable {{parent.Merge2.disable}}
+ }
+push $N6b194800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference3
+  xpos 575
+  ypos 414
+  disable {{parent.Merge2.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert3
+  xpos 575
+  ypos 506
+  disable {{parent.Merge2.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot4
+  xpos 336
+  ypos 189
+ }
+set N6b235800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.Add_color01.r x1 0} {parent.Add_color01.g x1 0} {parent.Add_color01.b x1 0} {parent.Add_color01.a x1 0}}
+  maximum {{parent.Add_color01.r} {parent.Add_color01.g} {parent.Add_color01.b} {parent.Add_color01.a}}
+  name Clamp2
+  xpos 165
+  ypos 253
+  disable {{parent.Merge1.disable}}
+ }
+push $N6b235800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference2
+  xpos 302
+  ypos 247
+  disable {{parent.Merge1.disable}}
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  xpos 302
+  ypos 317
+  disable {{parent.Merge1.disable}}
+ }
+push $N61123c00
+ Dot {
+  name Dot3
+  xpos 40
+  ypos 26
+ }
+set N6b234800 [stack 0]
+ Clamp {
+  channels rgb
+  minimum {{parent.ID_color.r} {parent.ID_color.g} {parent.ID_color.b} {parent.ID_color.a}}
+  maximum {{parent.ID_color.r} {parent.ID_color.g} {parent.ID_color.b} {parent.ID_color.a}}
+  name Clamp1
+  xpos -133
+  ypos 96
+ }
+push $N6b234800
+ Difference {
+  inputs 2
+  gain 100000
+  name Difference1
+  xpos 7
+  ypos 90
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 7
+  ypos 162
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge1
+  xpos 6
+  ypos 323
+  disable {{parent.Enable01}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge2
+  xpos 94
+  ypos 512
+  disable {{parent.Enable02}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge3
+  xpos 215
+  ypos 706
+  disable {{parent.Enable03}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge4
+  xpos 363
+  ypos 883
+  disable {{parent.Enable04}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge5
+  xpos 580
+  ypos 1070
+  disable {{parent.Enable05}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge6
+  xpos 822
+  ypos 1261
+  disable {{parent.Enable06}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge7
+  xpos 1057
+  ypos 1403
+  disable {{parent.Enable07}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge8
+  xpos 1301
+  ypos 1554
+  disable {{parent.Enable08}}
+ }
+ Merge2 {
+  inputs 2
+  operation screen
+  name Merge9
+  xpos 1589
+  ypos 1694
+  disable {{parent.Enable09}}
+ }
+ Dot {
+  name Dot12
+  xpos 1623
+  ypos 1796
+ }
+set N4bbcd400 [stack 0]
+push $N4bbcd400
+ Dot {
+  name Dot8
+  xpos 1789
+  ypos 1796
+ }
+set N4bbcd000 [stack 0]
+ Erode {
+  channels {rgba.alpha none none rgba.alpha}
+  size {{parent.Erode_alpha}}
+  name Erode3
+  xpos 1902
+  ypos 1854
+ }
+push $N4bbcd000
+ Erode {
+  size {{Erode3.size*-1}}
+  name Erode4
+  xpos 1755
+  ypos 1853
+ }
+ Add {
+  inputs 1+1
+  channels alpha
+  value -1
+  name Add1
+  xpos 1755
+  ypos 1933
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle2
+  xpos 1755
+  ypos 2004
+ }
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos 1589
+  ypos 2004
+ }
+push $N5e043c00
+ Merge2 {
+  inputs 2
+  operation in
+  name In1
+  xpos 1589
+  ypos 2103
+ }
+ Switch {
+  inputs 2
+  which {{1-parent.Enable_RGB}}
+  name Switch1
+  xpos 1589
+  ypos 2169
+ }
+ Dot {
+  name Dot19
+  xpos 1623
+  ypos 2259
+ }
+set N6e73b000 [stack 0]
+ Shuffle {
+  alpha black
+  name Shuffle1
+  xpos 1439
+  ypos 2338
+  disable {{parent.mask_function}}
+ }
+push $N6e73b000
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 1589
+  ypos 2332
+  disable {{parent.mask_function}}
+ }
+ Dot {
+  name Dot9
+  xpos 1623
+  ypos 2450
+ }
+set N6e73a400 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1623
+  ypos 2510
+ }
+set N6e73a000 [stack 0]
+ Dot {
+  name Dot36
+  xpos 1623
+  ypos 2583
+ }
+push $N6e73a000
+ CheckerBoard2 {
+  inputs 0
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  boxsize 2.85
+  color0 0.41
+  color1 0.035
+  color2 0.055
+  color3 0.15
+  centerlinecolor 0
+  centerlinewidth 0
+  name CheckerBoard2
+  xpos 661
+  ypos 2483
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.ID.input_format.w}}
+  box_height {{parent.ID.input_format.h}}
+  box_fixed true
+  name Reformat1
+  xpos 894
+  ypos 2506
+ }
+push $N6e73a400
+push $N5e043800
+ Multiply {
+  inputs 1+1
+  channels rgb
+  value 0.25
+  name Multiply1
+  xpos 1057
+  ypos 2446
+ }
+ Merge2 {
+  inputs 2+1
+  name Merge21
+  xpos 1057
+  ypos 2506
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy3
+  xpos 1057
+  ypos 2573
+ }
+ Output {
+  name Output1
+  xpos 1057
+  ypos 2663
+ }
+ Viewer {
+  frame_range 101-101
+  fps 25
+  colour_sample_bbox {0.3020833433 0.143749997 0.303124994 0.1447916627}
+  samplepoints {{0.3020833433 0.143749997}
+    }
+  name Viewer1
+  xpos 1057
+  ypos 2771
+ }
+end_group

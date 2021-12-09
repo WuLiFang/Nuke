@@ -1,0 +1,175 @@
+#! C:/Program Files/Nuke7.0v6/Nuke7.0.exe -nx
+version 7.0 v6
+Group {
+ inputs 2
+ name RGB_light
+ addUserKnob {20 User}
+ addUserKnob {41 Red_lamp l "Red Lamp Color" T red_color.color}
+ addUserKnob {41 red_lamp_intensity l "Red Lamp Intensity" T red_grade.red_lamp_intensity}
+ addUserKnob {26 ""}
+ addUserKnob {41 green_lamp_color l "Green Lamp Color" T green_color.color}
+ addUserKnob {41 green_lamp_intensity l "Green Lamp Intensity" T green_grade.green_lamp_intensity}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 blue_lamp_color l "Blue Lamp Color" T blue_color.color}
+ addUserKnob {41 blue_lamp_intensity l "Blue Lamp Intensity" T blue_grade.blue_lamp_intensity}
+}
+ Input {
+  inputs 0
+  name RGB_light
+  xpos -342
+  ypos -184
+ }
+ Dot {
+  name Dot2
+  xpos -308
+  ypos -124
+ }
+set N135a060 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name blue_color
+  xpos -131
+  ypos -39
+ }
+ Copy {
+  inputs 2
+  from0 rgba.blue
+  to0 rgba.alpha
+  name Copy3
+  xpos -179
+  ypos 54
+ }
+ Premult {
+  name Premult3
+  xpos -179
+  ypos 109
+ }
+ Grade {
+  gamma {{blue_lamp_intensity}}
+  name blue_grade
+  xpos -179
+  ypos 164
+  addUserKnob {20 User}
+  addUserKnob {41 gamma_1 l gamma T blue_grade.gamma}
+  addUserKnob {7 blue_lamp_intensity R 0 5}
+  blue_lamp_intensity 1
+ }
+ Input {
+  inputs 0
+  name Diffuse_color
+  xpos -784
+  ypos 242
+  number 1
+ }
+ Dot {
+  name Dot1
+  xpos -638
+  ypos 236
+ }
+set N16835b20 [stack 0]
+ Merge2 {
+  inputs 2
+  operation multiply
+  sRGB true
+  name Merge3
+  xpos -179
+  ypos 204
+ }
+push 0
+push $N135a060
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name green_color
+  xpos -273
+  ypos -32
+ }
+ Copy {
+  inputs 2
+  from0 rgba.green
+  to0 rgba.alpha
+  name Copy2
+  xpos -342
+  ypos 59
+ }
+ Premult {
+  name Premult2
+  xpos -342
+  ypos 113
+ }
+ Grade {
+  gamma {{green_lamp_intensity}}
+  name green_grade
+  xpos -342
+  ypos 162
+  addUserKnob {20 User}
+  addUserKnob {41 gamma_1 l gamma T green_grade.gamma}
+  addUserKnob {7 green_lamp_intensity R 0 5}
+  green_lamp_intensity 1
+ }
+push $N16835b20
+ Merge2 {
+  inputs 2
+  operation multiply
+  sRGB true
+  name Merge2
+  xpos -342
+  ypos 209
+ }
+push $N135a060
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  name red_color
+  xpos -476
+  ypos -33
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name Copy1
+  xpos -452
+  ypos 59
+ }
+ Premult {
+  name Premult1
+  xpos -452
+  ypos 114
+ }
+ Grade {
+  gamma {{red_lamp_intensity}}
+  name red_grade
+  xpos -452
+  ypos 157
+  addUserKnob {20 User}
+  addUserKnob {41 gamma_1 l gamma T red_grade.gamma}
+  addUserKnob {7 red_lamp_intensity R 0 5}
+  red_lamp_intensity 1
+ }
+push $N16835b20
+ Merge2 {
+  inputs 2
+  operation multiply
+  sRGB true
+  name Merge1
+  xpos -452
+  ypos 209
+ }
+ Merge2 {
+  inputs 3+1
+  operation screen
+  name Merge4
+  xpos -342
+  ypos 305
+ }
+ Output {
+  name Output1
+  xpos -342
+  ypos 405
+ }
+end_group

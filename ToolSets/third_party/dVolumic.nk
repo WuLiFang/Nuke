@@ -1,0 +1,503 @@
+# Filter dTools
+#! C:/Program Files/Nuke5.2v1b17/Nuke5.2.exe -nx
+# Created by Diogo Girondi
+# diogogirondi@gmail.com
+version 5.2117
+Group {
+ name dVolumic
+ help "@b;dVolumic v1@n; for Nuke v6.x\n\nGenerates volumes from a given source. This is a replacement for the standard VolumeRays from Nuke.\n\ncreated by Diogo Girondi\ndiogogirondi@gmail.com"
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in ('source', 'showPanel'):\n    src = n\['source'].value()\n    if src in ('Luminance', 'Red', 'Green', 'Blue'):\n        n\['tolerance'].setVisible(True)\n        n\['emitter_area'].setVisible(False)\n        n\['softness'].setVisible(False)\n        n\['edge_size'].setVisible(False)\n    elif src == 'Alpha Edges':\n        n\['tolerance'].setVisible(False)\n        n\['emitter_area'].setVisible(False)\n        n\['softness'].setVisible(False)\n        n\['edge_size'].setVisible(True)\n    elif src == 'Emitter (Rectangle)' or src == 'Emitter (Radial)':\n        n\['tolerance'].setVisible(False)\n        n\['emitter_area'].setVisible(True)\n        n\['softness'].setVisible(True)\n        n\['edge_size'].setVisible(False)\n    else:\n        n\['tolerance'].setVisible(False)\n        n\['emitter_area'].setVisible(False)\n        n\['softness'].setVisible(False)\n        n\['edge_size'].setVisible(False)\n\nif k.name() in ('colors', 'showPanel'):\n    c = n\['colors'].value()\n    if c == 'Original':\n        n\['c1'].setEnabled(False)\n        n\['c2'].setEnabled(False)\n        n\['c3'].setEnabled(False)\n        n\['c4'].setEnabled(False)\n        n\['c5'].setEnabled(False)\n    elif c == 'Single':\n        n\['c1'].setEnabled(True)\n        n\['c2'].setEnabled(False)\n        n\['c3'].setEnabled(False)\n        n\['c4'].setEnabled(False)\n        n\['c5'].setEnabled(False)\n    elif c == '3 Colors':\n        n\['c1'].setEnabled(True)\n        n\['c2'].setEnabled(True)\n        n\['c3'].setEnabled(True)\n        n\['c4'].setEnabled(False)\n        n\['c5'].setEnabled(False)\n    elif c == '5 Colors ':\n        n\['c1'].setEnabled(True)\n        n\['c2'].setEnabled(True)\n        n\['c3'].setEnabled(True)\n        n\['c4'].setEnabled(True)\n        n\['c5'].setEnabled(True)\n\nif k.name() in ('output', 'showPanel'):\n    out = n\['output'].value()\n    if out == 'Effect Only':\n        n\['mix'].setValue(1)\n        n\['mix'].setVisible(False)\n    else:\n        n\['mix'].setVisible(True)"
+ tile_color 0xd3b100ff
+ addUserKnob {20 dvolumic l "dVolumic v1"}
+ addUserKnob {4 source l Source t "Source to use as the Ray emitter" M {Luminance Red Green Blue Alpha "Alpha Edges" "Emitter (Rectangle)" "Emitter (Radial)" "Emitter (mask.a)"}}
+ addUserKnob {6 shadow_making l "Shadow Making" -STARTLINE}
+ addUserKnob {7 tolerance l Tolerance}
+ addUserKnob {15 emitter_area l "Emitter Area"}
+ emitter_area {100 100 300 200}
+ addUserKnob {7 softness l Softness}
+ addUserKnob {7 edge_size l "Edge Size" R 1 10}
+ edge_size 1
+ addUserKnob {7 pre_blur l Pre-blur t "Source blur" R 0 100}
+ addUserKnob {26 ray l "@b;Volumic Ray"}
+ addUserKnob {4 quality l Quality t "Quality of the Rays. Medium should be sufficient in most cases." M {Low "Medium   " High Super Uber "" ""}}
+ quality "Medium   "
+ addUserKnob {12 center l " Center" t "The center of the volume rays source" -STARTLINE}
+ center {150 150}
+ addUserKnob {14 length l Length t "Ray length" R 0 100}
+ length 20
+ addUserKnob {7 boost l Boost t "Boost ray light" R 0 5}
+ addUserKnob {26 shimmer l "@b;Shimmer"}
+ addUserKnob {7 amount l Amount t "Controls the shimmer quantity" R 0 300}
+ addUserKnob {7 detail l Detail t "Controls the shimmer detail. Sharper or smoother."}
+ addUserKnob {7 speed l Speed t "Sets the speed in which shimmer rays will be animated over time. Setting this to 0 will make them static, higher the value faster their animation cycle is." R 0 100}
+ addUserKnob {6 transform l "Transform with Volumic Ray center" t "This will transform the shimmer rays source with the volumic center." +STARTLINE}
+ transform true
+ addUserKnob {26 colorize l "@b;Colorize"}
+ addUserKnob {4 colors l Colors t "Sets the number of colors to be used to colorize the volumic rays." M {Original Single "3 Colors" "5 Colors " "" "" "" ""}}
+ addUserKnob {18 c1 l "Color 1" +DISABLED}
+ c1 {1 1 1}
+ addUserKnob {18 c2 l "Color 2" +DISABLED}
+ c2 {0 1 0.7}
+ addUserKnob {18 c3 l "Color 3" +DISABLED}
+ c3 {0 0.25 1}
+ addUserKnob {18 c4 l "Color 4" +DISABLED}
+ c4 {0 0.1049999967 0.4199999869}
+ addUserKnob {18 c5 l "Color 5" +DISABLED}
+ c5 {0 0.05691181868 0.2150000036}
+ addUserKnob {26 falloff l "@b;Radial Falloff"}
+ addUserKnob {6 enable_falloff l "Enable Radial Falloff" +STARTLINE}
+ addUserKnob {14 falloff_size l Size R 0 100}
+ falloff_size 500
+ addUserKnob {7 radial_falloff l Falloff}
+ radial_falloff 1
+ addUserKnob {26 ""}
+ addUserKnob {4 output l Output M {"Effect Only" Plus Screen "" "" "" "" "" "" "" ""}}
+ addUserKnob {7 mix l " Mix" -STARTLINE}
+ mix 1
+ addUserKnob {6 keep_bbox l "Keep Input's BBox" +STARTLINE}
+ keep_bbox true
+ addUserKnob {20 presets l Presets}
+ addUserKnob {26 threeColors l "@b;Three Colors"}
+ addUserKnob {22 p_electric l Electric T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((0,1,0.7))\nn\['c3'].setValue((0,0.25,1))" +STARTLINE}
+ addUserKnob {22 p_golden l Golden -STARTLINE T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((1,0.7,0))\nn\['c3'].setValue((1,0.3,0))"}
+ addUserKnob {22 p_water l Water -STARTLINE T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((0.2,1,0.6))\nn\['c3'].setValue((0,1,0.4))"}
+ addUserKnob {22 p_fire l Fire -STARTLINE T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((1,0.7,0))\nn\['c3'].setValue((1,0.1,0))"}
+ addUserKnob {22 p_magic l Magic T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((0.9,0.3,1))\nn\['c3'].setValue((0.3,0,1))" +STARTLINE}
+ addUserKnob {22 p_alien l Alien -STARTLINE T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((0.9,1,0.3))\nn\['c3'].setValue((0.5,1,0))"}
+ addUserKnob {22 p_pinky l Pinky -STARTLINE T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((1,0.4,0.95))\nn\['c3'].setValue((1,0.05,0.85))"}
+ addUserKnob {22 p_pastel l Pastel -STARTLINE T "n = nuke.thisNode()\n\nn\['colors'].setValue('3 Colors')\nn\['c1'].setValue((1,1,1))\nn\['c2'].setValue((1,1,0.95))\nn\['c3'].setValue((1,0.9,0.75))"}
+ addUserKnob {26 fiveColors l "@b;Five Colors"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 444
+  ypos -440
+ }
+ Dot {
+  name Dot11
+  xpos 478
+  ypos -350
+ }
+set N11817ef0 [stack 0]
+ Shuffle {
+  in2 mask
+  alpha red2
+  name Shuffle1
+  xpos 968
+  ypos -233
+ }
+ Dot {
+  name Dot10
+  label Mask.a
+  xpos 1002
+  ypos -14
+ }
+push $N11817ef0
+ Radial {
+  output alpha
+  cliptype none
+  replace true
+  area {{parent.emitter_area.x i} {parent.emitter_area.y i} {parent.emitter_area.r i} {parent.emitter_area.t i}}
+  softness {{parent.softness i}}
+  name Radial1
+  xpos 852
+  ypos -232
+ }
+ Dot {
+  name Dot9
+  label Radial
+  xpos 886
+  ypos -11
+ }
+push $N11817ef0
+ Rectangle {
+  output alpha
+  cliptype none
+  replace true
+  area {{parent.emitter_area.x i} {parent.emitter_area.y i} {parent.emitter_area.r i} {parent.emitter_area.t i}}
+  softness {{parent.softness*100 i}}
+  name Rectangle1
+  xpos 737
+  ypos -231
+ }
+ Dot {
+  name Dot8
+  label Rectangle
+  xpos 771
+  ypos -11
+ }
+push $N11817ef0
+ Dot {
+  name Dot6
+  xpos 593
+  ypos -251
+ }
+set N1183ce70 [stack 0]
+ Erode {
+  size {{-parent.edge_size i}}
+  name Erode2
+  xpos 617
+  ypos -206
+ }
+push $N1183ce70
+ Erode {
+  size {{parent.edge_size i}}
+  name Erode1
+  xpos 506
+  ypos -202
+ }
+ ChannelMerge {
+  inputs 2
+  operation minus
+  name ChannelMerge1
+  xpos 564
+  ypos -129
+ }
+ Dot {
+  name Dot7
+  label "Alpha Edges"
+  xpos 598
+  ypos -10
+ }
+push $N11817ef0
+ Dot {
+  name Dot5
+  label Alpha
+  xpos 478
+  ypos -10
+ }
+push $N11817ef0
+ Keyer {
+  operation "blue keyer"
+  range {{parent.tolerance i 0} 1 1 1}
+  name Keyer4
+  xpos 330
+  ypos -229
+ }
+ Dot {
+  name Dot4
+  label Blue
+  xpos 364
+  ypos -8
+ }
+push $N11817ef0
+ Keyer {
+  operation "green keyer"
+  range {{parent.tolerance i 0} 1 1 1}
+  name Keyer3
+  xpos 220
+  ypos -228
+ }
+ Dot {
+  name Dot3
+  label Green
+  xpos 254
+  ypos -8
+ }
+push $N11817ef0
+ Keyer {
+  operation "red keyer"
+  range {{parent.tolerance i 0} 1 1 1}
+  name Keyer2
+  xpos 110
+  ypos -229
+ }
+ Dot {
+  name Dot2
+  label Red
+  xpos 144
+  ypos -8
+ }
+push $N11817ef0
+ Keyer {
+  operation "luminance key"
+  range {{parent.tolerance i 0} 1 1 1}
+  name Keyer1
+  xpos 0
+  ypos -228
+ }
+ Dot {
+  name Dot1
+  label Luminance
+  xpos 34
+  ypos -8
+ }
+ Switch {
+  inputs 9
+  which {{parent.source i}}
+  name Source
+  xpos 444
+  ypos 115
+ }
+ Invert {
+  channels alpha
+  clamp true
+  name ShadowMaking
+  xpos 444
+  ypos 144
+  disable {{!parent.shadow_making i}}
+ }
+ Blur {
+  channels alpha
+  size {{parent.pre_blur i}}
+  name PreBlur
+  xpos 444
+  ypos 189
+  disable {{parent.pre_blur==0 i}}
+ }
+set N11870a60 [stack 0]
+ Dot {
+  name Dot15
+  xpos 386
+  ypos 202
+ }
+ Dot {
+  name Dot16
+  xpos 386
+  ypos 562
+ }
+push $N11870a60
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle2
+  xpos 444
+  ypos 234
+ }
+set N11879ca8 [stack 0]
+ Dot {
+  name Dot12
+  xpos 478
+  ypos 376
+ }
+set N11880230 [stack 0]
+push $N11879ca8
+ Noise {
+  cliptype none
+  replace true
+  size {{abs(parent.amount-500)+1 i}}
+  zoffset {{frame/(100/parent.speed) i}}
+  nyquist false
+  gain {{0.5+(parent.detail/2) i}}
+  translate {{parent.transform?parent.center.x:0 i} {parent.transform?parent.center.y:0 i}}
+  center {960 540}
+  name Shimmer
+  xpos 547
+  ypos 289
+ }
+ Blur {
+  size {{(input.width*0.025)-(parent.detail*(input.width*0.025)) i}}
+  name Blur1
+  xpos 547
+  ypos 318
+ }
+ Multiply {
+  inputs 1+1
+  value 0
+  invert_mask true
+  name Multiply1
+  xpos 547
+  ypos 363
+ }
+ Clamp {
+  name Clamp2
+  xpos 547
+  ypos 408
+ }
+push $N11880230
+ Dissolve {
+  inputs 2
+  channels rgba
+  which {{clamp(parent.amount/150) i}}
+  name Amount
+  xpos 444
+  ypos 489
+ }
+ MergeExpression {
+  inputs 2
+  expr0 Ar*Ba
+  expr1 Ag*Ba
+  expr2 Ab*Ba
+  expr3 Ba
+  name MergeExpression1
+  xpos 444
+  ypos 557
+ }
+ Radial {
+  invert true
+  area {{parent.center.x-parent.falloff_size.w i} {parent.center.y-parent.falloff_size.h i} {parent.center.x+parent.falloff_size.w i} {parent.center.y+parent.falloff_size.h i}}
+  softness {{parent.radial_falloff.main i}}
+  color 0
+  name RadialFalloff
+  xpos 444
+  ypos 613
+  disable {{!parent.enable_falloff i}}
+ }
+ GodRays {
+  channels rgba
+  scale {{parent.length.w i} {parent.length.h i}}
+  center {{parent.center.x i} {parent.center.y i}}
+  from_color {{abs(parent.boost+1)*10 i}}
+  to_color 0
+  steps {{(parent.quality+1)*5 i}}
+  name Volumic
+  xpos 444
+  ypos 642
+ }
+ Clamp {
+  channels rgba
+  name Clamp1
+  xpos 444
+  ypos 697
+ }
+ Sharpen {
+  size {{(input.width*0.025)*parent.detail i}}
+  name Sharpen1
+  xpos 444
+  ypos 726
+ }
+set N118b2d60 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  format "512 512 0 0 512 512 1 Square_512"
+  name Constant1
+  xpos 687
+  ypos 549
+ }
+ Rectangle {
+  area {{width-(width/(parent.colors==1?2:parent.colors==2?4:6)) i} 0 512 512}
+  color {{parent.c1.main i} {parent.c1.main i} {parent.c1.main i} 1}
+  name c1
+  xpos 687
+  ypos 624
+ }
+ Rectangle {
+  area {{input.area.x-(width/(parent.colors==1?2:parent.colors==2?4:6)) i} 0 {input.area.x i} 512}
+  color {{parent.c2.main i} {parent.c2.main i} {parent.c2.main i} 1}
+  name c2
+  xpos 687
+  ypos 653
+  disable {{parent.colors<2 i}}
+ }
+ Rectangle {
+  area {{input.area.x-(width/(parent.colors==1?2:parent.colors==2?4:6)) i} 0 {input.area.x i} 512}
+  color {{parent.c3.main i} {parent.c3.main i} {parent.c3.main i} 1}
+  name c3
+  xpos 687
+  ypos 682
+  disable {{parent.colors<2 i}}
+ }
+ Rectangle {
+  area {{input.area.x-(width/(parent.colors==1?2:parent.colors==2?4:6)) i} 0 {input.area.x i} 512}
+  color {{parent.c4.main i} {parent.c4.main i} {parent.c4.main i} 1}
+  name c4
+  xpos 687
+  ypos 711
+  disable {{parent.colors<3 i}}
+ }
+ Rectangle {
+  area {{input.area.x-(width/(parent.colors==1?2:parent.colors==2?4:6)) i} 0 {input.area.x i} 512}
+  color {{parent.c5.main i} {parent.c5.main i} {parent.c5.main i} 1}
+  name c5
+  xpos 687
+  ypos 740
+  disable {{parent.colors<3 i}}
+ }
+ Blur {
+  size {{width/(parent.colors==1?2:parent.colors==2?4:6) i} 0}
+  name Blur2
+  xpos 687
+  ypos 769
+ }
+ Grade {
+  channels rgba
+  blackpoint 0.02
+  white_clamp true
+  name Grade1
+  xpos 687
+  ypos 814
+ }
+ STMap {
+  inputs 2
+  channels rgba
+  uv alpha
+  blur_scale 0
+  name STMap1
+  xpos 527
+  ypos 814
+ }
+push $N118b2d60
+ Switch {
+  inputs 2
+  which {{!parent.colors==0 i}}
+  name Colorize
+  xpos 444
+  ypos 899
+ }
+set N118e66e0 [stack 0]
+push $N11817ef0
+ Dot {
+  name Dot13
+  xpos -91
+  ypos -350
+ }
+ Dot {
+  name Dot14
+  xpos -91
+  ypos 1015
+ }
+set N118eb4c8 [stack 0]
+ Merge2 {
+  inputs 2
+  operation screen
+  mix {{parent.mix i}}
+  name Merge1
+  xpos 444
+  ypos 1076
+ }
+push $N118e66e0
+push $N118eb4c8
+ Merge2 {
+  inputs 2
+  operation plus
+  bbox B
+  mix {{parent.mix i}}
+  name Merge2
+  xpos 444
+  ypos 1010
+ }
+push $N11817ef0
+ Dot {
+  name Dot17
+  xpos 1141
+  ypos -350
+ }
+ Dot {
+  name Dot18
+  xpos 1141
+  ypos 904
+ }
+push $N118e66e0
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 598
+  ypos 899
+  disable {{!parent.keep_bbox i}}
+ }
+ Switch {
+  inputs 3
+  which {{parent.output i}}
+  name Output
+  xpos 598
+  ypos 1050
+ }
+ Output {
+  name Output1
+  xpos 598
+  ypos 1307
+ }
+end_group

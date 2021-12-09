@@ -1,0 +1,148 @@
+#! C:/Program Files/Nuke8.0v3/nuke-8.0.v3.dll -nx
+version 8.0 v3
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1920" h="1050" screen="0">
+        <splitter orientation="1">
+            <split size="1204"/>
+            <splitter orientation="1">
+                <split size="46"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1154"/>
+                <splitter orientation="2">
+                    <split size="493"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="492"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                        <page id="DAG.2"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="696"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/Users/Administrator/Pictures/PolarCoords.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Group {
+ inputs 0
+ name PolarDistort
+ xpos -825
+ ypos -137
+ addUserKnob {20 User l Controls}
+ addUserKnob {4 Out l Transform M {"Rectangular to Polar" "Polar to Rectangular" ""}}
+ Out "Polar to Rectangular"
+ addUserKnob {6 Ccc l CheckerSample +STARTLINE}
+ Ccc true
+ addUserKnob {26 About l "" +STARTLINE T "\nDaniel Velikov  © 2015 \n"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -711
+  ypos -2
+ }
+ CheckerBoard2 {
+  inputs 0
+  name CheckerBoard1
+  xpos -516
+  ypos 42
+ }
+ Switch {
+  inputs 2
+  which {{!Ccc}}
+  name Switch2
+  xpos -711
+  ypos 66
+ }
+set N4b281f70 [stack 0]
+ Expression {
+  temp_name0 rr
+  temp_expr0 ((0.5+x)/width)+ax
+  temp_name1 gg
+  temp_expr1 1-((0.5+y)/height)-ay
+  temp_name2 xx
+  temp_expr2 gg*sin(pi*2*(1-rr))
+  temp_name3 yy
+  temp_expr3 gg*cos(pi*2*rr)
+  expr0 (1+xx)*.5+(rx-.5)
+  expr1 (1+yy)*.5+(ry-.5)
+  channel2 {-rgba.red -rgba.green rgba.blue rgba.alpha}
+  expr2 0
+  channel3 none
+  name Expression3
+  xpos -516
+  ypos 128
+  addUserKnob {20 User}
+  addUserKnob {7 ax l Tx}
+  addUserKnob {7 ay l Ty}
+  addUserKnob {7 rx l Rx}
+  rx 0.5
+  addUserKnob {7 ry l Ry}
+  ry 0.5
+ }
+push $N4b281f70
+ Expression {
+  temp_name0 gg
+  temp_expr0 (0.5+x)/(width)-.5
+  temp_name1 rr
+  temp_expr1 (0.5+y)/(height)-.5
+  temp_name2 xx
+  temp_expr2 sqrt(rr*rr+gg*gg)
+  temp_name3 yy
+  temp_expr3 "atan2(x-width/2 , y-height/2 )/pi"
+  channel0 {rgba.red -rgba.green -rgba.blue none}
+  expr0 1-(yy<0?1-abs(yy)/2:yy/2)
+  channel1 {-rgba.red rgba.green -rgba.blue none}
+  expr1 (.5-xx)*2
+  channel2 {-rgba.red -rgba.green rgba.blue none}
+  expr2 0
+  expr3 0
+  name Expression2
+  xpos -638
+  ypos 131
+  addUserKnob {20 User}
+ }
+ Switch {
+  inputs 2
+  which {{parent.Out}}
+  name Switch1
+  xpos -638
+  ypos 180
+ }
+push $N4b281f70
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap3
+  xpos -711
+  ypos 242
+ }
+ Output {
+  name Output1
+  xpos -711
+  ypos 331
+ }
+end_group
+Viewer {
+ input_process false
+ name Viewer1
+ xpos -825
+ ypos -57
+}

@@ -1,0 +1,154 @@
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
+Group {
+ name Displace_Master1
+ inputs 2
+ tile_color 0x755cff
+ label "<font size=\"3\" color =#548DD4>Aether Tool"
+ note_font "微软雅黑 Bold Bold Bold Bold"
+ addUserKnob {20 User}
+ addUserKnob {4 Type M {Displace "RGB Blur"}}
+ addUserKnob {6 _1_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ _1_panelDropped true
+ addUserKnob {41 uv_scale l "UV scale" T IDistort2.uv_scale}
+ addUserKnob {41 blur_scale l "blur scale" T IDistort2.blur_scale}
+ addUserKnob {26 ""}
+ addUserKnob {7 VectorBlur R 0 100}
+ VectorBlur 48
+ addUserKnob {7 BlurFalloff}
+ BlurFalloff 1
+ addUserKnob {18 RGB_Offset l "RGB Offset"}
+ RGB_Offset {0 0.275 0}
+ addUserKnob {6 RGB_Offset_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 RGB_Offset_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 OffsetMutiply l "<span style=\"color:Red\"><b>＊OffsetMutiply"}
+ OffsetMutiply 1
+ addUserKnob {7 expandbbox l "Expand Blur Bbox" R 0 100}
+ expandbbox 100
+}
+ Input {
+  inputs 0
+  name Displace
+  xpos 25
+  ypos 69
+  number 1
+ }
+ Input {
+  inputs 0
+  name BG
+  label 原素材
+  xpos 191
+  ypos 59
+ }
+add_layer {distort distort.red distort.green distort.blue}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out distort
+  name ShuffleCopy1
+  xpos 103
+  ypos 100
+ }
+set Nab341400 [stack 0]
+ Shuffle {
+  red black
+  blue black
+  name Shuffle2
+  tile_color 0xff0000
+  xpos -168
+  ypos 160
+ }
+ VectorBlur2 {
+  uv distort
+  scale {{parent.VectorBlur}}
+  motion_falloff {{parent.BlurFalloff}}
+  offset {{(parent.RGB_Offset.1-1)*parent.OffsetMutiply}}
+  grow_bbox {{parent.expandbbox}}
+  name VectorBlur3
+  xpos -168
+  ypos 234
+ }
+push 0
+push $Nab341400
+ Shuffle {
+  red black
+  green black
+  name Shuffle3
+  tile_color 0xff00
+  xpos 36
+  ypos 162
+ }
+ VectorBlur2 {
+  uv distort
+  scale {{parent.VectorBlur}}
+  motion_falloff {{parent.BlurFalloff}}
+  offset {{(parent.RGB_Offset.2-1)*parent.OffsetMutiply}}
+  grow_bbox {{parent.expandbbox}}
+  name VectorBlur2
+  xpos 36
+  ypos 235
+ }
+push $Nab341400
+ Shuffle {
+  green black
+  blue black
+  name Shuffle1
+  tile_color 0xff000000
+  xpos -67
+  ypos 163
+ }
+ VectorBlur2 {
+  uv distort
+  scale {{parent.VectorBlur}}
+  motion_falloff {{parent.BlurFalloff}}
+  offset {{(parent.RGB_Offset.0-1)*parent.OffsetMutiply}}
+  grow_bbox {{parent.expandbbox}}
+  name VectorBlur1
+  xpos -67
+  ypos 233
+ }
+ Merge2 {
+  inputs 3+1
+  operation screen
+  name Merge1
+  xpos -67
+  ypos 309
+ }
+push $Nab341400
+ IDistort {
+  uv distort
+  uv_scale 73
+  blur distort.red
+  blur_scale 10.2
+  name IDistort2
+  xpos 151
+  ypos 151
+ }
+ Switch {
+  inputs 2
+  which {{parent.Type}}
+  name Switch1
+  xpos 93
+  ypos 343
+ }
+ Output {
+  name Output1
+  xpos 93
+  ypos 377
+ }
+ Expression {
+  inputs 0
+  expr0 -(x-center.x)/100
+  expr1 -(y-center.y)/100
+  expr2 0
+  name Expression1
+  selected true
+  xpos 286
+  ypos 215
+  addUserKnob {20 User}
+  addUserKnob {12 center}
+  center {512 338}
+ }
+end_group

@@ -1,0 +1,314 @@
+#! C:/Program Files/Nuke9.0v8/nuke-9.0.8.dll -nx
+version 9.0 v8
+Group {
+ name ColorWheel_Pro1
+ inputs 0
+ tile_color 0xff005fff
+ addUserKnob {20 colorwheel_Pro_0 l ColorWheel_Pro}
+ addUserKnob {4 box l "Box type" M {16:9 " 1:1" "" ""}}
+ box " 1:1"
+ addUserKnob {20 color_value l "Color Value" n 1}
+ addUserKnob {41 value1 l Value1 T ColorWheel_Pro.value1}
+ addUserKnob {41 value2 l Value2 T ColorWheel_Pro.value2}
+ addUserKnob {41 value3 l Value3 T ColorWheel_Pro.value3}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Text n 1}
+ addUserKnob {41 Enable_Text l "Enable Text" T ColorWheel_Pro.Enable_Text}
+ addUserKnob {41 Close_shadows l "Close shadows" -STARTLINE T ColorWheel_Pro.Close_shadows}
+ addUserKnob {41 color T ColorWheel_Pro.color}
+ addUserKnob {41 Text_size l Size T ColorWheel_Pro.Text_size}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 color_wheel l "Color Wheel" n 1}
+ addUserKnob {41 Rotate T ColorWheel_Pro.Rotate}
+ addUserKnob {41 Close_ColorWheel1 l "Close ColorWheel1" T ColorWheel_Pro.Close_ColorWheel1}
+ addUserKnob {41 Close_ColorWheel2 l "Close ColorWheel2" -STARTLINE T ColorWheel_Pro.Close_ColorWheel2}
+ addUserKnob {41 Close_ColorWheel3 l "Close ColorWheel3" -STARTLINE T ColorWheel_Pro.Close_ColorWheel3}
+ addUserKnob {41 Close_ColorWheel4 l "Close ColorWheel4" -STARTLINE T ColorWheel_Pro.Close_ColorWheel4}
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 ""}
+ addUserKnob {26 versions l "" +STARTLINE T "<b><font color=#ef2e6d size=4 face=arial>ColorWheel_Pro_V2.0</font><b>"}
+ addUserKnob {26 message l "@b;" T "Author: after 94 uncle     Q:1692147818     更多内容请搜索微信公众号:nuke后期部"}
+}
+ Group {
+  inputs 0
+  name ColorWheel_Pro
+  tile_color 0x7fff00ff
+  xpos 115
+  ypos -152
+  addUserKnob {20 ColorWheel_Pro}
+  addUserKnob {20 color_value l "Color Value" n 1}
+  addUserKnob {7 value1 l Value1}
+  value1 0.2
+  addUserKnob {7 value2 l Value2}
+  value2 0.1
+  addUserKnob {7 value3 l Value3}
+  value3 0.3
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 Text n 1}
+  addUserKnob {6 Enable_Text l "Enable Text" +STARTLINE}
+  Enable_Text true
+  addUserKnob {6 Close_shadows l "Close shadows" -STARTLINE}
+  Close_shadows true
+  addUserKnob {41 color T Text1.color}
+  addUserKnob {7 Text_size l Size R 0.36 0.5}
+  Text_size 0.45
+  addUserKnob {20 endGroup_1 l endGroup n -1}
+  addUserKnob {20 color_wheel l "Color Wheel" n 1}
+  addUserKnob {7 Rotate R 0 360}
+  addUserKnob {6 Close_ColorWheel1 l "Close ColorWheel1" t "It only works if the text function is close." +STARTLINE}
+  addUserKnob {6 Close_ColorWheel2 l "Close ColorWheel2" t "It only works if the text function is close." -STARTLINE}
+  addUserKnob {6 Close_ColorWheel3 l "Close ColorWheel3" t "It only works if the text function is close." -STARTLINE}
+  addUserKnob {6 Close_ColorWheel4 l "Close ColorWheel4" t "It only works if the text function is close." -STARTLINE}
+  addUserKnob {20 endGroup_3 l endGroup n -1}
+  addUserKnob {20 endGroup_2 l endGroup n -1}
+  addUserKnob {26 ""}
+  addUserKnob {26 message l "@b;" T "Author: after 94 uncle     Q:1692147818     更多内容请搜索微信公众号:nuke后期部"}
+ }
+  ColorWheel {
+   inputs 0
+   format "1920 1080 0 0 1920 1080 1 HD_1080"
+   centerSaturation 1
+   gamma 0
+   rotate {{parent.Rotate+90}}
+   name ColorWheel1
+   xpos -391
+   ypos -263
+   postage_stamp false
+  }
+set N77bf4400 [stack 0]
+  Transform {
+   scale {{parent.Transform12.scale-0.25}}
+   center {960 540}
+   name Transform13
+   xpos -174
+   ypos 83
+  }
+push $N77bf4400
+  Multiply {
+   channels rgb
+   value {{parent.value1}}
+   name Multiply2
+   xpos -391
+   ypos -205
+  }
+set N67d63c00 [stack 0]
+  Transform {
+   scale {{parent.Transform11.scale-0.25}}
+   center {960 540}
+   name Transform12
+   xpos -281
+   ypos 35
+  }
+  ColorWheel {
+   inputs 0
+   format "1920 1080 0 0 1920 1080 1 HD_1080"
+   channels rgb
+   centerSaturation 1
+   gamma 0
+   rotate {{parent.ColorWheel1.rotate-120}}
+   name ColorWheel2
+   xpos -584
+   ypos -264
+   postage_stamp false
+  }
+  Multiply {
+   channels rgb
+   value {{parent.value2}}
+   name Multiply1
+   xpos -584
+   ypos -133
+  }
+push $N67d63c00
+  Merge2 {
+   inputs 2
+   name Merge2
+   xpos -391
+   ypos -133
+  }
+set N67d62c00 [stack 0]
+  Transform {
+   scale 0.75
+   center {960 540}
+   name Transform11
+   xpos -539
+   ypos -37
+  }
+  ColorWheel {
+   inputs 0
+   format "1920 1080 0 0 1920 1080 1 HD_1080"
+   channels rgb
+   centerSaturation 1
+   gamma 0
+   rotate {{parent.ColorWheel1.rotate-240}}
+   name ColorWheel9
+   xpos -171
+   ypos -261
+   postage_stamp false
+  }
+  Multiply {
+   channels rgb
+   value {{parent.value3}}
+   name Multiply3
+   xpos -171
+   ypos -85
+  }
+push $N67d62c00
+  Merge2 {
+   inputs 2
+   name Merge10
+   xpos -391
+   ypos -85
+   disable {{parent.Text1.disable==1?parent.Close_ColorWheel4:0}}
+  }
+  Merge2 {
+   inputs 2
+   name Merge11
+   xpos -391
+   ypos -37
+   disable {{parent.Text1.disable==1?parent.Close_ColorWheel3:0}}
+  }
+  Merge2 {
+   inputs 2
+   name Merge12
+   xpos -391
+   ypos 35
+   disable {{parent.Text1.disable==1?parent.Close_ColorWheel2:0}}
+  }
+  Merge2 {
+   inputs 2
+   name Merge13
+   xpos -391
+   ypos 83
+   disable {{parent.Text1.disable==1?parent.Close_ColorWheel1:0}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value Multiply2.value]r+\[value Multiply3.value]g+\[value Multiply1.value]b\n\n\n\[value Multiply2.value]r+\[value Multiply1.value]b\n\n\n\[value Multiply2.value]r\n\n\nr\n"
+   old_message {{48 46 50 114 43 48 46 51 103 43 48 46 49 98 10 10 10 48 46 50 114 43 48 46 49 98 10 10 10 48 46 50 114 10 10 10 114 10}
+     }
+   old_expression_markers {{0 2 5 7 10 12 17 19 22 24 29 31}
+     }
+   box {629.5 704.5 1290.5 885.5}
+   xjustify center
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 127
+   global_font_scale {{parent.Text_size}}
+   rotate {{parent.ColorWheel1.rotate-90}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   initial_cursor_position {{960 795}
+     }
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 {parent.ColorWheel1.rotate-90} 0}
+     }
+   color {0 0 0 0}
+   enable_shadows {{1-parent.Close_shadows}}
+   name Text1
+   xpos -391
+   ypos 134
+   disable {{1-parent.Enable_Text}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value Multiply3.value]r+\[value Multiply1.value]g+\[value Multiply2.value]b\n\n\n\[value Multiply1.value]g+\[value Multiply2.value]b\n\n\n\[value Multiply2.value]b\n\n\nb\n"
+   old_message {{48 46 51 114 43 48 46 49 103 43 48 46 50 98 10 10 10 48 46 49 103 43 48 46 50 98 10 10 10 48 46 50 98 10 10 10 98 10}
+     }
+   old_expression_markers {{0 2 5 7 10 12 17 19 22 24 29 31}
+     }
+   box {629.5 704.5 1290.5 885.5}
+   xjustify center
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 66
+   global_font_scale {{parent.Text1.global_font_scale}}
+   rotate {{parent.Text1.rotate+120}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   initial_cursor_position {{960 795}
+     }
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 {parent.Text1.rotate+120} 0}
+     }
+   color {{parent.Text1.color.r} {parent.Text1.color.g} {parent.Text1.color.b} {parent.Text1.color.a}}
+   enable_shadows {{parent.Text1.enable_shadows}}
+   name Text2
+   xpos -391
+   ypos 180
+   disable {{parent.Text1.disable}}
+  }
+  Text2 {
+   font_size_toolbar 100
+   font_width_toolbar 100
+   font_height_toolbar 100
+   message "\[value Multiply1.value]r+\[value Multiply2.value]g+\[value Multiply3.value]b\n\n\n\[value Multiply1.value]r+\[value Multiply2.value]g\n\n\n\[value Multiply2.value]g\n\n\ng\n"
+   old_message {{48 46 49 114 43 48 46 50 103 43 48 46 51 98 10 10 10 48 46 49 114 43 48 46 50 103 10 10 10 48 46 50 103 10 10 10 103 10}
+     }
+   old_expression_markers {{0 2 5 7 10 12 17 19 22 24 29 31}
+     }
+   box {629.5 704.5 1290.5 885.5}
+   xjustify center
+   yjustify center
+   transforms {{0 2}
+     }
+   cursor_position 153
+   global_font_scale {{parent.Text1.global_font_scale}}
+   rotate {{parent.Text1.rotate-120}}
+   scale {1 1}
+   center {960 540}
+   cursor_initialised true
+   initial_cursor_position {{960 795}
+     }
+   group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+   animation_layers {{1 11 960 540 0 0 1 1 0 0 {parent.Text1.rotate-120} 0}
+     }
+   color {{parent.Text1.color.r} {parent.Text1.color.g} {parent.Text1.color.b} {parent.Text1.color.a}}
+   enable_shadows {{parent.Text1.enable_shadows}}
+   name Text3
+   xpos -391
+   ypos 226
+   disable {{parent.Text1.disable}}
+  }
+  Output {
+   name Output1
+   xpos -391
+   ypos 273
+  }
+ end_group
+ Transform {
+  rotate -90
+  center {960 540}
+  name Transform1
+  xpos 115
+  ypos -104
+  disable {{1-parent.box}}
+ }
+ Reformat {
+  type "to box"
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  box_width 1080
+  box_height 1080
+  box_fixed true
+  resize none
+  turn true
+  name Reformat1
+  selected true
+  xpos 115
+  ypos -62
+  disable {{1-parent.box}}
+ }
+ Output {
+  name Output1
+  xpos 115
+  ypos -12
+ }
+end_group

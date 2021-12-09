@@ -1,0 +1,723 @@
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
+Group {
+ name Spectrum1
+ tile_color 0x987fffff
+ label "Spectrum 2.0"
+ addUserKnob {20 User t "This tool will help you to add spectrum in your shots. \nIt's better than chromatic aberration because is based in all ranges of color: purple, blue, cyan, green, yellow, orange, red. Forget the basic chromatic aberration based in RGB.\nThis tool works very well in shots with water or under the water. Use it with caustics and it will blow your mind. \nIt works really well with Alexa, Phantom and better with eye fish lenses\n\nHope you enjoy it!\n"}
+ addUserKnob {68 ultraviolet l "<font face=\"verdana\" color=\"#e6ccff\">Ultraviolet Range</font>" M {"NO ultraviolet range" "YES ultraviolet range" "" "" "" "" "" ""}}
+ ultraviolet "YES ultraviolet range"
+ addUserKnob {7 transform l "<font face=\"verdana\" color=\"orange\">Transform</font>"}
+ transform 0.5
+ addUserKnob {7 scale l "<font face=\"verdana\" color=\"orange\">Scale</font>" R 0 0.02}
+ scale 0.01
+ addUserKnob {22 documentation l "<font face=\"verdana\" color=\"orange\">Documentation</font>" T "import os\nimport webbrowser\nimport nuke\n\ndef openWebpage():\n  webbrowser.open(\"https://en.wikipedia.org/wiki/Prism#History/\")\n\nopenWebpage()" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 website l by: T "\n\n<style> a:link \{\n    color: orange; \n    background-color: transparent; \n    text-decoration: none;\n\} a:visited \{\n    color: pink;\n    background-color: transparent;\n    text-decoration: none;\n\} a:hover \{\n    color: red;\n    background-color: transparent;\n    text-decoration: underline;\n\} a:active \{\n    color: yellow;\n    background-color: transparent;\n    text-decoration: underline;\n\} </style>\n\n<a href=\"https://www.rescueteam.tv/\">www.rescueteam.tv</a>"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 472
+  ypos 429
+ }
+set N95e28000 [stack 0]
+ Dot {
+  name Dot9
+  xpos 2148
+  ypos 433
+ }
+ Expression {
+  expr0 r*0.9508
+  expr1 g*1.11
+  expr2 b*1.534
+  expr3 a*.076923077
+  name Expression11
+  xpos 2114
+  ypos 556
+ }
+set N78447000 [stack 0]
+ Dot {
+  name Dot381
+  xpos 2038
+  ypos 560
+ }
+set N87e7f000 [stack 0]
+ Dot {
+  name Dot382
+  xpos 1928
+  ypos 560
+ }
+set N81c1e400 [stack 0]
+ Dot {
+  name Dot215
+  label new
+  xpos 1807
+  ypos 560
+ }
+set N82f46000 [stack 0]
+ Dot {
+  name Dot383
+  xpos 1675
+  ypos 560
+ }
+set Na7df0000 [stack 0]
+ Dot {
+  name Dot205
+  label n
+  xpos 1542
+  ypos 560
+ }
+set N85ff0c00 [stack 0]
+ Dot {
+  name Dot384
+  xpos 1413
+  ypos 560
+ }
+set Nd947d400 [stack 0]
+ Dot {
+  name Dot219
+  label n
+  xpos 1300
+  ypos 560
+ }
+set N93609000 [stack 0]
+ Expression {
+  expr0 (r*.75)*.2
+  expr1 (g*0)*.2
+  expr2 (b*.25)*.2
+  name Expression24
+  label purple
+  xpos 1266
+  ypos 581
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*-2)} {0+((parent.transform/13)*-2)}}
+  scale {{1+((parent.scale/13)*-2)}}
+  center {{width/2} {height/2}}
+  name Transform19
+  xpos 1266
+  ypos 619
+ }
+ Dot {
+  name Dot220
+  xpos 1300
+  ypos 655
+ }
+push $N93609000
+ Dot {
+  name Dot217
+  label n
+  xpos 1173
+  ypos 560
+ }
+ Expression {
+  expr0 (r*.5)*.2
+  expr1 (g*0)*.2
+  expr2 (b*.5)*.2
+  name Expression23
+  label purple
+  xpos 1139
+  ypos 579
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*-1)} {0+((parent.transform/13)*-1)}}
+  scale {{1+((parent.scale/13)*-1)}}
+  center {{width/2} {height/2}}
+  name Transform18
+  xpos 1139
+  ypos 617
+ }
+ Dot {
+  name Dot218
+  xpos 1173
+  ypos 655
+ }
+push $N82f46000
+ Expression {
+  expr0 (r*.635)*.2
+  expr1 (g*0.365)*.2
+  expr2 (b*0)*.2
+  name Expression22
+  label "orange light"
+  xpos 1773
+  ypos 588
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*3)} {0+((parent.transform/13)*3)}}
+  scale {{1+((parent.scale/13)*3)}}
+  center {{width/2} {height/2}}
+  name Transform17
+  xpos 1773
+  ypos 624
+ }
+ Dot {
+  name Dot216
+  xpos 1807
+  ypos 655
+ }
+push $N85ff0c00
+ Expression {
+  expr0 (r*.86)*.2
+  expr1 (g*0.14)*.2
+  expr2 (b*0)*.2
+  name Expression12
+  label "red light"
+  xpos 1508
+  ypos 586
+ }
+ Transform {
+  translate {{0+(parent.transform/13*1)} {0+(parent.transform/13*1)}}
+  scale {{1+(parent.scale/13*1)}}
+  center {{width/2} {height/2}}
+  name Transform10
+  xpos 1508
+  ypos 624
+ }
+ Dot {
+  name Dot206
+  xpos 1542
+  ypos 655
+ }
+push $N78447000
+ Dot {
+  name Dot377
+  xpos 2258
+  ypos 560
+ }
+set N83025000 [stack 0]
+ Dot {
+  name Dot378
+  xpos 2368
+  ypos 560
+ }
+set Nfaae7000 [stack 0]
+ Dot {
+  name Dot379
+  xpos 2478
+  ypos 560
+ }
+set Nbb2d1c00 [stack 0]
+ Dot {
+  name Dot380
+  xpos 2588
+  ypos 560
+ }
+ Expression {
+  expr0 (r*0)*.2
+  expr1 (g*0)*.2
+  expr2 (b*1)*.2
+  name Expression13
+  label "blue dark"
+  xpos 2554
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*10)} {0+((parent.transform/13)*10)}}
+  scale {{1+((parent.scale/13)*10)}}
+  center {{width/2} {height/2}}
+  name Transform40
+  xpos 2554
+  ypos 616
+ }
+ Dot {
+  name Dot204
+  xpos 2588
+  ypos 655
+ }
+push $Nbb2d1c00
+ Expression {
+  expr0 (r*0)*.2
+  expr1 (g*0.25)*.2
+  expr2 (b*0.75)*.2
+  name Expression14
+  label blue
+  xpos 2444
+  ypos 582
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*9)} {0+((parent.transform/13)*9)}}
+  scale {{1+((parent.scale/13)*9)}}
+  center {{width/2} {height/2}}
+  name Transform41
+  xpos 2444
+  ypos 619
+ }
+ Dot {
+  name Dot203
+  xpos 2478
+  ypos 655
+ }
+push $Nfaae7000
+ Expression {
+  expr0 (r*0)*.2
+  expr1 (g/2)*.2
+  expr2 (b/2)*.2
+  name Expression15
+  label "blue light"
+  xpos 2334
+  ypos 579
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*8)} {0+((parent.transform/13)*8)}}
+  scale {{1+((parent.scale/13)*8)}}
+  center {{width/2} {height/2}}
+  name Transform42
+  xpos 2334
+  ypos 619
+ }
+ Dot {
+  name Dot202
+  xpos 2368
+  ypos 655
+ }
+push $N83025000
+ Expression {
+  expr0 (r*0)*.2
+  expr1 (g*0.75)*.2
+  expr2 (b*0.25)*.2
+  name Expression16
+  label "green dark"
+  xpos 2224
+  ypos 582
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*7)} {0+((parent.transform/13)*7)}}
+  scale {{1+((parent.scale/13)*7)}}
+  center {{width/2} {height/2}}
+  name Transform43
+  xpos 2224
+  ypos 620
+ }
+ Dot {
+  name Dot201
+  xpos 2258
+  ypos 655
+ }
+push $N78447000
+ Expression {
+  expr0 (r*.0)*.2
+  expr1 (g*1)*.2
+  expr2 (b*0)*.2
+  name Expression17
+  label green
+  xpos 2114
+  ypos 585
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*6)} {0+((parent.transform/13)*6)}}
+  scale {{1+((parent.scale/13)*6)}}
+  center {{width/2} {height/2}}
+  name Transform44
+  xpos 2114
+  ypos 623
+ }
+push $N87e7f000
+ Expression {
+  expr0 (r*.25)*.2
+  expr1 (g*0.75)*.2
+  expr2 (b*0)*.2
+  name Expression18
+  label "green light"
+  xpos 2004
+  ypos 585
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*5)} {0+((parent.transform/13)*5)}}
+  scale {{1+((parent.scale/13)*5)}}
+  center {{width/2} {height/2}}
+  name Transform45
+  xpos 2004
+  ypos 624
+ }
+ Dot {
+  name Dot200
+  xpos 2038
+  ypos 655
+ }
+push $N81c1e400
+ Expression {
+  expr0 (r*.5)*.2
+  expr1 (g*.5)*.2
+  expr2 (b*0)*.2
+  name Expression19
+  label yellow
+  xpos 1894
+  ypos 584
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*4)} {0+((parent.transform/13)*4)}}
+  scale {{1+((parent.scale/13)*4)}}
+  center {{width/2} {height/2}}
+  name Transform46
+  xpos 1894
+  ypos 621
+ }
+ Dot {
+  name Dot199
+  xpos 1928
+  ypos 655
+ }
+push 0
+push $Nd947d400
+ Expression {
+  expr0 (r*1)*.2
+  expr1 (g*0)*.2
+  expr2 (b*0)*.2
+  name Expression20
+  label red
+  xpos 1379
+  ypos 584
+ }
+ Transform {
+  translate {{0+(parent.transform/13*0)} {0+(parent.transform/13*0)}}
+  scale {{1+(parent.scale/13*0)}}
+  center {{width/2} {height/2}}
+  name Transform47
+  xpos 1379
+  ypos 622
+ }
+ Dot {
+  name Dot197
+  xpos 1413
+  ypos 655
+ }
+push $Na7df0000
+ Expression {
+  expr0 (r*.75)*.2
+  expr1 (g*0.25)*.2
+  expr2 (b*0)*.2
+  name Expression21
+  label orange
+  xpos 1641
+  ypos 587
+ }
+ Transform {
+  translate {{0+((parent.transform/13)*2)} {0+((parent.transform/13)*2)}}
+  scale {{1+((parent.scale/13)*2)}}
+  center {{width/2} {height/2}}
+  name Transform48
+  xpos 1641
+  ypos 625
+ }
+ Dot {
+  name Dot198
+  xpos 1675
+  ypos 655
+ }
+ Merge2 {
+  inputs 13+1
+  operation plus
+  name Merge127
+  xpos 2114
+  ypos 651
+ }
+ Shuffle {
+  name Shuffle34
+  xpos 2114
+  ypos 678
+ }
+ Dot {
+  name Dot10
+  xpos 2148
+  ypos 872
+ }
+push $N95e28000
+ Expression {
+  expr0 r*1.53845
+  expr1 g*.96155
+  expr2 b*1.53845
+  expr3 a*.111111
+  name Expression1
+  xpos 472
+  ypos 556
+ }
+set N8b1ae000 [stack 0]
+ Dot {
+  name Dot24
+  xpos 396
+  ypos 560
+ }
+set N911a7800 [stack 0]
+ Dot {
+  name Dot25
+  xpos 286
+  ypos 560
+ }
+set N911a7400 [stack 0]
+ Dot {
+  name Dot26
+  xpos 176
+  ypos 560
+ }
+set N911a7000 [stack 0]
+ Dot {
+  name Dot27
+  xpos 66
+  ypos 560
+ }
+ Expression {
+  expr0 (r*1)*.26
+  expr1 (g*0)*.26
+  expr2 (b*0)*.26
+  name Expression2
+  xpos 32
+  ypos 578
+ }
+ Transform {
+  translate {{0+(parent.transform/9*0)} {0+(parent.transform/9*0)}}
+  scale {{1+(parent.scale/9*0)}}
+  center {{width/2} {height/2}}
+  name Transform1
+  xpos 32
+  ypos 604
+ }
+ Dot {
+  name Dot1
+  xpos 66
+  ypos 638
+ }
+push $N911a7000
+ Expression {
+  expr0 (r*.75)*.26
+  expr1 (g*0.25)*.26
+  expr2 (b*0)*.26
+  name Expression3
+  xpos 142
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*1)} {0+((parent.transform/9)*1)}}
+  scale {{1+((parent.scale/9)*1)}}
+  center {{width/2} {height/2}}
+  name Transform2
+  xpos 142
+  ypos 604
+ }
+ Dot {
+  name Dot2
+  xpos 176
+  ypos 638
+ }
+push $N911a7400
+ Expression {
+  expr0 (r*.5)*.26
+  expr1 (g*.5)*.26
+  expr2 (b*0)*.26
+  name Expression4
+  xpos 252
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*2)} {0+((parent.transform/9)*2)}}
+  scale {{1+((parent.scale/9)*2)}}
+  center {{width/2} {height/2}}
+  name Transform3
+  xpos 252
+  ypos 604
+ }
+ Dot {
+  name Dot3
+  xpos 286
+  ypos 638
+ }
+push $N911a7800
+ Expression {
+  expr0 (r*.25)*.26
+  expr1 (g*0.75)*.26
+  expr2 (b*0)*.26
+  name Expression5
+  xpos 362
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*3)} {0+((parent.transform/9)*3)}}
+  scale {{1+((parent.scale/9)*3)}}
+  center {{width/2} {height/2}}
+  name Transform4
+  xpos 362
+  ypos 604
+ }
+ Dot {
+  name Dot4
+  xpos 396
+  ypos 638
+ }
+push $N8b1ae000
+ Dot {
+  name Dot20
+  xpos 616
+  ypos 560
+ }
+set N896ba800 [stack 0]
+ Dot {
+  name Dot21
+  xpos 726
+  ypos 560
+ }
+set N896ba400 [stack 0]
+ Dot {
+  name Dot22
+  xpos 836
+  ypos 560
+ }
+set N896ba000 [stack 0]
+ Expression {
+  expr0 (r*0)*.26
+  expr1 (g*0.25)*.26
+  expr2 (b*0.75)*.26
+  name Expression9
+  xpos 802
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*7)} {0+((parent.transform/9)*7)}}
+  scale {{1+((parent.scale/9)*7)}}
+  center {{width/2} {height/2}}
+  name Transform8
+  xpos 802
+  ypos 604
+ }
+ Dot {
+  name Dot6
+  xpos 836
+  ypos 638
+ }
+push $N896ba000
+ Dot {
+  name Dot23
+  xpos 946
+  ypos 560
+ }
+ Expression {
+  expr0 (r*0)*.26
+  expr1 (g*0)*.26
+  expr2 (b*1)*.26
+  name Expression10
+  xpos 912
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*8)} {0+((parent.transform/9)*8)}}
+  scale {{1+((parent.scale/9)*8)}}
+  center {{width/2} {height/2}}
+  name Transform9
+  xpos 912
+  ypos 604
+ }
+ Dot {
+  name Dot5
+  xpos 946
+  ypos 638
+ }
+push $N896ba400
+ Expression {
+  expr0 (r*0)*.26
+  expr1 (g/2)*.26
+  expr2 (b/2)*.26
+  name Expression8
+  xpos 692
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*6)} {0+((parent.transform/9)*6)}}
+  scale {{1+((parent.scale/9)*6)}}
+  center {{width/2} {height/2}}
+  name Transform7
+  xpos 692
+  ypos 604
+ }
+ Dot {
+  name Dot7
+  xpos 726
+  ypos 638
+ }
+push 0
+push $N8b1ae000
+ Expression {
+  expr0 (r*.0)*.26
+  expr1 (g*1)*.26
+  expr2 (b*0)*.26
+  name Expression6
+  xpos 472
+  ypos 582
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*4)} {0+((parent.transform/9)*4)}}
+  scale {{1+((parent.scale/9)*4)}}
+  center {{width/2} {height/2}}
+  name Transform5
+  xpos 472
+  ypos 608
+ }
+push $N896ba800
+ Expression {
+  expr0 (r*0)*.26
+  expr1 (g*0.75)*.26
+  expr2 (b*0.25)*.26
+  name Expression7
+  xpos 582
+  ypos 578
+ }
+ Transform {
+  translate {{0+((parent.transform/9)*5)} {0+((parent.transform/9)*5)}}
+  scale {{1+((parent.scale/9)*5)}}
+  center {{width/2} {height/2}}
+  name Transform6
+  xpos 582
+  ypos 604
+ }
+ Dot {
+  name Dot8
+  xpos 616
+  ypos 638
+ }
+ Merge2 {
+  inputs 9+1
+  operation plus
+  name Plus
+  xpos 472
+  ypos 634
+ }
+ Shuffle {
+  name Shuffle1
+  xpos 472
+  ypos 698
+ }
+ Switch {
+  inputs 2
+  which {{parent.ultraviolet}}
+  name Switch1
+  xpos 472
+  ypos 868
+ }
+set N9254bf80 [stack 0]
+ Output {
+  name Output1
+  xpos 472
+  ypos 1038
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote2
+  label "+ ultraviolet and purple"
+  xpos 2215
+  ypos 459
+ }
+ StickyNote {
+  inputs 0
+  name StickyNote1
+  label "  no ultraviolet and purple"
+  xpos 44
+  ypos 466
+ }
+push $N9254bf80
+ Viewer {
+  frame_range 1001-1001
+  fps 25
+  name Viewer1
+  selected true
+  xpos 1978
+  ypos 763
+ }
+end_group

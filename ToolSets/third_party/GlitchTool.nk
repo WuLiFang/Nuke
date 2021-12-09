@@ -1,0 +1,388 @@
+version 10.5 v7
+Group {
+name GlitchTool1
+inputs 3
+tile_color 0xdb5200ff
+note_font "Verdana Bold"
+addUserKnob {20 User}
+addUserKnob {26 glitch l "" +STARTLINE T GLITCH}
+addUserKnob {4 glitchMap l "Glitch map" t "Noise - ready made glitch map\nCustom - plug-on your own glitch map (must be black and white image)" M {Noise Custom "" "" ""}}
+addUserKnob {7 flashingFreguency l "Flashing freguency" t "0 = flashing off, bigger value = quicker flashing" R 0 4}
+flashingFreguency 1
+addUserKnob {6 flickeringOnOff l "Flickering ON/OFF" +STARTLINE}
+flickeringOnOff true
+addUserKnob {7 flickerSpeed l "Flickering speed" R 0 4}
+flickerSpeed 1
+addUserKnob {3 glitchOnOff l "Glitch ON/OFF" t "Set keys or expression to animate glitch FX ON or OFF"}
+glitchOnOff 1
+addUserKnob {20 transform l Transform n 1}
+transform 0
+addUserKnob {41 translate T Transform12.translate}
+addUserKnob {41 rotate T Transform12.rotate}
+addUserKnob {41 scale T Transform12.scale}
+addUserKnob {41 skewX l "skew X" T Transform12.skewX}
+addUserKnob {41 skewY l "skew Y" T Transform12.skewY}
+addUserKnob {20 endGroup n -1}
+addUserKnob {26 ""}
+addUserKnob {26 distort l "" +STARTLINE T DISTORT}
+addUserKnob {7 UVoffset l "UV offset"}
+addUserKnob {14 UVscale l "UV scale" R 0 100}
+UVscale 60
+addUserKnob {26 ""}
+addUserKnob {26 transformRGB l "" +STARTLINE T "TRANSFORM RGB"}
+addUserKnob {41 red l Red T Transform16.translate}
+addUserKnob {41 green l Green T Transform1.translate}
+addUserKnob {41 blue l Blue T Transform2.translate}
+addUserKnob {26 ""}
+addUserKnob {26 info l "" +STARTLINE T "GlitchTool - 2021 - Kristin Kaas-Lutsberg - https://vimeo.com/kristinkaaslutsberg"}
+}
+BackdropNode {
+inputs 0
+name BackdropNode20
+tile_color 0x526f49ff
+label GLITCH
+note_font "Verdana Bold"
+note_font_size 120
+xpos -2597
+ypos -3063
+bdwidth 2348
+bdheight 2612
+}
+Input {
+inputs 0
+name mask
+xpos -426
+ypos -596
+number 1
+}
+Input {
+inputs 0
+name glitchMap
+xpos -2167
+ypos -2886
+number 2
+}
+Noise {
+inputs 0
+type turbulence
+size {600 80}
+zoffset 0.76
+lacunarity 2.18
+gain 0.57
+gamma 0.21
+translate {{(random(3,frame*0.6)*200)+10} 38.52051888}
+center {960 540}
+name Noise1
+xpos -2304
+ypos -2888
+}
+Switch {
+inputs 2
+which {{parent.glitchMap}}
+name Switch1
+xpos -2260
+ypos -2808
+}
+CheckerBoard2 {
+inputs 0
+boxsize {600 65}
+centerlinewidth 1
+name CheckerBoard1
+xpos -2429
+ypos -2843
+}
+Grade {
+white 0.2
+gamma 0.9
+name Grade69
+xpos -2429
+ypos -2759
+}
+Merge2 {
+inputs 2
+operation screen
+name Merge73
+xpos -2260
+ypos -2759
+}
+Sharpen {
+amount 2
+size 20
+name Sharpen3
+xpos -2260
+ypos -2700
+}
+Grade {
+white 2
+gamma 0.7
+name Grade70
+xpos -2260
+ypos -2651
+}
+Grade {
+white {{(random(5,frame*(parent.flashingFreguency*0.4))*10)+0}}
+name Grade71
+label FLASHING
+xpos -2260
+ypos -2600
+}
+Position {
+translate {0 {(random(5,frame*0.1)*54)+4}}
+name Position2
+xpos -2260
+ypos -2536
+}
+Clamp {
+name Clamp2
+xpos -2260
+ypos -2464
+}
+set N325c4800 [stack 0]
+Grade {
+name Grade72
+xpos -2369
+ypos -2315
+}
+push $N325c4800
+Grade {
+white 0
+name Grade73
+xpos -2172
+ypos -2309
+}
+Switch {
+inputs 2
+which {{(random(1,frame*(parent.flickerSpeed*0.8))*3)+0}}
+name Switch16
+label "FLICKERING "
+xpos -2275
+ypos -2208
+}
+push $N325c4800
+Dot {
+name Dot5
+xpos -2447
+ypos -2306
+}
+Switch {
+inputs 2
+which {{"parent.flickeringOnOff == 1 ? (random(1,frame*0.8)*3)+0 : 0"}}
+name Switch2
+label "FLICKERING ON/OFF"
+xpos -2275
+ypos -2094
+}
+Transform {
+translate {97 1}
+scale {1.5 2.2}
+skewX 0.05
+center {960 540}
+name Transform12
+xpos -2275
+ypos -1964
+}
+set N3cdbf400 [stack 0]
+Dot {
+name Dot122
+xpos -2027
+ypos -1961
+}
+Keyer {
+operation "luminance key"
+range {0 0.5493863791 1 1}
+name Keyer15
+xpos -2061
+ypos -1920
+}
+Grade {
+channels alpha
+white {{parent.glitchOnOff}}
+name Grade1
+xpos -2061
+ypos -1862
+}
+Dot {
+name Dot123
+xpos -2027
+ypos -1815
+}
+push $N3cdbf400
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 rgba.alpha
+name Copy11
+xpos -2275
+ypos -1822
+}
+Premult {
+name Premult13
+xpos -2275
+ypos -1712
+}
+Dot {
+name Dot115
+xpos -2241
+ypos -1499
+}
+Dot {
+name Dot4
+xpos -1792
+ypos -1499
+}
+set N3cdbd400 [stack 0]
+Dot {
+name Dot3
+xpos -1792
+ypos -1127
+}
+set N3cdbd000 [stack 0]
+push $N3cdbd400
+Input {
+inputs 0
+name image
+xpos -588
+ypos -1776
+}
+set N3cdbcc00 [stack 0]
+Dot {
+name Dot1
+xpos -1084
+ypos -1773
+}
+Copy {
+inputs 2
+from0 rgba.alpha
+to0 forward.u
+from1 rgba.alpha
+to1 backward.v
+name Copy9
+xpos -1118
+ypos -1511
+}
+IDistort {
+uv forward
+uv_offset {{parent.UVoffset}}
+uv_scale {{parent.UVscale}}
+maskChannel -rgba.alpha
+name IDistort1
+xpos -1118
+ypos -1358
+}
+set N3cd53c00 [stack 0]
+Shuffle {
+green black
+blue black
+alpha black
+name Shuffle1
+label RED
+xpos -1399
+ypos -1127
+}
+TransformMasked {
+inputs 1+1
+center {960 540}
+name Transform16
+xpos -1399
+ypos -1006
+}
+Dot {
+name Dot125
+xpos -1365
+ypos -917
+}
+push $N3cdbd000
+push $N3cd53c00
+Shuffle {
+red black
+blue black
+alpha black
+name Shuffle2
+label GREEN
+xpos -1118
+ypos -1125
+}
+TransformMasked {
+inputs 1+1
+translate {-10 0}
+center {960 540}
+name Transform1
+xpos -1118
+ypos -1008
+}
+Merge2 {
+inputs 2
+operation plus
+name Merge74
+xpos -1118
+ypos -920
+}
+Dot {
+name Dot124
+xpos -1084
+ypos -852
+}
+push $N3cdbd000
+push $N3cd53c00
+Shuffle {
+red black
+green black
+alpha black
+name Shuffle3
+label BLUE
+xpos -826
+ypos -1123
+}
+TransformMasked {
+inputs 1+1
+center {960 540}
+name Transform2
+xpos -826
+ypos -1010
+}
+Merge2 {
+inputs 2
+operation plus
+name Merge76
+xpos -826
+ypos -855
+}
+Remove {
+operation keep
+channels rgba
+name Remove2
+xpos -826
+ypos -763
+}
+Dot {
+name Dot2
+xpos -792
+ypos -593
+}
+push $N3cdbcc00
+Keymix {
+inputs 3
+name Keymix1
+xpos -588
+ypos -600
+}
+Crop {
+box {0 0 1920 1080}
+name Crop1
+xpos -588
+ypos -545
+}
+Output {
+name Output1
+xpos -588
+ypos -484
+}
+push $N3cd53c00
+Viewer {
+frame_range 10-50
+frame_range_lock true
+name Viewer1
+xpos 290
+ypos 311
+}
+end_group

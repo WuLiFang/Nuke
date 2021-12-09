@@ -1,0 +1,91 @@
+#! C:/Program Files/Nuke6.2v2/Nuke6.2.exe -nx
+version 6.2 v2
+Group {
+ name FX_HighLights
+ addUserKnob {20 User l Settings}
+ addUserKnob {41 gain l Color_Main T CC_gainColored.gain}
+ addUserKnob {41 translate l Offset_translate T Transform_plus.translate}
+ addUserKnob {41 size l Blur_Size T Blur_Highlights.size}
+ addUserKnob {41 brightness l Glow_Brightness T Glow_Highlights.brightness}
+}
+ Input {
+  inputs 0
+  name IN_Hightlights
+  xpos -532
+  ypos -484
+ }
+ Dot {
+  name Dot1
+  xpos -498
+  ypos -408
+ }
+set N721a6b0 [stack 0]
+ ColorCorrect {
+  gain {2 2 0 1}
+  name CC_gainColored
+  xpos -183
+  ypos -398
+ }
+push $N721a6b0
+ Merge2 {
+  inputs 2
+  operation in
+  name Merge_IN
+  xpos -183
+  ypos -336
+ }
+ Transform {
+  translate {-5 0}
+  center {960 540}
+  name Transform_plus
+  xpos -183
+  ypos -274
+ }
+push $N721a6b0
+ Merge2 {
+  inputs 2
+  operation out
+  name Merge_Out
+  xpos -402
+  ypos -185
+ }
+ Transform {
+  translate {{(parent.Transform_plus.translate)*-1 i} {parent.Transform_plus.translate i}}
+  center {960 540}
+  name Transform_Minus
+  xpos -402
+  ypos -88
+ }
+ Blur {
+  channels rgba
+  size 20
+  name Blur_Highlights
+  xpos -402
+  ypos -18
+ }
+ Dot {
+  name Dot2
+  xpos -321
+  ypos 15
+ }
+ Glow {
+  brightness 5
+  size {{(parent.Blur_Highlights.size)/2 i}}
+  name Glow_Highlights
+  xpos -402
+  ypos 75
+ }
+push $N721a6b0
+ Merge2 {
+  inputs 2
+  maskChannelInput rgba.alpha
+  name Merge_final
+  xpos -532
+  ypos 133
+ }
+ Output {
+  name OUT_Hightlights
+  xpos -532
+  ypos 233
+ }
+end_group
