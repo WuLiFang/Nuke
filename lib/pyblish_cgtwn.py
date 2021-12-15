@@ -35,7 +35,7 @@ def _copy_file(src, dst):
     _LOGGER.info("复制:\n\t\t%s\n\t->\t%s", src, dst)
     try:
         return shutil.copy2(src, dst)
-    except shutil.SameFileError:
+    except shutil.Error:
         return dst
 
 
