@@ -3,6 +3,7 @@ install:
   - set "PYTHON27=C:\\Python27\\python.exe"
   - "%PYTHON27% -m pip install -U pip"
 build_script:
+  - pip3 install -r ./docs/dev-requirements.txt
   - make build
 after_build:
   - 7z a -tzip -xr!.* -xr0!build build\\WuLiFang-Nuke-%APPVEYOR_REPO_TAG_NAME%-win.zip
