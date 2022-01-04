@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2022.0.0](https://github.com/WuLiFang/Nuke/compare/v2021.4.1...v2022.0.0) (2022-01-04)
+
+### Features
+
+- update expire time to 2023-01-01 ([7c71567](https://github.com/WuLiFang/Nuke/commit/7c715675d749405f8b06075088aee7ee930b847d))
+
+### Bug Fixes
+
+- missing identifier `shutil.SameFileError` ([5d11a0c](https://github.com/WuLiFang/Nuke/commit/5d11a0cddd910098ed9b761247bded29d2170093))
+- preference panel layout ([3824d3a](https://github.com/WuLiFang/Nuke/commit/3824d3a11a2d56b067496c5d38a7b22a746fafbe))
+
 ## [2021.4.1](https://github.com/WuLiFang/Nuke/compare/v2021.4.0...v2021.4.1) (2021-11-12)
 
 ### Bug Fixes

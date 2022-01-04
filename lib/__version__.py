@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2021.4.1'
-RELEASE_DATE = datetime.fromtimestamp(1636692377)
-LAST_GIT_COMMIT_DESCRIBE = 'v2021.4.0-2-gb3ee633'
-LAST_GIT_COMMIT_HASH = 'b3ee63311bf1fca32fff0abbba484c5be94a0916'
+VERSION = '2022.0.0'
+RELEASE_DATE = datetime.fromtimestamp(1641263162)
+LAST_GIT_COMMIT_DESCRIBE = 'v2021.4.1-20-g7c71567'
+LAST_GIT_COMMIT_HASH = '7c715675d749405f8b06075088aee7ee930b847d'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1636692358)
-LAST_GIT_COMMIT_SUBJECT = 'fix(cgteamwork): error when workfile already uploaded'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1641263100)
+LAST_GIT_COMMIT_SUBJECT = 'feat: update expire time to 2023-01-01'
 LAST_GIT_COMMIT_BODY = ''
