@@ -1,8 +1,9 @@
 install:
-  - set "PATH=C:\\msys64\\usr\\bin;%PATH%"
   - set "PYTHON27=C:\\Python27\\python.exe"
+  - set "PYTHON38=C:\\Python38-x64\\python.exe"
+  - set "PATH=C:\\msys64\\usr\\bin;C:\Python38-x64\Scripts;%PATH%"
   - "%PYTHON27% -m pip install -U pip"
-  - py -3 -m pip install -r ./docs/dev-requirements.txt
+  - "%PYTHON38% -m pip install -r ./docs/dev-requirements.txt"
 build_script:
   - make build
 after_build:
