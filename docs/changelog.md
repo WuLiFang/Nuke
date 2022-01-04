@@ -1,5 +1,16 @@
 # 更新日志
 
+## [2022.0.0](https://github.com/WuLiFang/Nuke/compare/v2021.4.1...v2022.0.0) (2022-01-04)
+
+### 特性
+
+- 更新过期日期至 2023-01-01 ([7c71567](https://github.com/WuLiFang/Nuke/commit/7c715675d749405f8b06075088aee7ee930b847d))
+
+### 修复
+
+- 丢失标识符 `shutil.SameFileError` ([5d11a0c](https://github.com/WuLiFang/Nuke/commit/5d11a0cddd910098ed9b761247bded29d2170093))
+- 首选项面板布局 ([3824d3a](https://github.com/WuLiFang/Nuke/commit/3824d3a11a2d56b067496c5d38a7b22a746fafbe))
+
 ## [2021.4.1](https://github.com/WuLiFang/Nuke/compare/v2021.4.0...v2021.4.1) (2021-11-12)
 
 ### 修复
