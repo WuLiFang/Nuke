@@ -15,7 +15,7 @@ endif
 
 default: .venv build docs/_build/html $(VENV_SITEPATH)/lib.pth
 
-build: docs/_build/html/.git lib/site-packages/.sentinel
+build: docs/_build/html lib/site-packages/.sentinel
 
 export PYTHONPATH
 export PYTHONIOENCODING=UTF-8
@@ -31,6 +31,7 @@ lib/site-packages/.sentinel: requirements.txt patches/*.patch
 	for file in patches/*.patch; do patch -p1 < $$file; done
 	touch $@
 
+docs/_build/html: PYTHONPATH=
 docs/_build/html:
 	"$(MAKE)" -C docs html
 
