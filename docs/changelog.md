@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2022.1.0](https://github.com/WuLiFang/Nuke/compare/v2022.0.0...v2022.1.0) (2022-01-12)
+
+### 特性
+
+- wlf_Write: 1.57.0: 添加 mov 相关控制 ([90c72fe](https://github.com/WuLiFang/Nuke/commit/90c72febdb2f4c9e16b2ce51cc476b7204f9034e))
+
 ## [2022.0.0](https://github.com/WuLiFang/Nuke/compare/v2021.4.1...v2022.0.0) (2022-01-04)
 
 ### 特性
