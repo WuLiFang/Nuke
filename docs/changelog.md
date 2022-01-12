@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2022.1.1](https://github.com/WuLiFang/Nuke/compare/v2022.1.0...v2022.1.1) (2022-01-12)
+
+### 修复
+
+- wlf_Write: v1.57.1: mov 禁用条件错误 ([c8959a1](https://github.com/WuLiFang/Nuke/commit/c8959a15d700d9c6cbffb5972e8bec473f7baf1f))
+
 ## [2022.1.0](https://github.com/WuLiFang/Nuke/compare/v2022.0.0...v2022.1.0) (2022-01-12)
 
 ### 特性
