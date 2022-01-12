@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2022.1.0](https://github.com/WuLiFang/Nuke/compare/v2022.0.0...v2022.1.0) (2022-01-12)
+
+### Features
+
+- wlf_Write: 1.57.0: add mov knobs ([90c72fe](https://github.com/WuLiFang/Nuke/commit/90c72febdb2f4c9e16b2ce51cc476b7204f9034e))
+
 ## [2022.0.0](https://github.com/WuLiFang/Nuke/compare/v2021.4.1...v2022.0.0) (2022-01-04)
 
 ### Features
