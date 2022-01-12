@@ -4,12 +4,58 @@
 version 10.0 v4
 Gizmo {
   onCreate {
-if '__wlf_Write_1_56_4' not in locals():
-    class __wlf_Write_1_56_4(object):
+if '__wlf_Write_1_57_0' not in locals():
+    # need call this before create to affect first node. 
+    # already done in lib/pref.py
+    nuke.knobDefault("wlf_Write.__initiated", "false") 
+    class __wlf_Write_1_57_0(object):
+        @classmethod
+        def preset_path(cls, name):
+            import os
+            return os.path.expanduser("~/.nuke/wlf_Write.%s.preset.json" % name)
+
+        @classmethod
+        def apply_preset(cls, name):
+            import json
+            import codecs
+            n = nuke.thisNode()
+            try:
+                with codecs.open(cls.preset_path(name), "r", encoding="utf-8") as f:
+                    preset = json.load(f)
+            except IOError:
+                return
+            for (k,v) in preset.iteritems():
+                n[k].fromScript(v)
+
+        preset_knob_names = (
+          'output_exr',
+          'output_mov',
+          'output_png',
+          'exr_threshold',
+          'format',
+          'mov_codec',
+          'no_motionblur',
+        )
+        @classmethod
+        def save_preset(cls, name):
+            import json
+            import codecs
+
+            n = nuke.thisNode()
+            with codecs.open(cls.preset_path(name), "w", encoding="utf-8") as f:
+                json.dump({
+                  i: n[i].toScript()
+                  for i in cls.preset_knob_names
+                }, f)
+
         @classmethod
         def on_create(cls):
             this = nuke.thisNode()
             this['custom_frame'].setEnabled(this['use_custom_frame'].value())
+
+            if not nuke.numvalue("this.__initiated"):
+                cls.apply_preset("default")
+                nuke.knob('this.__initiated', 'true')
 
             old = nuke.value('this.Text_Artist.message')
             new = nuke.value('root.wlf_artist', '')
@@ -35,10 +81,12 @@ if '__wlf_Write_1_56_4' not in locals():
             ret = ret or autolabel()
             return ret
 
-        @staticmethod
-        def knob_changed():
-            if nuke.thisKnob() is nuke.thisNode()['use_custom_frame']:
-                nuke.thisNode()['custom_frame'].setEnabled(nuke.thisKnob().value())
+        @classmethod
+        def knob_changed(cls):
+            k = nuke.thisKnob()
+            n = nuke.thisNode()
+            if k is n['use_custom_frame']:
+                n['custom_frame'].setEnabled(k.value())
 
         @staticmethod
         def create_output_dir(node):
@@ -70,6 +118,7 @@ if '__wlf_Write_1_56_4' not in locals():
             enabled = {
                 'exr': p['output_exr'].value(),
                 'png': p['output_png'].value(),
+                'mov': p['output_mov'].value(),
             }
             import os
             if (
@@ -87,7 +136,7 @@ if '__wlf_Write_1_56_4' not in locals():
         class WriteMOV(object):
             @classmethod
             def before_render(cls):
-                globals()['__wlf_Write_1_56_4'].create_output_dir(nuke.thisNode())
+                globals()['__wlf_Write_1_57_0'].create_output_dir(nuke.thisNode())
                 nuke.knob('parent.Write_JPG_1.disable', 'True')
 
         class WriteJPG(object):
@@ -107,7 +156,7 @@ if '__wlf_Write_1_56_4' not in locals():
                 cls.last_render_mode = nuke.Root()['proxy'].value()
                 cls.blur_nodes = [n for n in nuke.allNodes(group=nuke.Root())
                                 if n.Class() in cls.blur_node_classes and not n['disable'].value()]
-                globals()['__wlf_Write_1_56_4'].create_output_dir(nuke.thisNode())
+                globals()['__wlf_Write_1_57_0'].create_output_dir(nuke.thisNode())
                 nuke.knob('root.proxy', 'False')
                 if nuke.numvalue('parent.no_motionblur'):
                     map(lambda n: n['disable'].setValue(
@@ -120,21 +169,19 @@ if '__wlf_Write_1_56_4' not in locals():
                     map(lambda n: n['disable'].setValue(
                         False), cls.blur_nodes)
                 nuke.knob('this.disable', 'True')
-
-
-__wlf_Write_1_56_4.on_create()
+__wlf_Write_1_57_0.on_create()
 }
- onDestroy __wlf_Write_1_56_4.on_destroy()
- autolabel __wlf_Write_1_56_4.autolabel()
+ onDestroy __wlf_Write_1_57_0.on_destroy()
+ autolabel __wlf_Write_1_57_0.autolabel()
  knobChanged {
 try:
-    __wlf_Write_1_56_4.knob_changed()
+    __wlf_Write_1_57_0.knob_changed()
 except NameError:
     pass
 }
  tile_color 0xbfbf00ff
  note_font 微软雅黑
- addUserKnob {20 Write l "wlf_Write v1.56.4"}
+ addUserKnob {20 Write l "wlf_Write v1.57.0"}
  addUserKnob {41 format l 输出格式 T Reformat1.format}
  addUserKnob {45 views l 视图}
  views {main}
@@ -151,16 +198,21 @@ except NameError:
  addUserKnob {6 no_motionblur l 渲染时不带运动模糊 +STARTLINE}
  no_motionblur true
  addUserKnob {26 exr_text l 序列}
- addUserKnob {6 output_exr l exr t 在输出mov的同时输出exr +STARTLINE}
+ addUserKnob {6 output_exr l exr t 输出exr +STARTLINE}
  output_exr true
- addUserKnob {6 output_png l png t 在输出mov的同时输出png -STARTLINE}
+ addUserKnob {6 output_png l png t 输出png -STARTLINE}
  output_png false
  addUserKnob {3 exr_threshold l 启用阈值 t 工程长度大于此值时才会输出 -STARTLINE}
  exr_threshold 100
+ addUserKnob {26 video_text l 视频}
+ addUserKnob {6 output_mov l mov t 输出mov +STARTLINE}
+ output_mov true
+ addUserKnob {41 mov_codec l 编码 T Write_MOV_1.meta_codec -STARTLINE}
  addUserKnob {26 ""}
  addUserKnob {32 bt_render_JPG l 渲染单帧 T "knob this.reading none\nknob this.Write_JPG_1.disable 0\nknob this.Read_JPG_1.disable 1\nexecute this.Write_JPG_1 \[value this.knob.frame]\nknob this.Read_JPG_1.version \[expr \[value this.Read_JPG_1.version]+1]\nknob this.Read_JPG_1.disable 0\nknob this.reading jpg" +STARTLINE}
- addUserKnob {22 bt_render l 渲染视频 -STARTLINE T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)"}
+ addUserKnob {22 bt_render l 渲染已选 -STARTLINE T "nukescripts.showRenderDialog(\[nuke.thisNode()], False)"}
  addUserKnob {6 reading_exr l 读取序列 t "渲染视频时不再计算已经输出了序列的帧, 直接读取结果"}
+ addUserKnob {22 bt_save_default l 设为默认配置 t "将当前配置设为默认值" -STARTLINE T "cls = __wlf_Write_1_57_0\ncls.save_preset('default')\nnuke.message('已保存至:\\n%s' % cls.preset_path('default'))"}
  addUserKnob {20 group_folders l 打开输出文件夹 n 1}
  group_folders 0
  addUserKnob {22 bt_img_dir l 单帧 -STARTLINE T "path = os.path.join(nuke.value('root.project_directory'), 'images')\nif os.path.isdir(path):\n    nukescripts.start('file://'+path)\nelse:\n    nuke.message('输出路径不存在, 请先尝试渲染')"}
@@ -169,6 +221,8 @@ except NameError:
  addUserKnob {20 endGroup n -1}
  addUserKnob {83 reading l 读取 M {none mov jpg}}
  addUserKnob {22 reload -STARTLINE T "for n in nuke.thisNode().nodes():\n    if n.Class() == 'Read':\n        n\['reload'].execute()"}
+ addUserKnob {6 __initiated +INVISIBLE}
+ __initiated true
 }
 Read {
 inputs 0
@@ -319,8 +373,8 @@ use_limit true
 checkHashOnRead false
 in_colorspace linear
 out_colorspace linear
-beforeRender __wlf_Write_1_56_4.WriteJPG.before_render()
-afterRender __wlf_Write_1_56_4.WriteJPG.after_render()
+beforeRender __wlf_Write_1_57_0.WriteJPG.before_render()
+afterRender __wlf_Write_1_57_0.WriteJPG.after_render()
 name Write_JPG_1
 label "单帧\n会在退出脚本时自动输出"
 xpos 0
@@ -332,12 +386,12 @@ file "sequences/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \
 proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[lindex \[split \[basename \[value root.name]] .] 0].%d.exr"
 file_type exr
 render_order 0
-reading {{"\[python __wlf_Write_1_56_4.is_reading()]"}}
+reading {{"\[python __wlf_Write_1_57_0.is_reading()]"}}
 checkHashOnRead false
 name Write_EXR_1
 xpos 0
 ypos -918
-disable {{"\[python __wlf_Write_1_56_4.is_write_disabled('exr')]"}}
+disable {{"\[python __wlf_Write_1_57_0.is_write_disabled('exr')]"}}
 }
 Write {
 channels {rgba.red rgba.green rgba.blue rgba.alpha}
@@ -346,13 +400,13 @@ proxy "sequences/proxy/\[lindex \[split \[basename \[value root.name]] .] 0]/\[l
 file_type png
 datatype "16 bit"
 render_order 0
-reading {{"\[python __wlf_Write_1_56_4.is_reading()]"}}
+reading {{"\[python __wlf_Write_1_57_0.is_reading()]"}}
 checkHashOnRead false
 name Write_PNG_1
 selected true
 xpos 0
 ypos -862
-disable {{"\[python __wlf_Write_1_56_4.is_write_disabled('png')]"}}
+disable {{"\[python __wlf_Write_1_57_0.is_write_disabled('png')]"}}
 }
 Write {
 file "mov/\[lindex \[split \[basename \[value root.name]] .] 0].mov"
@@ -365,7 +419,8 @@ mov32_codec "rle "
 mov32_pixel_format {{0} "default (RGBA  8-bit)" "RGBA  8-bit"}
 mov64_codec apch
 mov64_fps {{root.fps}}
-beforeRender __wlf_Write_1_56_4.WriteMOV.before_render()
+beforeRender __wlf_Write_1_57_0.WriteMOV.before_render()
+disable {{"\[python __wlf_Write_1_57_0.is_write_disabled('mov')]"}}
 name Write_MOV_1
 xpos 0
 ypos -806
@@ -383,13 +438,14 @@ proxy "mov/proxy/burn-in/\[lindex \[split \[basename \[value root.name]] .] 0].m
 colorspace sRGB
 views {{{parent.views}}}
 file_type mov
-meta_codec apch
+meta_codec {{{Write_MOV_1.meta_codec}}}
+disable {{{Write_MOV_1.disable}}}
 mov32_codec "rle "
 mov64_codec apch
 mov64_fps {{root.fps}}
 render_order 2
 checkHashOnRead false
-beforeRender __wlf_Write_1_56_4.WriteMOV.before_render()
+beforeRender __wlf_Write_1_57_0.WriteMOV.before_render()
 name Write_MOV_2
 label 带帧编号的MOV
 xpos 0

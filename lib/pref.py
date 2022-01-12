@@ -64,6 +64,8 @@ def set_knob_default():
 
     nuke.untitled = cast.binary("未命名")
 
+    _ = nuke.knobDefault(b"wlf_Write.__initiated", b"false")
+
 
 def add_preferences():
     """Add a prefrences panel."""
