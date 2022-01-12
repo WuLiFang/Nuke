@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2022.1.1](https://github.com/WuLiFang/Nuke/compare/v2022.1.0...v2022.1.1) (2022-01-12)
+
+### Bug Fixes
+
+- wlf_Write: v1.57.1: wrong mov disable condition ([c8959a1](https://github.com/WuLiFang/Nuke/commit/c8959a15d700d9c6cbffb5972e8bec473f7baf1f))
+
 ## [2022.1.0](https://github.com/WuLiFang/Nuke/compare/v2022.0.0...v2022.1.0) (2022-01-12)
 
 ### Features

@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2022.1.0'
-RELEASE_DATE = datetime.fromtimestamp(1641976801)
-LAST_GIT_COMMIT_DESCRIBE = 'v2022.0.0-6-g90c72fe'
-LAST_GIT_COMMIT_HASH = '90c72febdb2f4c9e16b2ce51cc476b7204f9034e'
+VERSION = '2022.1.1'
+RELEASE_DATE = datetime.fromtimestamp(1641978260)
+LAST_GIT_COMMIT_DESCRIBE = 'v2022.1.0-2-gc8959a1'
+LAST_GIT_COMMIT_HASH = 'c8959a15d700d9c6cbffb5972e8bec473f7baf1f'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1641967724)
-LAST_GIT_COMMIT_SUBJECT = 'feat: wlf_Write: 1.57.0: add mov knobs'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1641978111)
+LAST_GIT_COMMIT_SUBJECT = 'fix: wlf_Write: v1.57.1: wrong mov disable condition'
 LAST_GIT_COMMIT_BODY = ''
