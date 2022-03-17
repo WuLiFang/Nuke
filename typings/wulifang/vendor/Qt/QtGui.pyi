@@ -3619,31 +3619,31 @@ class QKeyEvent(QInputEvent):
     ...
 
 class QKeySequence(Shiboken.Object):
-    AddTab: ... = PySide.QtGui.QKeySequence.StandardKey.AddTab
+    AddTab: StandardKey
     """
     """
 
-    Back: ... = PySide.QtGui.QKeySequence.StandardKey.Back
+    Back: StandardKey
     """
     """
 
-    Bold: ... = PySide.QtGui.QKeySequence.StandardKey.Bold
+    Bold: StandardKey
     """
     """
 
-    Close: ... = PySide.QtGui.QKeySequence.StandardKey.Close
+    Close: StandardKey
     """
     """
 
-    Copy: ... = PySide.QtGui.QKeySequence.StandardKey.Copy
+    Copy: StandardKey
     """
     """
 
-    Cut: ... = PySide.QtGui.QKeySequence.StandardKey.Cut
+    Cut: StandardKey
     """
     """
 
-    Delete: ... = PySide.QtGui.QKeySequence.StandardKey.Delete
+    Delete: StandardKey
     """
     """
 
@@ -3666,23 +3666,23 @@ class QKeySequence(Shiboken.Object):
     """
     """
 
-    Find: ... = PySide.QtGui.QKeySequence.StandardKey.Find
+    Find: StandardKey
     """
     """
 
-    FindNext: ... = PySide.QtGui.QKeySequence.StandardKey.FindNext
+    FindNext: StandardKey
     """
     """
 
-    FindPrevious: ... = PySide.QtGui.QKeySequence.StandardKey.FindPrevious
+    FindPrevious: StandardKey
     """
     """
 
-    Forward: ... = PySide.QtGui.QKeySequence.StandardKey.Forward
+    Forward: StandardKey
     """
     """
 
-    HelpContents: ... = PySide.QtGui.QKeySequence.StandardKey.HelpContents
+    HelpContents: StandardKey
     """
     """
 
@@ -3696,7 +3696,7 @@ class QKeySequence(Shiboken.Object):
     PySide.QtGui.QKeySequence.StandardKey.Inser...
     """
 
-    Italic: ... = PySide.QtGui.QKeySequence.StandardKey.Italic
+    Italic: StandardKey
     """
     """
 
@@ -3715,19 +3715,19 @@ class QKeySequence(Shiboken.Object):
     PySide.QtGui.QKeySequence.StandardKey.MoveToEndOfLin...
     """
 
-    MoveToNextChar: ... = PySide.QtGui.QKeySequence.StandardKey.MoveToNextChar
+    MoveToNextChar: StandardKey
     """
     """
 
-    MoveToNextLine: ... = PySide.QtGui.QKeySequence.StandardKey.MoveToNextLine
+    MoveToNextLine: StandardKey
     """
     """
 
-    MoveToNextPage: ... = PySide.QtGui.QKeySequence.StandardKey.MoveToNextPage
+    MoveToNextPage: StandardKey
     """
     """
 
-    MoveToNextWord: ... = PySide.QtGui.QKeySequence.StandardKey.MoveToNextWord
+    MoveToNextWord: StandardKey
     """
     """
 
@@ -3770,11 +3770,11 @@ class QKeySequence(Shiboken.Object):
     """
     """
 
-    New: ... = PySide.QtGui.QKeySequence.StandardKey.New
+    New: StandardKey
     """
     """
 
-    NextChild: ... = PySide.QtGui.QKeySequence.StandardKey.NextChild
+    NextChild: StandardKey
     """
     """
 
@@ -3782,7 +3782,7 @@ class QKeySequence(Shiboken.Object):
     """
     """
 
-    Open: ... = PySide.QtGui.QKeySequence.StandardKey.Open
+    Open: StandardKey
     """
     """
 
@@ -3790,7 +3790,7 @@ class QKeySequence(Shiboken.Object):
     """
     """
 
-    Paste: ... = PySide.QtGui.QKeySequence.StandardKey.Paste
+    Paste: StandardKey
     """
     """
 
@@ -3798,43 +3798,43 @@ class QKeySequence(Shiboken.Object):
     """
     """
 
-    Preferences: ... = PySide.QtGui.QKeySequence.StandardKey.Preferences
+    Preferences: StandardKey
     """
     """
 
-    PreviousChild: ... = PySide.QtGui.QKeySequence.StandardKey.PreviousChild
+    PreviousChild: StandardKey
     """
     """
 
-    Print: ... = PySide.QtGui.QKeySequence.StandardKey.Print
+    Print: StandardKey
     """
     """
 
-    Quit: ... = PySide.QtGui.QKeySequence.StandardKey.Quit
+    Quit: StandardKey
     """
     """
 
-    Redo: ... = PySide.QtGui.QKeySequence.StandardKey.Redo
+    Redo: StandardKey
     """
     """
 
-    Refresh: ... = PySide.QtGui.QKeySequence.StandardKey.Refresh
+    Refresh: StandardKey
     """
     """
 
-    Replace: ... = PySide.QtGui.QKeySequence.StandardKey.Replace
+    Replace: StandardKey
     """
     """
 
-    Save: ... = PySide.QtGui.QKeySequence.StandardKey.Save
+    Save: StandardKey
     """
     """
 
-    SaveAs: ... = PySide.QtGui.QKeySequence.StandardKey.SaveAs
+    SaveAs: StandardKey
     """
     """
 
-    SelectAll: ... = PySide.QtGui.QKeySequence.StandardKey.SelectAll
+    SelectAll: StandardKey
     """
     """
 
@@ -3853,19 +3853,19 @@ class QKeySequence(Shiboken.Object):
     PySide.QtGui.QKeySequence.StandardKey.SelectEndOfLin...
     """
 
-    SelectNextChar: ... = PySide.QtGui.QKeySequence.StandardKey.SelectNextChar
+    SelectNextChar: StandardKey
     """
     """
 
-    SelectNextLine: ... = PySide.QtGui.QKeySequence.StandardKey.SelectNextLine
+    SelectNextLine: StandardKey
     """
     """
 
-    SelectNextPage: ... = PySide.QtGui.QKeySequence.StandardKey.SelectNextPage
+    SelectNextPage: StandardKey
     """
     """
 
-    SelectNextWord: ... = PySide.QtGui.QKeySequence.StandardKey.SelectNextWord
+    SelectNextWord: StandardKey
     """
     """
 
@@ -3903,43 +3903,41 @@ class QKeySequence(Shiboken.Object):
     """
     PySide.QtGui.QKeySequence.StandardKey.SelectStartO...
     """
-
-    SequenceFormat: ...
-    """
-    <type 'PySide.QtGui.QKeySequence.SequenceFormat'>
-    """
+    class SequenceFormat(int):
+        """
+        <type 'PySide.QtGui.QKeySequence.SequenceFormat'>
+        """
 
     SequenceMatch: ...
     """
     <type 'PySide.QtGui.QKeySequence.SequenceMatch'>
     """
+    class StandardKey(int):
+        """
+        <type 'PySide.QtGui.QKeySequence.StandardKey'>
+        """
 
-    StandardKey: ...
-    """
-    <type 'PySide.QtGui.QKeySequence.StandardKey'>
-    """
-
-    Underline: ... = PySide.QtGui.QKeySequence.StandardKey.Underline
-    """
-    """
-
-    Undo: ... = PySide.QtGui.QKeySequence.StandardKey.Undo
+    Underline: StandardKey
     """
     """
 
-    UnknownKey: ... = PySide.QtGui.QKeySequence.StandardKey.UnknownKey
+    Undo: StandardKey
     """
     """
 
-    WhatsThis: ... = PySide.QtGui.QKeySequence.StandardKey.WhatsThis
+    UnknownKey: StandardKey
     """
     """
 
-    ZoomIn: ... = PySide.QtGui.QKeySequence.StandardKey.ZoomIn
+    WhatsThis: StandardKey
     """
     """
 
-    ZoomOut: ... = PySide.QtGui.QKeySequence.StandardKey.ZoomOut
+    ZoomIn: StandardKey
+    """
+    """
+
+    ZoomOut: StandardKey
     """
     """
 
@@ -3947,6 +3945,14 @@ class QKeySequence(Shiboken.Object):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
+    @typing.overload
+    def __init__(self, key: StandardKey): ...
+    @typing.overload
+    def __init__(self, keysequence: typing.Optional[StandardKey] = ...): ...
+    @typing.overload
+    def __init__(self, k1: int, k2: int = 0, k3: int = 0, k4: int = 0): ...
+    @typing.overload
+    def __init__(self, key: typing.Text, format: SequenceFormat = NativeText): ...
     @staticmethod
     def fromString(*args, **kwargs):
         """ """

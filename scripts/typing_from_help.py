@@ -1,12 +1,24 @@
 # -*- coding=UTF-8 -*-
 """generate typing from module help.  
 
-Usage: "$NUKE_PYTHON" ./scripts/full_help.py nuke | "$PYTHON27" ./scripts/typing_from_help.py -
+Usage: "$PYTHON3" ./scripts/typing_from_help.py help.txt
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
+from threading import local
+from typing import Iterable, Iterator, List, Optional, Sequence, Text, Tuple
 import cast_unknown as cast
 import re
+import ast
+
+import logging
+
+
+class _g:
+    module_name = ""
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 _CLASS_MRO_START = "Method resolution order:"
@@ -14,21 +26,24 @@ _CLASS_METHODS_START = "Methods defined here:"
 _CLASS_CLASS_METHODS_START = "Class methods defined here:"
 _CLASS_STATIC_METHODS_START = "Static methods defined here:"
 _CLASS_DATA_ATTR_START = "Data and other attributes defined here:"
+_CLASS_READ_ONLY_PROPERTY_START = "Readonly properties defined here:"
 _CLASS_DATA_DESC_START = "Data descriptors defined here:"
 _CLASS_INHERITED_METHODS_START = "Methods inherited from (.+):"
+_CLASS_INHERITED_CLASS_METHODS_START = "Class methods inherited from (.+):"
 _CLASS_INHERITED_STATIC_METHODS_START = "Static methods inherited from (.+):"
 _CLASS_INHERITED_DATA_ATTR_START = "Data and other attributes inherited from (.+):"
 _CLASS_INHERITED_DATA_DESC_START = "Data descriptors inherited from (.+):"
+_CLASS_INHERITED_READ_ONLY_PROPERTY_START = "Readonly properties inherited from (.+):"
 _CLASS_SECTION_END = "-{20,}"
 
-TYPE_MAP = {
-    "__builtin__.object": "",
-    "__builtin__.Knob": "",
+_TYPE_MAP = {
     "object": "",
     "exceptions.Exception": "Exception",
-    "String": "six.binary_type",
-    "string": "six.binary_type",
-    "str": "six.binary_type",
+    "builtins.object": "object",
+    "builtins.tuple": "tuple",
+    "String": "typing.Text",
+    "string": "typing.Text",
+    "str": "typing.Text",
     "Float": "float",
     "Floating point value": "float",
     "Bool": "bool",
@@ -38,17 +53,13 @@ TYPE_MAP = {
     "integer": "int",
     "Integer value": "int",
     "void": "None",
-    "list of strings or single string": "typing.Union[typing.List[six.binary_type], six.binary_type]",
-    "List of strings": "typing.List[six.binary_type]",
-    "list of str": "typing.List[six.binary_type]",
-    "String list": "typing.List[six.binary_type]",
-    "List of int": "typing.List[int]",
-    "list of int": "typing.List[int]",
+    "list of strings or single string": "typing.Union[typing.List[typing.Text], typing.Text]",
+    "List of strings": "typing.List[typing.Text]",
+    "String list": "typing.List[typing.Text]",
     "[int]": "typing.List[int]",
     "List": "list",
-    "(x, y, z)": "typing.Tuple",
-    "list of (x,y,z) tuples": "typing.List",
-    "list of floats": "typing.List[float]",
+    "(x, y, z)": "typing.Tuple[typing.Any, typing.Any, typing.Any]",
+    "True or False": "bool",
 }
 
 
@@ -81,24 +92,44 @@ def _iter_class_sections(lines):
             yield (section_type, section_values)
             section_type = "data"
             section_values = []
+        elif re.match(_CLASS_READ_ONLY_PROPERTY_START, line):
+            yield (section_type, section_values)
+            section_type = "data"
+            section_values = []
         elif re.match(_CLASS_INHERITED_METHODS_START, line):
             yield (section_type, section_values)
             match = re.match(_CLASS_INHERITED_METHODS_START, line)
+            assert match
             section_type = "inherited-methods"
+            section_values = [match.group(1)]
+        elif re.match(_CLASS_INHERITED_CLASS_METHODS_START, line):
+            yield (section_type, section_values)
+            match = re.match(_CLASS_INHERITED_CLASS_METHODS_START, line)
+            assert match
+            section_type = "inherited-class-methods"
             section_values = [match.group(1)]
         elif re.match(_CLASS_INHERITED_STATIC_METHODS_START, line):
             yield (section_type, section_values)
             match = re.match(_CLASS_INHERITED_STATIC_METHODS_START, line)
+            assert match
             section_type = "inherited-static-methods"
             section_values = [match.group(1)]
         elif re.match(_CLASS_INHERITED_DATA_ATTR_START, line):
             yield (section_type, section_values)
             match = re.match(_CLASS_INHERITED_DATA_ATTR_START, line)
+            assert match
             section_type = "inherited-data"
             section_values = [match.group(1)]
         elif re.match(_CLASS_INHERITED_DATA_DESC_START, line):
             yield (section_type, section_values)
             match = re.match(_CLASS_INHERITED_DATA_DESC_START, line)
+            assert match
+            section_type = "inherited-data"
+            section_values = [match.group(1)]
+        elif re.match(_CLASS_INHERITED_READ_ONLY_PROPERTY_START, line):
+            yield (section_type, section_values)
+            match = re.match(_CLASS_INHERITED_READ_ONLY_PROPERTY_START, line)
+            assert match
             section_type = "inherited-data"
             section_values = [match.group(1)]
         elif re.match(_CLASS_SECTION_END, line):
@@ -116,14 +147,13 @@ def _strip_lines(lines):
 
 
 def _parse_by_indent(
-    lines,
-    indent="    ",
-):
+    lines: Iterator[Text], indent="    "
+) -> Iterator[Tuple[Text, Sequence[Text]]]:
     key = ""  # type: str
     values = []
     for line in lines:
         line = cast.text(line)
-        if line.startswith(indent):
+        if line.startswith(indent) or line == indent.rstrip(" "):
             values.append(line[len(indent) :])
         else:
             if key:
@@ -143,58 +173,222 @@ def _parse_class_data(lines):
         yield data_def
 
 
-def _parse_args(args):
-    args = (args or "").split(",")
+def _parse_type(s: Text) -> Text:
+    s = _TYPE_MAP.get(s, s)
+    if s.startswith("(") and s.endswith(")") and "," in s:
+        return f"typing.Tuple[{s[1:-1]}]"
+    if s.startswith("[") and s.endswith(""):
+        return f"typing.Optional[{s[1:-1]}]"
+
+    match = re.match(r"(?:an? )?(.+?) object$", s, re.I)
+    if match:
+        s = match.group(1)
+    match = re.match(r"tuple of (.+?)(?:s| items| objects| instances)?$", s, re.I)
+    if match:
+        elem_type = _parse_type(match.group(1))
+        if "," in elem_type:
+            s = "typing.Tuple[%s]" % elem_type
+        else:
+            s = "typing.Tuple[%s, ...]" % elem_type
+    match = re.match(r"list of (.+?)(?:s| items| objects| instances)?$", s, re.I)
+    if match:
+        s = f"typing.List[{_parse_type(match.group(1))}]"
+    if _g.module_name and s.startswith(_g.module_name + "."):
+        s = s[len(_g.module_name) + 1 :]
+    return s
+
+
+def _is_valid_arg_declaration(s: Text) -> bool:
+    try:
+        _ = ast.parse("def fn(%s):\n    pass" % s)
+        return True
+    except SyntaxError:
+        return False
+
+
+def _parse_args(s: Optional[Text]) -> Sequence[Text]:
+    args = (s or "").split(",")
     args = [i.strip() for i in args]
-    args = [TYPE_MAP.get(i, i) for i in args]
+    args = [_parse_type(i) for i in args]
     args = [i for i in args if i]
     if "..." in args:
         args = ["*args", "**kwargs"]
 
-    ret = []
+    b: List[Text] = []
     for i in args:
         match = re.match(r"\((.+)\)(.+)$", i)
         if match:
-            ret.append("%s: %s" % (match.group(2), match.group(1)))
+            b.append("%s: %s" % (match.group(2), match.group(1)))
             continue
-        ret.append(i)
+        b.append(i)
+    args = b
+    b = []
+    for i in args:
+        if _is_valid_arg_declaration(i):
+            b.append(i)
+        elif _is_valid_type_expression(i):
+            b.append("arg%d: %s" % (len(b) + 1, i))
+        else:
+            b.append("arg%d: typing.Literal['%s']" % (len(b) + 1, i))
+    args = b
+    return args
 
-    return ret
+
+def _is_valid_type_expression(s: Text) -> bool:
+    try:
+        _ = ast.parse("var: %s = None" % s)
+        return True
+    except SyntaxError:
+        return False
 
 
-def _parse_class_method(lines):
+def _escape_python_string(s: Text) -> Text:
+    return s.replace("\\", "\\\\")
+
+
+def _is_valid_identifier(s: Text) -> bool:
+    try:
+        _ = ast.parse("def fn(%s: int = 1):\n    pass" % s)
+        return True
+    except SyntaxError:
+        return False
+
+
+class FunctionDeclaration:
+    def __init__(
+        self,
+        name: Text = "",
+        args: Sequence[Text] = (),
+        return_type: Text = "",
+        docstring: Sequence[Text] = (),
+        inherits: Sequence[Text] = (),
+        real_name: Text = "",
+    ):
+        self.name = name
+        self.args = args
+        self.return_type = return_type
+        self.inherits = inherits
+        self.real_name = real_name
+        self.docstring = docstring
+
+
+def _parse_function_docstring(fd: FunctionDeclaration, docstring: Sequence[Text]):
+    doc_args: List[Text] = []
+    doc_returns: List[Text] = []
+    doc_overloads: List[Text] = []
+    args = fd.args
+    return_type = fd.return_type
+
+    # handle `self.xxx() -> xxx:`
+    b: List[Text] = []
+    match_count = 0
+    after_example = False
+    for line in docstring:
+        if not after_example:
+            match = re.match(
+                r"^\s*(?:self\.)?"
+                + f"(?:{re.escape(_g.module_name)}\\.)?"
+                + re.escape(fd.name)
+                + r"\((.*?)\)(?: ?-> ?(.+?)\s*:?)?$",
+                line,
+            )
+            if match:
+                match_count += 1
+                if match_count == 1:
+                    args = _parse_args(match.group(1))
+                    s = _parse_type(match.group(2) or "")
+                    if _is_valid_type_expression(s):
+                        return_type = s
+                    elif s.startswith("returns "):
+                        doc_returns.append(s[8:])
+                    else:
+                        b.append(s)
+                else:
+                    doc_overloads.append(line)
+                continue
+            after_example = re.match(".*example", line, re.I)
+        b.append(line)
+    docstring = b
+
+    # handle @param, @return
+
+    def _add_missing_newline(s: Iterable[Text]) -> Iterator[Text]:
+        for i in s:
+            for j in (
+                i.replace("@param", "\n@param")
+                .replace("@return", "\n@return")
+                .split("\n")
+            ):
+                if j:
+                    yield j
+
+    b: List[Text] = []
+    args_by_param: List[Text] = []
+    for line in _add_missing_newline(docstring):
+        match = re.match(r"^\s*@param(?: (.+?))?: (.+)$", line)
+        if match:
+            p_name, p_type = match.groups()
+            p_name = (p_name or p_type.strip("").split(" ")[0]).strip()
+            p_type = _parse_type(p_type)
+            if not _is_valid_identifier(p_name):
+                p_name = "param%d" % (len(args_by_param) + 1)
+            arg = "%s: %s" % (p_name, p_type)
+            if p_name == p_type or not _is_valid_arg_declaration(arg):
+                arg = p_name
+            args_by_param.append(arg)
+            doc_args.append("%s: %s" % (p_name, p_type))
+            continue
+        match = re.match(r"^\s*@return(?:\s*:)? (.+)$", line)
+        if match:
+            s = _parse_type(match.group(1))
+            if _is_valid_type_expression(s):
+                assert fd.return_type == "", line
+                return_type = s
+            else:
+                doc_returns.append(match.group(1))
+            continue
+        b.append(line)
+    docstring = b
+    if not args:
+        args = args_by_param
+
+    args = [i.strip() for i in args]
+    args = [i for i in args if i]
+    return_type = _parse_type(return_type)
+    if return_type and not _is_valid_type_expression(return_type):
+        _LOGGER.debug("ignore invalid type expiression: '%s'", return_type)
+        doc_returns.append(return_type)
+        return_type = ""
+    docstring = _strip_lines(docstring)
+    if doc_args:
+        docstring = [*docstring, "", "Args:", *["    " + i for i in doc_args]]
+    if doc_returns:
+        docstring = [*docstring, "", "Returns:", *["    " + i for i in doc_returns]]
+    if doc_overloads:
+        docstring = [
+            *docstring,
+            "",
+            "Overloads:",
+            *["    " + i for i in doc_overloads],
+        ]
+    fd.args = args
+    fd.return_type = return_type
+    fd.docstring = (*fd.docstring, *docstring)
+
+
+def _parse_class_method(lines) -> Iterator[FunctionDeclaration]:
     for k, v in _parse_by_indent(lines):
         match = re.match(r"^(.+?)(?:\((.+)\))?(?: from (.+))?$", k)
         if not match:
             raise NotImplementedError(k, v)
-        name = match.group(1)
-        args = _parse_args(match.group(2))
         docstring = v
-        return_type = ""
-        match = (
-            len(docstring) > 0
-            and re.match(
-                r"(?:self\.)?" + re.escape(name) + r"\((.*)\) ?-> ?(.+?)\.? *:?$",
-                docstring[0],
-            )
-            or None
-        )
-        if match:
-            docstring = docstring[1:]
-            args = _parse_args(match.group(1))
-            return_type = match.group(2) or ""
-        args = [i.strip() for i in args]
-        args = [TYPE_MAP.get(i, i) for i in args]
-        args = [i for i in args if i]
-        return_type = TYPE_MAP.get(return_type, return_type)
-        docstring = _strip_lines(docstring)
+        fd = FunctionDeclaration(name=match.group(1), args=_parse_args(match.group(2)))
+        if "=" in fd.name:
+            fd.name, alias = (i.strip() for i in fd.name.split("="))
+            docstring = ["alias of %s" % alias, *docstring]
 
-        yield dict(
-            name=name,
-            args=args,
-            return_type=return_type,
-            docstring=docstring,
-        )
+        _parse_function_docstring(fd, docstring)
+        yield fd
 
 
 def _iter_classes(lines):
@@ -235,6 +429,8 @@ def _iter_classes(lines):
                 continue
             elif section_key == "inherited-methods":
                 continue
+            elif section_key == "inherited-class-methods":
+                continue
             elif section_key == "inherited-static-methods":
                 continue
             elif section_key == "mro":
@@ -255,15 +451,25 @@ def _iter_classes(lines):
         yield class_def
 
 
-def _iter_functions(lines):
+def _iter_functions(lines) -> Iterator[FunctionDeclaration]:
     for k, v in _parse_by_indent(lines):
         match = re.match(r"(.+?) = (.+?)(?:\((.+)\))?$", k)
         if match:
             g3 = match.group(3)
-            yield dict(
+            yield FunctionDeclaration(
                 name=match.group(1),
                 inherits=g3.split(",") if g3 else [],
                 real_name=match.group(2),
+            )
+            continue
+
+        match = re.match(r"(.+?) lambda (.*)$", k)
+        if match:
+            yield FunctionDeclaration(
+                name=match.group(1),
+                args=_parse_args(match.group(2)),
+                docstring=_strip_lines(v),
+                return_type="",
             )
             continue
 
@@ -273,19 +479,9 @@ def _iter_functions(lines):
         name = match.group(1)
         args = _parse_args(match.group(2))
         docstring = _strip_lines(v)
-        match = (
-            len(docstring) > 0
-            and re.match(re.escape(name) + r"\((.*)\) ?-> ?(.+?)\.? *$", docstring[0])
-            or None
-        )
-        return_type = ""
-        if match:
-            docstring = docstring[1:]
-            args = _parse_args(match.group(1))
-            return_type = match.group(2) or ""
-        return_type = TYPE_MAP.get(return_type, return_type)
-        docstring = _strip_lines(docstring)
-        yield dict(name=name, args=args, docstring=docstring, return_type=return_type)
+        fd = FunctionDeclaration(name=name, args=args)
+        _parse_function_docstring(fd, docstring)
+        yield fd
 
 
 def _typing_from_class(class_def):
@@ -296,11 +492,11 @@ def _typing_from_class(class_def):
         return
     docstring = class_def["docstring"]
     inherits = class_def["inherits"]
-    inherits = [TYPE_MAP.get(i, i) for i in inherits]
+    inherits = [_parse_type(i) for i in inherits]
     inherits = [i for i in inherits if i]
-    methods = class_def["methods"]
-    class_methods = class_def["class_methods"]
-    static_methods = class_def["static_methods"]
+    methods: Sequence[FunctionDeclaration] = class_def["methods"]
+    class_methods: Sequence[FunctionDeclaration] = class_def["class_methods"]
+    static_methods: Sequence[FunctionDeclaration] = class_def["static_methods"]
     data = class_def["data"]
     yield "class %s%s:" % (name, "(%s)" % ",".join(inherits) if inherits else "")
     if docstring:
@@ -324,44 +520,44 @@ def _typing_from_class(class_def):
         for i in static_methods:
             yield "    @staticmethod"
             yield "    def %s(%s)%s:" % (
-                i["name"],
-                ", ".join(i["args"]),
-                " -> %s" % i["return_type"] if i["return_type"] else "",
+                i.name,
+                ", ".join(i.args),
+                " -> %s" % i.return_type if i.return_type else "",
             )
             yield '        """'
-            for j in i["docstring"]:
-                yield ("        %s" % j).rstrip()
+            for j in i.docstring:
+                yield ("        %s" % _escape_python_string(j)).rstrip()
             yield '        """'
             yield "        ..."
             yield ""
     if class_methods:
         for i in class_methods:
-            if "cls" not in i["args"]:
-                i["args"].insert(0, "cls")
+            if "cls" not in i.args:
+                i.args = ("cls", *i.args)
             yield "    @classmethod"
             yield "    def %s(%s)%s:" % (
-                i["name"],
-                ", ".join(i["args"]),
-                " -> %s" % i["return_type"] if i["return_type"] else "",
+                i.args,
+                ", ".join(i.args),
+                " -> %s" % i.return_type if i.return_type else "",
             )
             yield '        """'
-            for j in i["docstring"]:
-                yield ("        %s" % j).rstrip()
+            for j in i.docstring:
+                yield ("        %s" % _escape_python_string(j)).rstrip()
             yield '        """'
             yield "        ..."
             yield ""
     if methods:
         for i in methods:
-            if "self" not in i["args"]:
-                i["args"].insert(0, "self")
+            if "self" not in i.args:
+                i.args = ("self", *i.args)
             yield "    def %s(%s)%s:" % (
-                i["name"],
-                ", ".join(i["args"]),
-                " -> %s" % i["return_type"] if i["return_type"] else "",
+                i.name,
+                ", ".join(i.args),
+                " -> %s" % i.return_type if i.return_type else "",
             )
             yield '        """'
-            for j in i["docstring"]:
-                yield ("        %s" % j).rstrip()
+            for j in i.docstring:
+                yield ("        %s" % _escape_python_string(j)).rstrip()
             yield '        """'
             yield "        ..."
             yield ""
@@ -369,15 +565,15 @@ def _typing_from_class(class_def):
     yield "    ..."
 
 
-def _typing_from_function(func_def):
-    name = func_def["name"]
-    real_name = func_def.get("real_name")
-    if real_name is not None:
+def _typing_from_function(func_def: FunctionDeclaration):
+    name = func_def.name
+    real_name = func_def.real_name
+    if real_name:
         yield "%s = %s" % (name, real_name)
         return
-    args = func_def["args"]
-    return_type = func_def["return_type"]
-    docstring = func_def["docstring"]
+    args = func_def.args
+    return_type = func_def.return_type
+    docstring = func_def.docstring
     yield "def %s(%s)%s:" % (
         name,
         ", ".join(args),
@@ -385,7 +581,7 @@ def _typing_from_function(func_def):
     )
     yield '    """'
     for i in docstring:
-        yield ("    %s" % i).rstrip()
+        yield ("    %s" % _escape_python_string(i)).rstrip()
     yield '    """'
     yield "    ..."
     yield ""
@@ -405,6 +601,12 @@ def _typing_from_classes(lines):
         yield ""
 
 
+def _remove_prefix(s: Text, prefix: Text) -> Text:
+    if s.startswith(prefix):
+        return s[len(prefix) :]
+    return s
+
+
 def _parse_data_description(i):
     match = re.match(r"^(.+?)(?: ?= ?(.+))?$", i)
     if not match:
@@ -412,6 +614,8 @@ def _parse_data_description(i):
     name = match.group(1)
     value = match.group(2) or ""
     value_type = "..."
+    if _is_valid_type_expression(value):
+        value_type = _remove_prefix(value, _g.module_name + ".")
     docstring = []
     if value.endswith("..."):
         docstring.append(value)
@@ -421,7 +625,7 @@ def _parse_data_description(i):
         value = ""
     elif value.startswith(("'", '"')):
         docstring.append(value)
-        value_type = "six.binary_type"
+        value_type = "typing.Text"
         value = ""
     elif value.startswith("["):
         docstring.append(value)
@@ -437,12 +641,10 @@ def _parse_data_description(i):
         value_type = "bool"
     elif re.match(r"-?\d+", value):
         value_type = "int"
-    return dict(
-        name=name,
-        value=value,
-        value_type=value_type,
-        docstring=docstring,
-    )
+    if not _is_valid_type_expression(value_type):
+        _LOGGER.warning("ignore invalid type: %s", value_type)
+        value_type = "..."
+    return dict(name=name, value=value, value_type=value_type, docstring=docstring)
 
 
 def _iter_data(lines):
@@ -462,7 +664,7 @@ def _typing_from_datum(datum_def):
     if docstring:
         yield '"""'
         for i in docstring:
-            yield i
+            yield _escape_python_string(i)
         yield '"""'
 
 
@@ -473,25 +675,16 @@ def _typing_from_data(lines):
         yield ""
 
 
-def _fix_nuke_docstring(lines):
-    for i in lines:
-        i = cast.text(i)
-        # cSpell:ignore rief
-        if i.startswith("       rief "):
-            yield "        " + i[12:]
-            continue
-        yield i
-
-
 def _handle_windows_line_ending(lines):
     for i in lines:
         i = cast.text(i)
-        yield i.strip("\n")
+        yield i.strip("\r\n")
 
 
 def iterate_typing_from_help(lines):
     yield "# -*- coding=UTF-8 -*-"
     yield "# This typing file was generated by typing_from_help.py"
+    yield "# pyright: reportUndefinedVariable=information,reportUnusedImport=false"
     for k, v in _parse_by_indent(lines):
         if k == "NAME":
             yield '"""'
@@ -499,7 +692,6 @@ def iterate_typing_from_help(lines):
                 yield i
             yield '"""'
             yield ""
-            yield "import six"
             yield "import typing"
             yield ""
         elif k == "DATA":
@@ -542,9 +734,12 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     _ = parser.add_argument("--type", dest="type")
+    _ = parser.add_argument("--module", dest="module", default="")
     _ = parser.add_argument("file")
     args = parser.parse_args()
+    logging.basicConfig(level=logging.DEBUG)
     should_close = False
+    _g.module_name = args.module
     if args.file == "-":
         f = sys.stdin
     else:
@@ -552,7 +747,7 @@ if __name__ == "__main__":
         should_close = True
 
     try:
-        lines = _fix_nuke_docstring(_handle_windows_line_ending(f))
+        lines = _handle_windows_line_ending(f)
         if args.type == "class":
             for i in _typing_from_classes(lines):
                 print(i)

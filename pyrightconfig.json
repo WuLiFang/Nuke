@@ -2,27 +2,19 @@
   "executionEnvironments": [
     {
       "root": "lib",
-      "extraPaths": [
-        "lib/site-packages",
-      ]
+      "extraPaths": ["lib/site-packages"]
     },
     {
       "root": "tests",
-      "extraPaths": [
-        "lib/site-packages"
-      ],
+      "extraPaths": ["lib/site-packages"]
+    },
+    {
+      "root": "wulifang"
     }
   ],
   "typeCheckingMode": "basic",
   "reportMissingModuleSource": "none",
   "reportUnusedImport": "error",
-  "reportUnusedCallResult": "error",
   "reportUnknownMemberType": "information",
-  "include": [
-    "lib",
-    "*.py"
-  ],
-  "exclude": [
-    "lib/site-packages",
-  ],
+  "exclude": ["lib/site-packages", "**/vendor"]
 }

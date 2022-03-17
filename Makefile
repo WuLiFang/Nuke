@@ -16,9 +16,11 @@ endif
 default: .venv build docs/_build/html $(VENV_SITEPATH)/lib.pth
 
 build: docs/_build/html lib/site-packages/.sentinel
+	$(MAKE) -C wulifang_plugin
 
 export PYTHONPATH
 export PYTHONIOENCODING=UTF-8
+
 
 # https://github.com/pypa/pip/issues/5735
 lib/site-packages/.sentinel: export PIP_NO_BUILD_ISOLATION=false
@@ -53,3 +55,4 @@ $(VENV_SITEPATH)/lib.pth: lib/site-packages/.sentinel
 test: .venv/.sentinel
 	. ./scripts/activate-venv.sh &&\
 		pytest
+

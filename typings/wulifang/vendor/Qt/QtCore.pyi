@@ -743,7 +743,7 @@ class QAbstractTransition(QObject):
     <PySide.QtCore.QMetaObject object>
     """
 
-    triggered: ...
+    triggered: Signal
     """
     Signal
     """
@@ -1521,7 +1521,7 @@ class QCoreApplication(QObject):
         """ """
         ...
     @staticmethod
-    def instance(*args, **kwargs):
+    def instance() -> QCoreApplication:
         """ """
         ...
     @staticmethod
@@ -8772,7 +8772,10 @@ class QObject(Shiboken.Object):
     def eventFilter(self, *args, **kwargs):
         """ """
         ...
-    def findChild(self, *args, **kwargs):
+    T = typing.TypeVar("T", bound=type)
+    def findChild(
+        self, type: typing.Type[T], name: typing.Text = "", /
+    ) -> typing.Optional[T]:
         """ """
         ...
     def findChildren(self, *args, **kwargs):
@@ -8796,7 +8799,7 @@ class QObject(Shiboken.Object):
     def moveToThread(self, *args, **kwargs):
         """ """
         ...
-    def objectName(self, *args, **kwargs):
+    def objectName(self) -> typing.Text:
         """ """
         ...
     def parent(self, *args, **kwargs):
@@ -8817,7 +8820,7 @@ class QObject(Shiboken.Object):
     def senderSignalIndex(self, *args, **kwargs):
         """ """
         ...
-    def setObjectName(self, *args, **kwargs):
+    def setObjectName(self, name: typing.Text) -> None:
         """ """
         ...
     def setParent(self, *args, **kwargs):
@@ -19174,6 +19177,8 @@ class Signal:
     Signal
     """
 
+    Receiver = typing.Union[typing.Callable[..., None], Slot, Signal]
+
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -19198,7 +19203,9 @@ class Signal:
         x.__str__() <==> str(x)
         """
         ...
-    ...
+    def connect(self, receiver: Receiver, type: Qt.ConnectionType = ...) -> None: ...
+    def disconnect(self, receiver: Receiver) -> None: ...
+    def emit(self, *args: ...) -> None: ...
 
 class Slot:
     """
