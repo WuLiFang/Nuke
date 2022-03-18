@@ -4,12 +4,11 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
-from six import itervalues
+import re
 
-from wulifang.vendor.six import iteritems, python_2_unicode_compatible
+from wulifang.vendor.six import iteritems, itervalues, python_2_unicode_compatible
 
 import hiero.core
-import re
 import hiero.ui
 
 from .. import codectools
@@ -22,12 +21,12 @@ if TYPE_CHECKING:
         Dict,
         Iterator,
         List,
+        Optional,
+        Sequence,
         Set,
         Text,
         Tuple,
         Union,
-        Sequence,
-        Optional,
     )
 
 

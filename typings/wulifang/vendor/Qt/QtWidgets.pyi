@@ -1639,17 +1639,18 @@ class QAction(QtCore.QObject):
     Signal
     """
     @typing.overload
-    def __init__(self, parent: typing.Optional[QtCore.QObject] = None): ...
+    def __init__(self, parent: typing.Optional[QtCore.QObject] = None, /): ...
     @typing.overload
     def __init__(
         self,
         icon: QtGui.QIcon,
         text: typing.Text,
         parent: typing.Optional[QtCore.QObject] = None,
+        /,
     ): ...
     @typing.overload
     def __init__(
-        self, text: typing.Text, parent: typing.Optional[QtCore.QObject] = None
+        self, text: typing.Text, parent: typing.Optional[QtCore.QObject] = None, /
     ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
