@@ -8,7 +8,7 @@ import logging
 
 from wulifang.vendor import six
 from wulifang.vendor.Qt import QtGui
-from wulifang.vendor.Qt.QtWidgets import QAction, QMenu
+from wulifang.vendor.Qt.QtWidgets import QAction, QMenu, QApplication
 
 import hiero.core.events
 import hiero.ui
@@ -86,9 +86,10 @@ def _on_event(t):
 
 def _actions():
     # type: () -> Iterator[QAction]
+    app = QApplication.instance()
 
     def _action1():
-        a = QAction("以所选对齐其他轨道")
+        a = QAction("以所选对齐其他轨道", parent=app)
         a.setObjectName(_OBJECT_NAME_PREFIX + "timeline.alignOtherTrackBySelected")
         a.setEnabled(track_item.has_selection())
 
@@ -109,7 +110,7 @@ def _actions():
     yield _action1()
 
     def _action3():
-        a = QAction("移除所选名称中的版本后缀")
+        a = QAction("移除所选名称中的版本后缀", parent=app)
         a.setObjectName(_OBJECT_NAME_PREFIX + "timeline.removeVersionSuffix")
         a.setEnabled(track_item.has_selection())
 
@@ -134,7 +135,7 @@ def _actions():
     yield _action3()
 
     def _action2():
-        a = QAction("重新加载吾立方插件")
+        a = QAction("重新加载吾立方插件", parent=app)
         a.setObjectName(_OBJECT_NAME_PREFIX + "reload")
         a.setShortcut(QtGui.QKeySequence("Ctrl+Shift+F5"))
 
