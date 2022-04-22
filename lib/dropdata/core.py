@@ -6,6 +6,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 from itertools import chain
 
+import nuke
+
 import pluggy
 import cast_unknown as cast
 
@@ -24,7 +26,7 @@ HOOKIMPL = pluggy.HookimplMarker(
     PROJECT_NAME
 )  # type: Callable[[Callable[..., Any]], Callable[..., Any]]
 LOGGER = logging.getLogger(__name__)
-
+LOGGER.setLevel(logging.DEBUG)
 
 def dropdata_handler(mime_type, data, hook):
     """Handling dropdata."""
@@ -53,6 +55,8 @@ def dropdata_handler(mime_type, data, hook):
                 ret = True
                 LOGGER.debug("Created nodes: %s", nodes)
                 hook.after_created(nodes=nodes)
+            for i in nodes:
+                i.autoplace()
         return ret
     except CancelledError:
         return True
