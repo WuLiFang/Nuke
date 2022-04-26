@@ -9,7 +9,8 @@
       "extraPaths": ["lib/site-packages"]
     },
     {
-      "root": "wulifang"
+      "root": "wulifang",
+      "extraPaths": ["."]
     }
   ],
   "typeCheckingMode": "basic",

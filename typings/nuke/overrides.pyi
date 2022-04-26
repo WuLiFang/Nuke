@@ -13,7 +13,7 @@ def pluginAddPath(
 
 def pluginAppendPath(
     args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...
-):
+) -> None:
     """Add a filepath to the end of the Nuke plugin path.  If the path
     already exists in the list of plugin paths, it will remain at its
     current position.

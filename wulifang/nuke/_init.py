@@ -10,8 +10,6 @@ import sys
 from wulifang.vendor.six import itervalues
 from wulifang.vendor.six.moves import reload_module
 
-import nuke
-
 from .. import _reload  # type: ignore
 from .. import pathtools
 
@@ -30,11 +28,6 @@ def init():
     if _g.init_once:
         return
     _g.init_once = True
-    if nuke.GUI:
-        from ._init_gui import init_gui
-
-        init_gui()
-
 
 def _is_legacy_plugin_module(module):
     # type: (ModuleType) -> bool

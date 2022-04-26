@@ -6,4 +6,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from ._init import init, reload
 
-__all__ = ["init", "reload"]
+def init_gui():
+    from ._init_gui import init_gui
+    init_gui()
+
+__all__ = ["init", "reload", "init_gui"]
+
