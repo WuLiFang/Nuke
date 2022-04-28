@@ -3,7 +3,6 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import logging
 
 import wulifang
 from wulifang.infrastructure.multi_message_service import MultiMessageService
@@ -11,14 +10,11 @@ from wulifang.infrastructure.tray_message_service import TrayMessageService
 
 import nuke
 
-_LOGGER = logging.getLogger(__name__)
-
 
 def _reload():
-    from ._init import reload
+    import wulifang.nuke
 
-    _LOGGER.info("reload")
-    reload()
+    wulifang.nuke.reload()
 
 
 def init_gui():
