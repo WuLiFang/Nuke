@@ -2,6 +2,7 @@
 ./vendor/cgtwq-3.6.1-py2.py3-none-any.whl
 ./vendor/wlf-0.6.0-py2.py3-none-any.whl
 cast-unknown==0.1.4
+pathlib2==2.3.6
 pathlib2-unicode==3.0.0
 futures==3.3.0
 jinja2==2.11.3
