@@ -6,6 +6,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text
+    from ..types import MessageService
+
 
 import logging
 
@@ -34,3 +36,8 @@ class LoggingMessageService:
         if title:
             message = "[%s] %s" % (title, message)
         self._logger.error(message)
+
+
+def _(v):
+    # type: (LoggingMessageService) -> MessageService
+    return v

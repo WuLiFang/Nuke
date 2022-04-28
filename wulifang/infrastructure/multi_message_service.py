@@ -36,3 +36,8 @@ class MultiMessageService:
         # type: (Text, Text) -> None
         for i in self._s:
             i.error(message, title=title)
+
+
+def _(v):
+    # type: (MultiMessageService) -> MessageService
+    return v

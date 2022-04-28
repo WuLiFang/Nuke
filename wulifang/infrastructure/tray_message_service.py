@@ -12,6 +12,7 @@ from .. import pathtools
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text
+    from ..types import MessageService
 
 
 class TrayMessageService:
@@ -32,3 +33,8 @@ class TrayMessageService:
         self._icon.showMessage(
             title, message, icon=QSystemTrayIcon.Critical, msecs=3000
         )
+
+
+def _(v):
+    # type: (TrayMessageService) -> MessageService
+    return v

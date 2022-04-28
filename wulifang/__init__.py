@@ -16,7 +16,6 @@ if TYPE_CHECKING:
 def _undefined():
     # type: () -> Any
     """used this to prevent type inference."""
-    return None
 
 
 # services
