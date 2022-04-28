@@ -13,7 +13,7 @@ VENV_SITEPATH=$(abspath .venv/lib/python2.7/site-packages/)
 PYTHONPATH:=$(PYTHONPATH):$(abspath lib/site-packages):$(abspath lib)
 endif
 
-default: .venv build docs/_build/html $(VENV_SITEPATH)/lib.pth
+default: .venv/.sentinel build docs/_build/html $(VENV_SITEPATH)/lib.pth
 
 build: docs/_build/html lib/site-packages/.sentinel
 	$(MAKE) -C wulifang
@@ -37,9 +37,6 @@ docs/_build/html: PYTHONPATH=
 docs/_build/html:
 	"$(MAKE)" -C docs html
 
-.venv:
-	virtualenv --python "$(PYTHON27)" --clear .venv
-	touch $@
 
 $(VENV_SITEPATH)/nuke.pth:
 	"$(NUKE_PYTHON)" -c 'import imp;import os;print(os.path.dirname(imp.find_module("nuke")[1]))' > $@
@@ -47,7 +44,9 @@ $(VENV_SITEPATH)/nuke.pth:
 $(VENV_SITEPATH)/lib.pth: lib/site-packages/.sentinel
 	./scripts/add-lib-path.sh
 
-.venv/.sentinel: .venv dev-requirements.txt $(VENV_SITEPATH)/nuke.pth $(VENV_SITEPATH)/lib.pth
+.venv/.sentinel: PYTHONPATH=
+.venv/.sentinel: dev-requirements.txt $(VENV_SITEPATH)/nuke.pth $(VENV_SITEPATH)/lib.pth
+	virtualenv --python "$(PYTHON27)" --clear .venv
 	. ./scripts/activate-venv.sh &&\
 		pip install -U -r dev-requirements.txt
 	touch $@
