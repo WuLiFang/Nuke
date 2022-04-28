@@ -1,7 +1,7 @@
 .PHONY: default test build docs/_build/html deploy-docs
 
 ifeq ($(OS), Windows_NT)
-PYTHON27?=C:\Python27\python.exe
+PYTHON27?=C:/Python27/python.exe
 NUKE_PYTHON?=C:/Program Files/Nuke10.5v7/python.exe
 # abspath not work on windows
 VENV_SITEPATH=.venv/Lib/site-packages
@@ -16,7 +16,7 @@ endif
 default: .venv build docs/_build/html $(VENV_SITEPATH)/lib.pth
 
 build: docs/_build/html lib/site-packages/.sentinel
-	$(MAKE) -C wulifang_plugin
+	$(MAKE) -C wulifang
 
 export PYTHONPATH
 export PYTHONIOENCODING=UTF-8
