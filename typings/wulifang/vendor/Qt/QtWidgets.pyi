@@ -20176,7 +20176,7 @@ class QSystemTrayIcon(PySide.QtCore.QObject):
     def setContextMenu(self, *args, **kwargs):
         """ """
         ...
-    def setIcon(self, *args, **kwargs):
+    def setIcon(self, icon: QtGui.QIcon) -> None:
         """ """
         ...
     def setToolTip(self, *args, **kwargs):
@@ -20185,10 +20185,16 @@ class QSystemTrayIcon(PySide.QtCore.QObject):
     def setVisible(self, *args, **kwargs):
         """ """
         ...
-    def show(self, *args, **kwargs):
+    def show(self) -> None:
         """ """
         ...
-    def showMessage(self, *args, **kwargs):
+    def showMessage(
+        self,
+        title: typing.Text,
+        msg: typing.Text,
+        icon: QSystemTrayIcon.MessageIcon = QSystemTrayIcon.MessageIcon.Information, 
+        msecs: int=10000,
+    ) -> None:
         """ """
         ...
     def toolTip(self, *args, **kwargs):

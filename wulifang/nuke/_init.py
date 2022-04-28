@@ -1,14 +1,18 @@
 # -*- coding=UTF-8 -*-
 # pyright: strict
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 import os
 import sys
 
+import wulifang
+from wulifang.infrastructure.logging_message_service import LoggingMessageService
+from wulifang.infrastructure.multi_message_service import MultiMessageService
 from wulifang.vendor.six import itervalues
 from wulifang.vendor.six.moves import reload_module
+
+import nuke
 
 from .. import _reload  # type: ignore
 from .. import pathtools
@@ -27,7 +31,14 @@ class _g:
 def init():
     if _g.init_once:
         return
+
+    wulifang.message = MultiMessageService(
+        wulifang.message,
+        LoggingMessageService(),
+    )
+
     _g.init_once = True
+
 
 def _is_legacy_plugin_module(module):
     # type: (ModuleType) -> bool
@@ -57,3 +68,7 @@ def reload():
             except:
                 _LOGGER.exception("reload failed: %s", v)
     init()
+    if nuke.GUI:
+        from ._init_gui import init_gui
+
+        init_gui()

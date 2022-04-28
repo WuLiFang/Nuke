@@ -2,7 +2,7 @@
   "executionEnvironments": [
     {
       "root": "lib",
-      "extraPaths": ["lib/site-packages"]
+      "extraPaths": [".", "lib/site-packages"]
     },
     {
       "root": "tests",

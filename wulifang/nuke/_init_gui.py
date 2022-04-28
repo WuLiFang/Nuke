@@ -3,10 +3,13 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import logging
+
+import wulifang
+from wulifang.infrastructure.multi_message_service import MultiMessageService
+from wulifang.infrastructure.tray_message_service import TrayMessageService
 
 import nuke
-
-import logging
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -24,3 +27,4 @@ def init_gui():
         _reload,
         "Ctrl+Shift+F5".encode("utf-8"),
     )
+    wulifang.message = MultiMessageService(wulifang.message, TrayMessageService())

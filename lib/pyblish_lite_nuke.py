@@ -11,9 +11,10 @@ import Queue
 
 import nuke
 import pyblish.plugin
+import six
 from nukescripts.panels import restorePanel
 from Qt import QtGui
-from Qt.QtCore import Qt
+from Qt.QtCore import Qt, QObject
 from Qt.QtWidgets import QApplication
 
 import callback
@@ -27,7 +28,7 @@ import pyblish_lite.delegate
 from nuketools import abort_modified, mainwindow
 from pyblish_lite import app, control, settings, util, window
 import cast_unknown as cast
-from wlf.uitools import Tray
+import wulifang
 
 ACTION_QUEUE = multiprocessing.dummy.Queue()
 ACTION_LOCK = multiprocessing.Lock()
@@ -115,9 +116,21 @@ def _handle_result(result):
         return "请在pyblish窗口中查看详情"
 
     if not result["success"]:
-        Tray.critical("发布失败", _get_text())
+        wulifang.message.error(_get_text(), title="发布失败")
 
 
+class _SingletonMeta(type(QObject)):
+    _instance = None
+
+    def __call__(self, *args, **kwargs):
+        if self._instance is None:
+            instance = QObject.__new__(QObject, "", (), {})
+            instance.__init__(*args, **kwargs)
+            self._instance = instance
+        return self._instance
+
+
+@six.with_metaclass(_SingletonMeta)
 class Window(window.Window):
     """Modified pyblish_lite window for nuke.
 
@@ -130,16 +143,6 @@ class Window(window.Window):
 
     _is_initiated = False
     instance = None
-
-    def __new__(
-        cls,
-        parent=None,
-    ):
-        if not cls.instance:
-            LOGGER.debug("create new pyblish window")
-            cls.instance = super(Window, cls).__new__(cls, parent)  # type: ignore
-            # https://github.com/microsoft/pyright/issues/1638
-        return cls.instance
 
     def __init__(self, parent=None):
         if self._is_initiated:

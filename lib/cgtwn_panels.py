@@ -12,7 +12,7 @@ import nuke
 import cgtwq
 import cgtwq.core
 from wlf.progress import CancelledError, progress
-from wlf.uitools import Tray
+import wulifang
 import cast_unknown as cast
 
 LOGGER = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ def dialog_login():
     client = cgtwq.DesktopClient()
     if client.is_logged_in():
         client.connect()
-        Tray.message("CGTeamWork", "登录成功")
+        wulifang.message.info("登录成功", title="CGTeamWork")
         return
     account = "帐号"
     password = "密码"
@@ -41,9 +41,9 @@ def dialog_login():
                     panel.value(cast.binary(password)) or "",
                 ).token
             except ValueError:
-                Tray.message("CGTeamWork", "登录失败")
+                wulifang.message.info("登录失败", title="CGTeamWork")
                 continue
-            Tray.message("CGTeamWork", "登录成功")
+            wulifang.message.info("登录成功", title="CGTeamWork")
         break
 
 
