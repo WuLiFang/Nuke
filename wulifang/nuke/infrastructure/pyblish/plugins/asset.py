@@ -17,6 +17,7 @@ from wulifang.nuke.infrastructure.recover_modifield_flag import recover_modifiel
 from wulifang.nuke.infrastructure.wlf_write_node import wlf_write_node
 from wulifang.vendor.pathlib2_unicode import PurePath
 from wulifang.vendor.pyblish import api
+import wulifang
 
 
 class FootageInfo:
@@ -160,12 +161,12 @@ class ExtractJPG(api.InstancePlugin):
                 return
 
             n = wlf_write_node()
-            if n:
+            if not n:
                 self.log.debug("render_jpg: %s", n.name())
                 try:
                     cast.instance(n[b"bt_render_JPG"], nuke.Script_Knob).execute()
                 except RuntimeError as ex:
-                    nuke.message(cast.binary(ex))
+                    wulifang.message.error("生成JPG: %s" % ex)
             else:
                 self.log.warning("工程中缺少wlf_Write节点")
 
