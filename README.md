@@ -5,7 +5,8 @@
 - [x] Nuke10.0
 - [x] Nuke10.5
 - [x] Nuke11
-- [ ] Nuke12
+- [x] Nuke12
+- [ ] Nuke13
 
 ## 注意事项
 
