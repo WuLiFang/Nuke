@@ -1,0 +1,244 @@
+diff -ru a/vendor/cgtwq/client/desktop/core.py b/vendor/cgtwq/client/desktop/core.py
+--- a/vendor/cgtwq/client/desktop/core.py	2022-04-29 15:35:05.404797000 +0800
++++ b/vendor/cgtwq/client/desktop/core.py	2022-04-29 17:21:28.229797600 +0800
+@@ -16,7 +16,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Any, Text
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class DesktopClientAttachment(object):
+diff -ru a/vendor/cgtwq/database/core.py b/vendor/cgtwq/database/core.py
+--- a/vendor/cgtwq/database/core.py	2022-04-29 15:35:05.407797000 +0800
++++ b/vendor/cgtwq/database/core.py	2022-04-29 17:21:28.128297600 +0800
+@@ -5,7 +5,7 @@
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class DatabaseAttachment(object):
+diff -ru a/vendor/cgtwq/database/database.py b/vendor/cgtwq/database/database.py
+--- a/vendor/cgtwq/database/database.py	2022-04-29 15:35:05.408297000 +0800
++++ b/vendor/cgtwq/database/database.py	2022-04-29 17:24:35.122297600 +0800
+@@ -20,8 +20,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Any, Text, Union, Tuple
+-    import cgtwq
+-    import cgtwq.model
++    from wulifang.vendor import cgtwq
+ 
+ 
+ LOGGER = logging.getLogger(__name__)
+diff -ru a/vendor/cgtwq/database/field.py b/vendor/cgtwq/database/field.py
+--- a/vendor/cgtwq/database/field.py	2022-04-29 15:35:05.409297000 +0800
++++ b/vendor/cgtwq/database/field.py	2022-04-29 17:21:28.142297600 +0800
+@@ -11,7 +11,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Text, Union, Tuple
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class DatabaseField(core.DatabaseAttachment, ControllerGetterMixin):
+diff -ru a/vendor/cgtwq/database/filebox.py b/vendor/cgtwq/database/filebox.py
+--- a/vendor/cgtwq/database/filebox.py	2022-04-29 15:35:05.409797000 +0800
++++ b/vendor/cgtwq/database/filebox.py	2022-04-29 17:24:37.903297600 +0800
+@@ -12,8 +12,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Text, Tuple, Union
+-    import cgtwq
+-    import cgtwq.model
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class DatabaseFilebox(core.DatabaseAttachment):
+diff -ru a/vendor/cgtwq/database/meta.py b/vendor/cgtwq/database/meta.py
+--- a/vendor/cgtwq/database/meta.py	2022-04-29 15:35:05.410297000 +0800
++++ b/vendor/cgtwq/database/meta.py	2022-04-29 17:21:28.142297600 +0800
+@@ -7,7 +7,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Any, Text
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class DatabaseMeta(core.DatabaseAttachment):
+diff -ru a/vendor/cgtwq/database/pipeline.py b/vendor/cgtwq/database/pipeline.py
+--- a/vendor/cgtwq/database/pipeline.py	2022-04-29 15:35:05.411797000 +0800
++++ b/vendor/cgtwq/database/pipeline.py	2022-04-29 17:21:28.164797600 +0800
+@@ -12,7 +12,7 @@
+ if TYPE_CHECKING:
+     from typing import Tuple, Union
+ 
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class DatabasePipeline(core.DatabaseAttachment, ControllerGetterMixin):
+diff -ru a/vendor/cgtwq/helper/qt.py b/vendor/cgtwq/helper/qt.py
+--- a/vendor/cgtwq/helper/qt.py	2022-04-29 15:35:05.414797000 +0800
++++ b/vendor/cgtwq/helper/qt.py	2022-04-29 17:21:28.112297600 +0800
+@@ -4,7 +4,7 @@
+ 
+ import sys
+ 
+-import cgtwq
++from wulifang.vendor import cgtwq
+ from Qt.QtWidgets import (
+     QApplication,
+     QDialog,
+diff -ru a/vendor/cgtwq/helper/wlf.py b/vendor/cgtwq/helper/wlf.py
+--- a/vendor/cgtwq/helper/wlf.py	2022-04-29 17:18:39.097797600 +0800
++++ b/vendor/cgtwq/helper/wlf.py	2022-04-29 17:20:49.043797600 +0800
+@@ -6,7 +6,7 @@
+ import re
+ 
+ import cast_unknown as cast
+-import cgtwq
++from wulifang.vendor import cgtwq
+ from deprecated import deprecated
+ from pathlib2_unicode import PurePath
+ from six import text_type
+diff -ru a/vendor/cgtwq/module/core.py b/vendor/cgtwq/module/core.py
+--- a/vendor/cgtwq/module/core.py	2022-04-29 15:35:05.419297000 +0800
++++ b/vendor/cgtwq/module/core.py	2022-04-29 17:21:28.053297600 +0800
+@@ -5,7 +5,7 @@
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class ModuleAttachment(object):
+diff -ru a/vendor/cgtwq/module/history.py b/vendor/cgtwq/module/history.py
+--- a/vendor/cgtwq/module/history.py	2022-04-29 15:35:05.420797000 +0800
++++ b/vendor/cgtwq/module/history.py	2022-04-29 17:24:22.370297600 +0800
+@@ -11,7 +11,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Tuple, Union
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class ModuleHistory(ModuleAttachment, ControllerGetterMixin):
+diff -ru a/vendor/cgtwq/module/module.py b/vendor/cgtwq/module/module.py
+--- a/vendor/cgtwq/module/module.py	2022-04-29 15:35:05.421297000 +0800
++++ b/vendor/cgtwq/module/module.py	2022-04-29 17:24:41.290297600 +0800
+@@ -20,8 +20,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Any, Text, Union, Tuple, Dict
+-    import cgtwq
+-    import cgtwq.model
++    from wulifang.vendor import cgtwq
+ 
+ 
+ @six.python_2_unicode_compatible
+diff -ru a/vendor/cgtwq/plugin_meta.py b/vendor/cgtwq/plugin_meta.py
+--- a/vendor/cgtwq/plugin_meta.py	2022-04-29 15:35:05.397297000 +0800
++++ b/vendor/cgtwq/plugin_meta.py	2022-04-29 17:21:28.033297600 +0800
+@@ -18,7 +18,7 @@
+ if TYPE_CHECKING:
+     from typing import Any, Dict, List, Text, Union
+ 
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ def _accessor(field):
+diff -ru a/vendor/cgtwq/public_module.py b/vendor/cgtwq/public_module.py
+--- a/vendor/cgtwq/public_module.py	2022-04-29 15:35:05.397797000 +0800
++++ b/vendor/cgtwq/public_module.py	2022-04-29 17:21:27.983797600 +0800
+@@ -11,7 +11,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Union, Text, Tuple
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class PublicModule(Module):
+diff -ru a/vendor/cgtwq/resultset.py b/vendor/cgtwq/resultset.py
+--- a/vendor/cgtwq/resultset.py	2022-04-29 15:35:05.399297000 +0800
++++ b/vendor/cgtwq/resultset.py	2022-04-29 17:21:27.904797600 +0800
+@@ -13,7 +13,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Iterable, Text, Any, Tuple
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class ResultSet(list):
+diff -ru a/vendor/cgtwq/selection/core.py b/vendor/cgtwq/selection/core.py
+--- a/vendor/cgtwq/selection/core.py	2022-04-29 15:35:05.422797000 +0800
++++ b/vendor/cgtwq/selection/core.py	2022-04-29 17:21:28.016797600 +0800
+@@ -12,7 +12,7 @@
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class SelectionAttachment(object):
+diff -ru a/vendor/cgtwq/selection/entry.py b/vendor/cgtwq/selection/entry.py
+--- a/vendor/cgtwq/selection/entry.py	2022-04-29 15:35:05.423297000 +0800
++++ b/vendor/cgtwq/selection/entry.py	2022-04-29 17:21:28.073297600 +0800
+@@ -12,7 +12,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Any, Text, Union, Tuple
+-    import cgtwq
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class Entry(Selection):
+diff -ru a/vendor/cgtwq/selection/history.py b/vendor/cgtwq/selection/history.py
+--- a/vendor/cgtwq/selection/history.py	2022-04-29 15:35:05.427797000 +0800
++++ b/vendor/cgtwq/selection/history.py	2022-04-29 17:24:30.883297600 +0800
+@@ -9,8 +9,7 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Union, Tuple
+-    import cgtwq
+-    import cgtwq.model
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class SelectionHistory(SelectionAttachment):
+diff -ru a/vendor/cgtwq/selection/notify.py b/vendor/cgtwq/selection/notify.py
+--- a/vendor/cgtwq/selection/notify.py	2022-04-29 15:35:05.430297000 +0800
++++ b/vendor/cgtwq/selection/notify.py	2022-04-29 17:24:48.905297600 +0800
+@@ -11,7 +11,6 @@
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+     from typing import Text, Tuple, Union, Any
+-    import cgtwq.model
+ 
+ 
+ class SelectionNotify(SelectionAttachment):
+diff -ru a/vendor/cgtwq/selection/selection.py b/vendor/cgtwq/selection/selection.py
+--- a/vendor/cgtwq/selection/selection.py	2022-04-29 15:35:05.431797000 +0800
++++ b/vendor/cgtwq/selection/selection.py	2022-04-29 17:24:44.883797600 +0800
+@@ -23,8 +23,7 @@
+ if TYPE_CHECKING:
+     from typing import Any, Dict, Text, Tuple, Union, overload
+ 
+-    import cgtwq
+-    import cgtwq.model
++    from wulifang.vendor import cgtwq
+ 
+ 
+ class Selection(tuple):

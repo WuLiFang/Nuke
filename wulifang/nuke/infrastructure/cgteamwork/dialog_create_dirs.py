@@ -3,48 +3,15 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import logging
 import os
 import webbrowser
 
 import nuke
-
-import cgtwq
-import cgtwq.core
-from wlf.progress import CancelledError, progress
 import wulifang
+
+from wulifang.vendor import cgtwq
+from wulifang.vendor.wlf.progress import CancelledError, progress
 import cast_unknown as cast
-
-LOGGER = logging.getLogger(__name__)
-
-
-def dialog_login():
-    """Login teamwork."""
-
-    client = cgtwq.DesktopClient()
-    if client.is_logged_in():
-        client.connect()
-        wulifang.message.info("登录成功", title="CGTeamWork")
-        return
-    account = "帐号"
-    password = "密码"
-    panel = nuke.Panel(b"")
-    _ = panel.addSingleLineInput(cast.binary(account), b"")
-    _ = panel.addPasswordInput(cast.binary(password), b"")
-
-    while True:
-        confirm = panel.show()
-        if confirm:
-            try:
-                cgtwq.core.CONFIG["DEFAULT_TOKEN"] = cgtwq.login(
-                    panel.value(cast.binary(account)) or "",
-                    panel.value(cast.binary(password)) or "",
-                ).token
-            except ValueError:
-                wulifang.message.info("登录失败", title="CGTeamWork")
-                continue
-            wulifang.message.info("登录成功", title="CGTeamWork")
-        break
 
 
 def dialog_create_dirs():
@@ -92,4 +59,4 @@ def dialog_create_dirs():
 
         _ = webbrowser.open(save_path)
     except CancelledError:
-        LOGGER.debug("用户取消创建文件夹")
+        wulifang.message.debug("用户取消创建文件夹")

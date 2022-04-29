@@ -8,14 +8,15 @@ if TYPE_CHECKING:
     from typing import Text
     from ..types import MessageService
 
-
 import logging
+
+import wulifang
 
 
 class LoggingMessageService:
     def __init__(self):
         # type: () -> None
-        logger = logging.Logger("wulifang", logging.INFO)
+        logger = logging.Logger("wulifang", logging.DEBUG)
         handler = logging.StreamHandler()
         formatter = logging.Formatter(
             "%(levelname)-6s[%(asctime)s]%(name)s: %(message)s",
@@ -24,6 +25,14 @@ class LoggingMessageService:
         handler.setFormatter(formatter)
         logger.addHandler(handler)
         self._logger = logger
+
+    def debug(self, message, title=""):
+        # type: (Text, Text) -> None
+        if not wulifang.is_debug:
+            return
+        if title:
+            message = "[%s] %s" % (title, message)
+        self._logger.debug(message)
 
     def info(self, message, title=""):
         # type: (Text, Text) -> None

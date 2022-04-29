@@ -1973,7 +1973,7 @@ class QApplication(QtCore.QCoreApplication):
         """ """
         ...
     @staticmethod
-    def activeWindow(*args, **kwargs):
+    def activeWindow() -> QWidget:
         """ """
         ...
     @staticmethod

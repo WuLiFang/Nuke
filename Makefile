@@ -44,9 +44,11 @@ $(VENV_SITEPATH)/nuke.pth:
 $(VENV_SITEPATH)/lib.pth: lib/site-packages/.sentinel
 	./scripts/add-lib-path.sh
 
-.venv/.sentinel: PYTHONPATH=
-.venv/.sentinel: dev-requirements.txt $(VENV_SITEPATH)/nuke.pth $(VENV_SITEPATH)/lib.pth
+.venv: PYTHONPATH=
+.venv:
 	virtualenv --python "$(PYTHON27)" --clear .venv
+
+.venv/.sentinel: .venv dev-requirements.txt $(VENV_SITEPATH)/nuke.pth $(VENV_SITEPATH)/lib.pth
 	. ./scripts/activate-venv.sh &&\
 		pip install -U -r dev-requirements.txt
 	touch $@

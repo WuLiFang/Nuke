@@ -10,7 +10,6 @@ jinja2==2.11.3
 pendulum==1.4.2
 pluggy==0.12.0
 psutil==5.8.0
-pyblish-lite==0.8.12
 qt.py==1.1.0
 six==1.15.0
 win-unicode-console==0.5; sys_platform == "win32"

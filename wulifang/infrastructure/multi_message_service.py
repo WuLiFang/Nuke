@@ -37,6 +37,11 @@ class MultiMessageService:
         for i in self._s:
             i.error(message, title=title)
 
+    def debug(self, message, title=""):
+        # type: (Text, Text) -> None
+        for i in self._s:
+            i.debug(message, title=title)
+
 
 def _(v):
     # type: (MultiMessageService) -> MessageService

@@ -5633,7 +5633,7 @@ class Root(Group):
         @return: None.
         """
         ...
-    def setModified(self, b) -> None:
+    def setModified(self, b: bool) -> None:
         """
         Set the 'modified' flag in a script.
 
@@ -6859,7 +6859,7 @@ class XY_Knob(Array_Knob):
         ...
     ...
 
-def activeViewer() -> ViewerWindow:
+def activeViewer() -> typing.Optional[ViewerWindow]:
     """
     Return an object representing the active Viewer panel. This
     is not the same as the Viewer node, this is the viewer UI element.
@@ -8941,7 +8941,7 @@ def usingPerformanceTimers() -> bool:
     """
     ...
 
-def value(knob: six.binary_type, default: six.binary_type = None) -> six.binary_type:
+def value(knob: bytes, default: typing.Optional[bytes] = None) -> bytes:
     """
     The value function returns the current value of a knob.
 

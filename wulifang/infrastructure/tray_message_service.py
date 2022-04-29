@@ -34,6 +34,10 @@ class TrayMessageService:
             title, message, icon=QSystemTrayIcon.Critical, msecs=3000
         )
 
+    def debug(self, message, title=""):
+        # type: (Text, Text) -> None
+        pass
+
 
 def _(v):
     # type: (TrayMessageService) -> MessageService

@@ -1541,7 +1541,7 @@ class QCoreApplication(QObject):
         """ """
         ...
     @staticmethod
-    def processEvents(*args, **kwargs):
+    def processEvents() -> None:
         """ """
         ...
     @staticmethod

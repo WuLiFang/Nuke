@@ -5,12 +5,15 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 
-from ._reload import reload as reload_modules
-
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from .types import MessageService
     from typing import Any
+
+    from .types import MessageService, PublishService
+
+import os
+
+from ._reload import reload as reload_modules
 
 
 def _undefined():
@@ -21,3 +24,5 @@ def _undefined():
 # services
 # should been set during init
 message = _undefined()  # type: MessageService
+publish = _undefined()  # type: PublishService
+is_debug = os.getenv("DEBUG") == "wulifang"

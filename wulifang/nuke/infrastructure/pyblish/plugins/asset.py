@@ -3,33 +3,39 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Text
+
+import shutil
 import sys
-from collections import namedtuple
+import time
 
-import nuke
-import pendulum
-import pyblish.api
 import cast_unknown as cast
-
-from node import wlf_write_node
-from nuketools import keep_modifield_status
-from pathlib2_unicode import PurePath
-from wlf.fileutil import copy
-
-FootageInfo = namedtuple("FootageInfo", ("filename", "mtime"))
-
-# pylint: disable=no-init
+import nuke
+from wulifang.nuke.infrastructure.recover_modifield_flag import recover_modifield_flag
+from wulifang.nuke.infrastructure.wlf_write_node import wlf_write_node
+from wulifang.vendor.pathlib2_unicode import PurePath
+from wulifang.vendor.pyblish import api
 
 
-class CollectFile(pyblish.api.ContextPlugin):
+class FootageInfo:
+    def __init__(self, filename, mtime):
+        # type: (Text, float) -> None
+
+        self.filename = filename
+        self.mtime = mtime
+
+
+class CollectFile(api.ContextPlugin):
     """获取当前Nuke使用的文件."""
 
-    order = pyblish.api.CollectorOrder
+    order = api.CollectorOrder
     label = "获取当前文件"
 
     def process(self, context):
         context.data["comment"] = ""
-        assert isinstance(context, pyblish.api.Context)
+        assert isinstance(context, api.Context)
         filename = nuke.value(b"root.name")
         if not filename:
             raise ValueError("工程尚未保存.")
@@ -37,10 +43,10 @@ class CollectFile(pyblish.api.ContextPlugin):
         context.create_instance(filename, family="Nuke文件")
 
 
-class CollectFrameRange(pyblish.api.ContextPlugin):
+class CollectFrameRange(api.ContextPlugin):
     """获取当前工程帧范围设置."""
 
-    order = pyblish.api.CollectorOrder
+    order = api.CollectorOrder
     label = "获取帧范围"
 
     def process(self, context):
@@ -54,10 +60,10 @@ class CollectFrameRange(pyblish.api.ContextPlugin):
         )
 
 
-class CollectFPS(pyblish.api.ContextPlugin):
+class CollectFPS(api.ContextPlugin):
     """获取当前工程帧速率设置."""
 
-    order = pyblish.api.CollectorOrder
+    order = api.CollectorOrder
     label = "获取帧速率"
 
     def process(self, context):
@@ -65,14 +71,14 @@ class CollectFPS(pyblish.api.ContextPlugin):
         context.create_instance(name="帧速率: {:.0f}".format(fps), fps=fps, family="帧速率")
 
 
-class CollectMTime(pyblish.api.ContextPlugin):
+class CollectMTime(api.ContextPlugin):
     """获取当前工程使用的素材."""
 
-    order = pyblish.api.CollectorOrder
+    order = api.CollectorOrder
     label = "获取素材"
 
     def process(self, context):
-        assert isinstance(context, pyblish.api.Context)
+        assert isinstance(context, api.Context)
         footages = set()
         root = nuke.Root()
         for n in nuke.allNodes(b"Read", nuke.Root()):
@@ -85,9 +91,12 @@ class CollectMTime(pyblish.api.ContextPlugin):
                 continue
 
             footage = FootageInfo(
-                filename=filename,
-                mtime=pendulum.from_format(
-                    mtime, "%Y-%m-%d %H:%M:%S", tz="Asia/Shanghai"
+                filename=cast.text(filename),
+                mtime=time.mktime(
+                    time.strptime(
+                        cast.text(mtime),
+                        "%Y-%m-%d %H:%M:%S",
+                    )
                 ),
             )
             footages.add(footage)
@@ -97,18 +106,18 @@ class CollectMTime(pyblish.api.ContextPlugin):
         instance.extend(footages)
 
 
-class CollectMemoryUsage(pyblish.api.ContextPlugin):
+class CollectMemoryUsage(api.ContextPlugin):
     """获取当前工程内存占用."""
 
-    order = pyblish.api.CollectorOrder
+    order = api.CollectorOrder
     label = "获取内存占用"
 
     def process(self, context):
-        assert isinstance(context, pyblish.api.Context)
+        assert isinstance(context, api.Context)
         number = int(nuke.memory(b"usage"))
 
         context.create_instance(
-            "内存占用: {}GB".format(round(number / 2.0 ** 30, 2)),
+            "内存占用: {}GB".format(round(number / 2.0**30, 2)),
             number=number,
             family="内存",
         )
@@ -123,10 +132,10 @@ def _is_local_file(path):
     return False
 
 
-class ValidateFootageStore(pyblish.api.InstancePlugin):
+class ValidateFootageStore(api.InstancePlugin):
     """检查素材文件是否保存于服务器."""
 
-    order = pyblish.api.ValidatorOrder
+    order = api.ValidatorOrder
     label = "检查素材保存位置"
     families = ["素材"]
 
@@ -137,15 +146,15 @@ class ValidateFootageStore(pyblish.api.InstancePlugin):
                 raise ValueError("使用了本地素材: %s" % i.filename)
 
 
-class ExtractJPG(pyblish.api.InstancePlugin):
+class ExtractJPG(api.InstancePlugin):
     """生成单帧图."""
 
-    order = pyblish.api.ExtractorOrder
+    order = api.ExtractorOrder
     label = "生成JPG"
     families = ["Nuke文件"]
 
     def process(self, instance):
-        with keep_modifield_status():
+        with recover_modifield_flag():
             if not nuke.numvalue(b"preferences.wlf_render_jpg", 0.0):
                 self.log.info("因首选项而跳过生成JPG")
                 return
@@ -161,10 +170,10 @@ class ExtractJPG(pyblish.api.InstancePlugin):
                 self.log.warning("工程中缺少wlf_Write节点")
 
 
-class SendToRenderDir(pyblish.api.InstancePlugin):
+class SendToRenderDir(api.InstancePlugin):
     """发送Nuke文件至渲染文件夹."""
 
-    order = pyblish.api.IntegratorOrder
+    order = api.IntegratorOrder
     label = "发送至渲染文件夹"
     families = ["Nuke文件"]
 
@@ -172,6 +181,6 @@ class SendToRenderDir(pyblish.api.InstancePlugin):
         filename = instance.data["name"]
         if nuke.numvalue(b"preferences.wlf_send_to_dir", 0.0):
             render_dir = cast.text(nuke.value(b"preferences.wlf_render_dir"))
-            _ = copy(filename, render_dir + "/")
+            _ = shutil.copy(filename, render_dir + "/")
         else:
             self.log.info("因为首选项设置而跳过")

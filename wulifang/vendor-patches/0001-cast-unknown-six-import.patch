@@ -1,0 +1,49 @@
+diff -ru a/vendor/cast_unknown/binary.py b/vendor/cast_unknown/binary.py
+--- a/vendor/cast_unknown/binary.py	2022-04-29 14:27:56.616797000 +0800
++++ b/vendor/cast_unknown/binary.py	2022-04-29 14:32:32.687297600 +0800
+@@ -4,7 +4,7 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-import six
++from wulifang.vendor import six
+ 
+ 
+ def binary(v, encoding='utf-8', errors='strict'):
+diff -ru a/vendor/cast_unknown/datetime.py b/vendor/cast_unknown/datetime.py
+--- a/vendor/cast_unknown/datetime.py	2022-04-29 14:27:56.617797000 +0800
++++ b/vendor/cast_unknown/datetime.py	2022-04-29 14:32:41.518297600 +0800
+@@ -7,7 +7,7 @@
+ import datetime as dt
+ 
+ import dateutil.parser
+-import six
++from wulifang.vendor import six
+ 
+ from .text import text
+ 
+diff -ru a/vendor/cast_unknown/iterable.py b/vendor/cast_unknown/iterable.py
+--- a/vendor/cast_unknown/iterable.py	2022-04-29 14:27:56.621797000 +0800
++++ b/vendor/cast_unknown/iterable.py	2022-04-29 14:50:27.588297600 +0800
+@@ -3,7 +3,8 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-from six.moves.collections_abc import Iterable
++
++from wulifang.vendor.six.moves.collections_abc import Iterable
+ 
+ 
+ def iterable(v):
+diff -ru a/vendor/cast_unknown/text.py b/vendor/cast_unknown/text.py
+--- a/vendor/cast_unknown/text.py	2022-04-29 14:27:56.627297000 +0800
++++ b/vendor/cast_unknown/text.py	2022-04-29 14:37:50.110297600 +0800
+@@ -4,7 +4,7 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-import six
++from wulifang.vendor import six
+ 
+ def text(v, encoding='utf-8', errors='strict'):
+     """Cast value  to text type, 

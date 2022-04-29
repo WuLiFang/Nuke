@@ -1,0 +1,708 @@
+diff -ru a/vendor/pyblish_lite/__main__.py b/vendor/pyblish_lite/__main__.py
+--- a/vendor/pyblish_lite/__main__.py	2022-04-29 14:59:02.607297000 +0800
++++ b/vendor/pyblish_lite/__main__.py	2022-04-29 15:20:17.226797600 +0800
+@@ -11,9 +11,9 @@
+ 
+     if args.debug:
+         from . import mock
+-        import pyblish.api
++        from wulifang.vendor.pyblish import api as pyblish_api
+ 
+         for Plugin in mock.plugins:
+-            pyblish.api.register_plugin(Plugin)
++            pyblish_api.register_plugin(Plugin)
+ 
+     show()
+diff -ru a/vendor/pyblish_lite/control.py b/vendor/pyblish_lite/control.py
+--- a/vendor/pyblish_lite/control.py	2022-04-29 14:59:02.611297000 +0800
++++ b/vendor/pyblish_lite/control.py	2022-04-29 15:34:18.961297600 +0800
+@@ -12,10 +12,9 @@
+ 
+ from .vendor.Qt import QtCore
+ 
+-import pyblish.api
+-import pyblish.lib
+-import pyblish.util
+-import pyblish.logic
++from wulifang.vendor.pyblish import api as pyblish_api
++from wulifang.vendor.pyblish import plugin as pyblish_plugin
++from wulifang.vendor.pyblish import logic as pyblish_logic
+ 
+ from . import util
+ 
+@@ -61,8 +60,8 @@
+ 
+     def reset(self):
+         """Discover plug-ins and run collection"""
+-        self.context = pyblish.api.Context()
+-        self.plugins = pyblish.api.discover()
++        self.context = pyblish_api.Context()
++        self.plugins = pyblish_api.discover()
+ 
+         self.was_discovered.emit()
+ 
+@@ -76,15 +75,15 @@
+         }
+ 
+         self._load()
+-        self._run(until=pyblish.api.CollectorOrder,
++        self._run(until=pyblish_api.CollectorOrder,
+                   on_finished=self.was_reset.emit)
+ 
+     def validate(self):
+         # The iterator doesn't sync with the GUI check states so
+         # reset the iterator to ensure we grab the updated instances
+         # assuming the plugins are already sorted from api.Discover()
+-        self._reset_iterator(start_from=pyblish.api.ValidatorOrder)
+-        self._run(until=pyblish.api.ValidatorOrder,
++        self._reset_iterator(start_from=pyblish_api.ValidatorOrder)
++        self._run(until=pyblish_api.ValidatorOrder,
+                   on_finished=self.on_validated)
+ 
+     def publish(self):
+@@ -96,24 +95,24 @@
+         self._run(on_finished=self.on_published)
+ 
+     def on_validated(self):
+-        pyblish.api.emit("validated", context=self.context)
++        pyblish_api.emit("validated", context=self.context)
+         self.was_validated.emit()
+ 
+     def on_published(self):
+-        pyblish.api.emit("published", context=self.context)
++        pyblish_api.emit("published", context=self.context)
+         self.was_published.emit()
+ 
+     def act(self, plugin, action):
+         context = self.context
+ 
+         def on_next():
+-            result = pyblish.plugin.process(plugin, context, None, action.id)
++            result = pyblish_plugin.process(plugin, context, None, action.id)
+             self.was_acted.emit(result)
+ 
+         util.defer(100, on_next)
+ 
+     def emit_(self, signal, kwargs):
+-        pyblish.api.emit(signal, **kwargs)
++        pyblish_api.emit(signal, **kwargs)
+ 
+     def _load(self):
+         """Initiate new generator and load first pair"""
+@@ -131,8 +130,8 @@
+         an instance/plugin pair can be fetched and processed in isolation.
+ 
+         Arguments:
+-            plugin (pyblish.api.Plugin): Produce result using plug-in
+-            instance (optional, pyblish.api.Instance): Process this instance,
++            plugin (pyblish_api.Plugin): Produce result using plug-in
++            instance (optional, pyblish_api.Instance): Process this instance,
+                 if no instance is provided, context is processed.
+ 
+         """
+@@ -140,7 +139,7 @@
+         self.processing["nextOrder"] = plugin.order
+ 
+         try:
+-            result = pyblish.plugin.process(plugin, self.context, instance)
++            result = pyblish_plugin.process(plugin, self.context, instance)
+ 
+         except Exception as e:
+             raise Exception("Unknown error: %s" % e)
+@@ -158,7 +157,7 @@
+         """Process current pair and store next pair for next process
+ 
+         Arguments:
+-            until (pyblish.api.Order, optional): Keep fetching next()
++            until (pyblish_api.Order, optional): Keep fetching next()
+                 until this order, default value is infinity.
+             on_finished (callable, optional): What to do when finishing,
+                 defaults to doing nothing.
+@@ -260,12 +259,12 @@
+ 
+         Arguments:
+             plugins (list): Plug-ins to process
+-            context (pyblish.api.Context): Context to process
++            context (pyblish_api.Context): Context to process
+ 
+         """
+-        test = pyblish.logic.registered_test()
++        test = pyblish_logic.registered_test()
+ 
+-        for plug, instance in pyblish.logic.Iterator(plugins, context):
++        for plug, instance in pyblish_logic.Iterator(plugins, context):
+             order = plug.order
+ 
+             if order < start_from or not plug.active:
+diff -ru a/vendor/pyblish_lite/mock.py b/vendor/pyblish_lite/mock.py
+--- a/vendor/pyblish_lite/mock.py	2022-04-29 14:59:02.612797000 +0800
++++ b/vendor/pyblish_lite/mock.py	2022-04-29 15:20:40.093797600 +0800
+@@ -2,10 +2,10 @@
+ import time
+ import subprocess
+ 
+-import pyblish.api
++from wulifang.vendor.pyblish import api as pyblish_api
+ 
+ 
+-class MyAction(pyblish.api.Action):
++class MyAction(pyblish_api.Action):
+     label = "My Action"
+     on = "processed"
+ 
+@@ -13,14 +13,14 @@
+         self.log.info("Running!")
+ 
+ 
+-class MyOtherAction(pyblish.api.Action):
++class MyOtherAction(pyblish_api.Action):
+     label = "My Other Action"
+ 
+     def process(self, context, plugin):
+         self.log.info("Running!")
+ 
+ 
+-class CollectComment(pyblish.api.ContextPlugin):
++class CollectComment(pyblish_api.ContextPlugin):
+     """This collector has a very long comment.
+ 
+     The idea is that this comment should either be elided, or word-
+@@ -28,15 +28,15 @@
+ 
+     """
+ 
+-    order = pyblish.api.CollectorOrder
++    order = pyblish_api.CollectorOrder
+ 
+     def process(self, context):
+         context.data["comment"] = ""
+ 
+ 
+-class MyCollector(pyblish.api.ContextPlugin):
++class MyCollector(pyblish_api.ContextPlugin):
+     label = "My Collector"
+-    order = pyblish.api.CollectorOrder
++    order = pyblish_api.CollectorOrder
+ 
+     def process(self, context):
+         context.create_instance("MyInstance 1", families=["myFamily"])
+@@ -48,8 +48,8 @@
+         )
+ 
+ 
+-class MyValidator(pyblish.api.InstancePlugin):
+-    order = pyblish.api.ValidatorOrder
++class MyValidator(pyblish_api.InstancePlugin):
++    order = pyblish_api.ValidatorOrder
+     active = False
+     label = "My Validator"
+     actions = [MyAction,
+@@ -59,8 +59,8 @@
+         self.log.info("Validating: %s" % instance)
+ 
+ 
+-class MyExtractor(pyblish.api.InstancePlugin):
+-    order = pyblish.api.ExtractorOrder
++class MyExtractor(pyblish_api.InstancePlugin):
++    order = pyblish_api.ExtractorOrder
+     families = ["myFamily"]
+     label = "My Extractor"
+ 
+@@ -68,33 +68,33 @@
+         self.log.info("Extracting: %s" % instance)
+ 
+ 
+-class CollectRenamed(pyblish.api.Collector):
++class CollectRenamed(pyblish_api.Collector):
+     def process(self, context):
+         i = context.create_instance("MyInstanceXYZ", family="MyFamily")
+         i.set_data("name", "My instance")
+ 
+ 
+-class CollectNegatron(pyblish.api.Collector):
++class CollectNegatron(pyblish_api.Collector):
+     """Negative collector adds Negatron"""
+ 
+-    order = pyblish.api.Collector.order - 0.49
++    order = pyblish_api.Collector.order - 0.49
+ 
+     def process_context(self, context):
+         self.log.info("Collecting Negatron")
+         context.create_instance("Negatron", family="MyFamily")
+ 
+ 
+-class CollectPositron(pyblish.api.Collector):
++class CollectPositron(pyblish_api.Collector):
+     """Positive collector adds Positron"""
+ 
+-    order = pyblish.api.Collector.order + 0.49
++    order = pyblish_api.Collector.order + 0.49
+ 
+     def process_context(self, context):
+         self.log.info("Collecting Positron")
+         context.create_instance("Positron", family="MyFamily")
+ 
+ 
+-class SelectInstances(pyblish.api.Selector):
++class SelectInstances(pyblish_api.Selector):
+     """Select debugging instances
+ 
+     These instances are part of the evil plan to destroy the world.
+@@ -114,7 +114,7 @@
+                 instance.set_data(key, value)
+ 
+ 
+-class SelectDiInstances(pyblish.api.Selector):
++class SelectDiInstances(pyblish_api.Selector):
+     """Select DI instances"""
+ 
+     name = "Select Dependency Instances"
+@@ -128,7 +128,7 @@
+             instance.set_data(key, value)
+ 
+ 
+-class SelectInstancesFailure(pyblish.api.Selector):
++class SelectInstancesFailure(pyblish_api.Selector):
+     """Select some instances, but fail before adding anything to the context.
+ 
+     That's right. I'm programmed to fail. Try me.
+@@ -142,12 +142,12 @@
+         assert False, "I was programmed to fail"
+ 
+ 
+-class SelectInstances2(pyblish.api.Selector):
++class SelectInstances2(pyblish_api.Selector):
+     def process(self, context):
+         self.log.warning("I'm good")
+ 
+ 
+-class ValidateNamespace(pyblish.api.Validator):
++class ValidateNamespace(pyblish_api.Validator):
+     """Namespaces must be orange
+ 
+     In case a namespace is not orange, report immediately to
+@@ -175,14 +175,14 @@
+         """)
+ 
+ 
+-class ValidateContext(pyblish.api.Validator):
++class ValidateContext(pyblish_api.Validator):
+     families = ["A", "B"]
+ 
+     def process_context(self, context):
+         self.log.info("Processing context..")
+ 
+ 
+-class ValidateContextFailure(pyblish.api.Validator):
++class ValidateContextFailure(pyblish_api.Validator):
+     optional = True
+     families = ["C"]
+     __fail__ = True
+@@ -195,35 +195,35 @@
+ and the moon is gray; not yellow. Try again when the moon is yellow."""
+ 
+ 
+-class Validator1(pyblish.api.Validator):
++class Validator1(pyblish_api.Validator):
+     """Test of the order attribute"""
+-    order = pyblish.api.Validator.order + 0.1
++    order = pyblish_api.Validator.order + 0.1
+     families = ["A"]
+ 
+     def process_instance(self, instance):
+         pass
+ 
+ 
+-class Validator2(pyblish.api.Validator):
+-    order = pyblish.api.Validator.order + 0.2
++class Validator2(pyblish_api.Validator):
++    order = pyblish_api.Validator.order + 0.2
+     families = ["B"]
+ 
+     def process_instance(self, instance):
+         pass
+ 
+ 
+-class Validator3(pyblish.api.Validator):
+-    order = pyblish.api.Validator.order + 0.3
++class Validator3(pyblish_api.Validator):
++    order = pyblish_api.Validator.order + 0.3
+     families = ["B"]
+ 
+     def process_instance(self, instance):
+         pass
+ 
+ 
+-class ValidateFailureMock(pyblish.api.Validator):
++class ValidateFailureMock(pyblish_api.Validator):
+     """Plug-in that always fails"""
+     optional = True
+-    order = pyblish.api.Validator.order + 0.1
++    order = pyblish_api.Validator.order + 0.1
+     families = ["C"]
+     __fail__ = True
+ 
+@@ -245,12 +245,12 @@
+ """
+ 
+ 
+-class ValidateIsIncompatible(pyblish.api.Validator):
++class ValidateIsIncompatible(pyblish_api.Validator):
+     """This plug-in should never appear.."""
+     requires = False  # This is invalid
+ 
+ 
+-class ValidateWithRepair(pyblish.api.Validator):
++class ValidateWithRepair(pyblish_api.Validator):
+     """A validator with repair functionality"""
+     optional = True
+     families = ["C"]
+@@ -264,7 +264,7 @@
+         self.log.info("Success!")
+ 
+ 
+-class ValidateWithRepairFailure(pyblish.api.Validator):
++class ValidateWithRepairFailure(pyblish_api.Validator):
+     """A validator with repair functionality that fails"""
+     optional = True
+     families = ["C"]
+@@ -278,12 +278,12 @@
+         assert False, "Could not repair due to X"
+ 
+ 
+-class ValidateWithVeryVeryVeryLongLongNaaaaame(pyblish.api.Validator):
++class ValidateWithVeryVeryVeryLongLongNaaaaame(pyblish_api.Validator):
+     """A validator with repair functionality that fails"""
+     families = ["A"]
+ 
+ 
+-class ValidateWithRepairContext(pyblish.api.Validator):
++class ValidateWithRepairContext(pyblish_api.Validator):
+     """A validator with repair functionality that fails"""
+     optional = True
+     families = ["C"]
+@@ -297,7 +297,7 @@
+         assert False, "Could not repair"
+ 
+ 
+-class ExtractAsMa(pyblish.api.Extractor):
++class ExtractAsMa(pyblish_api.Extractor):
+     """Extract contents of each instance into .ma
+ 
+     Serialise scene using Maya's own facilities and then put
+@@ -324,7 +324,7 @@
+         self.log.info("Finished successfully")
+ 
+ 
+-class ConformAsset(pyblish.api.Conformer):
++class ConformAsset(pyblish_api.Conformer):
+     """Conform the world
+ 
+     Step 1: Conform all humans and Step 2: Conform all non-humans.
+@@ -344,7 +344,7 @@
+         self.log.info("Conformed Successfully")
+ 
+ 
+-class ValidateInstancesDI(pyblish.api.Validator):
++class ValidateInstancesDI(pyblish_api.Validator):
+     """Validate using the DI interface"""
+     families = ["diFamily"]
+ 
+@@ -352,7 +352,7 @@
+         self.log.info("Validating %s.." % instance.data("name"))
+ 
+ 
+-class ValidateDIWithRepair(pyblish.api.Validator):
++class ValidateDIWithRepair(pyblish_api.Validator):
+     families = ["diFamily"]
+     optional = True
+     __fail__ = True
+@@ -364,7 +364,7 @@
+         self.log.info("Repairing %s" % instance.data("name"))
+ 
+ 
+-class ExtractInstancesDI(pyblish.api.Extractor):
++class ExtractInstancesDI(pyblish_api.Extractor):
+     """Extract using the DI interface"""
+     families = ["diFamily"]
+ 
+@@ -372,24 +372,24 @@
+         self.log.info("Extracting %s.." % instance.data("name"))
+ 
+ 
+-class ValidateWithLabel(pyblish.api.Validator):
++class ValidateWithLabel(pyblish_api.Validator):
+     """Validate using the DI interface"""
+     label = "Validate with Label"
+ 
+ 
+-class ValidateWithLongLabel(pyblish.api.Validator):
++class ValidateWithLongLabel(pyblish_api.Validator):
+     """Validate using the DI interface"""
+     label = "Validate with Loooooooooooooooooooooong Label"
+ 
+ 
+-class SimplePlugin1(pyblish.api.Plugin):
++class SimplePlugin1(pyblish_api.Plugin):
+     """Validate using the simple-plugin interface"""
+ 
+     def process(self):
+         self.log.info("I'm a simple plug-in, only processed once")
+ 
+ 
+-class SimplePlugin2(pyblish.api.Plugin):
++class SimplePlugin2(pyblish_api.Plugin):
+     """Validate using the simple-plugin interface
+ 
+     It doesn't have an order, and will likely end up *before* all
+@@ -401,14 +401,14 @@
+         self.log.info("Processing the context, simply: %s" % context)
+ 
+ 
+-class SimplePlugin3(pyblish.api.Plugin):
++class SimplePlugin3(pyblish_api.Plugin):
+     """Simply process every instance"""
+ 
+     def process(self, instance):
+         self.log.info("Processing the instance, simply: %s" % instance)
+ 
+ 
+-class ContextAction(pyblish.api.Action):
++class ContextAction(pyblish_api.Action):
+     label = "Context action"
+ 
+     def process(self, context):
+@@ -416,7 +416,7 @@
+         self.log.info("Context.instances: %s" % str(list(context)))
+ 
+ 
+-class FailingAction(pyblish.api.Action):
++class FailingAction(pyblish_api.Action):
+     label = "Failing action"
+ 
+     def process(self):
+@@ -424,7 +424,7 @@
+         raise Exception("I failed")
+ 
+ 
+-class LongRunningAction(pyblish.api.Action):
++class LongRunningAction(pyblish_api.Action):
+     label = "Long-running action"
+ 
+     def process(self):
+@@ -433,7 +433,7 @@
+         self.log.info("Ah, that's better")
+ 
+ 
+-class IconAction(pyblish.api.Action):
++class IconAction(pyblish_api.Action):
+     label = "Icon action"
+     icon = "crop"
+ 
+@@ -441,7 +441,7 @@
+         self.log.info("I have an icon")
+ 
+ 
+-class PluginAction(pyblish.api.Action):
++class PluginAction(pyblish_api.Action):
+     label = "Plugin action"
+ 
+     def process(self, plugin):
+@@ -449,7 +449,7 @@
+         self.log.info("Which is %s" % plugin.id)
+ 
+ 
+-class LaunchExplorerAction(pyblish.api.Action):
++class LaunchExplorerAction(pyblish_api.Action):
+     label = "Open in Explorer"
+     icon = "folder-open"
+ 
+@@ -460,7 +460,7 @@
+         self.log.debug(result)
+ 
+ 
+-class ProcessedAction(pyblish.api.Action):
++class ProcessedAction(pyblish_api.Action):
+     label = "Success action"
+     icon = "check"
+     on = "processed"
+@@ -469,13 +469,13 @@
+         self.log.info("I am only available on a successful plug-in")
+ 
+ 
+-class FailedAction(pyblish.api.Action):
++class FailedAction(pyblish_api.Action):
+     label = "Failure action"
+     icon = "close"
+     on = "failed"
+ 
+ 
+-class SucceededAction(pyblish.api.Action):
++class SucceededAction(pyblish_api.Action):
+     label = "Success action"
+     icon = "check"
+     on = "succeeded"
+@@ -484,47 +484,47 @@
+         self.log.info("I am only available on a successful plug-in")
+ 
+ 
+-class LongLabelAction(pyblish.api.Action):
++class LongLabelAction(pyblish_api.Action):
+     label = "An incredibly, incredicly looooon label. Very long."
+     icon = "close"
+ 
+ 
+-class BadEventAction(pyblish.api.Action):
++class BadEventAction(pyblish_api.Action):
+     label = "Bad event action"
+     on = "not exist"
+ 
+ 
+-class InactiveAction(pyblish.api.Action):
++class InactiveAction(pyblish_api.Action):
+     active = False
+ 
+ 
+-class PluginWithActions(pyblish.api.Validator):
++class PluginWithActions(pyblish_api.Validator):
+     optional = True
+     actions = [
+-        pyblish.api.Category("General"),
++        pyblish_api.Category("General"),
+         ContextAction,
+         FailingAction,
+         LongRunningAction,
+         IconAction,
+         PluginAction,
+-        pyblish.api.Category("Empty"),
+-        pyblish.api.Category("OS"),
++        pyblish_api.Category("Empty"),
++        pyblish_api.Category("OS"),
+         LaunchExplorerAction,
+-        pyblish.api.Separator,
++        pyblish_api.Separator,
+         FailedAction,
+         SucceededAction,
+-        pyblish.api.Category("Debug"),
++        pyblish_api.Category("Debug"),
+         BadEventAction,
+         InactiveAction,
+         LongLabelAction,
+-        pyblish.api.Category("Empty"),
++        pyblish_api.Category("Empty"),
+     ]
+ 
+     def process(self):
+         self.log.info("Ran PluginWithActions")
+ 
+ 
+-class FailingPluginWithActions(pyblish.api.Validator):
++class FailingPluginWithActions(pyblish_api.Validator):
+     optional = True
+     actions = [
+         FailedAction,
+@@ -535,7 +535,7 @@
+         raise Exception("I was programmed to fail")
+ 
+ 
+-class ValidateDefaultOff(pyblish.api.Validator):
++class ValidateDefaultOff(pyblish_api.Validator):
+     families = ["A", "B"]
+     active = False
+     optional = True
+@@ -544,10 +544,10 @@
+         self.log.info("Processing instance..")
+ 
+ 
+-class ValidateWithHyperlinks(pyblish.api.Validator):
++class ValidateWithHyperlinks(pyblish_api.Validator):
+     """To learn about Pyblish
+ 
+-    <a href="http://pyblish.com">click here</a> (http://pyblish.com)
++    <a href="http://pyblish_com">click here</a> (http://pyblish_com)
+ 
+     """
+ 
+@@ -556,13 +556,13 @@
+     def process(self, instance):
+         self.log.info("Processing instance..")
+ 
+-        msg = "To learn about Pyblish, <a href='http://pyblish.com'>"
+-        msg += "click here</a> (http://pyblish.com)"
++        msg = "To learn about Pyblish, <a href='http://pyblish_com'>"
++        msg += "click here</a> (http://pyblish_com)"
+ 
+         self.log.info(msg)
+ 
+ 
+-class LongRunningCollector(pyblish.api.Collector):
++class LongRunningCollector(pyblish_api.Collector):
+     """I will take at least 2 seconds..."""
+     def process(self, context):
+         self.log.info("Sleeping for 2 seconds..")
+@@ -570,7 +570,7 @@
+         self.log.info("Good morning")
+ 
+ 
+-class LongRunningValidator(pyblish.api.Validator):
++class LongRunningValidator(pyblish_api.Validator):
+     """I will take at least 2 seconds..."""
+     def process(self, context):
+         self.log.info("Sleeping for 2 seconds..")
+@@ -578,9 +578,9 @@
+         self.log.info("Good morning")
+ 
+ 
+-class RearrangingPlugin(pyblish.api.ContextPlugin):
++class RearrangingPlugin(pyblish_api.ContextPlugin):
+     """Sort plug-ins by family, and then reverse it"""
+-    order = pyblish.api.CollectorOrder + 0.2
++    order = pyblish_api.CollectorOrder + 0.2
+ 
+     def process(self, context):
+         self.log.info("Reversing instances in the context..")
+@@ -592,17 +592,17 @@
+         self.log.info("Reversed!")
+ 
+ 
+-class InactiveInstanceCollectorPlugin(pyblish.api.InstancePlugin):
++class InactiveInstanceCollectorPlugin(pyblish_api.InstancePlugin):
+     """Special case of an InstancePlugin running as a Collector"""
+-    order = pyblish.api.CollectorOrder + 0.1
++    order = pyblish_api.CollectorOrder + 0.1
+     active = False
+ 
+     def process(self, instance):
+         raise TypeError("I shouldn't have run in the first place")
+ 
+ 
+-class CollectWithIcon(pyblish.api.ContextPlugin):
+-    order = pyblish.api.CollectorOrder
++class CollectWithIcon(pyblish_api.ContextPlugin):
++    order = pyblish_api.CollectorOrder
+ 
+     def process(self, context):
+         instance = context.create_instance("With Icon")
+@@ -725,4 +725,4 @@
+     CollectWithIcon,
+ ]
+ 
+-pyblish.api.sort_plugins(plugins)
++pyblish_api.sort_plugins(plugins)
+diff -ru a/vendor/pyblish_lite/model.py b/vendor/pyblish_lite/model.py
+--- a/vendor/pyblish_lite/model.py	2022-04-29 14:59:02.613297000 +0800
++++ b/vendor/pyblish_lite/model.py	2022-04-29 15:19:18.981297600 +0800
+@@ -2,11 +2,11 @@
+ 
+ Description:
+     The model contains the original objects from Pyblish, such as
+-    pyblish.api.Instance and pyblish.api.Plugin. The model then
++    pyblish_api.Instance and pyblish_api.Plugin. The model then
+     provides an interface for reading and writing to those.
+ 
+ GUI data:
+-    Aside from original data, such as pyblish.api.Plugin.optional,
++    Aside from original data, such as pyblish_api.Plugin.optional,
+     the GUI also hosts data internal to itself, such as whether or
+     not an item has processed such that it may be colored appropriately
+     in the view. This data is prefixed with two underscores (__).
