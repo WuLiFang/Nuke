@@ -8,13 +8,8 @@ import os
 import webbrowser
 from itertools import chain
 
-import cast_unknown as cast
-import nuke
-import nukescripts
-import six
-
 import asset
-import cgtwn_panels
+import cast_unknown as cast
 import cgtwq
 import comp
 import comp.panels
@@ -28,11 +23,15 @@ import edit.script_use_seq.panels
 import edit.shuffle_layers_by_re
 import edit_panels
 import enable_later
+import nuke
+import nukescripts
 import nuketools
 import organize
 import scanner
+import six
 import splitexr
-
+from wulifang.nuke.infrastructure.cgteamwork import (dialog_create_dirs,
+                                                     dialog_login)
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -232,8 +231,8 @@ def add_menu():
             -2,
             {
                 _("CGTeamWork", icon="cgteamwork.png"): [
-                    _("登录", cgtwn_panels.dialog_login),
-                    _("创建项目文件夹", cgtwn_panels.dialog_create_dirs),
+                    _("登录", dialog_login.dialog_login),
+                    _("创建项目文件夹", dialog_create_dirs.dialog_create_dirs),
                     _(
                         "上传工具",
                         lambda: nukescripts.panels.restorePanel(b"com.wlf.uploader"),
