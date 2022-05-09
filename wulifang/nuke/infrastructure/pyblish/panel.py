@@ -27,7 +27,7 @@ def _on_processed(result):
         return "请在发布窗口的最后一个标签中查看详情"
 
     if not result["success"]:
-        wulifang.message.error(_get_text(), title="发布失败")
+        wulifang.message.info(_get_text(), title="发布失败")
 
 
 class Window(window.Window):
