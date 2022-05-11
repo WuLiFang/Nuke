@@ -14,6 +14,9 @@ if TYPE_CHECKING:
 import os
 
 from ._reload import reload as reload_modules
+from .infrastructure.no_op_publish_service import (
+    NoOpPublishService as _DefaultPublishService,
+)
 
 
 def _undefined():
@@ -26,3 +29,5 @@ def _undefined():
 message = _undefined()  # type: MessageService
 publish = _undefined()  # type: PublishService
 is_debug = os.getenv("DEBUG") == "wulifang"
+
+publish = _DefaultPublishService()
