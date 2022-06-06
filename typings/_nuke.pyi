@@ -8911,7 +8911,7 @@ def toolbar(name: six.binary_type, create: bool = True) -> ToolBar:
     ...
 
 def tprint(
-    *value,
+    *value: object,
     sep: six.binary_type = b" ",
     end: six.binary_type = b"\n",
     file: typing.IO[six.binary_type] = ...,
