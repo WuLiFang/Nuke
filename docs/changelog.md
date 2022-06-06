@@ -1,5 +1,26 @@
 # 更新日志
 
+## [2022.2.0](https://github.com/WuLiFang/Nuke/compare/v2022.1.1...v2022.2.0) (2022-06-06)
+
+### 特性
+
+- 自动摆放拖放创建的节点 ([d529784](https://github.com/WuLiFang/Nuke/commit/d529784ae94e111bf2464512ffabc1791d611c24))
+- **hiero:** 添加轨道项操作 ([11af7e9](https://github.com/WuLiFang/Nuke/commit/11af7e93ca1051b03c2522972dd2bb0d94b5f513))
+- **nuke:** 为 Shuffle2 添加自动标签 ([e435d0e](https://github.com/WuLiFang/Nuke/commit/8564f2b582d50007400644b23d8601b9a8e246a0))
+- 支持 nuke 插件重新加载 ([09b4be3](https://github.com/WuLiFang/Nuke/commit/09b4be36765216f833098ecc3d0276bb488f183c))
+- 更新过期日期至 2023-06-01 ([d837097](https://github.com/WuLiFang/Nuke/commit/3211ace684eb0a7bfd34e1204b97f27328b1bbf3))
+- **wlf_Write:** v1.58.0: 允许设置颜色空间 ([cec8335](https://github.com/WuLiFang/Nuke/commit/cec8335a66ee7538fefeb9c146c85ecc65ed5142))
+
+### 修复
+
+- **hiero:** 退出时崩溃 ([0854bf5](https://github.com/WuLiFang/Nuke/commit/0854bf5bb39527d60894d08113fd8501aba0c0d5))
+- **hiero:** 对 Hiero10.5v7 不起作用 ([1bb2082](https://github.com/WuLiFang/Nuke/commit/1bb2082c2e3081b7a6762057bb6a1f628ccc1d53))
+- **nuke:** 终端模式渲染时出错 ([5272a37](https://github.com/WuLiFang/Nuke/commit/5272a375444e13a939f540fc9bb01a52182f7811))
+- **nuke:** 导入错误 ([ea2c667](https://github.com/WuLiFang/Nuke/commit/ea2c6671c612ef00434c8a98ee5e537e104c7292))
+- **nuke:** 插件重新加载只在第二次运行后才有效果 ([6719af7](https://github.com/WuLiFang/Nuke/commit/6719af74f74ca63e9373fa6d8419788df642df9c))
+- **publish:** Nuke12.2 中发布窗口错误 ([4cbbcce](https://github.com/WuLiFang/Nuke/commit/4cbbcce48dd3227ae58766d53b871c2161e2a195))
+- Nuke12.2 中托盘消息不起作用 ([6e6784a](https://github.com/WuLiFang/Nuke/commit/6e6784aaec507ed2faed7d765750b35bfe8c1c04))
+
 ## [2022.1.1](https://github.com/WuLiFang/Nuke/compare/v2022.1.0...v2022.1.1) (2022-01-12)
 
 ### 修复
