@@ -5,16 +5,75 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text, Optional
+    from typing import Text, Optional, Iterator, TypeVar, Set
 
     from .. import types
     import wulifang.types
+
+    T = TypeVar("T")
 
 
 import nuke
 from autolabel import autolabel
 
 import wulifang.vendor.cast_unknown as cast
+import wulifang.vendor.six as six
+
+
+def _parse_layer(s):
+    # type: (Text) -> ...
+    layer, channel = s.split(".", 2)
+
+    return layer, channel
+
+
+def _uniq(s):
+    # type: (Iterator[T]) -> Iterator[T]
+    m = set()  # type: Set[T]
+    for i in s:
+        if i not in m:
+            yield i
+            m.add(i)
+
+
+class _Shuffle2Mapping:
+    def __init__(
+        self,
+        in_channel,
+        in_layer_index,
+        in_channel_index,
+        out_channel,
+        out_layer_index,
+        out_channel_index,
+    ):
+        # type: (Text, int, int, Text,int,int) -> None
+        self.in_channel = in_channel
+        self.in_layer_index = in_layer_index
+        self.in_channel_index = in_channel_index
+        self.out_channel = out_channel
+        self.out_layer_index = out_layer_index
+        self.out_channel_index = out_channel_index
+
+    @classmethod
+    def parse(cls, s):
+        # type: (Text) -> Iterator[_Shuffle2Mapping]
+        parts = s.split(" ")
+        for end_index in six.moves.range(1 + 6, len(parts) + 1, 6):
+            start_index = end_index - 6
+            yield cls(
+                parts[start_index],
+                int(parts[start_index + 1]),
+                int(parts[start_index + 2]),
+                parts[start_index + 3],
+                int(parts[start_index + 4]),
+                int(parts[start_index + 5]),
+            )
+
+    def in_layer(self):
+        return _parse_layer(self.in_channel)[0]
+
+    def out_layer(self):
+        return _parse_layer(self.out_channel)[0]
 
 
 class AutolabelService:
@@ -24,6 +83,9 @@ class AutolabelService:
 
     def _with_next(self, text, center=False):
         # type: (Text, bool) -> bytes
+
+        if not text:
+            return autolabel()
 
         ret = cast.text(autolabel()).split("\n")
         ret.insert(1, cast.text(text))
@@ -78,6 +140,41 @@ class AutolabelService:
         ret = self._with_next(label)
         return ret
 
+    def _shuffle2(self):
+        mapping_text = cast.text(nuke.value(b"this.mappings", b""))[1:-1]
+        l = list(_Shuffle2Mapping.parse(mapping_text))
+
+        l_channel_changed = [i for i in l if i.in_channel_index != i.out_channel_index]
+        l_channel_changed = sorted(
+            [
+                i
+                for i in l
+                if any(
+                    j.out_layer_index == i.out_layer_index for j in l_channel_changed
+                )
+            ],
+            key=lambda x: (x.out_layer_index, x.out_channel_index),
+        )
+        l_channel_unchanged = [
+            i
+            for i in l
+            if all(j.out_layer_index != i.out_layer_index for j in l_channel_changed)
+        ]
+
+        label = ""
+        label += "".join(
+            _uniq(
+                "%s -> %s\n" % (i.in_layer(), i.out_layer())
+                for i in l_channel_unchanged
+            )
+        )
+        label += "".join(
+            "%s -> %s\n" % (i.in_channel, i.out_channel) for i in l_channel_changed
+        )
+
+        ret = self._with_next(label)
+        return ret
+
     def _time_offset(self):
         this = nuke.thisNode()
         return self._with_next("{:.0f}".format(this[b"time_offset"].value()))
@@ -91,6 +188,7 @@ class AutolabelService:
             b"Keyer": self._keyer,
             b"Read": self._read,
             b"Shuffle": self._shuffle,
+            b"Shuffle2": self._shuffle2,
             b"TimeOffset": self._time_offset,
         }
 
