@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2022.2.0'
-RELEASE_DATE = datetime.fromtimestamp(1654506989)
-LAST_GIT_COMMIT_DESCRIBE = 'v2022.1.1-24-g3211ace'
-LAST_GIT_COMMIT_HASH = '3211ace684eb0a7bfd34e1204b97f27328b1bbf3'
+VERSION = '2022.2.1'
+RELEASE_DATE = datetime.fromtimestamp(1654511632)
+LAST_GIT_COMMIT_DESCRIBE = 'v2022.2.0-3-gf48388e'
+LAST_GIT_COMMIT_HASH = 'f48388e9f13ebf23ac95e612607cb4e1f2305640'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1654505909)
-LAST_GIT_COMMIT_SUBJECT = 'feat: update expire time to 2023-06-01'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1654511624)
+LAST_GIT_COMMIT_SUBJECT = 'fix(nuke): crash on exit'
 LAST_GIT_COMMIT_BODY = ''

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2022.2.1](https://github.com/WuLiFang/Nuke/compare/v2022.2.0...v2022.2.1) (2022-06-06)
+
+### Bug Fixes
+
+- **nuke:** crash on exit ([f48388e](https://github.com/WuLiFang/Nuke/commit/f48388e9f13ebf23ac95e612607cb4e1f2305640))
+
 ## [2022.2.0](https://github.com/WuLiFang/Nuke/compare/v2022.1.1...v2022.2.0) (2022-06-06)
 
 ### Features
