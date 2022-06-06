@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2022.2.1](https://github.com/WuLiFang/Nuke/compare/v2022.2.0...v2022.2.1) (2022-06-06)
+
+### 修复
+
+- **nuke:** 退出时崩溃 ([f48388e](https://github.com/WuLiFang/Nuke/commit/f48388e9f13ebf23ac95e612607cb4e1f2305640))
+
 ## [2022.2.0](https://github.com/WuLiFang/Nuke/compare/v2022.1.1...v2022.2.0) (2022-06-06)
 
 ### 特性
