@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2022.2.0](https://github.com/WuLiFang/Nuke/compare/v2022.1.1...v2022.2.0) (2022-06-06)
+
+### Features
+
+- autoplace node after drop ([d529784](https://github.com/WuLiFang/Nuke/commit/d529784ae94e111bf2464512ffabc1791d611c24))
+- **hiero:** add track item actions ([11af7e9](https://github.com/WuLiFang/Nuke/commit/11af7e93ca1051b03c2522972dd2bb0d94b5f513))
+- **nuke:** add autolabel for Shuffle2 ([8564f2b](https://github.com/WuLiFang/Nuke/commit/8564f2b582d50007400644b23d8601b9a8e246a0))
+- support nuke plugin reload ([09b4be3](https://github.com/WuLiFang/Nuke/commit/09b4be36765216f833098ecc3d0276bb488f183c))
+- update expire time to 2023-06-01 ([3211ace](https://github.com/WuLiFang/Nuke/commit/3211ace684eb0a7bfd34e1204b97f27328b1bbf3))
+- **wlf_Write:** v1.58.0: allow set colorspace ([cec8335](https://github.com/WuLiFang/Nuke/commit/cec8335a66ee7538fefeb9c146c85ecc65ed5142))
+
+### Bug Fixes
+
+- **hiero:** crash on exit ([0854bf5](https://github.com/WuLiFang/Nuke/commit/0854bf5bb39527d60894d08113fd8501aba0c0d5))
+- **hiero:** not work in Hiero10.5v7 ([1bb2082](https://github.com/WuLiFang/Nuke/commit/1bb2082c2e3081b7a6762057bb6a1f628ccc1d53))
+- **nuke:** error while rendering in terminal mode ([5272a37](https://github.com/WuLiFang/Nuke/commit/5272a375444e13a939f540fc9bb01a52182f7811))
+- **nuke:** import error ([ea2c667](https://github.com/WuLiFang/Nuke/commit/ea2c6671c612ef00434c8a98ee5e537e104c7292))
+- **nuke:** plugin reload not work until second run ([6719af7](https://github.com/WuLiFang/Nuke/commit/6719af74f74ca63e9373fa6d8419788df642df9c))
+- **publish:** publish window error in Nuke12.2 ([4cbbcce](https://github.com/WuLiFang/Nuke/commit/4cbbcce48dd3227ae58766d53b871c2161e2a195))
+- tray message not work in Nuke12.2 ([6e6784a](https://github.com/WuLiFang/Nuke/commit/6e6784aaec507ed2faed7d765750b35bfe8c1c04))
+
 ## [2022.1.1](https://github.com/WuLiFang/Nuke/compare/v2022.1.0...v2022.1.1) (2022-01-12)
 
 ### Bug Fixes
