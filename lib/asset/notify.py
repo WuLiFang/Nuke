@@ -14,7 +14,7 @@ import nuke
 import pendulum
 from jinja2 import Environment, FileSystemLoader
 
-import asset.missing_frames
+import wulifang
 import callback
 import cast_unknown as cast
 import templates
@@ -39,7 +39,9 @@ def warn_missing_frames(nodes=None, show_ok=False):
     result = []
     for n in nodes:
         filename = cast.text(nuke.filename(n))
-        frame_ranges = asset.missing_frames.get(filename, n.firstFrame(), n.lastFrame())
+        frame_ranges = list(
+            wulifang.file.missing_frames(filename, n.firstFrame(), n.lastFrame())
+        )
         if not frame_ranges:
             continue
         result.append(

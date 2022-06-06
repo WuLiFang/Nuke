@@ -2,6 +2,7 @@
 # pyright: strict
 
 from __future__ import absolute_import, division, print_function, unicode_literals
+from wulifang.nuke.infrastructure.autolabel_service import AutolabelService
 
 import wulifang
 from wulifang.infrastructure.multi_message_service import MultiMessageService
@@ -55,5 +56,10 @@ def init_gui():
     )
     wulifang.message = MultiMessageService(wulifang.message, TrayMessageService())
     wulifang.publish = pyblish.PublishService()
+
+    autolabel = AutolabelService(wulifang.file)
+    wulifang.nuke.cleanup.add(lambda: nuke.removeAutolabel(autolabel.autolabel))
+    nuke.addAutolabel(autolabel.autolabel)
+
     _init_cgtw()
     _g.init_once = True

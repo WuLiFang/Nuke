@@ -23,7 +23,7 @@ cleanup = _undefined()  # type: wulifang.types.CleanupService
 publish = _undefined()  # type: wulifang.types.PublishService
 active_viewer = _undefined()  # type: types.ActiveViewerService
 callback = _undefined()  # type: types.CallbackService
-
+file = _undefined()  #type: wulifang.types.FileService
 
 def init_gui():
     from ._init_gui import init_gui
