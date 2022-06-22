@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2022.2.2](https://github.com/WuLiFang/Nuke/compare/v2022.2.1...v2022.2.2) (2022-06-22)
+
+### Bug Fixes
+
+- **deps:** missing vendor dependencies ([e7df8e3](https://github.com/WuLiFang/Nuke/commit/e7df8e3684ba0051bdc9c5665197e522cd693057))
+- **wlf_Write:** v1.58.1: set jpg sub sampling to 4:4:4 ([4ab4506](https://github.com/WuLiFang/Nuke/commit/4ab4506265ffbdf9b4e62fc66f28ae3518b35a2e))
+
 ## [2022.2.1](https://github.com/WuLiFang/Nuke/compare/v2022.2.0...v2022.2.1) (2022-06-06)
 
 ### Bug Fixes
