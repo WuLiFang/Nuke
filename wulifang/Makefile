@@ -12,5 +12,5 @@ vendor/__init__.py: vendor-requirements.txt vendor-patches/*.patch
 	mkdir -p vendor
 	rm -rf vendor/*
 	cd vendor; "$(PYTHON27)" -m pip install -r ../vendor-requirements.txt --target . --upgrade
-	for file in vendor-patches/*.patch; do patch -p1 < $$file; done
+	for file in vendor-patches/*.patch; do patch -u -p1 < $$file; done
 	touch $@

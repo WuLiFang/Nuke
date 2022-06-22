@@ -1,0 +1,49 @@
+diff -ru a/vendor/concurrent/futures/__init__.py b/vendor/concurrent/futures/__init__.py
+--- a/vendor/concurrent/futures/__init__.py	2022-06-22 14:56:53.012922000 +0800
++++ b/vendor/concurrent/futures/__init__.py	2022-06-22 15:03:37.257422000 +0800
+@@ -5,7 +5,7 @@
+ 
+ __author__ = 'Brian Quinlan (brian@sweetapp.com)'
+ 
+-from concurrent.futures._base import (FIRST_COMPLETED,
++from ._base import (FIRST_COMPLETED,
+                                       FIRST_EXCEPTION,
+                                       ALL_COMPLETED,
+                                       CancelledError,
+@@ -14,10 +14,10 @@
+                                       Executor,
+                                       wait,
+                                       as_completed)
+-from concurrent.futures.thread import ThreadPoolExecutor
++from .thread import ThreadPoolExecutor
+ 
+ try:
+-    from concurrent.futures.process import ProcessPoolExecutor
++    from .process import ProcessPoolExecutor
+ except ImportError:
+     # some platforms don't have multiprocessing
+     pass
+diff -ru a/vendor/concurrent/futures/process.py b/vendor/concurrent/futures/process.py
+--- a/vendor/concurrent/futures/process.py	2022-06-22 14:56:53.015422000 +0800
++++ b/vendor/concurrent/futures/process.py	2022-06-22 15:03:55.857922000 +0800
+@@ -44,7 +44,7 @@
+ """
+ 
+ import atexit
+-from concurrent.futures import _base
++from . import _base
+ import Queue as queue
+ import multiprocessing
+ import threading
+diff -ru a/vendor/concurrent/futures/thread.py b/vendor/concurrent/futures/thread.py
+--- a/vendor/concurrent/futures/thread.py	2022-06-22 14:56:53.016422000 +0800
++++ b/vendor/concurrent/futures/thread.py	2022-06-22 15:04:05.879922000 +0800
+@@ -4,7 +4,7 @@
+ """Implements ThreadPoolExecutor."""
+ 
+ import atexit
+-from concurrent.futures import _base
++from . import _base
+ import itertools
+ import Queue as queue
+ import threading

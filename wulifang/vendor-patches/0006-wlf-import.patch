@@ -1,0 +1,129 @@
+diff -ru a/vendor/wlf/codectools.py b/vendor/wlf/codectools.py
+--- a/vendor/wlf/codectools.py	2022-06-22 15:20:31.461921000 +0800
++++ b/vendor/wlf/codectools.py	2022-06-22 15:25:30.993922000 +0800
+@@ -7,8 +7,8 @@
+ import os
+ import sys
+ 
+-import six
+-from six import text_type
++from wulifang.vendor import six
++from wulifang.vendor.six import text_type
+ 
+ 
+ def u_print(msg, **kwargs):
+diff -ru a/vendor/wlf/decorators.py b/vendor/wlf/decorators.py
+--- a/vendor/wlf/decorators.py	2022-06-22 15:20:31.463922000 +0800
++++ b/vendor/wlf/decorators.py	2022-06-22 15:25:54.613422000 +0800
+@@ -11,7 +11,7 @@
+ from multiprocessing.dummy import Queue
+ from threading import Thread, current_thread
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from .env import HAS_QT, has_nuke
+ 
+diff -ru a/vendor/wlf/ffmpeg.py b/vendor/wlf/ffmpeg.py
+--- a/vendor/wlf/ffmpeg.py	2022-06-22 15:20:31.466422000 +0800
++++ b/vendor/wlf/ffmpeg.py	2022-06-22 15:25:54.575422000 +0800
+@@ -10,7 +10,7 @@
+ from subprocess import PIPE
+ from tempfile import mktemp
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from .codectools import get_encoded as e
+ from .codectools import get_unicode as u
+diff -ru a/vendor/wlf/fileutil.py b/vendor/wlf/fileutil.py
+--- a/vendor/wlf/fileutil.py	2022-06-22 15:20:31.466922000 +0800
++++ b/vendor/wlf/fileutil.py	2022-06-22 15:26:03.876922000 +0800
+@@ -12,7 +12,7 @@
+ import sys
+ from subprocess import call
+ 
+-from six.moves import urllib
++from wulifang.vendor.six.moves import urllib
+ 
+ from .codectools import get_encoded as e
+ from .codectools import get_unicode as u
+diff -ru a/vendor/wlf/mimetools.py b/vendor/wlf/mimetools.py
+--- a/vendor/wlf/mimetools.py	2022-06-22 15:20:31.467921000 +0800
++++ b/vendor/wlf/mimetools.py	2022-06-22 15:26:03.877422000 +0800
+@@ -6,7 +6,7 @@
+ 
+ import mimetypes
+ 
+-from six import text_type
++from wulifang.vendor.six import text_type
+ 
+ 
+ def same_mimetype(suffix_a, suffix_b):
+diff -ru a/vendor/wlf/mp_logging.py b/vendor/wlf/mp_logging.py
+--- a/vendor/wlf/mp_logging.py	2022-06-22 15:20:31.469422000 +0800
++++ b/vendor/wlf/mp_logging.py	2022-06-22 15:24:31.222922000 +0800
+@@ -9,7 +9,7 @@
+ import warnings
+ from multiprocessing.dummy import Lock, Process, Queue
+ 
+-from six import binary_type, text_type
++from wulifang.vendor.six import binary_type, text_type
+ 
+ from .decorators import renamed
+ from .path import get_unicode as u
+diff -ru a/vendor/wlf/path.py b/vendor/wlf/path.py
+--- a/vendor/wlf/path.py	2022-06-22 15:20:31.470422000 +0800
++++ b/vendor/wlf/path.py	2022-06-22 15:24:23.754422000 +0800
+@@ -12,13 +12,13 @@
+ import sys
+ from functools import wraps
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from .codectools import get_encoded, get_unicode
+ from .pathtools import module_path
+ 
+ if six.PY2:
+-    import pathlib2 as pathlib  # pylint: disable=import-error
++    import wulifang.vendor.pathlib2_unicode as pathlib  # pylint: disable=import-error
+ else:
+     import pathlib  # pylint: disable=import-error
+ 
+diff -ru a/vendor/wlf/progress/exceptions.py b/vendor/wlf/progress/exceptions.py
+--- a/vendor/wlf/progress/exceptions.py	2022-06-22 15:20:31.480921000 +0800
++++ b/vendor/wlf/progress/exceptions.py	2022-06-22 15:25:54.577422000 +0800
+@@ -4,7 +4,7 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-import six
++from wulifang.vendor import six
+ 
+ 
+ @six.python_2_unicode_compatible
+diff -ru a/vendor/wlf/progress/handlers/base.py b/vendor/wlf/progress/handlers/base.py
+--- a/vendor/wlf/progress/handlers/base.py	2022-06-22 15:20:31.483422000 +0800
++++ b/vendor/wlf/progress/handlers/base.py	2022-06-22 15:25:54.613422000 +0800
+@@ -7,7 +7,7 @@
+ import time
+ from datetime import timedelta
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from ...codectools import u_print
+ from ..exceptions import CancelledError
+diff -ru a/vendor/wlf/progress/handlers/cli.py b/vendor/wlf/progress/handlers/cli.py
+--- a/vendor/wlf/progress/handlers/cli.py	2022-06-22 15:20:31.484421000 +0800
++++ b/vendor/wlf/progress/handlers/cli.py	2022-06-22 15:25:54.613422000 +0800
+@@ -6,7 +6,7 @@
+ 
+ import sys
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from .. import core
+ from ...codectools import get_unicode as u

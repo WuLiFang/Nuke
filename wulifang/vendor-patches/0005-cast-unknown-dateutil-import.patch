@@ -1,0 +1,21 @@
+diff -ru a/vendor/cast_unknown/datetime.py b/vendor/cast_unknown/datetime.py
+--- a/vendor/cast_unknown/datetime.py	2022-06-22 14:57:00.714922000 +0800
++++ b/vendor/cast_unknown/datetime.py	2022-06-22 15:20:15.174922000 +0800
+@@ -6,7 +6,7 @@
+ 
+ import datetime as dt
+ 
+-import dateutil.parser
++import wulifang.vendor.dateutil as dateutil_parser
+ from wulifang.vendor import six
+ 
+ from .text import text
+@@ -41,7 +41,7 @@
+             v.microsecond,
+             v.tzinfo
+         )
+-    return dateutil.parser.parse(text(v), default=at)
++    return dateutil_parser.parse(text(v), default=at)
+ 
+ 
+ def datetime(v):

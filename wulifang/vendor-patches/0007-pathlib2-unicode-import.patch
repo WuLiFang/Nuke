@@ -1,0 +1,12 @@
+diff -ru a/vendor/pathlib2_unicode/__init__.py b/vendor/pathlib2_unicode/__init__.py
+--- a/vendor/pathlib2_unicode/__init__.py	2022-06-22 15:23:22.097922000 +0800
++++ b/vendor/pathlib2_unicode/__init__.py	2022-06-22 15:27:55.038422000 +0800
+@@ -53,7 +53,7 @@
+ try:
+     from os import scandir as os_scandir
+ except ImportError:
+-    from scandir import scandir as os_scandir
++    from wulifang.vendor.scandir import scandir as os_scandir
+ 
+ __all__ = [
+     "PurePath", "PurePosixPath", "PureWindowsPath",

@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 import os
 import time
-from concurrent import futures
+from wulifang.vendor.concurrent import futures
 from wulifang.vendor import six
 
 from wulifang import filename as fn

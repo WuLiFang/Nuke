@@ -2,6 +2,9 @@ qt.py==1.3.6
 six==1.16.0
 pyblish-lite==0.8.12
 cast-unknown==0.1.7
+python-dateutil==2.8.2
+futures==3.3.0
+
 # relative to ./vendor folder
 ../../vendor/cgtwq-3.6.1-py2.py3-none-any.whl
 ../../vendor/cgtwq_uploader-3.6.4-py2.py3-none-any.whl

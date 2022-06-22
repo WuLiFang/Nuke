@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 import re
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 from wulifang.vendor.wlf import path as wlf_path
 
 
