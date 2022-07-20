@@ -238,8 +238,8 @@ def nodePresetsStartup():
             "proxy": "images/[lindex [split [basename [metadata input/filename]] .] 0]/[lindex [split [basename [metadata input/filename]] .] 0]_proxy.%04d.png",
             "file": "images/[lindex [split [basename [metadata input/filename]] .] 0]/[lindex [split [basename [metadata input/filename]] .] 0].%04d.png",
             "indicators": "2",
-            "last": '{"\\[metadata last_frame]"}',
-            "first": '{"\\[metadata first_frame]"}',
+            "last": '{"\\[python nuke.thisNode().input(0).lastFrame()]"}',
+            "first": '{"\\[python nuke.thisNode().input(0).firstFrame()]"}',
             "png.datatype": "16 bit",
         },
     )
