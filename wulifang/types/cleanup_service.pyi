@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-# pyright: strict
+# pyright: strict, reportTypeCommentUsage=false
 
 from __future__ import annotations
 from typing import Callable, Protocol

@@ -17,5 +17,6 @@
   "reportMissingModuleSource": "none",
   "reportUnusedImport": "error",
   "reportUnknownMemberType": "information",
+  "reportTypeCommentUsage": "none",
   "exclude": ["lib/site-packages", "**/vendor"]
 }

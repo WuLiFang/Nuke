@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding=UTF-8 -*-
-# pyright: strict
+# pyright: strict, reportTypeCommentUsage=false
 
 from __future__ import annotations
 

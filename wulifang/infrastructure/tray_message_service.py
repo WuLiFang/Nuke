@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-# pyright: strict
+# pyright: strict, reportTypeCommentUsage=false
 """send notification messsages to user.  """
 
 from __future__ import absolute_import, division, print_function, unicode_literals

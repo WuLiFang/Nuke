@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-# pyright: strict
+# pyright: strict, reportTypeCommentUsage=false
 """For disable nodes then enable them on script save.  """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
