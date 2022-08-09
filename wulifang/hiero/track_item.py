@@ -194,10 +194,14 @@ class AlignPlan:
 
         def _compat_end_items():
             out_max = max(i[1] for i in itervalues(self._m))
-            end_items = (i for i in track.items() if i.timelineIn() > out_max)
+            end_items = (i for i in track.items() if i.timelineOut() > out_max)
             q = out_max
             for i in end_items:
-                offset = q - i.timelineIn()
+                in_ = i.timelineIn()
+                if in_ < q:
+                    q = i.timelineOut()
+                    continue
+                offset = q - in_
                 assert offset < 0, "offset should be negative"
                 i.move(offset + 1)
                 q = i.timelineOut()
