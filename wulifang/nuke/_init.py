@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import wulifang
 import wulifang.nuke
-from wulifang.infrastructure.logging_message_service import LoggingMessageService
+import wulifang.license
 from wulifang.infrastructure.multi_message_service import MultiMessageService
 from wulifang.nuke.infrastructure.active_viewer_service import ActiveViewerService
 from wulifang.nuke.infrastructure.callback_service import CallbackService
@@ -20,13 +20,22 @@ class _g:
 def init():
     if _g.init_once:
         return
+    if nuke.GUI:
+        from wulifang.infrastructure.tray_message_service import TrayMessageService
 
+        wulifang.message = MultiMessageService(
+            wulifang.message,
+            TrayMessageService(),
+        )
+    try:
+        wulifang.license.check()
+    except wulifang.license.LicenseError:
+        return
+    nuke.pluginAddPath("../../../lib".encode("utf-8"))
+    nuke.pluginAddPath("../../../plugins".encode("utf-8"))
     wulifang.nuke.cleanup = CleanupService()
     wulifang.nuke.cleanup.run()
-    wulifang.message = MultiMessageService(
-        wulifang.message,
-        LoggingMessageService(),
-    )
+
     wulifang.nuke.active_viewer = ActiveViewerService()
     wulifang.nuke.callback = CallbackService()
     wulifang.nuke.callback.on_script_load(lambda: wulifang.publish.validate())
@@ -39,4 +48,8 @@ def init():
 
     wulifang.nuke.callback.on_script_close(_on_script_close)
 
+    if nuke.GUI:
+        from ._init_gui import init_gui
+
+        init_gui()
     _g.init_once = True

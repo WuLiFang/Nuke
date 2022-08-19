@@ -1,0 +1,45 @@
+diff -ru a/vendor/deprecated/__init__.py b/vendor/deprecated/__init__.py
+--- a/vendor/deprecated/__init__.py	2022-08-22 12:01:08.125672000 +0800
++++ b/vendor/deprecated/__init__.py	2022-08-22 12:02:54.951672600 +0800
+@@ -12,4 +12,4 @@
+ __date__ = "2021-09-05"
+ __credits__ = "(c) Laurent LAPORTE"
+ 
+-from deprecated.classic import deprecated
++from wulifang.vendor.deprecated.classic import deprecated
+diff -ru a/vendor/deprecated/classic.py b/vendor/deprecated/classic.py
+--- a/vendor/deprecated/classic.py	2022-08-22 12:01:08.127672000 +0800
++++ b/vendor/deprecated/classic.py	2022-08-22 11:58:27.034672600 +0800
+@@ -12,13 +12,13 @@
+ import platform
+ import warnings
+ 
+-import wrapt
++import wulifang.vendor.wrapt as wrapt
+ 
+ try:
+     # If the C extension for wrapt was compiled and wrapt/_wrappers.pyd exists, then the
+     # stack level that should be passed to warnings.warn should be 2. However, if using
+     # a pure python wrapt, a extra stacklevel is required.
+-    import wrapt._wrappers
++    import wulifang.vendor.wrapt._wrappers
+ 
+     _routine_stacklevel = 2
+     _class_stacklevel = 2
+diff -ru a/vendor/deprecated/sphinx.py b/vendor/deprecated/sphinx.py
+--- a/vendor/deprecated/sphinx.py	2022-08-22 12:01:08.129672000 +0800
++++ b/vendor/deprecated/sphinx.py	2022-08-22 12:02:54.953172600 +0800
+@@ -22,10 +22,10 @@
+ import re
+ import textwrap
+ 
+-import wrapt
++import wulifang.vendor.wrapt as wrapt
+ 
+-from deprecated.classic import ClassicAdapter
+-from deprecated.classic import deprecated as _classic_deprecated
++from wulifang.vendor.deprecated.classic import ClassicAdapter
++from wulifang.vendor.deprecated.classic import deprecated as _classic_deprecated
+ 
+ 
+ class SphinxAdapter(ClassicAdapter):

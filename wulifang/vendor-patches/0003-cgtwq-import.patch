@@ -1,6 +1,76 @@
+diff -ru a/vendor/cgtwq/__init__.py b/vendor/cgtwq/__init__.py
+--- a/vendor/cgtwq/__init__.py	2022-08-22 13:31:02.255172600 +0800
++++ b/vendor/cgtwq/__init__.py	2022-08-22 13:26:05.952672600 +0800
+@@ -29,7 +29,7 @@
+ from .resultset import ResultSet
+ from .selection import Entry, Selection
+ from .util import current_account, current_account_id, update_setting
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ from . import __version__, compat
+ 
+ __all__ = [
+diff -ru a/vendor/cgtwq/_test.py b/vendor/cgtwq/_test.py
+--- a/vendor/cgtwq/_test.py	2022-08-22 13:31:02.265172600 +0800
++++ b/vendor/cgtwq/_test.py	2022-08-22 13:26:05.958172600 +0800
+@@ -6,7 +6,7 @@
+ 
+ import pytest
+ 
+-from cgtwq import DesktopClient, compat, Database, Field
++from wulifang.vendor.cgtwq import DesktopClient, compat, Database, Field
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+diff -ru a/vendor/cgtwq/account.py b/vendor/cgtwq/account.py
+--- a/vendor/cgtwq/account.py	2022-08-22 13:31:02.276672600 +0800
++++ b/vendor/cgtwq/account.py	2022-08-22 13:26:05.964172600 +0800
+@@ -3,7 +3,7 @@
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-import cast_unknown as cast
++import wulifang.vendor.cast_unknown as cast
+ 
+ from . import core, server
+ from .exceptions import AuthenticateError
+diff -ru a/vendor/cgtwq/client/desktop/client.py b/vendor/cgtwq/client/desktop/client.py
+--- a/vendor/cgtwq/client/desktop/client.py	2022-08-22 13:31:02.342172600 +0800
++++ b/vendor/cgtwq/client/desktop/client.py	2022-08-22 14:04:47.243672600 +0800
+@@ -8,11 +8,14 @@
+ from functools import partial
+ from subprocess import Popen
+ 
+-import psutil
+-import websocket as ws
+-from deprecated import deprecated
+-from six import text_type
+-from six.moves import configparser
++try:
++    from wulifang.vendor import psutil
++except ImportError:
++    import psutil
++import wulifang.vendor.websocket as ws
++from wulifang.vendor.deprecated import deprecated
++from wulifang.vendor.six import text_type
++from wulifang.vendor.six.moves import configparser
+ 
+ from ...core import CONFIG, CachedFunctionMixin
+ from ...exceptions import IDError
 diff -ru a/vendor/cgtwq/client/desktop/core.py b/vendor/cgtwq/client/desktop/core.py
---- a/vendor/cgtwq/client/desktop/core.py	2022-04-29 15:35:05.404797000 +0800
-+++ b/vendor/cgtwq/client/desktop/core.py	2022-04-29 17:21:28.229797600 +0800
+--- a/vendor/cgtwq/client/desktop/core.py	2022-08-22 13:31:02.351172600 +0800
++++ b/vendor/cgtwq/client/desktop/core.py	2022-08-22 13:35:38.163172600 +0800
+@@ -7,8 +7,8 @@
+ import logging
+ import socket
+ 
+-import six
+-from websocket import create_connection
++from wulifang.vendor import six
++from wulifang.vendor.websocket import create_connection
+ 
+ from ...core import CONFIG
+ 
 @@ -16,7 +16,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -10,9 +80,60 @@ diff -ru a/vendor/cgtwq/client/desktop/core.py b/vendor/cgtwq/client/desktop/cor
  
  
  class DesktopClientAttachment(object):
+diff -ru a/vendor/cgtwq/client/desktop/plugin.py b/vendor/cgtwq/client/desktop/plugin.py
+--- a/vendor/cgtwq/client/desktop/plugin.py	2022-08-22 13:31:02.359672600 +0800
++++ b/vendor/cgtwq/client/desktop/plugin.py	2022-08-22 13:26:05.983672600 +0800
+@@ -6,9 +6,9 @@
+ import sys
+ from uuid import UUID
+ 
+-import six
++from wulifang.vendor import six
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from . import core
+ from ...exceptions import IDError
+diff -ru a/vendor/cgtwq/compat.py b/vendor/cgtwq/compat.py
+--- a/vendor/cgtwq/compat.py	2022-08-22 13:31:02.370172600 +0800
++++ b/vendor/cgtwq/compat.py	2022-08-22 13:26:05.990672600 +0800
+@@ -4,7 +4,7 @@
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from . import core, filter
+ 
+diff -ru a/vendor/cgtwq/core.py b/vendor/cgtwq/core.py
+--- a/vendor/cgtwq/core.py	2022-08-22 13:31:02.382172600 +0800
++++ b/vendor/cgtwq/core.py	2022-08-22 13:26:05.997672600 +0800
+@@ -4,9 +4,9 @@
+ 
+ import time
+ 
+-from environs import Env
++from wulifang.vendor.environs import Env
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from .filter import FilterList
+ 
+diff -ru a/vendor/cgtwq/core.pyi b/vendor/cgtwq/core.pyi
+--- a/vendor/cgtwq/core.pyi	2022-08-22 13:31:02.388172600 +0800
++++ b/vendor/cgtwq/core.pyi	2022-08-22 13:26:06.005172600 +0800
+@@ -1,4 +1,4 @@
+-from cgtwq.filter import FilterList
++from wulifang.vendor.cgtwq.filter import FilterList
+ from typing import Any, Callable, Text, Tuple, TypedDict
+ 
+ class _Config(TypedDict):
 diff -ru a/vendor/cgtwq/database/core.py b/vendor/cgtwq/database/core.py
---- a/vendor/cgtwq/database/core.py	2022-04-29 15:35:05.407797000 +0800
-+++ b/vendor/cgtwq/database/core.py	2022-04-29 17:21:28.128297600 +0800
+--- a/vendor/cgtwq/database/core.py	2022-08-22 13:31:02.395172600 +0800
++++ b/vendor/cgtwq/database/core.py	2022-08-22 13:26:06.011672600 +0800
 @@ -5,7 +5,7 @@
  
  TYPE_CHECKING = False
@@ -23,8 +144,21 @@ diff -ru a/vendor/cgtwq/database/core.py b/vendor/cgtwq/database/core.py
  
  class DatabaseAttachment(object):
 diff -ru a/vendor/cgtwq/database/database.py b/vendor/cgtwq/database/database.py
---- a/vendor/cgtwq/database/database.py	2022-04-29 15:35:05.408297000 +0800
-+++ b/vendor/cgtwq/database/database.py	2022-04-29 17:24:35.122297600 +0800
+--- a/vendor/cgtwq/database/database.py	2022-08-22 13:31:02.400672600 +0800
++++ b/vendor/cgtwq/database/database.py	2022-08-22 13:26:06.018172600 +0800
+@@ -4,10 +4,10 @@
+ 
+ import logging
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from .. import core, server
+-import cast_unknown as cast
++import wulifang.vendor.cast_unknown as cast
+ from ..filter import Field, FilterList
+ from ..model import ModuleInfo
+ from ..module import Module
 @@ -20,8 +20,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -36,8 +170,8 @@ diff -ru a/vendor/cgtwq/database/database.py b/vendor/cgtwq/database/database.py
  
  LOGGER = logging.getLogger(__name__)
 diff -ru a/vendor/cgtwq/database/field.py b/vendor/cgtwq/database/field.py
---- a/vendor/cgtwq/database/field.py	2022-04-29 15:35:05.409297000 +0800
-+++ b/vendor/cgtwq/database/field.py	2022-04-29 17:21:28.142297600 +0800
+--- a/vendor/cgtwq/database/field.py	2022-08-22 13:31:02.407672600 +0800
++++ b/vendor/cgtwq/database/field.py	2022-08-22 13:26:06.025172600 +0800
 @@ -11,7 +11,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -48,9 +182,15 @@ diff -ru a/vendor/cgtwq/database/field.py b/vendor/cgtwq/database/field.py
  
  class DatabaseField(core.DatabaseAttachment, ControllerGetterMixin):
 diff -ru a/vendor/cgtwq/database/filebox.py b/vendor/cgtwq/database/filebox.py
---- a/vendor/cgtwq/database/filebox.py	2022-04-29 15:35:05.409797000 +0800
-+++ b/vendor/cgtwq/database/filebox.py	2022-04-29 17:24:37.903297600 +0800
-@@ -12,8 +12,7 @@
+--- a/vendor/cgtwq/database/filebox.py	2022-08-22 13:31:02.415172600 +0800
++++ b/vendor/cgtwq/database/filebox.py	2022-08-22 13:26:06.031172600 +0800
+@@ -7,13 +7,12 @@
+ from . import core
+ 
+ from .. import compat
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
  TYPE_CHECKING = False
  if TYPE_CHECKING:
      from typing import Text, Tuple, Union
@@ -61,8 +201,8 @@ diff -ru a/vendor/cgtwq/database/filebox.py b/vendor/cgtwq/database/filebox.py
  
  class DatabaseFilebox(core.DatabaseAttachment):
 diff -ru a/vendor/cgtwq/database/meta.py b/vendor/cgtwq/database/meta.py
---- a/vendor/cgtwq/database/meta.py	2022-04-29 15:35:05.410297000 +0800
-+++ b/vendor/cgtwq/database/meta.py	2022-04-29 17:21:28.142297600 +0800
+--- a/vendor/cgtwq/database/meta.py	2022-08-22 13:31:02.422672600 +0800
++++ b/vendor/cgtwq/database/meta.py	2022-08-22 13:26:06.037172600 +0800
 @@ -7,7 +7,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -73,8 +213,8 @@ diff -ru a/vendor/cgtwq/database/meta.py b/vendor/cgtwq/database/meta.py
  
  class DatabaseMeta(core.DatabaseAttachment):
 diff -ru a/vendor/cgtwq/database/pipeline.py b/vendor/cgtwq/database/pipeline.py
---- a/vendor/cgtwq/database/pipeline.py	2022-04-29 15:35:05.411797000 +0800
-+++ b/vendor/cgtwq/database/pipeline.py	2022-04-29 17:21:28.164797600 +0800
+--- a/vendor/cgtwq/database/pipeline.py	2022-08-22 13:31:02.430172600 +0800
++++ b/vendor/cgtwq/database/pipeline.py	2022-08-22 13:26:06.043672600 +0800
 @@ -12,7 +12,7 @@
  if TYPE_CHECKING:
      from typing import Tuple, Union
@@ -84,33 +224,97 @@ diff -ru a/vendor/cgtwq/database/pipeline.py b/vendor/cgtwq/database/pipeline.py
  
  
  class DatabasePipeline(core.DatabaseAttachment, ControllerGetterMixin):
+diff -ru a/vendor/cgtwq/exceptions.py b/vendor/cgtwq/exceptions.py
+--- a/vendor/cgtwq/exceptions.py	2022-08-22 13:31:02.436172600 +0800
++++ b/vendor/cgtwq/exceptions.py	2022-08-22 13:26:06.050172600 +0800
+@@ -2,10 +2,10 @@
+ """Exceptions for cgtwq.  """
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
+-from cgtwq.model import AccountInfo
++from wulifang.vendor.cgtwq.model import AccountInfo
+ 
+-import cast_unknown as cast
+-import six
++import wulifang.vendor.cast_unknown as cast
++from wulifang.vendor import six
+ 
+ if six.PY2:
+     _BYTES_KEY = b"__str__"
+diff -ru a/vendor/cgtwq/filter.py b/vendor/cgtwq/filter.py
+--- a/vendor/cgtwq/filter.py	2022-08-22 13:31:02.441672600 +0800
++++ b/vendor/cgtwq/filter.py	2022-08-22 13:26:06.056672600 +0800
+@@ -3,8 +3,8 @@
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-import six
+-from six.moves import reduce
++from wulifang.vendor import six
++from wulifang.vendor.six.moves import reduce
+ 
+ # six.moves.collections_abc is not added at six<1.13.0
+ # https://github.com/benjaminp/six/blob/42636b15dd1a5b85de56eac98e47954d4c776576/CHANGES#L35
 diff -ru a/vendor/cgtwq/helper/qt.py b/vendor/cgtwq/helper/qt.py
---- a/vendor/cgtwq/helper/qt.py	2022-04-29 15:35:05.414797000 +0800
-+++ b/vendor/cgtwq/helper/qt.py	2022-04-29 17:21:28.112297600 +0800
-@@ -4,7 +4,7 @@
+--- a/vendor/cgtwq/helper/qt.py	2022-08-22 13:31:02.448672600 +0800
++++ b/vendor/cgtwq/helper/qt.py	2022-08-22 13:26:06.063172600 +0800
+@@ -4,8 +4,8 @@
  
  import sys
  
 -import cgtwq
+-from Qt.QtWidgets import (
 +from wulifang.vendor import cgtwq
- from Qt.QtWidgets import (
++from wulifang.vendor.Qt.QtWidgets import (
      QApplication,
      QDialog,
+     QLabel,  # type: ignore
+@@ -14,7 +14,7 @@
+     QPushButton,
+     QVBoxLayout,
+ )
+-from six import text_type
++from wulifang.vendor.six import text_type
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
 diff -ru a/vendor/cgtwq/helper/wlf.py b/vendor/cgtwq/helper/wlf.py
---- a/vendor/cgtwq/helper/wlf.py	2022-04-29 17:18:39.097797600 +0800
-+++ b/vendor/cgtwq/helper/wlf.py	2022-04-29 17:20:49.043797600 +0800
-@@ -6,7 +6,7 @@
+--- a/vendor/cgtwq/helper/wlf.py	2022-08-22 13:31:02.454672600 +0800
++++ b/vendor/cgtwq/helper/wlf.py	2022-08-22 13:26:06.070672600 +0800
+@@ -5,11 +5,11 @@
+ import logging
  import re
  
- import cast_unknown as cast
+-import cast_unknown as cast
 -import cgtwq
+-from deprecated import deprecated
+-from pathlib2_unicode import PurePath
+-from six import text_type
++import wulifang.vendor.cast_unknown as cast
 +from wulifang.vendor import cgtwq
- from deprecated import deprecated
- from pathlib2_unicode import PurePath
- from six import text_type
++from wulifang.vendor.deprecated import deprecated
++from wulifang.vendor.pathlib2_unicode import PurePath
++from wulifang.vendor.six import text_type
+ 
+ from .exceptions import DatabaseError
+ 
+diff -ru a/vendor/cgtwq/message.py b/vendor/cgtwq/message.py
+--- a/vendor/cgtwq/message.py	2022-08-22 13:31:02.460172600 +0800
++++ b/vendor/cgtwq/message.py	2022-08-22 13:26:06.077172600 +0800
+@@ -6,8 +6,8 @@
+ import json
+ import logging
+ 
+-import six
+-import cast_unknown as cast
++from wulifang.vendor import six
++import wulifang.vendor.cast_unknown as cast
+ 
+ from .server.web import upload_image
+ from .model import ImageInfo
 diff -ru a/vendor/cgtwq/module/core.py b/vendor/cgtwq/module/core.py
---- a/vendor/cgtwq/module/core.py	2022-04-29 15:35:05.419297000 +0800
-+++ b/vendor/cgtwq/module/core.py	2022-04-29 17:21:28.053297600 +0800
+--- a/vendor/cgtwq/module/core.py	2022-08-22 13:31:02.465172600 +0800
++++ b/vendor/cgtwq/module/core.py	2022-08-22 13:26:06.083672600 +0800
 @@ -5,7 +5,7 @@
  
  TYPE_CHECKING = False
@@ -120,9 +324,21 @@ diff -ru a/vendor/cgtwq/module/core.py b/vendor/cgtwq/module/core.py
  
  
  class ModuleAttachment(object):
+diff -ru a/vendor/cgtwq/module/field.py b/vendor/cgtwq/module/field.py
+--- a/vendor/cgtwq/module/field.py	2022-08-22 13:31:02.470672600 +0800
++++ b/vendor/cgtwq/module/field.py	2022-08-22 13:26:06.089172600 +0800
+@@ -2,7 +2,7 @@
+ """Database module.  """
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from ..model import FieldMeta
+ from .core import ModuleAttachment
 diff -ru a/vendor/cgtwq/module/history.py b/vendor/cgtwq/module/history.py
---- a/vendor/cgtwq/module/history.py	2022-04-29 15:35:05.420797000 +0800
-+++ b/vendor/cgtwq/module/history.py	2022-04-29 17:24:22.370297600 +0800
+--- a/vendor/cgtwq/module/history.py	2022-08-22 13:31:02.476672600 +0800
++++ b/vendor/cgtwq/module/history.py	2022-08-22 13:26:06.095172600 +0800
 @@ -11,7 +11,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -133,8 +349,19 @@ diff -ru a/vendor/cgtwq/module/history.py b/vendor/cgtwq/module/history.py
  
  class ModuleHistory(ModuleAttachment, ControllerGetterMixin):
 diff -ru a/vendor/cgtwq/module/module.py b/vendor/cgtwq/module/module.py
---- a/vendor/cgtwq/module/module.py	2022-04-29 15:35:05.421297000 +0800
-+++ b/vendor/cgtwq/module/module.py	2022-04-29 17:24:41.290297600 +0800
+--- a/vendor/cgtwq/module/module.py	2022-08-22 13:31:02.499172600 +0800
++++ b/vendor/cgtwq/module/module.py	2022-08-22 13:26:06.101672600 +0800
+@@ -4,8 +4,8 @@
+ 
+ import logging
+ 
+-from deprecated import deprecated
+-import six
++from wulifang.vendor.deprecated import deprecated
++from wulifang.vendor import six
+ 
+ from ..core import ControllerGetterMixin
+ from ..filter import Field, Filter, FilterList
 @@ -20,8 +20,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -146,8 +373,19 @@ diff -ru a/vendor/cgtwq/module/module.py b/vendor/cgtwq/module/module.py
  
  @six.python_2_unicode_compatible
 diff -ru a/vendor/cgtwq/plugin_meta.py b/vendor/cgtwq/plugin_meta.py
---- a/vendor/cgtwq/plugin_meta.py	2022-04-29 15:35:05.397297000 +0800
-+++ b/vendor/cgtwq/plugin_meta.py	2022-04-29 17:21:28.033297600 +0800
+--- a/vendor/cgtwq/plugin_meta.py	2022-08-22 13:31:02.524172600 +0800
++++ b/vendor/cgtwq/plugin_meta.py	2022-08-22 13:26:06.107672600 +0800
+@@ -7,8 +7,8 @@
+ import time
+ from functools import partial
+ 
+-import cast_unknown as cast
+-import six
++import wulifang.vendor.cast_unknown as cast
++from wulifang.vendor import six
+ 
+ from . import core, server
+ from .filter import Field, FilterList
 @@ -18,7 +18,7 @@
  if TYPE_CHECKING:
      from typing import Any, Dict, List, Text, Union
@@ -158,8 +396,17 @@ diff -ru a/vendor/cgtwq/plugin_meta.py b/vendor/cgtwq/plugin_meta.py
  
  def _accessor(field):
 diff -ru a/vendor/cgtwq/public_module.py b/vendor/cgtwq/public_module.py
---- a/vendor/cgtwq/public_module.py	2022-04-29 15:35:05.397797000 +0800
-+++ b/vendor/cgtwq/public_module.py	2022-04-29 17:21:27.983797600 +0800
+--- a/vendor/cgtwq/public_module.py	2022-08-22 13:31:02.530172600 +0800
++++ b/vendor/cgtwq/public_module.py	2022-08-22 13:26:06.114172600 +0800
+@@ -2,7 +2,7 @@
+ """Database module.  """
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from .database import Database
+ from .filter import Field, Filter
 @@ -11,7 +11,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -170,8 +417,17 @@ diff -ru a/vendor/cgtwq/public_module.py b/vendor/cgtwq/public_module.py
  
  class PublicModule(Module):
 diff -ru a/vendor/cgtwq/resultset.py b/vendor/cgtwq/resultset.py
---- a/vendor/cgtwq/resultset.py	2022-04-29 15:35:05.399297000 +0800
-+++ b/vendor/cgtwq/resultset.py	2022-04-29 17:21:27.904797600 +0800
+--- a/vendor/cgtwq/resultset.py	2022-08-22 13:31:02.536172600 +0800
++++ b/vendor/cgtwq/resultset.py	2022-08-22 13:26:06.121172600 +0800
+@@ -4,7 +4,7 @@
+ 
+ import logging
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from .filter import Field
+ 
 @@ -13,7 +13,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -182,8 +438,8 @@ diff -ru a/vendor/cgtwq/resultset.py b/vendor/cgtwq/resultset.py
  
  class ResultSet(list):
 diff -ru a/vendor/cgtwq/selection/core.py b/vendor/cgtwq/selection/core.py
---- a/vendor/cgtwq/selection/core.py	2022-04-29 15:35:05.422797000 +0800
-+++ b/vendor/cgtwq/selection/core.py	2022-04-29 17:21:28.016797600 +0800
+--- a/vendor/cgtwq/selection/core.py	2022-08-22 13:31:02.541672600 +0800
++++ b/vendor/cgtwq/selection/core.py	2022-08-22 13:26:06.126672600 +0800
 @@ -12,7 +12,7 @@
  
  TYPE_CHECKING = False
@@ -194,8 +450,17 @@ diff -ru a/vendor/cgtwq/selection/core.py b/vendor/cgtwq/selection/core.py
  
  class SelectionAttachment(object):
 diff -ru a/vendor/cgtwq/selection/entry.py b/vendor/cgtwq/selection/entry.py
---- a/vendor/cgtwq/selection/entry.py	2022-04-29 15:35:05.423297000 +0800
-+++ b/vendor/cgtwq/selection/entry.py	2022-04-29 17:21:28.073297600 +0800
+--- a/vendor/cgtwq/selection/entry.py	2022-08-22 13:31:02.549172600 +0800
++++ b/vendor/cgtwq/selection/entry.py	2022-08-22 13:26:06.133672600 +0800
+@@ -2,7 +2,7 @@
+ """Database module selection.  """
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-from six import text_type
++from wulifang.vendor.six import text_type
+ 
+ from .. import exceptions
+ from ..model import ImageInfo
 @@ -12,7 +12,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -205,9 +470,68 @@ diff -ru a/vendor/cgtwq/selection/entry.py b/vendor/cgtwq/selection/entry.py
  
  
  class Entry(Selection):
+diff -ru a/vendor/cgtwq/selection/filebox.py b/vendor/cgtwq/selection/filebox.py
+--- a/vendor/cgtwq/selection/filebox.py	2022-08-22 13:31:02.555672600 +0800
++++ b/vendor/cgtwq/selection/filebox.py	2022-08-22 13:26:06.140172600 +0800
+@@ -2,7 +2,7 @@
+ """Database module selection.  """
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from ..model import FileBoxInfo
+ from .core import SelectionAttachment
+diff -ru a/vendor/cgtwq/selection/filebox_test.py b/vendor/cgtwq/selection/filebox_test.py
+--- a/vendor/cgtwq/selection/filebox_test.py	2022-08-22 13:31:02.561672600 +0800
++++ b/vendor/cgtwq/selection/filebox_test.py	2022-08-22 13:26:06.147172600 +0800
+@@ -2,7 +2,7 @@
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-from cgtwq import _test, Field
++from wulifang.vendor.cgtwq import _test, Field
+ 
+ 
+ @_test.skip_if_not_logged_in
+diff -ru a/vendor/cgtwq/selection/flow.py b/vendor/cgtwq/selection/flow.py
+--- a/vendor/cgtwq/selection/flow.py	2022-08-22 13:31:02.566172600 +0800
++++ b/vendor/cgtwq/selection/flow.py	2022-08-22 13:26:06.153672600 +0800
+@@ -6,14 +6,14 @@
+ import os
+ import uuid
+ 
+-import six
+-from deprecated import deprecated
++from wulifang.vendor import six
++from wulifang.vendor.deprecated import deprecated
+ 
+ from .. import account, compat, constants, exceptions
+ from ..filter import Field
+ from ..message import Message
+ from .core import SelectionAttachment
+-import cast_unknown as cast
++import wulifang.vendor.cast_unknown as cast
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+diff -ru a/vendor/cgtwq/selection/flow_test.py b/vendor/cgtwq/selection/flow_test.py
+--- a/vendor/cgtwq/selection/flow_test.py	2022-08-22 13:31:02.573172600 +0800
++++ b/vendor/cgtwq/selection/flow_test.py	2022-08-22 13:26:06.160172600 +0800
+@@ -2,8 +2,8 @@
+ 
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-import six
+-from cgtwq import _test
++from wulifang.vendor import six
++from wulifang.vendor.cgtwq import _test
+ 
+ 
+ @_test.skip_if_not_logged_in
 diff -ru a/vendor/cgtwq/selection/history.py b/vendor/cgtwq/selection/history.py
---- a/vendor/cgtwq/selection/history.py	2022-04-29 15:35:05.427797000 +0800
-+++ b/vendor/cgtwq/selection/history.py	2022-04-29 17:24:30.883297600 +0800
+--- a/vendor/cgtwq/selection/history.py	2022-08-22 13:31:02.578172600 +0800
++++ b/vendor/cgtwq/selection/history.py	2022-08-22 13:26:06.166172600 +0800
 @@ -9,8 +9,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -218,9 +542,44 @@ diff -ru a/vendor/cgtwq/selection/history.py b/vendor/cgtwq/selection/history.py
  
  
  class SelectionHistory(SelectionAttachment):
+diff -ru a/vendor/cgtwq/selection/image.py b/vendor/cgtwq/selection/image.py
+--- a/vendor/cgtwq/selection/image.py	2022-08-22 13:31:02.583672600 +0800
++++ b/vendor/cgtwq/selection/image.py	2022-08-22 13:26:06.173672600 +0800
+@@ -4,8 +4,8 @@
+ 
+ import json
+ 
+-import cast_unknown as cast
+-import six
++import wulifang.vendor.cast_unknown as cast
++from wulifang.vendor import six
+ from .. import compat
+ from ..model import ImageInfo
+ from ..server.web import upload_image
+diff -ru a/vendor/cgtwq/selection/link.py b/vendor/cgtwq/selection/link.py
+--- a/vendor/cgtwq/selection/link.py	2022-08-22 13:31:02.590172600 +0800
++++ b/vendor/cgtwq/selection/link.py	2022-08-22 13:26:06.180672600 +0800
+@@ -3,7 +3,7 @@
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+ from .core import SelectionAttachment
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ from .. import compat
+ 
+ TYPE_CHECKING = False
+diff -ru a/vendor/cgtwq/selection/link_test.py b/vendor/cgtwq/selection/link_test.py
+--- a/vendor/cgtwq/selection/link_test.py	2022-08-22 13:31:02.595672600 +0800
++++ b/vendor/cgtwq/selection/link_test.py	2022-08-22 13:26:06.187672600 +0800
+@@ -1,4 +1,4 @@
+-from cgtwq import _test, Field
++from wulifang.vendor.cgtwq import _test, Field
+ 
+ 
+ def _use_shots_and_assets():
 diff -ru a/vendor/cgtwq/selection/notify.py b/vendor/cgtwq/selection/notify.py
---- a/vendor/cgtwq/selection/notify.py	2022-04-29 15:35:05.430297000 +0800
-+++ b/vendor/cgtwq/selection/notify.py	2022-04-29 17:24:48.905297600 +0800
+--- a/vendor/cgtwq/selection/notify.py	2022-08-22 13:31:02.601672600 +0800
++++ b/vendor/cgtwq/selection/notify.py	2022-08-22 13:26:06.193672600 +0800
 @@ -11,7 +11,6 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -230,8 +589,19 @@ diff -ru a/vendor/cgtwq/selection/notify.py b/vendor/cgtwq/selection/notify.py
  
  class SelectionNotify(SelectionAttachment):
 diff -ru a/vendor/cgtwq/selection/selection.py b/vendor/cgtwq/selection/selection.py
---- a/vendor/cgtwq/selection/selection.py	2022-04-29 15:35:05.431797000 +0800
-+++ b/vendor/cgtwq/selection/selection.py	2022-04-29 17:24:44.883797600 +0800
+--- a/vendor/cgtwq/selection/selection.py	2022-08-22 13:31:02.607172600 +0800
++++ b/vendor/cgtwq/selection/selection.py	2022-08-22 13:26:06.199672600 +0800
+@@ -2,8 +2,8 @@
+ """Database module selection.  """
+ from __future__ import absolute_import, division, print_function, unicode_literals
+ 
+-import six
+-from deprecated import deprecated
++from wulifang.vendor import six
++from wulifang.vendor.deprecated import deprecated
+ 
+ from .. import compat
+ from ..exceptions import EmptySelection
 @@ -23,8 +23,7 @@
  if TYPE_CHECKING:
      from typing import Any, Dict, Text, Tuple, Union, overload
@@ -242,3 +612,57 @@ diff -ru a/vendor/cgtwq/selection/selection.py b/vendor/cgtwq/selection/selectio
  
  
  class Selection(tuple):
+diff -ru a/vendor/cgtwq/server/http.py b/vendor/cgtwq/server/http.py
+--- a/vendor/cgtwq/server/http.py	2022-08-22 13:31:02.612172600 +0800
++++ b/vendor/cgtwq/server/http.py	2022-08-22 13:26:06.205672600 +0800
+@@ -6,11 +6,11 @@
+ import logging
+ from collections import OrderedDict
+ 
+-import requests
+-import cast_unknown as cast
++from wulifang.vendor import requests
++import wulifang.vendor.cast_unknown as cast
+ 
+ from .. import core, exceptions
+-import six
++from wulifang.vendor import six
+ 
+ TYPE_CHECKING = False
+ if TYPE_CHECKING:
+diff -ru a/vendor/cgtwq/server/meta.py b/vendor/cgtwq/server/meta.py
+--- a/vendor/cgtwq/server/meta.py	2022-08-22 13:31:02.617172600 +0800
++++ b/vendor/cgtwq/server/meta.py	2022-08-22 13:26:06.211172600 +0800
+@@ -1,7 +1,7 @@
+ # -*- coding=UTF-8 -*-
+ """Server metadata."""
+ 
+-import cast_unknown as cast
++import wulifang.vendor.cast_unknown as cast
+ 
+ from ..core import CONFIG
+ from ..model import StatusInfo
+diff -ru a/vendor/cgtwq/server/web.py b/vendor/cgtwq/server/web.py
+--- a/vendor/cgtwq/server/web.py	2022-08-22 13:31:02.622172600 +0800
++++ b/vendor/cgtwq/server/web.py	2022-08-22 13:26:06.217672600 +0800
+@@ -5,7 +5,7 @@
+ 
+ import mimetypes
+ import os
+-import cast_unknown as cast
++import wulifang.vendor.cast_unknown as cast
+ 
+ from ..model import ImageInfo
+ from .http import post
+diff -ru a/vendor/cgtwq/util.py b/vendor/cgtwq/util.py
+--- a/vendor/cgtwq/util.py	2022-08-22 13:31:02.628672600 +0800
++++ b/vendor/cgtwq/util.py	2022-08-22 13:26:06.224172600 +0800
+@@ -4,7 +4,7 @@
+ 
+ import logging
+ 
+-from deprecated import deprecated
++from wulifang.vendor.deprecated import deprecated
+ 
+ from . import account
+ from .client import DesktopClient

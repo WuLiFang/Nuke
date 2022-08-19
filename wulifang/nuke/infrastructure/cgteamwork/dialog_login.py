@@ -9,7 +9,7 @@ import nuke
 from wulifang.vendor import cgtwq
 from wulifang.vendor.cgtwq import core
 import wulifang
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 
 
 def dialog_login():

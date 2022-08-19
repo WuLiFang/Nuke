@@ -1,0 +1,12 @@
+diff -ru a/vendor/scandir.py b/vendor/scandir.py
+--- a/vendor/scandir.py	2022-08-22 11:42:46.492672600 +0800
++++ b/vendor/scandir.py	2022-08-22 11:46:35.101172600 +0800
+@@ -26,7 +26,7 @@
+ import sys
+ 
+ try:
+-    import _scandir
++    import wulifang.vendor._scandir as _scandir
+ except ImportError:
+     _scandir = None
+ 

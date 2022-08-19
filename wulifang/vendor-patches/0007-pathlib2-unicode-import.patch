@@ -1,6 +1,15 @@
 diff -ru a/vendor/pathlib2_unicode/__init__.py b/vendor/pathlib2_unicode/__init__.py
 --- a/vendor/pathlib2_unicode/__init__.py	2022-06-22 15:23:22.097922000 +0800
-+++ b/vendor/pathlib2_unicode/__init__.py	2022-06-22 15:27:55.038422000 +0800
++++ b/vendor/pathlib2_unicode/__init__.py	2022-08-22 10:51:59.866172600 +0800
+@@ -12,7 +12,7 @@
+ import os
+ import posixpath
+ import re
+-import six
++from wulifang.vendor import six
+ import sys
+ 
+ from errno import EINVAL, ENOENT, ENOTDIR, EBADF
 @@ -53,7 +53,7 @@
  try:
      from os import scandir as os_scandir

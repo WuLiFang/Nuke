@@ -1,0 +1,111 @@
+diff -ru a/vendor/chardet/cli/chardetect.py b/vendor/chardet/cli/chardetect.py
+--- a/vendor/chardet/cli/chardetect.py	2022-08-22 12:29:05.574172000 +0800
++++ b/vendor/chardet/cli/chardetect.py	2022-08-22 12:33:51.482672600 +0800
+@@ -17,9 +17,9 @@
+ import argparse
+ import sys
+ 
+-from chardet import __version__
+-from chardet.compat import PY2
+-from chardet.universaldetector import UniversalDetector
++from wulifang.vendor.chardet import __version__
++from wulifang.vendor.chardet.compat import PY2
++from wulifang.vendor.chardet.universaldetector import UniversalDetector
+ 
+ 
+ def description_of(lines, name='stdin'):
+diff -ru a/vendor/chardet/langbulgarianmodel.py b/vendor/chardet/langbulgarianmodel.py
+--- a/vendor/chardet/langbulgarianmodel.py	2022-08-22 12:29:05.520672000 +0800
++++ b/vendor/chardet/langbulgarianmodel.py	2022-08-22 12:33:51.286172600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/langgreekmodel.py b/vendor/chardet/langgreekmodel.py
+--- a/vendor/chardet/langgreekmodel.py	2022-08-22 12:29:05.523172000 +0800
++++ b/vendor/chardet/langgreekmodel.py	2022-08-22 12:33:51.433172600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/langhebrewmodel.py b/vendor/chardet/langhebrewmodel.py
+--- a/vendor/chardet/langhebrewmodel.py	2022-08-22 12:29:05.525672000 +0800
++++ b/vendor/chardet/langhebrewmodel.py	2022-08-22 12:33:51.456172600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/langhungarianmodel.py b/vendor/chardet/langhungarianmodel.py
+--- a/vendor/chardet/langhungarianmodel.py	2022-08-22 12:29:05.528672000 +0800
++++ b/vendor/chardet/langhungarianmodel.py	2022-08-22 12:33:51.378172600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/langrussianmodel.py b/vendor/chardet/langrussianmodel.py
+--- a/vendor/chardet/langrussianmodel.py	2022-08-22 12:29:05.532672000 +0800
++++ b/vendor/chardet/langrussianmodel.py	2022-08-22 12:33:51.287172600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/langthaimodel.py b/vendor/chardet/langthaimodel.py
+--- a/vendor/chardet/langthaimodel.py	2022-08-22 12:29:05.535172000 +0800
++++ b/vendor/chardet/langthaimodel.py	2022-08-22 12:33:51.358172600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/langturkishmodel.py b/vendor/chardet/langturkishmodel.py
+--- a/vendor/chardet/langturkishmodel.py	2022-08-22 12:29:05.538172000 +0800
++++ b/vendor/chardet/langturkishmodel.py	2022-08-22 12:33:51.377672600 +0800
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env python
+ # -*- coding: utf-8 -*-
+ 
+-from chardet.sbcharsetprober import SingleByteCharSetModel
++from wulifang.vendor.chardet.sbcharsetprober import SingleByteCharSetModel
+ 
+ 
+ # 3: Positive
+diff -ru a/vendor/chardet/version.py b/vendor/chardet/version.py
+--- a/vendor/chardet/version.py	2022-08-22 12:29:05.565672000 +0800
++++ b/vendor/chardet/version.py	2022-08-22 12:33:51.285672600 +0800
+@@ -1,6 +1,6 @@
+ """
+ This module exists only to simplify retrieving the version number of chardet
+-from within setup.py and from chardet subpackages.
++from within setup.py and from wulifang.vendor.chardet subpackages.
+ 
+ :author: Dan Blanchard (dan.blanchard@gmail.com)
+ """

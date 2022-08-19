@@ -12,10 +12,13 @@ import logging
 
 import wulifang
 
+from wulifang.vendor import win_unicode_console
+
 
 class LoggingMessageService:
     def __init__(self):
         # type: () -> None
+        win_unicode_console.enable()
         logger = logging.Logger("wulifang", logging.DEBUG)
         handler = logging.StreamHandler()
         formatter = logging.Formatter(

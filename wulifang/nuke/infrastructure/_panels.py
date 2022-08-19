@@ -7,9 +7,9 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import AnyStr, Any
 
-import cast_unknown as cast
 import nuke
 import nukescripts
+import wulifang.vendor.cast_unknown as cast
 from wulifang.vendor.Qt import QtWidgets
 
 

@@ -25,6 +25,10 @@ module.exports = {
       updater: "scripts/python-version-updater.js",
     },
     {
+      filename: "wulifang/__version__.py",
+      updater: "scripts/python-version-updater.js",
+    },
+    {
       filename: "version",
       type: "plain-text",
     },

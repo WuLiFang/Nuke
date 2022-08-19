@@ -7,7 +7,7 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Optional, Text
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import wulifang
 from wulifang import pathtools
 from wulifang.vendor.pyblish_lite import control, delegate, settings, util, window

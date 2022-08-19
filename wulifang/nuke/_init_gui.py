@@ -5,8 +5,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from wulifang.nuke.infrastructure.autolabel_service import AutolabelService
 
 import wulifang
-from wulifang.infrastructure.multi_message_service import MultiMessageService
-from wulifang.infrastructure.tray_message_service import TrayMessageService
 from wulifang.nuke.infrastructure import pyblish
 from wulifang.vendor import cgtwq
 import nuke
@@ -54,7 +52,6 @@ def init_gui():
         _reload,
         "Ctrl+Shift+F5".encode("utf-8"),
     )
-    wulifang.message = MultiMessageService(wulifang.message, TrayMessageService())
     wulifang.publish = pyblish.PublishService()
 
     autolabel = AutolabelService(wulifang.file)

@@ -16,7 +16,7 @@ import shutil
 import webbrowser
 import wulifang
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import nuke
 import wulifang.filename
 from wulifang.nuke.infrastructure.wlf_write_node import wlf_write_node

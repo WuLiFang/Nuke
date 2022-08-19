@@ -11,7 +11,7 @@ import shutil
 import sys
 import time
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import nuke
 from wulifang.nuke.infrastructure.recover_modifield_flag import recover_modifield_flag
 from wulifang.nuke.infrastructure.wlf_write_node import wlf_write_node

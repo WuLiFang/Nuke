@@ -1,0 +1,160 @@
+diff -ru a/vendor/marshmallow/__init__.py b/vendor/marshmallow/__init__.py
+--- a/vendor/marshmallow/__init__.py	2022-08-22 11:37:54.887172000 +0800
++++ b/vendor/marshmallow/__init__.py	2022-08-22 11:41:58.530172600 +0800
+@@ -1,18 +1,18 @@
+ # -*- coding: utf-8 -*-
+ from __future__ import absolute_import
+ 
+-from marshmallow.schema import (
++from wulifang.vendor.marshmallow.schema import (
+     Schema,
+     SchemaOpts,
+     MarshalResult,
+     UnmarshalResult,
+ )
+ from . import fields
+-from marshmallow.decorators import (
++from wulifang.vendor.marshmallow.decorators import (
+     pre_dump, post_dump, pre_load, post_load, validates, validates_schema
+ )
+-from marshmallow.utils import pprint, missing
+-from marshmallow.exceptions import ValidationError
++from wulifang.vendor.marshmallow.utils import pprint, missing
++from wulifang.vendor.marshmallow.exceptions import ValidationError
+ from distutils.version import LooseVersion
+ 
+ __version__ = '2.21.0'
+diff -ru a/vendor/marshmallow/class_registry.py b/vendor/marshmallow/class_registry.py
+--- a/vendor/marshmallow/class_registry.py	2022-08-22 11:37:54.889672000 +0800
++++ b/vendor/marshmallow/class_registry.py	2022-08-22 11:41:58.662672600 +0800
+@@ -10,7 +10,7 @@
+ """
+ from __future__ import unicode_literals
+ 
+-from marshmallow.exceptions import RegistryError
++from wulifang.vendor.marshmallow.exceptions import RegistryError
+ 
+ # {
+ #   <class_name>: <list of class objects>
+diff -ru a/vendor/marshmallow/exceptions.py b/vendor/marshmallow/exceptions.py
+--- a/vendor/marshmallow/exceptions.py	2022-08-22 11:37:54.893172000 +0800
++++ b/vendor/marshmallow/exceptions.py	2022-08-22 11:41:58.662172600 +0800
+@@ -1,7 +1,7 @@
+ # -*- coding: utf-8 -*-
+ """Exception classes for marshmallow-related errors."""
+ 
+-from marshmallow.compat import basestring
++from wulifang.vendor.marshmallow.compat import basestring
+ 
+ class MarshmallowError(Exception):
+     """Base class for all marshmallow-related errors."""
+diff -ru a/vendor/marshmallow/fields.py b/vendor/marshmallow/fields.py
+--- a/vendor/marshmallow/fields.py	2022-08-22 11:37:54.895172000 +0800
++++ b/vendor/marshmallow/fields.py	2022-08-22 11:41:58.662672600 +0800
+@@ -9,13 +9,13 @@
+ import warnings
+ import decimal
+ 
+-from marshmallow import validate, utils, class_registry
+-from marshmallow.base import FieldABC, SchemaABC
+-from marshmallow.utils import missing as missing_
+-from marshmallow.compat import text_type, basestring, Mapping
+-from marshmallow.exceptions import ValidationError
+-from marshmallow.validate import Validator
+-from marshmallow.warnings import RemovedInMarshmallow3Warning
++from wulifang.vendor.marshmallow import validate, utils, class_registry
++from wulifang.vendor.marshmallow.base import FieldABC, SchemaABC
++from wulifang.vendor.marshmallow.utils import missing as missing_
++from wulifang.vendor.marshmallow.compat import text_type, basestring, Mapping
++from wulifang.vendor.marshmallow.exceptions import ValidationError
++from wulifang.vendor.marshmallow.validate import Validator
++from wulifang.vendor.marshmallow.warnings import RemovedInMarshmallow3Warning
+ 
+ __all__ = [
+     'Field',
+diff -ru a/vendor/marshmallow/marshalling.py b/vendor/marshmallow/marshalling.py
+--- a/vendor/marshmallow/marshalling.py	2022-08-22 11:37:54.896172000 +0800
++++ b/vendor/marshmallow/marshalling.py	2022-08-22 11:41:58.612172600 +0800
+@@ -10,9 +10,9 @@
+ 
+ from __future__ import unicode_literals
+ 
+-from marshmallow.utils import is_collection, missing, set_value
+-from marshmallow.compat import text_type, iteritems, Mapping
+-from marshmallow.exceptions import (
++from wulifang.vendor.marshmallow.utils import is_collection, missing, set_value
++from wulifang.vendor.marshmallow.compat import text_type, iteritems, Mapping
++from wulifang.vendor.marshmallow.exceptions import (
+     ValidationError,
+ )
+ 
+diff -ru a/vendor/marshmallow/orderedset.py b/vendor/marshmallow/orderedset.py
+--- a/vendor/marshmallow/orderedset.py	2022-08-22 11:37:54.898672000 +0800
++++ b/vendor/marshmallow/orderedset.py	2022-08-22 11:41:58.624172600 +0800
+@@ -21,7 +21,7 @@
+ #     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ #     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ #     OTHER DEALINGS IN THE SOFTWARE.
+-from marshmallow.compat import MutableSet
++from wulifang.vendor.marshmallow.compat import MutableSet
+ 
+ class OrderedSet(MutableSet):
+ 
+diff -ru a/vendor/marshmallow/schema.py b/vendor/marshmallow/schema.py
+--- a/vendor/marshmallow/schema.py	2022-08-22 11:37:54.900172000 +0800
++++ b/vendor/marshmallow/schema.py	2022-08-22 11:41:58.530672600 +0800
+@@ -12,15 +12,15 @@
+ import warnings
+ import functools
+ 
+-from marshmallow import base, fields, utils, class_registry, marshalling
+-from marshmallow.compat import (with_metaclass, iteritems, text_type,
++from wulifang.vendor.marshmallow import base, fields, utils, class_registry, marshalling
++from wulifang.vendor.marshmallow.compat import (with_metaclass, iteritems, text_type,
+                                 binary_type, Mapping, OrderedDict)
+-from marshmallow.exceptions import ValidationError
+-from marshmallow.orderedset import OrderedSet
+-from marshmallow.decorators import (PRE_DUMP, POST_DUMP, PRE_LOAD, POST_LOAD,
++from wulifang.vendor.marshmallow.exceptions import ValidationError
++from wulifang.vendor.marshmallow.orderedset import OrderedSet
++from wulifang.vendor.marshmallow.decorators import (PRE_DUMP, POST_DUMP, PRE_LOAD, POST_LOAD,
+                                     VALIDATES, VALIDATES_SCHEMA)
+-from marshmallow.utils import missing
+-from marshmallow.warnings import RemovedInMarshmallow3Warning, ChangedInMarshmallow3Warning
++from wulifang.vendor.marshmallow.utils import missing
++from wulifang.vendor.marshmallow.warnings import RemovedInMarshmallow3Warning, ChangedInMarshmallow3Warning
+ 
+ 
+ #: Return type of :meth:`Schema.dump` including serialized data and errors
+diff -ru a/vendor/marshmallow/utils.py b/vendor/marshmallow/utils.py
+--- a/vendor/marshmallow/utils.py	2022-08-22 11:37:54.901672000 +0800
++++ b/vendor/marshmallow/utils.py	2022-08-22 11:41:58.623672600 +0800
+@@ -13,10 +13,10 @@
+ from email.utils import formatdate, parsedate
+ from pprint import pprint as py_pprint
+ 
+-from marshmallow.compat import OrderedDict, binary_type, text_type
+-from marshmallow.compat import get_func_args as compat_get_func_args
+-from marshmallow.compat import Mapping, Iterable
+-from marshmallow.warnings import unused_and_removed_in_ma3
++from wulifang.vendor.marshmallow.compat import OrderedDict, binary_type, text_type
++from wulifang.vendor.marshmallow.compat import get_func_args as compat_get_func_args
++from wulifang.vendor.marshmallow.compat import Mapping, Iterable
++from wulifang.vendor.marshmallow.warnings import unused_and_removed_in_ma3
+ 
+ 
+ dateutil_available = False
+diff -ru a/vendor/marshmallow/validate.py b/vendor/marshmallow/validate.py
+--- a/vendor/marshmallow/validate.py	2022-08-22 11:37:54.902672000 +0800
++++ b/vendor/marshmallow/validate.py	2022-08-22 11:41:58.530672600 +0800
+@@ -6,8 +6,8 @@
+ import re
+ from operator import attrgetter
+ 
+-from marshmallow.compat import basestring, text_type, zip_longest
+-from marshmallow.exceptions import ValidationError
++from wulifang.vendor.marshmallow.compat import basestring, text_type, zip_longest
++from wulifang.vendor.marshmallow.exceptions import ValidationError
+ 
+ 
+ class Validator(object):

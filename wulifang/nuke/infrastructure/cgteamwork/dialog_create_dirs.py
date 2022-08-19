@@ -11,7 +11,7 @@ import wulifang
 
 from wulifang.vendor import cgtwq
 from wulifang.vendor.wlf.progress import CancelledError, progress
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 
 
 def dialog_create_dirs():

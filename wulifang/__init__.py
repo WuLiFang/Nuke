@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-# pyright: strict,reportUnusedImport=false
+# pyright: strict,reportUnusedImport=false,reportTypeCommentUsage=false
 """WuliFang plugin for Nuke and Hiero.  """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
@@ -18,7 +18,7 @@ from .infrastructure.no_op_publish_service import (
     NoOpPublishService as _DefaultPublishService,
 )
 from .infrastructure.file_service import FileService as _DefaultFileService
-
+from .infrastructure.logging_message_service import (LoggingMessageService as _DefaultMessageService)
 
 def _undefined():
     # type: () -> Any
@@ -34,3 +34,4 @@ is_debug = os.getenv("DEBUG") == "wulifang"
 
 publish = _DefaultPublishService()
 file = _DefaultFileService()
+message =  _DefaultMessageService()

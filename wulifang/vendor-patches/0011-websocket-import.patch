@@ -1,0 +1,108 @@
+diff -ru a/vendor/websocket/_abnf.py b/vendor/websocket/_abnf.py
+--- a/vendor/websocket/_abnf.py	2022-08-22 14:07:28.883672600 +0800
++++ b/vendor/websocket/_abnf.py	2022-08-22 14:05:15.487172600 +0800
+@@ -26,7 +26,7 @@
+ import os
+ import struct
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from ._exceptions import *
+ from ._utils import validate_utf8
+diff -ru a/vendor/websocket/_app.py b/vendor/websocket/_app.py
+--- a/vendor/websocket/_app.py	2022-08-22 14:07:28.887172600 +0800
++++ b/vendor/websocket/_app.py	2022-08-22 14:05:15.491672600 +0800
+@@ -29,7 +29,7 @@
+ import time
+ import traceback
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from ._abnf import ABNF
+ from ._core import WebSocket, getdefaulttimeout
+diff -ru a/vendor/websocket/_core.py b/vendor/websocket/_core.py
+--- a/vendor/websocket/_core.py	2022-08-22 14:07:28.890672600 +0800
++++ b/vendor/websocket/_core.py	2022-08-22 14:05:15.496172600 +0800
+@@ -30,7 +30,7 @@
+ import threading
+ import time
+ 
+-import six
++from wulifang.vendor import six
+ 
+ # websocket modules
+ from ._abnf import *
+diff -ru a/vendor/websocket/_handshake.py b/vendor/websocket/_handshake.py
+--- a/vendor/websocket/_handshake.py	2022-08-22 14:07:28.894172600 +0800
++++ b/vendor/websocket/_handshake.py	2022-08-22 14:05:15.500672600 +0800
+@@ -22,7 +22,7 @@
+ import hmac
+ import os
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from ._cookiejar import SimpleCookieJar
+ from ._exceptions import *
+diff -ru a/vendor/websocket/_http.py b/vendor/websocket/_http.py
+--- a/vendor/websocket/_http.py	2022-08-22 14:07:28.897672600 +0800
++++ b/vendor/websocket/_http.py	2022-08-22 14:05:15.506172600 +0800
+@@ -23,7 +23,7 @@
+ import socket
+ import sys
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from ._exceptions import *
+ from ._logging import *
+diff -ru a/vendor/websocket/_socket.py b/vendor/websocket/_socket.py
+--- a/vendor/websocket/_socket.py	2022-08-22 14:07:28.901672600 +0800
++++ b/vendor/websocket/_socket.py	2022-08-22 14:05:15.511672600 +0800
+@@ -26,7 +26,7 @@
+ import select
+ import socket
+ 
+-import six
++from wulifang.vendor import six
+ 
+ from ._exceptions import *
+ from ._ssl_compat import *
+diff -ru a/vendor/websocket/_url.py b/vendor/websocket/_url.py
+--- a/vendor/websocket/_url.py	2022-08-22 14:05:04.539672000 +0800
++++ b/vendor/websocket/_url.py	2022-08-22 14:08:07.357172600 +0800
+@@ -26,7 +26,7 @@
+ import socket
+ import struct
+ 
+-from six.moves.urllib.parse import urlparse
++from wulifang.vendor.six.moves.urllib.parse import urlparse
+ 
+ 
+ __all__ = ["parse_url", "get_proxy_info"]
+diff -ru a/vendor/websocket/_utils.py b/vendor/websocket/_utils.py
+--- a/vendor/websocket/_utils.py	2022-08-22 14:07:28.907672600 +0800
++++ b/vendor/websocket/_utils.py	2022-08-22 14:05:15.515672600 +0800
+@@ -18,7 +18,7 @@
+     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ 
+ """
+-import six
++from wulifang.vendor import six
+ 
+ __all__ = ["NoLock", "validate_utf8", "extract_err_message", "extract_error_code"]
+ 
+diff -ru a/vendor/websocket/tests/test_websocket.py b/vendor/websocket/tests/test_websocket.py
+--- a/vendor/websocket/tests/test_websocket.py	2022-08-22 14:07:28.913672600 +0800
++++ b/vendor/websocket/tests/test_websocket.py	2022-08-22 14:05:15.520172600 +0800
+@@ -32,7 +32,7 @@
+ import os.path
+ import socket
+ 
+-import six
++from wulifang.vendor import six
+ 
+ # websocket-client
+ import websocket as ws
