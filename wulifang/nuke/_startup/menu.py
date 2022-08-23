@@ -1,1 +1,3 @@
-# gui inited by init.py
+import wulifang.nuke
+
+wulifang.nuke.init_gui()

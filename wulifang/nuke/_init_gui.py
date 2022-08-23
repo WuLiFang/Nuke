@@ -2,13 +2,16 @@
 # pyright: strict, reportTypeCommentUsage=false
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-from wulifang.nuke.infrastructure.autolabel_service import AutolabelService
 
 import wulifang
-from wulifang.nuke.infrastructure import pyblish
-from wulifang.vendor import cgtwq
-import nuke
+import wulifang.license
 import wulifang.nuke
+from wulifang.nuke.infrastructure import pyblish
+from wulifang.nuke.infrastructure.autolabel_service import AutolabelService
+from wulifang.vendor import cgtwq
+
+import nuke
+from ._init import skip_gui as _skip
 
 
 def _reload():
@@ -45,8 +48,9 @@ class _g:
 
 
 def init_gui():
-    if _g.init_once:
+    if _g.init_once or _skip():
         return
+
     nuke.menu("Nuke".encode("utf-8")).addMenu("帮助".encode("utf-8")).addCommand(
         "重新加载吾立方插件".encode("utf-8"),
         _reload,

@@ -15,7 +15,10 @@ import nuke
 
 class _g:
     init_once = False
+    skip_gui = False
 
+def skip_gui():
+    return _g.skip_gui
 
 def init():
     if _g.init_once:
@@ -30,6 +33,7 @@ def init():
     try:
         wulifang.license.check()
     except wulifang.license.LicenseError:
+        _g.skip_gui = True
         return
     nuke.pluginAddPath("../../../lib".encode("utf-8"))
     nuke.pluginAddPath("../../../plugins".encode("utf-8"))
@@ -48,8 +52,4 @@ def init():
 
     wulifang.nuke.callback.on_script_close(_on_script_close)
 
-    if nuke.GUI:
-        from ._init_gui import init_gui
-
-        init_gui()
     _g.init_once = True

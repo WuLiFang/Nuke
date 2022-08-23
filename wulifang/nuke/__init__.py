@@ -1,5 +1,5 @@
 # -*- coding=UTF-8 -*-
-# pyright: strict,reportUnusedImport=false
+# pyright: strict,reportUnusedImport=false, reportTypeCommentUsage=none
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
@@ -23,9 +23,11 @@ cleanup = _undefined()  # type: wulifang.types.CleanupService
 publish = _undefined()  # type: wulifang.types.PublishService
 active_viewer = _undefined()  # type: types.ActiveViewerService
 callback = _undefined()  # type: types.CallbackService
-file = _undefined()  #type: wulifang.types.FileService
+file = _undefined()  # type: wulifang.types.FileService
+
 
 def init_gui():
     from ._init_gui import init_gui
+
     init()
     init_gui()
