@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, Dict, Tuple, Iterator
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
 import os
 import time
+import wulifang
 from wulifang.vendor.concurrent import futures
 from wulifang.vendor import six
 
@@ -27,7 +29,13 @@ class FileService:
         key = os.path.normcase(path)
         now = time.time()
         if key not in self._cache or self._cache[key][0] < now - max_age:
-            self._cache[key] = (now, os.path.exists(path))
+            try:
+                stat = os.stat(path)
+                if stat.st_size < 16 << 10:
+                    wulifang.message.debug("small file: path=%s, size=%0.2fKiB" % (path, stat.st_size / (1 << 10)))
+                self._cache[key] = (now, stat.st_size > 0)
+            except OSError:
+                self._cache[key] = (now, False)
 
         return self._cache[key][1]
 

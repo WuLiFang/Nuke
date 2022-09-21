@@ -2,6 +2,7 @@
 # pyright: strict, reportTypeCommentUsage=false
 
 from __future__ import absolute_import, division, print_function, unicode_literals
+from cmath import log
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -19,14 +20,8 @@ class LoggingMessageService:
     def __init__(self):
         # type: () -> None
         win_unicode_console.enable()
-        logger = logging.Logger("wulifang", logging.DEBUG)
-        handler = logging.StreamHandler()
-        formatter = logging.Formatter(
-            "%(levelname)-6s[%(asctime)s]%(name)s: %(message)s",
-            "%H:%M:%S",
-        )
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
+        logger = logging.getLogger("wulifang")
+        logger.setLevel(logging.DEBUG)
         self._logger = logger
 
     def debug(self, message, title=""):
