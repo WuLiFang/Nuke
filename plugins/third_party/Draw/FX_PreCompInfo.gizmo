@@ -1,0 +1,215 @@
+#! C:/Program Files/Nuke12.2v9/nuke-12.2.9.dll -nx
+version 10.5 v7
+Group {
+ name FX_PreCompInfo1
+ tile_color 0x2558dbff
+ gl_color 0xa0ff3200
+ label 吾立方特效预合成信息
+ note_font 微软雅黑
+ selected true
+ xpos -326
+ ypos -106
+}
+ Input {
+  inputs 0
+  name Input
+  gl_color 0x32a7ff00
+  selected true
+  xpos 0
+  ypos -272
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.3
+  message "\[python -execlocal import datetime\\nret=datetime.date.today()]"
+  old_message {{50 48 50 50 45 48 57 45 50 56}
+    }
+  old_expression_markers {{0 9}
+    }
+  box {0 0 {Input.format.r} {Input.format.t}}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 62
+  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  global_font_scale {{Input.format.r*0.00015625}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1778.5 128.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0
+  background_border_x 0
+  background_border_y 0
+  enable_shadows true
+  name Text_Artist9
+  gl_color 0x74ff3200
+  label 提交日期
+  selected true
+  xpos 0
+  ypos -208
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.3
+  message "WLF:\[lindex \[split \[basename \[value root.name]] .] 0] "
+  old_message {{87 76 70 58 32}
+    }
+  old_expression_markers {{4 3}
+    }
+  box {0 0 {Input.format.r} {Input.format.t}}
+  transforms {{0 2}
+    }
+  cursor_position 4
+  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  global_font_scale {{Input.format.r*0.00015625}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{24 122.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0
+  background_border_x 0
+  background_border_y 0
+  enable_shadows true
+  name Text_Shot3
+  gl_color 0x32ffb100
+  label 镜头名称
+  selected true
+  xpos 0
+  ypos -170
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 200
+  font_height_toolbar 100
+  opacity 0.3
+  message "\[python -execlocal import getpass\\nret=getpass.getuser()]"
+  old_message {{122 104 111 117 120 117 97 110}
+    }
+  old_expression_markers {{0 7}
+    }
+  box {0 0 {Input.format.r} {Input.format.t}}
+  xjustify justify
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 57
+  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  global_font_scale {{Input.format.r*0.00015625}}
+  font_width 200
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{24 122.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0
+  background_border_x 0
+  background_border_y 0
+  enable_shadows true
+  name Text_Shot4
+  gl_color 0x32ffb100
+  label 制作者
+  selected true
+  xpos 0
+  ypos -132
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.3
+  message "\[value root.width]x\[value root.height]"
+  old_message {{49 57 50 48 120 49 48 56 48}
+    }
+  old_expression_markers {{0 3 5 8}
+    }
+  box {0 0 {Input.format.r} {Input.format.t}}
+  xjustify center
+  transforms {{0 2}
+    }
+  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  global_font_scale {{Input.format.r*0.00015625}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1778.5 128.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0
+  background_border_x 0
+  background_border_y 0
+  enable_shadows true
+  name Text_Artist7
+  gl_color 0x74ff3200
+  label 尺寸
+  selected true
+  xpos 0
+  ypos -94
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity 0.3
+  message "FPS:\[value root.fps]  Range:\[value root.first_frame]-\[value root.last_frame](\[expr \[value root.last_frame] - \[value root.first_frame] + 1])  \[x]\n"
+  old_message {{70 80 83 58 50 53 32 32 82 97 110 103 101 58 49 45 49 48 48 40 49 48 48 41 32 32 49 10}
+    }
+  old_expression_markers {{4 5 14 14 16 18 20 22 26 26}
+    }
+  box {0 0 {Input.format.r} {Input.format.t}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 139
+  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  global_font_scale {{Input.format.r*0.00015625}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{1778.5 128.5}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 960 540 0 0 1 1 0 0 0 0}
+    }
+  enable_background {{!root.proxy}}
+  background_opacity 0
+  background_border_x 0
+  background_border_y 0
+  enable_shadows true
+  name Text_Frame3
+  gl_color 0xff713200
+  label 帧范围
+  selected true
+  xpos 0
+  ypos -56
+ }
+ Output {
+  name Output1
+  gl_color 0x32ff7200
+  selected true
+  xpos 0
+  ypos -18
+ }
+end_group
