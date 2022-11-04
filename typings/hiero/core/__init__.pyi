@@ -479,8 +479,7 @@ class AudioTrack(TrackBase):
         """
         ...
     @typing.overload
-    def addTrackItem(self, clip: TrackItem) -> TrackItem:
-        ...
+    def addTrackItem(self, clip: TrackItem) -> TrackItem: ...
     @typing.overload
     def addTrackItem(self, clip: Clip, audioChannel: int, position: int) -> TrackItem:
         """
@@ -7487,7 +7486,9 @@ class TrackItem(TrackItemBase):
             outTime: frame value
         """
         ...
-    def setTimes(self, timelineIn: int, timelineOut: int, sourceIn: float, sourceOut: float) -> None:
+    def setTimes(
+        self, timelineIn: int, timelineOut: int, sourceIn: float, sourceOut: float
+    ) -> None:
         """
         sets the timeline and source times for the track item.
 
@@ -8280,8 +8281,7 @@ class VideoTrack(TrackBase):
         """
         ...
     @typing.overload
-    def addTrackItem(self, clip: TrackItem) -> TrackItem:
-        ...   
+    def addTrackItem(self, clip: TrackItem) -> TrackItem: ...
     @typing.overload
     def addTrackItem(self, clip: Clip, position: int) -> TrackItem:
         """
@@ -8532,7 +8532,11 @@ def defaultFrameRates() -> typing.Tuple[float, ...]:
     """
     ...
 
-def executeInMainThread(call, *args, **kwargs):
+def executeInMainThread(
+    call: typing.Callable[..., None],
+    *args: typing.Any,
+    **kwargs: typing.Any,
+) -> None:
     """
     Execute the callable 'call' with optional arguments 'args' and named arguments 'kwargs' in
     the main thread and return immediately.

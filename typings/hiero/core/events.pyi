@@ -214,13 +214,18 @@ def _splitType(type, methodName):
     """ """
     ...
 
-def postEvent(type, subtype, **kwargs):
+def postEvent(
+    type: typing.Text,
+    subtype: typing.Optional[typing.Text],
+    *,
+    __not_available_in_hiero12: None,
+) -> None:
     """
     Post an event to the event queue. This only calls listeners registered with connection = kQueued or connection = kAny.
     """
     ...
 
-def registerEventType(name):
+def registerEventType(name: typing.Text) -> None:
     """
     Register a new event type. The type should be a string (suitable as an attribute name) describing the event, e.g. 'kStartup'.
     """
@@ -229,6 +234,7 @@ def registerEventType(name):
 def registerInterest(
     type: typing.Text,
     callback: typing.Callable[[Event], None],
+    *,
     connection: int = 1,
 ) -> None:
     """
@@ -236,7 +242,7 @@ def registerInterest(
     """
     ...
 
-def sendEvent(type, subtype, **kwargs):
+def sendEvent(type: typing.Text, subtype: typing.Optional[typing.Text]) -> None:
     """
     Send an event immediately. The caller will block until the event has been handled.
     This only calls listeners registered with connection = kDirect or connection = kAny.
@@ -250,13 +256,15 @@ def signalEvent(type, subtype, **kwargs):
     """
     ...
 
-def unregisterEventType(name):
+def unregisterEventType(name: typing.Text) -> None:
     """
     Unregister an event type.
     """
     ...
 
-def unregisterInterest(type: typing.Text, callback: typing.Callable[[Event], None]) -> None:
+def unregisterInterest(
+    type: typing.Text, callback: typing.Callable[[Event], None]
+) -> None:
     """
     Unregister interest in an event type. The callback will no longer be called whenever an event of the given type is dispatched.
     """

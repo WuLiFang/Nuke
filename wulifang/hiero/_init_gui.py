@@ -75,7 +75,6 @@ def _actions():
     def _action1():
         a = QAction("以所选对齐其他轨道", app)
         a.setObjectName(_OBJECT_NAME_PREFIX + "timeline.alignOtherTrackBySelected")
-        a.setEnabled(track_item.has_selection())
 
         def _align_other_track_by_selected():
             with capture_exception():
@@ -84,10 +83,12 @@ def _actions():
 
         a.triggered.connect(_align_other_track_by_selected)
 
-        @_on_event("kSelectionChanged")
-        def _(event):
-            # type: (hiero.core.events.Event,) -> None
-            a.setEnabled(track_item.has_selection())
+        # XXX: cause crash
+        # a.setEnabled(track_item.has_selection())
+        # @_on_event("kSelectionChanged")
+        # def _(event):
+        #     # type: (hiero.core.events.Event,) -> None
+        #     a.setEnabled(track_item.has_selection())
 
         return a
 
@@ -96,7 +97,6 @@ def _actions():
     def _action3():
         a = QAction("移除所选名称中的版本后缀", app)
         a.setObjectName(_OBJECT_NAME_PREFIX + "timeline.removeVersionSuffix")
-        a.setEnabled(track_item.has_selection())
 
         def _receiver():
             with capture_exception():
@@ -109,10 +109,12 @@ def _actions():
 
         a.triggered.connect(_receiver)
 
-        @_on_event("kSelectionChanged")
-        def _(event):
-            # type: (hiero.core.events.Event,) -> None
-            a.setEnabled(track_item.has_selection())
+        # XXX: cause crash
+        # a.setEnabled(track_item.has_selection())
+        # @_on_event("kSelectionChanged")
+        # def _(event):
+        #     # type: (hiero.core.events.Event,) -> None
+        #     a.setEnabled(track_item.has_selection())
 
         return a
 
