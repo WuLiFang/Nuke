@@ -9,7 +9,10 @@ import logging
 from wulifang.vendor import six
 from wulifang.vendor.Qt import QtGui
 from wulifang.vendor.Qt.QtWidgets import QAction, QMenu, QApplication
-
+from wulifang.infrastructure.tray_message_service import TrayMessageService
+from wulifang.infrastructure.multi_message_service import MultiMessageService
+import wulifang
+import wulifang.license
 import hiero.core.events
 import hiero.ui
 import hiero.core
@@ -35,6 +38,7 @@ _CLEANUP_KEY = "_WULIFANG_GUI_CLEANUPS"
 class _g:
     actions = []  # type: List[QAction]
     setups = []  # type: List[Callable[[], None]]
+    init_once = False
 
 
 def _cleanups():
@@ -166,11 +170,18 @@ def _(event):
 
 
 def init_gui():
+    if _g.init_once:
+        return
+    try:
+        wulifang.license.check()
+    except wulifang.license.LicenseError:
+        return
     cleanups = _cleanups()
     while cleanups:
         with _exception_as_message():
             cleanups.pop()()
 
+    wulifang.message = MultiMessageService(wulifang.message, TrayMessageService())
     _g.actions = list(_actions())
     bar = hiero.ui.menuBar()
     m = bar.findChild(QMenu, _MENU_OBJECT_NAME) or bar.addMenu(_MENU_TITLE)
@@ -182,3 +193,4 @@ def init_gui():
 
     for i in _g.setups:
         i()
+    _g.init_once = True
