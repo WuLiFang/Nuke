@@ -13,10 +13,9 @@ VENV_SITEPATH=$(abspath .venv/lib/python2.7/site-packages/)
 PYTHONPATH:=$(PYTHONPATH):$(abspath lib/site-packages):$(abspath lib)
 endif
 
-default: .venv/.sentinel build docs/_build/html $(VENV_SITEPATH)/lib.pth
+default: .venv/.sentinel build docs/_build/html $(VENV_SITEPATH)/lib.pth 
 
-build: docs/_build/html lib/site-packages/.sentinel
-	$(MAKE) -C wulifang
+build: docs/_build/html lib/site-packages/.sentinel wulifang/vendor/__init__.py
 
 export PYTHONPATH
 export PYTHONIOENCODING=UTF-8
@@ -53,7 +52,10 @@ $(VENV_SITEPATH)/lib.pth: lib/site-packages/.sentinel
 		pip install -U -r dev-requirements.txt
 	touch $@
 
-test: .venv/.sentinel
+wulifang/vendor/__init__.py:
+	$(MAKE) -C wulifang
+
+test: .venv/.sentinel wulifang/vendor/__init__.py
 	. ./scripts/activate-venv.sh &&\
 		pytest
 
