@@ -69,7 +69,7 @@ class Window(window.Window):
         def _cleanup():
             self.close()
 
-        wulifang.nuke.cleanup.add(_cleanup)
+        wulifang.cleanup.add(_cleanup)
 
     def activate(self):
         """Active pyblish window."""

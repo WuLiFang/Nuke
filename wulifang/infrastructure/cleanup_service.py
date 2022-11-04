@@ -7,9 +7,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import List, Callable, Text
+    from wulifang.types.cleanup_service import CleanupService as Service
 
-import nuke
-from wulifang.infrastructure.exception_as_message import exception_as_message
+from wulifang._util import capture_exception
+import wulifang.vendor
 
 
 class CleanupService:
@@ -19,9 +20,9 @@ class CleanupService:
 
     def _cleanups(self):
         # type: () -> List[Callable[[],None]]
-        cleanups = getattr(nuke, self._key, None)
+        cleanups = getattr(wulifang.vendor, self._key, None)
         if cleanups is None:
-            setattr(nuke, self._key, [])
+            setattr(wulifang.vendor, self._key, [])
             return self._cleanups()
         return cleanups
 
@@ -42,5 +43,10 @@ class CleanupService:
     def run(self):
         cleanups = self._cleanups()
         while cleanups:
-            with exception_as_message():
+            with capture_exception():
                 cleanups.pop()()
+
+
+def _(v):
+    # type: (CleanupService) -> Service
+    return v

@@ -6,7 +6,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import contextlib
 import logging
 
-from wulifang.vendor import six
 from wulifang.vendor.Qt import QtGui
 from wulifang.vendor.Qt.QtWidgets import QAction, QMenu, QApplication
 from wulifang.infrastructure.tray_message_service import TrayMessageService
@@ -16,9 +15,8 @@ import wulifang.license
 import hiero.core.events
 import hiero.ui
 import hiero.core
-
-from .. import codectools
 from . import message, track_item
+from wulifang._util import capture_exception
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -32,30 +30,12 @@ _LOGGER = logging.getLogger(__name__)
 _MENU_TITLE = "吾立方"
 _OBJECT_NAME_PREFIX = __name__ + "."
 _MENU_OBJECT_NAME = _OBJECT_NAME_PREFIX + "menu"
-_CLEANUP_KEY = "_WULIFANG_GUI_CLEANUPS"
 
 
 class _g:
     actions = []  # type: List[QAction]
     setups = []  # type: List[Callable[[], None]]
     init_once = False
-
-
-def _cleanups():
-    # type: () -> List[Callable[[],None]]
-    cleanups = getattr(hiero.ui, _CLEANUP_KEY, None)
-    if cleanups is None:
-        setattr(hiero.ui, _CLEANUP_KEY, [])
-        return _cleanups()
-    return cleanups
-
-
-@contextlib.contextmanager
-def _exception_as_message():
-    try:
-        yield
-    except Exception as ex:
-        message.error(codectools.text(six.text_type(ex)))
 
 
 @contextlib.contextmanager
@@ -79,7 +59,7 @@ def _on_event(t):
             def _cleanup():
                 hiero.core.events.unregisterInterest(t, cb)
 
-            _cleanups().append(_cleanup)
+            wulifang.cleanup.add(_cleanup)
 
         _g.setups.append(_setup)
 
@@ -98,7 +78,7 @@ def _actions():
         a.setEnabled(track_item.has_selection())
 
         def _align_other_track_by_selected():
-            with _exception_as_message():
+            with capture_exception():
                 ap = track_item.align_other_track_by(track_item.selection())
                 message.info(ap.explain())
 
@@ -119,7 +99,7 @@ def _actions():
         a.setEnabled(track_item.has_selection())
 
         def _receiver():
-            with _exception_as_message():
+            with capture_exception():
                 for project, items in track_item.group_by_project(
                     track_item.selection()
                 ):
@@ -144,7 +124,7 @@ def _actions():
         a.setShortcut(QtGui.QKeySequence("Ctrl+Shift+F5"))
 
         def _reload():
-            with _exception_as_message():
+            with capture_exception():
                 from ._init import reload
 
                 _LOGGER.info("reload")
@@ -176,10 +156,6 @@ def init_gui():
         wulifang.license.check()
     except wulifang.license.LicenseError:
         return
-    cleanups = _cleanups()
-    while cleanups:
-        with _exception_as_message():
-            cleanups.pop()()
 
     wulifang.message = MultiMessageService(wulifang.message, TrayMessageService())
     _g.actions = list(_actions())

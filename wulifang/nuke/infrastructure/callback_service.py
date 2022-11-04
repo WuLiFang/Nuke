@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 import nuke
 
-import wulifang.nuke
+import wulifang
 
 
 class CallbackService:
@@ -34,7 +34,7 @@ class CallbackService:
         def cancel():
             remove(cb, **kwargs)
 
-        wulifang.nuke.cleanup.add(cancel)
+        wulifang.cleanup.add(cancel)
         return cancel
 
     def _use_add_only(
@@ -56,7 +56,7 @@ class CallbackService:
         def cancel():
             local.is_cancelled = True
 
-        wulifang.nuke.cleanup.add(cancel)
+        wulifang.cleanup.add(cancel)
         return cancel
 
     def on_render_start(self, cb, node_class=""):

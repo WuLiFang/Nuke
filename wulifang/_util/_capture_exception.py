@@ -10,10 +10,10 @@ if TYPE_CHECKING:
 
 import contextlib
 
-import wulifang
-
 
 def _default_message():
+    import wulifang
+
     if wulifang.message is None:
         from wulifang.infrastructure.logging_message_service import (
             LoggingMessageService,
@@ -24,7 +24,7 @@ def _default_message():
 
 
 @contextlib.contextmanager
-def exception_as_message(message=None):
+def capture_exception(message=None):
     # type: (Optional[MessageService]) -> Generator[None, None, None]
     message = message or _default_message()
     try:

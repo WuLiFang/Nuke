@@ -59,7 +59,7 @@ def init_gui():
     wulifang.publish = pyblish.PublishService()
 
     autolabel = AutolabelService(wulifang.file)
-    wulifang.nuke.cleanup.add(lambda: nuke.removeAutolabel(autolabel.autolabel))
+    wulifang.cleanup.add(lambda: nuke.removeAutolabel(autolabel.autolabel))
     nuke.addAutolabel(autolabel.autolabel)
 
     _init_cgtw()

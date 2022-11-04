@@ -9,7 +9,13 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Any
 
-    from .types import MessageService, PublishService, FileService, ManifestService
+    from .types import (
+        MessageService,
+        PublishService,
+        FileService,
+        ManifestService,
+        CleanupService,
+    )
 
 import os
 
@@ -18,7 +24,11 @@ from .infrastructure.no_op_publish_service import (
     NoOpPublishService as _DefaultPublishService,
 )
 from .infrastructure.file_service import FileService as _DefaultFileService
-from .infrastructure.logging_message_service import (LoggingMessageService as _DefaultMessageService)
+from .infrastructure.logging_message_service import (
+    LoggingMessageService as _DefaultMessageService,
+)
+from .infrastructure.cleanup_service import CleanupService as _DefaultCleanupService
+
 
 def _undefined():
     # type: () -> Any
@@ -31,8 +41,10 @@ message = _undefined()  # type: MessageService
 publish = _undefined()  # type: PublishService
 file = _undefined()  # type: FileService
 manifest = _undefined()  # type: ManifestService
+cleanup = _undefined()  # type: CleanupService
 is_debug = os.getenv("DEBUG") == "wulifang"
 
 publish = _DefaultPublishService()
 file = _DefaultFileService()
-message =  _DefaultMessageService()
+message = _DefaultMessageService()
+cleanup = _DefaultCleanupService()

@@ -8,7 +8,6 @@ import wulifang.nuke
 from wulifang.infrastructure.multi_message_service import MultiMessageService
 from wulifang.nuke.infrastructure.active_viewer_service import ActiveViewerService
 from wulifang.nuke.infrastructure.callback_service import CallbackService
-from wulifang.nuke.infrastructure.cleanup_service import CleanupService
 from wulifang.nuke.infrastructure.manifest_service import ManifestService
 
 import nuke
@@ -41,8 +40,7 @@ def init():
         return
     nuke.pluginAddPath("../../../lib".encode("utf-8"))
     nuke.pluginAddPath("../../../plugins".encode("utf-8"))
-    wulifang.nuke.cleanup = CleanupService()
-    wulifang.nuke.cleanup.run()
+    wulifang.cleanup.run()
 
     wulifang.nuke.active_viewer = ActiveViewerService()
     wulifang.nuke.callback = CallbackService()

@@ -16,6 +16,7 @@ class _g:
 def init():
     if _g.init_once:
         return
+    wulifang.cleanup.run()
     try:
         wulifang.license.check()
     except wulifang.license.LicenseError:

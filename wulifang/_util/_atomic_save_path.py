@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 
 
 import contextlib
-from typing import Text
 
 from ._force_rename import force_rename
 
