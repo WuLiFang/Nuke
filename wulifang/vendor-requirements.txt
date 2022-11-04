@@ -12,3 +12,4 @@ psutil==5.8.0
 ../../vendor/cgtwq-3.6.1-py2.py3-none-any.whl
 ../../vendor/cgtwq_uploader-3.6.4-py2.py3-none-any.whl
 ../../vendor/wlf-0.6.0-py2.py3-none-any.whl
+../../vendor/wulifang_manifest-0.1.0-py2.py3-none-any.whl

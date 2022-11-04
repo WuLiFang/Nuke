@@ -41,19 +41,19 @@ class AbstractEntity(__builtin__.list):
     list of weak references to the object (if defined)
     """
 
-    data: ...
+    data: typing.Dict[typing.Text, typing.Any]
     """
     """
 
-    id: ...
+    id: str
     """
     """
 
-    name: ...
+    name: str
     """
     """
 
-    parent: ...
+    parent: typing.Optional[AbstractEntity]
     """
     """
 
@@ -209,7 +209,7 @@ class Context(AbstractEntity):
         """
         ...
 
-    def create_instance(self, name, **kwargs):
+    def create_instance(self, name: typing.Text, **kwargs: typing.Any) -> Instance:
         """
         Convenience method of the following.
         >>> ctx = Context()

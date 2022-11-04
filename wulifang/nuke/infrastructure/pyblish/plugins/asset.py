@@ -13,11 +13,8 @@ import time
 
 import wulifang.vendor.cast_unknown as cast
 import nuke
-from wulifang.nuke.infrastructure.recover_modifield_flag import recover_modifield_flag
-from wulifang.nuke.infrastructure.wlf_write_node import wlf_write_node
 from wulifang.vendor.pathlib2_unicode import PurePath
 from wulifang.vendor.pyblish import api
-import wulifang
 
 
 class FootageInfo:
@@ -41,35 +38,7 @@ class CollectFile(api.ContextPlugin):
         if not filename:
             raise ValueError("工程尚未保存.")
 
-        context.create_instance(filename, family="Nuke文件")
-
-
-class CollectFrameRange(api.ContextPlugin):
-    """获取当前工程帧范围设置."""
-
-    order = api.CollectorOrder
-    label = "获取帧范围"
-
-    def process(self, context):
-        first = nuke.numvalue(b"root.first_frame")
-        last = nuke.numvalue(b"root.last_frame")
-        context.create_instance(
-            "帧范围: {:.0f}-{:.0f}".format(first, last),
-            first=first,
-            last=last,
-            family="帧范围",
-        )
-
-
-class CollectFPS(api.ContextPlugin):
-    """获取当前工程帧速率设置."""
-
-    order = api.CollectorOrder
-    label = "获取帧速率"
-
-    def process(self, context):
-        fps = nuke.numvalue(b"root.fps")
-        context.create_instance(name="帧速率: {:.0f}".format(fps), fps=fps, family="帧速率")
+        context.create_instance(cast.text(filename), family="工作文件")
 
 
 class CollectMTime(api.ContextPlugin):
@@ -147,36 +116,12 @@ class ValidateFootageStore(api.InstancePlugin):
                 raise ValueError("使用了本地素材: %s" % i.filename)
 
 
-class ExtractJPG(api.InstancePlugin):
-    """生成单帧图."""
-
-    order = api.ExtractorOrder
-    label = "生成JPG"
-    families = ["Nuke文件"]
-
-    def process(self, instance):
-        with recover_modifield_flag():
-            if not nuke.numvalue(b"preferences.wlf_render_jpg", 0.0):
-                self.log.info("因首选项而跳过生成JPG")
-                return
-
-            n = wlf_write_node()
-            if not n:
-                self.log.debug("render_jpg: %s", n.name())
-                try:
-                    cast.instance(n[b"bt_render_JPG"], nuke.Script_Knob).execute()
-                except RuntimeError as ex:
-                    wulifang.message.error("生成JPG: %s" % ex)
-            else:
-                self.log.warning("工程中缺少wlf_Write节点")
-
-
 class SendToRenderDir(api.InstancePlugin):
-    """发送Nuke文件至渲染文件夹."""
+    """发送工作文件至渲染文件夹."""
 
     order = api.IntegratorOrder
     label = "发送至渲染文件夹"
-    families = ["Nuke文件"]
+    families = ["工作文件"]
 
     def process(self, instance):
         filename = instance.data["name"]

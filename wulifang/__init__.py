@@ -9,7 +9,7 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Any
 
-    from .types import MessageService, PublishService, FileService
+    from .types import MessageService, PublishService, FileService, ManifestService
 
 import os
 
@@ -30,6 +30,7 @@ def _undefined():
 message = _undefined()  # type: MessageService
 publish = _undefined()  # type: PublishService
 file = _undefined()  # type: FileService
+manifest = _undefined()  # type: ManifestService
 is_debug = os.getenv("DEBUG") == "wulifang"
 
 publish = _DefaultPublishService()

@@ -7,7 +7,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from contextlib import contextmanager
 import nuke
 
-
+# TODO: correct typo
 @contextmanager
 def recover_modifield_flag():
     """Restore modifield flag after action finished."""

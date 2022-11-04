@@ -38,6 +38,7 @@
         "or'ed",
         "Popen",
         "postchangelog",
+        "Precomp",
         "psutil",
         "pyblish",
         "pylint",

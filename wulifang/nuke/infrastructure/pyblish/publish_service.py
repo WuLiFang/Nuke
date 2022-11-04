@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, Optional, Callable, Tuple
@@ -15,12 +16,11 @@ import threading
 
 import nuke
 from nukescripts.panels import restorePanel
-from wulifang.vendor.pyblish import api
 from wulifang.vendor.pyblish_lite import app, settings
 from wulifang.vendor.Qt.QtCore import Signal
 from wulifang.vendor.Qt.QtWidgets import QApplication
 from wulifang.vendor.six.moves import queue
-
+import wulifang.vendor.cgtwq as cgtwq
 from .. import _panels
 from . import plugins
 from .panel import Window, set_preferred_fonts
@@ -52,7 +52,9 @@ class PublishService:
         app.install_translator(QApplication.instance())  # type: ignore
         set_preferred_fonts("微软雅黑", 1.2)
 
-        api.register_plugin_path(plugins.PATH)
+        plugins.register()
+        if cgtwq.DesktopClient().executable():
+            plugins.cgteamwork.register()
 
     def _show_window(self):
         if not self._window:
@@ -65,7 +67,7 @@ class PublishService:
             if pane:
                 panel = restorePanel(b"com.wlf.pyblish")
                 panel.addToPane(pane)
-                assert Window.last_instance
+                assert Window.last_instance, "missing publish window"
                 self._window = Window.last_instance
             else:
                 self._window = Window()

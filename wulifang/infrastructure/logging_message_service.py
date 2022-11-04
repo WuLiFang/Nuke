@@ -2,7 +2,6 @@
 # pyright: strict, reportTypeCommentUsage=false
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-from cmath import log
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
