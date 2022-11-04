@@ -8,15 +8,13 @@ import logging
 
 from wulifang.vendor.Qt import QtGui
 from wulifang.vendor.Qt.QtWidgets import QAction, QMenu, QApplication
-from wulifang.infrastructure.tray_message_service import TrayMessageService
-from wulifang.infrastructure.multi_message_service import MultiMessageService
 import wulifang
-import wulifang.license
 import hiero.core.events
 import hiero.ui
 import hiero.core
 from . import message, track_item
 from wulifang._util import capture_exception
+from ._init import skip_gui as _skip
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -152,14 +150,9 @@ def _(event):
 
 
 def init_gui():
-    if _g.init_once:
-        return
-    try:
-        wulifang.license.check()
-    except wulifang.license.LicenseError:
+    if _g.init_once or _skip():
         return
 
-    wulifang.message = MultiMessageService(wulifang.message, TrayMessageService())
     _g.actions = list(_actions())
     bar = hiero.ui.menuBar()
     m = bar.findChild(QMenu, _MENU_OBJECT_NAME) or bar.addMenu(_MENU_TITLE)
