@@ -3,15 +3,16 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import os
+
 import wulifang
-
-
+import wulifang.vendor.cgtwq as cgtwq
+from wulifang._util import cast_text
+from wulifang.vendor.cgtwq.helper.wlf import DatabaseError, get_database_by_file
 from wulifang.vendor.pyblish import api
+
 from .._context_manifest import context_manifest
 from ._context_task import with_task
-import wulifang.vendor.cgtwq as cgtwq
-from wulifang.vendor.cgtwq.helper.wlf import get_database_by_file, DatabaseError
-from wulifang._util import cast_text
 
 
 class CollectTask(api.InstancePlugin):
@@ -25,7 +26,7 @@ class CollectTask(api.InstancePlugin):
     def process(self, instance):
         # type: (api.Instance) -> None
         obj = instance
-        filename = obj.name
+        filename = os.path.basename(obj.name)
         ctx = instance.context
         m = context_manifest(obj)
         m2 = m.cgteamwork
@@ -45,7 +46,7 @@ class CollectTask(api.InstancePlugin):
             try:
                 m2.database = get_database_by_file(filename)
             except DatabaseError:
-                self.log.info("无法通过文件名匹配项目")
+                self.log.info("无法通过文件名 '%s' 匹配项目" % (filename,))
         if not m2.database:
             wulifang.manifest.request_user_edit(m, wait=True)
         if not m2.database:
