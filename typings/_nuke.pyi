@@ -3535,7 +3535,7 @@ class Menu(MenuItem):
         Returns a list of sub menu items.
         """
         ...
-    def menu(self, name) -> typing.Optional[Menu]:
+    def menu(self, name: six.binary_type) -> typing.Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -5894,7 +5894,7 @@ class String_Knob(Knob):
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def getText(self, oc) -> six.binary_type:
+    def getText(self, oc=...) -> six.binary_type:
         """
         Get the non-evaluated value of this knob - also see `value()`
 
@@ -5916,7 +5916,7 @@ class String_Knob(Knob):
         @return: String value.
         """
         ...
-    def setText(self, *args, **kwargs):
+    def setText(self, value: six.binary_type, *, view: six.binary_type = ...) -> None:
         """
         self.setValue(val, view='default') -> None
 
