@@ -71,7 +71,7 @@ def pack_project():
 
         gizmo_count = 0
         for n in nuke.allNodes():
-            if isinstance(n, nuke.Gizmo):
+            if isinstance(n, nuke.Gizmo) and n.Class() not in nuke.knobChangeds:
                 gizmo_to_group(n)
                 gizmo_count += 1
         if gizmo_count:
