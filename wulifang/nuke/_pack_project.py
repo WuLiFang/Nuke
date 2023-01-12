@@ -7,7 +7,9 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text
 
+import codecs
 import hashlib
+import json
 import os
 import shutil
 
@@ -16,7 +18,7 @@ from wulifang.vendor.concurrent import futures
 
 import nuke
 
-from .._util import cast_binary, cast_text, iteritems, FileSequence
+from .._util import FileSequence, cast_binary, cast_text, iteritems
 from ._gizmo import gizmo_to_group
 
 
@@ -43,14 +45,22 @@ def _is_weak_same(a, b):
 def _save_by_expr(cwd, file_dir, src_expr):
     # type: (Text, Text, Text) -> Text
     wulifang.message.info("正在打包: %s" % src_expr)
-    src_dir, src_expr = os.path.split(src_expr)
+    src_dir, src_base = os.path.split(src_expr)
     _dir_with_hash = _hashed_dir(src_dir)
     dst_dir = os.path.join(cwd, file_dir, _dir_with_hash)
     try:
         os.makedirs(dst_dir)
     except:
         pass
-    seq = FileSequence(os.path.normcase(src_expr))
+    with codecs.open(dst_dir + ".json", "w", encoding="utf-8") as f:
+        json.dump(
+            {"sourcePath": src_expr},
+            f,
+            indent=2,
+            ensure_ascii=False,
+        )
+
+    seq = FileSequence(os.path.normcase(src_base))
     executor = futures.ThreadPoolExecutor(max_workers=32)
 
     def _copy_file(i):
@@ -70,7 +80,7 @@ def _save_by_expr(cwd, file_dir, src_expr):
         for _ in executor.map(_copy_file, (i for i in files if os.path.normcase(i) in seq)):  # type: ignore
             pass
 
-    return "/".join((file_dir, _dir_with_hash, src_expr))
+    return "/".join((file_dir, _dir_with_hash, src_base))
 
 
 def pack_project():
