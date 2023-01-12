@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from typing import Text
 
 import codecs
+import datetime
 import hashlib
 import json
 import os
@@ -18,8 +19,46 @@ from wulifang.vendor.concurrent import futures
 
 import nuke
 
-from .._util import FileSequence, cast_binary, cast_text, iteritems
+from .._util import TZ_CHINA, FileSequence, cast_binary, cast_text, iteritems
 from ._gizmo import gizmo_to_group
+
+
+class _Context(object):
+    def __init__(self):
+        self.project_dir_old = cast_text(nuke.value(b"root.project_directory"))
+        self.script_name = nuke.scriptName()
+        self.script_dir = cast_text(os.path.dirname(self.script_name))
+        self.file_dir = cast_text(self.script_name) + ".files"
+        self.file_dir_base = os.path.basename(self.file_dir)
+        try:
+            os.makedirs(self.file_dir)
+        except:
+            pass
+        self.log_file = codecs.open(
+            os.path.join(self.file_dir, "工程打包日志.txt"),
+            "a",
+            encoding="utf-8",
+        )
+        self._log("开始")
+        self._log("工程文件：%s" % self.script_name)
+        self._log("原工程目录：%s" % self.project_dir_old)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_):
+        self.log_file.close()
+
+    def _log(self, msg):
+        # type: (Text) -> None
+        self.log_file.write(
+            "[%s] %s\r\n" % (datetime.datetime.now(TZ_CHINA).isoformat(), msg)
+        )
+
+    def log(self, msg):
+        # type: (Text) -> None
+        wulifang.message.info(msg)
+        self._log(msg)
 
 
 def _hashed_dir(dir_path):
@@ -42,12 +81,13 @@ def _is_weak_same(a, b):
     )
 
 
-def _save_by_expr(cwd, file_dir, src_expr):
-    # type: (Text, Text, Text) -> Text
-    wulifang.message.info("正在打包: %s" % src_expr)
+def _save_by_expr(ctx, src_expr):
+    # type: (_Context, Text) -> Text
     src_dir, src_base = os.path.split(src_expr)
+
     _dir_with_hash = _hashed_dir(src_dir)
-    dst_dir = os.path.join(cwd, file_dir, _dir_with_hash)
+    dst_dir = os.path.join(ctx.file_dir, _dir_with_hash)
+    
     try:
         os.makedirs(dst_dir)
     except:
@@ -60,6 +100,12 @@ def _save_by_expr(cwd, file_dir, src_expr):
             ensure_ascii=False,
         )
 
+    try:
+        files = os.listdir(src_dir)
+    except:
+        ctx.log("目录无法访问: %s" % src_dir)
+        files = []
+
     seq = FileSequence(os.path.normcase(src_base))
     executor = futures.ThreadPoolExecutor(max_workers=32)
 
@@ -71,47 +117,43 @@ def _save_by_expr(cwd, file_dir, src_expr):
             return
         shutil.copy2(src, dst)
 
-    try:
-        files = os.listdir(src_dir)
-    except:
-        wulifang.message.info("忽略无法访问的目录: %s" % src_dir)
-        files = []
     with executor:
         for _ in executor.map(_copy_file, (i for i in files if os.path.normcase(i) in seq)):  # type: ignore
             pass
 
-    return "/".join((file_dir, _dir_with_hash, src_base))
+    return "/".join((ctx.file_dir_base, _dir_with_hash, src_base))
 
 
 def pack_project():
     try:
-        script_name = nuke.scriptName()
+        nuke.scriptName()
     except RuntimeError:
         nuke.message("请先保存工程".encode("utf-8"))
         return
-    with nuke.Undo("打包工程"):
-        project_dir_old = cast_text(nuke.value(b"root.project_directory"))
-        script_dir = cast_text(os.path.dirname(script_name))
+
+    with nuke.Undo("打包工程"), _Context() as ctx:
         nuke.Root()["project_directory"].setValue("[python {nuke.script_directory()}]")
 
-        gizmo_count = 0
         for n in nuke.allNodes():
-            if isinstance(n, nuke.Gizmo) and n.Class() not in nuke.knobChangeds:
+            if isinstance(n, nuke.Gizmo):
+                if n.Class() not in nuke.knobChangeds:
+                    ctx.log("%s: 此类型节点有脚本回调，无法转为 Group" % (cast_text(n.name()),))
+                    continue
                 gizmo_to_group(n)
-                gizmo_count += 1
-        if gizmo_count:
-            wulifang.message.info("将 %d 个 Gizmo 转为了 Group" % gizmo_count)
+                ctx.log("将 %s 转为了 Group" % (cast_text(n.name()),))
 
-        file_dir = os.path.basename(cast_text(script_name)) + ".files"
         for n in nuke.allNodes():
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
                     old_src = cast_text(k.getText())
-                    if not old_src or old_src.startswith(file_dir):
+                    if not old_src or old_src.startswith(ctx.file_dir_base):
                         continue
+                    ctx.log("打包文件: %s.%s: %s" % (n.name(), k.name(), old_src))
                     new_src = _save_by_expr(
-                        script_dir, file_dir, os.path.join(project_dir_old, old_src)
+                        ctx, os.path.join(ctx.project_dir_old, old_src)
                     )
                     k.setText(cast_binary(new_src))
-
-        wulifang.message.info("项目打包完毕，相关文件存放于 %s" % file_dir)
+        ctx.log("完成")
+        nuke.message(
+            ("项目打包完毕，工程内的文件路径已被替换\n相关文件存放于 %s" % (ctx.file_dir,)).encode("utf-8")
+        )
