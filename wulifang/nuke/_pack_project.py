@@ -49,7 +49,7 @@ def _save_by_expr(cwd, file_dir, src_expr):
     try:
         files = os.listdir(src_dir)
     except:
-        wulifang.message.info("忽略: %s" % src_dir)
+        wulifang.message.info("忽略无法访问的目录: %s" % src_dir)
         files = []
     with executor:
         for _ in executor.map(_copy_file, (i for i in files if os.path.normcase(i) in seq)):  # type: ignore
