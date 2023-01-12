@@ -30,7 +30,7 @@ def _hashed_dir(dir_path):
 
 def _save_by_expr(cwd, file_dir, src_expr):
     # type: (Text, Text, Text) -> Text
-    if not src_expr or not os.path.isabs(src_expr):
+    if not src_expr or src_expr.startswith(file_dir):
         return src_expr
     src_dir, src_expr = os.path.split(src_expr)
     wulifang.message.info("正在打包: %s" % src_dir)
@@ -77,7 +77,7 @@ def pack_project():
         if gizmo_count:
             wulifang.message.info("将 %d 个 Gizmo 转为了 Group" % gizmo_count)
 
-        file_dir = "files"
+        file_dir = os.path.basename(cast_text(script_name)) + ".files"
         for n in nuke.allNodes():
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
@@ -87,4 +87,4 @@ def pack_project():
                         )
                     )
 
-    wulifang.message.info("项目打包完毕")
+        wulifang.message.info("项目打包完毕，相关文件存放于 %s" % file_dir)
