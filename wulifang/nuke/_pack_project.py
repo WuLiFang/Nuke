@@ -22,9 +22,8 @@ from ._gizmo import gizmo_to_group
 
 def _hashed_dir(dir_path):
     # type: (Text) -> Text
-    p = os.path.normcase(dir_path)
-    parent, p = os.path.split(p)
-    h = hashlib.sha256(parent.encode("utf-8")).hexdigest()
+    parent, p = os.path.split(dir_path)
+    h = hashlib.sha256(os.path.normpath(parent).encode("utf-8")).hexdigest()
     return "%s.@%s" % (p, h[:8])
 
 
