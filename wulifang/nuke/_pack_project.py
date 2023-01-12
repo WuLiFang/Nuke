@@ -27,6 +27,19 @@ def _hashed_dir(dir_path):
     return "%s.@%s" % (p, h[:8])
 
 
+def _is_weak_same(a, b):
+    # type: (Text, Text) -> bool
+    try:
+        stat_a = os.stat(a)
+        stat_b = os.stat(b)
+    except:
+        return False
+
+    return (
+        stat_a.st_size == stat_b.st_size and abs(stat_a.st_mtime - stat_b.st_mtime) < 1
+    )
+
+
 def _save_by_expr(cwd, file_dir, src_expr):
     # type: (Text, Text, Text) -> Text
     wulifang.message.info("正在打包: %s" % src_expr)
@@ -43,7 +56,10 @@ def _save_by_expr(cwd, file_dir, src_expr):
     def _copy_file(i):
         # type: (Text) -> None
         src = os.path.join(src_dir, i)
-        shutil.copy2(src, dst_dir)
+        dst = os.path.join(dst_dir, i)
+        if _is_weak_same(src, dst):
+            return
+        shutil.copy2(src, dst)
 
     try:
         files = os.listdir(src_dir)
