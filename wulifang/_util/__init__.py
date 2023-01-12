@@ -15,3 +15,4 @@ from ._iterkeys import iterkeys
 from ._null_time import NULL_TIME
 from ._timezone import TZ_CHINA, TZ_UTC, FixedTimezone
 from ._capture_exception import capture_exception
+from ._file_sequence import FileSequence

@@ -15,10 +15,8 @@ import wulifang
 from wulifang.vendor.concurrent import futures
 
 import nuke
-import re
 
-
-from .._util import cast_binary, cast_text, iteritems
+from .._util import cast_binary, cast_text, iteritems, FileSequence
 
 
 def _hashed_dir(dir_path):
@@ -29,51 +27,33 @@ def _hashed_dir(dir_path):
     return "%s.@%s" % (p, h[:8])
 
 
-class FilenameMatcher(object):
-    expression_number_pattern = re.compile(r"%0\d*d|#+|\d+")
-    actual_number_pattern = re.compile(r"\d+")
-    repl = "⯒"
-
-    def __init__(self, expr):
-        # type: (Text) -> None
-        self._target = self.expression_number_pattern.sub(
-            self.repl,
-            os.path.normcase(expr),
-        )
-
-    def match(self, v):
-        # type: (Text) -> bool
-        return (
-            self.actual_number_pattern.sub(self.repl, os.path.normcase(v))
-            == self._target
-        )
-
-
 def _save_by_expr(cwd, file_dir, src_expr):
     # type: (Text, Text, Text) -> Text
-    if not src_expr or src_expr.startswith(file_dir):
+    if not src_expr or not os.path.isabs(src_expr):
         return src_expr
     src_dir, src_expr = os.path.split(src_expr)
+    wulifang.message.info("正在打包: %s" % src_dir)
     _dir_with_hash = _hashed_dir(src_dir)
     dst_dir = os.path.join(cwd, file_dir, _dir_with_hash)
     try:
         os.makedirs(dst_dir)
     except:
         pass
-    wulifang.message.info("正在打包: %s" % src_dir)
-    m = FilenameMatcher(src_expr)
+    seq = FileSequence(os.path.normcase(src_expr))
     executor = futures.ThreadPoolExecutor(max_workers=32)
 
     def _copy_file(i):
         # type: (Text) -> None
-        shutil.copy2(os.path.join(src_dir, i), dst_dir)
+        src = os.path.join(src_dir, i)
+        shutil.copy2(src, dst_dir)
+
     try:
         files = os.listdir(src_dir)
     except:
         wulifang.message.info("忽略: %s" % src_dir)
         files = []
     with executor:
-        for _ in executor.map(_copy_file, (i for i in files if m.match(i))):  # type: ignore
+        for _ in executor.map(_copy_file, (i for i in files if os.path.normcase(i) in seq)):  # type: ignore
             pass
 
     return "/".join((file_dir, _dir_with_hash, src_expr))
