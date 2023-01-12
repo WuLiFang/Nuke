@@ -61,8 +61,9 @@ def _save_by_expr(cwd, file_dir, src_expr):
 
 
 def pack_project():
-    script_name = nuke.scriptName()
-    if not script_name:
+    try:
+        script_name = nuke.scriptName()
+    except RuntimeError:
         nuke.message("请先保存工程".encode("utf-8"))
         return
     with nuke.Undo("打包工程"):
