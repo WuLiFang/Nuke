@@ -30,10 +30,8 @@ def _hashed_dir(dir_path):
 
 def _save_by_expr(cwd, file_dir, src_expr):
     # type: (Text, Text, Text) -> Text
-    if not src_expr or src_expr.startswith(file_dir):
-        return src_expr
+    wulifang.message.info("正在打包: %s" % src_expr)
     src_dir, src_expr = os.path.split(src_expr)
-    wulifang.message.info("正在打包: %s" % src_dir)
     _dir_with_hash = _hashed_dir(src_dir)
     dst_dir = os.path.join(cwd, file_dir, _dir_with_hash)
     try:
@@ -67,6 +65,7 @@ def pack_project():
         nuke.message("请先保存工程".encode("utf-8"))
         return
     with nuke.Undo("打包工程"):
+        project_dir_old = cast_text(nuke.value(b"root.project_directory"))
         script_dir = cast_text(os.path.dirname(script_name))
         nuke.Root()["project_directory"].setValue("[python {nuke.script_directory()}]")
 
@@ -82,10 +81,12 @@ def pack_project():
         for n in nuke.allNodes():
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
-                    k.setText(
-                        cast_binary(
-                            _save_by_expr(script_dir, file_dir, cast_text(k.getText()))
-                        )
+                    old_src = cast_text(k.getText())
+                    if not old_src or old_src.startswith(file_dir):
+                        continue
+                    new_src = _save_by_expr(
+                        script_dir, file_dir, os.path.join(project_dir_old, old_src)
                     )
+                    k.setText(cast_binary(new_src))
 
         wulifang.message.info("项目打包完毕，相关文件存放于 %s" % file_dir)
