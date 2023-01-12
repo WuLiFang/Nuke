@@ -2381,7 +2381,7 @@ class GeoSelect_Knob(Knob):
     ...
 
 class Gizmo(Group):
-    def __getitem__(self, *args, **kwargs):
+    def __getitem__(self, name: bytes) -> Knob:
         """
         x.__getitem__(y) <==> x[y]
         """

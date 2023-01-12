@@ -17,6 +17,7 @@ from wulifang.vendor.concurrent import futures
 import nuke
 
 from .._util import cast_binary, cast_text, iteritems, FileSequence
+from ._gizmo import gizmo_to_group
 
 
 def _hashed_dir(dir_path):
@@ -67,6 +68,15 @@ def pack_project():
     with nuke.Undo("打包工程"):
         script_dir = cast_text(os.path.dirname(script_name))
         nuke.Root()["project_directory"].setValue("[python {nuke.script_directory()}]")
+
+        gizmo_count = 0
+        for n in nuke.allNodes():
+            if isinstance(n, nuke.Gizmo):
+                gizmo_to_group(n)
+                gizmo_count += 1
+        if gizmo_count:
+            wulifang.message.info("将 %d 个 Gizmo 转为了 Group" % gizmo_count)
+
         file_dir = "files"
         for n in nuke.allNodes():
             for _, k in iteritems(n.knobs()):
@@ -76,4 +86,5 @@ def pack_project():
                             _save_by_expr(script_dir, file_dir, cast_text(k.getText()))
                         )
                     )
-    wulifang.message.info("项目打包完毕，可能还有 Gizmo 需要转为 Group")
+
+    wulifang.message.info("项目打包完毕")

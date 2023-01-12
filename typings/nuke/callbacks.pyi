@@ -138,7 +138,7 @@ def removeOnDestroy(
 
 def onDestroy(): ...
 
-knobChangeds = {}
+knobChangeds: Dict[bytes, list[Any]] = {}
 
 def addKnobChanged(
     call: Callable[..., None],
