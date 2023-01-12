@@ -42,6 +42,10 @@ def test_expand_frame(expr, frame, expected):
         ("%02d.jpg", 0, 100, "01.jpg", True),
         ("test_v1.%02d.jpg", 0, 100, "test_v1.01.jpg", True),
         ("%d.jpg", None, None, "1001.jpg", True),
+        ("123%02d.jpg", 4, 4, "12304.jpg", True),
+        ("123%02d.jpg", 5, 5, "12304.jpg", False),
+        ("%02d123.jpg", 4, 4, "04123.jpg", True),
+        ("1%02d2.jpg", 4, 4, "1042.jpg", True),
     ],
 )
 def test_contains(expr, first, last, item, expected):

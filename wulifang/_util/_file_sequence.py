@@ -5,9 +5,17 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text, Optional
+    from typing import Text, Optional, Iterable
 
 import re
+from wulifang.vendor.six.moves import xrange
+
+
+def _iter_possible_frames(s):
+    # type: (Text) -> Iterable[int]
+    for start in xrange(len(s)):
+        for end in xrange(start + 1, len(s) + 1):
+            yield int(s[start:end])
 
 
 class FileSequence(object):
@@ -43,11 +51,11 @@ class FileSequence(object):
         if name == self.expr:
             return True
         for match in self._frame_value_pattern.finditer(name):
-            frame = int(match.group(0))
-            if not self.include_frame(frame):
-                continue
-            if self.expand_frame(self.expr, frame) == name:
-                return True
+            for frame in _iter_possible_frames(match.group(0)):
+                if not self.include_frame(frame):
+                    continue
+                if self.expand_frame(self.expr, frame) == name:
+                    return True
         return False
 
     @classmethod
