@@ -5492,10 +5492,11 @@ class Range_Knob(Array_Knob):
     ...
 
 class Root(Group):
-    __new__: ...
-    """
-    T.__new__(S, ...) -> a new object with type S, a subtype of T
-    """
+    def __new__(cls):
+        """
+        T.__new__(S, ...) -> a new object with type S, a subtype of T
+        """
+        ...
     def __len__(self) -> int:
         """
         x.__len__() <==> len(x)

@@ -6,10 +6,10 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import os
 
-import nuke
-import cast_unknown as cast
+import wulifang.nuke
+import wulifang.vendor.cast_unknown as cast
 
-import callback
+import nuke
 
 
 def _eval_proj_dir():
@@ -71,8 +71,8 @@ def _check_project():
         )
 
 
-def setup():
-    callback.CALLBACKS_ON_SCRIPT_LOAD.append(_add_root_info)
-    callback.CALLBACKS_ON_SCRIPT_LOAD.append(_eval_proj_dir)
-    callback.CALLBACKS_ON_SCRIPT_SAVE.append(_lock_connections)
-    callback.CALLBACKS_ON_SCRIPT_SAVE.append(_check_project)
+def init():
+    wulifang.nuke.callback.on_script_load(_add_root_info)
+    wulifang.nuke.callback.on_script_load(_eval_proj_dir)
+    wulifang.nuke.callback.on_script_save(_lock_connections)
+    wulifang.nuke.callback.on_script_save(_check_project)

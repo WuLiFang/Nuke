@@ -132,7 +132,7 @@ def pack_project():
         return
 
     with nuke.Undo("打包工程"), _Context() as ctx:
-        nuke.Root()["project_directory"].setValue("[python {nuke.script_directory()}]")
+        nuke.Root()[b"project_directory"].setValue("[python {nuke.script_directory()}]")
 
         for n in nuke.allNodes():
             if isinstance(n, nuke.Gizmo):

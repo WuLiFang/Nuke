@@ -9,7 +9,6 @@ def main():
     import dropdata
     import gizmo_convert
     import pref
-    import project_settings
     import enable_later
     import asset
     import patch.toolsets
@@ -18,7 +17,6 @@ def main():
     pref.setup()
     dropdata.setup()
     gizmo_convert.setup()
-    project_settings.setup()
     enable_later.setup()
     asset.setup()
 

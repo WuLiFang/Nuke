@@ -1,11 +1,12 @@
 # -*- coding=UTF-8 -*-
 # pyright: strict, reportTypeCommentUsage=false
 
-from __future__ import absolute_import, division, print_function, unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Any, Text, Union, Optional
+    from typing import Text
 
 import wulifang
 import wulifang.license
@@ -18,6 +19,7 @@ import nuke
 
 from ._init import skip_gui as _skip
 from ._pack_project import pack_project
+from ._project_settings import init as _init_project_settings
 
 
 def _reload():
@@ -59,10 +61,7 @@ def _obtain_menu(parent, name):
     return parent.menu(name_b) or parent.addMenu(name_b)
 
 
-def init_gui():
-    if _g.init_once or _skip():
-        return
-
+def _init_menu():
     rootMenu = nuke.menu("Nuke".encode("utf-8"))
 
     rootMenu.addMenu("帮助".encode("utf-8")).addCommand(
@@ -75,11 +74,17 @@ def init_gui():
         "打包工程".encode("utf-8"),
         pack_project,
     )
-    wulifang.publish = pyblish.PublishService()
 
+
+def init_gui():
+    if _g.init_once or _skip():
+        return
+    wulifang.publish = pyblish.PublishService()
     autolabel = AutolabelService(wulifang.file)
     wulifang.cleanup.add(lambda: nuke.removeAutolabel(autolabel.autolabel))
-    nuke.addAutolabel(autolabel.autolabel)
 
+    nuke.addAutolabel(autolabel.autolabel)
+    _init_menu()
+    _init_project_settings()
     _init_cgtw()
     _g.init_once = True
