@@ -8,13 +8,11 @@ def main():
     import gui
     import dropdata
     import gizmo_convert
-    import pref
     import enable_later
     import asset
     import patch.toolsets
 
     gui.setup()
-    pref.setup()
     dropdata.setup()
     gizmo_convert.setup()
     enable_later.setup()

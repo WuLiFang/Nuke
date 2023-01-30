@@ -1,8 +1,7 @@
 # -*- coding=UTF-8 -*-
 # pyright: strict, reportTypeCommentUsage=false
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -19,7 +18,7 @@ import nuke
 
 from ._init import skip_gui as _skip
 from ._pack_project import pack_project
-from ._project_settings import init as _init_project_settings
+from . import _preference, _project_settings
 
 
 def _reload():
@@ -85,6 +84,7 @@ def init_gui():
 
     nuke.addAutolabel(autolabel.autolabel)
     _init_menu()
-    _init_project_settings()
+    _project_settings.init()
+    _preference.init_gui()
     _init_cgtw()
     _g.init_once = True

@@ -3131,7 +3131,7 @@ class Knob:
         @return: True if successful, False if not.
         """
         ...
-    def setVisible(self, visible) -> None:
+    def setVisible(self, visible: bool) -> None:
         """
         Show or hide the knob.
 

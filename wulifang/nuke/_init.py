@@ -11,6 +11,7 @@ from wulifang.nuke.infrastructure.callback_service import CallbackService
 from wulifang.nuke.infrastructure.manifest_service import ManifestService
 
 import nuke
+from . import _preference
 
 
 class _g:
@@ -53,5 +54,5 @@ def init():
         wulifang.publish.publish()
 
     wulifang.nuke.callback.on_script_close(_on_script_close)
-
+    _preference.init()
     _g.init_once = True
