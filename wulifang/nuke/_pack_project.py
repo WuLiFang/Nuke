@@ -136,7 +136,7 @@ def pack_project():
 
         for n in nuke.allNodes():
             if isinstance(n, nuke.Gizmo):
-                if n.Class() not in nuke.knobChangeds:
+                if n.Class() in nuke.knobChangeds:
                     ctx.log("%s: 此类型节点有脚本回调，无法转为 Group" % (cast_text(n.name()),))
                     continue
                 gizmo_to_group(n)
