@@ -136,11 +136,12 @@ def pack_project():
 
         for n in nuke.allNodes():
             if isinstance(n, nuke.Gizmo):
+                name = cast_text(n.name())
                 if n.Class() in nuke.knobChangeds:
-                    ctx.log("%s: 此类型节点有脚本回调，无法转为 Group" % (cast_text(n.name()),))
+                    ctx.log("%s: 此类型节点有脚本回调，无法转为 Group" % (name,))
                     continue
                 gizmo_to_group(n)
-                ctx.log("将 %s 转为了 Group" % (cast_text(n.name()),))
+                ctx.log("将 %s 转为了 Group" % (name,))
 
         for n in nuke.allNodes():
             for _, k in iteritems(n.knobs()):
