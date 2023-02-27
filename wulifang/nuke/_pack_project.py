@@ -156,5 +156,5 @@ def pack_project():
                     k.setText(cast_binary(new_src))
         ctx.log("完成")
         nuke.message(
-            ("项目打包完毕，工程内的文件路径已被替换\n相关文件存放于 %s" % (ctx.file_dir,)).encode("utf-8")
+            ("项目打包完毕\n文件保存目录： %s\n工程内的文件路径已全部替换，请检查后保存" % (ctx.file_dir,)).encode("utf-8")
         )
