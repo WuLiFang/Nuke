@@ -1,0 +1,93 @@
+set cut_paste_input [stack 0]
+version 12.2 v9
+push 0
+push $cut_paste_input
+Group {
+ inputs 2
+ name AOV_merge_v02_5
+ addUserKnob {20 AOV_merge l User}
+ addUserKnob {41 operation T Merge1.operation}
+ addUserKnob {41 also_merge l "also merge" T Merge1.also_merge}
+ addUserKnob {41 disable_copy_P l "also merge P" T Copy13.disable}
+ addUserKnob {20 About}
+ addUserKnob {26 Comment -STARTLINE T ""}
+ addUserKnob {26 ""}
+ addUserKnob {26 Author -STARTLINE T pranjan}
+ addUserKnob {26 releaseMaintainer l Maintainer T schandrasekaran}
+ addUserKnob {26 releasedate l "Modification Date" T "2019/11/08 14:43"}
+}
+ Input {
+  inputs 0
+  name Input2
+  xpos -1057
+  ypos 303
+  number 1
+ }
+ Dot {
+  name Dot12
+  xpos -963
+  ypos 306
+ }
+set N1eaed3f0 [stack 0]
+ Shuffle {
+  red black
+  green black
+  blue black
+  name Shuffle17
+  label "\[value in]"
+  xpos -997
+  ypos 354
+ }
+push $N1eaed3f0
+ Input {
+  inputs 0
+  name Input1
+  xpos -908
+  ypos 191
+ }
+ Merge2 {
+  inputs 2
+  also_merge depth
+  name Merge1
+  label "\[value mix]"
+  xpos -908
+  ypos 298
+ }
+ Dot {
+  name out_char1
+  xpos -874
+  ypos 344
+  addUserKnob {20 About}
+  addUserKnob {26 Comment -STARTLINE T ""}
+  addUserKnob {26 ""}
+  addUserKnob {26 Author -STARTLINE T pranjan}
+  addUserKnob {26 releaseMaintainer l Maintainer T schandrasekaran}
+  addUserKnob {26 releasedate l "Modification Date" T "2019/11/08 14:43"}
+ }
+set N1e7f04e0 [stack 0]
+add_layer {P P.red P.green P.blue P.x P.y P.z P.alpha}
+ Merge2 {
+  inputs 2
+  also_merge P
+  name Merge23
+  label "\[value mix]"
+  xpos -997
+  ypos 407
+ }
+push $N1e7f04e0
+ Copy {
+  inputs 2
+  from0 -rgba.alpha
+  to0 -rgba.alpha
+  channels P
+  name Copy13
+  xpos -908
+  ypos 402
+  disable true
+ }
+ Output {
+  name Output1
+  xpos -908
+  ypos 496
+ }
+end_group
