@@ -2327,7 +2327,7 @@ class FreeType_Knob(Knob):
         @return: [String, String].
         """
         ...
-    def setValue(self, family, style) -> None:
+    def setValue(self, family: bytes, style: bytes) -> None:
         """
         self.setValue(filename,index) -> None.
 

@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text, Optional
+    from typing import Text, Optional, Iterator
 
 import codecs
 import datetime
@@ -64,7 +64,7 @@ class _Context(object):
         # type: (nuke.File_Knob) -> Text
         input = cast_text(k.getText())
         if not input:
-            return ''
+            return ""
         try:
             file_sequence = next(
                 FileSequence.from_paths(
@@ -83,8 +83,10 @@ class _Context(object):
                     % (k.node().fullName(), k.name(), input, output)
                 )
             return output
-        except Exception as ex: 
-            self.log("%s.%s: 无法处理表达式：'%s': %s" % (k.node().fullName(), k.name(), input, ex))
+        except Exception as ex:
+            self.log(
+                "%s.%s: 无法处理表达式：'%s': %s" % (k.node().fullName(), k.name(), input, ex)
+            )
             return input
 
 
@@ -152,7 +154,7 @@ def _save_by_expr(ctx, src_expr):
 
 
 def _iter_deep_all_nodes(root=None):
-    # type: (Optional[nuke.Group]) -> ...
+    # type: (Optional[nuke.Group]) -> Iterator[nuke.Node]
     for n in (root or nuke.Root()).nodes():
         if isinstance(n, nuke.Group):
             for i in _iter_deep_all_nodes(n):
@@ -190,6 +192,14 @@ def pack_project():
                         ctx, os.path.join(ctx.project_dir_old, old_src)
                     )
                     k.setText(cast_binary(new_src))
+                if isinstance(k, nuke.FreeType_Knob):
+                    old_value = k.getValue()
+                    if old_value[0] != b"Utopia":
+                        k.setValue(b"Utopia", b"Regular")
+                        ctx.log(
+                            "%s.%s: 设置 FreeType 字体为 Utopia（Nuke 自带）：原始值=%s"
+                            % (n.fullName(), k.name(), old_value)
+                        )
         ctx.log("完成")
         nuke.message(
             ("项目打包完毕\n文件保存目录： %s\n工程内的文件路径已全部替换，请检查后保存" % (ctx.file_dir,)).encode(
