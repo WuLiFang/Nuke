@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text
+    from typing import Text, Optional
 
 import codecs
 import datetime
@@ -87,7 +87,7 @@ def _save_by_expr(ctx, src_expr):
 
     _dir_with_hash = _hashed_dir(src_dir)
     dst_dir = os.path.join(ctx.file_dir, _dir_with_hash)
-    
+
     try:
         os.makedirs(dst_dir)
     except:
@@ -124,6 +124,15 @@ def _save_by_expr(ctx, src_expr):
     return "/".join((ctx.file_dir_base, _dir_with_hash, src_base))
 
 
+def _iter_deep_all_nodes(root=None):
+    # type: (Optional[nuke.Group]) -> ...
+    for n in (root or nuke.Root()).nodes():
+        if isinstance(n, nuke.Group):
+            for i in _iter_deep_all_nodes(n):
+                yield i
+        yield n
+
+
 def pack_project():
     try:
         nuke.scriptName()
@@ -134,27 +143,29 @@ def pack_project():
     with nuke.Undo("打包工程"), _Context() as ctx:
         nuke.Root()[b"project_directory"].setValue("[python {nuke.script_directory()}]")
 
-        for n in nuke.allNodes():
+        for n in _iter_deep_all_nodes():
             if isinstance(n, nuke.Gizmo):
-                name = cast_text(n.name())
+                name = cast_text(n.fullName())
                 if n.Class() in nuke.knobChangeds:
                     ctx.log("%s: 此类型节点有脚本回调，无法转为 Group" % (name,))
                     continue
                 gizmo_to_group(n)
                 ctx.log("将 %s 转为了 Group" % (name,))
 
-        for n in nuke.allNodes():
+        for n in _iter_deep_all_nodes():
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
                     old_src = cast_text(k.getText())
                     if not old_src or old_src.startswith(ctx.file_dir_base):
                         continue
-                    ctx.log("打包文件: %s.%s: %s" % (n.name(), k.name(), old_src))
+                    ctx.log("打包文件: %s.%s: %s" % (n.fullName(), k.name(), old_src))
                     new_src = _save_by_expr(
                         ctx, os.path.join(ctx.project_dir_old, old_src)
                     )
                     k.setText(cast_binary(new_src))
         ctx.log("完成")
         nuke.message(
-            ("项目打包完毕\n文件保存目录： %s\n工程内的文件路径已全部替换，请检查后保存" % (ctx.file_dir,)).encode("utf-8")
+            ("项目打包完毕\n文件保存目录： %s\n工程内的文件路径已全部替换，请检查后保存" % (ctx.file_dir,)).encode(
+                "utf-8"
+            )
         )
