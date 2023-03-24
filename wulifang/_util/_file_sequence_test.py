@@ -51,3 +51,42 @@ def test_expand_frame(expr, frame, expected):
 def test_contains(expr, first, last, item, expected):
     # type: (Text, Optional[int], Optional[int], Text, bool) -> None
     assert (item in FileSequence(expr, first, last)) == expected
+
+
+@pytest.mark.parametrize(
+    ("paths", "expected"),
+    [
+        (("image.1.png", "image.2.png"), (("image.#.png", 1, 2),)),
+        (("image.1.png", "image.2.png", "image.3.png"), (("image.#.png", 1, 3),)),
+        (("example.txt",), (("example.txt", None, None),)),
+        (("example_v1.txt",), (("example_v1.txt", None, None),)),
+        (("image.0001.png", "image.0002.png"), (("image.####.png", 1, 2),)),
+        (("image.0001.png", "image.0002.png"), (("image.####.png", 1, 2),)),
+        (
+            (
+                "example.1001.exr",
+                "example.1002.exr",
+                "example.1003.exr",
+            ),
+            (
+                (
+                    "example.####.exr",
+                    1001,
+                    1003,
+                ),
+            ),
+        ),
+        (
+            ("shot001/image.0001.png", "shot001/image.0002.png"),
+            (("shot001/image.####.png", 1, 2),),
+        ),
+    ],
+)
+def test_from_paths(paths, expected):
+    # type: (tuple[Text, ...], tuple[tuple[Text,Optional[int], Optional[int]], ...]) -> None
+    got = list(FileSequence.from_paths(paths))
+    assert len(got) == len(expected)
+    for index in range(len(expected)):
+        assert got[index].expr == expected[index][0]
+        assert got[index].first == expected[index][1]
+        assert got[index].last == expected[index][2]

@@ -60,6 +60,33 @@ class _Context(object):
         wulifang.message.info(msg)
         self._log(msg)
 
+    def get_src(self, k):
+        # type: (nuke.File_Knob) -> Text
+        input = cast_text(k.getText())
+        if not input:
+            return ''
+        try:
+            file_sequence = next(
+                FileSequence.from_paths(
+                    (
+                        cast_text(k.evaluate(frame))
+                        for frame in range(
+                            nuke.Root().firstFrame(), nuke.Root().lastFrame() + 1
+                        )
+                    )
+                )
+            )
+            output = file_sequence.expr
+            if input != output:
+                self.log(
+                    "%s.%s: 计算表达式：输入='%s', 输出='%s'"
+                    % (k.node().fullName(), k.name(), input, output)
+                )
+            return output
+        except Exception as ex: 
+            self.log("%s.%s: 无法处理表达式：'%s': %s" % (k.node().fullName(), k.name(), input, ex))
+            return input
+
 
 def _hashed_dir(dir_path):
     # type: (Text) -> Text
@@ -155,7 +182,7 @@ def pack_project():
         for n in _iter_deep_all_nodes():
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
-                    old_src = cast_text(k.getText())
+                    old_src = ctx.get_src(k)
                     if not old_src or old_src.startswith(ctx.file_dir_base):
                         continue
                     ctx.log("打包文件: %s.%s: %s" % (n.fullName(), k.name(), old_src))

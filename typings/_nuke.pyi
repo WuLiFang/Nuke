@@ -1804,7 +1804,7 @@ class EvalString_Knob(String_Knob):
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def evaluate(self) -> six.binary_type:
+    def evaluate(self, frame: int = ...) -> six.binary_type:
         """
         Evaluate the string, performing substitutions.
 
@@ -1866,7 +1866,7 @@ class File_Knob(EvalString_Knob):
         @return: None.
         """
         ...
-    def getEvaluatedValue(self, *args, **kwargs):
+    def getEvaluatedValue(self, oc: OutputContext = ...) -> bytes:
         """
         self.getValue(oc) -> String.
 
