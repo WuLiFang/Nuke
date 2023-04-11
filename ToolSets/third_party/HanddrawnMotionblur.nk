@@ -1,0 +1,377 @@
+#! C:/Program Files/Nuke12.1v2/nuke-12.1.2.dll -nx
+version 12.1 v2
+Group {
+name HanddrawnMotionblur1
+inputs 2
+tile_color 0x441bff
+addUserKnob {20 Tracker}
+addUserKnob {41 tracks l "" -STARTLINE T Tracker1.tracks}
+addUserKnob {41 add_track l "add track" T Tracker1.add_track}
+addUserKnob {41 del_tracks l "delete tracks" -STARTLINE T Tracker1.del_tracks}
+addUserKnob {41 select_all l "select all" -STARTLINE T Tracker1.select_all}
+addUserKnob {41 average_tracks l "average tracks" -STARTLINE T Tracker1.average_tracks}
+addUserKnob {41 track_to_start l "" -STARTLINE T Tracker1.track_to_start}
+addUserKnob {41 track_stop l "" -STARTLINE T Tracker1.track_stop}
+addUserKnob {41 track_to_end l "" -STARTLINE T Tracker1.track_to_end}
+addUserKnob {20 MotionBlur}
+addUserKnob {26 HDMB l "" +STARTLINE T "<font size=\"5\"><span style=\"color:#646464\">HanddrawnMotionblur\n\n<font size=\"3\"><span style=\"color:#646464\"> v1.0"}
+addUserKnob {26 by64 l "" +STARTLINE T "<font size=\"2\"><span style=\"color:#646464\">    By 64"}
+addUserKnob {26 static_01 l <b>MotionBlur}
+addUserKnob {41 center T GodRays1.center}
+addUserKnob {41 rotate T Tracker1.rotate}
+addUserKnob {41 scale T Tracker1.scale}
+addUserKnob {41 Size T Merge2.mix}
+addUserKnob {41 Noise_steps T GodRays1.steps}
+addUserKnob {41 max -STARTLINE T GodRays1.max}
+addUserKnob {3 MB_Sreps}
+MB_Sreps 10
+addUserKnob {20 more -STARTLINE n 1}
+more 0
+addUserKnob {41 multiply T Grade1.multiply}
+addUserKnob {41 add l offset T Grade1.add}
+addUserKnob {41 gamma_1 l gamma T Grade1.gamma}
+addUserKnob {6 optimizationOFF l Optimization_off +STARTLINE}
+addUserKnob {20 endGroup_2 l endGroup n -1}
+addUserKnob {26 static_02 l <b>Noise}
+addUserKnob {6 Noise +STARTLINE}
+addUserKnob {41 size l x/ysize T Noise1.size}
+addUserKnob {41 zoffset l z T Noise1.zoffset}
+addUserKnob {41 octaves T Noise1.octaves}
+addUserKnob {41 nyquist l "clip at Nyquist limit" -STARTLINE T Noise1.nyquist}
+addUserKnob {41 lacunarity T Noise1.lacunarity}
+addUserKnob {41 gain T Noise1.gain}
+addUserKnob {41 gamma T Noise1.gamma}
+addUserKnob {26 static_03 l <b>R&S}
+addUserKnob {20 onlyrsG l "" +STARTLINE n 1}
+onlyrsG 0
+addUserKnob {3 onlyRS l OnlyRS}
+addUserKnob {12 RS l center}
+RS {1024 700}
+addUserKnob {41 rotate_1 l rotate T GodRays3.rotate}
+addUserKnob {41 scale_1 l scale T GodRays3.scale}
+addUserKnob {41 steps_1 l Noise_Steps T GodRays3.steps}
+addUserKnob {41 max_1 l max -STARTLINE T GodRays3.max}
+addUserKnob {3 MB_Steps}
+MB_Steps 10
+addUserKnob {20 endGroup_1 l endGroup n -1}
+addUserKnob {20 endGroup n -1}
+addUserKnob {41 transform +INVISIBLE T Tracker1.transform}
+addUserKnob {41 reference_frame l "reference frame" +INVISIBLE T Tracker1.reference_frame}
+addUserKnob {41 jitter_period l "jitter period" +INVISIBLE T Tracker1.jitter_period}
+addUserKnob {41 smoothT l "smooth t" +INVISIBLE T Tracker1.smoothT}
+addUserKnob {41 smoothR l r +INVISIBLE T Tracker1.smoothR}
+addUserKnob {41 smoothS l s +INVISIBLE T Tracker1.smoothS}
+addUserKnob {41 livelink_transform l "live-link transform" +INVISIBLE T Tracker1.livelink_transform}
+addUserKnob {41 matrix +INVISIBLE T Tracker1.matrix}
+addUserKnob {41 translate +INVISIBLE T Tracker1.translate}
+addUserKnob {41 skewX l "skew X" +INVISIBLE T Tracker1.skewX}
+addUserKnob {41 skewY l "skew Y" +INVISIBLE T Tracker1.skewY}
+addUserKnob {41 skew_order l "skew order" +INVISIBLE T Tracker1.skew_order}
+addUserKnob {41 center_1 l center +INVISIBLE T Tracker1.center}
+addUserKnob {41 filter +INVISIBLE T Tracker1.filter}
+addUserKnob {41 clamp +INVISIBLE T Tracker1.clamp}
+addUserKnob {41 black_outside l "black outside" +INVISIBLE T Tracker1.black_outside}
+addUserKnob {41 motionblur +INVISIBLE T Tracker1.motionblur}
+addUserKnob {41 shutter +INVISIBLE T Tracker1.shutter}
+addUserKnob {41 shutteroffset l "shutter offset" +INVISIBLE T Tracker1.shutteroffset}
+addUserKnob {41 shuttercustomoffset l "" -STARTLINE +INVISIBLE T Tracker1.shuttercustomoffset}
+addUserKnob {41 selected_tracks +INVISIBLE T Tracker1.selected_tracks}
+addUserKnob {41 top_left_draw_position l "top left draw position" +INVISIBLE T Tracker1.top_left_draw_position}
+addUserKnob {41 mouseReleaseCallBack +INVISIBLE T Tracker1.mouseReleaseCallBack}
+addUserKnob {41 userClickedKeyFrame +INVISIBLE T Tracker1.userClickedKeyFrame}
+addUserKnob {41 previous_filter +INVISIBLE T Tracker1.previous_filter}
+addUserKnob {41 translate_1 l translate +INVISIBLE T GodRays1.translate}
+addUserKnob {41 translate_2 l translate +INVISIBLE T GodRays3.translate}
+addUserKnob {41 center_2 l center +INVISIBLE T GodRays3.center}
+}
+Transform {
+inputs 0
+translate {{parent.Tracker1.translate.x-parent.Tracker1.translate.x(frame-1)} {parent.Tracker1.translate.y-parent.Tracker1.translate.y(frame-1)}}
+center {1024 778}
+name Transform1
+xpos 701
+ypos -531
+}
+Input {
+inputs 0
+name Input
+xpos 825
+ypos -626
+}
+set N3364e800 [stack 0]
+Tracker4 {
+reference_frame 1001
+center {320 240}
+name Tracker1
+xpos 701
+ypos -626
+}
+Reformat {
+inputs 0
+name Reformat1
+xpos 557
+ypos -597
+}
+Noise {
+size 11
+gain 0.8
+gamma 0.08
+center {-3000 3000}
+name Noise1
+xpos 557
+ypos -573
+}
+set N33699800 [stack 0]
+Dot {
+name Dot1
+xpos 463
+ypos -570
+}
+GodRays {
+center {{parent.RS} {parent.RS}}
+max true
+name GodRays3
+xpos 429
+ypos -494
+}
+GodRays {
+rotate {{-parent.GodRays3.rotate}}
+scale {{2-parent.GodRays3.scale}}
+center {{parent.GodRays3.center} {parent.GodRays3.center}}
+steps {{parent.GodRays3.steps}}
+max {{parent.GodRays3.max}}
+name GodRays4
+xpos 429
+ypos -460
+}
+push $N33699800
+GodRays {
+translate {{parent.Transform1.translate*0.5} {parent.Transform1.translate*0.5}}
+rotate {{parent.Tracker1.rotate}}
+scale {{parent.Tracker1.scale} {parent.Tracker1.scale}}
+steps 6
+max true
+name GodRays1
+xpos 557
+ypos -536
+}
+GodRays {
+translate {{parent.Transform1.translate*0.5} {parent.Transform1.translate*0.5}}
+rotate {{parent.GodRays1.rotate}}
+scale {{parent.GodRays1.scale} {parent.GodRays1.scale}}
+center {{parent.GodRays1.center} {parent.GodRays1.center}}
+steps {{parent.GodRays1.steps}}
+max {{parent.GodRays1.max}}
+name GodRays2
+xpos 557
+ypos -502
+}
+set N33698400 [stack 0]
+Switch {
+inputs 2
+which {{parent.onlyRS}}
+name Only_RS
+xpos 557
+ypos -455
+}
+set N33698000 [stack 0]
+push 0
+Merge2 {
+inputs 2
+mix {{parent.Merge2.mix}}
+name Merge3
+xpos 273
+ypos -141
+}
+Input {
+inputs 0
+name RotoPaint
+xpos 273
+ypos -412
+number 1
+}
+push 0
+Merge2 {
+inputs 2
+mix 0.5
+name Merge2
+xpos 273
+ypos -350
+}
+push $N33698000
+Merge2 {
+inputs 2
+operation mask
+name Merge1
+xpos 557
+ypos -350
+}
+set N336d5000 [stack 0]
+push $N3364e800
+OFXcom.genarts.sapphire.distort.s_warpchroma_v1 {
+inputs 2
+steps {{parent.MB_Steps}}
+center {960 409}
+from_z_dist {{2-parent.GodRays3.scale}}
+from_rotate {{parent.GodRays3.rotate}}
+from_shift_x 0
+from_shift_y 0
+to_z_dist 1
+to_rotate 0
+to_shift_x 0
+to_shift_y 0
+warp_amount 1
+brightness 1
+color1 {1 1 1}
+color2 {0 0 0}
+color3 {0 0 0}
+white_balance false
+wrap_x No
+wrap_y No
+filter false
+blur_mask 0
+invert_mask false
+mask_use Luma
+"Crop Input" 1
+crop_left 0
+crop_right 0
+crop_top 0
+crop_bottom 0
+ShowCenter true
+ShowFromTransfm true
+ShowToTransform true
+ShowFromShift false
+ShowToShift false
+Enable_GPU true
+version 8.12
+version2 11017095
+name S_WarpChroma2
+xpos 557
+ypos -221
+}
+push $N336d5000
+push $N336d5000
+push $N336d5000
+push $N3364e800
+OFXcom.genarts.sapphire.distort.s_warpchroma_v1 {
+inputs 2
+steps {{parent.MB_Sreps}}
+center {{parent.GodRays1.center} {parent.GodRays1.center}}
+from_z_dist {{2-parent.Tracker1.scale}}
+from_rotate {{parent.Tracker1.rotate}}
+from_shift_x {{-parent.Transform1.translate.x*0.5}}
+from_shift_y {{-parent.Transform1.translate.y*0.5}}
+to_z_dist 1
+to_rotate 0
+to_shift_x 0
+to_shift_y 0
+warp_amount 1
+brightness 1
+color1 {1 1 1}
+color2 {0 0 0}
+color3 {0 0 0}
+white_balance false
+wrap_x No
+wrap_y No
+filter false
+blur_mask 0
+invert_mask false
+mask_use Luma
+"Crop Input" 1
+crop_left 0
+crop_right 0
+crop_top 0
+crop_bottom 0
+ShowCenter true
+ShowFromTransfm true
+ShowToTransform true
+ShowFromShift false
+ShowToShift false
+Enable_GPU true
+version 8.12
+version2 11017095
+name S_WarpChroma1
+xpos 825
+ypos -350
+}
+OFXcom.genarts.sapphire.distort.s_warpchroma_v1 {
+inputs 2
+steps {{parent.MB_Sreps}}
+center {{parent.GodRays1.center} {parent.GodRays1.center}}
+from_z_dist {{((1-parent.S_WarpChroma1.from_z_dist)*0.5)+parent.S_WarpChroma1.from_z_dist}}
+from_rotate {{-parent.S_WarpChroma1.from_rotate/4}}
+from_shift_x {{parent.S_WarpChroma1.from_shift_x*0.3}}
+from_shift_y {{parent.S_WarpChroma1.from_shift_y*0.3}}
+to_z_dist 1
+to_rotate 0
+to_shift_x 0
+to_shift_y 0
+warp_amount 1
+brightness 1
+color1 {1 1 1}
+color2 {0 0 0}
+color3 {0 0 0}
+white_balance false
+wrap_x No
+wrap_y No
+filter false
+blur_mask 0
+invert_mask false
+mask_use Luma
+"Crop Input" 1
+crop_left 0
+crop_right 0
+crop_top 0
+crop_bottom 0
+ShowCenter true
+ShowFromTransfm true
+ShowToTransform true
+ShowFromShift false
+ShowToShift false
+Enable_GPU true
+version 8.12
+version2 11017095
+name S_WarpChroma4
+xpos 825
+ypos -311
+disable {{parent.optimizationOFF}}
+}
+Grade {
+inputs 2
+name Grade1
+xpos 825
+ypos -279
+}
+Switch {
+inputs 2
+which {{parent.onlyRS}}
+name Only_RS2
+xpos 825
+ypos -221
+}
+Switch {
+inputs 2
+which {{parent.Noise}}
+name show_Noise
+xpos 825
+ypos -141
+}
+Output {
+name Output1
+xpos 825
+ypos -76
+}
+CheckerBoard2 {
+inputs 0
+name CheckerBoard2
+xpos -1362
+ypos -495
+}
+push $N33698400
+Viewer {
+frame_range 1-1106
+name Viewer1
+xpos 825
+ypos -20
+}
+end_group
