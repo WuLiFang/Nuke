@@ -152,6 +152,4 @@ def warn_mtime(show_ok=False, since=None):
 def setup():
     pendulum.set_locale("zh")
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(reset_warning_history)
-    callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_missing_frames)
     callback.CALLBACKS_ON_SCRIPT_LOAD.append(warn_mtime)
-    callback.CALLBACKS_ON_SCRIPT_SAVE.append(warn_missing_frames)

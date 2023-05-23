@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 import nuke
 from autolabel import autolabel
 
+from wulifang._util import is_local_file, cast_text
 import wulifang.vendor.cast_unknown as cast
 import wulifang.vendor.six as six
 
@@ -109,17 +110,20 @@ class AutolabelService:
         label += "<b>帧范围: </b><span>{} - {}</span>".format(
             this.firstFrame(), this.lastFrame()
         )
-        missing_frames = list(
-            self.file.missing_frames(
-                cast.text(nuke.filename(this)),
-                this.firstFrame(),
-                this.lastFrame(),
+
+        if is_local_file(cast_text(nuke.filename(this))):
+            missing_frames = list(
+                self.file.missing_frames(
+                    cast.text(nuke.filename(this)),
+                    this.firstFrame(),
+                    this.lastFrame(),
+                )
             )
-        )
-        if missing_frames:
-            label += "\n<span>缺帧: {}</span>".format(
-                nuke.FrameRanges(missing_frames),
-            )
+            if missing_frames:
+                label += "\n<span>缺帧: {}</span>".format(
+                    nuke.FrameRanges(missing_frames),
+                )
+
         label += "\n<b>修改日期: </b>{}".format(this.metadata(b"input/mtime"))
         ret = self._with_next(label, True)
         return ret
