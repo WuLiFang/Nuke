@@ -1,0 +1,78 @@
+set cut_paste_input [stack 0]
+version 11.3 v1
+push 0
+push 0
+push 0
+push $cut_paste_input
+ContactSheet {
+ inputs 4
+ width {{input.width*columns*resMult}}
+ height {{input.height*rows*resMult}}
+ rows {{"\[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ] * \[expr \{int( ceil ( (\[numvalue inputs] /(sqrt( \[numvalue inputs] ) ) )) )\} ] < \[numvalue inputs]   ? \[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ] +1 : \[expr \{int( (sqrt( \[numvalue inputs] ) ) )\} ]"}}
+ columns {{"\[expr \{int( ceil ( (\[numvalue inputs] /(sqrt( \[numvalue inputs] )) )) )\} ]"}}
+ roworder TopBottom
+ startframe 1
+ endframe 1
+ name ContactSheetPro2
+ tile_color 0x65e3ffff
+ selected true
+ xpos 26
+ ypos -115
+ addUserKnob {20 Settings}
+ addUserKnob {3 node_amount +INVISIBLE}
+ node_amount 4
+ addUserKnob {26 description l "" +STARTLINE T "\nPlease select read nodes and press Generate\n"}
+ addUserKnob {22 generate l Generate T "counter = 0\n\nthis_node = nuke.thisNode()\nthis_node_name = this_node\['name'].getValue()\n\nkeyslist = \[]\nfor specnode in nuke.selectedNodes():\n    meta = specnode.metadata().keys()\n    for key in meta:\n        keyslist.append(key)\nkeyslist = list(set(keyslist))\n\nnuke.thisNode()\['metadata'].setValues(keyslist)\n\nfor i in nuke.selectedNodes():\n    if i.Class() in \['Read']:\n\n        reformat = nuke.nodes.Reformat()\n        reformat.setInput(0,i)\n        reformat\['type'].setValue(1)\n        reformat\['box_fixed'].setValue(True)\n\n        reformat\['box_width'].setExpression('\{\}.reformat_size.w'.format(this_node_name))\n        reformat\['box_height'].setExpression('\{\}.reformat_size.h'.format(this_node_name))        \n        reformat\['black_outside'].setValue(1)\n\n        exp_node = nuke.nodes.Expression(expr3 = 1)\n        exp_node.setInput(0,reformat)\n\n        crop_node = nuke.nodes.Crop()\n        crop_node\['box'].setExpression('width',2)\n        crop_node\['box'].setExpression('height',3)\n        crop_node.setInput(0,exp_node)\n\n        edge_detect_node = nuke.nodes.EdgeDetectWrapper(channels = 'alpha')\n        edge_detect_node.setInput(0,crop_node)\n        edge_detect_node\['disable'].setExpression('!(\{\}.enable_border)'.format(this_node_name))\n\n        filter_erode_node = nuke.nodes.FilterErode(channels = 'alpha')\n        filter_erode_node\['size'].setExpression('0-\{\}.border_thickness*10'.format(this_node_name))\n        filter_erode_node.setInput(0,edge_detect_node)\n        filter_erode_node\['disable'].setExpression('!(\{\}.enable_border)'.format(this_node_name))\n\n        grade_secondary = nuke.nodes.Grade(channels = 'alpha')\n        grade_secondary\['white_clamp'].setValue(1)\n        grade_secondary.setInput(0,filter_erode_node)\n        grade_secondary\['maskChannelInput'].setValue('rgba.alpha')\n        grade_secondary\['whitepoint'].setValue(0.5)\n        grade_secondary\['blackpoint'].setValue(0.5)     \n        grade_secondary\['disable'].setExpression('!(\{\}.enable_border)'.format(this_node_name))\n\n        clampnode = nuke.nodes.Clamp(maximum = 0,maskChannelInput = 'rgba.alpha',channels = 'rgb')\n        clampnode\['disable'].setExpression('!\{\}.enable_border'.format(this_node_name))\n        clampnode.setInput(0,grade_secondary)\n\n        grade_border = nuke.nodes.Grade()\n        grade_border\['add'].setSingleValue(False)\n        grade_border\['add'].setExpression('\{\}.border_color.r'.format(this_node_name),0)\n        grade_border\['add'].setExpression('\{\}.border_color.g'.format(this_node_name),1)\n        grade_border\['add'].setExpression('\{\}.border_color.b'.format(this_node_name),2)\n        grade_border\['mix'].setExpression('%s.border_opacity' %this_node_name)\n        grade_border\['maskChannelInput'].setValue('rgba.alpha')\n        grade_border.setInput(0,clampnode)\n        grade_border\['disable'].setExpression('!(\{\}.enable_border)'.format(this_node_name))\n\n        exp_node2 = nuke.nodes.Expression(expr3 = 0)\n        exp_node2\['disable'].setExpression('\{\}.enable_border'.format(this_node_name))\n        exp_node2.setInput(0,grade_border)\n\n\n        grade_thirdly = nuke.nodes.Grade()\n        grade_thirdly\['tile_color'].setValue(4278190335)\n        grade_thirdly.setInput(0,exp_node2)\n        grade_thirdly\['maskChannelInput'].setValue('rgba.alpha')\n        grade_thirdly\['multiply'].setValue(0)\n        grade_thirdly\['add'].setSingleValue(False)\n        grade_thirdly\['add'].setValue(0.75,0)\n        grade_thirdly\['add'].setValue(0,1)\n        grade_thirdly\['add'].setValue(0,2)\n        grade_thirdly\['disable'].setValue(1)\n        grade_thirdly\['mix'].setExpression('%s.border_opacity' %this_node_name)\n\n        textnode_metadata = nuke.nodes.Text(label = 'metadata',output = 'alpha',message = '')\n        knob = nuke.Text_Knob('metadata_text_knob')\n        textnode_metadata.addKnob(knob)\n        textnode_metadata.knob('User').setFlag(nuke.INVISIBLE)\n        textnode_metadata\['translate'].setExpression('yjustify==1?-height*0.045:height*0.025',1)\n        textnode_metadata\['font'].setValue('C:/Windows/Fonts/arial.ttf')\n        textnode_metadata\['size'].setExpression('\{\}.text_scale*100'.format(this_node_name))\n        textnode_metadata\['xjustify'].setExpression('\{\}.justify_x'.format(this_node_name))\n        textnode_metadata\['yjustify'].setExpression('\{\}.justify_y+1'.format(this_node_name))    \n        \n        textnode_metadata.setInput(0,grade_thirdly)\n\n        textnode = nuke.nodes.Text(message=\"\[join \[lrange \[split \[lrange \[split \[basename \[value \[topnode].file]] .] 0 0] _] \[value start] end-\[value end]] _]\[if \{\{\[value \{0\}.frames]\}\} \{\{return .\[lrange \[split \[basename \[value \[topnode].file]] .] 1 end-1]\}\}]\[if \{\{\[value \{0\}.extend]\}\} \{\{return .\[lrange \[split \[basename \[value \[topnode].file]] .] 2 end]\}\}]\".format(this_node_name))\n        knob_start = nuke.Int_Knob('start')\n        knob_end = nuke.Int_Knob('end')\n        textnode.addKnob(knob_start)\n        textnode.addKnob(knob_end)\n        textnode\['start'].setExpression('\{\}.begin'.format(this_node_name))\n        textnode\['end'].setExpression('\{0\}.end<=0?0:\{0\}.end'.format(this_node_name))\n        textnode\['font'].setValue('C:/Windows/Fonts/arial.ttf')\n        textnode\['size'].setExpression('\{0\}.text_scale<0.5?50:\{0\}.text_scale*100'.format(this_node_name))\n        textnode\['xjustify'].setExpression('\{\}.justify_x'.format(this_node_name))\n        textnode\['yjustify'].setExpression('\{\}.justify_y+1'.format(this_node_name))            \n\n        for node in \[textnode_metadata,textnode]:\n            node\['box'].setExpression('xjustify==0?width*0.025+\{\}.padding_x/100*width:(xjustify==1?width*0.025:width*0.025)'.format(this_node_name),0)\n            node\['box'].setExpression('yjustify==1?height*0.025:(yjustify==2?height*0.025:height*0.025+\{\}.padding_y/100*height)'.format(this_node_name),1)\n            node\['box'].setExpression('xjustify==0?width-width*0.025:( xjustify==1?width-width*0.025:width-width*0.025-\{\}.padding_x/100*width) '.format(this_node_name),2)\n            node\['box'].setExpression('yjustify==1?height-height*0.025-\{\}.padding_y/100*height:(yjustify==2?height-height*0.025:height-height*0.025)  '.format(this_node_name),3)  \n        textnode.setInput(0,textnode_metadata)\n\n        nuke.thisNode().setInput(counter,textnode)\n        counter+=1\n\nthis_node\['node_amount'].setValue(counter)\n\n\n\n" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {20 Format n 1}
+ addUserKnob {14 reformat_size l "Reformat size" R 0 100}
+ reformat_size {1920 1080}
+ addUserKnob {7 aspectratio l "aspect ratio" t "This will show you the aspect ratio of each input" -STARTLINE}
+ aspectratio {{ContactSheetPro2.reformat_size.w/ContactSheetPro2.reformat_size.h}}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {7 resMult l "Resolution Multiplier" R 0.1 2}
+ resMult 1
+ addUserKnob {20 Position l Text n 1}
+ addUserKnob {26 filenamerange l "Filename range"}
+ addUserKnob {3 begin t "This would change the name of each read node on viewer based on begin and end. Begin and end is the coordinates of the name, and 0 in begin is the most begining position, 0 in end is for the last position.\nfor example: if you have a shot named aaaa_bbbb_cccc_dddd, then \n1 1 for begin and end will keep it as \nbbbb_cccc \n0 0 for begin and end will keep it as\naaaa_bbbb_cccc_dddd"}
+ addUserKnob {3 end -STARTLINE}
+ addUserKnob {22 update_name l Update t "This would change the name of each read node on viewer based on begin and end. Begin and end is the coordinates of the name, and 0 in begein is for the most begining position, 0 in end is for the last position.\nfor example: if you have a shot named aaaa_bbbb_cccc_dddd, then \n1 -1 for begin and end will keep it as \nbbbb_cccc \n0 0 for begin and end will keep it as\naaaa_bbbb_cccc_dddd" -STARTLINE +INVISIBLE T "Amount = int(nuke.thisNode()\['node_amount'].getValue())\nnodegraph = \[]\n\nfor i in range(Amount):\n    nodegraph.append(nuke.thisNode().input(i))\n\nfor node in nodegraph:\n    thisnode = nuke.thisNode()\n    this_node_name = thisnode\['name'].getValue()\n    A = int(nuke.thisNode()\['begin'].getValue())\n    if int(nuke.thisNode()\['end'].getValue()) >= 0:\n        B = ''\n    else:\n        B = int(nuke.thisNode()\['end'].getValue())\n    exp = \"\[join \[lrange \[split \[lrange \[split \[basename \[value \[topnode].file]] .] 0 0] _] \" + str(A) + \" end\" + str(B) + \"] _]\[if \{\{\[value \{0\}.frames]\}\} \{\{return .\[lrange \[split \[basename \[value \[topnode].file]] .] 1 end-1]\}\}]\[if \{\{\[value \{0\}.extend]\}\} \{\{return .\[lrange \[split \[basename \[value \[topnode].file]] .] 2 end]\}\}]\".format(this_node_name)\n    node\['message'].setValue(exp)"}
+ addUserKnob {6 frames l "Current frame" +STARTLINE}
+ frames true
+ addUserKnob {6 extend l extension -STARTLINE}
+ extend true
+ addUserKnob {7 text_scale l "Text scale" t "Control the text scale, the size of file name is controlled only when the Text scale is bigger than 0.5"}
+ text_scale 0.5
+ addUserKnob {4 justify_x l Align M {left center right justify "" "" "" "" "" "" ""}}
+ addUserKnob {4 justify_y l "" -STARTLINE M {top center bottom "" "" ""}}
+ justify_y bottom
+ addUserKnob {7 padding_x l "Padding x (%)" t "Padding in x axis, based on percentage" R 0 100}
+ padding_x 4
+ addUserKnob {7 padding_y l "Padding y (%)" t "Padding in y axis, based on percentage" R 0 100}
+ padding_y 4
+ addUserKnob {20 endGroup_3 l endGroup n -1}
+ addUserKnob {20 border l Border n 1}
+ addUserKnob {6 enable_border l "Enable border" +STARTLINE}
+ enable_border true
+ addUserKnob {18 border_color l "Border color"}
+ border_color {0.02216530964 0.4549218118 0}
+ addUserKnob {6 border_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 border_color_panelDropped_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 border_color_panelDropped_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 border_color_panelDropped_1_1_1 l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 border_thickness l "Border thickness" R 0 5}
+ border_thickness 2.02
+ addUserKnob {7 border_opacity l "Border opacity"}
+ border_opacity 1
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 Advanced n 1}
+ addUserKnob {4 metadata l Metadata M {input/bitsperchannel exr/type exr/compressionName exif/0/YResolution input/filename exr/cameraFNumber exr/channels exr/screenWindowCenter exif/2/ExifVersion exr/pixelAspectRatio exr/cameraFov input/width exr/cameraNearRange exif/2/FlashPixVersion input/mtime input/frame exr/cameraTargetDistance input/height exr/compression exr/dataWindow exr/cameraAperture exr/screenWindowWidth exif/0/ResolutionUnit exif/2/ColorSpace exr/displayWindow input/filereader exr/cameraProjection exr/cameraFarRange input/filesize exr/name exr/cameraNearClip exif/0/XResolution exr/cameraFocalLength exr/cameraFarClip input/ctime exr/cameraTransform exr/lineOrder}}
+ metadata exr/type
+ addUserKnob {26 gaptext3 l "" -STARTLINE T "    "}
+ addUserKnob {22 show l Add t "Add metadata to the alpha channel which showing in Meatadata" T "thisnode = nuke.thisNode()\nindex = int(thisnode\['metadata'].getValue())\nmetaname = thisnode\['metadata'].values()\[index]\n\nflag = True\n\nfor i in nuke.allNodes():\n    if i.knob('metadata_text_knob') and i.Class() in \['Text','Text2']:\n        message = i\['message'].getValue()\n        metadatas = i.metadata()\n        target = '\{\}: \{\}'.format(metaname, metadatas.get(metaname))\n\n        if(target and target not in message):\n            flag = False\n            newtext = message + target + '\\n'\n            i\['message'].setValue(newtext)\n    else:\n        pass\nif(flag):\n    nuke.message('This metadata is already exist! :P')" +STARTLINE}
+ addUserKnob {22 remove l Remove t "Remove metadata to the alpha channel which showing in Meatadata" -STARTLINE T "thisnode = nuke.thisNode()\nindex = int(thisnode\['metadata'].getValue())\nmetaname = thisnode\['metadata'].values()\[index]\n\nflag = False\n\nfor i in nuke.allNodes():\n    if i.knob('metadata_text_knob') and i.Class() in \['Text','Text2']:\n        message = i\['message'].getValue()\n        metadatas = i.metadata()\n        target = \"\{\}: \{\}\".format(metaname,metadatas.get(metaname)) + '\\n' \n        if(target in message):\n            flag = True\n            newtext = message.replace(target,'')\n            i\['message'].setValue(newtext)\nif (flag == False):\n    nuke.message(\"Oops! There's no such a metadata! :D\")"}
+ addUserKnob {22 add_all l "Add all" t "Add all Meatadata" -STARTLINE T "thisnode = nuke.thisNode()\ndata = ''\n\nfor i in nuke.allNodes():\n    if i.knob('metadata_text_knob') and i.Class() in \['Text','Text2']:                  \n        for metaname in thisnode\['metadata'].values():\n            metadatas = i.metadata()\n            target = \"\{\}: \{\}\".format(metaname,metadatas.get(metaname)) + '\\n'\n            data = data + target\n        i\['message'].setValue(data)\n        data = ''\n\n\n"}
+ addUserKnob {22 clear l Clear t "Clear all Meatadata" -STARTLINE T "thisnode = nuke.thisNode()\nfor i in nuke.allNodes():\n    if i.knob('metadata_text_knob') and i.Class() in \['Text','Text2']:    \n        i\['message'].setValue('')\n\n\n\n"}
+ addUserKnob {20 endGroup_2 l endGroup n -1}
+ addUserKnob {26 credit l "" +STARTLINE T "\nBarry Wang and Armen Mailyan (c) 2019"}
+}
