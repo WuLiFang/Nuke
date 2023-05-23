@@ -9,14 +9,12 @@ def main():
     import dropdata
     import gizmo_convert
     import enable_later
-    import asset
     import patch.toolsets
 
     gui.setup()
     dropdata.setup()
     gizmo_convert.setup()
     enable_later.setup()
-    asset.setup()
 
     patch.toolsets.enable()
 
