@@ -1,5 +1,28 @@
 # 更新日志
 
+## [2023.0.0](https://github.com/WuLiFang/Nuke/compare/v2022.2.2...v2023.0.0) (2023-06-02)
+
+### 特性
+
+- 允许配置图片上传名称 ([bee3af7](https://github.com/WuLiFang/Nuke/commit/bee3af78ae8365081d71f73d9c5b12d1459af7bc))
+- **nuke:** 日志记录小文件 ([29a4cbc](https://github.com/WuLiFang/Nuke/commit/29a4cbc1afc0735ec88569c736636d515cee84a3))
+- **nuke:** 支持打包工程 ([f59188d](https://github.com/WuLiFang/Nuke/commit/f59188d54b6ac712a3c4bd9eb896fcf50e73b218))
+- **nuke:** 打包工程: 将 freetype 控制设置为自带字体 ([50cb95a](https://github.com/WuLiFang/Nuke/commit/50cb95a70a1871ef5338ea3c3677adaaeceec32f))
+- **nuke:** 打包工程: 支持文件名表达式 ([00b8573](https://github.com/WuLiFang/Nuke/commit/00b8573c32582c2b973f48a7b76ede9e838fc007))
+- 支持吾立方清单文件 ([d678465](https://github.com/WuLiFang/Nuke/commit/d67846555d14bb79f41922b0abf86c083b0502a0))
+- 更新过期时间至 2024-01-01 ([f522b3d](https://github.com/WuLiFang/Nuke/commit/f522b3d13fe32e515c2bfb9d5ae35286d1813def))
+
+### 修复
+
+- 在非 windows 系统上出错 ([8c22e2b](https://github.com/WuLiFang/Nuke/commit/8c22e2b66cc50c1bd0524fecb172ea9b711ccfb2))
+- **hiero:** 在选择变更时崩溃 ([48c4ee4](https://github.com/WuLiFang/Nuke/commit/48c4ee44fd06d9ff9d784c7fc69a10da87af4c2b))
+- **hiero:** 在没有轨道项可对齐时出错 ([0652050](https://github.com/WuLiFang/Nuke/commit/0652050005b503b5c7be10c0efd8efdf7fbf0256))
+- **nuke:** 不能在 nuke12 中变更首选项 ([6bfb14b](https://github.com/WuLiFang/Nuke/commit/6bfb14bd4489a08cc61ffc8ebc733ec5920fb284))
+- **nuke:** 打包工程: 应处理在 group 中的文件 ([b7e20b3](https://github.com/WuLiFang/Nuke/commit/b7e20b3742e5020a8525215c3d786ee39b3fa81b))
+- **nuke:** 不应在 init.py 中初始化 GUI ([0f9e1c3](https://github.com/WuLiFang/Nuke/commit/0f9e1c3ac5593b97efc2cdb957d6d28c34016ef5))
+- **nuke:** 更新 Write 节点预设 ([ec285cd](https://github.com/WuLiFang/Nuke/commit/ec285cde14f0e716095208c9fc12ced54176656e))
+- **nuke:** 为 nuke 12 更新 Write 节点预设 ([cb8a32f](https://github.com/WuLiFang/Nuke/commit/cb8a32fe12928f90a0413c47a3bf5dbccc2b9ed4))
+
 ## [2022.2.2](https://github.com/WuLiFang/Nuke/compare/v2022.2.1...v2022.2.2) (2022-06-22)
 
 ### 修复
