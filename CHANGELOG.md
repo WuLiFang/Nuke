@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2023.0.0](https://github.com/WuLiFang/Nuke/compare/v2022.2.2...v2023.0.0) (2023-06-02)
+
+### Features
+
+- allow configure image upload name ([bee3af7](https://github.com/WuLiFang/Nuke/commit/bee3af78ae8365081d71f73d9c5b12d1459af7bc))
+- **nuke:** log small file ([29a4cbc](https://github.com/WuLiFang/Nuke/commit/29a4cbc1afc0735ec88569c736636d515cee84a3))
+- **nuke:** pack project ([f59188d](https://github.com/WuLiFang/Nuke/commit/f59188d54b6ac712a3c4bd9eb896fcf50e73b218))
+- **nuke:** pack-project: set freetype knob to to built-in font ([50cb95a](https://github.com/WuLiFang/Nuke/commit/50cb95a70a1871ef5338ea3c3677adaaeceec32f))
+- **nuke:** pack-project: supports file name expression ([00b8573](https://github.com/WuLiFang/Nuke/commit/00b8573c32582c2b973f48a7b76ede9e838fc007))
+- support wulifang manifest ([d678465](https://github.com/WuLiFang/Nuke/commit/d67846555d14bb79f41922b0abf86c083b0502a0))
+- update expire time to 2024-01-01 ([f522b3d](https://github.com/WuLiFang/Nuke/commit/f522b3d13fe32e515c2bfb9d5ae35286d1813def))
+
+### Bug Fixes
+
+- error on non-windows system ([8c22e2b](https://github.com/WuLiFang/Nuke/commit/8c22e2b66cc50c1bd0524fecb172ea9b711ccfb2))
+- **hiero:** crash on selection change ([48c4ee4](https://github.com/WuLiFang/Nuke/commit/48c4ee44fd06d9ff9d784c7fc69a10da87af4c2b))
+- **hiero:** error when no track item to align ([0652050](https://github.com/WuLiFang/Nuke/commit/0652050005b503b5c7be10c0efd8efdf7fbf0256))
+- **nuke:** can not change preference in nuke12 ([6bfb14b](https://github.com/WuLiFang/Nuke/commit/6bfb14bd4489a08cc61ffc8ebc733ec5920fb284))
+- **nuke:** pack-project: should handle file in group ([b7e20b3](https://github.com/WuLiFang/Nuke/commit/b7e20b3742e5020a8525215c3d786ee39b3fa81b))
+- **nuke:** should not nit gui in init.py ([0f9e1c3](https://github.com/WuLiFang/Nuke/commit/0f9e1c3ac5593b97efc2cdb957d6d28c34016ef5))
+- **nuke:** update Write preset ([ec285cd](https://github.com/WuLiFang/Nuke/commit/ec285cde14f0e716095208c9fc12ced54176656e))
+- update Write node preset for nuke 12 ([cb8a32f](https://github.com/WuLiFang/Nuke/commit/cb8a32fe12928f90a0413c47a3bf5dbccc2b9ed4))
+
+### Performance
+
+- not force use source file ([08248c9](https://github.com/WuLiFang/Nuke/commit/08248c98c0458ac56eaecc7b44cb84d6043e3889))
+- reduce network access ([3265452](https://github.com/WuLiFang/Nuke/commit/32654524c57ab69320270cb220b54b55cb4bc289))
+
 ## [2022.2.2](https://github.com/WuLiFang/Nuke/compare/v2022.2.1...v2022.2.2) (2022-06-22)
 
 ### Bug Fixes
