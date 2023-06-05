@@ -1,0 +1,294 @@
+Group {
+ name PixelSort
+ inputs 2
+ addUserKnob {20 PixelSortTab l PixelSort}
+ addUserKnob {7 rotate t "rotate line direction" R -180 180}
+ rotate 90
+ addUserKnob {7 threshold t "value to start sorting at"}
+ threshold 0.2
+ addUserKnob {3 length t "max length of sorting lines (0 is unlimited)"}
+ addUserKnob {7 max l "maximum brightness" t "maximum value in image (can be >1, for example when working in ACES)" R 0 5}
+ max 1
+ addUserKnob {26 empty0 l "" +STARTLINE T " "}
+ addUserKnob {41 from0 l "use single sort input channel" t "use single channel from 'sort' input for sorting order\n\nif disabled, image luminance is used" T Copy2.from0}
+ addUserKnob {26 empty1 l "" +STARTLINE T " "}
+ addUserKnob {26 empty2 l "" +STARTLINE T " "}
+ addUserKnob {4 rotateFilter l filter t "rotation filter" M {Impulse Cubic Keys Simon Riffman Mitchell Parzen Notch Lanczos4 Lanczos6 Sinc4 ""}}
+ rotateFilter Cubic
+ addUserKnob {26 ""}
+ addUserKnob {26 Me l "" +STARTLINE T "Max van Leeuwen"}
+ addUserKnob {26 Version l "" +STARTLINE T "PixelSort 1.0"}
+ addUserKnob {26 Website l "" +STARTLINE T "<a href=\"https://www.maxvanleeuwen.com/pixelsort\"><font color=\"#b2b2b2\">maxvanleeuwen.com/pixelsort</font></a>"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0 0 0}
+  name Constant1
+  xpos 189
+  ypos -1601
+ }
+ Dot {
+  name Dot13
+  note_font_size 30
+  xpos 223
+  ypos -1496
+ }
+ Input {
+  inputs 0
+  name img
+  xpos 362
+  ypos -1825
+ }
+ Switch {
+  inputs 2
+  which {{bbox.w<2}}
+  name Switch_onNoInp
+  xpos 362
+  ypos -1500
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop3
+  xpos 362
+  ypos -1249
+ }
+ Clamp {
+  maximum {{parent.max}}
+  name Clamp1
+  xpos 362
+  ypos -1206
+ }
+ Dot {
+  name Dot6
+  note_font_size 30
+  xpos 396
+  ypos -894
+ }
+set N9b395800 [stack 0]
+ Dot {
+  name Dot8
+  note_font_size 30
+  xpos 690
+  ypos -894
+ }
+ Keyer {
+  operation "luminance key"
+  range {0 {parent.max} {range.B} {range.B}}
+  name Keyer1
+  xpos 656
+  ypos -792
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  alpha black
+  name Shuffle5
+  label "\[value in]"
+  xpos 656
+  ypos -754
+ }
+ Dot {
+  name Dot10
+  note_font_size 30
+  xpos 690
+  ypos -638
+ }
+ Input {
+  inputs 0
+  name sort
+  xpos 962
+  ypos -1834
+  number 1
+ }
+ Crop {
+  box {0 0 {parent.Crop3.box.r} {parent.Crop3.box.t}}
+  crop false
+  name Crop4
+  xpos 962
+  ypos -1253
+ }
+ Dot {
+  name Dot11
+  note_font_size 30
+  xpos 996
+  ypos -984
+ }
+set Nafa6f400 [stack 0]
+ Dot {
+  name Dot14
+  note_font_size 30
+  xpos 1091
+  ypos -984
+ }
+ Dot {
+  name Dot12
+  note_font_size 30
+  xpos 1091
+  ypos -886
+ }
+push $Nafa6f400
+ Copy {
+  inputs 2
+  to0 rgba.alpha
+  name Copy2
+  xpos 962
+  ypos -896
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  alpha black
+  name Shuffle1
+  label "\[value in]"
+  xpos 962
+  ypos -751
+ }
+ Switch {
+  inputs 2
+  which {{!parent.from0}}
+  name Switch1
+  xpos 962
+  ypos -641
+ }
+ Transform {
+  rotate {{parent.Transform1.rotate}}
+  center {{parent.Transform1.center.x} {parent.Transform1.center.y}}
+  shutteroffset centred
+  name Transform2
+  xpos 962
+  ypos -294
+ }
+ Reformat {
+  type "to box"
+  box_width {{parent.Reformat1.box_width}}
+  box_height {{parent.Reformat1.box_height}}
+  box_fixed true
+  resize none
+  pbb true
+  name Reformat2
+  xpos 962
+  ypos -268
+ }
+ Crop {
+  box {0 0 {parent.Crop1.box.r} {parent.Crop1.box.t}}
+  crop false
+  name Crop2
+  xpos 962
+  ypos -242
+ }
+ Dot {
+  name Dot9
+  note_font_size 30
+  xpos 996
+  ypos 71
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove3
+  xpos 525
+  ypos 67
+ }
+push $N9b395800
+ Transform {
+  rotate {{"parent.rotate - 90"}}
+  center {{width/2} {height/2}}
+  shutteroffset centred
+  name Transform1
+  xpos 362
+  ypos -289
+ }
+ Reformat {
+  type "to box"
+  box_width {{bbox.w}}
+  box_height {{bbox.h}}
+  box_fixed true
+  resize none
+  pbb true
+  name Reformat1
+  xpos 362
+  ypos -263
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop1
+  xpos 362
+  ypos -237
+ }
+ Remove {
+  operation keep
+  channels rgb
+  name Remove1
+  xpos 362
+  ypos -28
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 132
+  ProgramGroup 1
+  KernelDescription "2 \"PixelSort\" iterate componentWise 04ac188f2f61733434e6dd75b4aa6a575ddd811ed5751b03104cb12c865386b4 3 \"src\" Read Ranged1D \"sort\" Read Ranged1D \"dst\" Write Ranged1D 2 \"threshold\" Float 1 AAAAAA== \"cutOff\" Int 1 AAAAAA== 2 \"threshold\" 1 1 \"cutOff\" 1 1 10 \"srcrangedAxisMask\" Int 1 1 AAAAAA== \"srcrangeMin\" Int 1 1 AAAAAA== \"srcrangeMax\" Int 1 1 AAAAAA== \"sortrangedAxisMask\" Int 1 1 AAAAAA== \"sortrangeMin\" Int 1 1 AAAAAA== \"sortrangeMax\" Int 1 1 AAAAAA== \"dstrangedAxisMask\" Int 1 1 AAAAAA== \"dstrangeMin\" Int 1 1 AAAAAA== \"dstrangeMax\" Int 1 1 AAAAAA== \"srcWidth\" Int 1 1 AAAAAA=="
+  kernelSource "// Max van leeuwen\n// PixelSort (blinkscript) v1.0 - maxvanleeuwen.com/pixelsort\n//\n// Sort pixels in an orderly fashion.\n\n\n\n\nkernel PixelSort : ImageComputationKernel<eComponentWise>\{\n\tImage<eRead, eAccessRanged1D, eEdgeNone> src;\n\tImage<eRead, eAccessRanged1D, eEdgeNone> sort;\n\tImage<eWrite, eAccessRanged1D> dst;\n\n\n  \nparam:\n\n\t// these are the knobs on the node\n\tfloat threshold;\n\tint cutOff;\n\n\n\nlocal:\n\n\t// image width\n\tint srcWidth;\n\n\n\n\tvoid define() \{\n\n\t\t// sorting threshold\n\t\tdefineParam(threshold, \"threshold\", 0.0f);\n\n\t\t// maximum length of sort (0 is unlimited)\n\t\tdefineParam(cutOff, \"cutOff\", 0);\n\t\}\n\n\n\n\n\tvoid init()\{\n\n\t\t// get image width\n\t\tsrcWidth = dst.bounds.width();\n\t\}\n\n\n\n\n\t// run over each pixel\n\tvoid process(int2 pos) \{\n\n\t\t// only once per row\n\t\tif(pos.x == 0)\{\n\n\t\t\t// make list for sorting order input, img input\n\t\t\tfloat dataList\[10000]\[2];\n\n\n\t\t\t// populate list for sorting order and img\n\t\t\tfor(int pixel = 0; pixel < srcWidth; pixel++)\{\n\n\t\t\t\tdataList\[pixel]\[0] = sort(pixel);\n\t\t\t\tdataList\[pixel]\[1] = src(pixel);\n\t\t\t\}\n\n\n\n\n\t\t\t// go through row of pixels\n\t\t\tfor (int thisX = 0; thisX < srcWidth; thisX++) \{\n\n\t\t\t\t// found pixel index placeholder, starts at current pixel index\n\t\t\t\tint foundPixel = thisX;\n\n\t\t\t\t// found img value placeholder, starts at this img value\n\t\t\t\tfloat foundValue = dataList\[thisX]\[1];\n\n\n\n\t\t\t\t// for each pixel in row\n\t\t\t\tfor (int walkX = thisX; walkX < srcWidth; walkX++) \{\n\n\t\t\t\t\t// skip the rest of the row if the sort value is under threshold, or if the maximum sorting limit has been reached\n\t\t\t\t\tif  (dataList\[walkX]\[0] < threshold || ( (walkX - thisX) > cutOff && cutOff != 0) ) \{\n\n\t\t\t\t\t\tbreak;\t\n\t\t\t\t\t\}\n\n\n\n\t\t\t\t\t// if found img value is higher than the current record\n\t\t\t\t\tif (dataList\[walkX]\[1] < foundValue) \{\n\n\t\t\t\t\t\t// remember the index of that pixel\n\t\t\t\t\t\tfoundPixel = walkX;\n\n\t\t\t\t\t\t// remember its img value and set as new highscore\n\t\t\t\t\t\tfoundValue = dataList\[walkX]\[1];\n\t\t\t\t\t\}\n\t\t\t\t\}\n\n\n\n\t\t\t\t// move old values of sort and img in list to this high score index, so these values are not lost\n\t\t\t\tdataList\[foundPixel]\[0] = dataList\[thisX]\[0];\n\t\t\t\tdataList\[foundPixel]\[1] = dataList\[thisX]\[1];\n\n\n\t\t\t\t// write image\n\t\t\t\tdst(thisX) = foundValue;\n\t\t\t\}\n\t\t\}\n\t\}\n\};"
+  rebuild ""
+  PixelSort_threshold {{parent.threshold}}
+  PixelSort_cutOff {{parent.length}}
+  rebuild_finalise ""
+  name BlinkScript_PixelSort
+  xpos 362
+  ypos 61
+ }
+ Expression {
+  temp_name0 unsorted
+  temp_expr0 "r == -1"
+  expr0 "unsorted ? 0 : r"
+  expr1 "unsorted ? 0 : g"
+  expr2 "unsorted ? 0 : b"
+  expr3 "unsorted ? 0 : 1"
+  name Expression_makeAlpha
+  xpos 362
+  ypos 146
+ }
+ Transform {
+  rotate {{-Transform1.rotate}}
+  center {{width/2} {height/2}}
+  shutteroffset centred
+  name Transform3
+  xpos 362
+  ypos 637
+ }
+ Reformat {
+  type "to box"
+  box_width {{img.width}}
+  box_height {{img.height}}
+  box_fixed true
+  resize none
+  name Reformat3
+  xpos 362
+  ypos 663
+ }
+ Transform {
+  filter {{parent.rotateFilter}}
+  black_outside false
+  shutter 0
+  shutteroffset centred
+  name Transform_SetFilterConcatinated1
+  xpos 362
+  ypos 899
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  crop false
+  name Crop5
+  xpos 362
+  ypos 925
+ }
+ Output {
+  name Output1
+  xpos 362
+  ypos 1539
+ }
+end_group
