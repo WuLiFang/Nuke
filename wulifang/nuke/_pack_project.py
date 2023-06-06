@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text, Optional, Iterator
+    from typing import Text
 
 import codecs
 import datetime
@@ -20,6 +20,7 @@ from wulifang.vendor.concurrent import futures
 import nuke
 
 from .._util import TZ_CHINA, FileSequence, cast_binary, cast_text, iteritems
+from ._util import iter_deep_all_nodes
 from ._gizmo import gizmo_to_group
 
 
@@ -153,14 +154,6 @@ def _save_by_expr(ctx, src_expr):
     return "/".join((ctx.file_dir_base, _dir_with_hash, src_base))
 
 
-def _iter_deep_all_nodes(root=None):
-    # type: (Optional[nuke.Group]) -> Iterator[nuke.Node]
-    for n in (root or nuke.Root()).nodes():
-        if isinstance(n, nuke.Group):
-            for i in _iter_deep_all_nodes(n):
-                yield i
-        yield n
-
 
 def pack_project():
     try:
@@ -172,7 +165,7 @@ def pack_project():
     with nuke.Undo("打包工程"), _Context() as ctx:
         nuke.Root()[b"project_directory"].setValue("[python {nuke.script_directory()}]")
 
-        for n in _iter_deep_all_nodes():
+        for n in iter_deep_all_nodes():
             if isinstance(n, nuke.Gizmo):
                 name = cast_text(n.fullName())
                 if n.Class() in nuke.knobChangeds:
@@ -181,7 +174,7 @@ def pack_project():
                 gizmo_to_group(n)
                 ctx.log("将 %s 转为了 Group" % (name,))
 
-        for n in _iter_deep_all_nodes():
+        for n in iter_deep_all_nodes():
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
                     old_src = ctx.get_src(k)

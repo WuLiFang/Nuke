@@ -18,6 +18,8 @@ import nuke
 
 from ._init import skip_gui as _skip
 from ._pack_project import pack_project
+from ._find_max_bbox_node import show_max_bbox_node
+from .._util import cast_str
 from . import _preference, _project_settings
 
 
@@ -56,22 +58,26 @@ class _g:
 
 def _obtain_menu(parent, name):
     # type: (nuke.Menu, Text) -> nuke.Menu
-    name_b = name.encode("utf-8")
-    return parent.menu(name_b) or parent.addMenu(name_b)
+    name_str = cast_str(name)
+    return parent.menu(name_str) or parent.addMenu(name_str)
 
 
 def _init_menu():
-    rootMenu = nuke.menu("Nuke".encode("utf-8"))
+    rootMenu = nuke.menu(cast_str("Nuke"))
 
-    rootMenu.addMenu("帮助".encode("utf-8")).addCommand(
-        "重新加载吾立方插件".encode("utf-8"),
+    rootMenu.addMenu(cast_str("帮助")).addCommand(
+        cast_str("重新加载吾立方插件"),
         _reload,
-        "Ctrl+Shift+F5".encode("utf-8"),
+        cast_str("Ctrl+Shift+F5"),
     )
     editMenu = _obtain_menu(rootMenu, "编辑")
     editMenu.addCommand(
-        "打包工程".encode("utf-8"),
+        cast_str("打包工程"),
         pack_project,
+    )
+    editMenu.addCommand(
+        cast_str("查找当前所选中 BBox 最大的节点"),
+        show_max_bbox_node,
     )
 
 
