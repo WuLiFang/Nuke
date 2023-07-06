@@ -5,8 +5,8 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import os
 
-from wlf.config import Config
-from wlf.path import TAG_PATTERN
+from wulifang.vendor.wlf.config import Config
+from wulifang.vendor.wlf.path import TAG_PATTERN
 
 START_MESSAGE = "{:-^50s}".format("COMP START")
 

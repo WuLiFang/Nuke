@@ -9,73 +9,76 @@ if TYPE_CHECKING:
 import nuke
 import os
 import wulifang
-import wulifang.vendor.cast_unknown as cast
 from wulifang.vendor.Qt.QtCore import QTimer
-from wulifang._util import cast_binary
+from wulifang._util import cast_str, assert_not_none, assert_isinstance
 
 
 def init():
     wulifang.message.debug("设置knob默认值")
 
-    nuke.knobDefault(b"VectorBlur2.uv", b"motion")
-    nuke.knobDefault(b"VectorBlur2.uv_offset", b"0")
-    nuke.knobDefault(b"VectorBlur2.scale", b"1")
-    nuke.knobDefault(b"VectorBlur2.soft_lines", b"True")
-    nuke.knobDefault(b"VectorBlur2.normalize", b"True")
+    nuke.knobDefault(cast_str("VectorBlur2.uv"), cast_str("motion"))
+    nuke.knobDefault(cast_str("VectorBlur2.uv_offset"), cast_str("0"))
+    nuke.knobDefault(cast_str("VectorBlur2.scale"), cast_str("1"))
+    nuke.knobDefault(cast_str("VectorBlur2.soft_lines"), cast_str("True"))
+    nuke.knobDefault(cast_str("VectorBlur2.normalize"), cast_str("True"))
 
-    nuke.knobDefault(b"Root.fps", b"25")
-    nuke.knobDefault(b"Root.format", b"1920 1080 0 0 1920 1080 1 HD_1080")
-
-    nuke.knobDefault(b"ZDefocus2.blur_dof", b"0")
-    nuke.knobDefault(b"ZDefocus2.math", b"depth")
-
-    nuke.knobDefault(b"RolloffContrast.contrast", b"2")
-    nuke.knobDefault(b"RolloffContrast.center", b"0.001")
-    nuke.knobDefault(b"RolloffContrast.soft_clip", b"1")
-    nuke.knobDefault(b"RolloffContrast.channels", b"rgb")
-
-    nuke.knobDefault(b"LayerContactSheet.showLayerNames", b"1")
-    nuke.knobDefault(b"note_font", cast.binary("微软雅黑"))
-    nuke.knobDefault(b"Switch.which", b"1")
-    nuke.knobDefault(b"Viewer.input_process", b"False")
-    nuke.knobDefault(b"SoftClip.conversion", b"3")
-    nuke.knobDefault(b"PositionToPoints.P_channel", b"P")
-    nuke.knobDefault(b"Roto.cliptype", b"no clip")
-    nuke.knobDefault(b"RotoPaint.cliptype", b"no clip")
-    nuke.knobDefault(b"Denoise2.type", b"Digital")
-
-    nuke.knobDefault(b"preferences.UIFontSize", b"12")
-    nuke.knobDefault(b"preferences.LocalizationPauseOnProjectLoad", b"True")
+    nuke.knobDefault(cast_str("Root.fps"), cast_str("25"))
     nuke.knobDefault(
-        b"preferences.wlf_artist",
-        (
+        cast_str("Root.format"), cast_str("1920 1080 0 0 1920 1080 1 HD_1080")
+    )
+
+    nuke.knobDefault(cast_str("ZDefocus2.blur_dof"), cast_str("0"))
+    nuke.knobDefault(cast_str("ZDefocus2.math"), cast_str("depth"))
+
+    nuke.knobDefault(cast_str("RolloffContrast.contrast"), cast_str("2"))
+    nuke.knobDefault(cast_str("RolloffContrast.center"), cast_str("0.001"))
+    nuke.knobDefault(cast_str("RolloffContrast.soft_clip"), cast_str("1"))
+    nuke.knobDefault(cast_str("RolloffContrast.channels"), cast_str("rgb"))
+
+    nuke.knobDefault(cast_str("LayerContactSheet.showLayerNames"), cast_str("1"))
+    nuke.knobDefault(cast_str("note_font"), cast_str("微软雅黑"))
+    nuke.knobDefault(cast_str("Switch.which"), cast_str("1"))
+    nuke.knobDefault(cast_str("Viewer.input_process"), cast_str("False"))
+    nuke.knobDefault(cast_str("SoftClip.conversion"), cast_str("3"))
+    nuke.knobDefault(cast_str("PositionToPoints.P_channel"), cast_str("P"))
+    nuke.knobDefault(cast_str("Roto.cliptype"), cast_str("no clip"))
+    nuke.knobDefault(cast_str("RotoPaint.cliptype"), cast_str("no clip"))
+    nuke.knobDefault(cast_str("Denoise2.type"), cast_str("Digital"))
+
+    nuke.knobDefault(cast_str("preferences.UIFontSize"), cast_str("12"))
+    nuke.knobDefault(
+        cast_str("preferences.LocalizationPauseOnProjectLoad"), cast_str("True")
+    )
+    nuke.knobDefault(
+        cast_str("preferences.wlf_artist"),
+        cast_str(
             "%s@%s"
             % (
                 os.getenv("USERNAME") or "anonymous",
                 os.getenv("COMPUTERNAME") or "localhost",
             )
-        ).encode("utf-8"),
+        ),
     )
-    nuke.untitled = cast.binary("未命名")
+    nuke.untitled = cast_str("未命名")
 
 
 def _init_gui():
     wulifang.message.debug("添加首选项")
-    pref = cast.not_none(nuke.toNode(b"preferences"))
+    pref = assert_not_none(nuke.toNode(cast_str("preferences")))
 
     def remove(name):
         # type: (Text) -> None
         try:
-            pref.removeKnob(pref[cast_binary(name)])
+            pref.removeKnob(pref[cast_str(name)])
         except NameError:
             pass
 
     def add(k, inline=False):
-        k = cast.instance(k, nuke.Knob)
+        k = assert_isinstance(k, nuke.Knob)
         name = k.name()
         if name:
             tcl_name = "preferences.{}".format(k.name())
-            if nuke.exists(cast.binary(tcl_name)):
+            if nuke.exists(cast_str(tcl_name)):
                 k.setValue(pref[k.name()].value())
                 pref.removeKnob(pref[k.name()])
         k.setFlag(nuke.ALWAYS_SAVE)
@@ -87,84 +90,81 @@ def _init_gui():
 
     remove("wlf_lock_connection")
     remove("wlf_create_csheet")
-    add(nuke.Tab_Knob(b"wlf_tab", "吾立方".encode("utf-8")))
+    add(nuke.Tab_Knob(cast_str("wlf_tab"), cast_str("吾立方")))
     add(
         nuke.String_Knob(
-            b"wlf_artist",
-            cast.binary("制作人信息"),
+            cast_str("wlf_artist"),
+            cast_str("制作人信息"),
         )
     )
-    add(
-        nuke.Boolean_Knob(b"wlf_gizmo_to_group", cast.binary("创建Gizmo时尝试转换为Group")),
-    )
-    add(nuke.Boolean_Knob(b"wlf_eval_proj_dir", cast.binary("读取时工程目录自动转换为绝对路径")))
+    add(nuke.Boolean_Knob(cast_str("wlf_eval_proj_dir"), cast_str("读取时工程目录自动转换为绝对路径")))
     add(
         nuke.Text_Knob(
-            b"wlf_on_script_save",
-            cast.binary("保存时"),
+            cast_str("wlf_on_script_save"),
+            cast_str("保存时"),
         )
     )
     add(
         nuke.Boolean_Knob(
-            b"wlf_autoplace",
-            cast.binary("自动摆放节点"),
+            cast_str("wlf_autoplace"),
+            cast_str("自动摆放节点"),
         ),
         True,
     )
     add(
         nuke.Enumeration_Knob(
-            b"wlf_autoplace_type",
-            cast.binary("风格"),
+            cast_str("wlf_autoplace_type"),
+            cast_str("风格"),
             [
-                cast.binary("竖式"),
-                cast.binary("横式(Nuke)"),
+                cast_str("竖式"),
+                cast_str("横式(Nuke)"),
             ],
         ),
         True,
     )
     add(
         nuke.Boolean_Knob(
-            b"wlf_lock_connections",
-            cast.binary("锁定节点连接"),
+            cast_str("wlf_lock_connections"),
+            cast_str("锁定节点连接"),
         )
     )
     add(
         nuke.Boolean_Knob(
-            b"wlf_enable_node",
-            cast.binary("启用被标记为稍后启用的节点"),
+            cast_str("wlf_enable_node"),
+            cast_str("启用被标记为稍后启用的节点"),
             True,
         )
     )
     add(
         nuke.Boolean_Knob(
-            b"wlf_jump_frame",
-            cast.binary("跳至_Write节点指定的帧"),
+            cast_str("wlf_jump_frame"),
+            cast_str("跳至_Write节点指定的帧"),
             True,
         )
     )
     add(
         nuke.Text_Knob(
-            b"wlf_on_script_close",
-            cast.binary("保存并退出时"),
+            cast_str("wlf_on_script_close"),
+            cast_str("保存并退出时"),
         )
     )
     add(
         nuke.Boolean_Knob(
-            b"wlf_render_jpg",
-            cast.binary("渲染_Write节点单帧"),
+            cast_str("wlf_render_jpg"),
+            cast_str("渲染_Write节点单帧"),
             True,
         )
     )
     add(
         nuke.Boolean_Knob(
-            b"wlf_send_to_dir",
-            cast.binary("发送至渲染文件夹"),
+            cast_str("wlf_send_to_dir"),
+            cast_str("发送至渲染文件夹"),
         )
     )
     add(
         nuke.File_Knob(
-            b"wlf_render_dir",
-            cast.binary(""),
+            cast_str("wlf_render_dir"),
+            cast_str(""),
         ),
         True,
     )
@@ -185,7 +185,7 @@ def _init_gui():
 
     if nuke.NUKE_VERSION_MAJOR >= 12:
         # XXX: last tab not visible in nuke12
-        add(nuke.Tab_Knob(b""))
+        add(nuke.Tab_Knob(cast_str("")))
 
 
 def init_gui():

@@ -8,8 +8,7 @@ from glob import iglob
 import os
 import wulifang
 
-import wulifang.vendor.cast_unknown as cast
-import wulifang.filename
+from wulifang._util import cast_text
 from wulifang.vendor.pyblish import api
 from ._context_task import context_task
 
@@ -33,7 +32,7 @@ class CollectFXFootage(api.InstancePlugin):
             return
         wulifang.message.debug("fx filebox path: %s" % (filebox.path,))  # type: ignore
         try:
-            match = cast.text(next(iglob(filebox.path + "/*")))  # type: ignore
+            match = cast_text(next(iglob(filebox.path + "/*")))  # type: ignore
             dir_ = os.path.dirname(match)
             ctx.create_instance("特效素材", folder=dir_, family="特效素材")
         except StopIteration:

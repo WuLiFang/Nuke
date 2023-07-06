@@ -5,23 +5,13 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Any, List
+    from typing import List, TypeVar, Union
 
-import sys
-
-_py2 = sys.version_info[0] == 2
-
-
-if _py2:
-    _text_type = unicode  # type: ignore
-    _binary_type = str  # type: ignore
-else:
-    _text_type = str
-    _binary_type = bytes
+    T = TypeVar("T")
 
 
 def cast_list(v):
-    # type: (Any) -> List[Any]
+    # type: (Union[T, list[T], tuple[T]]) -> List[T]
     if v is None:
         return []
     if isinstance(v, list):

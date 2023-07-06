@@ -7,7 +7,7 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text
 
-import wulifang.vendor.cast_unknown as cast
+from wulifang._util import cast_text
 from wulifang.vendor.pyblish import api
 
 from ._context_task import context_task
@@ -23,6 +23,6 @@ def context_work_file_dir(ctx):
             work_file_box = entry.filebox.get("workfile")
         except:
             raise ValueError("找不到标识为 workfile 的文件框 请联系管理员进行设置")
-        v = cast.text(work_file_box.path) + "/"  # type: ignore
+        v = cast_text(work_file_box.path) + "/"  # type: ignore
         ctx.data[_KEY] = v
     return ctx.data[_KEY]

@@ -4,12 +4,14 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 
-import wulifang.vendor.cast_unknown as cast
 import nuke
-from wulifang.nuke.infrastructure.recover_modifield_flag import recover_modifield_flag
-from wulifang.nuke.infrastructure.wlf_write_node import wlf_write_node
-from wulifang.vendor.pyblish import api
 import wulifang
+from wulifang.nuke._util import (
+    ignore_modification,
+    wlf_write_node,
+)
+from wulifang._util import cast_str, assert_isinstance
+from wulifang.vendor.pyblish import api
 
 
 class ExtractImage(api.InstancePlugin):
@@ -21,8 +23,8 @@ class ExtractImage(api.InstancePlugin):
 
     def process(self, instance):
         # type: (api.Instance) -> None
-        with recover_modifield_flag():
-            if not nuke.numvalue(b"preferences.wlf_render_jpg", 0.0):
+        with ignore_modification():
+            if not nuke.numvalue(cast_str("preferences.wlf_render_jpg"), 0.0):
                 self.log.info("因首选项而跳过生成JPG")
                 return
 
@@ -30,7 +32,9 @@ class ExtractImage(api.InstancePlugin):
             if n:
                 self.log.debug("render_jpg: %s", n.name())
                 try:
-                    cast.instance(n[b"bt_render_JPG"], nuke.Script_Knob).execute()
+                    assert_isinstance(
+                        n[cast_str("bt_render_JPG")], nuke.Script_Knob
+                    ).execute()
                 except RuntimeError as ex:
                     wulifang.message.error("生成JPG: %s" % ex)
             else:

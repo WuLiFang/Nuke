@@ -16869,7 +16869,7 @@ class QGraphicsTextItem(QGraphicsObject):
         """
         ...
 
-    def toPlainText(self, *args, **kwargs):
+    def toPlainText(self ) -> Str:
         """
         """
         ...
@@ -31915,7 +31915,7 @@ class QPlainTextEdit(QAbstractScrollArea):
         """
         ...
 
-    def toPlainText(self, *args, **kwargs):
+    def toPlainText(self ) -> Str:
         """
         """
         ...
@@ -46757,7 +46757,7 @@ class QTextDocument(PySide.QtCore.QObject):
         """
         ...
 
-    def toPlainText(self, *args, **kwargs):
+    def toPlainText(self ) -> Str:
         """
         """
         ...
@@ -46813,7 +46813,7 @@ class QTextDocumentFragment(Shiboken.Object):
         """
         ...
 
-    def toPlainText(self, *args, **kwargs):
+    def toPlainText(self ) -> Str:
         """
         """
         ...
@@ -47435,7 +47435,7 @@ class QTextEdit(QAbstractScrollArea):
         """
         ...
 
-    def toPlainText(self, *args, **kwargs):
+    def toPlainText(self ) -> Str:
         """
         """
         ...

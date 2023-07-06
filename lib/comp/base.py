@@ -8,17 +8,17 @@ import os
 import re
 import webbrowser
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import itertools
 import nuke
-import six
+import wulifang.vendor.six as six
 
 from comp.config import BatchCompConfig, CompConfig
-from comp.precomp import Precomp
-from node import ReadNode
-from nuketools import undoable_func
-from organize import autoplace
-from wlf.progress.core import DefaultHandler
+from comp._read_node import ReadNode
+from wulifang.nuke import _aov_assemble
+from wulifang.nuke._util import undoable as undoable_func
+from wulifang.nuke._auto_place import auto_place as autoplace
+from wulifang.vendor.wlf.progress.core import DefaultHandler
 
 CONFIG = CompConfig()
 LOGGER = logging.getLogger("com.wlf.comp")
@@ -238,7 +238,7 @@ class Comp(object):
         _ = map(nuke.delete, nuke.allNodes(b"Viewer"))
         _ = nuke.nodes.Viewer(inputs=[n, n.input(0), n, n])
 
-        _ = autoplace(undoable=False)
+        _ = autoplace(nuke.allNodes())
 
     @staticmethod
     def _merge_mp(input_node, mp_file="", lut=""):
@@ -448,7 +448,7 @@ class Comp(object):
                 if len(nodes) == 1 and not CONFIG.get("precomp"):  # type: ignore
                     n = nodes[0]
                 else:
-                    n = Precomp(nodes, async_=False).last_node
+                    n = _aov_assemble.assemble(nodes) or nodes[0]
                 n = nuke.nodes.ModifyMetaData(
                     inputs=[n],
                     metadata="{{set {} {}}}".format(self.tag_metadata_key, tag),

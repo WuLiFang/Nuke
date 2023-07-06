@@ -5,8 +5,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    import wulifang.types
-    from . import types
+    import wulifang._types
+    from . import _types
     from typing import Any
 
 from ._init import init
@@ -19,11 +19,10 @@ def _undefined():
 
 
 # cleanup before re-init
-cleanup = _undefined()  # type: wulifang.types.CleanupService
-publish = _undefined()  # type: wulifang.types.PublishService
-active_viewer = _undefined()  # type: types.ActiveViewerService
-callback = _undefined()  # type: types.CallbackService
-file = _undefined()  # type: wulifang.types.FileService
+publish = _undefined()  # type: wulifang._types.PublishService
+active_viewer = _undefined()  # type: _types.ActiveViewerService
+callback = _undefined()  # type: _types.CallbackService
+file = _undefined()  # type: wulifang._types.FileService
 
 
 def init_gui():

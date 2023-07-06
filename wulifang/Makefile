@@ -6,11 +6,11 @@ PYTHON27?=/usr/bin/python
 NUKE_PYTHON?=python
 endif
 
-vendor/__init__.py: vendor-requirements.txt vendor-patches/*.patch
+vendor/__init__.py: vendor-requirements.txt vendor-patches/*.patch ../vendor/*.whl
 	# Do not run this in vscode integrated terminal before windows 10 1803
 	# https://github.com/microsoft/vscode/issues/36630
 	mkdir -p vendor
 	rm -rf vendor/*
 	cd vendor; "$(PYTHON27)" -m pip install -r ../vendor-requirements.txt --target . --upgrade
-	for file in vendor-patches/*.patch; do patch -u -p1 < $$file; done
+	set -ex; for file in vendor-patches/*.patch; do patch -u -p1 < $$file; done
 	touch $@

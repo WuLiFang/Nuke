@@ -10,14 +10,14 @@ import tempfile
 import webbrowser
 from datetime import datetime
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import jinja2
 import nuke
-import six
-from pathlib2_unicode import Path
+import wulifang.vendor.six as six
+from wulifang.vendor.pathlib2_unicode import Path
 
-from wlf.decorators import run_async
-from wlf.progress import CancelledError, progress
+from wulifang._util import run_in_thread
+from wulifang.vendor.wlf.progress import CancelledError, progress
 
 from . import __main__, files
 from .config import START_MESSAGE, Config
@@ -25,7 +25,7 @@ from .config import START_MESSAGE, Config
 LOGGER = logging.getLogger(__name__)
 
 
-@run_async
+@run_in_thread()
 def run(input_dir, output_dir):
     cfg = Config()
     temp_fd, temp_fp = tempfile.mkstemp("-script_use_seq")

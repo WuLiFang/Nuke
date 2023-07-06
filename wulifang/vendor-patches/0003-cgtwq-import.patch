@@ -1,18 +1,30 @@
 diff -ru a/vendor/cgtwq/__init__.py b/vendor/cgtwq/__init__.py
---- a/vendor/cgtwq/__init__.py	2022-08-22 13:31:02.255172600 +0800
-+++ b/vendor/cgtwq/__init__.py	2022-08-22 13:26:05.952672600 +0800
-@@ -29,7 +29,7 @@
+--- a/vendor/cgtwq/__init__.py	2023-06-26 13:48:44.134111000 +0800
++++ b/vendor/cgtwq/__init__.py	2023-06-26 13:56:19.273954700 +0800
+@@ -83,7 +83,7 @@
  from .resultset import ResultSet
  from .selection import Entry, Selection
  from .util import current_account, current_account_id, update_setting
--from deprecated import deprecated
-+from wulifang.vendor.deprecated import deprecated
+-from deprecated import deprecated # type: ignore
++from wulifang.vendor.deprecated import deprecated # type: ignore
  from . import __version__, compat
  
- __all__ = [
+ get_all_status = deprecated(  # type: ignore
+diff -ru a/vendor/cgtwq/_http_client.py b/vendor/cgtwq/_http_client.py
+--- a/vendor/cgtwq/_http_client.py	2023-06-26 13:48:44.147776000 +0800
++++ b/vendor/cgtwq/_http_client.py	2023-06-26 12:32:48.796255400 +0800
+@@ -8,7 +8,7 @@
+     from typing import Any, Text, Dict
+ from collections import OrderedDict
+ 
+-import requests
++from wulifang.vendor import requests
+ import json
+ from . import exceptions
+ 
 diff -ru a/vendor/cgtwq/_test.py b/vendor/cgtwq/_test.py
---- a/vendor/cgtwq/_test.py	2022-08-22 13:31:02.265172600 +0800
-+++ b/vendor/cgtwq/_test.py	2022-08-22 13:26:05.958172600 +0800
+--- a/vendor/cgtwq/_test.py	2023-06-26 13:48:44.161440000 +0800
++++ b/vendor/cgtwq/_test.py	2023-06-26 12:28:28.663883000 +0800
 @@ -6,7 +6,7 @@
  
  import pytest
@@ -23,8 +35,8 @@ diff -ru a/vendor/cgtwq/_test.py b/vendor/cgtwq/_test.py
  TYPE_CHECKING = False
  if TYPE_CHECKING:
 diff -ru a/vendor/cgtwq/account.py b/vendor/cgtwq/account.py
---- a/vendor/cgtwq/account.py	2022-08-22 13:31:02.276672600 +0800
-+++ b/vendor/cgtwq/account.py	2022-08-22 13:26:05.964172600 +0800
+--- a/vendor/cgtwq/account.py	2023-06-26 13:48:44.162415000 +0800
++++ b/vendor/cgtwq/account.py	2023-06-26 12:28:28.668763700 +0800
 @@ -3,7 +3,7 @@
  
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -35,8 +47,8 @@ diff -ru a/vendor/cgtwq/account.py b/vendor/cgtwq/account.py
  from . import core, server
  from .exceptions import AuthenticateError
 diff -ru a/vendor/cgtwq/client/desktop/client.py b/vendor/cgtwq/client/desktop/client.py
---- a/vendor/cgtwq/client/desktop/client.py	2022-08-22 13:31:02.342172600 +0800
-+++ b/vendor/cgtwq/client/desktop/client.py	2022-08-22 14:04:47.243672600 +0800
+--- a/vendor/cgtwq/client/desktop/client.py	2023-06-26 13:48:44.189743000 +0800
++++ b/vendor/cgtwq/client/desktop/client.py	2023-06-26 12:28:28.672668200 +0800
 @@ -8,11 +8,14 @@
  from functools import partial
  from subprocess import Popen
@@ -58,8 +70,8 @@ diff -ru a/vendor/cgtwq/client/desktop/client.py b/vendor/cgtwq/client/desktop/c
  from ...core import CONFIG, CachedFunctionMixin
  from ...exceptions import IDError
 diff -ru a/vendor/cgtwq/client/desktop/core.py b/vendor/cgtwq/client/desktop/core.py
---- a/vendor/cgtwq/client/desktop/core.py	2022-08-22 13:31:02.351172600 +0800
-+++ b/vendor/cgtwq/client/desktop/core.py	2022-08-22 13:35:38.163172600 +0800
+--- a/vendor/cgtwq/client/desktop/core.py	2023-06-26 13:48:44.191695000 +0800
++++ b/vendor/cgtwq/client/desktop/core.py	2023-06-26 12:28:28.677548900 +0800
 @@ -7,8 +7,8 @@
  import logging
  import socket
@@ -81,8 +93,8 @@ diff -ru a/vendor/cgtwq/client/desktop/core.py b/vendor/cgtwq/client/desktop/cor
  
  class DesktopClientAttachment(object):
 diff -ru a/vendor/cgtwq/client/desktop/plugin.py b/vendor/cgtwq/client/desktop/plugin.py
---- a/vendor/cgtwq/client/desktop/plugin.py	2022-08-22 13:31:02.359672600 +0800
-+++ b/vendor/cgtwq/client/desktop/plugin.py	2022-08-22 13:26:05.983672600 +0800
+--- a/vendor/cgtwq/client/desktop/plugin.py	2023-06-26 13:48:44.193647000 +0800
++++ b/vendor/cgtwq/client/desktop/plugin.py	2023-06-26 12:28:28.681451900 +0800
 @@ -6,9 +6,9 @@
  import sys
  from uuid import UUID
@@ -96,8 +108,8 @@ diff -ru a/vendor/cgtwq/client/desktop/plugin.py b/vendor/cgtwq/client/desktop/p
  from . import core
  from ...exceptions import IDError
 diff -ru a/vendor/cgtwq/compat.py b/vendor/cgtwq/compat.py
---- a/vendor/cgtwq/compat.py	2022-08-22 13:31:02.370172600 +0800
-+++ b/vendor/cgtwq/compat.py	2022-08-22 13:26:05.990672600 +0800
+--- a/vendor/cgtwq/compat.py	2023-06-26 13:48:44.163392000 +0800
++++ b/vendor/cgtwq/compat.py	2023-06-26 12:28:28.684380000 +0800
 @@ -4,7 +4,7 @@
  
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -108,14 +120,11 @@ diff -ru a/vendor/cgtwq/compat.py b/vendor/cgtwq/compat.py
  from . import core, filter
  
 diff -ru a/vendor/cgtwq/core.py b/vendor/cgtwq/core.py
---- a/vendor/cgtwq/core.py	2022-08-22 13:31:02.382172600 +0800
-+++ b/vendor/cgtwq/core.py	2022-08-22 13:26:05.997672600 +0800
-@@ -4,9 +4,9 @@
- 
+--- a/vendor/cgtwq/core.py	2023-06-26 13:48:44.165343000 +0800
++++ b/vendor/cgtwq/core.py	2023-06-26 14:00:19.410664800 +0800
+@@ -5,7 +5,7 @@
  import time
  
--from environs import Env
-+from wulifang.vendor.environs import Env
  
 -from deprecated import deprecated
 +from wulifang.vendor.deprecated import deprecated
@@ -123,8 +132,8 @@ diff -ru a/vendor/cgtwq/core.py b/vendor/cgtwq/core.py
  from .filter import FilterList
  
 diff -ru a/vendor/cgtwq/core.pyi b/vendor/cgtwq/core.pyi
---- a/vendor/cgtwq/core.pyi	2022-08-22 13:31:02.388172600 +0800
-+++ b/vendor/cgtwq/core.pyi	2022-08-22 13:26:06.005172600 +0800
+--- a/vendor/cgtwq/core.pyi	2023-06-26 13:48:44.166320000 +0800
++++ b/vendor/cgtwq/core.pyi	2023-06-26 12:28:28.695116500 +0800
 @@ -1,4 +1,4 @@
 -from cgtwq.filter import FilterList
 +from wulifang.vendor.cgtwq.filter import FilterList
@@ -132,8 +141,8 @@ diff -ru a/vendor/cgtwq/core.pyi b/vendor/cgtwq/core.pyi
  
  class _Config(TypedDict):
 diff -ru a/vendor/cgtwq/database/core.py b/vendor/cgtwq/database/core.py
---- a/vendor/cgtwq/database/core.py	2022-08-22 13:31:02.395172600 +0800
-+++ b/vendor/cgtwq/database/core.py	2022-08-22 13:26:06.011672600 +0800
+--- a/vendor/cgtwq/database/core.py	2023-06-26 13:48:44.194623000 +0800
++++ b/vendor/cgtwq/database/core.py	2023-06-26 12:28:28.698044700 +0800
 @@ -5,7 +5,7 @@
  
  TYPE_CHECKING = False
@@ -144,8 +153,8 @@ diff -ru a/vendor/cgtwq/database/core.py b/vendor/cgtwq/database/core.py
  
  class DatabaseAttachment(object):
 diff -ru a/vendor/cgtwq/database/database.py b/vendor/cgtwq/database/database.py
---- a/vendor/cgtwq/database/database.py	2022-08-22 13:31:02.400672600 +0800
-+++ b/vendor/cgtwq/database/database.py	2022-08-22 13:26:06.018172600 +0800
+--- a/vendor/cgtwq/database/database.py	2023-06-26 13:48:44.195599000 +0800
++++ b/vendor/cgtwq/database/database.py	2023-06-26 12:28:28.699997300 +0800
 @@ -4,10 +4,10 @@
  
  import logging
@@ -170,8 +179,8 @@ diff -ru a/vendor/cgtwq/database/database.py b/vendor/cgtwq/database/database.py
  
  LOGGER = logging.getLogger(__name__)
 diff -ru a/vendor/cgtwq/database/field.py b/vendor/cgtwq/database/field.py
---- a/vendor/cgtwq/database/field.py	2022-08-22 13:31:02.407672600 +0800
-+++ b/vendor/cgtwq/database/field.py	2022-08-22 13:26:06.025172600 +0800
+--- a/vendor/cgtwq/database/field.py	2023-06-26 13:48:44.196575000 +0800
++++ b/vendor/cgtwq/database/field.py	2023-06-26 12:28:28.703901200 +0800
 @@ -11,7 +11,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -182,8 +191,8 @@ diff -ru a/vendor/cgtwq/database/field.py b/vendor/cgtwq/database/field.py
  
  class DatabaseField(core.DatabaseAttachment, ControllerGetterMixin):
 diff -ru a/vendor/cgtwq/database/filebox.py b/vendor/cgtwq/database/filebox.py
---- a/vendor/cgtwq/database/filebox.py	2022-08-22 13:31:02.415172600 +0800
-+++ b/vendor/cgtwq/database/filebox.py	2022-08-22 13:26:06.031172600 +0800
+--- a/vendor/cgtwq/database/filebox.py	2023-06-26 13:48:44.196575000 +0800
++++ b/vendor/cgtwq/database/filebox.py	2023-06-26 12:28:28.706829000 +0800
 @@ -7,13 +7,12 @@
  from . import core
  
@@ -201,8 +210,8 @@ diff -ru a/vendor/cgtwq/database/filebox.py b/vendor/cgtwq/database/filebox.py
  
  class DatabaseFilebox(core.DatabaseAttachment):
 diff -ru a/vendor/cgtwq/database/meta.py b/vendor/cgtwq/database/meta.py
---- a/vendor/cgtwq/database/meta.py	2022-08-22 13:31:02.422672600 +0800
-+++ b/vendor/cgtwq/database/meta.py	2022-08-22 13:26:06.037172600 +0800
+--- a/vendor/cgtwq/database/meta.py	2023-06-26 13:48:44.197551000 +0800
++++ b/vendor/cgtwq/database/meta.py	2023-06-26 12:28:28.709759400 +0800
 @@ -7,7 +7,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -213,8 +222,8 @@ diff -ru a/vendor/cgtwq/database/meta.py b/vendor/cgtwq/database/meta.py
  
  class DatabaseMeta(core.DatabaseAttachment):
 diff -ru a/vendor/cgtwq/database/pipeline.py b/vendor/cgtwq/database/pipeline.py
---- a/vendor/cgtwq/database/pipeline.py	2022-08-22 13:31:02.430172600 +0800
-+++ b/vendor/cgtwq/database/pipeline.py	2022-08-22 13:26:06.043672600 +0800
+--- a/vendor/cgtwq/database/pipeline.py	2023-06-26 13:48:44.198527000 +0800
++++ b/vendor/cgtwq/database/pipeline.py	2023-06-26 12:28:28.712686000 +0800
 @@ -12,7 +12,7 @@
  if TYPE_CHECKING:
      from typing import Tuple, Union
@@ -225,8 +234,8 @@ diff -ru a/vendor/cgtwq/database/pipeline.py b/vendor/cgtwq/database/pipeline.py
  
  class DatabasePipeline(core.DatabaseAttachment, ControllerGetterMixin):
 diff -ru a/vendor/cgtwq/exceptions.py b/vendor/cgtwq/exceptions.py
---- a/vendor/cgtwq/exceptions.py	2022-08-22 13:31:02.436172600 +0800
-+++ b/vendor/cgtwq/exceptions.py	2022-08-22 13:26:06.050172600 +0800
+--- a/vendor/cgtwq/exceptions.py	2023-06-26 13:48:44.167296000 +0800
++++ b/vendor/cgtwq/exceptions.py	2023-06-26 12:28:28.718542800 +0800
 @@ -2,10 +2,10 @@
  """Exceptions for cgtwq.  """
  
@@ -242,8 +251,8 @@ diff -ru a/vendor/cgtwq/exceptions.py b/vendor/cgtwq/exceptions.py
  if six.PY2:
      _BYTES_KEY = b"__str__"
 diff -ru a/vendor/cgtwq/filter.py b/vendor/cgtwq/filter.py
---- a/vendor/cgtwq/filter.py	2022-08-22 13:31:02.441672600 +0800
-+++ b/vendor/cgtwq/filter.py	2022-08-22 13:26:06.056672600 +0800
+--- a/vendor/cgtwq/filter.py	2023-06-26 13:48:44.169248000 +0800
++++ b/vendor/cgtwq/filter.py	2023-06-26 12:28:28.723422000 +0800
 @@ -3,8 +3,8 @@
  
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -256,8 +265,8 @@ diff -ru a/vendor/cgtwq/filter.py b/vendor/cgtwq/filter.py
  # six.moves.collections_abc is not added at six<1.13.0
  # https://github.com/benjaminp/six/blob/42636b15dd1a5b85de56eac98e47954d4c776576/CHANGES#L35
 diff -ru a/vendor/cgtwq/helper/qt.py b/vendor/cgtwq/helper/qt.py
---- a/vendor/cgtwq/helper/qt.py	2022-08-22 13:31:02.448672600 +0800
-+++ b/vendor/cgtwq/helper/qt.py	2022-08-22 13:26:06.063172600 +0800
+--- a/vendor/cgtwq/helper/qt.py	2023-06-26 13:48:44.210239000 +0800
++++ b/vendor/cgtwq/helper/qt.py	2023-06-26 12:28:28.728303000 +0800
 @@ -4,8 +4,8 @@
  
  import sys
@@ -279,8 +288,8 @@ diff -ru a/vendor/cgtwq/helper/qt.py b/vendor/cgtwq/helper/qt.py
  TYPE_CHECKING = False
  if TYPE_CHECKING:
 diff -ru a/vendor/cgtwq/helper/wlf.py b/vendor/cgtwq/helper/wlf.py
---- a/vendor/cgtwq/helper/wlf.py	2022-08-22 13:31:02.454672600 +0800
-+++ b/vendor/cgtwq/helper/wlf.py	2022-08-22 13:26:06.070672600 +0800
+--- a/vendor/cgtwq/helper/wlf.py	2023-06-26 13:48:44.210239000 +0800
++++ b/vendor/cgtwq/helper/wlf.py	2023-06-26 12:28:28.733182800 +0800
 @@ -5,11 +5,11 @@
  import logging
  import re
@@ -299,8 +308,8 @@ diff -ru a/vendor/cgtwq/helper/wlf.py b/vendor/cgtwq/helper/wlf.py
  from .exceptions import DatabaseError
  
 diff -ru a/vendor/cgtwq/message.py b/vendor/cgtwq/message.py
---- a/vendor/cgtwq/message.py	2022-08-22 13:31:02.460172600 +0800
-+++ b/vendor/cgtwq/message.py	2022-08-22 13:26:06.077172600 +0800
+--- a/vendor/cgtwq/message.py	2023-06-26 13:48:44.171200000 +0800
++++ b/vendor/cgtwq/message.py	2023-06-26 12:28:28.737087900 +0800
 @@ -6,8 +6,8 @@
  import json
  import logging
@@ -313,8 +322,8 @@ diff -ru a/vendor/cgtwq/message.py b/vendor/cgtwq/message.py
  from .server.web import upload_image
  from .model import ImageInfo
 diff -ru a/vendor/cgtwq/module/core.py b/vendor/cgtwq/module/core.py
---- a/vendor/cgtwq/module/core.py	2022-08-22 13:31:02.465172600 +0800
-+++ b/vendor/cgtwq/module/core.py	2022-08-22 13:26:06.083672600 +0800
+--- a/vendor/cgtwq/module/core.py	2023-06-26 13:48:44.213168000 +0800
++++ b/vendor/cgtwq/module/core.py	2023-06-26 12:28:28.745871400 +0800
 @@ -5,7 +5,7 @@
  
  TYPE_CHECKING = False
@@ -325,8 +334,8 @@ diff -ru a/vendor/cgtwq/module/core.py b/vendor/cgtwq/module/core.py
  
  class ModuleAttachment(object):
 diff -ru a/vendor/cgtwq/module/field.py b/vendor/cgtwq/module/field.py
---- a/vendor/cgtwq/module/field.py	2022-08-22 13:31:02.470672600 +0800
-+++ b/vendor/cgtwq/module/field.py	2022-08-22 13:26:06.089172600 +0800
+--- a/vendor/cgtwq/module/field.py	2023-06-26 13:48:44.213168000 +0800
++++ b/vendor/cgtwq/module/field.py	2023-06-26 12:28:28.748800000 +0800
 @@ -2,7 +2,7 @@
  """Database module.  """
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -337,8 +346,8 @@ diff -ru a/vendor/cgtwq/module/field.py b/vendor/cgtwq/module/field.py
  from ..model import FieldMeta
  from .core import ModuleAttachment
 diff -ru a/vendor/cgtwq/module/history.py b/vendor/cgtwq/module/history.py
---- a/vendor/cgtwq/module/history.py	2022-08-22 13:31:02.476672600 +0800
-+++ b/vendor/cgtwq/module/history.py	2022-08-22 13:26:06.095172600 +0800
+--- a/vendor/cgtwq/module/history.py	2023-06-26 13:48:44.214144000 +0800
++++ b/vendor/cgtwq/module/history.py	2023-06-26 12:28:28.764418700 +0800
 @@ -11,7 +11,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -349,8 +358,8 @@ diff -ru a/vendor/cgtwq/module/history.py b/vendor/cgtwq/module/history.py
  
  class ModuleHistory(ModuleAttachment, ControllerGetterMixin):
 diff -ru a/vendor/cgtwq/module/module.py b/vendor/cgtwq/module/module.py
---- a/vendor/cgtwq/module/module.py	2022-08-22 13:31:02.499172600 +0800
-+++ b/vendor/cgtwq/module/module.py	2022-08-22 13:26:06.101672600 +0800
+--- a/vendor/cgtwq/module/module.py	2023-06-26 13:48:44.215119000 +0800
++++ b/vendor/cgtwq/module/module.py	2023-06-26 12:28:28.790770200 +0800
 @@ -4,8 +4,8 @@
  
  import logging
@@ -373,8 +382,8 @@ diff -ru a/vendor/cgtwq/module/module.py b/vendor/cgtwq/module/module.py
  
  @six.python_2_unicode_compatible
 diff -ru a/vendor/cgtwq/plugin_meta.py b/vendor/cgtwq/plugin_meta.py
---- a/vendor/cgtwq/plugin_meta.py	2022-08-22 13:31:02.524172600 +0800
-+++ b/vendor/cgtwq/plugin_meta.py	2022-08-22 13:26:06.107672600 +0800
+--- a/vendor/cgtwq/plugin_meta.py	2023-06-26 13:48:44.174127000 +0800
++++ b/vendor/cgtwq/plugin_meta.py	2023-06-26 12:28:28.810291100 +0800
 @@ -7,8 +7,8 @@
  import time
  from functools import partial
@@ -396,8 +405,8 @@ diff -ru a/vendor/cgtwq/plugin_meta.py b/vendor/cgtwq/plugin_meta.py
  
  def _accessor(field):
 diff -ru a/vendor/cgtwq/public_module.py b/vendor/cgtwq/public_module.py
---- a/vendor/cgtwq/public_module.py	2022-08-22 13:31:02.530172600 +0800
-+++ b/vendor/cgtwq/public_module.py	2022-08-22 13:26:06.114172600 +0800
+--- a/vendor/cgtwq/public_module.py	2023-06-26 13:48:44.175104000 +0800
++++ b/vendor/cgtwq/public_module.py	2023-06-26 12:28:29.311984400 +0800
 @@ -2,7 +2,7 @@
  """Database module.  """
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -417,8 +426,8 @@ diff -ru a/vendor/cgtwq/public_module.py b/vendor/cgtwq/public_module.py
  
  class PublicModule(Module):
 diff -ru a/vendor/cgtwq/resultset.py b/vendor/cgtwq/resultset.py
---- a/vendor/cgtwq/resultset.py	2022-08-22 13:31:02.536172600 +0800
-+++ b/vendor/cgtwq/resultset.py	2022-08-22 13:26:06.121172600 +0800
+--- a/vendor/cgtwq/resultset.py	2023-06-26 13:48:44.177056000 +0800
++++ b/vendor/cgtwq/resultset.py	2023-06-26 12:28:29.314912800 +0800
 @@ -4,7 +4,7 @@
  
  import logging
@@ -438,8 +447,8 @@ diff -ru a/vendor/cgtwq/resultset.py b/vendor/cgtwq/resultset.py
  
  class ResultSet(list):
 diff -ru a/vendor/cgtwq/selection/core.py b/vendor/cgtwq/selection/core.py
---- a/vendor/cgtwq/selection/core.py	2022-08-22 13:31:02.541672600 +0800
-+++ b/vendor/cgtwq/selection/core.py	2022-08-22 13:26:06.126672600 +0800
+--- a/vendor/cgtwq/selection/core.py	2023-06-26 13:48:44.217071000 +0800
++++ b/vendor/cgtwq/selection/core.py	2023-06-26 12:28:29.317841300 +0800
 @@ -12,7 +12,7 @@
  
  TYPE_CHECKING = False
@@ -450,8 +459,8 @@ diff -ru a/vendor/cgtwq/selection/core.py b/vendor/cgtwq/selection/core.py
  
  class SelectionAttachment(object):
 diff -ru a/vendor/cgtwq/selection/entry.py b/vendor/cgtwq/selection/entry.py
---- a/vendor/cgtwq/selection/entry.py	2022-08-22 13:31:02.549172600 +0800
-+++ b/vendor/cgtwq/selection/entry.py	2022-08-22 13:26:06.133672600 +0800
+--- a/vendor/cgtwq/selection/entry.py	2023-06-26 13:48:44.218047000 +0800
++++ b/vendor/cgtwq/selection/entry.py	2023-06-26 12:28:29.321746700 +0800
 @@ -2,7 +2,7 @@
  """Database module selection.  """
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -471,8 +480,8 @@ diff -ru a/vendor/cgtwq/selection/entry.py b/vendor/cgtwq/selection/entry.py
  
  class Entry(Selection):
 diff -ru a/vendor/cgtwq/selection/filebox.py b/vendor/cgtwq/selection/filebox.py
---- a/vendor/cgtwq/selection/filebox.py	2022-08-22 13:31:02.555672600 +0800
-+++ b/vendor/cgtwq/selection/filebox.py	2022-08-22 13:26:06.140172600 +0800
+--- a/vendor/cgtwq/selection/filebox.py	2023-06-26 13:48:44.219023000 +0800
++++ b/vendor/cgtwq/selection/filebox.py	2023-06-26 12:28:29.324673700 +0800
 @@ -2,7 +2,7 @@
  """Database module selection.  """
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -483,8 +492,8 @@ diff -ru a/vendor/cgtwq/selection/filebox.py b/vendor/cgtwq/selection/filebox.py
  from ..model import FileBoxInfo
  from .core import SelectionAttachment
 diff -ru a/vendor/cgtwq/selection/filebox_test.py b/vendor/cgtwq/selection/filebox_test.py
---- a/vendor/cgtwq/selection/filebox_test.py	2022-08-22 13:31:02.561672600 +0800
-+++ b/vendor/cgtwq/selection/filebox_test.py	2022-08-22 13:26:06.147172600 +0800
+--- a/vendor/cgtwq/selection/filebox_test.py	2023-06-26 13:48:44.220976000 +0800
++++ b/vendor/cgtwq/selection/filebox_test.py	2023-06-26 12:28:29.326625500 +0800
 @@ -2,7 +2,7 @@
  
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -495,8 +504,8 @@ diff -ru a/vendor/cgtwq/selection/filebox_test.py b/vendor/cgtwq/selection/fileb
  
  @_test.skip_if_not_logged_in
 diff -ru a/vendor/cgtwq/selection/flow.py b/vendor/cgtwq/selection/flow.py
---- a/vendor/cgtwq/selection/flow.py	2022-08-22 13:31:02.566172600 +0800
-+++ b/vendor/cgtwq/selection/flow.py	2022-08-22 13:26:06.153672600 +0800
+--- a/vendor/cgtwq/selection/flow.py	2023-06-26 13:48:44.221952000 +0800
++++ b/vendor/cgtwq/selection/flow.py	2023-06-26 12:28:29.328577800 +0800
 @@ -6,14 +6,14 @@
  import os
  import uuid
@@ -516,8 +525,8 @@ diff -ru a/vendor/cgtwq/selection/flow.py b/vendor/cgtwq/selection/flow.py
  TYPE_CHECKING = False
  if TYPE_CHECKING:
 diff -ru a/vendor/cgtwq/selection/flow_test.py b/vendor/cgtwq/selection/flow_test.py
---- a/vendor/cgtwq/selection/flow_test.py	2022-08-22 13:31:02.573172600 +0800
-+++ b/vendor/cgtwq/selection/flow_test.py	2022-08-22 13:26:06.160172600 +0800
+--- a/vendor/cgtwq/selection/flow_test.py	2023-06-26 13:48:44.222927000 +0800
++++ b/vendor/cgtwq/selection/flow_test.py	2023-06-26 12:28:29.331506100 +0800
 @@ -2,8 +2,8 @@
  
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -530,8 +539,8 @@ diff -ru a/vendor/cgtwq/selection/flow_test.py b/vendor/cgtwq/selection/flow_tes
  
  @_test.skip_if_not_logged_in
 diff -ru a/vendor/cgtwq/selection/history.py b/vendor/cgtwq/selection/history.py
---- a/vendor/cgtwq/selection/history.py	2022-08-22 13:31:02.578172600 +0800
-+++ b/vendor/cgtwq/selection/history.py	2022-08-22 13:26:06.166172600 +0800
+--- a/vendor/cgtwq/selection/history.py	2023-06-26 13:48:44.224879000 +0800
++++ b/vendor/cgtwq/selection/history.py	2023-06-26 12:28:29.333458500 +0800
 @@ -9,8 +9,7 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -543,8 +552,8 @@ diff -ru a/vendor/cgtwq/selection/history.py b/vendor/cgtwq/selection/history.py
  
  class SelectionHistory(SelectionAttachment):
 diff -ru a/vendor/cgtwq/selection/image.py b/vendor/cgtwq/selection/image.py
---- a/vendor/cgtwq/selection/image.py	2022-08-22 13:31:02.583672600 +0800
-+++ b/vendor/cgtwq/selection/image.py	2022-08-22 13:26:06.173672600 +0800
+--- a/vendor/cgtwq/selection/image.py	2023-06-26 13:48:44.225855000 +0800
++++ b/vendor/cgtwq/selection/image.py	2023-06-26 12:28:29.337362500 +0800
 @@ -4,8 +4,8 @@
  
  import json
@@ -557,8 +566,8 @@ diff -ru a/vendor/cgtwq/selection/image.py b/vendor/cgtwq/selection/image.py
  from ..model import ImageInfo
  from ..server.web import upload_image
 diff -ru a/vendor/cgtwq/selection/link.py b/vendor/cgtwq/selection/link.py
---- a/vendor/cgtwq/selection/link.py	2022-08-22 13:31:02.590172600 +0800
-+++ b/vendor/cgtwq/selection/link.py	2022-08-22 13:26:06.180672600 +0800
+--- a/vendor/cgtwq/selection/link.py	2023-06-26 13:48:44.226832000 +0800
++++ b/vendor/cgtwq/selection/link.py	2023-06-26 12:28:29.340291000 +0800
 @@ -3,7 +3,7 @@
  from __future__ import absolute_import, division, print_function, unicode_literals
  
@@ -569,8 +578,8 @@ diff -ru a/vendor/cgtwq/selection/link.py b/vendor/cgtwq/selection/link.py
  
  TYPE_CHECKING = False
 diff -ru a/vendor/cgtwq/selection/link_test.py b/vendor/cgtwq/selection/link_test.py
---- a/vendor/cgtwq/selection/link_test.py	2022-08-22 13:31:02.595672600 +0800
-+++ b/vendor/cgtwq/selection/link_test.py	2022-08-22 13:26:06.187672600 +0800
+--- a/vendor/cgtwq/selection/link_test.py	2023-06-26 13:48:44.227808000 +0800
++++ b/vendor/cgtwq/selection/link_test.py	2023-06-26 12:28:29.343218600 +0800
 @@ -1,4 +1,4 @@
 -from cgtwq import _test, Field
 +from wulifang.vendor.cgtwq import _test, Field
@@ -578,8 +587,8 @@ diff -ru a/vendor/cgtwq/selection/link_test.py b/vendor/cgtwq/selection/link_tes
  
  def _use_shots_and_assets():
 diff -ru a/vendor/cgtwq/selection/notify.py b/vendor/cgtwq/selection/notify.py
---- a/vendor/cgtwq/selection/notify.py	2022-08-22 13:31:02.601672600 +0800
-+++ b/vendor/cgtwq/selection/notify.py	2022-08-22 13:26:06.193672600 +0800
+--- a/vendor/cgtwq/selection/notify.py	2023-06-26 13:48:44.228784000 +0800
++++ b/vendor/cgtwq/selection/notify.py	2023-06-26 12:28:29.346146500 +0800
 @@ -11,7 +11,6 @@
  TYPE_CHECKING = False
  if TYPE_CHECKING:
@@ -589,8 +598,8 @@ diff -ru a/vendor/cgtwq/selection/notify.py b/vendor/cgtwq/selection/notify.py
  
  class SelectionNotify(SelectionAttachment):
 diff -ru a/vendor/cgtwq/selection/selection.py b/vendor/cgtwq/selection/selection.py
---- a/vendor/cgtwq/selection/selection.py	2022-08-22 13:31:02.607172600 +0800
-+++ b/vendor/cgtwq/selection/selection.py	2022-08-22 13:26:06.199672600 +0800
+--- a/vendor/cgtwq/selection/selection.py	2023-06-26 13:48:44.229759000 +0800
++++ b/vendor/cgtwq/selection/selection.py	2023-06-26 12:28:29.349074600 +0800
 @@ -2,8 +2,8 @@
  """Database module selection.  """
  from __future__ import absolute_import, division, print_function, unicode_literals
@@ -613,8 +622,8 @@ diff -ru a/vendor/cgtwq/selection/selection.py b/vendor/cgtwq/selection/selectio
  
  class Selection(tuple):
 diff -ru a/vendor/cgtwq/server/http.py b/vendor/cgtwq/server/http.py
---- a/vendor/cgtwq/server/http.py	2022-08-22 13:31:02.612172600 +0800
-+++ b/vendor/cgtwq/server/http.py	2022-08-22 13:26:06.205672600 +0800
+--- a/vendor/cgtwq/server/http.py	2023-06-26 13:48:44.231712000 +0800
++++ b/vendor/cgtwq/server/http.py	2023-06-26 12:28:29.352003200 +0800
 @@ -6,11 +6,11 @@
  import logging
  from collections import OrderedDict
@@ -631,8 +640,8 @@ diff -ru a/vendor/cgtwq/server/http.py b/vendor/cgtwq/server/http.py
  TYPE_CHECKING = False
  if TYPE_CHECKING:
 diff -ru a/vendor/cgtwq/server/meta.py b/vendor/cgtwq/server/meta.py
---- a/vendor/cgtwq/server/meta.py	2022-08-22 13:31:02.617172600 +0800
-+++ b/vendor/cgtwq/server/meta.py	2022-08-22 13:26:06.211172600 +0800
+--- a/vendor/cgtwq/server/meta.py	2023-06-26 13:48:44.232688000 +0800
++++ b/vendor/cgtwq/server/meta.py	2023-06-26 12:28:29.353955600 +0800
 @@ -1,7 +1,7 @@
  # -*- coding=UTF-8 -*-
  """Server metadata."""
@@ -643,8 +652,8 @@ diff -ru a/vendor/cgtwq/server/meta.py b/vendor/cgtwq/server/meta.py
  from ..core import CONFIG
  from ..model import StatusInfo
 diff -ru a/vendor/cgtwq/server/web.py b/vendor/cgtwq/server/web.py
---- a/vendor/cgtwq/server/web.py	2022-08-22 13:31:02.622172600 +0800
-+++ b/vendor/cgtwq/server/web.py	2022-08-22 13:26:06.217672600 +0800
+--- a/vendor/cgtwq/server/web.py	2023-06-26 13:48:44.233664000 +0800
++++ b/vendor/cgtwq/server/web.py	2023-06-26 12:28:29.356883800 +0800
 @@ -5,7 +5,7 @@
  
  import mimetypes
@@ -655,8 +664,8 @@ diff -ru a/vendor/cgtwq/server/web.py b/vendor/cgtwq/server/web.py
  from ..model import ImageInfo
  from .http import post
 diff -ru a/vendor/cgtwq/util.py b/vendor/cgtwq/util.py
---- a/vendor/cgtwq/util.py	2022-08-22 13:31:02.628672600 +0800
-+++ b/vendor/cgtwq/util.py	2022-08-22 13:26:06.224172600 +0800
+--- a/vendor/cgtwq/util.py	2023-06-26 13:48:44.179008000 +0800
++++ b/vendor/cgtwq/util.py	2023-06-26 12:28:29.359811300 +0800
 @@ -4,7 +4,7 @@
  
  import logging

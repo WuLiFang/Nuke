@@ -7,7 +7,7 @@ import nuke
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from .. import types
+    from .. import _types
 
 
 class ActiveViewerService(object):
@@ -34,5 +34,5 @@ class ActiveViewerService(object):
 
 
 def _(v):
-    # type: (ActiveViewerService) -> types.ActiveViewerService
+    # type: (ActiveViewerService) -> _types.ActiveViewerService
     return v

@@ -5,11 +5,15 @@ _curveknob - The Python API for the CurveKnob
 """
 
 import six
-import typing
 import _curvelib
 import _curveknob
+from typing import Iterator, TypeVar
+import nuke
+from wulifang._compat.str import Str
 
-class CurveKnob:
+T = TypeVar("T")
+
+class CurveKnob(nuke.Knob):
     """
     The knob which holds the tree of paint elements (Layers, Shapes and Strokes).
 
@@ -144,7 +148,7 @@ class Element:
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-    def clone(self) -> ...:
+    def clone(self: T) -> T:
         """
         elementCreate clone of element
         """
@@ -204,6 +208,7 @@ class Layer(Element):
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
+    def __iter__(self) -> Iterator[Element]: ...
     def append(self, element) -> None:
         """
         Add a new element inside this layer. The element must be an instance of either the Shape, Stroke or Layer classes. Note that an element cannot be in more than one place in the tree, so if you try to add an element that is already in the tree somewhere else, it'll be removed from its old location first.
@@ -229,7 +234,7 @@ class Layer(Element):
         Insert a new element inside this layer at the given index. The element must be an instance of either the Shape, Stroke or Layer classes. Note that an element cannot be in more than one place in the tree, so if you try to add an element that is already in the tree somewhere else, it'll be removed from its old location first.
         """
         ...
-    def remove(self, index) -> None:
+    def remove(self, index: int) -> None:
         """
         Remove the element at the given index from this layer. If the index is out of bounds, an IndexError will be raised.
         """
@@ -270,6 +275,11 @@ class Shape(Element):
           support@thefoundry.co.uk
     """
 
+    locked: bool
+    "Whether this element is locked."
+
+    name: Str
+    "The name for this element"
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -294,6 +304,7 @@ class Shape(Element):
         x.__len__() <==> len(x)
         """
         ...
+    def __iter__(self) -> Iterator[ShapeControlPoint]: ...
     def __setattr__(self, *args, **kwargs):
         """
         x.__setattr__('name', value) <==> x.name = value
@@ -382,7 +393,18 @@ class ShapeControlPoint:
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
-    ...
+    center: _curvelib.AnimControlPoint
+    "The center of the control point"
+    featherCenter: _curvelib.AnimControlPoint
+    "The feather point offsets, relative to the center point"
+    featherLeftTangent: _curvelib.AnimControlPoint
+    "The left feather tangent offsets, relative to the feather center point."
+    featherRightTangent: _curvelib.AnimControlPoint
+    "The right feather tangent offsets, relative to the feather center point."
+    leftTangent: _curvelib.AnimControlPoint
+    "The left tangent offsets, relative to the center point."
+    rightTangent: _curvelib.AnimControlPoint
+    "The right tangent offsets, relative to the center point."
 
 class Stroke(Element):
     """
@@ -420,6 +442,7 @@ class Stroke(Element):
         x.__setattr__('name', value) <==> x.name = value
         """
         ...
+    def __iter__(self) -> Iterator[_curvelib.AnimControlPoint]: ...
     def append(self, controlPoint) -> None:
         """
         Add a new control point to the stroke. The controlPoint parameter must be either an instance of the AnimControlPoint class, or something we can convert to an AnimControlPoint. This includes a sequence of 2, 3 or 4 floats; or a CVec2, CVec3 or CVec4 object.

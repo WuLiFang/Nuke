@@ -2,19 +2,27 @@
 
 import nuke
 
-nuke.pluginAddPath("3D")
-nuke.pluginAddPath("Channel")
-nuke.pluginAddPath("Color")
-nuke.pluginAddPath("Deep")
-nuke.pluginAddPath("Draw")
-nuke.pluginAddPath("Edge")
-nuke.pluginAddPath("Filter")
-nuke.pluginAddPath("icons")
-nuke.pluginAddPath("Image")
-nuke.pluginAddPath("Keyer")
-nuke.pluginAddPath("Lighting")
-nuke.pluginAddPath("Merge")
-nuke.pluginAddPath("Obsolete")
-nuke.pluginAddPath("Particle")
-nuke.pluginAddPath("Transform")
-nuke.pluginAddPath("third_party")
+TYPE_CHECKING = False
+if TYPE_CHECKING:
+    from typing import Any
+
+
+def cast_str(v):
+    # type: (str) -> Any
+    return v
+
+nuke.pluginAddPath(cast_str("3D"))
+nuke.pluginAddPath(cast_str("Channel"))
+nuke.pluginAddPath(cast_str("Color"))
+nuke.pluginAddPath(cast_str("Deep"))
+nuke.pluginAddPath(cast_str("Draw"))
+nuke.pluginAddPath(cast_str("Edge"))
+nuke.pluginAddPath(cast_str("Filter"))
+nuke.pluginAddPath(cast_str("Image"))
+nuke.pluginAddPath(cast_str("Keyer"))
+nuke.pluginAddPath(cast_str("Lighting"))
+nuke.pluginAddPath(cast_str("Merge"))
+nuke.pluginAddPath(cast_str("Obsolete"))
+nuke.pluginAddPath(cast_str("Particle"))
+nuke.pluginAddPath(cast_str("Transform"))
+nuke.pluginAddPath(cast_str("third_party"))

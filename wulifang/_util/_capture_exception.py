@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from wulifang.types import MessageService
+    from wulifang._types import MessageService
     from typing import Optional, Generator
 
 import contextlib
@@ -14,7 +14,7 @@ import contextlib
 def _default_message():
     import wulifang
 
-    if wulifang.message is None:
+    if wulifang.message is None: # type: ignore
         from wulifang.infrastructure.logging_message_service import (
             LoggingMessageService,
         )

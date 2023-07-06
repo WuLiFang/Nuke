@@ -3,13 +3,9 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-TYPE_CHECKING = False
-if TYPE_CHECKING:
-    from typing import Any
-
 
 def cast_int(v):
-    # type: (Any) -> int
+    # type: (object) -> int
     if isinstance(v, int):
         return v
-    return int(v)
+    return int(v)  # type: ignore

@@ -4,8 +4,8 @@
 _curvelib - The Python API for the Nuke's core curve library
 """
 
-import six
-import typing
+from typing import Optional, Union, overload
+from wulifang._compat.str import Str
 
 class AnimAttributes:
     """
@@ -17,6 +17,117 @@ class AnimAttributes:
     """
 
     __new__: ...
+
+    kAlphaAttribute: Str = Str("a")
+
+    kAlphaOverlayAttribute: Str = Str("ao")
+
+    kBlendingModeAttribute: Str = Str("bm")
+
+    kBlueAttribute: Str = Str("b")
+
+    kBlueOverlayAttribute: Str = Str("bo")
+
+    kBrushSizeAttribute: Str = Str("bs")
+
+    kBrushSpacingAttribute: Str = Str("bsp")
+
+    kBrushTypeAttribute: Str = Str("bt")
+
+    kBuildUpAttribute: Str = Str("bu")
+
+    kDynamicHardnessAttribute: Str = Str("dh")
+
+    kDynamicSizeAttribute: Str = Str("ds")
+
+    kDynamicTransparencyAttribute: Str = Str("dt")
+
+    kEffectParameter1Attribute: Str = Str("ep1")
+
+    kEffectParameter2Attribute: Str = Str("ep2")
+
+    kEffectParameter3Attribute: Str = Str("ep3")
+
+    kFeatherFallOffAttribute: Str = Str("ff")
+
+    kFeatherOnAttribute: Str = Str("fo")
+
+    kFeatherTypeAttribute: Str = Str("ft")
+
+    kFeatherXAttribute: Str = Str("fx")
+
+    kFeatherYAttribute: Str = Str("fy")
+
+    kGreenAttribute: Str = Str("g")
+
+    kGreenOverlayAttribute: Str = Str("go")
+
+    kHardnessAttribute: Str = Str("h")
+
+    kInvertedAttribute: Str = Str("inv")
+
+    kLifeTimeMAttribute: Str = Str("ltm")
+
+    kLifeTimeNAttribute: Str = Str("ltn")
+
+    kLifeTimeTypeAttribute: Str = Str("ltt")
+
+    kMotionBlurAttribute: Str = Str("mb")
+
+    kMotionBlurOnAttribute: Str = Str("mbo")
+
+    kMotionBlurShutterAttribute: Str = Str("mbs")
+
+    kMotionBlurShutterOffsetAttribute: Str = Str("mbso")
+
+    kMotionBlurShutterOffsetTypeAttribute: Str = Str("mbsot")
+
+    kNumberOfViewsAttribute: Str = Str("nv")
+
+    kOpacityAttribute: Str = Str("opc")
+
+    kPlanarTrackLayerAttribute: Str = Str("pt")
+
+    kRedAttribute: Str = Str("r")
+
+    kRedOverlayAttribute: Str = Str("ro")
+
+    kSourceAttribute: Str = Str("src")
+
+    kSourcePivotPointXAttribute: Str = Str("spx")
+
+    kSourcePivotPointYAttribute: Str = Str("spy")
+
+    kSourceRotateAttribute: Str = Str("sr")
+
+    kSourceScaleXAttribute: Str = Str("ssx")
+
+    kSourceScaleYAttribute: Str = Str("ssy")
+
+    kSourceSkewOrderAttribute: Str = Str("sso")
+
+    kSourceSkewXAttribute: Str = Str("sskx")
+
+    kSourceSkewYAttribute: Str = Str("ssky")
+
+    kSourceTimeOffsetAttribute: Str = Str("sto")
+
+    kSourceTimeOffsetTypeAttribute: Str = Str("stot")
+
+    kSourceTranslateRoundAttribute: Str = Str("str")
+
+    kSourceTranslateXAttribute: Str = Str("stx")
+
+    kSourceTranslateYAttribute: Str = Str("sty")
+
+    kTensionAttribute: Str = Str("t")
+
+    kViewAttribute: Str = Str("view")
+
+    kVisibleAttribute: Str = Str("vis")
+
+    kWriteOnEndAttribute: Str = Str("we")
+
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
@@ -56,7 +167,7 @@ class AnimAttributes:
         When a name and value is specified, this method adds a new key to an existing attribute at the given time. When the name and value are omitted, a new key is added to all attributes at the specified time. The view parameter is optional in either case.
         """
         ...
-    def getCurve(self, attr: typing.Union[int, six.binary_type], view=...) -> AnimCurve:
+    def getCurve(self, attr: Union[int, Str], view=...) -> AnimCurve:
         """
         Gets the AnimCurve object for a particular attribute. The attr parameter can be the index or name of the attribute. The view parameter is optional.
         """
@@ -66,7 +177,7 @@ class AnimAttributes:
         Gets the time a particular key is set at. The index parameter is the index of the attribute; keyIndexOrHash is either the index of the key in the attributes AnimCurve, or its associated Hash; and view is the optional view name.
         """
         ...
-    def getName(self, index) -> six.binary_type:
+    def getName(self, index) -> Str:
         """
         Get the name of an attribute when you know its index.
         """
@@ -76,7 +187,12 @@ class AnimAttributes:
         Returns the number of keys in the curve for a particular attribute. The attr parameter can be the index or name of the attribute. The view parameter is optional.
         """
         ...
-    def getValue(self, time, indexOrName, view) -> float:
+    def getValue(
+        self,
+        time: float,
+        indexOrName: Union[int, Str],
+        view: Optional[Str] = ...,
+    ) -> float:
         """
         Evaluates the anim curve of an attribute at a particular time and returns the value.
         time is the time for which to evaluate the attribute; indexOrName is either the index of the attribute to evaluate, or its name; and view is the optional view name.
@@ -107,7 +223,21 @@ class AnimAttributes:
         Reset the object to have no attributes.
         """
         ...
-    def set(self, time, attributeIndexOrName, value, view) -> None:
+    @overload
+    def set(
+        self,
+        attributeIndexOrName: Union[int, Str],
+        value: float,
+        view: Optional[Str] = ...,
+    ) -> None: ...
+    @overload
+    def set(
+        self,
+        time: float,
+        attributeIndexOrName: Union[int, Str],
+        value: float,
+        view: Optional[Str] = ...,
+    ) -> None:
         """
         Set the value of an attribute. The time parameter is optional: if it's present, a new key is created at that time with the specified value; if it's not present, a constant value is set for the attribute. The attribute to set may be identified by its name or index. The view parameter is optional.
         """
@@ -217,7 +347,7 @@ class AnimCTransform:
         Get the time for a specific key on the pivotPoint attribute. index is the index of the key. The view parameter is optional.
         """
         ...
-    def getPivotPointKeyTimes(self, view) -> typing.List[float]:
+    def getPivotPointKeyTimes(self, view) -> list[float]:
         """
         Get the times for all keys on the pivotPoint attribute. The view parameter is optional.
         """
@@ -230,7 +360,7 @@ class AnimCTransform:
         Get the time for a specific key on the rotation attribute. index is the index of the key. The view parameter is optional.
         """
         ...
-    def getRotationKeyTimes(self, view) -> typing.List[float]:
+    def getRotationKeyTimes(self, view) -> list[float]:
         """
         Get the times for all keys on the rotation attribute.The view parameter is optional.
         """
@@ -243,7 +373,7 @@ class AnimCTransform:
         Get the time for a specific key on the scale attribute. index is the index of the key. The view parameter is optional.
         """
         ...
-    def getScaleKeyTimes(self, view) -> typing.List[float]:
+    def getScaleKeyTimes(self, view) -> list[float]:
         """
         Get the times for all keys on the scale attribute. The view parameter is optional.
         """
@@ -256,7 +386,7 @@ class AnimCTransform:
         Get the time for a specific key on the skewX attribute. index is the index of the key. The view parameter is optional.
         """
         ...
-    def getSkewXKeyTimes(self, view) -> typing.List[float]:
+    def getSkewXKeyTimes(self, view) -> list[float]:
         """
         Get the times for all keys on the skewX attribute. The view parameter is optional.
         """
@@ -266,7 +396,7 @@ class AnimCTransform:
         Get the time for a specific key. The view parameter is optional.
         """
         ...
-    def getTransformKeyTimes(self, view) -> typing.List[float]:
+    def getTransformKeyTimes(self, view) -> list[float]:
         """
         Get the times for all keys, across all attributes of this transform. The view parameter is optional.
         """
@@ -279,7 +409,7 @@ class AnimCTransform:
         Get the time for a specific key on the translation attribute. index is the index of the key. The view parameter is optional.
         """
         ...
-    def getTranslationKeyTimes(self, view) -> typing.List[float]:
+    def getTranslationKeyTimes(self, view) -> list[float]:
         """
         Get the times for all keys on the translation attribute. The view parameter is optional.
         """
@@ -381,7 +511,12 @@ class AnimControlPoint(Flag):
     def addKey(self, time, controlPointOrDim, view) -> None:
         """ """
         ...
-    def addPositionKey(self, time, positionOrDim, view) -> None:
+    def addPositionKey(
+        self,
+        time: float,
+        positionOrDim: Union[CVec3, int],
+        view: Optional[Str] = ...,
+    ) -> None:
         """
         Adds a new key to the control point's timeline. positionOrDim can either be a vector or a single scalar that specifies which component (xyzw) to add a key for.
         """
@@ -391,12 +526,12 @@ class AnimControlPoint(Flag):
         Evaluates the animated control point's position at the specific time.
         """
         ...
-    def getControlPointKeyTimes(self, view) -> typing.List[float]:
+    def getControlPointKeyTimes(self, view: Str = ...) -> list[float]:
         """
         Get the list of times at which this control point has a key. The view parameter is optional.
         """
         ...
-    def getPosition(self, time, view) -> CVec3:
+    def getPosition(self, time: float, view: Optional[Str] = ...) -> CVec3:
         """
         Get the position of this control point at a particular time. The time parameter is a float specifying which time to calculate the position for; the view parameter is the optional view name.
         """
@@ -417,7 +552,7 @@ class AnimControlPoint(Flag):
     def removeKey(self, time, view) -> None:
         """ """
         ...
-    def removePositionKey(self, time, view) -> None:
+    def removePositionKey(self, time: float, view: Str = ...) -> None:
         """ """
         ...
     def reset(self) -> None:
@@ -453,6 +588,11 @@ class AnimCurve(BaseCurve):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
+
+    kDefaultConstantValue: float = 0.0
+
+    constantValue: float = ...
+
     def __delattr__(self, *args, **kwargs):
         """
         x.__delattr__('name') <==> del x.name
@@ -470,8 +610,10 @@ class AnimCurve(BaseCurve):
         ...
     def addKey(self, time, value) -> None:
         """
-        self.addKey(keyObj) -> None
         Add a new key to this curve. You can pass in either a time and value pair (the value parameter is optional), or an AnimCurveKey object you've created yourself. In the former case, a new AnimCurveKey object will be created and added to the curve; in the latter case, the key you pass in will be added directly.
+
+        Overloads:
+            self.addKey(keyObj) -> None
         """
         ...
     def evaluate(self, time) -> float:
@@ -577,12 +719,12 @@ class AnimCurveViews:
         Get the index of a view when you know its name.
         """
         ...
-    def getViewName(self, index) -> six.binary_type:
+    def getViewName(self, index) -> Str:
         """
         Get the name of a particular view when you know its index.
         """
         ...
-    def getViewNames(self) -> typing.List[float]:
+    def getViewNames(self) -> list[float]:
         """
         Get the list of all view names.
         """
@@ -597,6 +739,13 @@ class BaseCurve(Flag):
     """
 
     __new__: ...
+
+    kDefaultCurveFlag: int = 0
+
+    kDefaultCurveTension: float = 0.5
+
+    kDefaultCurveType: int = 0
+
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
@@ -992,11 +1141,20 @@ class CVec3:
     A 3-component vector.
     """
 
+    x: float
+    "The x coordinate."
+
+    y: float
+    "The y coordinate."
+
+    z: float
+    "The z coordinate."
+
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    def __add__(self, *args, **kwargs):
+    def __add__(self, *args, **kwargs) -> CVec3:
         """
         x.__add__(y) <==> x+y
         """
@@ -1011,7 +1169,7 @@ class CVec3:
         x.__delitem__(y) <==> del x[y]
         """
         ...
-    def __div__(self, *args, **kwargs):
+    def __div__(self, *args, **kwargs) -> CVec3:
         """
         x.__div__(y) <==> x/y
         """
@@ -1041,12 +1199,12 @@ class CVec3:
         x.__gt__(y) <==> x>y
         """
         ...
-    def __iadd__(self, *args, **kwargs):
+    def __iadd__(self, *args, **kwargs) -> CVec3:
         """
         x.__iadd__(y) <==> x+=y
         """
         ...
-    def __isub__(self, *args, **kwargs):
+    def __isub__(self, *args, **kwargs) -> CVec3:
         """
         x.__isub__(y) <==> x-=y
         """
@@ -1066,7 +1224,7 @@ class CVec3:
         x.__lt__(y) <==> x<y
         """
         ...
-    def __mul__(self, *args, **kwargs):
+    def __mul__(self, *args, **kwargs) -> CVec3:
         """
         x.__mul__(y) <==> x*y
         """
@@ -1076,17 +1234,17 @@ class CVec3:
         x.__ne__(y) <==> x!=y
         """
         ...
-    def __neg__(self, *args, **kwargs):
+    def __neg__(self, *args, **kwargs) -> CVec3:
         """
         x.__neg__() <==> -x
         """
         ...
-    def __radd__(self, *args, **kwargs):
+    def __radd__(self, *args, **kwargs) -> CVec3:
         """
         x.__radd__(y) <==> y+x
         """
         ...
-    def __rdiv__(self, *args, **kwargs):
+    def __rdiv__(self, *args, **kwargs) -> CVec3:
         """
         x.__rdiv__(y) <==> y/x
         """
@@ -1096,12 +1254,12 @@ class CVec3:
         x.__repr__() <==> repr(x)
         """
         ...
-    def __rmul__(self, *args, **kwargs):
+    def __rmul__(self, *args, **kwargs) -> CVec3:
         """
         x.__rmul__(y) <==> y*x
         """
         ...
-    def __rsub__(self, *args, **kwargs):
+    def __rsub__(self, *args, **kwargs) -> CVec3:
         """
         x.__rsub__(y) <==> y-x
         """
@@ -1116,12 +1274,11 @@ class CVec3:
         x.__setitem__(i, y) <==> x[i]=y
         """
         ...
-    def __sub__(self, *args, **kwargs):
+    def __sub__(self, *args, **kwargs) -> CVec3:
         """
         x.__sub__(y) <==> x-y
         """
         ...
-    ...
 
 class CVec4:
     """

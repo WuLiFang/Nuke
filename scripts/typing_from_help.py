@@ -5,7 +5,6 @@ Usage: "$PYTHON3" ./scripts/typing_from_help.py help.txt
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
-from threading import local
 from typing import Iterable, Iterator, List, Optional, Sequence, Text, Tuple
 import cast_unknown as cast
 import re
@@ -152,7 +151,7 @@ def _parse_by_indent(
     key = ""  # type: str
     values = []
     for line in lines:
-        line = cast.text(line)
+        line = Text(line)
         if line.startswith(indent) or line == indent.rstrip(" "):
             values.append(line[len(indent) :])
         else:
@@ -507,14 +506,16 @@ def _typing_from_class(class_def):
         yield ""
     if data:
         for i in data:
-            yield "    %s: ...%s" % (
+            yield "    %s: %s%s" % (
                 i["name"],
+                i["value_type"],
                 " = %s" % i["value"] if i["value"] else "",
             )
-            yield '    """'
-            for j in i["docstring"]:
-                yield ("    %s" % j).rstrip()
-            yield '    """'
+            if i["docstring"]:
+                yield '    """'
+                for j in i["docstring"]:
+                    yield ("    %s" % j).rstrip()
+                yield '    """'
             yield ""
     if static_methods:
         for i in static_methods:
@@ -619,28 +620,24 @@ def _parse_data_description(i):
     docstring = []
     if value.endswith("..."):
         docstring.append(value)
-        value = ""
     elif value.startswith("<"):
         docstring.append(value)
-        value = ""
     elif value.startswith(("'", '"')):
         docstring.append(value)
         value_type = "typing.Text"
-        value = ""
     elif value.startswith("["):
         docstring.append(value)
-        value = ""
         value_type = "list"
     elif value.startswith("{"):
         docstring.append(value)
-        value = ""
         value_type = "dict"
     elif value in ("True", "False"):
         docstring.append(value)
-        value = ""
         value_type = "bool"
-    elif re.match(r"-?\d+", value):
+    elif re.match(r"^-?\d+", value):
         value_type = "int"
+        if "." in value:
+            value_type = "float"
     if not _is_valid_type_expression(value_type):
         _LOGGER.warning("ignore invalid type: %s", value_type)
         value_type = "..."
@@ -677,7 +674,7 @@ def _typing_from_data(lines):
 
 def _handle_windows_line_ending(lines):
     for i in lines:
-        i = cast.text(i)
+        i = Text(i)
         yield i.strip("\r\n")
 
 
@@ -724,7 +721,7 @@ def iterate_typing_from_help(lines):
 
 
 def typing_from_help(text):
-    return "\n".join(iterate_typing_from_help(cast.text(text).splitlines()))
+    return "\n".join(iterate_typing_from_help(Text(text).splitlines()))
 
 
 if __name__ == "__main__":

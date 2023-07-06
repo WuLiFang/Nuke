@@ -13,21 +13,32 @@ import hashlib
 import json
 import os
 import shutil
-
-import wulifang
-from wulifang.vendor.concurrent import futures
-
 import nuke
 
-from .._util import TZ_CHINA, FileSequence, cast_binary, cast_text, iteritems
-from ._util import iter_deep_all_nodes
-from ._gizmo import gizmo_to_group
+
+import wulifang
+from wulifang._compat import futures
+from wulifang._util import (
+    TZ_CHINA,
+    FileSequence,
+    cast_text,
+    iteritems,
+    cast_str,
+    cast_binary,
+)
+from wulifang.nuke._util import (
+    iter_deep_all_nodes,
+    gizmo_to_group,
+    knob_of,
+)
+
+# spell-checker: words Changeds
 
 
 class _Context(object):
     def __init__(self):
-        self.project_dir_old = cast_text(nuke.value(b"root.project_directory"))
-        self.script_name = nuke.scriptName()
+        self.project_dir_old = cast_text(nuke.value(cast_str("root.project_directory")))
+        self.script_name = cast_text(nuke.scriptName())
         self.script_dir = cast_text(os.path.dirname(self.script_name))
         self.file_dir = cast_text(self.script_name) + ".files"
         self.file_dir_base = os.path.basename(self.file_dir)
@@ -94,7 +105,7 @@ class _Context(object):
 def _hashed_dir(dir_path):
     # type: (Text) -> Text
     parent, p = os.path.split(dir_path)
-    h = hashlib.sha256(os.path.normpath(parent).encode("utf-8")).hexdigest()
+    h = hashlib.sha256(cast_binary(os.path.normpath(parent))).hexdigest()
     return "%s.@%s" % (p, h[:8])
 
 
@@ -154,16 +165,19 @@ def _save_by_expr(ctx, src_expr):
     return "/".join((ctx.file_dir_base, _dir_with_hash, src_base))
 
 
-
 def pack_project():
     try:
         nuke.scriptName()
     except RuntimeError:
-        nuke.message("请先保存工程".encode("utf-8"))
+        nuke.message(cast_str("请先保存工程"))
         return
 
-    with nuke.Undo("打包工程"), _Context() as ctx:
-        nuke.Root()[b"project_directory"].setValue("[python {nuke.script_directory()}]")
+    with nuke.Undo(cast_str("打包工程")), _Context() as ctx:
+        knob_of(
+            nuke.root(),
+            "project_directory",
+            nuke.File_Knob,
+        ).setValue(cast_str("[python {nuke.script_directory()}]"))
 
         for n in iter_deep_all_nodes():
             if isinstance(n, nuke.Gizmo):
@@ -184,18 +198,16 @@ def pack_project():
                     new_src = _save_by_expr(
                         ctx, os.path.join(ctx.project_dir_old, old_src)
                     )
-                    k.setText(cast_binary(new_src))
+                    k.setText(cast_str(new_src))
                 if isinstance(k, nuke.FreeType_Knob):
                     old_value = k.getValue()
-                    if old_value[0] != b"Utopia":
-                        k.setValue(b"Utopia", b"Regular")
+                    if cast_text(old_value[0]) != "Utopia":
+                        k.setValue(cast_str("Utopia"), cast_str("Regular"))
                         ctx.log(
                             "%s.%s: 设置 FreeType 字体为 Utopia（Nuke 自带）：原始值=%s"
                             % (n.fullName(), k.name(), old_value)
                         )
         ctx.log("完成")
         nuke.message(
-            ("项目打包完毕\n文件保存目录： %s\n工程内的文件路径已全部替换，请检查后保存" % (ctx.file_dir,)).encode(
-                "utf-8"
-            )
+            cast_str("项目打包完毕\n文件保存目录： %s\n工程内的文件路径已全部替换，请检查后保存" % (ctx.file_dir,))
         )

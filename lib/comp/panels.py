@@ -6,15 +6,15 @@ from __future__ import absolute_import, print_function, unicode_literals
 import os
 import webbrowser
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import nuke
 import nukescripts
 import psutil
 
 from comp.batch import BatchComp
 from comp.config import IGNORE_EXISTED, MULTI_THREADING, BatchCompConfig, CompConfig
-from wlf.decorators import run_async, run_in_main_thread
-import cast_unknown as cast
+from wulifang._util import run_in_thread, run_in_main_thread
+import wulifang.vendor.cast_unknown as cast
 
 
 class CompConfigPanel(nukescripts.PythonPanel):
@@ -151,7 +151,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
 
         self.update()
 
-    @run_async
+    @run_in_thread()
     @run_in_main_thread
     def show_setting(self):
         """Show comp setting."""
@@ -191,7 +191,7 @@ class BatchCompPanel(nukescripts.PythonPanel):
         flags = 0
         if self.knobs()[b"exclude_existed"].value():
             flags |= IGNORE_EXISTED
-        if psutil.virtual_memory().free > 16 * 1024 ** 3:
+        if psutil.virtual_memory().free > 16 * 1024**3:
             flags |= MULTI_THREADING
 
         return BatchComp(i_dir, o_dir, flags=flags)

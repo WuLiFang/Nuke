@@ -6,14 +6,14 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 import re
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import nuke
-from pathlib2_unicode import Path
+from wulifang.vendor.pathlib2_unicode import Path
 
-from edit import replace_node
+from wulifang.nuke._util import replace_node
 from edit.script_use_seq import files
 from edit.script_use_seq.config import Config
-from wlf.progress import progress
+from wulifang.vendor.wlf.progress import progress
 
 LOGGER = logging.getLogger(__name__)
 

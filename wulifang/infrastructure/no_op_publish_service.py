@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 TYPE_CHECKING = False
 if TYPE_CHECKING:
 
-    from ..types import PublishService
+    from .._types import PublishService
 
 
 class NoOpPublishService:

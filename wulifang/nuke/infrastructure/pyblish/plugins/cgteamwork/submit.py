@@ -7,10 +7,9 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import List, Text
 
-
-import wulifang.vendor.cast_unknown as cast
 import nuke
 
+from wulifang._util import cast_text, cast_str
 from wulifang.vendor import cgtwq
 from wulifang.vendor.pyblish import api
 from ._context_task import context_task
@@ -35,20 +34,20 @@ class Submit(api.InstancePlugin):
             return
 
         note = nuke.getInput(
-            "CGTeamWork任务提交备注(Cancel则不提交)".encode("utf-8"),
-            b"",
+            cast_str("CGTeamWork任务提交备注(Cancel则不提交)"),
+            cast_str(""),
         )
 
         if note is None:
             self.log.info("用户选择不提交任务。")
             return
-        note = cast.text(note)
+        note = cast_text(note)
 
         message = cgtwq.Message(note)
         filenames = []  # type: List[Text]
         submit_image = obj.data.get(IMAGE_KEY)
         if submit_image:
-            filenames.append(cast.text(submit_image.path))
+            filenames.append(cast_text(submit_image.path))
             message.images.append(submit_image)  # type: ignore
 
         if not filenames:

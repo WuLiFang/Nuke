@@ -4,10 +4,13 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import hiero.core
+
+from . import _win_unicode_console
 from .._reload import reload as _raw_reload
 import wulifang.license
 import wulifang
 from ..infrastructure.multi_message_service import MultiMessageService
+from wulifang import _sentry
 
 
 class _g:
@@ -36,6 +39,8 @@ def init():
         return
 
     wulifang.cleanup.run()
+    _sentry.init()
+    _win_unicode_console.init()
     _g.init_once = True
 
 

@@ -7,6 +7,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import nuke
 from wulifang.vendor.pyblish import api
 from ._context_manifest import context_manifest
+from wulifang._util import cast_str
 
 
 class ValidateResolution(api.ContextPlugin):
@@ -19,8 +20,8 @@ class ValidateResolution(api.ContextPlugin):
         # type: (api.Context) -> None
         ctx = context
         m = context_manifest(ctx)
-        actual_width = int(nuke.numvalue(b"root.width"))
-        actual_height = int(nuke.numvalue(b"root.height"))
+        actual_width = int(nuke.numvalue(cast_str("root.width")))
+        actual_height = int(nuke.numvalue(cast_str("root.height")))
         if not (m.shot.width and m.shot.height):
             self.log.warning("清单未指定分辨率")
             return

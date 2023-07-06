@@ -1,11 +1,11 @@
 import os
 
-import wlf.config
+from wulifang.vendor.wlf.config import Config as _Config
 
 START_MESSAGE = "{:-^50s}".format("SCRIPT USE SEQUENCE CONVERT START")
 
 
-class Config(wlf.config.Config):
+class Config(_Config):
     default = {
         "seq_include": "Z:/CGteamwork_Test/MT2/shot_work/Render/EP00/*/eps/*/*.exr",
         "seq_exclude": "**/mov/*",

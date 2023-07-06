@@ -127,3 +127,71 @@ diff -ru a/vendor/wlf/progress/handlers/cli.py b/vendor/wlf/progress/handlers/cl
  
  from .. import core
  from ...codectools import get_unicode as u
+diff -ru a/vendor/wlf/progress/handlers/qt.py b/vendor/wlf/progress/handlers/qt.py
+--- a/vendor/wlf/progress/handlers/qt.py	2023-06-29 11:17:16.544572000 +0800
++++ b/vendor/wlf/progress/handlers/qt.py	2023-06-29 11:21:53.443166100 +0800
+@@ -4,8 +4,8 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-from Qt import QtCompat, QtWidgets
+-from Qt.QtCore import Qt, Signal
++from wulifang.vendor.Qt import QtCompat, QtWidgets
++from wulifang.vendor.Qt.QtCore import Qt, Signal
+ 
+ from .. import core
+ from ...codectools import get_unicode as u
+diff -ru a/vendor/wlf/uitools/core.py b/vendor/wlf/uitools/core.py
+--- a/vendor/wlf/uitools/core.py	2023-06-29 11:17:16.546522000 +0800
++++ b/vendor/wlf/uitools/core.py	2023-06-29 11:21:15.024852600 +0800
+@@ -5,7 +5,7 @@
+ 
+ import sys
+ 
+-from Qt.QtWidgets import QAction, QApplication, QMenu
++from wulifang.vendor.Qt.QtWidgets import QAction, QApplication, QMenu
+ 
+ from .. import mp_logging
+ from ..progress.handlers.qt import QtProgressBar
+diff -ru a/vendor/wlf/uitools/pyblish_l10n.py b/vendor/wlf/uitools/pyblish_l10n.py
+--- a/vendor/wlf/uitools/pyblish_l10n.py	2023-06-29 11:17:16.546522000 +0800
++++ b/vendor/wlf/uitools/pyblish_l10n.py	2023-06-29 11:20:58.188334800 +0800
+@@ -7,8 +7,8 @@
+ import json
+ from functools import wraps
+ 
+-import pyblish.api  # pylint: disable=import-error
+-from pyblish.plugin import discover  # pylint: disable=import-error
++import wulifang.vendor.pyblish.api  # pylint: disable=import-error
++from wulifang.vendor.pyblish.plugin import discover  # pylint: disable=import-error
+ 
+ from ..pathtools import module_path
+ from ..path import Path
+diff -ru a/vendor/wlf/uitools/template/dialog_with_dir.py b/vendor/wlf/uitools/template/dialog_with_dir.py
+--- a/vendor/wlf/uitools/template/dialog_with_dir.py	2023-06-29 11:17:16.549449000 +0800
++++ b/vendor/wlf/uitools/template/dialog_with_dir.py	2023-06-29 11:21:27.532300700 +0800
+@@ -5,8 +5,8 @@
+ 
+ from abc import abstractmethod
+ 
+-from Qt import QtCompat, QtCore, QtWidgets
+-from Qt.QtWidgets import QDialog, QFileDialog
++from wulifang.vendor.Qt import QtCompat, QtCore, QtWidgets
++from wulifang.vendor.Qt.QtWidgets import QDialog, QFileDialog
+ 
+ from ...path import Path
+ 
+diff -ru a/vendor/wlf/uitools/tray.py b/vendor/wlf/uitools/tray.py
+--- a/vendor/wlf/uitools/tray.py	2023-06-29 11:17:16.547497000 +0800
++++ b/vendor/wlf/uitools/tray.py	2023-06-29 11:20:48.387336600 +0800
+@@ -4,8 +4,8 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-from Qt.QtGui import QCursor, QIcon
+-from Qt.QtWidgets import QSystemTrayIcon
++from wulifang.vendor.Qt.QtGui import QCursor, QIcon
++from wulifang.vendor.Qt.QtWidgets import QSystemTrayIcon
+ 
+ from ..pathtools import module_path
+ from .core import Menu

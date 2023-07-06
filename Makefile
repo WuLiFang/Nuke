@@ -23,13 +23,12 @@ export PYTHONIOENCODING=UTF-8
 
 # https://github.com/pypa/pip/issues/5735
 lib/site-packages/.sentinel: export PIP_NO_BUILD_ISOLATION=false
-lib/site-packages/.sentinel: requirements.txt patches/*.patch
+lib/site-packages/.sentinel: requirements.txt
 	# Do not run this in vscode integrated terminal before windows 10 1803
 	# https://github.com/microsoft/vscode/issues/36630
 	rm -rf lib/site-packages
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
 	rm -rfv lib/site-packages/**/*.pyc
-	for file in patches/*.patch; do patch -p1 < $$file; done
 	touch $@
 
 docs/_build/html: PYTHONPATH=

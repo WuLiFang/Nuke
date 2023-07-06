@@ -7,17 +7,16 @@ TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, Optional, Iterator, TypeVar, Set
 
-    from .. import types
-    import wulifang.types
+    from .. import _types
+    import wulifang._types
+    from wulifang._compat.str import Str
 
     T = TypeVar("T")
-
 
 import nuke
 from autolabel import autolabel
 
-from wulifang._util import is_local_file, cast_text
-import wulifang.vendor.cast_unknown as cast
+from wulifang._util import is_local_file, cast_text, cast_str
 import wulifang.vendor.six as six
 
 
@@ -79,26 +78,26 @@ class _Shuffle2Mapping:
 
 class AutolabelService:
     def __init__(self, file):
-        # type: (wulifang.types.FileService) -> None
+        # type: (wulifang._types.FileService) -> None
         self.file = file
 
     def _with_next(self, text, center=False):
-        # type: (Text, bool) -> bytes
+        # type: (Text, bool) -> Str
 
         if not text:
             return autolabel()
 
-        ret = cast.text(autolabel()).split("\n")
-        ret.insert(1, cast.text(text))
+        ret = cast_text(autolabel()).split("\n")
+        ret.insert(1, cast_text(text))
         ret = "\n".join(ret).rstrip("\n")
         if center:
             ret = (
                 '<div align="center" ' 'style="margin:0px;padding:0px">{}</div>'
             ).format(ret)
-        return cast.binary(ret)
+        return cast_str(ret)
 
     def _keyer(self):
-        label = "输入通道 : " + cast.text(nuke.value(b"this.input"))
+        label = "输入通道 : " + cast_text(nuke.value(cast_str("this.input")))
         ret = self._with_next(label)
         return ret
 
@@ -114,7 +113,7 @@ class AutolabelService:
         if is_local_file(cast_text(nuke.filename(this))):
             missing_frames = list(
                 self.file.missing_frames(
-                    cast.text(nuke.filename(this)),
+                    cast_text(nuke.filename(this)),
                     this.firstFrame(),
                     this.lastFrame(),
                 )
@@ -124,14 +123,14 @@ class AutolabelService:
                     nuke.FrameRanges(missing_frames),
                 )
 
-        label += "\n<b>修改日期: </b>{}".format(this.metadata(b"input/mtime"))
+        label += "\n<b>修改日期: </b>{}".format(this.metadata(cast_str("input/mtime")))
         ret = self._with_next(label, True)
         return ret
 
     def _shuffle(self):
         channels = dict.fromkeys(["in", "in2", "out", "out2"], "")
         for i in channels.keys():
-            channel_value = cast.text(nuke.value(cast.binary("this." + i)))
+            channel_value = cast_text(nuke.value(cast_str("this." + i)))
             if channel_value != "none":
                 channels[i] = channel_value + " "
         label = (
@@ -145,7 +144,7 @@ class AutolabelService:
         return ret
 
     def _shuffle2(self):
-        mapping_text = cast.text(nuke.value(b"this.mappings", b""))[1:-1]
+        mapping_text = cast_text(nuke.value(cast_str("this.mappings"), cast_str("")))[1:-1]
         l = list(_Shuffle2Mapping.parse(mapping_text))
 
         l_channel_changed = [i for i in l if i.in_channel_index != i.out_channel_index]
@@ -181,19 +180,19 @@ class AutolabelService:
 
     def _time_offset(self):
         this = nuke.thisNode()
-        return self._with_next("{:.0f}".format(this[b"time_offset"].value()))
+        return self._with_next("{:.0f}".format(this[cast_str("time_offset")].value()))
 
     def autolabel(self):
-        # type: () -> Optional[bytes]
+        # type: () -> Optional[Str]
 
         this = nuke.thisNode()
-        class_ = this.Class()
+        class_ = cast_text(this.Class())
         dict_ = {
-            b"Keyer": self._keyer,
-            b"Read": self._read,
-            b"Shuffle": self._shuffle,
-            b"Shuffle2": self._shuffle2,
-            b"TimeOffset": self._time_offset,
+            "Keyer": self._keyer,
+            "Read": self._read,
+            "Shuffle": self._shuffle,
+            "Shuffle2": self._shuffle2,
+            "TimeOffset": self._time_offset,
         }
 
         if class_ in dict_:
@@ -201,5 +200,5 @@ class AutolabelService:
 
 
 def _(v):
-    # type: (AutolabelService) -> types.AutolabelService
+    # type: (AutolabelService) -> _types.AutolabelService
     return v

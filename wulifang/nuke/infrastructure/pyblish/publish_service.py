@@ -7,7 +7,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, Optional, Callable, Tuple
-    from wulifang import types
+    from wulifang import _types
 
 import logging
 import multiprocessing
@@ -21,9 +21,9 @@ from wulifang.vendor.Qt.QtCore import Signal
 from wulifang.vendor.Qt.QtWidgets import QApplication
 from wulifang.vendor.six.moves import queue
 import wulifang.vendor.cgtwq as cgtwq
-from .. import _panels
-from . import plugins
-from .panel import Window, set_preferred_fonts
+from wulifang._util import cast_str, assert_isinstance
+from wulifang.nuke._util import Panel
+from . import plugins, window
 
 
 def _after_signal(signal, func):
@@ -37,50 +37,54 @@ def _after_signal(signal, func):
 
 class PublishService:
     def __init__(self):
-        self._window = None  # type: Optional[Window]
+        self._window = None  # type: Optional[window.Window]
         self._action_queue = queue.Queue()  # type: queue.Queue[Tuple[Text, bool]]
         self._action_lock = multiprocessing.Lock()
-        _panels.register(
-            Window,
-            "发布".encode("utf-8"),
-            "com.wlf.pyblish".encode("utf-8"),
+        Panel.register(
+            "com.wlf.pyblish",
+            "发布",
+            window.Window,
         )
+        pyblish_logger = logging.getLogger("pyblish")
+        if pyblish_logger.getEffectiveLevel() > logging.DEBUG:
+            pyblish_logger.setLevel(logging.CRITICAL)
         if os.getenv("DEBUG") != "pyblish":
             settings.TerminalLoglevel = logging.INFO
 
         app.install_fonts()
         app.install_translator(QApplication.instance())  # type: ignore
-        set_preferred_fonts("微软雅黑", 1.2)
-
+        window.set_preferred_fonts("微软雅黑", 1.2)
         plugins.register()
         if cgtwq.DesktopClient().executable():
             plugins.cgteamwork.register()
 
     def _show_window(self):
         if not self._window:
-            if Window.last_instance:
-                self._window = Window.last_instance
+            if window.Window.last_instance:
+                self._window =window.Window.last_instance
                 self._show_window()
                 return
 
-            pane = nuke.getPaneFor(b"Properties.1")
+            pane = nuke.getPaneFor(cast_str("Properties.1"))
+            panel = None
             if pane:
-                panel = restorePanel(b"com.wlf.pyblish")
+                panel = restorePanel(cast_str("com.wlf.pyblish"))
+            if panel:
                 panel.addToPane(pane)
-                assert Window.last_instance, "missing publish window"
-                self._window = Window.last_instance
+                assert window.Window.last_instance, "missing publish window"
+                self._window = window.Window.last_instance
             else:
-                self._window = Window()
+                self._window = window.Window()
         try:
             self._window.activate()
         except RuntimeError:
-            Window.last_instance = None
+            window.Window.last_instance = None
             self._window = None
             self._show_window()
 
     def _pyblish_action(self, name, is_reset=True):
         # type: (Text, bool) -> None
-        if nuke.value(b"root.name", None):
+        if nuke.value(cast_str("root.name"), None):
             self._show_window()
         win = self._window
         if not win:
@@ -89,15 +93,13 @@ class PublishService:
         controller = win.controller
 
         start = getattr(win, name)
-        signal = {
+        signal = {  # type: ignore
             "publish": controller.was_published,  # type: ignore
             "validate": controller.was_validated,  # type: ignore
-        }[
-            name
-        ]  # type: Signal
+        }[name]
 
         finish_event = threading.Event()
-        _after_signal(signal, finish_event.set)
+        _after_signal(assert_isinstance(signal, Signal), finish_event.set)
 
         if is_reset:
             # Run after reset finish.
@@ -149,5 +151,5 @@ class PublishService:
 
 
 def _(v):
-    # type: (PublishService) -> types.PublishService
+    # type: (PublishService) -> _types.PublishService
     return v

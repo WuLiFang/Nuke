@@ -5,8 +5,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Any, Mapping, TypeVar, ItemsView
+    from typing import Mapping, TypeVar, ItemsView
 
+    K = TypeVar("K")
     T = TypeVar("T")
 
 
@@ -14,7 +15,7 @@ from ._compat import PY2
 
 
 def iteritems(d):
-    # type: (Mapping[T, Any]) -> ItemsView[T, Any]
+    # type: (Mapping[K, T]) -> ItemsView[K, T]
     if PY2:
         return d.iteritems()  # type: ignore
     return d.items()

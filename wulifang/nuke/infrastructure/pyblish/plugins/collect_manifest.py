@@ -9,11 +9,8 @@ if TYPE_CHECKING:
 
 from datetime import datetime
 
-import wulifang
-import wulifang.filename
-import wulifang.vendor.cast_unknown as cast
 import wulifang.vendor.wulifang_manifest as m6t
-from wulifang._util import TZ_CHINA
+from wulifang._util import TZ_CHINA, cast_text, shot_from_filename
 from wulifang.vendor.pathlib2_unicode import Path
 from wulifang.vendor.pyblish import api
 
@@ -54,7 +51,7 @@ class CollectManifest(api.InstancePlugin):
         obj = instance
         ctx = obj.context
         user = context_user(ctx)
-        m = m6t.load(cast.text(Path(instance.name).parent), factory=Factory(user))
+        m = m6t.load(cast_text(Path(instance.name).parent), factory=Factory(user))
         for i in _iter_manifest_paths(m):
             self.log.info(i)
         if not m.shot.name:
@@ -70,6 +67,6 @@ class CollectManifest(api.InstancePlugin):
                 else:
                     self.log.warning("当前文件格式不满足清单要求，无法获取镜头名称")
             else:
-                m.shot.name = wulifang.filename.get_shot(obj.name)
+                m.shot.name = shot_from_filename(obj.name)
 
         with_manifest(ctx, m)

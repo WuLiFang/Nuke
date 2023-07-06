@@ -1,8 +1,10 @@
 import typing
 import nuke
 
+from wulifang._compat.str import Str
+
 def pluginAddPath(
-    args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...
+    args: typing.Union[typing.Iterable[Str], Str], addToSysPath: bool = ...
 ) -> None:
     """Adds all the paths to the beginning of the Nuke plugin path.
     If the path already exists in the list of plugin paths, it is moved
@@ -12,7 +14,7 @@ def pluginAddPath(
     ...
 
 def pluginAppendPath(
-    args: typing.Union[typing.Iterable[bytes], bytes], addToSysPath: bool = ...
+    args: typing.Union[typing.Iterable[Str], Str], addToSysPath: bool = ...
 ) -> None:
     """Add a filepath to the end of the Nuke plugin path.  If the path
     already exists in the list of plugin paths, it will remain at its

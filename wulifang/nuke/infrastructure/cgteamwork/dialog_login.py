@@ -9,7 +9,7 @@ import nuke
 from wulifang.vendor import cgtwq
 from wulifang.vendor.cgtwq import core
 import wulifang
-import wulifang.vendor.cast_unknown as cast
+from wulifang._util import cast_str, cast_text
 
 
 def dialog_login():
@@ -22,17 +22,17 @@ def dialog_login():
         return
     account = "帐号"
     password = "密码"
-    panel = nuke.Panel(b"")
-    _ = panel.addSingleLineInput(cast.binary(account), b"")
-    _ = panel.addPasswordInput(cast.binary(password), b"")
+    panel = nuke.Panel(cast_str(""))
+    _ = panel.addSingleLineInput(cast_str(account), cast_str(""))
+    _ = panel.addPasswordInput(cast_str(password), cast_str(""))
 
     while True:
         confirm = panel.show()
         if confirm:
             try:
                 core.CONFIG["DEFAULT_TOKEN"] = cgtwq.login(
-                    panel.value(cast.binary(account)) or "",
-                    panel.value(cast.binary(password)) or "",
+                    cast_text(panel.value(cast_str(account)) or ""),
+                    cast_text(panel.value(cast_str(password)) or ""),
                 ).token
             except ValueError:
                 wulifang.message.info("登录失败", title="CGTeamWork")

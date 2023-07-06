@@ -4,12 +4,29 @@
 _nuke
 """
 
-import typing
-import six
-import typing
+# spell-checker: words    nukemath CATMULL bitmask autoplace precomps frameholds timeblurs motionblur viewcount
+# spell-checker: words    viewshort clipname colorspace somefile scenefile flipbook maxviews thefoundry classknob
+# spell-checker: words    infoxml nodegraph checkmarks noisetools denoise fullscreen nodepreset invalidhint multiview
+# spell-checker: words    POSTAGESTAMPS PHASENUMBER TABBEGINCLOSEDGROUP TABBEGINGROUP TABENDGROUP TABKNOB
+
 import _geo
 import _nukemath
-from wulifang._util._cast_str import Str
+
+from typing import (
+    Optional,
+    Union,
+    overload,
+    Iterable,
+    Callable,
+    Literal,
+    type_check_only,
+    Sequence,
+    IO,
+)
+from wulifang._compat.str import Str
+
+class _Unknown:
+    pass
 
 class AColor_Knob(Color_Knob):
     """
@@ -23,7 +40,7 @@ class AColor_Knob(Color_Knob):
     def __init__(
         self,
         name: Str,
-        label: typing.Optional[Str] = ...,
+        label: Optional[Str] = ...,
         /,
     ):
         """
@@ -161,7 +178,7 @@ class AnimationCurve:
         @return: Float.
         """
         ...
-    def keys(self) -> typing.List[Str]:
+    def keys(self) -> list[Str]:
         """
         List of keys.
         """
@@ -338,7 +355,7 @@ class Array_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    def animation(self, chan, view) -> typing.Optional[AnimationCurve]:
+    def animation(self, chan, view) -> Optional[AnimationCurve]:
         """
         Return the AnimationCurve for the  channel 'chan' and view 'view'. The view argument is optional.
 
@@ -349,7 +366,7 @@ class Array_Knob(Knob):
         @return: AnimationCurve or None.
         """
         ...
-    def animations(self, view) -> typing.List[AnimationCurve]:
+    def animations(self, view) -> list[AnimationCurve]:
         """
         @param view: Optional view.
 
@@ -370,7 +387,7 @@ class Array_Knob(Knob):
         a[0].setKey(10, 20)
         """
         ...
-    def array(self) -> typing.List[typing.Any]:
+    def array(self) -> list[object]:
         """
         List of knob values.
         """
@@ -429,7 +446,7 @@ class Array_Knob(Knob):
         @return: None. Raises ValueError if not found.
         """
         ...
-    def dimensions(self) -> typing.List[typing.Any]:
+    def dimensions(self) -> list[object]:
         """
         Dimensions in array.
         """
@@ -491,7 +508,9 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-    def getValueAt(self, *args, **kwargs):
+    def getValueAt(
+        self, time: int, index: int = ..., view: Str = ...
+    ) -> Union[float, list[float]]:
         """
         self.valueAt(time, index, view) -> Floating point or List of floating point values (in case some are different).
 
@@ -506,7 +525,7 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-    def hasExpression(self, index) -> bool:
+    def hasExpression(self, index: int = ...) -> bool:
         """
         @param index: Optional index.
 
@@ -641,7 +660,7 @@ class Array_Knob(Knob):
 
         @param channel: Optional parameter, specifying the channel to set the expression for. This should be an integer.
 
-        @param view: Optional view parameter. Without, this command will set the expression for the current view theinterface is displaying. Can be the name of the view or the index.
+        @param view: Optional view parameter. Without, this command will set the expression for the current view the interface is displaying. Can be the name of the view or the index.
 
         @return: True if successful, False if not.
         """
@@ -659,7 +678,7 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-    def setRange(self, f1, f2) -> None:
+    def setRange(self, f1: ..., f2: ...) -> None:
         """
         Set range of values.
 
@@ -681,7 +700,15 @@ class Array_Knob(Knob):
         @return: None.
         """
         ...
-    def setValue(self, value, index, time, view) -> bool:
+    def setValue(
+        self,
+        value: Union[float, Sequence[float]],
+        /,
+        *,
+        index: int = ...,
+        time: int = ...,
+        view: Str = ...,
+    ) -> bool:
         """
         Set index to value at time and view.
 
@@ -749,7 +776,7 @@ class Array_Knob(Knob):
         ...
     def value(
         self, index: int = 0, view=..., time: int = ...
-    ) -> typing.Union[float, typing.List[float]]:
+    ) -> Union[float, list[float]]:
         """
         @param index: Optional index. Default is 0.
 
@@ -760,7 +787,7 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-    def valueAt(self, time, index, view) -> typing.Union[typing.List[float], float]:
+    def valueAt(self, time, index, view) -> Union[list[float], float]:
         """
         Return value for this knob at specified time, optional index and view.
 
@@ -773,7 +800,7 @@ class Array_Knob(Knob):
         @return: Floating point or List of floating point values (in case some are different).
         """
         ...
-    def vect(self) -> typing.List[typing.Any]:
+    def vect(self) -> list[object]:
         """
         List of knob values.
         """
@@ -797,7 +824,7 @@ class Axis_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -853,7 +880,7 @@ class BBox_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -939,12 +966,12 @@ class BackdropNode(Node):
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
-    def getNodes(self) -> typing.List[Node]:
+    def getNodes(self) -> list[Node]:
         """
         Get the nodes contained inside a backdrop node
         Example:
@@ -999,18 +1026,18 @@ class Boolean_Knob(Array_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         value: bool = ...,
         /,
     ):
@@ -1176,7 +1203,7 @@ class Box3_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1295,7 +1322,7 @@ class CascadingEnumeration_Knob(Enumeration_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1316,7 +1343,7 @@ class ChannelMask_Knob(Channel_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1344,18 +1371,18 @@ class Channel_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         depth: int = ...,
         /,
     ):
@@ -1419,7 +1446,7 @@ class Channel_Knob(Knob):
         @return: None
         """
         ...
-    def setValue(self, name) -> None:
+    def setValue(self, name: Str) -> None:
         """
         Set the selected channel using the channel name.
 
@@ -1451,7 +1478,7 @@ class ColorChip_Knob(Unsigned_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1472,7 +1499,7 @@ class Color_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1503,7 +1530,7 @@ class Disable_Knob(Boolean_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1540,7 +1567,7 @@ class Double_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1565,7 +1592,7 @@ class EditableEnumeration_Knob(Enumeration_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1633,7 +1660,7 @@ class EditableEnumeration_Knob(Enumeration_Knob):
         k.value()
         """
         ...
-    def values(self) -> typing.List[Str]:
+    def values(self) -> list[Str]:
         """
         Return list of items.
 
@@ -1689,26 +1716,19 @@ class Enumeration_Knob(Unsigned_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+
     def __init__(
         self,
         name: Str,
-        label: Str = None,
-        /,
-    ): ...
-    @typing.overload
-    def __init__(
-        self,
-        name: Str,
-        label: Str = None,
-        options: typing.Iterable[bytes] = ...,
+        label: Optional[Str],
+        options: Sequence[Str],
         /,
     ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def enumName(self, n) -> Str:
+    def enumName(self, n: int) -> Str:
         """
         Return name of enumeration n. The argument n is an integer and in the range of 0 and numValues. Deprecated.
         """
@@ -1718,7 +1738,7 @@ class Enumeration_Knob(Unsigned_Knob):
         Return number of values. Deprecated.
         """
         ...
-    def setValue(self, item) -> None:
+    def setValue(self, item: Str) -> None:
         """
         Set the current value. item will first be converted into a String and matched against the enum values.
 
@@ -1737,7 +1757,7 @@ class Enumeration_Knob(Unsigned_Knob):
         k.setValue('exr')
         """
         ...
-    def setValues(self, items) -> None:
+    def setValues(self, items: Sequence[Str]) -> None:
         """
         (Re)initialise knob to the supplied list of items.
 
@@ -1769,7 +1789,7 @@ class Enumeration_Knob(Unsigned_Knob):
         k.value()
         """
         ...
-    def values(self) -> typing.List[Str]:
+    def values(self) -> list[Str]:
         """
         Return list of items.
 
@@ -1798,7 +1818,7 @@ class EvalString_Knob(String_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1842,7 +1862,7 @@ class File_Knob(EvalString_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -1867,7 +1887,7 @@ class File_Knob(EvalString_Knob):
         @return: None.
         """
         ...
-    def getEvaluatedValue(self, oc: OutputContext = ...) -> bytes:
+    def getEvaluatedValue(self, oc: OutputContext = ...) -> Str:
         """
         self.getValue(oc) -> String.
 
@@ -1902,7 +1922,7 @@ class File_Knob(EvalString_Knob):
         @return: None.
         """
         ...
-    def value(self, *args, **kwargs):
+    def value(self) -> Str:
         """
         self.getEvaluatedValue() -> String.
 
@@ -1941,7 +1961,7 @@ class Format:
         Add this instance to a list of "named" formats. The name parameter is the name of the list to add the format to.
         """
         ...
-    def fromUV(self, u, v) -> typing.List[int]:
+    def fromUV(self, u, v) -> list[int]:
         """
         Transform a UV coordinate in the range 0-1 into the format's XY range. Returns a list containing the x and y coordinates.
 
@@ -2026,7 +2046,7 @@ class Format:
         Return the top edge of image file in pixels.
         """
         ...
-    def toUV(self, x, y) -> typing.List[int]:
+    def toUV(self, x, y) -> list[int]:
         """
         Back-transform an XY coordinate in the format's space into UV space.
 
@@ -2068,7 +2088,7 @@ class Font_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -2086,7 +2106,7 @@ class Format_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    def __init__(self, name: Str, label: Str = None, /):
+    def __init__(self, name: Str, label: Optional[Str] = None, /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -2143,9 +2163,9 @@ class FrameRange:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(self, first: int, last: int, increment: int) -> None: ...
-    @typing.overload
+    @overload
     def __init__(self, s: Str) -> None:
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -2156,9 +2176,9 @@ class FrameRange:
         x.__iter__() <==> iter(x)
         """
         ...
-    def __Str__(self) -> Str:
+    def __str__(self) -> Str:
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def first(self) -> int:
@@ -2193,12 +2213,12 @@ class FrameRange:
         ...
     def maxFrame(self) -> int:
         """
-        return the maximun frame define in the range.
+        return the maximum frame define in the range.
         """
         ...
     def minFrame(self) -> int:
         """
-        return the minimun frame define in the range.
+        return the minimum frame define in the range.
         """
         ...
     def next(self) -> int:
@@ -2239,11 +2259,11 @@ class FrameRanges:
     """
     def __init__(
         self,
-        o: typing.Union[
+        o: Union[
             Str,
-            typing.List[FrameRange],
-            typing.List[Str],
-            typing.List[int],
+            list[FrameRange],
+            list[Str],
+            list[int],
         ] = ...,
     ) -> None:
         """
@@ -2255,9 +2275,9 @@ class FrameRanges:
         x.__iter__() <==> iter(x)
         """
         ...
-    def __Str__(self) -> Str:
+    def __str__(self) -> Str:
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def add(self, r: FrameRange) -> None:
@@ -2282,12 +2302,12 @@ class FrameRanges:
         ...
     def maxFrame(self) -> int:
         """
-        get maximun frame of all ranges.
+        get maximum frame of all ranges.
         """
         ...
     def minFrame(self) -> int:
         """
-        get minimun frame of all ranges.
+        get minimum frame of all ranges.
         """
         ...
     def next(self) -> FrameRange:
@@ -2300,7 +2320,7 @@ class FrameRanges:
         return the ranges number.
         """
         ...
-    def toFrameList(self) -> typing.List[int]:
+    def toFrameList(self) -> list[int]:
         """
         return a list of frames in a vector
         """
@@ -2316,19 +2336,19 @@ class FreeType_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    def __init__(self, name: Str, label: Str = None, /):
+    def __init__(self, name: Str, label: Optional[Str] = None, /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def getValue(self) -> typing.List[Str]:
+    def getValue(self) -> list[Str]:
         """
         Returns the font family/style on this knob.
 
         @return: [String, String].
         """
         ...
-    def setValue(self, family: bytes, style: bytes) -> None:
+    def setValue(self, family: Str, style: Str) -> None:
         """
         self.setValue(filename,index) -> None.
 
@@ -2374,7 +2394,7 @@ class GeoSelect_Knob(Knob):
         Get the geometry which this knob can select from.
         """
         ...
-    def getSelection(self) -> typing.List[typing.List[float]]:
+    def getSelection(self) -> list[list[float]]:
         """
         Returns the selection weights for each vertex as a float. If you access the result as selection[obj][pt], then obj is the index of the object in the input geometry and pt is the index of the point in that object.
         """
@@ -2382,7 +2402,7 @@ class GeoSelect_Knob(Knob):
     ...
 
 class Gizmo(Group):
-    def __getitem__(self, name: bytes) -> Knob:
+    def __getitem__(self, name: Str) -> Knob:
         """
         x.__getitem__(y) <==> x[y]
         """
@@ -2397,9 +2417,9 @@ class Gizmo(Group):
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def command(self) -> Str:
@@ -2485,9 +2505,9 @@ class Group(Node):
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def begin(self) -> Group:
@@ -2526,7 +2546,7 @@ class Group(Node):
         @return: None.
         """
         ...
-    def node(self, s: Str) -> typing.Optional[Node]:
+    def node(self, s: Str) -> Optional[Node]:
         """
         Locate a node by name.
 
@@ -2535,7 +2555,7 @@ class Group(Node):
         @return: Node with name s or None.
         """
         ...
-    def nodes(self) -> typing.List[Node]:
+    def nodes(self) -> list[Node]:
         """
         List of nodes in group.
 
@@ -2549,7 +2569,7 @@ class Group(Node):
         @return: Number of nodes
         """
         ...
-    def output(self) -> typing.Optional[Node]:
+    def output(self) -> Optional[Node]:
         """
         Return output node of group.
 
@@ -2565,14 +2585,14 @@ class Group(Node):
         @return: Result of callable.
         """
         ...
-    def selectedNode(self) -> typing.Optional[Node]:
+    def selectedNode(self) -> Optional[Node]:
         """
         Returns the node the user is most likely thinking about. This is the last node the user clicked on, if it is selected.  Otherwise it is an 'output' (one with no selected outputs) of the set of selected nodes. If no nodes are selected then None is returned.
 
         @return: Node or None.
         """
         ...
-    def selectedNodes(self) -> typing.Optional[Node]:
+    def selectedNodes(self) -> Optional[Node]:
         """
         Selected nodes.
 
@@ -2687,7 +2707,7 @@ class Help_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -2708,7 +2728,7 @@ class Histogram_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -2729,7 +2749,7 @@ class IArray_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -2806,7 +2826,7 @@ class Int_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -2843,7 +2863,7 @@ class Keyer_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -2890,7 +2910,7 @@ class Knob:
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """ """
@@ -3070,9 +3090,9 @@ class Knob:
         ...
     def setExpression(
         self,
-        expression: bytes,
+        expression: Str,
         channel: int = -1,
-        view: typing.Union[int, bytes] = None,
+        view: Union[int, Str, None] = None,
     ) -> bool:
         """
         Set the expression for a knob. You can optionally specify a channel to set the expression for.
@@ -3083,7 +3103,7 @@ class Knob:
 
         @param channel: Optional parameter, specifying the channel to set the expression for. This should be an integer.
 
-        @param view: Optional view parameter. Without, this command will set the expression for the current view theinterface is displaying. Can be the name of the view or the index.
+        @param view: Optional view parameter. Without, this command will set the expression for the current view the interface is displaying. Can be the name of the view or the index.
 
         @return: True if successful, False if not.
         """
@@ -3097,7 +3117,7 @@ class Knob:
         @return: None.
         """
         ...
-    def setLabel(self, s: bytes) -> None:
+    def setLabel(self, s: Str) -> None:
         """
         @param s: New label.
 
@@ -3118,11 +3138,12 @@ class Knob:
         @return: None.
         """
         ...
-    def setValue(self, val: typing.Any, chan: Str = ...) -> bool:
+    def setValue(self, val: _Unknown, chan: Str = ..., /) -> bool:
         """
         Sets the value 'val' at channel 'chan'.
-
         @return: True if successful, False if not.
+
+        **NOTICE**: should assert to concrete knob type instead.
         """
         ...
     def setValueAt(self, val, time, chan) -> bool:
@@ -3139,7 +3160,7 @@ class Knob:
         @param visible: True to show the knob, False to hide it.
         """
         ...
-    def toScript(self, quote, context=...) -> Str:
+    def toScript(self, quote: bool = ..., context=...) -> Str:
         """
         Return the value of the knob in script syntax.
 
@@ -3153,7 +3174,7 @@ class Knob:
         tooltip.
         """
         ...
-    def value(self, index: int = ...) -> typing.Any:
+    def value(self, index: int = ...) -> object:
         """
         Return value at the current frame for channel 'c'.
         """
@@ -3184,8 +3205,8 @@ class Layer:
     A layer is a set of channels.
     """
 
-    def __new__(cls, name: Str, channels: typing.List[Str] = ...): ...
-    def channels(self) -> typing.List[Str]:
+    def __new__(cls, name: Str, channels: list[Str] = ...): ...
+    def channels(self) -> list[Str]:
         """
         Get a list of the channels in this layer.
 
@@ -3227,7 +3248,7 @@ class Link_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -3319,7 +3340,7 @@ class LookupCurves_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -3380,7 +3401,7 @@ class Lut:
         Converts byte values in the range 0-255 to floating point.
         """
         ...
-    def fromFloat(self, src, alpha) -> typing.List[float]:
+    def fromFloat(self, src, alpha) -> list[float]:
         """
         Convert a sequence of floating-point values to from_byte(x*255).
         Alpha is an optional argument and if present unpremultiply by alpha, convert, and then multiply back.
@@ -3408,7 +3429,7 @@ class Lut:
         Converts floating point values to byte values in the range 0-255.
         """
         ...
-    def toFloat(self, src, alpha) -> typing.List[float]:
+    def toFloat(self, src, alpha) -> list[float]:
         """
         Convert a sequence of floating-point values to to_byte(x)/255.
         Alpha is an optional argument and if present unpremultiply by alpha, convert, and then multiply back.
@@ -3429,14 +3450,14 @@ class Menu(MenuItem):
     def addCommand(
         self,
         name: Str,
-        command: typing.Union[Str, typing.Callable[[], typing.Any]] = ...,
+        command: Union[Str, Callable[..., object]] = ...,
         shortcut: Str = ...,
         icon: Str = ...,
         tooltip: Str = ...,
         index: int = ...,
         readonly: bool = ...,
         shortcutContext: int = ...,
-    ) -> typing.Union[MenuItem, ToolBar]:
+    ) -> MenuItem:
         """
         Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
 
@@ -3476,6 +3497,7 @@ class Menu(MenuItem):
     def addMenu(
         self,
         name: Str,
+        *,
         icon: Str = ...,
         tooltip: Str = ...,
         index: int = ...,
@@ -3496,7 +3518,7 @@ class Menu(MenuItem):
         @return: The submenu that was added.
         """
         ...
-    def addSeparator(self, index: int = ...) -> ...:
+    def addSeparator(self, index: int = ...) -> MenuItem:
         """
         Add a separator to this menu/toolbar.
 
@@ -3520,7 +3542,7 @@ class Menu(MenuItem):
         @return: true if cleared, false if menu not found
         """
         ...
-    def findItem(self, name: bytes) -> typing.Optional[Menu]:
+    def findItem(self, name: Str) -> Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -3534,7 +3556,7 @@ class Menu(MenuItem):
         Returns a list of sub menu items.
         """
         ...
-    def menu(self, name: Str) -> typing.Optional[Menu]:
+    def menu(self, name: Str) -> Optional[MenuItem]:
         """
         Finds a submenu or command with a particular name.
 
@@ -3548,7 +3570,7 @@ class Menu(MenuItem):
         Returns the name of the menu item.
         """
         ...
-    def removeItem(self, name) -> None:
+    def removeItem(self, name: Str) -> bool:
         """
         Removes a submenu or command with a particular name. If the containing menu becomes empty, it will be removed too.
 
@@ -3576,7 +3598,7 @@ class MenuBar:
         ...
     def addCommand(
         self, name, command, shortcut, icon, tooltip, index, readonly
-    ) -> typing.Union[Menu, ToolBar]:
+    ) -> Union[Menu, ToolBar]:
         """
         Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
         Note that if the command argument is not specified, then the command will be auto-created as a "nuke.createNode()" using the name argument as the node to create.
@@ -3625,7 +3647,7 @@ class MenuBar:
         @return: true if cleared, false if menu not found
         """
         ...
-    def findItem(self, name) -> typing.Optional[Menu]:
+    def findItem(self, name) -> Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
         @param name: The name to search for.
@@ -3637,7 +3659,7 @@ class MenuBar:
         Returns a list of sub menu items.
         """
         ...
-    def menu(self, name) -> typing.Optional[Menu]:
+    def menu(self, name) -> Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
         @param name: The name to search for.
@@ -3718,7 +3740,7 @@ class MenuItem:
         menu.setScript("execfile('script.py')")
         """
         ...
-    def setShortcut(self, keySequence: bytes) -> None:
+    def setShortcut(self, keySequence: Str) -> None:
         """
         Set the keyboard shortcut on this menu item.
 
@@ -3751,7 +3773,7 @@ class MultiView_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -3812,7 +3834,7 @@ class Multiline_Eval_String_Knob(EvalString_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -3839,127 +3861,6 @@ class Node:
         Class of node.
         """
         ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"autolabel"],
-        /,
-    ) -> PythonKnob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"gl_color"],
-        /,
-    ) -> ColorChip_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"help"],
-        /,
-    ) -> EvalString_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"hide_input"],
-        /,
-    ) -> Boolean_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"icon"],
-        /,
-    ) -> File_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"indicators"],
-        /,
-    ) -> Array_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"knobChanged"],
-        /,
-    ) -> PythonKnob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"label"],
-        /,
-    ) -> Multiline_Eval_String_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"name"],
-        /,
-    ) -> String_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"note_font"],
-        /,
-    ) -> Font_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"note_font_color"],
-        /,
-    ) -> ColorChip_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"note_font_size"],
-        /,
-    ) -> Array_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"onCreate"],
-        /,
-    ) -> PythonKnob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"onDeStroy"],
-        /,
-    ) -> PythonKnob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"panel"],
-        /,
-    ) -> Obsolete_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"selected"],
-        /,
-    ) -> Boolean_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"tile_color"],
-        /,
-    ) -> ColorChip_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"updateUI"],
-        /,
-    ) -> PythonKnob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"xpos"],
-        /,
-    ) -> Array_Knob: ...
-    @typing.overload
-    def __getitem__(
-        self,
-        name: typing.Literal[b"ypos"],
-        /,
-    ) -> Array_Knob: ...
-    @typing.overload
     def __getitem__(
         self,
         name: Str,
@@ -3979,9 +3880,9 @@ class Node:
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self) -> Str:
+    def __str__(self) -> Str:
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def addKnob(self, k: Knob) -> None:
@@ -3993,7 +3894,7 @@ class Node:
         @return: None.
         """
         ...
-    def allKnobs(self) -> typing.List[Knob]:
+    def allKnobs(self) -> list[Knob]:
         """
         Get a list of all knobs in this node, including nameless knobs.
 
@@ -4041,7 +3942,7 @@ class Node:
         @return: True if node can be connected, False otherwise.
         """
         ...
-    def channels(self) -> typing.List[Str]:
+    def channels(self) -> list[Str]:
         """
         List channels output by this node.
 
@@ -4098,7 +3999,7 @@ class Node:
         @return: Integer value.
         """
         ...
-    def dependencies(self, what: int = ...) -> typing.List[Node]:
+    def dependencies(self, what: int = ...) -> list[Node]:
         """
         List all nodes referred to by this node. 'what' is an optional integer (see below).
 
@@ -4123,9 +4024,7 @@ class Node:
         @return: List of nodes.
         """
         ...
-    def dependent(
-        self, what: int = ..., forceEvaluate: bool = ...
-    ) -> typing.List[Node]:
+    def dependent(self, what: int = ..., forceEvaluate: bool = ...) -> list[Node]:
         """
         List all nodes that read information from this node.  'what' is an optional integer:
 
@@ -4169,9 +4068,7 @@ class Node:
         Note that this will always return false for viewers, which cannot generate their input trees.  Instead, choose an input of the viewer (e.g. the active one), and call treeHasError() on that.
         """
         ...
-    def fileDependencies(
-        self, start, end
-    ) -> typing.List[typing.Union[Node, typing.List[Str]]]:
+    def fileDependencies(self, start, end) -> list[Union[Node, list[Str]]]:
         """
         @param start: first frame
 
@@ -4279,7 +4176,7 @@ class Node:
         @return: True if selected, or False if not.
         """
         ...
-    def knob(self, p: typing.Union[int, Str]) -> Knob:
+    def knob(self, p: Union[int, Str]) -> Optional[Knob]:
         """
         @param p: A String or an integer.
 
@@ -4290,7 +4187,7 @@ class Node:
         Note that this follows the links for Link_Knobs
         """
         ...
-    def knobs(self) -> typing.Dict[Str, Knob]:
+    def knobs(self) -> dict[Str, Knob]:
         """
         Get a dictionary of (name, knob) pairs for all knobs in this node.
 
@@ -4347,14 +4244,14 @@ class Node:
         Maximum number of outputs this node can have.
         """
         ...
-    @typing.overload
+    @overload
     def metadata(
         self, *, time: int = ..., view: Str = ...
-    ) -> typing.Dict[Str, typing.Union[Str, float]]: ...
-    @typing.overload
+    ) -> dict[Str, Union[Str, float]]: ...
+    @overload
     def metadata(
         self, key: Str, time: int = ..., view: Str = ...
-    ) -> typing.Union[Str, float, None]:
+    ) -> Union[Str, float, None]:
         """
         Return the metadata item for key on this node at current output context, or at optional time and view.
 
@@ -4391,7 +4288,7 @@ class Node:
         The number of knobs.
         """
         ...
-    def opHashes(self) -> typing.List[int]:
+    def opHashes(self) -> list[int]:
         """
         Returns a list of hash values, one for each op in this node.
         """
@@ -4463,7 +4360,15 @@ class Node:
         @return: Node rendering when paralleled threads are running or None.
         """
         ...
-    def sample(self, c, x, y, dx, dy) -> float:
+    def sample(
+        self,
+        c: Str,
+        x: float,
+        y: float,
+        dx: float = ...,
+        dy: float = ...,
+        frame: float = ...,
+    ) -> float:
         """
         Return pixel values from an image.
 
@@ -4511,7 +4416,7 @@ class Node:
         @return: None.
         """
         ...
-    def setInput(self, i: int, node: typing.Optional[Node]) -> bool:
+    def setInput(self, i: int, node: Optional[Node]) -> bool:
         """
         Connect input i to node if canSetInput() returns true.
 
@@ -4540,7 +4445,7 @@ class Node:
         @return: None
         """
         ...
-    def setSelected(self, selected) -> None:
+    def setSelected(self, selected: bool) -> None:
         """
         Set the selection state of the node.  This is the same as changing the 'selected' knob.
 
@@ -4686,7 +4591,7 @@ class NodeConStructor:
     def __call__(
         self,
         *,
-        inputs: typing.Iterable[typing.Optional[Node]] = ...,
+        inputs: Iterable[Optional[Node]] = ...,
         autolabel: Str = ...,
         gl_color: int = ...,
         help: Str = ...,
@@ -4724,7 +4629,7 @@ class Nodes:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    def __getattribute__(self, name: Str) -> NodeConStructor: ...
+    def __getattribute__(self, name: str) -> NodeConStructor: ...
     ...
 
 class Obsolete_Knob(Knob):
@@ -4735,7 +4640,7 @@ class Obsolete_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -4970,7 +4875,7 @@ class Panel:
         Clear all panel attributes.
         """
         ...
-    def execute(self, name: Str) -> typing.Optional[Str]:
+    def execute(self, name: Str) -> Optional[Str]:
         """
         Execute the script command associated with a particular label and return the result as a String.
 
@@ -5011,7 +4916,7 @@ class Panel:
         @return: The title as a String.
         """
         ...
-    def value(self, name: Str) -> typing.Optional[typing.Any]:
+    def value(self, name: Str) -> Optional[Str]:
         """
         Get the value of a particular control in the panel.
 
@@ -5038,9 +4943,9 @@ class PanelNode:
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def addKnob(self, k) -> None:
@@ -5083,7 +4988,7 @@ class PanelNode:
         @return: None.
         """
         ...
-    def writeKnobs(self, i) -> six.text_type:
+    def writeKnobs(self, i) -> Str:
         """
         Return a tcl list. If TO_SCRIPT | TO_VALUE is not on, this is a simple list
         of knob names. If it is on, it is an alternating list of knob names
@@ -5114,7 +5019,7 @@ class Password_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5162,9 +5067,9 @@ class Precomp(Group):
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def reload(self) -> None:
@@ -5181,6 +5086,7 @@ class ProgressTask:
     """
 
     __new__: ...
+    def __init__(self, name: Str, /) -> None: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
@@ -5189,12 +5095,12 @@ class ProgressTask:
         True if the user has requested the task to be cancelled
         """
         ...
-    def setMessage(self, s) -> None:
+    def setMessage(self, s: Str) -> None:
         """
         set the message for the progress task
         """
         ...
-    def setProgress(self, i) -> None:
+    def setProgress(self, i: int) -> None:
         """
         i is an integer representing the current progress
         """
@@ -5213,7 +5119,7 @@ class Pulldown_Knob(Enumeration_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5272,8 +5178,8 @@ class PyCustom_Knob(Script_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
-        content: six.text_type = ...,
+        label: Optional[Str] = None,
+        content: Str = ...,
         /,
     ):
         """
@@ -5298,18 +5204,18 @@ class PyScript_Knob(Script_Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         value: Str = ...,
         /,
     ):
@@ -5331,7 +5237,7 @@ class PythonCustomKnob(Script_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5357,7 +5263,7 @@ class PythonKnob(String_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5382,7 +5288,7 @@ class Radio_Knob(Enumeration_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5450,7 +5356,7 @@ class Radio_Knob(Enumeration_Knob):
         k.value()
         """
         ...
-    def values(self) -> typing.List[Str]:
+    def values(self) -> list[Str]:
         """
         Return list of items.
 
@@ -5479,7 +5385,7 @@ class Range_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5504,9 +5410,9 @@ class Root(Group):
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self) -> Str:
+    def __str__(self) -> Str:
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def addView(self, name, color) -> None:
@@ -5520,7 +5426,7 @@ class Root(Group):
         @return: None.
         """
         ...
-    def channels(self) -> typing.List[Str]:
+    def channels(self) -> list[Str]:
         """
         nuke.Root.channels() -> Channel list.
 
@@ -5684,7 +5590,7 @@ class Scale_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5734,7 +5640,7 @@ class SceneView_Knob(Unsigned_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5810,7 +5716,7 @@ class Script_Knob(String_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -5867,24 +5773,24 @@ class String_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         value: Str = ...,
         /,
     ):
@@ -5892,7 +5798,7 @@ class String_Knob(Knob):
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def getText(self, oc=...) -> Str:
+    def getText(self, oc: OutputContext = ...) -> Str:
         """
         Get the non-evaluated value of this knob - also see `value()`
 
@@ -5901,7 +5807,7 @@ class String_Knob(Knob):
         Return text associated with knob.
         """
         ...
-    def getValue(self, *args, **kwargs):
+    def getValue(self, oc: OutputContext = ...) -> Str:
         """
         self.value(oc) -> Str
 
@@ -5978,24 +5884,24 @@ class Tab_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         flags: int = ...,
         /,
     ): ...
@@ -6010,19 +5916,19 @@ class Text_Knob(Knob):
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
         self,
         name: Str,
-        label: Str = None,
-        content: Str = None,
+        label: Optional[Str] = None,
+        content: Optional[Str] = None,
         /,
     ):
         """
@@ -6047,7 +5953,7 @@ class ToolBar:
         ...
     def addCommand(
         self, name, command, shortcut, icon, tooltip, index, readonly
-    ) -> typing.Union[Menu, ToolBar]:
+    ) -> Union[Menu, ToolBar]:
         """
         Add a new command to this menu/toolbar. Note that when invoked, the command is automatically enclosed in an undo group, so that undo/redo functionality works. Optional arguments can be specified by name.
 
@@ -6125,7 +6031,7 @@ class ToolBar:
         @return: true if cleared, false if menu not found
         """
         ...
-    def findItem(self, name) -> typing.Optional[Menu]:
+    def findItem(self, name) -> Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -6139,7 +6045,7 @@ class ToolBar:
         Returns a list of sub menu items.
         """
         ...
-    def menu(self, name) -> typing.Optional[Menu]:
+    def menu(self, name) -> Optional[Menu]:
         """
         Finds a submenu or command with a particular name.
 
@@ -6181,7 +6087,7 @@ class Transform2d_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6207,7 +6113,7 @@ class UV_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6227,6 +6133,8 @@ class Undo:
     """
 
     __new__: ...
+    __enter__: ...
+    __exit__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
@@ -6373,7 +6281,7 @@ class Unsigned_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6412,9 +6320,9 @@ class View:
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def String(self) -> Str:
@@ -6441,7 +6349,7 @@ class ViewView_Knob(Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6466,9 +6374,9 @@ class Viewer(Node):
         x.__repr__() <==> repr(x)
         """
         ...
-    def __Str__(self, *args, **kwargs):
+    def __str__(self, *args, **kwargs):
         """
-        x.__Str__() <==> Str(x)
+        x.__str__() <==> Str(x)
         """
         ...
     def capture(self, file) -> None:
@@ -6582,7 +6490,7 @@ class ViewerProcess:
     def registeredNames(self, *args, **kwargs):
         """
         nuke.ViewerProcess.registeredNames() -> List.
-        Returns a list containing the names of all currently regisered ViewerProcesses.
+        Returns a list containing the names of all currently registered ViewerProcesses.
         @return: List.
         """
         ...
@@ -6616,7 +6524,7 @@ class ViewerWindow:
         @return: None
         """
         ...
-    def activeInput(self, secondary=False) -> int:
+    def activeInput(self, secondary=False) -> Optional[int]:
         """
         Returns the currently active input of the viewer - i. e. the one with its image in the output window.
 
@@ -6731,7 +6639,7 @@ class WH_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6777,7 +6685,7 @@ class XYZ_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6828,7 +6736,7 @@ class XY_Knob(Array_Knob):
     def __init__(
         self,
         name: Str,
-        label: Str = None,
+        label: Optional[Str] = None,
         /,
     ):
         """
@@ -6857,7 +6765,7 @@ class XY_Knob(Array_Knob):
         ...
     ...
 
-def activeViewer() -> typing.Optional[ViewerWindow]:
+def activeViewer() -> Optional[ViewerWindow]:
     """
     Return an object representing the active Viewer panel. This
     is not the same as the Viewer node, this is the viewer UI element.
@@ -6880,7 +6788,7 @@ def addFavoriteDir(name, directory, type, icon, tooltip, key) -> None:
     """
     ...
 
-def addFormat(s: Str) -> typing.Optional[Format]:
+def addFormat(s: Str) -> Optional[Format]:
     """
     Create a new image format, which will show up on the pull-down menus for image formats. You must give a width and height and name. The xyrt rectangle describes the image area, if it is smaller than the width and height (for Academy aperture, for example). The pixel aspect is the ratio of the width of a pixel to the height.
 
@@ -6924,32 +6832,7 @@ def addView(s) -> None:
     """
     ...
 
-@typing.overload
-def allNodes(
-    filter: typing.Literal[b"BackdropNode"] = ..., group: Group = ...
-) -> typing.List[BackdropNode]: ...
-@typing.overload
-def allNodes(
-    filter: typing.Literal[b"Group"] = ..., group: Group = ...
-) -> typing.List[Group]: ...
-@typing.overload
-def allNodes(
-    filter: typing.Literal[b"Viewer"] = ..., group: Group = ...
-) -> typing.List[Viewer]: ...
-@typing.overload
-def allNodes(
-    filter: typing.Literal[b"Gizmo"] = ..., group: Group = ...
-) -> typing.List[Gizmo]: ...
-@typing.overload
-def allNodes(
-    filter: typing.Literal[b"Root"] = ..., group: Group = ...
-) -> typing.List[Root]: ...
-@typing.overload
-def allNodes(
-    filter: typing.Literal[b"Precomp"] = ..., group: Group = ...
-) -> typing.List[Precomp]: ...
-@typing.overload
-def allNodes(filter: Str = ..., group: Group = ...) -> typing.List[Node]:
+def allNodes(filter: Str = ..., group: Group = ...) -> list[Node]:
     """
     List of all nodes in a group. If you need to get all the nodes in the script
     from a context which has no child nodes, for instance a control panel, use
@@ -6990,7 +6873,7 @@ def animation(*commands) -> None:
       - B{size} returns the number of keys in the animation.
       - B{test} errors if no points in the animation are selected
       - B{y} index C{I{newvalue}} gets or sets the value of an animation.
-      - B{x} index C{I{newvalue}} gets or sets the horizontal postion of a key.
+      - B{x} index C{I{newvalue}} gets or sets the horizontal position of a key.
         If the animation contains an expression or keyframes, the new value will be overridden.
 
     See also: animations
@@ -7107,7 +6990,7 @@ def cacheUsage() -> int:
     """
     Get the total amount of memory currently used by the cache.
 
-    @return: Current memory usage in bytes.
+    @return: Current memory usage in Str.
     """
     ...
 
@@ -7127,7 +7010,7 @@ def cancel() -> None:
     """
     ...
 
-def center() -> typing.List[int]:
+def center() -> list[int]:
     """
     Return the center values of a group's display, these values are suitable to be passed to nuke.zoom as the DAG center point.  Like so:
     center = nuke.center()
@@ -7140,7 +7023,7 @@ def center() -> typing.List[int]:
     """
     ...
 
-def channels(n: typing.Optional[Node] = None) -> typing.List[Str]:
+def channels(n: Optional[Node] = None) -> list[Str]:
     """
     Deprecated. Use Node.channels.
 
@@ -7154,9 +7037,9 @@ def channels(n: typing.Optional[Node] = None) -> typing.List[Str]:
 def choice(
     title: Str,
     prompt: Str,
-    options: typing.List[Str],
+    options: list[Str],
     default: int = 0,
-) -> int:
+) -> Optional[int]:
     """
     Shows a dialog box with the given title and prompt text, and a combo box containing the given options.
 
@@ -7250,7 +7133,7 @@ def createScenefileBrowser(fileName, nodeName) -> None:
     """
     Pops up a scene browser dialog box.
     Receives the path to an Alembic (abc) file, and displays a hierarchical tree of the nodes within the file.
-    The user can select which nodes they are interseted in, and nodes of the appropriate type will automatically.
+    The user can select which nodes they are interested in, and nodes of the appropriate type will automatically.
     be created.
     If a valid scene file nodeName is specified, this node will be populated with the selected tree.
 
@@ -7260,7 +7143,7 @@ def createScenefileBrowser(fileName, nodeName) -> None:
     ...
 
 def createToolset(
-    filename: bytes = ..., overwrite: bool = ..., rootPath: bytes = ...
+    filename: Str = ..., overwrite: bool = ..., rootPath: Str = ...
 ) -> None:
     """
     Creates a tool preset based on the currently selected nodes.
@@ -7270,7 +7153,7 @@ def createToolset(
     """
     ...
 
-def critical(message: bytes) -> None:
+def critical(message: Str) -> None:
     """
     Puts the message into the error console, treating it like an error. Also pops up an alert dialog to the user, immediately.
 
@@ -7279,7 +7162,7 @@ def critical(message: bytes) -> None:
     """
     ...
 
-def debug(message: bytes) -> None:
+def debug(message: Str) -> None:
     """
     Puts the message into the error console, treating it like a debug message, which only shows up when the verbosity level is high enough.
 
@@ -7296,7 +7179,7 @@ def defaultFontPathname() -> Str:
     """
     ...
 
-def defaultNodeColor(s: bytes) -> int:
+def defaultNodeColor(s: Str) -> int:
     """
     Get the default node colour.
 
@@ -7384,11 +7267,11 @@ def error(message) -> None:
     ...
 
 def execute(
-    nameOrNode: typing.Union[Str, Node],
+    nameOrNode: Union[Str, Node],
     start: int = ...,
     end: int = ...,
     incr: int = ...,
-    views: typing.List[Str] = None,
+    views: Optional[list[Str]] = None,
     continueOnError: bool = False,
 ) -> None:
     """
@@ -7493,7 +7376,7 @@ def expr(*args, **kwargs):
     """
     ...
 
-def expression(s) -> float:
+def expression(s: Str) -> float:
     """
     Parse a Nuke expression. Runs the same expression parser as is used by animations. This is not the same as the tcl expr parser. The main differences are:
     - Only floating point numbers are calculated. There are no Strings, boolean, or integer values.
@@ -7517,13 +7400,13 @@ def extractSelected() -> None:
     """
     ...
 
-def filename(node: Node, i: int = ...) -> Str:
+def filename(node: Node, i: int = ...) -> Optional[Str]:
     """
     Return the filename(s) this node or group is working with.
 
     For a Read or Write operator (or anything else with a filename
     knob) this will return the current filename, based on the
-    root.proxy settings and which of the fullsize/proxy filenames are
+    root.proxy settings and which of the full-size/proxy filenames are
     filled in. All expansion of commands and variables is
     done. However by default it will still have %%04d sequences in it,
     use REPLACE to get the actual filename with the current frame number.
@@ -7591,18 +7474,18 @@ def fromNode(n) -> Str:
 def getAllUserPresets() -> None:
     """
     gets a list of all current user presets
-    @return: a list of tuples containing all nodename/presetname pairs.
+    @return: a list of tuples containing all nodename/preset-name pairs.
     """
     ...
 
-@typing.overload
+@overload
 def getClipname(
-    prompt, pattern=None, default=None, multiple: typing.Literal[False] = False
+    prompt, pattern=None, default=None, multiple: Literal[False] = False
 ) -> Str: ...
-@typing.overload
+@overload
 def getClipname(
-    prompt, pattern=None, default=None, multiple: typing.Literal[True] = ...
-) -> typing.List[Str]:
+    prompt, pattern=None, default=None, multiple: Literal[True] = ...
+) -> list[Str]:
     """
     Pops up a file chooser dialog box. You can use the pattern to reStrict the displayed choices to matching filenames,
     normal Unix glob rules are used here. getClipname compresses lists of filenames that only differ by an index number
@@ -7630,7 +7513,7 @@ def getColor(initial) -> int:
 def getDeletedPresets() -> None:
     """
     gets a list of all currently deleted presets
-    @return: a pyDict containing all nodename/presetname pairs.
+    @return: a pyDict containing all nodename/preset-name pairs.
     """
     ...
 
@@ -7640,7 +7523,8 @@ def getFileNameList(
     extraInformation: bool = False,
     returnDirs: bool = True,
     returnHidden: bool = False,
-) -> typing.List[Str]:
+    /,
+) -> list[Str]:
     """
     @param dir the directory to get sequences from
     @param splitSequences whether to split sequences or not
@@ -7652,24 +7536,24 @@ def getFileNameList(
     """
     ...
 
-@typing.overload
+@overload
 def getFilename(
     message,
     pattern=None,
     default=None,
     favorites=None,
     type=None,
-    multiple: typing.Literal[False] = False,
+    multiple: Literal[False] = False,
 ) -> Str: ...
-@typing.overload
+@overload
 def getFilename(
     message,
     pattern=None,
     default=None,
     favorites=None,
     type=None,
-    multiple: typing.Literal[True] = ...,
-) -> typing.List[Str]:
+    multiple: Literal[True] = ...,
+) -> list[Str]:
     """
     Pops up a file chooser dialog box. You can use the pattern to reStrict the displayed choices to matching filenames, normal Unix glob rules are used here.
 
@@ -7683,7 +7567,7 @@ def getFilename(
     """
     ...
 
-def getFonts() -> typing.List[Str]:
+def getFonts() -> list[Str]:
     """
     Return a list of all available font families and styles
 
@@ -7702,7 +7586,7 @@ def getFramesAndViews(label, default=None, maxviews=0) -> ...:
     """
     ...
 
-def getInput(prompt: Str, default: Str = ...) -> typing.Optional[Str]:
+def getInput(prompt: Str, default: Str = ...) -> Optional[Str]:
     """
     Pops up a dialog box with a text field for an arbitrary String.
 
@@ -7719,7 +7603,7 @@ def getNodeClassName() -> None:
     """
     ...
 
-def getNodePresetExcludePaths() -> typing.List[Str]:
+def getNodePresetExcludePaths() -> list[Str]:
     """
     Gets a list of all paths that are excluded from the search for node presets.
 
@@ -7734,7 +7618,7 @@ def getNodePresetID() -> None:
     """
     ...
 
-@typing.type_check_only
+@type_check_only
 class Widget:
     """
     Widget.
@@ -7754,9 +7638,9 @@ class Widget:
         Called when the widget is asked to be closed.
         """
         ...
-    def deStroy(self) -> None:
+    def destroy(self) -> None:
         """
-        DeStroy the widget.
+        Destroy the widget.
         """
         ...
     def height(self, *args, **kwargs):
@@ -7821,7 +7705,7 @@ class Widget:
         ...
     ...
 
-@typing.type_check_only
+@type_check_only
 class Container(Widget):
     """
     Container
@@ -7843,7 +7727,7 @@ class Container(Widget):
         ...
     ...
 
-@typing.type_check_only
+@type_check_only
 class Dock(Container):
     """
     Dock
@@ -7887,11 +7771,11 @@ def getPresetKnobValues() -> None:
 def getPresets() -> None:
     """
     gets a list of all presets for the currently selected node's class
-    @return: a pyList containing all nodename/presetname pairs.
+    @return: a pyList containing all nodename/preset-name pairs.
     """
     ...
 
-def getPresetsMenu(Node) -> typing.Optional[Menu]:
+def getPresetsMenu(Node) -> Optional[Menu]:
     """
     Gets the presets menu for the currently selected node.
     @return: The menu, or None if it doesn't exist.
@@ -7914,7 +7798,7 @@ def getRenderProgress() -> int:
     """
     ...
 
-def getToolsetExcludePaths() -> typing.List[Str]:
+def getToolsetExcludePaths() -> list[Str]:
     """
     Gets a list of all paths that are excluded from the search for node presets.
 
@@ -7934,7 +7818,7 @@ def getUserPresetKnobValues() -> None:
 def getUserPresets(Node) -> None:
     """
     gets a list of all user presets for the currently selected node's class
-    @return: a pyList containing all nodename/presetname pairs.
+    @return: a pyList containing all nodename/preset-name pairs.
     """
     ...
 
@@ -7972,7 +7856,7 @@ def knob(
     name: Str,
     value: Str = ...,
     type: bool = ...,
-    **kwargs: typing.Dict[typing.Literal["class"], typing.Optional[bool]],
+    **kwargs: dict[Literal["class"], Optional[bool]],
 ) -> None:
     """
     Returns or sets the entire state of a knob.
@@ -8025,7 +7909,7 @@ def knob(
     """
     ...
 
-def knobDefault(classknob: Str, value: Str) -> typing.Optional[Str]:
+def knobDefault(classknob: Str, value: Str) -> Optional[Str]:
     """
     Set a default value for knobs in nodes that belong to the
     same class. All knobs with matching names, that are created after this
@@ -8065,7 +7949,7 @@ def knobTooltip(classknob, value) -> None:
     """
     ...
 
-def layers(node: Node = None) -> typing.List[Str]:
+def layers(node: Optional[Node] = None) -> list[Str]:
     """
     Lists the layers in a node. If no node is provided this will list all known layer names in this script.
 
@@ -8136,7 +8020,7 @@ def maxPerformanceInfo(*args, **kwargs):
     """
     ...
 
-def memory(cmd: Str, value=...) -> typing.Union[Str, int]:
+def memory(cmd: Str, value=...) -> Union[Str, int]:
     """
     Get or set information about memory usage.
 
@@ -8144,8 +8028,8 @@ def memory(cmd: Str, value=...) -> typing.Union[Str, int]:
 
     The cmd parameter specifies what memory information to retrieve. It can be one of the following values:
     - info [node-name]                           Return a String describing current memory usage. Can optionally provide it for a specific node.
-    - infoxml [format_bytes] [node-name]         Return current memory usage as above, but in XML format. Can optionally provide if bytes should be formatted to be human readable, and also a specific node
-    - allocator_info [format_bytes]              Return current allocator usage in XML format. Can optionally provide if bytes should be formatted to be human readable
+    - infoxml [format_Str] [node-name]         Return current memory usage as above, but in XML format. Can optionally provide if Str should be formatted to be human readable, and also a specific node
+    - allocator_info [format_Str]              Return current allocator usage in XML format. Can optionally provide if Str should be formatted to be human readable
     - free [size]                                Free as much memory as possible. If a size is specified, if will stop trying to free memory when usage drops below the size.
     - usage                                      Return the amount of memory currently in use.
     - max_usage [size]                           If no size is specified, returns the current size of the memory limit.  If a size is given, then set this size as the memory limit.
@@ -8298,7 +8182,7 @@ def openPanels(*args, **kwargs):
     """
     ...
 
-def pan() -> typing.List[int]:
+def pan() -> list[int]:
     """
     Return the pan values of a group's display.
     This function is deprecated and will be removed in a future version.  You probably want to use nuke.center().
@@ -8353,7 +8237,7 @@ def pluginExists(name) -> bool:
     """
     ...
 
-def pluginInstallLocation() -> typing.List[Str]:
+def pluginInstallLocation() -> list[Str]:
     """
     The system-specific locations that Nuke will look in for third-party plugins.
 
@@ -8361,7 +8245,7 @@ def pluginInstallLocation() -> typing.List[Str]:
     """
     ...
 
-def pluginPath() -> typing.List[Str]:
+def pluginPath() -> list[Str]:
     """
     List all the directories Nuke will search in for plugins.
 
@@ -8371,7 +8255,7 @@ def pluginPath() -> typing.List[Str]:
     """
     ...
 
-def plugins(switches=0, *pattern) -> typing.List[Str]:
+def plugins(switches=0, *pattern) -> list[Str]:
     """
     Returns a list of every loaded plugin or every plugin available. By default each plugin is returned as the full pathname of the plugin file.
 
@@ -8423,7 +8307,14 @@ def removeFavoriteDir(name, type) -> None:
     """
     ...
 
-def render(*args, **kwargs):
+def render(
+    nameOrNode: Union[Str, Node],
+    /,
+    start: int = ...,
+    end: int = ...,
+    incr: int = ...,
+    views: Optional[list[Str]] = ...,
+) -> None:
     """
     execute(nameOrNode, start, end, incr, views, continueOnError = False) -> None.
     execute(nameOrNode, frameRangeSet, views, continueOnError = False) -> None.
@@ -8469,7 +8360,7 @@ def restoreWindowLayout(i) -> None:
 def resumePathProcessing() -> None:
     """
     Resume path processing.
-    Use prior to performingmultiple node graph modifications, to avoid repeated path processing.
+    Use prior to performing multiple node graph modifications, to avoid repeated path processing.
     @return: None.
     """
     ...
@@ -8569,14 +8460,14 @@ def scriptNew(*args, **kwargs):
     """
     ...
 
-def scriptOpen(filePath: bytes) -> None:
+def scriptOpen(filePath: Str) -> None:
     """
     Opens a new script containing the contents of the named file.
     """
     ...
 
 def scriptReadFile(
-    path: bytes,
+    path: Str,
     /,
 ) -> None:
     """
@@ -8590,7 +8481,7 @@ def scriptReadText(*args, **kwargs):
     """
     ...
 
-def scriptSave(filename: Str = None) -> typing.Literal[True]:
+def scriptSave(filename: Optional[Str] = None) -> Literal[True]:
     """
     Saves the current script to the current file name. If there is no current file name and Nuke is running in GUI mode, the user is asked for a name using the file chooser.
 
@@ -8650,7 +8541,7 @@ def selectedNode() -> Node:
     """
     ...
 
-def selectedNodes(filter: Str = ...) -> typing.List[Node]:
+def selectedNodes(filter: Str = ...) -> list[Node]:
     """
     Returns a list of all selected nodes in the current group. An attempt is made to return them in 'useful' order where inputs are done before the final node, so commands applied to this list go from top-down.
 
@@ -8786,7 +8677,7 @@ def StripFrameRange(clipname) -> Str:
 def suspendPathProcessing() -> None:
     """
     Suspend path processing.
-    Use prior to performingmultiple node graph modifications, to avoid repeated path processing.
+    Use prior to performing multiple node graph modifications, to avoid repeated path processing.
     @return: None.
     """
     ...
@@ -8868,7 +8759,7 @@ def thisView() -> Str:
     """
     ...
 
-def toNode(s: Str) -> typing.Optional[Node]:
+def toNode(s: Str) -> Optional[Node]:
     """
     Search for a node in the DAG by name and return it as a Python object.
 
@@ -8906,9 +8797,9 @@ def toolbar(name: Str, create: bool = True) -> ToolBar:
 
 def tprint(
     *value: object,
-    sep: Str = b" ",
-    end: Str = b"\n",
-    file: typing.IO[Str] = ...,
+    sep: Str = Str(" "),
+    end: Str = Str("\n"),
+    file: IO = ...,
 ) -> None:
     """
     Prints the values to a Stream, or to stdout by default.
@@ -8935,7 +8826,7 @@ def usingPerformanceTimers() -> bool:
     """
     ...
 
-def value(knob: bytes, default: typing.Optional[bytes] = None) -> bytes:
+def value(knob: Str, default: Optional[Str] = None) -> Str:
     """
     The value function returns the current value of a knob.
 
@@ -8955,7 +8846,7 @@ def views() -> list:
 
 def waitForThreadsToFinish() -> Str:
     """
-    Returns true if Nuke should wait for any Python threads to finish before exitting.
+    Returns true if Nuke should wait for any Python threads to finish before exiting.
     @return: True or False.
     """
     ...
@@ -8970,8 +8861,8 @@ def warning(message) -> None:
     ...
 
 def zoom(
-    scale: float = ..., center: typing.Tuple[int, int] = ..., group: Group = ..., /
-) -> typing.Optional[float]:
+    scale: float = ..., center: tuple[int, int] = ..., group: Group = ..., /
+) -> Optional[float]:
     """
     Change the zoom and pan of a group's display. The scale argument is the new zoom factor.
     If the scale is given, but not the center, the zoom is set to that factor and the view is
@@ -9188,7 +9079,7 @@ WRITE_NON_DEFAULT_ONLY: int = 16
 
 WRITE_USER_KNOB_DEFS: int = 4
 
-__all__: typing.List[six.text_type]
+__all__: list[Str]
 """
 ['AColor_Knob', 'ADD_VIEWS', 'AFTER_CONST', 'AFTER_LINEAR', ...
 """
@@ -9201,9 +9092,11 @@ env: GlobalsEnvironment
 nodes: Nodes
 """
 <Nodes object>
+
+**NOTICE**: prefer `createNode`, it will apply default layout and more type-safe.
 """
 
-rawArgs: typing.List[bytes]
+rawArgs: list[Str]
 """
 [r'C:\\Program Files\\Nuke10.5v7\\python.exe']
 """

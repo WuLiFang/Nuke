@@ -1,28 +1,21 @@
 # -*- coding=UTF-8 -*-
 # pyright: strict, reportTypeCommentUsage=false
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
+
+import logging
+
+import wulifang
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text
-    from ..types import MessageService
-
-import logging
-import sys
-
-import wulifang
+    from .._types import MessageService
 
 
 class LoggingMessageService:
-
     def __init__(self):
         # type: () -> None
-        if sys.platform == "win32":
-            from wulifang.vendor import win_unicode_console
-            win_unicode_console.enable()
-
         logger = logging.getLogger("wulifang")
         logger.setLevel(logging.DEBUG)
         self._logger = logger

@@ -7,7 +7,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import List, Callable, Text
-    from wulifang.types.cleanup_service import CleanupService as Service
+    from wulifang._types.cleanup_service import CleanupService as Service
 
 from wulifang._util import capture_exception
 import wulifang.vendor

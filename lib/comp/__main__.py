@@ -9,8 +9,8 @@ import logging
 import logging.config
 import os
 
-import wlf.path
-import cast_unknown as cast
+from wulifang.vendor.wlf.path import PurePath
+import wulifang.vendor.cast_unknown as cast
 from comp import Comp, FootageError, RenderError
 from comp.config import START_MESSAGE, CompConfig
 
@@ -30,7 +30,7 @@ def main():
     try:
         LOGGER.info(START_MESSAGE)
         logging.getLogger("com.wlf").setLevel(logging.WARNING)
-        wlf.path.PurePath.tag_pattern = CompConfig()["tag_pat"]
+        PurePath.tag_pattern = CompConfig()["tag_pat"]
 
         comp = Comp()
         comp.import_resource(args.input_dir)

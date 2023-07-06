@@ -23,15 +23,17 @@ def reload():
     """reload wulifang modules."""
     modules = []  # type: List[ModuleType]
     for k, v in iteritems(sys.modules):
-        if v is None:
+        if v is None:  # type: ignore
             continue
 
         if k == "wulifang" or (
             k.startswith("wulifang.") and not k.startswith("wulifang.vendor")
         ):
             modules.append(v)
-    for i in modules:
-        try:
-            _ = reload_module(i)
-        except:
-            _LOGGER.exception("reload failed: %s", i.__name__)
+    # reload twice for dependency
+    for _ in range(2):
+        for i in modules:
+            try:
+                reload_module(i)
+            except:
+                _LOGGER.exception("reload failed: %s", i.__name__)

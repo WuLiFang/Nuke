@@ -6,24 +6,21 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    import wulifang
+    import wulifang._types as _types
 
 
 import nuke
 from wulifang.vendor.pathlib2_unicode import Path
-from wulifang.vendor import cast_unknown as cast
 import wulifang.vendor.wulifang_manifest as m6t
+from wulifang._util import cast_text
 
 
 class ManifestService:
-    pass
-
     def path(self):
-        name = nuke.scriptName()
+        name = cast_text(nuke.scriptName())
         if not name:
             return ""
-        p = Path(name.decode("utf-8")).parent / "wulifang.toml"  # type: Path
-        return cast.text(p)
+        return cast_text(Path(name).parent / "wulifang.toml") # type: ignore
 
     def save(self, manifest):
         # type: (m6t.Manifest) -> None
@@ -44,5 +41,5 @@ class ManifestService:
 
 
 def _(v):
-    # type: (ManifestService) -> wulifang.types.ManifestService
+    # type: (ManifestService) -> _types.ManifestService
     return v

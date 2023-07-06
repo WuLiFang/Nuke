@@ -3,9 +3,8 @@
 """
 QtCompat
 """
-
-import six
-import typing
+from typing import Any
+from wulifang._compat.str import Str
 
 class QFileDialog(QtCompat):
     getOpenFileName: ...
@@ -64,6 +63,8 @@ def _convert(lines):
         ..   lines = _convert(f.readlines())
     """
     ...
+
+def _loadUi(path: str, /) -> Any: ...
 
 loadUi = _loadUi
 

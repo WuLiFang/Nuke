@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from wulifang.types import MessageService
+    from wulifang._types import MessageService
     from typing import Text, Iterator, Optional
 
 

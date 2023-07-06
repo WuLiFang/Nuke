@@ -4,10 +4,10 @@
 Qt.QtCore
 """
 
-import six
-import typing
 import PySide
 import Shiboken
+from typing import Any, Optional, TypeVar, Optional, Union, Callable, Type
+from wulifang._compat.str import Str
 
 class Property:
     __new__: ...
@@ -39,48 +39,48 @@ class Property:
     ...
 
 class QAbstractAnimation(QObject):
-    Backward: ... = PySide.QtCore.QAbstractAnimation.Direction.Backward
+    Backward: ... = QAbstractAnimation.Direction.Backward
     """
     """
 
     DeleteWhenStopped: ...
     """
-    PySide.QtCore.QAbstractAnimation.DeletionPolicy.De...
+    QAbstractAnimation.DeletionPolicy.De...
     """
 
     DeletionPolicy: ...
     """
-    <type 'PySide.QtCore.QAbstractAnimation.DeletionPolic...
+    <type 'QAbstractAnimation.DeletionPolic...
     """
 
     Direction: ...
     """
-    <type 'PySide.QtCore.QAbstractAnimation.Direction'>
+    <type 'QAbstractAnimation.Direction'>
     """
 
-    Forward: ... = PySide.QtCore.QAbstractAnimation.Direction.Forward
+    Forward: ... = QAbstractAnimation.Direction.Forward
     """
     """
 
     KeepWhenStopped: ...
     """
-    PySide.QtCore.QAbstractAnimation.DeletionPolicy.Keep...
+    QAbstractAnimation.DeletionPolicy.Keep...
     """
 
-    Paused: ... = PySide.QtCore.QAbstractAnimation.State.Paused
+    Paused: ... = QAbstractAnimation.State.Paused
     """
     """
 
-    Running: ... = PySide.QtCore.QAbstractAnimation.State.Running
+    Running: ... = QAbstractAnimation.State.Running
     """
     """
 
     State: ...
     """
-    <type 'PySide.QtCore.QAbstractAnimation.State'>
+    <type 'QAbstractAnimation.State'>
     """
 
-    Stopped: ... = PySide.QtCore.QAbstractAnimation.State.Stopped
+    Stopped: ... = QAbstractAnimation.State.Stopped
     """
     """
 
@@ -111,7 +111,7 @@ class QAbstractAnimation(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -201,7 +201,7 @@ class QAbstractEventDispatcher(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def instance(*args, **kwargs):
@@ -351,7 +351,7 @@ class QAbstractItemModel(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -548,7 +548,7 @@ class QAbstractListModel(QAbstractItemModel):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -572,7 +572,7 @@ class QAbstractListModel(QAbstractItemModel):
         ...
     ...
 
-class QAbstractProxyModel(PySide.QtCore.QAbstractItemModel):
+class QAbstractProxyModel(QAbstractItemModel):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -580,7 +580,7 @@ class QAbstractProxyModel(PySide.QtCore.QAbstractItemModel):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -679,7 +679,7 @@ class QAbstractState(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -711,7 +711,7 @@ class QAbstractTableModel(QAbstractItemModel):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -740,7 +740,7 @@ class QAbstractTransition(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     triggered: Signal
@@ -798,7 +798,7 @@ class QAnimationGroup(QAbstractAnimation):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -1036,7 +1036,7 @@ class QBuffer(QIODevice):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -1432,20 +1432,20 @@ class QCoreApplication(QObject):
     """
     """
 
-    CodecForTr: ... = PySide.QtCore.QCoreApplication.Encoding.CodecForTr
+    CodecForTr: ... = QCoreApplication.Encoding.CodecForTr
     """
     """
 
-    DefaultCodec: ... = PySide.QtCore.QCoreApplication.Encoding.DefaultCodec
+    DefaultCodec: ... = QCoreApplication.Encoding.DefaultCodec
     """
     """
 
     Encoding: ...
     """
-    <type 'PySide.QtCore.QCoreApplication.Encoding'>
+    <type 'QCoreApplication.Encoding'>
     """
 
-    UnicodeUTF8: ... = PySide.QtCore.QCoreApplication.Encoding.UnicodeUTF8
+    UnicodeUTF8: ... = QCoreApplication.Encoding.UnicodeUTF8
     """
     """
 
@@ -1461,7 +1461,7 @@ class QCoreApplication(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     unixSignal: ...
@@ -1521,7 +1521,7 @@ class QCoreApplication(QObject):
         """ """
         ...
     @staticmethod
-    def instance() -> QCoreApplication:
+    def instance() -> Optional[QCoreApplication]:
         """ """
         ...
     @staticmethod
@@ -1612,9 +1612,7 @@ class QCoreApplication(QObject):
     def event(self, *args, **kwargs):
         """ """
         ...
-    def notify(self, *args, **kwargs):
-        """ """
-        ...
+    def notify(self, obj: QObject, event: QEvent, /) -> None: ...
     def winEventFilter(self, *args, **kwargs):
         """ """
         ...
@@ -1623,18 +1621,18 @@ class QCoreApplication(QObject):
 class QCryptographicHash(Shiboken.Object):
     Algorithm: ...
     """
-    <type 'PySide.QtCore.QCryptographicHash.Algorithm'>
+    <type 'QCryptographicHash.Algorithm'>
     """
 
-    Md4: ... = PySide.QtCore.QCryptographicHash.Algorithm.Md4
-    """
-    """
-
-    Md5: ... = PySide.QtCore.QCryptographicHash.Algorithm.Md5
+    Md4: ... = QCryptographicHash.Algorithm.Md4
     """
     """
 
-    Sha1: ... = PySide.QtCore.QCryptographicHash.Algorithm.Sha1
+    Md5: ... = QCryptographicHash.Algorithm.Md5
+    """
+    """
+
+    Sha1: ... = QCryptographicHash.Algorithm.Sha1
     """
     """
 
@@ -1663,117 +1661,117 @@ class QCryptographicHash(Shiboken.Object):
     ...
 
 class QDataStream(Shiboken.Object):
-    BigEndian: ... = PySide.QtCore.QDataStream.ByteOrder.BigEndian
+    BigEndian: ... = QDataStream.ByteOrder.BigEndian
     """
     """
 
     ByteOrder: ...
     """
-    <type 'PySide.QtCore.QDataStream.ByteOrder'>
+    <type 'QDataStream.ByteOrder'>
     """
 
     DoublePrecision: ...
     """
-    PySide.QtCore.QDataStream.FloatingPointPrecision.Dou...
+    QDataStream.FloatingPointPrecision.Dou...
     """
 
     FloatingPointPrecision: ...
     """
-    <type 'PySide.QtCore.QDataStream.FloatingPoin...
+    <type 'QDataStream.FloatingPoin...
     """
 
-    LittleEndian: ... = PySide.QtCore.QDataStream.ByteOrder.LittleEndian
-    """
-    """
-
-    Ok: ... = PySide.QtCore.QDataStream.Status.Ok
+    LittleEndian: ... = QDataStream.ByteOrder.LittleEndian
     """
     """
 
-    Qt_1_0: ... = PySide.QtCore.QDataStream.Version.Qt_1_0
+    Ok: ... = QDataStream.Status.Ok
     """
     """
 
-    Qt_2_0: ... = PySide.QtCore.QDataStream.Version.Qt_2_0
+    Qt_1_0: ... = QDataStream.Version.Qt_1_0
     """
     """
 
-    Qt_2_1: ... = PySide.QtCore.QDataStream.Version.Qt_2_1
+    Qt_2_0: ... = QDataStream.Version.Qt_2_0
     """
     """
 
-    Qt_3_0: ... = PySide.QtCore.QDataStream.Version.Qt_3_0
+    Qt_2_1: ... = QDataStream.Version.Qt_2_1
     """
     """
 
-    Qt_3_1: ... = PySide.QtCore.QDataStream.Version.Qt_3_1
+    Qt_3_0: ... = QDataStream.Version.Qt_3_0
     """
     """
 
-    Qt_3_3: ... = PySide.QtCore.QDataStream.Version.Qt_3_3
+    Qt_3_1: ... = QDataStream.Version.Qt_3_1
     """
     """
 
-    Qt_4_0: ... = PySide.QtCore.QDataStream.Version.Qt_4_0
+    Qt_3_3: ... = QDataStream.Version.Qt_3_3
     """
     """
 
-    Qt_4_1: ... = PySide.QtCore.QDataStream.Version.Qt_4_1
+    Qt_4_0: ... = QDataStream.Version.Qt_4_0
     """
     """
 
-    Qt_4_2: ... = PySide.QtCore.QDataStream.Version.Qt_4_2
+    Qt_4_1: ... = QDataStream.Version.Qt_4_1
     """
     """
 
-    Qt_4_3: ... = PySide.QtCore.QDataStream.Version.Qt_4_3
+    Qt_4_2: ... = QDataStream.Version.Qt_4_2
     """
     """
 
-    Qt_4_4: ... = PySide.QtCore.QDataStream.Version.Qt_4_4
+    Qt_4_3: ... = QDataStream.Version.Qt_4_3
     """
     """
 
-    Qt_4_5: ... = PySide.QtCore.QDataStream.Version.Qt_4_5
+    Qt_4_4: ... = QDataStream.Version.Qt_4_4
     """
     """
 
-    Qt_4_6: ... = PySide.QtCore.QDataStream.Version.Qt_4_6
+    Qt_4_5: ... = QDataStream.Version.Qt_4_5
     """
     """
 
-    Qt_4_7: ... = PySide.QtCore.QDataStream.Version.Qt_4_7
+    Qt_4_6: ... = QDataStream.Version.Qt_4_6
     """
     """
 
-    Qt_4_8: ... = PySide.QtCore.QDataStream.Version.Qt_4_8
+    Qt_4_7: ... = QDataStream.Version.Qt_4_7
     """
     """
 
-    ReadCorruptData: ... = PySide.QtCore.QDataStream.Status.ReadCorruptData
+    Qt_4_8: ... = QDataStream.Version.Qt_4_8
     """
     """
 
-    ReadPastEnd: ... = PySide.QtCore.QDataStream.Status.ReadPastEnd
+    ReadCorruptData: ... = QDataStream.Status.ReadCorruptData
+    """
+    """
+
+    ReadPastEnd: ... = QDataStream.Status.ReadPastEnd
     """
     """
 
     SinglePrecision: ...
     """
-    PySide.QtCore.QDataStream.FloatingPointPrecision.Sin...
+    QDataStream.FloatingPointPrecision.Sin...
     """
 
     Status: ...
     """
-    <type 'PySide.QtCore.QDataStream.Status'>
+    <type 'QDataStream.Status'>
     """
 
     Version: ...
     """
-    <type 'PySide.QtCore.QDataStream.Version'>
+    <type 'QDataStream.Version'>
     """
 
-    WriteFailed: ... = PySide.QtCore.QDataStream.Status.WriteFailed
+    WriteFailed: ... = QDataStream.Status.WriteFailed
     """
     """
 
@@ -1953,16 +1951,16 @@ class QDataStream(Shiboken.Object):
     ...
 
 class QDate(Shiboken.Object):
-    DateFormat: ... = PySide.QtCore.QDate.MonthNameType.DateFormat
+    DateFormat: ... = QDate.MonthNameType.DateFormat
     """
     """
 
     MonthNameType: ...
     """
-    <type 'PySide.QtCore.QDate.MonthNameType'>
+    <type 'QDate.MonthNameType'>
     """
 
-    StandaloneFormat: ... = PySide.QtCore.QDate.MonthNameType.StandaloneFormat
+    StandaloneFormat: ... = QDate.MonthNameType.StandaloneFormat
     """
     """
 
@@ -2299,49 +2297,49 @@ class QDateTime(Shiboken.Object):
     ...
 
 class QDir(Shiboken.Object):
-    AccessMask: ... = PySide.QtCore.QDir.Filter.AccessMask
+    AccessMask: ... = QDir.Filter.AccessMask
     """
     """
 
-    AllDirs: ... = PySide.QtCore.QDir.Filter.AllDirs
+    AllDirs: ... = QDir.Filter.AllDirs
     """
     """
 
-    AllEntries: ... = PySide.QtCore.QDir.Filter.AllEntries
+    AllEntries: ... = QDir.Filter.AllEntries
     """
     """
 
-    CaseSensitive: ... = PySide.QtCore.QDir.Filter.CaseSensitive
+    CaseSensitive: ... = QDir.Filter.CaseSensitive
     """
     """
 
-    Dirs: ... = PySide.QtCore.QDir.Filter.Dirs
+    Dirs: ... = QDir.Filter.Dirs
     """
     """
 
-    DirsFirst: ... = PySide.QtCore.QDir.SortFlag.DirsFirst
+    DirsFirst: ... = QDir.SortFlag.DirsFirst
     """
     """
 
-    DirsLast: ... = PySide.QtCore.QDir.SortFlag.DirsLast
+    DirsLast: ... = QDir.SortFlag.DirsLast
     """
     """
 
-    Drives: ... = PySide.QtCore.QDir.Filter.Drives
+    Drives: ... = QDir.Filter.Drives
     """
     """
 
-    Executable: ... = PySide.QtCore.QDir.Filter.Executable
+    Executable: ... = QDir.Filter.Executable
     """
     """
 
-    Files: ... = PySide.QtCore.QDir.Filter.Files
+    Files: ... = QDir.Filter.Files
     """
     """
 
     Filter: ...
     """
-    <type 'PySide.QtCore.QDir.Filter'>
+    <type 'QDir.Filter'>
     """
 
     Filters: ...
@@ -2349,73 +2347,73 @@ class QDir(Shiboken.Object):
     <type 'Filters'>
     """
 
-    Hidden: ... = PySide.QtCore.QDir.Filter.Hidden
+    Hidden: ... = QDir.Filter.Hidden
     """
     """
 
-    IgnoreCase: ... = PySide.QtCore.QDir.SortFlag.IgnoreCase
+    IgnoreCase: ... = QDir.SortFlag.IgnoreCase
     """
     """
 
-    LocaleAware: ... = PySide.QtCore.QDir.SortFlag.LocaleAware
+    LocaleAware: ... = QDir.SortFlag.LocaleAware
     """
     """
 
-    Modified: ... = PySide.QtCore.QDir.Filter.Modified
+    Modified: ... = QDir.Filter.Modified
     """
     """
 
-    Name: ... = PySide.QtCore.QDir.SortFlag.Name
+    Name: ... = QDir.SortFlag.Name
     """
     """
 
-    NoDot: ... = PySide.QtCore.QDir.Filter.NoDot
+    NoDot: ... = QDir.Filter.NoDot
     """
     """
 
-    NoDotAndDotDot: ... = PySide.QtCore.QDir.Filter.NoDotAndDotDot
+    NoDotAndDotDot: ... = QDir.Filter.NoDotAndDotDot
     """
     """
 
-    NoDotDot: ... = PySide.QtCore.QDir.Filter.NoDotDot
+    NoDotDot: ... = QDir.Filter.NoDotDot
     """
     """
 
-    NoFilter: ... = PySide.QtCore.QDir.Filter.NoFilter
+    NoFilter: ... = QDir.Filter.NoFilter
     """
     """
 
-    NoSort: ... = PySide.QtCore.QDir.SortFlag.NoSort
+    NoSort: ... = QDir.SortFlag.NoSort
     """
     """
 
-    NoSymLinks: ... = PySide.QtCore.QDir.Filter.NoSymLinks
+    NoSymLinks: ... = QDir.Filter.NoSymLinks
     """
     """
 
-    PermissionMask: ... = PySide.QtCore.QDir.Filter.PermissionMask
+    PermissionMask: ... = QDir.Filter.PermissionMask
     """
     """
 
-    Readable: ... = PySide.QtCore.QDir.Filter.Readable
+    Readable: ... = QDir.Filter.Readable
     """
     """
 
-    Reversed: ... = PySide.QtCore.QDir.SortFlag.Reversed
+    Reversed: ... = QDir.SortFlag.Reversed
     """
     """
 
-    Size: ... = PySide.QtCore.QDir.SortFlag.Size
+    Size: ... = QDir.SortFlag.Size
     """
     """
 
-    SortByMask: ... = PySide.QtCore.QDir.SortFlag.SortByMask
+    SortByMask: ... = QDir.SortFlag.SortByMask
     """
     """
 
     SortFlag: ...
     """
-    <type 'PySide.QtCore.QDir.SortFlag'>
+    <type 'QDir.SortFlag'>
     """
 
     SortFlags: ...
@@ -2423,27 +2421,27 @@ class QDir(Shiboken.Object):
     <type 'SortFlags'>
     """
 
-    System: ... = PySide.QtCore.QDir.Filter.System
+    System: ... = QDir.Filter.System
     """
     """
 
-    Time: ... = PySide.QtCore.QDir.SortFlag.Time
+    Time: ... = QDir.SortFlag.Time
     """
     """
 
-    Type: ... = PySide.QtCore.QDir.SortFlag.Type
+    Type: ... = QDir.SortFlag.Type
     """
     """
 
-    TypeMask: ... = PySide.QtCore.QDir.Filter.TypeMask
+    TypeMask: ... = QDir.Filter.TypeMask
     """
     """
 
-    Unsorted: ... = PySide.QtCore.QDir.SortFlag.Unsorted
+    Unsorted: ... = QDir.SortFlag.Unsorted
     """
     """
 
-    Writable: ... = PySide.QtCore.QDir.Filter.Writable
+    Writable: ... = QDir.Filter.Writable
     """
     """
 
@@ -2690,12 +2688,12 @@ class QDir(Shiboken.Object):
 class QDirIterator(Shiboken.Object):
     FollowSymlinks: ...
     """
-    PySide.QtCore.QDirIterator.IteratorFlag.FollowSymlink...
+    QDirIterator.IteratorFlag.FollowSymlink...
     """
 
     IteratorFlag: ...
     """
-    <type 'PySide.QtCore.QDirIterator.IteratorFlag'>
+    <type 'QDirIterator.IteratorFlag'>
     """
 
     IteratorFlags: ...
@@ -2705,12 +2703,12 @@ class QDirIterator(Shiboken.Object):
 
     NoIteratorFlags: ...
     """
-    PySide.QtCore.QDirIterator.IteratorFlag.NoIteratorFl...
+    QDirIterator.IteratorFlag.NoIteratorFl...
     """
 
     Subdirectories: ...
     """
-    PySide.QtCore.QDirIterator.IteratorFlag.Subdirectorie...
+    QDirIterator.IteratorFlag.Subdirectorie...
     """
 
     __new__: ...
@@ -2758,197 +2756,197 @@ class QDynamicPropertyChangeEvent(QEvent):
     ...
 
 class QEasingCurve(Shiboken.Object):
-    CosineCurve: ... = PySide.QtCore.QEasingCurve.Type.CosineCurve
+    CosineCurve: ... = QEasingCurve.Type.CosineCurve
     """
     """
 
-    Custom: ... = PySide.QtCore.QEasingCurve.Type.Custom
+    Custom: ... = QEasingCurve.Type.Custom
     """
     """
 
-    InBack: ... = PySide.QtCore.QEasingCurve.Type.InBack
+    InBack: ... = QEasingCurve.Type.InBack
     """
     """
 
-    InBounce: ... = PySide.QtCore.QEasingCurve.Type.InBounce
+    InBounce: ... = QEasingCurve.Type.InBounce
     """
     """
 
-    InCirc: ... = PySide.QtCore.QEasingCurve.Type.InCirc
+    InCirc: ... = QEasingCurve.Type.InCirc
     """
     """
 
-    InCubic: ... = PySide.QtCore.QEasingCurve.Type.InCubic
+    InCubic: ... = QEasingCurve.Type.InCubic
     """
     """
 
-    InCurve: ... = PySide.QtCore.QEasingCurve.Type.InCurve
+    InCurve: ... = QEasingCurve.Type.InCurve
     """
     """
 
-    InElastic: ... = PySide.QtCore.QEasingCurve.Type.InElastic
+    InElastic: ... = QEasingCurve.Type.InElastic
     """
     """
 
-    InExpo: ... = PySide.QtCore.QEasingCurve.Type.InExpo
+    InExpo: ... = QEasingCurve.Type.InExpo
     """
     """
 
-    InOutBack: ... = PySide.QtCore.QEasingCurve.Type.InOutBack
+    InOutBack: ... = QEasingCurve.Type.InOutBack
     """
     """
 
-    InOutBounce: ... = PySide.QtCore.QEasingCurve.Type.InOutBounce
+    InOutBounce: ... = QEasingCurve.Type.InOutBounce
     """
     """
 
-    InOutCirc: ... = PySide.QtCore.QEasingCurve.Type.InOutCirc
+    InOutCirc: ... = QEasingCurve.Type.InOutCirc
     """
     """
 
-    InOutCubic: ... = PySide.QtCore.QEasingCurve.Type.InOutCubic
+    InOutCubic: ... = QEasingCurve.Type.InOutCubic
     """
     """
 
-    InOutElastic: ... = PySide.QtCore.QEasingCurve.Type.InOutElastic
+    InOutElastic: ... = QEasingCurve.Type.InOutElastic
     """
     """
 
-    InOutExpo: ... = PySide.QtCore.QEasingCurve.Type.InOutExpo
+    InOutExpo: ... = QEasingCurve.Type.InOutExpo
     """
     """
 
-    InOutQuad: ... = PySide.QtCore.QEasingCurve.Type.InOutQuad
+    InOutQuad: ... = QEasingCurve.Type.InOutQuad
     """
     """
 
-    InOutQuart: ... = PySide.QtCore.QEasingCurve.Type.InOutQuart
+    InOutQuart: ... = QEasingCurve.Type.InOutQuart
     """
     """
 
-    InOutQuint: ... = PySide.QtCore.QEasingCurve.Type.InOutQuint
+    InOutQuint: ... = QEasingCurve.Type.InOutQuint
     """
     """
 
-    InOutSine: ... = PySide.QtCore.QEasingCurve.Type.InOutSine
+    InOutSine: ... = QEasingCurve.Type.InOutSine
     """
     """
 
-    InQuad: ... = PySide.QtCore.QEasingCurve.Type.InQuad
+    InQuad: ... = QEasingCurve.Type.InQuad
     """
     """
 
-    InQuart: ... = PySide.QtCore.QEasingCurve.Type.InQuart
+    InQuart: ... = QEasingCurve.Type.InQuart
     """
     """
 
-    InQuint: ... = PySide.QtCore.QEasingCurve.Type.InQuint
+    InQuint: ... = QEasingCurve.Type.InQuint
     """
     """
 
-    InSine: ... = PySide.QtCore.QEasingCurve.Type.InSine
+    InSine: ... = QEasingCurve.Type.InSine
     """
     """
 
-    Linear: ... = PySide.QtCore.QEasingCurve.Type.Linear
+    Linear: ... = QEasingCurve.Type.Linear
     """
     """
 
-    NCurveTypes: ... = PySide.QtCore.QEasingCurve.Type.NCurveTypes
+    NCurveTypes: ... = QEasingCurve.Type.NCurveTypes
     """
     """
 
-    OutBack: ... = PySide.QtCore.QEasingCurve.Type.OutBack
+    OutBack: ... = QEasingCurve.Type.OutBack
     """
     """
 
-    OutBounce: ... = PySide.QtCore.QEasingCurve.Type.OutBounce
+    OutBounce: ... = QEasingCurve.Type.OutBounce
     """
     """
 
-    OutCirc: ... = PySide.QtCore.QEasingCurve.Type.OutCirc
+    OutCirc: ... = QEasingCurve.Type.OutCirc
     """
     """
 
-    OutCubic: ... = PySide.QtCore.QEasingCurve.Type.OutCubic
+    OutCubic: ... = QEasingCurve.Type.OutCubic
     """
     """
 
-    OutCurve: ... = PySide.QtCore.QEasingCurve.Type.OutCurve
+    OutCurve: ... = QEasingCurve.Type.OutCurve
     """
     """
 
-    OutElastic: ... = PySide.QtCore.QEasingCurve.Type.OutElastic
+    OutElastic: ... = QEasingCurve.Type.OutElastic
     """
     """
 
-    OutExpo: ... = PySide.QtCore.QEasingCurve.Type.OutExpo
+    OutExpo: ... = QEasingCurve.Type.OutExpo
     """
     """
 
-    OutInBack: ... = PySide.QtCore.QEasingCurve.Type.OutInBack
+    OutInBack: ... = QEasingCurve.Type.OutInBack
     """
     """
 
-    OutInBounce: ... = PySide.QtCore.QEasingCurve.Type.OutInBounce
+    OutInBounce: ... = QEasingCurve.Type.OutInBounce
     """
     """
 
-    OutInCirc: ... = PySide.QtCore.QEasingCurve.Type.OutInCirc
+    OutInCirc: ... = QEasingCurve.Type.OutInCirc
     """
     """
 
-    OutInCubic: ... = PySide.QtCore.QEasingCurve.Type.OutInCubic
+    OutInCubic: ... = QEasingCurve.Type.OutInCubic
     """
     """
 
-    OutInElastic: ... = PySide.QtCore.QEasingCurve.Type.OutInElastic
+    OutInElastic: ... = QEasingCurve.Type.OutInElastic
     """
     """
 
-    OutInExpo: ... = PySide.QtCore.QEasingCurve.Type.OutInExpo
+    OutInExpo: ... = QEasingCurve.Type.OutInExpo
     """
     """
 
-    OutInQuad: ... = PySide.QtCore.QEasingCurve.Type.OutInQuad
+    OutInQuad: ... = QEasingCurve.Type.OutInQuad
     """
     """
 
-    OutInQuart: ... = PySide.QtCore.QEasingCurve.Type.OutInQuart
+    OutInQuart: ... = QEasingCurve.Type.OutInQuart
     """
     """
 
-    OutInQuint: ... = PySide.QtCore.QEasingCurve.Type.OutInQuint
+    OutInQuint: ... = QEasingCurve.Type.OutInQuint
     """
     """
 
-    OutInSine: ... = PySide.QtCore.QEasingCurve.Type.OutInSine
+    OutInSine: ... = QEasingCurve.Type.OutInSine
     """
     """
 
-    OutQuad: ... = PySide.QtCore.QEasingCurve.Type.OutQuad
+    OutQuad: ... = QEasingCurve.Type.OutQuad
     """
     """
 
-    OutQuart: ... = PySide.QtCore.QEasingCurve.Type.OutQuart
+    OutQuart: ... = QEasingCurve.Type.OutQuart
     """
     """
 
-    OutQuint: ... = PySide.QtCore.QEasingCurve.Type.OutQuint
+    OutQuint: ... = QEasingCurve.Type.OutQuint
     """
     """
 
-    OutSine: ... = PySide.QtCore.QEasingCurve.Type.OutSine
+    OutSine: ... = QEasingCurve.Type.OutSine
     """
     """
 
-    SineCurve: ... = PySide.QtCore.QEasingCurve.Type.SineCurve
+    SineCurve: ... = QEasingCurve.Type.SineCurve
     """
     """
 
     Type: ...
     """
-    <type 'PySide.QtCore.QEasingCurve.Type'>
+    <type 'QEasingCurve.Type'>
     """
 
     __new__: ...
@@ -3036,28 +3034,28 @@ class QEasingCurve(Shiboken.Object):
 class QElapsedTimer(Shiboken.Object):
     ClockType: ...
     """
-    <type 'PySide.QtCore.QElapsedTimer.ClockType'>
+    <type 'QElapsedTimer.ClockType'>
     """
 
     MachAbsoluteTime: ...
     """
-    PySide.QtCore.QElapsedTimer.ClockType.MachAbsoluteT...
+    QElapsedTimer.ClockType.MachAbsoluteT...
     """
 
-    MonotonicClock: ... = PySide.QtCore.QElapsedTimer.ClockType.MonotonicClock
+    MonotonicClock: ... = QElapsedTimer.ClockType.MonotonicClock
     """
     """
 
     PerformanceCounter: ...
     """
-    PySide.QtCore.QElapsedTimer.ClockType.Performance...
+    QElapsedTimer.ClockType.Performance...
     """
 
-    SystemTime: ... = PySide.QtCore.QElapsedTimer.ClockType.SystemTime
+    SystemTime: ... = QElapsedTimer.ClockType.SystemTime
     """
     """
 
-    TickCounter: ... = PySide.QtCore.QElapsedTimer.ClockType.TickCounter
+    TickCounter: ... = QElapsedTimer.ClockType.TickCounter
     """
     """
 
@@ -3144,674 +3142,671 @@ class QElapsedTimer(Shiboken.Object):
     ...
 
 class QEvent(Shiboken.Object):
-    AcceptDropsChange: ... = PySide.QtCore.QEvent.Type.AcceptDropsChange
+    AcceptDropsChange: QEvent.Type
     """
     """
 
     AccessibilityDescription: ...
     """
-    PySide.QtCore.QEvent.Type.AccessibilityDesc...
+    QEvent.Type.AccessibilityDesc...
     """
 
-    AccessibilityHelp: ... = PySide.QtCore.QEvent.Type.AccessibilityHelp
-    """
-    """
-
-    AccessibilityPrepare: ... = PySide.QtCore.QEvent.Type.AccessibilityPrepare
+    AccessibilityHelp: QEvent.Type
     """
     """
 
-    ActionAdded: ... = PySide.QtCore.QEvent.Type.ActionAdded
+    AccessibilityPrepare: QEvent.Type
     """
     """
 
-    ActionChanged: ... = PySide.QtCore.QEvent.Type.ActionChanged
+    ActionAdded: QEvent.Type
     """
     """
 
-    ActionRemoved: ... = PySide.QtCore.QEvent.Type.ActionRemoved
+    ActionChanged: QEvent.Type
     """
     """
 
-    ActivateControl: ... = PySide.QtCore.QEvent.Type.ActivateControl
+    ActionRemoved: QEvent.Type
     """
     """
 
-    ActivationChange: ... = PySide.QtCore.QEvent.Type.ActivationChange
+    ActivateControl: QEvent.Type
     """
     """
 
-    ApplicationActivate: ... = PySide.QtCore.QEvent.Type.ApplicationActivate
+    ActivationChange: QEvent.Type
     """
     """
 
-    ApplicationActivated: ... = PySide.QtCore.QEvent.Type.ApplicationActivated
+    ApplicationActivate: QEvent.Type
+    """
+    """
+
+    ApplicationActivated: QEvent.Type
     """
     """
 
     ApplicationDeactivate: ...
     """
-    PySide.QtCore.QEvent.Type.ApplicationDeactivat...
+    QEvent.Type.ApplicationDeactivat...
     """
 
     ApplicationDeactivated: ...
     """
-    PySide.QtCore.QEvent.Type.ApplicationDeactiva...
+    QEvent.Type.ApplicationDeactiva...
     """
 
     ApplicationFontChange: ...
     """
-    PySide.QtCore.QEvent.Type.ApplicationFontChang...
+    QEvent.Type.ApplicationFontChang...
     """
 
     ApplicationLayoutDirectionChange: ...
     """
-    PySide.QtCore.QEvent.Type.Applicati...
+    QEvent.Type.Applicati...
     """
 
     ApplicationPaletteChange: ...
     """
-    PySide.QtCore.QEvent.Type.ApplicationPalett...
+    QEvent.Type.ApplicationPalett...
     """
 
     ApplicationWindowIconChange: ...
     """
-    PySide.QtCore.QEvent.Type.ApplicationWin...
+    QEvent.Type.ApplicationWin...
     """
 
-    ChildAdded: ... = PySide.QtCore.QEvent.Type.ChildAdded
-    """
-    """
-
-    ChildPolished: ... = PySide.QtCore.QEvent.Type.ChildPolished
+    ChildAdded: QEvent.Type
     """
     """
 
-    ChildRemoved: ... = PySide.QtCore.QEvent.Type.ChildRemoved
+    ChildPolished: QEvent.Type
     """
     """
 
-    Clipboard: ... = PySide.QtCore.QEvent.Type.Clipboard
+    ChildRemoved: QEvent.Type
     """
     """
 
-    Close: ... = PySide.QtCore.QEvent.Type.Close
+    Clipboard: QEvent.Type
+    """
+    """
+
+    Close: QEvent.Type
     """
     """
 
     CloseSoftwareInputPanel: ...
     """
-    PySide.QtCore.QEvent.Type.CloseSoftwareInput...
+    QEvent.Type.CloseSoftwareInput...
     """
 
-    ContentsRectChange: ... = PySide.QtCore.QEvent.Type.ContentsRectChange
-    """
-    """
-
-    ContextMenu: ... = PySide.QtCore.QEvent.Type.ContextMenu
+    ContentsRectChange: QEvent.Type
     """
     """
 
-    Create: ... = PySide.QtCore.QEvent.Type.Create
+    ContextMenu: QEvent.Type
     """
     """
 
-    CursorChange: ... = PySide.QtCore.QEvent.Type.CursorChange
+    Create: QEvent.Type
     """
     """
 
-    DeactivateControl: ... = PySide.QtCore.QEvent.Type.DeactivateControl
+    CursorChange: QEvent.Type
     """
     """
 
-    DeferredDelete: ... = PySide.QtCore.QEvent.Type.DeferredDelete
+    DeactivateControl: QEvent.Type
     """
     """
 
-    Destroy: ... = PySide.QtCore.QEvent.Type.Destroy
+    DeferredDelete: QEvent.Type
     """
     """
 
-    DragEnter: ... = PySide.QtCore.QEvent.Type.DragEnter
+    Destroy: QEvent.Type
     """
     """
 
-    DragLeave: ... = PySide.QtCore.QEvent.Type.DragLeave
+    DragEnter: QEvent.Type
     """
     """
 
-    DragMove: ... = PySide.QtCore.QEvent.Type.DragMove
+    DragLeave: QEvent.Type
     """
     """
 
-    DragResponse: ... = PySide.QtCore.QEvent.Type.DragResponse
+    DragMove: QEvent.Type
     """
     """
 
-    Drop: ... = PySide.QtCore.QEvent.Type.Drop
+    DragResponse: QEvent.Type
+    """
+    """
+
+    Drop: QEvent.Type
     """
     """
 
     DynamicPropertyChange: ...
     """
-    PySide.QtCore.QEvent.Type.DynamicPropertyChang...
+    QEvent.Type.DynamicPropertyChang...
     """
 
-    EmbeddingControl: ... = PySide.QtCore.QEvent.Type.EmbeddingControl
-    """
-    """
-
-    EnabledChange: ... = PySide.QtCore.QEvent.Type.EnabledChange
+    EmbeddingControl: QEvent.Type
     """
     """
 
-    Enter: ... = PySide.QtCore.QEvent.Type.Enter
+    EnabledChange: QEvent.Type
     """
     """
 
-    EnterWhatsThisMode: ... = PySide.QtCore.QEvent.Type.EnterWhatsThisMode
+    Enter: QEvent.Type
     """
     """
 
-    FileOpen: ... = PySide.QtCore.QEvent.Type.FileOpen
+    EnterWhatsThisMode: QEvent.Type
     """
     """
 
-    FocusIn: ... = PySide.QtCore.QEvent.Type.FocusIn
+    FileOpen: QEvent.Type
     """
     """
 
-    FocusOut: ... = PySide.QtCore.QEvent.Type.FocusOut
+    FocusIn: QEvent.Type
     """
     """
 
-    FontChange: ... = PySide.QtCore.QEvent.Type.FontChange
+    FocusOut: QEvent.Type
     """
     """
 
-    FutureCallOut: ... = PySide.QtCore.QEvent.Type.FutureCallOut
+    FontChange: QEvent.Type
     """
     """
 
-    Gesture: ... = PySide.QtCore.QEvent.Type.Gesture
+    FutureCallOut: QEvent.Type
     """
     """
 
-    GestureOverride: ... = PySide.QtCore.QEvent.Type.GestureOverride
+    Gesture: QEvent.Type
     """
     """
 
-    GrabKeyboard: ... = PySide.QtCore.QEvent.Type.GrabKeyboard
+    GestureOverride: QEvent.Type
     """
     """
 
-    GrabMouse: ... = PySide.QtCore.QEvent.Type.GrabMouse
+    GrabKeyboard: QEvent.Type
+    """
+    """
+
+    GrabMouse: QEvent.Type
     """
     """
 
     GraphicsSceneContextMenu: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneCont...
+    QEvent.Type.GraphicsSceneCont...
     """
 
     GraphicsSceneDragEnter: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneDragEn...
+    QEvent.Type.GraphicsSceneDragEn...
     """
 
     GraphicsSceneDragLeave: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneDragLe...
+    QEvent.Type.GraphicsSceneDragLe...
     """
 
     GraphicsSceneDragMove: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneDragMov...
+    QEvent.Type.GraphicsSceneDragMov...
     """
 
-    GraphicsSceneDrop: ... = PySide.QtCore.QEvent.Type.GraphicsSceneDrop
+    GraphicsSceneDrop: QEvent.Type
     """
     """
 
-    GraphicsSceneHelp: ... = PySide.QtCore.QEvent.Type.GraphicsSceneHelp
+    GraphicsSceneHelp: QEvent.Type
     """
     """
 
     GraphicsSceneHoverEnter: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneHover...
+    QEvent.Type.GraphicsSceneHover...
     """
 
     GraphicsSceneHoverLeave: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneHover...
+    QEvent.Type.GraphicsSceneHover...
     """
 
     GraphicsSceneHoverMove: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneHoverM...
+    QEvent.Type.GraphicsSceneHoverM...
     """
 
     GraphicsSceneMouseDoubleClick: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsScen...
+    QEvent.Type.GraphicsScen...
     """
 
     GraphicsSceneMouseMove: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneMouseM...
+    QEvent.Type.GraphicsSceneMouseM...
     """
 
     GraphicsSceneMousePress: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneMouse...
+    QEvent.Type.GraphicsSceneMouse...
     """
 
     GraphicsSceneMouseRelease: ...
     """
-    PySide.QtCore.QEvent.Type.GraphicsSceneMou...
+    QEvent.Type.GraphicsSceneMou...
     """
 
-    GraphicsSceneMove: ... = PySide.QtCore.QEvent.Type.GraphicsSceneMove
-    """
-    """
-
-    GraphicsSceneResize: ... = PySide.QtCore.QEvent.Type.GraphicsSceneResize
+    GraphicsSceneMove: ... = QEvent.Type
     """
     """
 
-    GraphicsSceneWheel: ... = PySide.QtCore.QEvent.Type.GraphicsSceneWheel
+    GraphicsSceneResize: ... = QEvent.Type
     """
     """
 
-    HelpRequest: ... = PySide.QtCore.QEvent.Type.HelpRequest
+    GraphicsSceneWheel: ... = QEvent.Type
     """
     """
 
-    Hide: ... = PySide.QtCore.QEvent.Type.Hide
+    HelpRequest: ... = QEvent.Type
     """
     """
 
-    HideToParent: ... = PySide.QtCore.QEvent.Type.HideToParent
+    Hide: ... = QEvent.Type
     """
     """
 
-    HoverEnter: ... = PySide.QtCore.QEvent.Type.HoverEnter
+    HideToParent: ... = QEvent.Type
     """
     """
 
-    HoverLeave: ... = PySide.QtCore.QEvent.Type.HoverLeave
+    HoverEnter: ... = QEvent.Type
     """
     """
 
-    HoverMove: ... = PySide.QtCore.QEvent.Type.HoverMove
+    HoverLeave: ... = QEvent.Type
     """
     """
 
-    IconDrag: ... = PySide.QtCore.QEvent.Type.IconDrag
+    HoverMove: ... = QEvent.Type
     """
     """
 
-    IconTextChange: ... = PySide.QtCore.QEvent.Type.IconTextChange
+    IconDrag: ... = QEvent.Type
     """
     """
 
-    InputMethod: ... = PySide.QtCore.QEvent.Type.InputMethod
+    IconStrChange: ... = QEvent.Type
     """
     """
 
-    KeyPress: ... = PySide.QtCore.QEvent.Type.KeyPress
+    InputMethod: ... = QEvent.Type
     """
     """
 
-    KeyRelease: ... = PySide.QtCore.QEvent.Type.KeyRelease
+    KeyPress: QEvent.Type
     """
     """
 
-    KeyboardLayoutChange: ... = PySide.QtCore.QEvent.Type.KeyboardLayoutChange
+    KeyRelease: QEvent.Type
     """
     """
 
-    LanguageChange: ... = PySide.QtCore.QEvent.Type.LanguageChange
+    KeyboardLayoutChange: QEvent.Type
     """
     """
 
-    LayoutDirectionChange: ...
-    """
-    PySide.QtCore.QEvent.Type.LayoutDirectionChang...
-    """
-
-    LayoutRequest: ... = PySide.QtCore.QEvent.Type.LayoutRequest
+    LanguageChange: QEvent.Type
     """
     """
 
-    Leave: ... = PySide.QtCore.QEvent.Type.Leave
+    LayoutDirectionChange: QEvent.Type
+
+    LayoutRequest: QEvent.Type
     """
     """
 
-    LeaveWhatsThisMode: ... = PySide.QtCore.QEvent.Type.LeaveWhatsThisMode
+    Leave: QEvent.Type
     """
     """
 
-    LocaleChange: ... = PySide.QtCore.QEvent.Type.LocaleChange
+    LeaveWhatsThisMode: QEvent.Type
     """
     """
 
-    MacGLClearDrawable: ... = PySide.QtCore.QEvent.Type.MacGLClearDrawable
+    LocaleChange: QEvent.Type
     """
     """
 
-    MacGLWindowChange: ... = PySide.QtCore.QEvent.Type.MacGLWindowChange
+    MacGLClearDrawable: QEvent.Type
     """
     """
 
-    MacSizeChange: ... = PySide.QtCore.QEvent.Type.MacSizeChange
+    MacGLWindowChange: QEvent.Type
     """
     """
 
-    MaxUser: ... = PySide.QtCore.QEvent.Type.MaxUser
+    MacSizeChange: QEvent.Type
     """
     """
 
-    MenubarUpdated: ... = PySide.QtCore.QEvent.Type.MenubarUpdated
+    MaxUser: QEvent.Type
     """
     """
 
-    MetaCall: ... = PySide.QtCore.QEvent.Type.MetaCall
+    MenubarUpdated: QEvent.Type
     """
     """
 
-    ModifiedChange: ... = PySide.QtCore.QEvent.Type.ModifiedChange
+    MetaCall: QEvent.Type
     """
     """
 
-    MouseButtonDblClick: ... = PySide.QtCore.QEvent.Type.MouseButtonDblClick
+    ModifiedChange: QEvent.Type
     """
     """
 
-    MouseButtonPress: ... = PySide.QtCore.QEvent.Type.MouseButtonPress
+    MouseButtonDblClick: QEvent.Type
     """
     """
 
-    MouseButtonRelease: ... = PySide.QtCore.QEvent.Type.MouseButtonRelease
+    MouseButtonPress: QEvent.Type
     """
     """
 
-    MouseMove: ... = PySide.QtCore.QEvent.Type.MouseMove
+    MouseButtonRelease: QEvent.Type
     """
     """
 
-    MouseTrackingChange: ... = PySide.QtCore.QEvent.Type.MouseTrackingChange
+    MouseMove: QEvent.Type
     """
     """
 
-    Move: ... = PySide.QtCore.QEvent.Type.Move
+    MouseTrackingChange: QEvent.Type
     """
     """
 
-    NativeGesture: ... = PySide.QtCore.QEvent.Type.NativeGesture
+    Move: QEvent.Type
     """
     """
 
-    NetworkReplyUpdated: ... = PySide.QtCore.QEvent.Type.NetworkReplyUpdated
+    NativeGesture: QEvent.Type
+    """
+    """
+
+    NetworkReplyUpdated: QEvent.Type
     """
     """
 
     NonClientAreaMouseButtonDblClick: ...
     """
-    PySide.QtCore.QEvent.Type.NonClient...
+    QEvent.Type.NonClient...
     """
 
     NonClientAreaMouseButtonPress: ...
     """
-    PySide.QtCore.QEvent.Type.NonClientAre...
+    QEvent.Type.NonClientAre...
     """
 
     NonClientAreaMouseButtonRelease: ...
     """
-    PySide.QtCore.QEvent.Type.NonClientA...
+    QEvent.Type.NonClientA...
     """
 
     NonClientAreaMouseMove: ...
     """
-    PySide.QtCore.QEvent.Type.NonClientAreaMouseM...
+    QEvent.Type.NonClientAreaMouseM...
     """
 
-    # None: ... = PySide.QtCore.QEvent.Type.None
-    """
-    """
-
-    OkRequest: ... = PySide.QtCore.QEvent.Type.OkRequest
+    # None : QEvent.Type
     """
     """
 
-    Paint: ... = PySide.QtCore.QEvent.Type.Paint
+    OkRequest: QEvent.Type
     """
     """
 
-    PaletteChange: ... = PySide.QtCore.QEvent.Type.PaletteChange
+    Paint: QEvent.Type
     """
     """
 
-    ParentAboutToChange: ... = PySide.QtCore.QEvent.Type.ParentAboutToChange
+    PaletteChange: QEvent.Type
     """
     """
 
-    ParentChange: ... = PySide.QtCore.QEvent.Type.ParentChange
+    ParentAboutToChange: QEvent.Type
     """
     """
 
-    PlatformPanel: ... = PySide.QtCore.QEvent.Type.PlatformPanel
+    ParentChange: QEvent.Type
     """
     """
 
-    Polish: ... = PySide.QtCore.QEvent.Type.Polish
+    PlatformPanel: QEvent.Type
     """
     """
 
-    PolishRequest: ... = PySide.QtCore.QEvent.Type.PolishRequest
+    Polish: QEvent.Type
     """
     """
 
-    QueryWhatsThis: ... = PySide.QtCore.QEvent.Type.QueryWhatsThis
+    PolishRequest: QEvent.Type
     """
     """
 
-    Quit: ... = PySide.QtCore.QEvent.Type.Quit
+    QueryWhatsThis: QEvent.Type
+    """
+    """
+
+    Quit: QEvent.Type
     """
     """
 
     RequestSoftwareInputPanel: ...
     """
-    PySide.QtCore.QEvent.Type.RequestSoftwareI...
+    QEvent.Type.RequestSoftwareI...
     """
 
-    Resize: ... = PySide.QtCore.QEvent.Type.Resize
-    """
-    """
-
-    Shortcut: ... = PySide.QtCore.QEvent.Type.Shortcut
+    Resize: QEvent.Type
     """
     """
 
-    ShortcutOverride: ... = PySide.QtCore.QEvent.Type.ShortcutOverride
+    Shortcut: QEvent.Type
     """
     """
 
-    Show: ... = PySide.QtCore.QEvent.Type.Show
+    ShortcutOverride: QEvent.Type
     """
     """
 
-    ShowToParent: ... = PySide.QtCore.QEvent.Type.ShowToParent
+    Show: QEvent.Type
     """
     """
 
-    ShowWindowRequest: ... = PySide.QtCore.QEvent.Type.ShowWindowRequest
+    ShowToParent: QEvent.Type
     """
     """
 
-    SockAct: ... = PySide.QtCore.QEvent.Type.SockAct
+    ShowWindowRequest: QEvent.Type
     """
     """
 
-    Speech: ... = PySide.QtCore.QEvent.Type.Speech
+    SockAct: QEvent.Type
     """
     """
 
-    StateMachineSignal: ... = PySide.QtCore.QEvent.Type.StateMachineSignal
+    Speech: QEvent.Type
     """
     """
 
-    StateMachineWrapped: ... = PySide.QtCore.QEvent.Type.StateMachineWrapped
+    StateMachineSignal: QEvent.Type
     """
     """
 
-    StatusTip: ... = PySide.QtCore.QEvent.Type.StatusTip
+    StateMachineWrapped: QEvent.Type
     """
     """
 
-    Style: ... = PySide.QtCore.QEvent.Type.Style
+    StatusTip: QEvent.Type
     """
     """
 
-    StyleChange: ... = PySide.QtCore.QEvent.Type.StyleChange
+    Style: QEvent.Type
     """
     """
 
-    TabletEnterProximity: ... = PySide.QtCore.QEvent.Type.TabletEnterProximity
+    StyleChange: QEvent.Type
     """
     """
 
-    TabletLeaveProximity: ... = PySide.QtCore.QEvent.Type.TabletLeaveProximity
+    TabletEnterProximity: QEvent.Type
     """
     """
 
-    TabletMove: ... = PySide.QtCore.QEvent.Type.TabletMove
+    TabletLeaveProximity: QEvent.Type
     """
     """
 
-    TabletPress: ... = PySide.QtCore.QEvent.Type.TabletPress
+    TabletMove: QEvent.Type
     """
     """
 
-    TabletRelease: ... = PySide.QtCore.QEvent.Type.TabletRelease
+    TabletPress: QEvent.Type
     """
     """
 
-    ThreadChange: ... = PySide.QtCore.QEvent.Type.ThreadChange
+    TabletRelease: QEvent.Type
     """
     """
 
-    Timer: ... = PySide.QtCore.QEvent.Type.Timer
+    ThreadChange: QEvent.Type
     """
     """
 
-    ToolBarChange: ... = PySide.QtCore.QEvent.Type.ToolBarChange
+    Timer: QEvent.Type
     """
     """
 
-    ToolTip: ... = PySide.QtCore.QEvent.Type.ToolTip
+    ToolBarChange: QEvent.Type
     """
     """
 
-    ToolTipChange: ... = PySide.QtCore.QEvent.Type.ToolTipChange
+    ToolTip: QEvent.Type
     """
     """
 
-    TouchBegin: ... = PySide.QtCore.QEvent.Type.TouchBegin
+    ToolTipChange: QEvent.Type
     """
     """
 
-    TouchEnd: ... = PySide.QtCore.QEvent.Type.TouchEnd
+    TouchBegin: QEvent.Type
     """
     """
 
-    TouchUpdate: ... = PySide.QtCore.QEvent.Type.TouchUpdate
+    TouchEnd: QEvent.Type
     """
     """
 
-    Type: ...
-    """
-    <type 'PySide.QtCore.QEvent.Type'>
-    """
-
-    UngrabKeyboard: ... = PySide.QtCore.QEvent.Type.UngrabKeyboard
+    TouchUpdate: QEvent.Type
     """
     """
 
-    UngrabMouse: ... = PySide.QtCore.QEvent.Type.UngrabMouse
+    class Type:
+        """
+        <type 'QEvent.Type'>
+        """
+
+    UngrabKeyboard: QEvent.Type
     """
     """
 
-    UpdateLater: ... = PySide.QtCore.QEvent.Type.UpdateLater
+    UngrabMouse: QEvent.Type
     """
     """
 
-    UpdateRequest: ... = PySide.QtCore.QEvent.Type.UpdateRequest
+    UpdateLater: QEvent.Type
     """
     """
 
-    UpdateSoftKeys: ... = PySide.QtCore.QEvent.Type.UpdateSoftKeys
+    UpdateRequest: QEvent.Type
     """
     """
 
-    User: ... = PySide.QtCore.QEvent.Type.User
+    UpdateSoftKeys: QEvent.Type
     """
     """
 
-    WhatsThis: ... = PySide.QtCore.QEvent.Type.WhatsThis
+    User: QEvent.Type
     """
     """
 
-    WhatsThisClicked: ... = PySide.QtCore.QEvent.Type.WhatsThisClicked
+    WhatsThis: QEvent.Type
     """
     """
 
-    Wheel: ... = PySide.QtCore.QEvent.Type.Wheel
+    WhatsThisClicked: QEvent.Type
     """
     """
 
-    WinEventAct: ... = PySide.QtCore.QEvent.Type.WinEventAct
+    Wheel: QEvent.Type
     """
     """
 
-    WinIdChange: ... = PySide.QtCore.QEvent.Type.WinIdChange
+    WinEventAct: QEvent.Type
     """
     """
 
-    WindowActivate: ... = PySide.QtCore.QEvent.Type.WindowActivate
+    WinIdChange: QEvent.Type
     """
     """
 
-    WindowBlocked: ... = PySide.QtCore.QEvent.Type.WindowBlocked
+    WindowActivate: QEvent.Type
     """
     """
 
-    WindowDeactivate: ... = PySide.QtCore.QEvent.Type.WindowDeactivate
+    WindowBlocked: QEvent.Type
     """
     """
 
-    WindowIconChange: ... = PySide.QtCore.QEvent.Type.WindowIconChange
+    WindowDeactivate: QEvent.Type
     """
     """
 
-    WindowStateChange: ... = PySide.QtCore.QEvent.Type.WindowStateChange
+    WindowIconChange: QEvent.Type
     """
     """
 
-    WindowTitleChange: ... = PySide.QtCore.QEvent.Type.WindowTitleChange
+    WindowStateChange: QEvent.Type
     """
     """
 
-    WindowUnblocked: ... = PySide.QtCore.QEvent.Type.WindowUnblocked
+    WindowTitleChange: QEvent.Type
     """
     """
 
-    ZOrderChange: ... = PySide.QtCore.QEvent.Type.ZOrderChange
+    WindowUnblocked: QEvent.Type
     """
     """
 
-    ZeroTimerEvent: ... = PySide.QtCore.QEvent.Type.ZeroTimerEvent
+    ZOrderChange: QEvent.Type
+    """
+    """
+
+    ZeroTimerEvent: QEvent.Type
     """
     """
 
@@ -3820,10 +3815,8 @@ class QEvent(Shiboken.Object):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
     @staticmethod
-    def registerEventType(*args, **kwargs):
-        """ """
-        ...
-    def __init__(self, *args, **kwargs):
+    def registerEventType(*args: Any, **kwargs: Any) -> QEvent.Type: ...
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -3848,43 +3841,41 @@ class QEvent(Shiboken.Object):
     def spontaneous(self, *args, **kwargs):
         """ """
         ...
-    def type(self, *args, **kwargs):
-        """ """
-        ...
+    def type(self) -> QEvent.Type: ...
     ...
 
 class QEventLoop(QObject):
-    AllEvents: ... = PySide.QtCore.QEventLoop.ProcessEventsFlag.AllEvents
+    AllEvents: ... = QEventLoop.ProcessEventsFlag.AllEvents
     """
     """
 
     DeferredDeletion: ...
     """
-    PySide.QtCore.QEventLoop.ProcessEventsFlag.Deferred...
+    QEventLoop.ProcessEventsFlag.Deferred...
     """
 
-    DialogExec: ... = PySide.QtCore.QEventLoop.ProcessEventsFlag.DialogExec
+    DialogExec: ... = QEventLoop.ProcessEventsFlag.DialogExec
     """
     """
 
     EventLoopExec: ...
     """
-    PySide.QtCore.QEventLoop.ProcessEventsFlag.EventLoopEx...
+    QEventLoop.ProcessEventsFlag.EventLoopEx...
     """
 
     ExcludeSocketNotifiers: ...
     """
-    PySide.QtCore.QEventLoop.ProcessEventsFlag.Ex...
+    QEventLoop.ProcessEventsFlag.Ex...
     """
 
     ExcludeUserInputEvents: ...
     """
-    PySide.QtCore.QEventLoop.ProcessEventsFlag.Ex...
+    QEventLoop.ProcessEventsFlag.Ex...
     """
 
     ProcessEventsFlag: ...
     """
-    <type 'PySide.QtCore.QEventLoop.ProcessEventsFlag'...
+    <type 'QEventLoop.ProcessEventsFlag'...
     """
 
     ProcessEventsFlags: ...
@@ -3894,12 +3885,12 @@ class QEventLoop(QObject):
 
     WaitForMoreEvents: ...
     """
-    PySide.QtCore.QEventLoop.ProcessEventsFlag.WaitFor...
+    QEventLoop.ProcessEventsFlag.WaitFor...
     """
 
     X11ExcludeTimers: ...
     """
-    PySide.QtCore.QEventLoop.ProcessEventsFlag.X11Exclu...
+    QEventLoop.ProcessEventsFlag.X11Exclu...
     """
 
     __new__: ...
@@ -3909,7 +3900,7 @@ class QEventLoop(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -3944,7 +3935,7 @@ class QEventTransition(QAbstractTransition):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -3975,50 +3966,50 @@ class QEventTransition(QAbstractTransition):
     ...
 
 class QFile(QIODevice):
-    AbortError: ... = PySide.QtCore.QFile.FileError.AbortError
+    AbortError: ... = QFile.FileError.AbortError
     """
     """
 
-    AutoCloseHandle: ... = PySide.QtCore.QFile.FileHandleFlag.AutoCloseHandle
+    AutoCloseHandle: ... = QFile.FileHandleFlag.AutoCloseHandle
     """
     """
 
-    CopyError: ... = PySide.QtCore.QFile.FileError.CopyError
+    CopyError: ... = QFile.FileError.CopyError
     """
     """
 
-    DontCloseHandle: ... = PySide.QtCore.QFile.FileHandleFlag.DontCloseHandle
+    DontCloseHandle: ... = QFile.FileHandleFlag.DontCloseHandle
     """
     """
 
-    ExeGroup: ... = PySide.QtCore.QFile.Permission.ExeGroup
+    ExeGroup: ... = QFile.Permission.ExeGroup
     """
     """
 
-    ExeOther: ... = PySide.QtCore.QFile.Permission.ExeOther
+    ExeOther: ... = QFile.Permission.ExeOther
     """
     """
 
-    ExeOwner: ... = PySide.QtCore.QFile.Permission.ExeOwner
+    ExeOwner: ... = QFile.Permission.ExeOwner
     """
     """
 
-    ExeUser: ... = PySide.QtCore.QFile.Permission.ExeUser
+    ExeUser: ... = QFile.Permission.ExeUser
     """
     """
 
-    FatalError: ... = PySide.QtCore.QFile.FileError.FatalError
+    FatalError: ... = QFile.FileError.FatalError
     """
     """
 
     FileError: ...
     """
-    <type 'PySide.QtCore.QFile.FileError'>
+    <type 'QFile.FileError'>
     """
 
     FileHandleFlag: ...
     """
-    <type 'PySide.QtCore.QFile.FileHandleFlag'>
+    <type 'QFile.FileHandleFlag'>
     """
 
     FileHandleFlags: ...
@@ -4028,24 +4019,24 @@ class QFile(QIODevice):
 
     MemoryMapFlags: ...
     """
-    <type 'PySide.QtCore.QFile.MemoryMapFlags'>
+    <type 'QFile.MemoryMapFlags'>
     """
 
-    NoError: ... = PySide.QtCore.QFile.FileError.NoError
-    """
-    """
-
-    NoOptions: ... = PySide.QtCore.QFile.MemoryMapFlags.NoOptions
+    NoError: ... = QFile.FileError.NoError
     """
     """
 
-    OpenError: ... = PySide.QtCore.QFile.FileError.OpenError
+    NoOptions: ... = QFile.MemoryMapFlags.NoOptions
+    """
+    """
+
+    OpenError: ... = QFile.FileError.OpenError
     """
     """
 
     Permission: ...
     """
-    <type 'PySide.QtCore.QFile.Permission'>
+    <type 'QFile.Permission'>
     """
 
     Permissions: ...
@@ -4053,75 +4044,75 @@ class QFile(QIODevice):
     <type 'Permissions'>
     """
 
-    PermissionsError: ... = PySide.QtCore.QFile.FileError.PermissionsError
+    PermissionsError: ... = QFile.FileError.PermissionsError
     """
     """
 
-    PositionError: ... = PySide.QtCore.QFile.FileError.PositionError
+    PositionError: ... = QFile.FileError.PositionError
     """
     """
 
-    ReadError: ... = PySide.QtCore.QFile.FileError.ReadError
+    ReadError: ... = QFile.FileError.ReadError
     """
     """
 
-    ReadGroup: ... = PySide.QtCore.QFile.Permission.ReadGroup
+    ReadGroup: ... = QFile.Permission.ReadGroup
     """
     """
 
-    ReadOther: ... = PySide.QtCore.QFile.Permission.ReadOther
+    ReadOther: ... = QFile.Permission.ReadOther
     """
     """
 
-    ReadOwner: ... = PySide.QtCore.QFile.Permission.ReadOwner
+    ReadOwner: ... = QFile.Permission.ReadOwner
     """
     """
 
-    ReadUser: ... = PySide.QtCore.QFile.Permission.ReadUser
+    ReadUser: ... = QFile.Permission.ReadUser
     """
     """
 
-    RemoveError: ... = PySide.QtCore.QFile.FileError.RemoveError
+    RemoveError: ... = QFile.FileError.RemoveError
     """
     """
 
-    RenameError: ... = PySide.QtCore.QFile.FileError.RenameError
+    RenameError: ... = QFile.FileError.RenameError
     """
     """
 
-    ResizeError: ... = PySide.QtCore.QFile.FileError.ResizeError
+    ResizeError: ... = QFile.FileError.ResizeError
     """
     """
 
-    ResourceError: ... = PySide.QtCore.QFile.FileError.ResourceError
+    ResourceError: ... = QFile.FileError.ResourceError
     """
     """
 
-    TimeOutError: ... = PySide.QtCore.QFile.FileError.TimeOutError
+    TimeOutError: ... = QFile.FileError.TimeOutError
     """
     """
 
-    UnspecifiedError: ... = PySide.QtCore.QFile.FileError.UnspecifiedError
+    UnspecifiedError: ... = QFile.FileError.UnspecifiedError
     """
     """
 
-    WriteError: ... = PySide.QtCore.QFile.FileError.WriteError
+    WriteError: ... = QFile.FileError.WriteError
     """
     """
 
-    WriteGroup: ... = PySide.QtCore.QFile.Permission.WriteGroup
+    WriteGroup: ... = QFile.Permission.WriteGroup
     """
     """
 
-    WriteOther: ... = PySide.QtCore.QFile.Permission.WriteOther
+    WriteOther: ... = QFile.Permission.WriteOther
     """
     """
 
-    WriteOwner: ... = PySide.QtCore.QFile.Permission.WriteOwner
+    WriteOwner: ... = QFile.Permission.WriteOwner
     """
     """
 
-    WriteUser: ... = PySide.QtCore.QFile.Permission.WriteUser
+    WriteUser: ... = QFile.Permission.WriteUser
     """
     """
 
@@ -4132,7 +4123,7 @@ class QFile(QIODevice):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def copy(*args, **kwargs):
@@ -4446,7 +4437,7 @@ class QFileSystemWatcher(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -4481,7 +4472,7 @@ class QFinalState(QAbstractState):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -4536,18 +4527,18 @@ class QGenericReturnArgument(QGenericArgument):
     ...
 
 class QHistoryState(QAbstractState):
-    DeepHistory: ... = PySide.QtCore.QHistoryState.HistoryType.DeepHistory
+    DeepHistory: ... = QHistoryState.HistoryType.DeepHistory
     """
     """
 
     HistoryType: ...
     """
-    <type 'PySide.QtCore.QHistoryState.HistoryType'>
+    <type 'QHistoryState.HistoryType'>
     """
 
     ShallowHistory: ...
     """
-    PySide.QtCore.QHistoryState.HistoryType.ShallowHistor...
+    QHistoryState.HistoryType.ShallowHistor...
     """
 
     __new__: ...
@@ -4557,7 +4548,7 @@ class QHistoryState(QAbstractState):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -4588,11 +4579,11 @@ class QHistoryState(QAbstractState):
     ...
 
 class QIODevice(QObject):
-    Append: ... = PySide.QtCore.QIODevice.OpenModeFlag.Append
+    Append: ... = QIODevice.OpenModeFlag.Append
     """
     """
 
-    NotOpen: ... = PySide.QtCore.QIODevice.OpenModeFlag.NotOpen
+    NotOpen: ... = QIODevice.OpenModeFlag.NotOpen
     """
     """
 
@@ -4603,30 +4594,30 @@ class QIODevice(QObject):
 
     OpenModeFlag: ...
     """
-    <type 'PySide.QtCore.QIODevice.OpenModeFlag'>
+    <type 'QIODevice.OpenModeFlag'>
     """
 
-    ReadOnly: ... = PySide.QtCore.QIODevice.OpenModeFlag.ReadOnly
-    """
-    """
-
-    ReadWrite: ... = PySide.QtCore.QIODevice.OpenModeFlag.ReadWrite
+    ReadOnly: ... = QIODevice.OpenModeFlag.ReadOnly
     """
     """
 
-    Text: ... = PySide.QtCore.QIODevice.OpenModeFlag.Text
+    ReadWrite: ... = QIODevice.OpenModeFlag.ReadWrite
     """
     """
 
-    Truncate: ... = PySide.QtCore.QIODevice.OpenModeFlag.Truncate
+    Str: ... = QIODevice.OpenModeFlag.Str
     """
     """
 
-    Unbuffered: ... = PySide.QtCore.QIODevice.OpenModeFlag.Unbuffered
+    Truncate: ... = QIODevice.OpenModeFlag.Truncate
     """
     """
 
-    WriteOnly: ... = PySide.QtCore.QIODevice.OpenModeFlag.WriteOnly
+    Unbuffered: ... = QIODevice.OpenModeFlag.Unbuffered
+    """
+    """
+
+    WriteOnly: ... = QIODevice.OpenModeFlag.WriteOnly
     """
     """
 
@@ -4657,7 +4648,7 @@ class QIODevice(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -4694,7 +4685,7 @@ class QIODevice(QObject):
     def isSequential(self, *args, **kwargs):
         """ """
         ...
-    def isTextModeEnabled(self, *args, **kwargs):
+    def isStrModeEnabled(self, *args, **kwargs):
         """ """
         ...
     def isWritable(self, *args, **kwargs):
@@ -4742,7 +4733,7 @@ class QIODevice(QObject):
     def setOpenMode(self, *args, **kwargs):
         """ """
         ...
-    def setTextModeEnabled(self, *args, **kwargs):
+    def setStrModeEnabled(self, *args, **kwargs):
         """ """
         ...
     def size(self, *args, **kwargs):
@@ -5002,7 +4993,7 @@ class QItemSelection(Shiboken.Object):
         ...
     ...
 
-class QItemSelectionModel(PySide.QtCore.QObject):
+class QItemSelectionModel(QObject):
     Clear: ... = PySide.QtGui.QItemSelectionModel.SelectionFlag.Clear
     """
     """
@@ -5087,7 +5078,7 @@ class QItemSelectionModel(PySide.QtCore.QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -5254,60 +5245,60 @@ class QItemSelectionRange(Shiboken.Object):
     ...
 
 class QLibraryInfo(Shiboken.Object):
-    BinariesPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.BinariesPath
+    BinariesPath: ... = QLibraryInfo.LibraryLocation.BinariesPath
     """
     """
 
-    DataPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.DataPath
+    DataPath: ... = QLibraryInfo.LibraryLocation.DataPath
     """
     """
 
-    DemosPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.DemosPath
+    DemosPath: ... = QLibraryInfo.LibraryLocation.DemosPath
     """
     """
 
     DocumentationPath: ...
     """
-    PySide.QtCore.QLibraryInfo.LibraryLocation.Documen...
+    QLibraryInfo.LibraryLocation.Documen...
     """
 
-    ExamplesPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.ExamplesPath
-    """
-    """
-
-    HeadersPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.HeadersPath
+    ExamplesPath: ... = QLibraryInfo.LibraryLocation.ExamplesPath
     """
     """
 
-    ImportsPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.ImportsPath
+    HeadersPath: ... = QLibraryInfo.LibraryLocation.HeadersPath
+    """
+    """
+
+    ImportsPath: ... = QLibraryInfo.LibraryLocation.ImportsPath
     """
     """
 
     LibrariesPath: ...
     """
-    PySide.QtCore.QLibraryInfo.LibraryLocation.LibrariesPa...
+    QLibraryInfo.LibraryLocation.LibrariesPa...
     """
 
     LibraryLocation: ...
     """
-    <type 'PySide.QtCore.QLibraryInfo.LibraryLocation'>
+    <type 'QLibraryInfo.LibraryLocation'>
     """
 
-    PluginsPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.PluginsPath
-    """
-    """
-
-    PrefixPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.PrefixPath
+    PluginsPath: ... = QLibraryInfo.LibraryLocation.PluginsPath
     """
     """
 
-    SettingsPath: ... = PySide.QtCore.QLibraryInfo.LibraryLocation.SettingsPath
+    PrefixPath: ... = QLibraryInfo.LibraryLocation.PrefixPath
+    """
+    """
+
+    SettingsPath: ... = QLibraryInfo.LibraryLocation.SettingsPath
     """
     """
 
     TranslationsPath: ...
     """
-    PySide.QtCore.QLibraryInfo.LibraryLocation.Translat...
+    QLibraryInfo.LibraryLocation.Translat...
     """
     @staticmethod
     def buildDate(*args, **kwargs):
@@ -5445,21 +5436,21 @@ class QLine(Shiboken.Object):
 class QLineF(Shiboken.Object):
     BoundedIntersection: ...
     """
-    PySide.QtCore.QLineF.IntersectType.BoundedInters...
+    QLineF.IntersectType.BoundedInters...
     """
 
     IntersectType: ...
     """
-    <type 'PySide.QtCore.QLineF.IntersectType'>
+    <type 'QLineF.IntersectType'>
     """
 
-    NoIntersection: ... = PySide.QtCore.QLineF.IntersectType.NoIntersection
+    NoIntersection: ... = QLineF.IntersectType.NoIntersection
     """
     """
 
     UnboundedIntersection: ...
     """
-    PySide.QtCore.QLineF.IntersectType.UnboundedIn...
+    QLineF.IntersectType.UnboundedIn...
     """
 
     __new__: ...
@@ -5602,1384 +5593,1384 @@ class QLineF(Shiboken.Object):
     ...
 
 class QLocale(Shiboken.Object):
-    Abkhazian: ... = PySide.QtCore.QLocale.Language.Abkhazian
+    Abkhazian: ... = QLocale.Language.Abkhazian
     """
     """
 
-    Afan: ... = PySide.QtCore.QLocale.Language.Afan
+    Afan: ... = QLocale.Language.Afan
     """
     """
 
-    Afar: ... = PySide.QtCore.QLocale.Language.Afar
+    Afar: ... = QLocale.Language.Afar
     """
     """
 
-    Afghanistan: ... = PySide.QtCore.QLocale.Country.Afghanistan
+    Afghanistan: ... = QLocale.Country.Afghanistan
     """
     """
 
-    Afrikaans: ... = PySide.QtCore.QLocale.Language.Afrikaans
+    Afrikaans: ... = QLocale.Language.Afrikaans
     """
     """
 
-    Aghem: ... = PySide.QtCore.QLocale.Language.Aghem
+    Aghem: ... = QLocale.Language.Aghem
     """
     """
 
-    Akan: ... = PySide.QtCore.QLocale.Language.Akan
+    Akan: ... = QLocale.Language.Akan
     """
     """
 
-    Albania: ... = PySide.QtCore.QLocale.Country.Albania
+    Albania: ... = QLocale.Country.Albania
     """
     """
 
-    Albanian: ... = PySide.QtCore.QLocale.Language.Albanian
+    Albanian: ... = QLocale.Language.Albanian
     """
     """
 
-    Algeria: ... = PySide.QtCore.QLocale.Country.Algeria
+    Algeria: ... = QLocale.Country.Algeria
     """
     """
 
     AlternateQuotation: ...
     """
-    PySide.QtCore.QLocale.QuotationStyle.AlternateQuo...
+    QLocale.QuotationStyle.AlternateQuo...
     """
 
-    AmericanSamoa: ... = PySide.QtCore.QLocale.Country.AmericanSamoa
-    """
-    """
-
-    Amharic: ... = PySide.QtCore.QLocale.Language.Amharic
+    AmericanSamoa: ... = QLocale.Country.AmericanSamoa
     """
     """
 
-    Andorra: ... = PySide.QtCore.QLocale.Country.Andorra
+    Amharic: ... = QLocale.Language.Amharic
     """
     """
 
-    Angola: ... = PySide.QtCore.QLocale.Country.Angola
+    Andorra: ... = QLocale.Country.Andorra
     """
     """
 
-    Anguilla: ... = PySide.QtCore.QLocale.Country.Anguilla
+    Angola: ... = QLocale.Country.Angola
     """
     """
 
-    Antarctica: ... = PySide.QtCore.QLocale.Country.Antarctica
+    Anguilla: ... = QLocale.Country.Anguilla
     """
     """
 
-    AntiguaAndBarbuda: ... = PySide.QtCore.QLocale.Country.AntiguaAndBarbuda
+    Antarctica: ... = QLocale.Country.Antarctica
     """
     """
 
-    AnyCountry: ... = PySide.QtCore.QLocale.Country.AnyCountry
+    AntiguaAndBarbuda: ... = QLocale.Country.AntiguaAndBarbuda
     """
     """
 
-    AnyLanguage: ... = PySide.QtCore.QLocale.Language.AnyLanguage
+    AnyCountry: ... = QLocale.Country.AnyCountry
     """
     """
 
-    AnyScript: ... = PySide.QtCore.QLocale.Script.AnyScript
+    AnyLanguage: ... = QLocale.Language.AnyLanguage
     """
     """
 
-    Arabic: ... = PySide.QtCore.QLocale.Language.Arabic
+    AnyScript: ... = QLocale.Script.AnyScript
     """
     """
 
-    ArabicScript: ... = PySide.QtCore.QLocale.Script.ArabicScript
+    Arabic: ... = QLocale.Language.Arabic
     """
     """
 
-    Argentina: ... = PySide.QtCore.QLocale.Country.Argentina
+    ArabicScript: ... = QLocale.Script.ArabicScript
     """
     """
 
-    Armenia: ... = PySide.QtCore.QLocale.Country.Armenia
+    Argentina: ... = QLocale.Country.Argentina
     """
     """
 
-    Armenian: ... = PySide.QtCore.QLocale.Language.Armenian
+    Armenia: ... = QLocale.Country.Armenia
     """
     """
 
-    Aruba: ... = PySide.QtCore.QLocale.Country.Aruba
+    Armenian: ... = QLocale.Language.Armenian
     """
     """
 
-    Assamese: ... = PySide.QtCore.QLocale.Language.Assamese
+    Aruba: ... = QLocale.Country.Aruba
     """
     """
 
-    Asu: ... = PySide.QtCore.QLocale.Language.Asu
+    Assamese: ... = QLocale.Language.Assamese
     """
     """
 
-    Atsam: ... = PySide.QtCore.QLocale.Language.Atsam
+    Asu: ... = QLocale.Language.Asu
     """
     """
 
-    Australia: ... = PySide.QtCore.QLocale.Country.Australia
+    Atsam: ... = QLocale.Language.Atsam
     """
     """
 
-    Austria: ... = PySide.QtCore.QLocale.Country.Austria
+    Australia: ... = QLocale.Country.Australia
     """
     """
 
-    Aymara: ... = PySide.QtCore.QLocale.Language.Aymara
+    Austria: ... = QLocale.Country.Austria
     """
     """
 
-    Azerbaijan: ... = PySide.QtCore.QLocale.Country.Azerbaijan
+    Aymara: ... = QLocale.Language.Aymara
     """
     """
 
-    Azerbaijani: ... = PySide.QtCore.QLocale.Language.Azerbaijani
+    Azerbaijan: ... = QLocale.Country.Azerbaijan
     """
     """
 
-    Bafia: ... = PySide.QtCore.QLocale.Language.Bafia
+    Azerbaijani: ... = QLocale.Language.Azerbaijani
     """
     """
 
-    Bahamas: ... = PySide.QtCore.QLocale.Country.Bahamas
+    Bafia: ... = QLocale.Language.Bafia
     """
     """
 
-    Bahrain: ... = PySide.QtCore.QLocale.Country.Bahrain
+    Bahamas: ... = QLocale.Country.Bahamas
     """
     """
 
-    Bambara: ... = PySide.QtCore.QLocale.Language.Bambara
+    Bahrain: ... = QLocale.Country.Bahrain
     """
     """
 
-    Bangladesh: ... = PySide.QtCore.QLocale.Country.Bangladesh
+    Bambara: ... = QLocale.Language.Bambara
     """
     """
 
-    Barbados: ... = PySide.QtCore.QLocale.Country.Barbados
+    Bangladesh: ... = QLocale.Country.Bangladesh
     """
     """
 
-    Basaa: ... = PySide.QtCore.QLocale.Language.Basaa
+    Barbados: ... = QLocale.Country.Barbados
     """
     """
 
-    Bashkir: ... = PySide.QtCore.QLocale.Language.Bashkir
+    Basaa: ... = QLocale.Language.Basaa
     """
     """
 
-    Basque: ... = PySide.QtCore.QLocale.Language.Basque
+    Bashkir: ... = QLocale.Language.Bashkir
     """
     """
 
-    Belarus: ... = PySide.QtCore.QLocale.Country.Belarus
+    Basque: ... = QLocale.Language.Basque
     """
     """
 
-    Belgium: ... = PySide.QtCore.QLocale.Country.Belgium
+    Belarus: ... = QLocale.Country.Belarus
     """
     """
 
-    Belize: ... = PySide.QtCore.QLocale.Country.Belize
+    Belgium: ... = QLocale.Country.Belgium
     """
     """
 
-    Bemba: ... = PySide.QtCore.QLocale.Language.Bemba
+    Belize: ... = QLocale.Country.Belize
     """
     """
 
-    Bena: ... = PySide.QtCore.QLocale.Language.Bena
+    Bemba: ... = QLocale.Language.Bemba
     """
     """
 
-    Bengali: ... = PySide.QtCore.QLocale.Language.Bengali
+    Bena: ... = QLocale.Language.Bena
     """
     """
 
-    Benin: ... = PySide.QtCore.QLocale.Country.Benin
+    Bengali: ... = QLocale.Language.Bengali
     """
     """
 
-    Bermuda: ... = PySide.QtCore.QLocale.Country.Bermuda
+    Benin: ... = QLocale.Country.Benin
     """
     """
 
-    Bhutan: ... = PySide.QtCore.QLocale.Country.Bhutan
+    Bermuda: ... = QLocale.Country.Bermuda
     """
     """
 
-    Bhutani: ... = PySide.QtCore.QLocale.Language.Bhutani
+    Bhutan: ... = QLocale.Country.Bhutan
     """
     """
 
-    Bihari: ... = PySide.QtCore.QLocale.Language.Bihari
+    Bhutani: ... = QLocale.Language.Bhutani
     """
     """
 
-    Bislama: ... = PySide.QtCore.QLocale.Language.Bislama
+    Bihari: ... = QLocale.Language.Bihari
     """
     """
 
-    Blin: ... = PySide.QtCore.QLocale.Language.Blin
+    Bislama: ... = QLocale.Language.Bislama
     """
     """
 
-    Bodo: ... = PySide.QtCore.QLocale.Language.Bodo
+    Blin: ... = QLocale.Language.Blin
     """
     """
 
-    Bolivia: ... = PySide.QtCore.QLocale.Country.Bolivia
+    Bodo: ... = QLocale.Language.Bodo
+    """
+    """
+
+    Bolivia: ... = QLocale.Country.Bolivia
     """
     """
 
     BosniaAndHerzegowina: ...
     """
-    PySide.QtCore.QLocale.Country.BosniaAndHerzegow...
+    QLocale.Country.BosniaAndHerzegow...
     """
 
-    Bosnian: ... = PySide.QtCore.QLocale.Language.Bosnian
-    """
-    """
-
-    Botswana: ... = PySide.QtCore.QLocale.Country.Botswana
+    Bosnian: ... = QLocale.Language.Bosnian
     """
     """
 
-    BouvetIsland: ... = PySide.QtCore.QLocale.Country.BouvetIsland
+    Botswana: ... = QLocale.Country.Botswana
     """
     """
 
-    Brazil: ... = PySide.QtCore.QLocale.Country.Brazil
+    BouvetIsland: ... = QLocale.Country.BouvetIsland
     """
     """
 
-    Breton: ... = PySide.QtCore.QLocale.Language.Breton
+    Brazil: ... = QLocale.Country.Brazil
+    """
+    """
+
+    Breton: ... = QLocale.Language.Breton
     """
     """
 
     BritishIndianOceanTerritory: ...
     """
-    PySide.QtCore.QLocale.Country.BritishInd...
+    QLocale.Country.BritishInd...
     """
 
     BritishVirginIslands: ...
     """
-    PySide.QtCore.QLocale.Country.BritishVirginIsla...
+    QLocale.Country.BritishVirginIsla...
     """
 
-    BruneiDarussalam: ... = PySide.QtCore.QLocale.Country.BruneiDarussalam
-    """
-    """
-
-    Bulgaria: ... = PySide.QtCore.QLocale.Country.Bulgaria
+    BruneiDarussalam: ... = QLocale.Country.BruneiDarussalam
     """
     """
 
-    Bulgarian: ... = PySide.QtCore.QLocale.Language.Bulgarian
+    Bulgaria: ... = QLocale.Country.Bulgaria
     """
     """
 
-    BurkinaFaso: ... = PySide.QtCore.QLocale.Country.BurkinaFaso
+    Bulgarian: ... = QLocale.Language.Bulgarian
     """
     """
 
-    Burmese: ... = PySide.QtCore.QLocale.Language.Burmese
+    BurkinaFaso: ... = QLocale.Country.BurkinaFaso
     """
     """
 
-    Burundi: ... = PySide.QtCore.QLocale.Country.Burundi
+    Burmese: ... = QLocale.Language.Burmese
     """
     """
 
-    Byelorussian: ... = PySide.QtCore.QLocale.Language.Byelorussian
+    Burundi: ... = QLocale.Country.Burundi
     """
     """
 
-    C: ... = PySide.QtCore.QLocale.Language.C
+    Byelorussian: ... = QLocale.Language.Byelorussian
     """
     """
 
-    Cambodia: ... = PySide.QtCore.QLocale.Country.Cambodia
+    C: ... = QLocale.Language.C
     """
     """
 
-    Cambodian: ... = PySide.QtCore.QLocale.Language.Cambodian
+    Cambodia: ... = QLocale.Country.Cambodia
     """
     """
 
-    Cameroon: ... = PySide.QtCore.QLocale.Country.Cameroon
+    Cambodian: ... = QLocale.Language.Cambodian
     """
     """
 
-    Canada: ... = PySide.QtCore.QLocale.Country.Canada
+    Cameroon: ... = QLocale.Country.Cameroon
     """
     """
 
-    CapeVerde: ... = PySide.QtCore.QLocale.Country.CapeVerde
+    Canada: ... = QLocale.Country.Canada
     """
     """
 
-    Catalan: ... = PySide.QtCore.QLocale.Language.Catalan
+    CapeVerde: ... = QLocale.Country.CapeVerde
     """
     """
 
-    CaymanIslands: ... = PySide.QtCore.QLocale.Country.CaymanIslands
+    Catalan: ... = QLocale.Language.Catalan
+    """
+    """
+
+    CaymanIslands: ... = QLocale.Country.CaymanIslands
     """
     """
 
     CentralAfricanRepublic: ...
     """
-    PySide.QtCore.QLocale.Country.CentralAfricanR...
+    QLocale.Country.CentralAfricanR...
     """
 
     CentralMoroccoTamazight: ...
     """
-    PySide.QtCore.QLocale.Language.CentralMorocc...
+    QLocale.Language.CentralMorocc...
     """
 
-    Chad: ... = PySide.QtCore.QLocale.Country.Chad
-    """
-    """
-
-    Cherokee: ... = PySide.QtCore.QLocale.Language.Cherokee
+    Chad: ... = QLocale.Country.Chad
     """
     """
 
-    Chewa: ... = PySide.QtCore.QLocale.Language.Chewa
+    Cherokee: ... = QLocale.Language.Cherokee
     """
     """
 
-    Chiga: ... = PySide.QtCore.QLocale.Language.Chiga
+    Chewa: ... = QLocale.Language.Chewa
     """
     """
 
-    Chile: ... = PySide.QtCore.QLocale.Country.Chile
+    Chiga: ... = QLocale.Language.Chiga
     """
     """
 
-    China: ... = PySide.QtCore.QLocale.Country.China
+    Chile: ... = QLocale.Country.Chile
     """
     """
 
-    Chinese: ... = PySide.QtCore.QLocale.Language.Chinese
+    China: ... = QLocale.Country.China
     """
     """
 
-    ChristmasIsland: ... = PySide.QtCore.QLocale.Country.ChristmasIsland
+    Chinese: ... = QLocale.Language.Chinese
     """
     """
 
-    CocosIslands: ... = PySide.QtCore.QLocale.Country.CocosIslands
+    ChristmasIsland: ... = QLocale.Country.ChristmasIsland
     """
     """
 
-    Colognian: ... = PySide.QtCore.QLocale.Language.Colognian
+    CocosIslands: ... = QLocale.Country.CocosIslands
     """
     """
 
-    Colombia: ... = PySide.QtCore.QLocale.Country.Colombia
+    Colognian: ... = QLocale.Language.Colognian
     """
     """
 
-    Comoros: ... = PySide.QtCore.QLocale.Country.Comoros
+    Colombia: ... = QLocale.Country.Colombia
     """
     """
 
-    CongoSwahili: ... = PySide.QtCore.QLocale.Language.CongoSwahili
+    Comoros: ... = QLocale.Country.Comoros
     """
     """
 
-    CookIslands: ... = PySide.QtCore.QLocale.Country.CookIslands
+    CongoSwahili: ... = QLocale.Language.CongoSwahili
     """
     """
 
-    Cornish: ... = PySide.QtCore.QLocale.Language.Cornish
+    CookIslands: ... = QLocale.Country.CookIslands
     """
     """
 
-    Corsican: ... = PySide.QtCore.QLocale.Language.Corsican
+    Cornish: ... = QLocale.Language.Cornish
     """
     """
 
-    CostaRica: ... = PySide.QtCore.QLocale.Country.CostaRica
+    Corsican: ... = QLocale.Language.Corsican
+    """
+    """
+
+    CostaRica: ... = QLocale.Country.CostaRica
     """
     """
 
     Country: ...
     """
-    <type 'PySide.QtCore.QLocale.Country'>
+    <type 'QLocale.Country'>
     """
 
-    Croatia: ... = PySide.QtCore.QLocale.Country.Croatia
-    """
-    """
-
-    Croatian: ... = PySide.QtCore.QLocale.Language.Croatian
+    Croatia: ... = QLocale.Country.Croatia
     """
     """
 
-    Cuba: ... = PySide.QtCore.QLocale.Country.Cuba
+    Croatian: ... = QLocale.Language.Croatian
+    """
+    """
+
+    Cuba: ... = QLocale.Country.Cuba
     """
     """
 
     CurrencyDisplayName: ...
     """
-    PySide.QtCore.QLocale.CurrencySymbolFormat.Curre...
+    QLocale.CurrencySymbolFormat.Curre...
     """
 
     CurrencyIsoCode: ...
     """
-    PySide.QtCore.QLocale.CurrencySymbolFormat.CurrencyI...
+    QLocale.CurrencySymbolFormat.CurrencyI...
     """
 
     CurrencySymbol: ...
     """
-    PySide.QtCore.QLocale.CurrencySymbolFormat.CurrencySy...
+    QLocale.CurrencySymbolFormat.CurrencySy...
     """
 
     CurrencySymbolFormat: ...
     """
-    <type 'PySide.QtCore.QLocale.CurrencySymbolForm...
+    <type 'QLocale.CurrencySymbolForm...
     """
 
-    Cyprus: ... = PySide.QtCore.QLocale.Country.Cyprus
-    """
-    """
-
-    CyrillicScript: ... = PySide.QtCore.QLocale.Script.CyrillicScript
+    Cyprus: ... = QLocale.Country.Cyprus
     """
     """
 
-    Czech: ... = PySide.QtCore.QLocale.Language.Czech
+    CyrillicScript: ... = QLocale.Script.CyrillicScript
     """
     """
 
-    CzechRepublic: ... = PySide.QtCore.QLocale.Country.CzechRepublic
+    Czech: ... = QLocale.Language.Czech
     """
     """
 
-    Danish: ... = PySide.QtCore.QLocale.Language.Danish
+    CzechRepublic: ... = QLocale.Country.CzechRepublic
+    """
+    """
+
+    Danish: ... = QLocale.Language.Danish
     """
     """
 
     DemocraticRepublicOfCongo: ...
     """
-    PySide.QtCore.QLocale.Country.DemocraticRe...
+    QLocale.Country.DemocraticRe...
     """
 
     DemocraticRepublicOfKorea: ...
     """
-    PySide.QtCore.QLocale.Country.DemocraticRe...
+    QLocale.Country.DemocraticRe...
     """
 
-    Denmark: ... = PySide.QtCore.QLocale.Country.Denmark
-    """
-    """
-
-    DeseretScript: ... = PySide.QtCore.QLocale.Script.DeseretScript
+    Denmark: ... = QLocale.Country.Denmark
     """
     """
 
-    Divehi: ... = PySide.QtCore.QLocale.Language.Divehi
+    DeseretScript: ... = QLocale.Script.DeseretScript
     """
     """
 
-    Djibouti: ... = PySide.QtCore.QLocale.Country.Djibouti
+    Divehi: ... = QLocale.Language.Divehi
     """
     """
 
-    Dominica: ... = PySide.QtCore.QLocale.Country.Dominica
+    Djibouti: ... = QLocale.Country.Djibouti
     """
     """
 
-    DominicanRepublic: ... = PySide.QtCore.QLocale.Country.DominicanRepublic
+    Dominica: ... = QLocale.Country.Dominica
     """
     """
 
-    Duala: ... = PySide.QtCore.QLocale.Language.Duala
+    DominicanRepublic: ... = QLocale.Country.DominicanRepublic
     """
     """
 
-    Dutch: ... = PySide.QtCore.QLocale.Language.Dutch
+    Duala: ... = QLocale.Language.Duala
     """
     """
 
-    EastTimor: ... = PySide.QtCore.QLocale.Country.EastTimor
+    Dutch: ... = QLocale.Language.Dutch
     """
     """
 
-    Ecuador: ... = PySide.QtCore.QLocale.Country.Ecuador
+    EastTimor: ... = QLocale.Country.EastTimor
     """
     """
 
-    Egypt: ... = PySide.QtCore.QLocale.Country.Egypt
+    Ecuador: ... = QLocale.Country.Ecuador
     """
     """
 
-    ElSalvador: ... = PySide.QtCore.QLocale.Country.ElSalvador
+    Egypt: ... = QLocale.Country.Egypt
     """
     """
 
-    Embu: ... = PySide.QtCore.QLocale.Language.Embu
+    ElSalvador: ... = QLocale.Country.ElSalvador
     """
     """
 
-    English: ... = PySide.QtCore.QLocale.Language.English
+    Embu: ... = QLocale.Language.Embu
     """
     """
 
-    EquatorialGuinea: ... = PySide.QtCore.QLocale.Country.EquatorialGuinea
+    English: ... = QLocale.Language.English
     """
     """
 
-    Eritrea: ... = PySide.QtCore.QLocale.Country.Eritrea
+    EquatorialGuinea: ... = QLocale.Country.EquatorialGuinea
     """
     """
 
-    Esperanto: ... = PySide.QtCore.QLocale.Language.Esperanto
+    Eritrea: ... = QLocale.Country.Eritrea
     """
     """
 
-    Estonia: ... = PySide.QtCore.QLocale.Country.Estonia
+    Esperanto: ... = QLocale.Language.Esperanto
     """
     """
 
-    Estonian: ... = PySide.QtCore.QLocale.Language.Estonian
+    Estonia: ... = QLocale.Country.Estonia
     """
     """
 
-    Ethiopia: ... = PySide.QtCore.QLocale.Country.Ethiopia
+    Estonian: ... = QLocale.Language.Estonian
     """
     """
 
-    Ewe: ... = PySide.QtCore.QLocale.Language.Ewe
+    Ethiopia: ... = QLocale.Country.Ethiopia
     """
     """
 
-    Ewondo: ... = PySide.QtCore.QLocale.Language.Ewondo
+    Ewe: ... = QLocale.Language.Ewe
     """
     """
 
-    FalklandIslands: ... = PySide.QtCore.QLocale.Country.FalklandIslands
+    Ewondo: ... = QLocale.Language.Ewondo
     """
     """
 
-    FaroeIslands: ... = PySide.QtCore.QLocale.Country.FaroeIslands
+    FalklandIslands: ... = QLocale.Country.FalklandIslands
     """
     """
 
-    Faroese: ... = PySide.QtCore.QLocale.Language.Faroese
+    FaroeIslands: ... = QLocale.Country.FaroeIslands
     """
     """
 
-    FijiCountry: ... = PySide.QtCore.QLocale.Country.FijiCountry
+    Faroese: ... = QLocale.Language.Faroese
     """
     """
 
-    FijiLanguage: ... = PySide.QtCore.QLocale.Language.FijiLanguage
+    FijiCountry: ... = QLocale.Country.FijiCountry
     """
     """
 
-    Filipino: ... = PySide.QtCore.QLocale.Language.Filipino
+    FijiLanguage: ... = QLocale.Language.FijiLanguage
     """
     """
 
-    Finland: ... = PySide.QtCore.QLocale.Country.Finland
+    Filipino: ... = QLocale.Language.Filipino
     """
     """
 
-    Finnish: ... = PySide.QtCore.QLocale.Language.Finnish
+    Finland: ... = QLocale.Country.Finland
+    """
+    """
+
+    Finnish: ... = QLocale.Language.Finnish
     """
     """
 
     FormatType: ...
     """
-    <type 'PySide.QtCore.QLocale.FormatType'>
+    <type 'QLocale.FormatType'>
     """
 
-    France: ... = PySide.QtCore.QLocale.Country.France
-    """
-    """
-
-    French: ... = PySide.QtCore.QLocale.Language.French
+    France: ... = QLocale.Country.France
     """
     """
 
-    FrenchGuiana: ... = PySide.QtCore.QLocale.Country.FrenchGuiana
+    French: ... = QLocale.Language.French
     """
     """
 
-    FrenchPolynesia: ... = PySide.QtCore.QLocale.Country.FrenchPolynesia
+    FrenchGuiana: ... = QLocale.Country.FrenchGuiana
+    """
+    """
+
+    FrenchPolynesia: ... = QLocale.Country.FrenchPolynesia
     """
     """
 
     FrenchSouthernTerritories: ...
     """
-    PySide.QtCore.QLocale.Country.FrenchSouthe...
+    QLocale.Country.FrenchSouthe...
     """
 
-    Frisian: ... = PySide.QtCore.QLocale.Language.Frisian
-    """
-    """
-
-    Friulian: ... = PySide.QtCore.QLocale.Language.Friulian
+    Frisian: ... = QLocale.Language.Frisian
     """
     """
 
-    Fulah: ... = PySide.QtCore.QLocale.Language.Fulah
+    Friulian: ... = QLocale.Language.Friulian
     """
     """
 
-    Ga: ... = PySide.QtCore.QLocale.Language.Ga
+    Fulah: ... = QLocale.Language.Fulah
     """
     """
 
-    Gabon: ... = PySide.QtCore.QLocale.Country.Gabon
+    Ga: ... = QLocale.Language.Ga
     """
     """
 
-    Gaelic: ... = PySide.QtCore.QLocale.Language.Gaelic
+    Gabon: ... = QLocale.Country.Gabon
     """
     """
 
-    Galician: ... = PySide.QtCore.QLocale.Language.Galician
+    Gaelic: ... = QLocale.Language.Gaelic
     """
     """
 
-    Gambia: ... = PySide.QtCore.QLocale.Country.Gambia
+    Galician: ... = QLocale.Language.Galician
     """
     """
 
-    Ganda: ... = PySide.QtCore.QLocale.Language.Ganda
+    Gambia: ... = QLocale.Country.Gambia
     """
     """
 
-    Geez: ... = PySide.QtCore.QLocale.Language.Geez
+    Ganda: ... = QLocale.Language.Ganda
     """
     """
 
-    Georgia: ... = PySide.QtCore.QLocale.Country.Georgia
+    Geez: ... = QLocale.Language.Geez
     """
     """
 
-    Georgian: ... = PySide.QtCore.QLocale.Language.Georgian
+    Georgia: ... = QLocale.Country.Georgia
     """
     """
 
-    German: ... = PySide.QtCore.QLocale.Language.German
+    Georgian: ... = QLocale.Language.Georgian
     """
     """
 
-    Germany: ... = PySide.QtCore.QLocale.Country.Germany
+    German: ... = QLocale.Language.German
     """
     """
 
-    Ghana: ... = PySide.QtCore.QLocale.Country.Ghana
+    Germany: ... = QLocale.Country.Germany
     """
     """
 
-    Gibraltar: ... = PySide.QtCore.QLocale.Country.Gibraltar
+    Ghana: ... = QLocale.Country.Ghana
     """
     """
 
-    Greece: ... = PySide.QtCore.QLocale.Country.Greece
+    Gibraltar: ... = QLocale.Country.Gibraltar
     """
     """
 
-    Greek: ... = PySide.QtCore.QLocale.Language.Greek
+    Greece: ... = QLocale.Country.Greece
     """
     """
 
-    Greenland: ... = PySide.QtCore.QLocale.Country.Greenland
+    Greek: ... = QLocale.Language.Greek
     """
     """
 
-    Greenlandic: ... = PySide.QtCore.QLocale.Language.Greenlandic
+    Greenland: ... = QLocale.Country.Greenland
     """
     """
 
-    Grenada: ... = PySide.QtCore.QLocale.Country.Grenada
+    Greenlandic: ... = QLocale.Language.Greenlandic
     """
     """
 
-    Guadeloupe: ... = PySide.QtCore.QLocale.Country.Guadeloupe
+    Grenada: ... = QLocale.Country.Grenada
     """
     """
 
-    Guam: ... = PySide.QtCore.QLocale.Country.Guam
+    Guadeloupe: ... = QLocale.Country.Guadeloupe
     """
     """
 
-    Guarani: ... = PySide.QtCore.QLocale.Language.Guarani
+    Guam: ... = QLocale.Country.Guam
     """
     """
 
-    Guatemala: ... = PySide.QtCore.QLocale.Country.Guatemala
+    Guarani: ... = QLocale.Language.Guarani
     """
     """
 
-    Guinea: ... = PySide.QtCore.QLocale.Country.Guinea
+    Guatemala: ... = QLocale.Country.Guatemala
     """
     """
 
-    GuineaBissau: ... = PySide.QtCore.QLocale.Country.GuineaBissau
+    Guinea: ... = QLocale.Country.Guinea
     """
     """
 
-    Gujarati: ... = PySide.QtCore.QLocale.Language.Gujarati
+    GuineaBissau: ... = QLocale.Country.GuineaBissau
     """
     """
 
-    GurmukhiScript: ... = PySide.QtCore.QLocale.Script.GurmukhiScript
+    Gujarati: ... = QLocale.Language.Gujarati
     """
     """
 
-    Gusii: ... = PySide.QtCore.QLocale.Language.Gusii
+    GurmukhiScript: ... = QLocale.Script.GurmukhiScript
     """
     """
 
-    Guyana: ... = PySide.QtCore.QLocale.Country.Guyana
+    Gusii: ... = QLocale.Language.Gusii
     """
     """
 
-    Haiti: ... = PySide.QtCore.QLocale.Country.Haiti
+    Guyana: ... = QLocale.Country.Guyana
     """
     """
 
-    Hausa: ... = PySide.QtCore.QLocale.Language.Hausa
+    Haiti: ... = QLocale.Country.Haiti
     """
     """
 
-    Hawaiian: ... = PySide.QtCore.QLocale.Language.Hawaiian
+    Hausa: ... = QLocale.Language.Hausa
+    """
+    """
+
+    Hawaiian: ... = QLocale.Language.Hawaiian
     """
     """
 
     HeardAndMcDonaldIslands: ...
     """
-    PySide.QtCore.QLocale.Country.HeardAndMcDona...
+    QLocale.Country.HeardAndMcDona...
     """
 
-    Hebrew: ... = PySide.QtCore.QLocale.Language.Hebrew
-    """
-    """
-
-    Hindi: ... = PySide.QtCore.QLocale.Language.Hindi
+    Hebrew: ... = QLocale.Language.Hebrew
     """
     """
 
-    Honduras: ... = PySide.QtCore.QLocale.Country.Honduras
+    Hindi: ... = QLocale.Language.Hindi
     """
     """
 
-    HongKong: ... = PySide.QtCore.QLocale.Country.HongKong
+    Honduras: ... = QLocale.Country.Honduras
     """
     """
 
-    Hungarian: ... = PySide.QtCore.QLocale.Language.Hungarian
+    HongKong: ... = QLocale.Country.HongKong
     """
     """
 
-    Hungary: ... = PySide.QtCore.QLocale.Country.Hungary
+    Hungarian: ... = QLocale.Language.Hungarian
     """
     """
 
-    Iceland: ... = PySide.QtCore.QLocale.Country.Iceland
+    Hungary: ... = QLocale.Country.Hungary
     """
     """
 
-    Icelandic: ... = PySide.QtCore.QLocale.Language.Icelandic
+    Iceland: ... = QLocale.Country.Iceland
     """
     """
 
-    Igbo: ... = PySide.QtCore.QLocale.Language.Igbo
+    Icelandic: ... = QLocale.Language.Icelandic
+    """
+    """
+
+    Igbo: ... = QLocale.Language.Igbo
     """
     """
 
     ImperialSystem: ...
     """
-    PySide.QtCore.QLocale.MeasurementSystem.ImperialSyste...
+    QLocale.MeasurementSystem.ImperialSyste...
     """
 
-    India: ... = PySide.QtCore.QLocale.Country.India
-    """
-    """
-
-    Indonesia: ... = PySide.QtCore.QLocale.Country.Indonesia
+    India: ... = QLocale.Country.India
     """
     """
 
-    Indonesian: ... = PySide.QtCore.QLocale.Language.Indonesian
+    Indonesia: ... = QLocale.Country.Indonesia
     """
     """
 
-    Interlingua: ... = PySide.QtCore.QLocale.Language.Interlingua
+    Indonesian: ... = QLocale.Language.Indonesian
     """
     """
 
-    Interlingue: ... = PySide.QtCore.QLocale.Language.Interlingue
+    Interlingua: ... = QLocale.Language.Interlingua
     """
     """
 
-    Inuktitut: ... = PySide.QtCore.QLocale.Language.Inuktitut
+    Interlingue: ... = QLocale.Language.Interlingue
     """
     """
 
-    Inupiak: ... = PySide.QtCore.QLocale.Language.Inupiak
+    Inuktitut: ... = QLocale.Language.Inuktitut
     """
     """
 
-    Iran: ... = PySide.QtCore.QLocale.Country.Iran
+    Inupiak: ... = QLocale.Language.Inupiak
     """
     """
 
-    Iraq: ... = PySide.QtCore.QLocale.Country.Iraq
+    Iran: ... = QLocale.Country.Iran
     """
     """
 
-    Ireland: ... = PySide.QtCore.QLocale.Country.Ireland
+    Iraq: ... = QLocale.Country.Iraq
     """
     """
 
-    Irish: ... = PySide.QtCore.QLocale.Language.Irish
+    Ireland: ... = QLocale.Country.Ireland
     """
     """
 
-    Israel: ... = PySide.QtCore.QLocale.Country.Israel
+    Irish: ... = QLocale.Language.Irish
     """
     """
 
-    Italian: ... = PySide.QtCore.QLocale.Language.Italian
+    Israel: ... = QLocale.Country.Israel
     """
     """
 
-    Italy: ... = PySide.QtCore.QLocale.Country.Italy
+    Italian: ... = QLocale.Language.Italian
     """
     """
 
-    IvoryCoast: ... = PySide.QtCore.QLocale.Country.IvoryCoast
+    Italy: ... = QLocale.Country.Italy
     """
     """
 
-    Jamaica: ... = PySide.QtCore.QLocale.Country.Jamaica
+    IvoryCoast: ... = QLocale.Country.IvoryCoast
     """
     """
 
-    Japan: ... = PySide.QtCore.QLocale.Country.Japan
+    Jamaica: ... = QLocale.Country.Jamaica
     """
     """
 
-    Japanese: ... = PySide.QtCore.QLocale.Language.Japanese
+    Japan: ... = QLocale.Country.Japan
     """
     """
 
-    Javanese: ... = PySide.QtCore.QLocale.Language.Javanese
+    Japanese: ... = QLocale.Language.Japanese
     """
     """
 
-    Jju: ... = PySide.QtCore.QLocale.Language.Jju
+    Javanese: ... = QLocale.Language.Javanese
     """
     """
 
-    JolaFonyi: ... = PySide.QtCore.QLocale.Language.JolaFonyi
+    Jju: ... = QLocale.Language.Jju
     """
     """
 
-    Jordan: ... = PySide.QtCore.QLocale.Country.Jordan
+    JolaFonyi: ... = QLocale.Language.JolaFonyi
     """
     """
 
-    Kabuverdianu: ... = PySide.QtCore.QLocale.Language.Kabuverdianu
+    Jordan: ... = QLocale.Country.Jordan
     """
     """
 
-    Kabyle: ... = PySide.QtCore.QLocale.Language.Kabyle
+    Kabuverdianu: ... = QLocale.Language.Kabuverdianu
     """
     """
 
-    Kalenjin: ... = PySide.QtCore.QLocale.Language.Kalenjin
+    Kabyle: ... = QLocale.Language.Kabyle
     """
     """
 
-    Kamba: ... = PySide.QtCore.QLocale.Language.Kamba
+    Kalenjin: ... = QLocale.Language.Kalenjin
     """
     """
 
-    Kannada: ... = PySide.QtCore.QLocale.Language.Kannada
+    Kamba: ... = QLocale.Language.Kamba
     """
     """
 
-    Kashmiri: ... = PySide.QtCore.QLocale.Language.Kashmiri
+    Kannada: ... = QLocale.Language.Kannada
     """
     """
 
-    Kazakh: ... = PySide.QtCore.QLocale.Language.Kazakh
+    Kashmiri: ... = QLocale.Language.Kashmiri
     """
     """
 
-    Kazakhstan: ... = PySide.QtCore.QLocale.Country.Kazakhstan
+    Kazakh: ... = QLocale.Language.Kazakh
     """
     """
 
-    Kenya: ... = PySide.QtCore.QLocale.Country.Kenya
+    Kazakhstan: ... = QLocale.Country.Kazakhstan
     """
     """
 
-    Kikuyu: ... = PySide.QtCore.QLocale.Language.Kikuyu
+    Kenya: ... = QLocale.Country.Kenya
     """
     """
 
-    Kinyarwanda: ... = PySide.QtCore.QLocale.Language.Kinyarwanda
+    Kikuyu: ... = QLocale.Language.Kikuyu
     """
     """
 
-    Kirghiz: ... = PySide.QtCore.QLocale.Language.Kirghiz
+    Kinyarwanda: ... = QLocale.Language.Kinyarwanda
     """
     """
 
-    Kiribati: ... = PySide.QtCore.QLocale.Country.Kiribati
+    Kirghiz: ... = QLocale.Language.Kirghiz
     """
     """
 
-    Konkani: ... = PySide.QtCore.QLocale.Language.Konkani
+    Kiribati: ... = QLocale.Country.Kiribati
     """
     """
 
-    Korean: ... = PySide.QtCore.QLocale.Language.Korean
+    Konkani: ... = QLocale.Language.Konkani
     """
     """
 
-    Koro: ... = PySide.QtCore.QLocale.Language.Koro
+    Korean: ... = QLocale.Language.Korean
     """
     """
 
-    KoyraChiini: ... = PySide.QtCore.QLocale.Language.KoyraChiini
+    Koro: ... = QLocale.Language.Koro
     """
     """
 
-    KoyraboroSenni: ... = PySide.QtCore.QLocale.Language.KoyraboroSenni
+    KoyraChiini: ... = QLocale.Language.KoyraChiini
     """
     """
 
-    Kpelle: ... = PySide.QtCore.QLocale.Language.Kpelle
+    KoyraboroSenni: ... = QLocale.Language.KoyraboroSenni
     """
     """
 
-    Kurdish: ... = PySide.QtCore.QLocale.Language.Kurdish
+    Kpelle: ... = QLocale.Language.Kpelle
     """
     """
 
-    Kurundi: ... = PySide.QtCore.QLocale.Language.Kurundi
+    Kurdish: ... = QLocale.Language.Kurdish
     """
     """
 
-    Kuwait: ... = PySide.QtCore.QLocale.Country.Kuwait
+    Kurundi: ... = QLocale.Language.Kurundi
     """
     """
 
-    Kwasio: ... = PySide.QtCore.QLocale.Language.Kwasio
+    Kuwait: ... = QLocale.Country.Kuwait
     """
     """
 
-    Kyrgyzstan: ... = PySide.QtCore.QLocale.Country.Kyrgyzstan
+    Kwasio: ... = QLocale.Language.Kwasio
     """
     """
 
-    Langi: ... = PySide.QtCore.QLocale.Language.Langi
+    Kyrgyzstan: ... = QLocale.Country.Kyrgyzstan
+    """
+    """
+
+    Langi: ... = QLocale.Language.Langi
     """
     """
 
     Language: ...
     """
-    <type 'PySide.QtCore.QLocale.Language'>
+    <type 'QLocale.Language'>
     """
 
-    Lao: ... = PySide.QtCore.QLocale.Country.Lao
-    """
-    """
-
-    Laothian: ... = PySide.QtCore.QLocale.Language.Laothian
+    Lao: ... = QLocale.Country.Lao
     """
     """
 
-    LastCountry: ... = PySide.QtCore.QLocale.Country.LastCountry
+    Laothian: ... = QLocale.Language.Laothian
     """
     """
 
-    LastLanguage: ... = PySide.QtCore.QLocale.Language.LastLanguage
+    LastCountry: ... = QLocale.Country.LastCountry
     """
     """
 
-    LastScript: ... = PySide.QtCore.QLocale.Script.LastScript
+    LastLanguage: ... = QLocale.Language.LastLanguage
     """
     """
 
-    Latin: ... = PySide.QtCore.QLocale.Language.Latin
+    LastScript: ... = QLocale.Script.LastScript
+    """
+    """
+
+    Latin: ... = QLocale.Language.Latin
     """
     """
 
     LatinAmericaAndTheCaribbean: ...
     """
-    PySide.QtCore.QLocale.Country.LatinAmeri...
+    QLocale.Country.LatinAmeri...
     """
 
-    LatinScript: ... = PySide.QtCore.QLocale.Script.LatinScript
-    """
-    """
-
-    Latvia: ... = PySide.QtCore.QLocale.Country.Latvia
+    LatinScript: ... = QLocale.Script.LatinScript
     """
     """
 
-    Latvian: ... = PySide.QtCore.QLocale.Language.Latvian
+    Latvia: ... = QLocale.Country.Latvia
     """
     """
 
-    Lebanon: ... = PySide.QtCore.QLocale.Country.Lebanon
+    Latvian: ... = QLocale.Language.Latvian
     """
     """
 
-    Lesotho: ... = PySide.QtCore.QLocale.Country.Lesotho
+    Lebanon: ... = QLocale.Country.Lebanon
     """
     """
 
-    Liberia: ... = PySide.QtCore.QLocale.Country.Liberia
+    Lesotho: ... = QLocale.Country.Lesotho
+    """
+    """
+
+    Liberia: ... = QLocale.Country.Liberia
     """
     """
 
     LibyanArabJamahiriya: ...
     """
-    PySide.QtCore.QLocale.Country.LibyanArabJamahir...
+    QLocale.Country.LibyanArabJamahir...
     """
 
-    Liechtenstein: ... = PySide.QtCore.QLocale.Country.Liechtenstein
-    """
-    """
-
-    Lingala: ... = PySide.QtCore.QLocale.Language.Lingala
+    Liechtenstein: ... = QLocale.Country.Liechtenstein
     """
     """
 
-    Lithuania: ... = PySide.QtCore.QLocale.Country.Lithuania
+    Lingala: ... = QLocale.Language.Lingala
     """
     """
 
-    Lithuanian: ... = PySide.QtCore.QLocale.Language.Lithuanian
+    Lithuania: ... = QLocale.Country.Lithuania
     """
     """
 
-    LongFormat: ... = PySide.QtCore.QLocale.FormatType.LongFormat
+    Lithuanian: ... = QLocale.Language.Lithuanian
     """
     """
 
-    LowGerman: ... = PySide.QtCore.QLocale.Language.LowGerman
+    LongFormat: ... = QLocale.FormatType.LongFormat
     """
     """
 
-    LubaKatanga: ... = PySide.QtCore.QLocale.Language.LubaKatanga
+    LowGerman: ... = QLocale.Language.LowGerman
     """
     """
 
-    Luo: ... = PySide.QtCore.QLocale.Language.Luo
+    LubaKatanga: ... = QLocale.Language.LubaKatanga
     """
     """
 
-    Luxembourg: ... = PySide.QtCore.QLocale.Country.Luxembourg
+    Luo: ... = QLocale.Language.Luo
     """
     """
 
-    Luyia: ... = PySide.QtCore.QLocale.Language.Luyia
+    Luxembourg: ... = QLocale.Country.Luxembourg
     """
     """
 
-    Macau: ... = PySide.QtCore.QLocale.Country.Macau
+    Luyia: ... = QLocale.Language.Luyia
     """
     """
 
-    Macedonia: ... = PySide.QtCore.QLocale.Country.Macedonia
+    Macau: ... = QLocale.Country.Macau
     """
     """
 
-    Macedonian: ... = PySide.QtCore.QLocale.Language.Macedonian
+    Macedonia: ... = QLocale.Country.Macedonia
     """
     """
 
-    Machame: ... = PySide.QtCore.QLocale.Language.Machame
+    Macedonian: ... = QLocale.Language.Macedonian
     """
     """
 
-    Madagascar: ... = PySide.QtCore.QLocale.Country.Madagascar
+    Machame: ... = QLocale.Language.Machame
     """
     """
 
-    MakhuwaMeetto: ... = PySide.QtCore.QLocale.Language.MakhuwaMeetto
+    Madagascar: ... = QLocale.Country.Madagascar
     """
     """
 
-    Makonde: ... = PySide.QtCore.QLocale.Language.Makonde
+    MakhuwaMeetto: ... = QLocale.Language.MakhuwaMeetto
     """
     """
 
-    Malagasy: ... = PySide.QtCore.QLocale.Language.Malagasy
+    Makonde: ... = QLocale.Language.Makonde
     """
     """
 
-    Malawi: ... = PySide.QtCore.QLocale.Country.Malawi
+    Malagasy: ... = QLocale.Language.Malagasy
     """
     """
 
-    Malay: ... = PySide.QtCore.QLocale.Language.Malay
+    Malawi: ... = QLocale.Country.Malawi
     """
     """
 
-    Malayalam: ... = PySide.QtCore.QLocale.Language.Malayalam
+    Malay: ... = QLocale.Language.Malay
     """
     """
 
-    Malaysia: ... = PySide.QtCore.QLocale.Country.Malaysia
+    Malayalam: ... = QLocale.Language.Malayalam
     """
     """
 
-    Maldives: ... = PySide.QtCore.QLocale.Country.Maldives
+    Malaysia: ... = QLocale.Country.Malaysia
     """
     """
 
-    Mali: ... = PySide.QtCore.QLocale.Country.Mali
+    Maldives: ... = QLocale.Country.Maldives
     """
     """
 
-    Malta: ... = PySide.QtCore.QLocale.Country.Malta
+    Mali: ... = QLocale.Country.Mali
     """
     """
 
-    Maltese: ... = PySide.QtCore.QLocale.Language.Maltese
+    Malta: ... = QLocale.Country.Malta
     """
     """
 
-    Manx: ... = PySide.QtCore.QLocale.Language.Manx
+    Maltese: ... = QLocale.Language.Maltese
     """
     """
 
-    Maori: ... = PySide.QtCore.QLocale.Language.Maori
+    Manx: ... = QLocale.Language.Manx
     """
     """
 
-    Marathi: ... = PySide.QtCore.QLocale.Language.Marathi
+    Maori: ... = QLocale.Language.Maori
     """
     """
 
-    MarshallIslands: ... = PySide.QtCore.QLocale.Country.MarshallIslands
+    Marathi: ... = QLocale.Language.Marathi
     """
     """
 
-    Martinique: ... = PySide.QtCore.QLocale.Country.Martinique
+    MarshallIslands: ... = QLocale.Country.MarshallIslands
     """
     """
 
-    Masai: ... = PySide.QtCore.QLocale.Language.Masai
+    Martinique: ... = QLocale.Country.Martinique
     """
     """
 
-    Mauritania: ... = PySide.QtCore.QLocale.Country.Mauritania
+    Masai: ... = QLocale.Language.Masai
     """
     """
 
-    Mauritius: ... = PySide.QtCore.QLocale.Country.Mauritius
+    Mauritania: ... = QLocale.Country.Mauritania
     """
     """
 
-    Mayotte: ... = PySide.QtCore.QLocale.Country.Mayotte
+    Mauritius: ... = QLocale.Country.Mauritius
+    """
+    """
+
+    Mayotte: ... = QLocale.Country.Mayotte
     """
     """
 
     MeasurementSystem: ...
     """
-    <type 'PySide.QtCore.QLocale.MeasurementSystem'>
+    <type 'QLocale.MeasurementSystem'>
     """
 
-    Meru: ... = PySide.QtCore.QLocale.Language.Meru
-    """
-    """
-
-    MetricSystem: ... = PySide.QtCore.QLocale.MeasurementSystem.MetricSystem
+    Meru: ... = QLocale.Language.Meru
     """
     """
 
-    MetropolitanFrance: ... = PySide.QtCore.QLocale.Country.MetropolitanFrance
+    MetricSystem: ... = QLocale.MeasurementSystem.MetricSystem
     """
     """
 
-    Mexico: ... = PySide.QtCore.QLocale.Country.Mexico
+    MetropolitanFrance: ... = QLocale.Country.MetropolitanFrance
     """
     """
 
-    Micronesia: ... = PySide.QtCore.QLocale.Country.Micronesia
+    Mexico: ... = QLocale.Country.Mexico
     """
     """
 
-    Moldavian: ... = PySide.QtCore.QLocale.Language.Moldavian
+    Micronesia: ... = QLocale.Country.Micronesia
     """
     """
 
-    Moldova: ... = PySide.QtCore.QLocale.Country.Moldova
+    Moldavian: ... = QLocale.Language.Moldavian
     """
     """
 
-    Monaco: ... = PySide.QtCore.QLocale.Country.Monaco
+    Moldova: ... = QLocale.Country.Moldova
     """
     """
 
-    Mongolia: ... = PySide.QtCore.QLocale.Country.Mongolia
+    Monaco: ... = QLocale.Country.Monaco
     """
     """
 
-    Mongolian: ... = PySide.QtCore.QLocale.Language.Mongolian
+    Mongolia: ... = QLocale.Country.Mongolia
     """
     """
 
-    MongolianScript: ... = PySide.QtCore.QLocale.Script.MongolianScript
+    Mongolian: ... = QLocale.Language.Mongolian
     """
     """
 
-    Montenegro: ... = PySide.QtCore.QLocale.Country.Montenegro
+    MongolianScript: ... = QLocale.Script.MongolianScript
     """
     """
 
-    Montserrat: ... = PySide.QtCore.QLocale.Country.Montserrat
+    Montenegro: ... = QLocale.Country.Montenegro
     """
     """
 
-    Morisyen: ... = PySide.QtCore.QLocale.Language.Morisyen
+    Montserrat: ... = QLocale.Country.Montserrat
     """
     """
 
-    Morocco: ... = PySide.QtCore.QLocale.Country.Morocco
+    Morisyen: ... = QLocale.Language.Morisyen
     """
     """
 
-    Mozambique: ... = PySide.QtCore.QLocale.Country.Mozambique
+    Morocco: ... = QLocale.Country.Morocco
     """
     """
 
-    Mundang: ... = PySide.QtCore.QLocale.Language.Mundang
+    Mozambique: ... = QLocale.Country.Mozambique
     """
     """
 
-    Myanmar: ... = PySide.QtCore.QLocale.Country.Myanmar
+    Mundang: ... = QLocale.Language.Mundang
     """
     """
 
-    Nama: ... = PySide.QtCore.QLocale.Language.Nama
+    Myanmar: ... = QLocale.Country.Myanmar
     """
     """
 
-    Namibia: ... = PySide.QtCore.QLocale.Country.Namibia
+    Nama: ... = QLocale.Language.Nama
     """
     """
 
-    NarrowFormat: ... = PySide.QtCore.QLocale.FormatType.NarrowFormat
+    Namibia: ... = QLocale.Country.Namibia
     """
     """
 
-    NauruCountry: ... = PySide.QtCore.QLocale.Country.NauruCountry
+    NarrowFormat: ... = QLocale.FormatType.NarrowFormat
     """
     """
 
-    NauruLanguage: ... = PySide.QtCore.QLocale.Language.NauruLanguage
+    NauruCountry: ... = QLocale.Country.NauruCountry
     """
     """
 
-    Nepal: ... = PySide.QtCore.QLocale.Country.Nepal
+    NauruLanguage: ... = QLocale.Language.NauruLanguage
     """
     """
 
-    Nepali: ... = PySide.QtCore.QLocale.Language.Nepali
+    Nepal: ... = QLocale.Country.Nepal
     """
     """
 
-    Netherlands: ... = PySide.QtCore.QLocale.Country.Netherlands
+    Nepali: ... = QLocale.Language.Nepali
+    """
+    """
+
+    Netherlands: ... = QLocale.Country.Netherlands
     """
     """
 
     NetherlandsAntilles: ...
     """
-    PySide.QtCore.QLocale.Country.NetherlandsAntille...
+    QLocale.Country.NetherlandsAntille...
     """
 
-    NewCaledonia: ... = PySide.QtCore.QLocale.Country.NewCaledonia
-    """
-    """
-
-    NewZealand: ... = PySide.QtCore.QLocale.Country.NewZealand
+    NewCaledonia: ... = QLocale.Country.NewCaledonia
     """
     """
 
-    Nicaragua: ... = PySide.QtCore.QLocale.Country.Nicaragua
+    NewZealand: ... = QLocale.Country.NewZealand
     """
     """
 
-    Niger: ... = PySide.QtCore.QLocale.Country.Niger
+    Nicaragua: ... = QLocale.Country.Nicaragua
     """
     """
 
-    Nigeria: ... = PySide.QtCore.QLocale.Country.Nigeria
+    Niger: ... = QLocale.Country.Niger
     """
     """
 
-    Niue: ... = PySide.QtCore.QLocale.Country.Niue
+    Nigeria: ... = QLocale.Country.Nigeria
     """
     """
 
-    NorfolkIsland: ... = PySide.QtCore.QLocale.Country.NorfolkIsland
+    Niue: ... = QLocale.Country.Niue
     """
     """
 
-    NorthNdebele: ... = PySide.QtCore.QLocale.Language.NorthNdebele
+    NorfolkIsland: ... = QLocale.Country.NorfolkIsland
+    """
+    """
+
+    NorthNdebele: ... = QLocale.Language.NorthNdebele
     """
     """
 
     NorthernMarianaIslands: ...
     """
-    PySide.QtCore.QLocale.Country.NorthernMariana...
+    QLocale.Country.NorthernMariana...
     """
 
-    NorthernSami: ... = PySide.QtCore.QLocale.Language.NorthernSami
-    """
-    """
-
-    NorthernSotho: ... = PySide.QtCore.QLocale.Language.NorthernSotho
+    NorthernSami: ... = QLocale.Language.NorthernSami
     """
     """
 
-    Norway: ... = PySide.QtCore.QLocale.Country.Norway
+    NorthernSotho: ... = QLocale.Language.NorthernSotho
     """
     """
 
-    Norwegian: ... = PySide.QtCore.QLocale.Language.Norwegian
+    Norway: ... = QLocale.Country.Norway
     """
     """
 
-    NorwegianBokmal: ... = PySide.QtCore.QLocale.Language.NorwegianBokmal
+    Norwegian: ... = QLocale.Language.Norwegian
     """
     """
 
-    NorwegianNynorsk: ... = PySide.QtCore.QLocale.Language.NorwegianNynorsk
+    NorwegianBokmal: ... = QLocale.Language.NorwegianBokmal
     """
     """
 
-    Nuer: ... = PySide.QtCore.QLocale.Language.Nuer
+    NorwegianNynorsk: ... = QLocale.Language.NorwegianNynorsk
+    """
+    """
+
+    Nuer: ... = QLocale.Language.Nuer
     """
     """
 
     NumberOption: ...
     """
-    <type 'PySide.QtCore.QLocale.NumberOption'>
+    <type 'QLocale.NumberOption'>
     """
 
     NumberOptions: ...
@@ -6987,745 +6978,745 @@ class QLocale(Shiboken.Object):
     <type 'NumberOptions'>
     """
 
-    Nyankole: ... = PySide.QtCore.QLocale.Language.Nyankole
+    Nyankole: ... = QLocale.Language.Nyankole
     """
     """
 
-    Nynorsk: ... = PySide.QtCore.QLocale.Language.Nynorsk
+    Nynorsk: ... = QLocale.Language.Nynorsk
     """
     """
 
-    Occitan: ... = PySide.QtCore.QLocale.Language.Occitan
+    Occitan: ... = QLocale.Language.Occitan
     """
     """
 
-    Oman: ... = PySide.QtCore.QLocale.Country.Oman
+    Oman: ... = QLocale.Country.Oman
     """
     """
 
     OmitGroupSeparator: ...
     """
-    PySide.QtCore.QLocale.NumberOption.OmitGroupSepar...
+    QLocale.NumberOption.OmitGroupSepar...
     """
 
-    Oriya: ... = PySide.QtCore.QLocale.Language.Oriya
-    """
-    """
-
-    Pakistan: ... = PySide.QtCore.QLocale.Country.Pakistan
+    Oriya: ... = QLocale.Language.Oriya
     """
     """
 
-    Palau: ... = PySide.QtCore.QLocale.Country.Palau
+    Pakistan: ... = QLocale.Country.Pakistan
+    """
+    """
+
+    Palau: ... = QLocale.Country.Palau
     """
     """
 
     PalestinianTerritory: ...
     """
-    PySide.QtCore.QLocale.Country.PalestinianTerrit...
+    QLocale.Country.PalestinianTerrit...
     """
 
-    Panama: ... = PySide.QtCore.QLocale.Country.Panama
-    """
-    """
-
-    PapuaNewGuinea: ... = PySide.QtCore.QLocale.Country.PapuaNewGuinea
+    Panama: ... = QLocale.Country.Panama
     """
     """
 
-    Paraguay: ... = PySide.QtCore.QLocale.Country.Paraguay
+    PapuaNewGuinea: ... = QLocale.Country.PapuaNewGuinea
     """
     """
 
-    Pashto: ... = PySide.QtCore.QLocale.Language.Pashto
+    Paraguay: ... = QLocale.Country.Paraguay
+    """
+    """
+
+    Pashto: ... = QLocale.Language.Pashto
     """
     """
 
     PeoplesRepublicOfCongo: ...
     """
-    PySide.QtCore.QLocale.Country.PeoplesRepublic...
+    QLocale.Country.PeoplesRepublic...
     """
 
-    Persian: ... = PySide.QtCore.QLocale.Language.Persian
-    """
-    """
-
-    Peru: ... = PySide.QtCore.QLocale.Country.Peru
+    Persian: ... = QLocale.Language.Persian
     """
     """
 
-    Philippines: ... = PySide.QtCore.QLocale.Country.Philippines
+    Peru: ... = QLocale.Country.Peru
     """
     """
 
-    Pitcairn: ... = PySide.QtCore.QLocale.Country.Pitcairn
+    Philippines: ... = QLocale.Country.Philippines
     """
     """
 
-    Poland: ... = PySide.QtCore.QLocale.Country.Poland
+    Pitcairn: ... = QLocale.Country.Pitcairn
     """
     """
 
-    Polish: ... = PySide.QtCore.QLocale.Language.Polish
+    Poland: ... = QLocale.Country.Poland
     """
     """
 
-    Portugal: ... = PySide.QtCore.QLocale.Country.Portugal
+    Polish: ... = QLocale.Language.Polish
     """
     """
 
-    Portuguese: ... = PySide.QtCore.QLocale.Language.Portuguese
+    Portugal: ... = QLocale.Country.Portugal
     """
     """
 
-    PuertoRico: ... = PySide.QtCore.QLocale.Country.PuertoRico
+    Portuguese: ... = QLocale.Language.Portuguese
     """
     """
 
-    Punjabi: ... = PySide.QtCore.QLocale.Language.Punjabi
+    PuertoRico: ... = QLocale.Country.PuertoRico
     """
     """
 
-    Qatar: ... = PySide.QtCore.QLocale.Country.Qatar
+    Punjabi: ... = QLocale.Language.Punjabi
     """
     """
 
-    Quechua: ... = PySide.QtCore.QLocale.Language.Quechua
+    Qatar: ... = QLocale.Country.Qatar
+    """
+    """
+
+    Quechua: ... = QLocale.Language.Quechua
     """
     """
 
     QuotationStyle: ...
     """
-    <type 'PySide.QtCore.QLocale.QuotationStyle'>
+    <type 'QLocale.QuotationStyle'>
     """
 
     RejectGroupSeparator: ...
     """
-    PySide.QtCore.QLocale.NumberOption.RejectGroupS...
+    QLocale.NumberOption.RejectGroupS...
     """
 
-    RepublicOfKorea: ... = PySide.QtCore.QLocale.Country.RepublicOfKorea
-    """
-    """
-
-    Reunion: ... = PySide.QtCore.QLocale.Country.Reunion
+    RepublicOfKorea: ... = QLocale.Country.RepublicOfKorea
     """
     """
 
-    RhaetoRomance: ... = PySide.QtCore.QLocale.Language.RhaetoRomance
+    Reunion: ... = QLocale.Country.Reunion
     """
     """
 
-    Romania: ... = PySide.QtCore.QLocale.Country.Romania
+    RhaetoRomance: ... = QLocale.Language.RhaetoRomance
     """
     """
 
-    Romanian: ... = PySide.QtCore.QLocale.Language.Romanian
+    Romania: ... = QLocale.Country.Romania
     """
     """
 
-    Rombo: ... = PySide.QtCore.QLocale.Language.Rombo
+    Romanian: ... = QLocale.Language.Romanian
     """
     """
 
-    Rundi: ... = PySide.QtCore.QLocale.Language.Rundi
+    Rombo: ... = QLocale.Language.Rombo
     """
     """
 
-    Russian: ... = PySide.QtCore.QLocale.Language.Russian
+    Rundi: ... = QLocale.Language.Rundi
     """
     """
 
-    RussianFederation: ... = PySide.QtCore.QLocale.Country.RussianFederation
+    Russian: ... = QLocale.Language.Russian
     """
     """
 
-    Rwa: ... = PySide.QtCore.QLocale.Language.Rwa
+    RussianFederation: ... = QLocale.Country.RussianFederation
     """
     """
 
-    Rwanda: ... = PySide.QtCore.QLocale.Country.Rwanda
+    Rwa: ... = QLocale.Language.Rwa
     """
     """
 
-    Saho: ... = PySide.QtCore.QLocale.Language.Saho
+    Rwanda: ... = QLocale.Country.Rwanda
     """
     """
 
-    SaintBarthelemy: ... = PySide.QtCore.QLocale.Country.SaintBarthelemy
+    Saho: ... = QLocale.Language.Saho
     """
     """
 
-    SaintKittsAndNevis: ... = PySide.QtCore.QLocale.Country.SaintKittsAndNevis
+    SaintBarthelemy: ... = QLocale.Country.SaintBarthelemy
     """
     """
 
-    SaintMartin: ... = PySide.QtCore.QLocale.Country.SaintMartin
+    SaintKittsAndNevis: ... = QLocale.Country.SaintKittsAndNevis
     """
     """
 
-    Sakha: ... = PySide.QtCore.QLocale.Language.Sakha
+    SaintMartin: ... = QLocale.Country.SaintMartin
     """
     """
 
-    Samburu: ... = PySide.QtCore.QLocale.Language.Samburu
+    Sakha: ... = QLocale.Language.Sakha
     """
     """
 
-    Samoa: ... = PySide.QtCore.QLocale.Country.Samoa
+    Samburu: ... = QLocale.Language.Samburu
     """
     """
 
-    Samoan: ... = PySide.QtCore.QLocale.Language.Samoan
+    Samoa: ... = QLocale.Country.Samoa
     """
     """
 
-    SanMarino: ... = PySide.QtCore.QLocale.Country.SanMarino
+    Samoan: ... = QLocale.Language.Samoan
     """
     """
 
-    Sangho: ... = PySide.QtCore.QLocale.Language.Sangho
+    SanMarino: ... = QLocale.Country.SanMarino
     """
     """
 
-    Sangu: ... = PySide.QtCore.QLocale.Language.Sangu
+    Sangho: ... = QLocale.Language.Sangho
     """
     """
 
-    Sanskrit: ... = PySide.QtCore.QLocale.Language.Sanskrit
+    Sangu: ... = QLocale.Language.Sangu
     """
     """
 
-    SaoTomeAndPrincipe: ... = PySide.QtCore.QLocale.Country.SaoTomeAndPrincipe
+    Sanskrit: ... = QLocale.Language.Sanskrit
     """
     """
 
-    SaudiArabia: ... = PySide.QtCore.QLocale.Country.SaudiArabia
+    SaoTomeAndPrincipe: ... = QLocale.Country.SaoTomeAndPrincipe
+    """
+    """
+
+    SaudiArabia: ... = QLocale.Country.SaudiArabia
     """
     """
 
     Script: ...
     """
-    <type 'PySide.QtCore.QLocale.Script'>
+    <type 'QLocale.Script'>
     """
 
-    Sena: ... = PySide.QtCore.QLocale.Language.Sena
-    """
-    """
-
-    Senegal: ... = PySide.QtCore.QLocale.Country.Senegal
+    Sena: ... = QLocale.Language.Sena
     """
     """
 
-    Serbia: ... = PySide.QtCore.QLocale.Country.Serbia
+    Senegal: ... = QLocale.Country.Senegal
+    """
+    """
+
+    Serbia: ... = QLocale.Country.Serbia
     """
     """
 
     SerbiaAndMontenegro: ...
     """
-    PySide.QtCore.QLocale.Country.SerbiaAndMontenegr...
+    QLocale.Country.SerbiaAndMontenegr...
     """
 
-    Serbian: ... = PySide.QtCore.QLocale.Language.Serbian
-    """
-    """
-
-    SerboCroatian: ... = PySide.QtCore.QLocale.Language.SerboCroatian
+    Serbian: ... = QLocale.Language.Serbian
     """
     """
 
-    Sesotho: ... = PySide.QtCore.QLocale.Language.Sesotho
+    SerboCroatian: ... = QLocale.Language.SerboCroatian
     """
     """
 
-    Setswana: ... = PySide.QtCore.QLocale.Language.Setswana
+    Sesotho: ... = QLocale.Language.Sesotho
     """
     """
 
-    Seychelles: ... = PySide.QtCore.QLocale.Country.Seychelles
+    Setswana: ... = QLocale.Language.Setswana
     """
     """
 
-    Shambala: ... = PySide.QtCore.QLocale.Language.Shambala
+    Seychelles: ... = QLocale.Country.Seychelles
     """
     """
 
-    Shona: ... = PySide.QtCore.QLocale.Language.Shona
+    Shambala: ... = QLocale.Language.Shambala
     """
     """
 
-    ShortFormat: ... = PySide.QtCore.QLocale.FormatType.ShortFormat
+    Shona: ... = QLocale.Language.Shona
     """
     """
 
-    SichuanYi: ... = PySide.QtCore.QLocale.Language.SichuanYi
+    ShortFormat: ... = QLocale.FormatType.ShortFormat
     """
     """
 
-    Sidamo: ... = PySide.QtCore.QLocale.Language.Sidamo
+    SichuanYi: ... = QLocale.Language.SichuanYi
     """
     """
 
-    SierraLeone: ... = PySide.QtCore.QLocale.Country.SierraLeone
+    Sidamo: ... = QLocale.Language.Sidamo
+    """
+    """
+
+    SierraLeone: ... = QLocale.Country.SierraLeone
     """
     """
 
     SimplifiedChineseScript: ...
     """
-    PySide.QtCore.QLocale.Script.SimplifiedChine...
+    QLocale.Script.SimplifiedChine...
     """
 
-    SimplifiedHanScript: ... = PySide.QtCore.QLocale.Script.SimplifiedHanScript
-    """
-    """
-
-    Sindhi: ... = PySide.QtCore.QLocale.Language.Sindhi
+    SimplifiedHanScript: ... = QLocale.Script.SimplifiedHanScript
     """
     """
 
-    Singapore: ... = PySide.QtCore.QLocale.Country.Singapore
+    Sindhi: ... = QLocale.Language.Sindhi
     """
     """
 
-    Singhalese: ... = PySide.QtCore.QLocale.Language.Singhalese
+    Singapore: ... = QLocale.Country.Singapore
     """
     """
 
-    Siswati: ... = PySide.QtCore.QLocale.Language.Siswati
+    Singhalese: ... = QLocale.Language.Singhalese
     """
     """
 
-    Slovak: ... = PySide.QtCore.QLocale.Language.Slovak
+    Siswati: ... = QLocale.Language.Siswati
     """
     """
 
-    Slovakia: ... = PySide.QtCore.QLocale.Country.Slovakia
+    Slovak: ... = QLocale.Language.Slovak
     """
     """
 
-    Slovenia: ... = PySide.QtCore.QLocale.Country.Slovenia
+    Slovakia: ... = QLocale.Country.Slovakia
     """
     """
 
-    Slovenian: ... = PySide.QtCore.QLocale.Language.Slovenian
+    Slovenia: ... = QLocale.Country.Slovenia
     """
     """
 
-    Soga: ... = PySide.QtCore.QLocale.Language.Soga
+    Slovenian: ... = QLocale.Language.Slovenian
     """
     """
 
-    SolomonIslands: ... = PySide.QtCore.QLocale.Country.SolomonIslands
+    Soga: ... = QLocale.Language.Soga
     """
     """
 
-    Somali: ... = PySide.QtCore.QLocale.Language.Somali
+    SolomonIslands: ... = QLocale.Country.SolomonIslands
     """
     """
 
-    Somalia: ... = PySide.QtCore.QLocale.Country.Somalia
+    Somali: ... = QLocale.Language.Somali
     """
     """
 
-    SouthAfrica: ... = PySide.QtCore.QLocale.Country.SouthAfrica
+    Somalia: ... = QLocale.Country.Somalia
+    """
+    """
+
+    SouthAfrica: ... = QLocale.Country.SouthAfrica
     """
     """
 
     SouthGeorgiaAndTheSouthSandwichIslands: ...
     """
-    PySide.QtCore.QLocale.Country...
+    QLocale.Country...
     """
 
-    SouthNdebele: ... = PySide.QtCore.QLocale.Language.SouthNdebele
-    """
-    """
-
-    Spain: ... = PySide.QtCore.QLocale.Country.Spain
+    SouthNdebele: ... = QLocale.Language.SouthNdebele
     """
     """
 
-    Spanish: ... = PySide.QtCore.QLocale.Language.Spanish
+    Spain: ... = QLocale.Country.Spain
     """
     """
 
-    SriLanka: ... = PySide.QtCore.QLocale.Country.SriLanka
+    Spanish: ... = QLocale.Language.Spanish
     """
     """
 
-    StHelena: ... = PySide.QtCore.QLocale.Country.StHelena
+    SriLanka: ... = QLocale.Country.SriLanka
     """
     """
 
-    StLucia: ... = PySide.QtCore.QLocale.Country.StLucia
+    StHelena: ... = QLocale.Country.StHelena
+    """
+    """
+
+    StLucia: ... = QLocale.Country.StLucia
     """
     """
 
     StPierreAndMiquelon: ...
     """
-    PySide.QtCore.QLocale.Country.StPierreAndMiquelo...
+    QLocale.Country.StPierreAndMiquelo...
     """
 
     StVincentAndTheGrenadines: ...
     """
-    PySide.QtCore.QLocale.Country.StVincentAnd...
+    QLocale.Country.StVincentAnd...
     """
 
     StandardQuotation: ...
     """
-    PySide.QtCore.QLocale.QuotationStyle.StandardQuota...
+    QLocale.QuotationStyle.StandardQuota...
     """
 
-    Sudan: ... = PySide.QtCore.QLocale.Country.Sudan
-    """
-    """
-
-    Sundanese: ... = PySide.QtCore.QLocale.Language.Sundanese
+    Sudan: ... = QLocale.Country.Sudan
     """
     """
 
-    Suriname: ... = PySide.QtCore.QLocale.Country.Suriname
+    Sundanese: ... = QLocale.Language.Sundanese
+    """
+    """
+
+    Suriname: ... = QLocale.Country.Suriname
     """
     """
 
     SvalbardAndJanMayenIslands: ...
     """
-    PySide.QtCore.QLocale.Country.SvalbardAnd...
+    QLocale.Country.SvalbardAnd...
     """
 
-    Swahili: ... = PySide.QtCore.QLocale.Language.Swahili
-    """
-    """
-
-    Swaziland: ... = PySide.QtCore.QLocale.Country.Swaziland
+    Swahili: ... = QLocale.Language.Swahili
     """
     """
 
-    Sweden: ... = PySide.QtCore.QLocale.Country.Sweden
+    Swaziland: ... = QLocale.Country.Swaziland
     """
     """
 
-    Swedish: ... = PySide.QtCore.QLocale.Language.Swedish
+    Sweden: ... = QLocale.Country.Sweden
     """
     """
 
-    SwissGerman: ... = PySide.QtCore.QLocale.Language.SwissGerman
+    Swedish: ... = QLocale.Language.Swedish
     """
     """
 
-    Switzerland: ... = PySide.QtCore.QLocale.Country.Switzerland
+    SwissGerman: ... = QLocale.Language.SwissGerman
     """
     """
 
-    Syriac: ... = PySide.QtCore.QLocale.Language.Syriac
+    Switzerland: ... = QLocale.Country.Switzerland
     """
     """
 
-    SyrianArabRepublic: ... = PySide.QtCore.QLocale.Country.SyrianArabRepublic
+    Syriac: ... = QLocale.Language.Syriac
     """
     """
 
-    Tachelhit: ... = PySide.QtCore.QLocale.Language.Tachelhit
+    SyrianArabRepublic: ... = QLocale.Country.SyrianArabRepublic
     """
     """
 
-    Tagalog: ... = PySide.QtCore.QLocale.Language.Tagalog
+    Tachelhit: ... = QLocale.Language.Tachelhit
     """
     """
 
-    Taita: ... = PySide.QtCore.QLocale.Language.Taita
+    Tagalog: ... = QLocale.Language.Tagalog
     """
     """
 
-    Taiwan: ... = PySide.QtCore.QLocale.Country.Taiwan
+    Taita: ... = QLocale.Language.Taita
     """
     """
 
-    Tajik: ... = PySide.QtCore.QLocale.Language.Tajik
+    Taiwan: ... = QLocale.Country.Taiwan
     """
     """
 
-    Tajikistan: ... = PySide.QtCore.QLocale.Country.Tajikistan
+    Tajik: ... = QLocale.Language.Tajik
     """
     """
 
-    Tamil: ... = PySide.QtCore.QLocale.Language.Tamil
+    Tajikistan: ... = QLocale.Country.Tajikistan
     """
     """
 
-    Tanzania: ... = PySide.QtCore.QLocale.Country.Tanzania
+    Tamil: ... = QLocale.Language.Tamil
     """
     """
 
-    Taroko: ... = PySide.QtCore.QLocale.Language.Taroko
+    Tanzania: ... = QLocale.Country.Tanzania
     """
     """
 
-    Tasawaq: ... = PySide.QtCore.QLocale.Language.Tasawaq
+    Taroko: ... = QLocale.Language.Taroko
     """
     """
 
-    Tatar: ... = PySide.QtCore.QLocale.Language.Tatar
+    Tasawaq: ... = QLocale.Language.Tasawaq
     """
     """
 
-    Telugu: ... = PySide.QtCore.QLocale.Language.Telugu
+    Tatar: ... = QLocale.Language.Tatar
     """
     """
 
-    Teso: ... = PySide.QtCore.QLocale.Language.Teso
+    Telugu: ... = QLocale.Language.Telugu
     """
     """
 
-    Thai: ... = PySide.QtCore.QLocale.Language.Thai
+    Teso: ... = QLocale.Language.Teso
     """
     """
 
-    Thailand: ... = PySide.QtCore.QLocale.Country.Thailand
+    Thai: ... = QLocale.Language.Thai
     """
     """
 
-    Tibetan: ... = PySide.QtCore.QLocale.Language.Tibetan
+    Thailand: ... = QLocale.Country.Thailand
     """
     """
 
-    TifinaghScript: ... = PySide.QtCore.QLocale.Script.TifinaghScript
+    Tibetan: ... = QLocale.Language.Tibetan
     """
     """
 
-    Tigre: ... = PySide.QtCore.QLocale.Language.Tigre
+    TifinaghScript: ... = QLocale.Script.TifinaghScript
     """
     """
 
-    Tigrinya: ... = PySide.QtCore.QLocale.Language.Tigrinya
+    Tigre: ... = QLocale.Language.Tigre
     """
     """
 
-    Togo: ... = PySide.QtCore.QLocale.Country.Togo
+    Tigrinya: ... = QLocale.Language.Tigrinya
     """
     """
 
-    Tokelau: ... = PySide.QtCore.QLocale.Country.Tokelau
+    Togo: ... = QLocale.Country.Togo
     """
     """
 
-    TongaCountry: ... = PySide.QtCore.QLocale.Country.TongaCountry
+    Tokelau: ... = QLocale.Country.Tokelau
     """
     """
 
-    TongaLanguage: ... = PySide.QtCore.QLocale.Language.TongaLanguage
+    TongaCountry: ... = QLocale.Country.TongaCountry
+    """
+    """
+
+    TongaLanguage: ... = QLocale.Language.TongaLanguage
     """
     """
 
     TraditionalChineseScript: ...
     """
-    PySide.QtCore.QLocale.Script.TraditionalChi...
+    QLocale.Script.TraditionalChi...
     """
 
     TraditionalHanScript: ...
     """
-    PySide.QtCore.QLocale.Script.TraditionalHanScri...
+    QLocale.Script.TraditionalHanScri...
     """
 
-    TrinidadAndTobago: ... = PySide.QtCore.QLocale.Country.TrinidadAndTobago
-    """
-    """
-
-    Tsonga: ... = PySide.QtCore.QLocale.Language.Tsonga
+    TrinidadAndTobago: ... = QLocale.Country.TrinidadAndTobago
     """
     """
 
-    Tunisia: ... = PySide.QtCore.QLocale.Country.Tunisia
+    Tsonga: ... = QLocale.Language.Tsonga
     """
     """
 
-    Turkey: ... = PySide.QtCore.QLocale.Country.Turkey
+    Tunisia: ... = QLocale.Country.Tunisia
     """
     """
 
-    Turkish: ... = PySide.QtCore.QLocale.Language.Turkish
+    Turkey: ... = QLocale.Country.Turkey
     """
     """
 
-    Turkmen: ... = PySide.QtCore.QLocale.Language.Turkmen
+    Turkish: ... = QLocale.Language.Turkish
     """
     """
 
-    Turkmenistan: ... = PySide.QtCore.QLocale.Country.Turkmenistan
+    Turkmen: ... = QLocale.Language.Turkmen
+    """
+    """
+
+    Turkmenistan: ... = QLocale.Country.Turkmenistan
     """
     """
 
     TurksAndCaicosIslands: ...
     """
-    PySide.QtCore.QLocale.Country.TurksAndCaicosIs...
+    QLocale.Country.TurksAndCaicosIs...
     """
 
-    Tuvalu: ... = PySide.QtCore.QLocale.Country.Tuvalu
-    """
-    """
-
-    Twi: ... = PySide.QtCore.QLocale.Language.Twi
+    Tuvalu: ... = QLocale.Country.Tuvalu
     """
     """
 
-    Tyap: ... = PySide.QtCore.QLocale.Language.Tyap
+    Twi: ... = QLocale.Language.Twi
     """
     """
 
-    USVirginIslands: ... = PySide.QtCore.QLocale.Country.USVirginIslands
+    Tyap: ... = QLocale.Language.Tyap
     """
     """
 
-    Uganda: ... = PySide.QtCore.QLocale.Country.Uganda
+    USVirginIslands: ... = QLocale.Country.USVirginIslands
     """
     """
 
-    Uigur: ... = PySide.QtCore.QLocale.Language.Uigur
+    Uganda: ... = QLocale.Country.Uganda
     """
     """
 
-    Ukraine: ... = PySide.QtCore.QLocale.Country.Ukraine
+    Uigur: ... = QLocale.Language.Uigur
     """
     """
 
-    Ukrainian: ... = PySide.QtCore.QLocale.Language.Ukrainian
+    Ukraine: ... = QLocale.Country.Ukraine
     """
     """
 
-    UnitedArabEmirates: ... = PySide.QtCore.QLocale.Country.UnitedArabEmirates
+    Ukrainian: ... = QLocale.Language.Ukrainian
     """
     """
 
-    UnitedKingdom: ... = PySide.QtCore.QLocale.Country.UnitedKingdom
+    UnitedArabEmirates: ... = QLocale.Country.UnitedArabEmirates
     """
     """
 
-    UnitedStates: ... = PySide.QtCore.QLocale.Country.UnitedStates
+    UnitedKingdom: ... = QLocale.Country.UnitedKingdom
+    """
+    """
+
+    UnitedStates: ... = QLocale.Country.UnitedStates
     """
     """
 
     UnitedStatesMinorOutlyingIslands: ...
     """
-    PySide.QtCore.QLocale.Country.Unite...
+    QLocale.Country.Unite...
     """
 
-    Urdu: ... = PySide.QtCore.QLocale.Language.Urdu
-    """
-    """
-
-    Uruguay: ... = PySide.QtCore.QLocale.Country.Uruguay
+    Urdu: ... = QLocale.Language.Urdu
     """
     """
 
-    Uzbek: ... = PySide.QtCore.QLocale.Language.Uzbek
+    Uruguay: ... = QLocale.Country.Uruguay
     """
     """
 
-    Uzbekistan: ... = PySide.QtCore.QLocale.Country.Uzbekistan
+    Uzbek: ... = QLocale.Language.Uzbek
     """
     """
 
-    Vai: ... = PySide.QtCore.QLocale.Language.Vai
+    Uzbekistan: ... = QLocale.Country.Uzbekistan
     """
     """
 
-    Vanuatu: ... = PySide.QtCore.QLocale.Country.Vanuatu
+    Vai: ... = QLocale.Language.Vai
     """
     """
 
-    VaticanCityState: ... = PySide.QtCore.QLocale.Country.VaticanCityState
+    Vanuatu: ... = QLocale.Country.Vanuatu
     """
     """
 
-    Venda: ... = PySide.QtCore.QLocale.Language.Venda
+    VaticanCityState: ... = QLocale.Country.VaticanCityState
     """
     """
 
-    Venezuela: ... = PySide.QtCore.QLocale.Country.Venezuela
+    Venda: ... = QLocale.Language.Venda
     """
     """
 
-    VietNam: ... = PySide.QtCore.QLocale.Country.VietNam
+    Venezuela: ... = QLocale.Country.Venezuela
     """
     """
 
-    Vietnamese: ... = PySide.QtCore.QLocale.Language.Vietnamese
+    VietNam: ... = QLocale.Country.VietNam
     """
     """
 
-    Volapuk: ... = PySide.QtCore.QLocale.Language.Volapuk
+    Vietnamese: ... = QLocale.Language.Vietnamese
     """
     """
 
-    Vunjo: ... = PySide.QtCore.QLocale.Language.Vunjo
+    Volapuk: ... = QLocale.Language.Volapuk
     """
     """
 
-    Walamo: ... = PySide.QtCore.QLocale.Language.Walamo
+    Vunjo: ... = QLocale.Language.Vunjo
+    """
+    """
+
+    Walamo: ... = QLocale.Language.Walamo
     """
     """
 
     WallisAndFutunaIslands: ...
     """
-    PySide.QtCore.QLocale.Country.WallisAndFutuna...
+    QLocale.Country.WallisAndFutuna...
     """
 
-    Walser: ... = PySide.QtCore.QLocale.Language.Walser
-    """
-    """
-
-    Welsh: ... = PySide.QtCore.QLocale.Language.Welsh
+    Walser: ... = QLocale.Language.Walser
     """
     """
 
-    WesternSahara: ... = PySide.QtCore.QLocale.Country.WesternSahara
+    Welsh: ... = QLocale.Language.Welsh
     """
     """
 
-    Wolof: ... = PySide.QtCore.QLocale.Language.Wolof
+    WesternSahara: ... = QLocale.Country.WesternSahara
     """
     """
 
-    Xhosa: ... = PySide.QtCore.QLocale.Language.Xhosa
+    Wolof: ... = QLocale.Language.Wolof
     """
     """
 
-    Yangben: ... = PySide.QtCore.QLocale.Language.Yangben
+    Xhosa: ... = QLocale.Language.Xhosa
     """
     """
 
-    Yemen: ... = PySide.QtCore.QLocale.Country.Yemen
+    Yangben: ... = QLocale.Language.Yangben
     """
     """
 
-    Yiddish: ... = PySide.QtCore.QLocale.Language.Yiddish
+    Yemen: ... = QLocale.Country.Yemen
     """
     """
 
-    Yoruba: ... = PySide.QtCore.QLocale.Language.Yoruba
+    Yiddish: ... = QLocale.Language.Yiddish
     """
     """
 
-    Yugoslavia: ... = PySide.QtCore.QLocale.Country.Yugoslavia
+    Yoruba: ... = QLocale.Language.Yoruba
     """
     """
 
-    Zambia: ... = PySide.QtCore.QLocale.Country.Zambia
+    Yugoslavia: ... = QLocale.Country.Yugoslavia
     """
     """
 
-    Zarma: ... = PySide.QtCore.QLocale.Language.Zarma
+    Zambia: ... = QLocale.Country.Zambia
     """
     """
 
-    Zhuang: ... = PySide.QtCore.QLocale.Language.Zhuang
+    Zarma: ... = QLocale.Language.Zarma
     """
     """
 
-    Zimbabwe: ... = PySide.QtCore.QLocale.Country.Zimbabwe
+    Zhuang: ... = QLocale.Language.Zhuang
     """
     """
 
-    Zulu: ... = PySide.QtCore.QLocale.Language.Zulu
+    Zimbabwe: ... = QLocale.Country.Zimbabwe
+    """
+    """
+
+    Zulu: ... = QLocale.Language.Zulu
     """
     """
 
@@ -7803,7 +7794,7 @@ class QLocale(Shiboken.Object):
         x.__ne__(y) <==> x!=y
         """
         ...
-    def amText(self, *args, **kwargs):
+    def amStr(self, *args, **kwargs):
         """ """
         ...
     def bcp47Name(self, *args, **kwargs):
@@ -7866,7 +7857,7 @@ class QLocale(Shiboken.Object):
     def percent(self, *args, **kwargs):
         """ """
         ...
-    def pmText(self, *args, **kwargs):
+    def pmStr(self, *args, **kwargs):
         """ """
         ...
     def positiveSign(self, *args, **kwargs):
@@ -8103,39 +8094,39 @@ class QMetaEnum(Shiboken.Object):
 class QMetaMethod(Shiboken.Object):
     Access: ...
     """
-    <type 'PySide.QtCore.QMetaMethod.Access'>
+    <type 'QMetaMethod.Access'>
     """
 
-    Constructor: ... = PySide.QtCore.QMetaMethod.MethodType.Constructor
+    Constructor: ... = QMetaMethod.MethodType.Constructor
     """
     """
 
-    Method: ... = PySide.QtCore.QMetaMethod.MethodType.Method
+    Method: ... = QMetaMethod.MethodType.Method
     """
     """
 
     MethodType: ...
     """
-    <type 'PySide.QtCore.QMetaMethod.MethodType'>
+    <type 'QMetaMethod.MethodType'>
     """
 
-    Private: ... = PySide.QtCore.QMetaMethod.Access.Private
-    """
-    """
-
-    Protected: ... = PySide.QtCore.QMetaMethod.Access.Protected
+    Private: ... = QMetaMethod.Access.Private
     """
     """
 
-    Public: ... = PySide.QtCore.QMetaMethod.Access.Public
+    Protected: ... = QMetaMethod.Access.Protected
     """
     """
 
-    Signal: ... = PySide.QtCore.QMetaMethod.MethodType.Signal
+    Public: ... = QMetaMethod.Access.Public
     """
     """
 
-    Slot: ... = PySide.QtCore.QMetaMethod.MethodType.Slot
+    Signal: ... = QMetaMethod.MethodType.Signal
+    """
+    """
+
+    Slot: ... = QMetaMethod.MethodType.Slot
     """
     """
 
@@ -8189,50 +8180,50 @@ class QMetaMethod(Shiboken.Object):
 class QMetaObject(Shiboken.Object):
     Call: ...
     """
-    <type 'PySide.QtCore.QMetaObject.Call'>
+    <type 'QMetaObject.Call'>
     """
 
-    CreateInstance: ... = PySide.QtCore.QMetaObject.Call.CreateInstance
+    CreateInstance: ... = QMetaObject.Call.CreateInstance
     """
     """
 
-    InvokeMetaMethod: ... = PySide.QtCore.QMetaObject.Call.InvokeMetaMethod
+    InvokeMetaMethod: ... = QMetaObject.Call.InvokeMetaMethod
     """
     """
 
     QueryPropertyDesignable: ...
     """
-    PySide.QtCore.QMetaObject.Call.QueryProperty...
+    QMetaObject.Call.QueryProperty...
     """
 
     QueryPropertyEditable: ...
     """
-    PySide.QtCore.QMetaObject.Call.QueryPropertyEd...
+    QMetaObject.Call.QueryPropertyEd...
     """
 
     QueryPropertyScriptable: ...
     """
-    PySide.QtCore.QMetaObject.Call.QueryProperty...
+    QMetaObject.Call.QueryProperty...
     """
 
     QueryPropertyStored: ...
     """
-    PySide.QtCore.QMetaObject.Call.QueryPropertyStor...
+    QMetaObject.Call.QueryPropertyStor...
     """
 
-    QueryPropertyUser: ... = PySide.QtCore.QMetaObject.Call.QueryPropertyUser
-    """
-    """
-
-    ReadProperty: ... = PySide.QtCore.QMetaObject.Call.ReadProperty
+    QueryPropertyUser: ... = QMetaObject.Call.QueryPropertyUser
     """
     """
 
-    ResetProperty: ... = PySide.QtCore.QMetaObject.Call.ResetProperty
+    ReadProperty: ... = QMetaObject.Call.ReadProperty
     """
     """
 
-    WriteProperty: ... = PySide.QtCore.QMetaObject.Call.WriteProperty
+    ResetProperty: ... = QMetaObject.Call.ResetProperty
+    """
+    """
+
+    WriteProperty: ... = QMetaObject.Call.WriteProperty
     """
     """
 
@@ -8453,7 +8444,7 @@ class QMimeData(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -8484,7 +8475,7 @@ class QMimeData(QObject):
     def hasImage(self, *args, **kwargs):
         """ """
         ...
-    def hasText(self, *args, **kwargs):
+    def hasStr(self, *args, **kwargs):
         """ """
         ...
     def hasUrls(self, *args, **kwargs):
@@ -8514,7 +8505,7 @@ class QMimeData(QObject):
     def setImageData(self, *args, **kwargs):
         """ """
         ...
-    def setText(self, *args, **kwargs):
+    def setStr(self, *args, **kwargs):
         """ """
         ...
     def setUrls(self, *args, **kwargs):
@@ -8617,16 +8608,16 @@ class QModelIndex(Shiboken.Object):
     ...
 
 class QMutex(Shiboken.Object):
-    NonRecursive: ... = PySide.QtCore.QMutex.RecursionMode.NonRecursive
+    NonRecursive: ... = QMutex.RecursionMode.NonRecursive
     """
     """
 
     RecursionMode: ...
     """
-    <type 'PySide.QtCore.QMutex.RecursionMode'>
+    <type 'QMutex.RecursionMode'>
     """
 
-    Recursive: ... = PySide.QtCore.QMutex.RecursionMode.Recursive
+    Recursive: ... = QMutex.RecursionMode.Recursive
     """
     """
 
@@ -8699,7 +8690,7 @@ class QObject(Shiboken.Object):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def connect(*args, **kwargs):
@@ -8748,9 +8739,7 @@ class QObject(Shiboken.Object):
     def customEvent(self, *args, **kwargs):
         """ """
         ...
-    def deleteLater(self, *args, **kwargs):
-        """ """
-        ...
+    def deleteLater(self) -> None: ...
     def disconnectNotify(self, *args, **kwargs):
         """ """
         ...
@@ -8766,16 +8755,14 @@ class QObject(Shiboken.Object):
     def emit(self, *args, **kwargs):
         """ """
         ...
-    def event(self, *args, **kwargs):
+    def event(self, event: QEvent) -> bool:
         """ """
         ...
     def eventFilter(self, *args, **kwargs):
         """ """
         ...
-    T = typing.TypeVar("T", bound=type)
-    def findChild(
-        self, type: typing.Type[T], name: typing.Text = "", /
-    ) -> typing.Optional[T]:
+    T = TypeVar("T", bound=type)
+    def findChild(self, type: Type[T], name: Str = "", /) -> Optional[T]:
         """ """
         ...
     def findChildren(self, *args, **kwargs):
@@ -8796,10 +8783,8 @@ class QObject(Shiboken.Object):
     def metaObject(self, *args, **kwargs):
         """ """
         ...
-    def moveToThread(self, *args, **kwargs):
-        """ """
-        ...
-    def objectName(self) -> typing.Text:
+    def moveToThread(self, targetThread: QThread, /) -> None: ...
+    def objectName(self) -> Str:
         """ """
         ...
     def parent(self, *args, **kwargs):
@@ -8820,7 +8805,7 @@ class QObject(Shiboken.Object):
     def senderSignalIndex(self, *args, **kwargs):
         """ """
         ...
-    def setObjectName(self, name: typing.Text) -> None:
+    def setObjectName(self, name: Str) -> None:
         """ """
         ...
     def setParent(self, *args, **kwargs):
@@ -8835,7 +8820,7 @@ class QObject(Shiboken.Object):
     def startTimer(self, *args, **kwargs):
         """ """
         ...
-    def thread(self, *args, **kwargs):
+    def thread(self) -> QThread:
         """ """
         ...
     def timerEvent(self, *args, **kwargs):
@@ -8857,7 +8842,7 @@ class QParallelAnimationGroup(QAnimationGroup):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -8889,7 +8874,7 @@ class QPauseAnimation(QAbstractAnimation):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -9006,7 +8991,7 @@ class QPluginLoader(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def staticInstances(*args, **kwargs):
@@ -9337,95 +9322,95 @@ class QPointF(Shiboken.Object):
     ...
 
 class QProcess(QIODevice):
-    CrashExit: ... = PySide.QtCore.QProcess.ExitStatus.CrashExit
+    CrashExit: ... = QProcess.ExitStatus.CrashExit
     """
     """
 
-    Crashed: ... = PySide.QtCore.QProcess.ProcessError.Crashed
+    Crashed: ... = QProcess.ProcessError.Crashed
     """
     """
 
     ExitStatus: ...
     """
-    <type 'PySide.QtCore.QProcess.ExitStatus'>
+    <type 'QProcess.ExitStatus'>
     """
 
-    FailedToStart: ... = PySide.QtCore.QProcess.ProcessError.FailedToStart
+    FailedToStart: ... = QProcess.ProcessError.FailedToStart
     """
     """
 
     ForwardedChannels: ...
     """
-    PySide.QtCore.QProcess.ProcessChannelMode.Forwarde...
+    QProcess.ProcessChannelMode.Forwarde...
     """
 
     MergedChannels: ...
     """
-    PySide.QtCore.QProcess.ProcessChannelMode.MergedChann...
+    QProcess.ProcessChannelMode.MergedChann...
     """
 
-    NormalExit: ... = PySide.QtCore.QProcess.ExitStatus.NormalExit
+    NormalExit: ... = QProcess.ExitStatus.NormalExit
     """
     """
 
-    NotRunning: ... = PySide.QtCore.QProcess.ProcessState.NotRunning
+    NotRunning: ... = QProcess.ProcessState.NotRunning
     """
     """
 
     ProcessChannel: ...
     """
-    <type 'PySide.QtCore.QProcess.ProcessChannel'>
+    <type 'QProcess.ProcessChannel'>
     """
 
     ProcessChannelMode: ...
     """
-    <type 'PySide.QtCore.QProcess.ProcessChannelMode'...
+    <type 'QProcess.ProcessChannelMode'...
     """
 
     ProcessError: ...
     """
-    <type 'PySide.QtCore.QProcess.ProcessError'>
+    <type 'QProcess.ProcessError'>
     """
 
     ProcessState: ...
     """
-    <type 'PySide.QtCore.QProcess.ProcessState'>
+    <type 'QProcess.ProcessState'>
     """
 
-    ReadError: ... = PySide.QtCore.QProcess.ProcessError.ReadError
+    ReadError: ... = QProcess.ProcessError.ReadError
     """
     """
 
-    Running: ... = PySide.QtCore.QProcess.ProcessState.Running
+    Running: ... = QProcess.ProcessState.Running
     """
     """
 
     SeparateChannels: ...
     """
-    PySide.QtCore.QProcess.ProcessChannelMode.SeparateC...
+    QProcess.ProcessChannelMode.SeparateC...
     """
 
-    StandardError: ... = PySide.QtCore.QProcess.ProcessChannel.StandardError
-    """
-    """
-
-    StandardOutput: ... = PySide.QtCore.QProcess.ProcessChannel.StandardOutput
+    StandardError: ... = QProcess.ProcessChannel.StandardError
     """
     """
 
-    Starting: ... = PySide.QtCore.QProcess.ProcessState.Starting
+    StandardOutput: ... = QProcess.ProcessChannel.StandardOutput
     """
     """
 
-    Timedout: ... = PySide.QtCore.QProcess.ProcessError.Timedout
+    Starting: ... = QProcess.ProcessState.Starting
     """
     """
 
-    UnknownError: ... = PySide.QtCore.QProcess.ProcessError.UnknownError
+    Timedout: ... = QProcess.ProcessError.Timedout
     """
     """
 
-    WriteError: ... = PySide.QtCore.QProcess.ProcessError.WriteError
+    UnknownError: ... = QProcess.ProcessError.UnknownError
+    """
+    """
+
+    WriteError: ... = QProcess.ProcessError.WriteError
     """
     """
 
@@ -9466,7 +9451,7 @@ class QProcess(QIODevice):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def execute(*args, **kwargs):
@@ -9685,7 +9670,7 @@ class QPropertyAnimation(QVariantAnimation):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -9743,16 +9728,16 @@ class QReadLocker(Shiboken.Object):
     ...
 
 class QReadWriteLock(Shiboken.Object):
-    NonRecursive: ... = PySide.QtCore.QReadWriteLock.RecursionMode.NonRecursive
+    NonRecursive: ... = QReadWriteLock.RecursionMode.NonRecursive
     """
     """
 
     RecursionMode: ...
     """
-    <type 'PySide.QtCore.QReadWriteLock.RecursionMode'>
+    <type 'QReadWriteLock.RecursionMode'>
     """
 
-    Recursive: ... = PySide.QtCore.QReadWriteLock.RecursionMode.Recursive
+    Recursive: ... = QReadWriteLock.RecursionMode.Recursive
     """
     """
 
@@ -9888,7 +9873,7 @@ class QRect(Shiboken.Object):
     def bottomRight(self, *args, **kwargs):
         """ """
         ...
-    def center(self, *args, **kwargs):
+    def center(self) -> QPoint:
         """ """
         ...
     def contains(self, *args, **kwargs):
@@ -9933,7 +9918,7 @@ class QRect(Shiboken.Object):
     def moveBottomRight(self, *args, **kwargs):
         """ """
         ...
-    def moveCenter(self, *args, **kwargs):
+    def moveCenter(self, position: QPoint,/) -> None:
         """ """
         ...
     def moveLeft(self, *args, **kwargs):
@@ -10300,49 +10285,49 @@ class QRectF(Shiboken.Object):
     ...
 
 class QRegExp(Shiboken.Object):
-    CaretAtOffset: ... = PySide.QtCore.QRegExp.CaretMode.CaretAtOffset
+    CaretAtOffset: ... = QRegExp.CaretMode.CaretAtOffset
     """
     """
 
-    CaretAtZero: ... = PySide.QtCore.QRegExp.CaretMode.CaretAtZero
+    CaretAtZero: ... = QRegExp.CaretMode.CaretAtZero
     """
     """
 
     CaretMode: ...
     """
-    <type 'PySide.QtCore.QRegExp.CaretMode'>
+    <type 'QRegExp.CaretMode'>
     """
 
-    CaretWontMatch: ... = PySide.QtCore.QRegExp.CaretMode.CaretWontMatch
+    CaretWontMatch: ... = QRegExp.CaretMode.CaretWontMatch
     """
     """
 
-    FixedString: ... = PySide.QtCore.QRegExp.PatternSyntax.FixedString
+    FixedString: ... = QRegExp.PatternSyntax.FixedString
     """
     """
 
     PatternSyntax: ...
     """
-    <type 'PySide.QtCore.QRegExp.PatternSyntax'>
+    <type 'QRegExp.PatternSyntax'>
     """
 
-    RegExp: ... = PySide.QtCore.QRegExp.PatternSyntax.RegExp
-    """
-    """
-
-    RegExp2: ... = PySide.QtCore.QRegExp.PatternSyntax.RegExp2
+    RegExp: ... = QRegExp.PatternSyntax.RegExp
     """
     """
 
-    W3CXmlSchema11: ... = PySide.QtCore.QRegExp.PatternSyntax.W3CXmlSchema11
+    RegExp2: ... = QRegExp.PatternSyntax.RegExp2
     """
     """
 
-    Wildcard: ... = PySide.QtCore.QRegExp.PatternSyntax.Wildcard
+    W3CXmlSchema11: ... = QRegExp.PatternSyntax.W3CXmlSchema11
     """
     """
 
-    WildcardUnix: ... = PySide.QtCore.QRegExp.PatternSyntax.WildcardUnix
+    Wildcard: ... = QRegExp.PatternSyntax.Wildcard
+    """
+    """
+
+    WildcardUnix: ... = QRegExp.PatternSyntax.WildcardUnix
     """
     """
 
@@ -10406,7 +10391,7 @@ class QRegExp(Shiboken.Object):
     def captureCount(self, *args, **kwargs):
         """ """
         ...
-    def capturedTexts(self, *args, **kwargs):
+    def capturedStrs(self, *args, **kwargs):
         """ """
         ...
     def caseSensitivity(self, *args, **kwargs):
@@ -10598,7 +10583,7 @@ class QSequentialAnimationGroup(QAnimationGroup):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -10632,114 +10617,114 @@ class QSequentialAnimationGroup(QAnimationGroup):
     ...
 
 class QSettings(QObject):
-    AccessError: ... = PySide.QtCore.QSettings.Status.AccessError
+    AccessError: ... = QSettings.Status.AccessError
     """
     """
 
-    CustomFormat1: ... = PySide.QtCore.QSettings.Format.CustomFormat1
+    CustomFormat1: ... = QSettings.Format.CustomFormat1
     """
     """
 
-    CustomFormat10: ... = PySide.QtCore.QSettings.Format.CustomFormat10
+    CustomFormat10: ... = QSettings.Format.CustomFormat10
     """
     """
 
-    CustomFormat11: ... = PySide.QtCore.QSettings.Format.CustomFormat11
+    CustomFormat11: ... = QSettings.Format.CustomFormat11
     """
     """
 
-    CustomFormat12: ... = PySide.QtCore.QSettings.Format.CustomFormat12
+    CustomFormat12: ... = QSettings.Format.CustomFormat12
     """
     """
 
-    CustomFormat13: ... = PySide.QtCore.QSettings.Format.CustomFormat13
+    CustomFormat13: ... = QSettings.Format.CustomFormat13
     """
     """
 
-    CustomFormat14: ... = PySide.QtCore.QSettings.Format.CustomFormat14
+    CustomFormat14: ... = QSettings.Format.CustomFormat14
     """
     """
 
-    CustomFormat15: ... = PySide.QtCore.QSettings.Format.CustomFormat15
+    CustomFormat15: ... = QSettings.Format.CustomFormat15
     """
     """
 
-    CustomFormat16: ... = PySide.QtCore.QSettings.Format.CustomFormat16
+    CustomFormat16: ... = QSettings.Format.CustomFormat16
     """
     """
 
-    CustomFormat2: ... = PySide.QtCore.QSettings.Format.CustomFormat2
+    CustomFormat2: ... = QSettings.Format.CustomFormat2
     """
     """
 
-    CustomFormat3: ... = PySide.QtCore.QSettings.Format.CustomFormat3
+    CustomFormat3: ... = QSettings.Format.CustomFormat3
     """
     """
 
-    CustomFormat4: ... = PySide.QtCore.QSettings.Format.CustomFormat4
+    CustomFormat4: ... = QSettings.Format.CustomFormat4
     """
     """
 
-    CustomFormat5: ... = PySide.QtCore.QSettings.Format.CustomFormat5
+    CustomFormat5: ... = QSettings.Format.CustomFormat5
     """
     """
 
-    CustomFormat6: ... = PySide.QtCore.QSettings.Format.CustomFormat6
+    CustomFormat6: ... = QSettings.Format.CustomFormat6
     """
     """
 
-    CustomFormat7: ... = PySide.QtCore.QSettings.Format.CustomFormat7
+    CustomFormat7: ... = QSettings.Format.CustomFormat7
     """
     """
 
-    CustomFormat8: ... = PySide.QtCore.QSettings.Format.CustomFormat8
+    CustomFormat8: ... = QSettings.Format.CustomFormat8
     """
     """
 
-    CustomFormat9: ... = PySide.QtCore.QSettings.Format.CustomFormat9
+    CustomFormat9: ... = QSettings.Format.CustomFormat9
     """
     """
 
     Format: ...
     """
-    <type 'PySide.QtCore.QSettings.Format'>
+    <type 'QSettings.Format'>
     """
 
-    FormatError: ... = PySide.QtCore.QSettings.Status.FormatError
-    """
-    """
-
-    IniFormat: ... = PySide.QtCore.QSettings.Format.IniFormat
+    FormatError: ... = QSettings.Status.FormatError
     """
     """
 
-    InvalidFormat: ... = PySide.QtCore.QSettings.Format.InvalidFormat
+    IniFormat: ... = QSettings.Format.IniFormat
     """
     """
 
-    NativeFormat: ... = PySide.QtCore.QSettings.Format.NativeFormat
+    InvalidFormat: ... = QSettings.Format.InvalidFormat
     """
     """
 
-    NoError: ... = PySide.QtCore.QSettings.Status.NoError
+    NativeFormat: ... = QSettings.Format.NativeFormat
+    """
+    """
+
+    NoError: ... = QSettings.Status.NoError
     """
     """
 
     Scope: ...
     """
-    <type 'PySide.QtCore.QSettings.Scope'>
+    <type 'QSettings.Scope'>
     """
 
     Status: ...
     """
-    <type 'PySide.QtCore.QSettings.Status'>
+    <type 'QSettings.Status'>
     """
 
-    SystemScope: ... = PySide.QtCore.QSettings.Scope.SystemScope
+    SystemScope: ... = QSettings.Scope.SystemScope
     """
     """
 
-    UserScope: ... = PySide.QtCore.QSettings.Scope.UserScope
+    UserScope: ... = QSettings.Scope.UserScope
     """
     """
 
@@ -10750,7 +10735,7 @@ class QSettings(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def defaultFormat(*args, **kwargs):
@@ -10868,7 +10853,7 @@ class QSignalMapper(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -10897,7 +10882,7 @@ class QSignalTransition(QAbstractTransition):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -11244,20 +11229,20 @@ class QSizeF(Shiboken.Object):
     ...
 
 class QSocketNotifier(QObject):
-    Exception: ... = PySide.QtCore.QSocketNotifier.Type.Exception
+    Exception: ... = QSocketNotifier.Type.Exception
     """
     """
 
-    Read: ... = PySide.QtCore.QSocketNotifier.Type.Read
+    Read: ... = QSocketNotifier.Type.Read
     """
     """
 
     Type: ...
     """
-    <type 'PySide.QtCore.QSocketNotifier.Type'>
+    <type 'QSocketNotifier.Type'>
     """
 
-    Write: ... = PySide.QtCore.QSocketNotifier.Type.Write
+    Write: ... = QSocketNotifier.Type.Write
     """
     """
 
@@ -11273,7 +11258,7 @@ class QSocketNotifier(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -11305,7 +11290,7 @@ class QSortFilterProxyModel(QAbstractProxyModel):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -11479,14 +11464,14 @@ class QSortFilterProxyModel(QAbstractProxyModel):
 class QState(QAbstractState):
     ChildMode: ...
     """
-    <type 'PySide.QtCore.QState.ChildMode'>
+    <type 'QState.ChildMode'>
     """
 
-    ExclusiveStates: ... = PySide.QtCore.QState.ChildMode.ExclusiveStates
+    ExclusiveStates: ... = QState.ChildMode.ExclusiveStates
     """
     """
 
-    ParallelStates: ... = PySide.QtCore.QState.ChildMode.ParallelStates
+    ParallelStates: ... = QState.ChildMode.ParallelStates
     """
     """
 
@@ -11507,7 +11492,7 @@ class QState(QAbstractState):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -11558,65 +11543,65 @@ class QState(QAbstractState):
 class QStateMachine(QState):
     DontRestoreProperties: ...
     """
-    PySide.QtCore.QStateMachine.RestorePolicy.Dont...
+    QStateMachine.RestorePolicy.Dont...
     """
 
     Error: ...
     """
-    <type 'PySide.QtCore.QStateMachine.Error'>
+    <type 'QStateMachine.Error'>
     """
 
     EventPriority: ...
     """
-    <type 'PySide.QtCore.QStateMachine.EventPriority'>
+    <type 'QStateMachine.EventPriority'>
     """
 
-    HighPriority: ... = PySide.QtCore.QStateMachine.EventPriority.HighPriority
+    HighPriority: ... = QStateMachine.EventPriority.HighPriority
     """
     """
 
     NoCommonAncestorForTransitionError: ...
     """
-    PySide.QtCore.QStateMachine.Error...
+    QStateMachine.Error...
     """
 
     NoDefaultStateInHistoryStateError: ...
     """
-    PySide.QtCore.QStateMachine.Error....
+    QStateMachine.Error....
     """
 
-    NoError: ... = PySide.QtCore.QStateMachine.Error.NoError
+    NoError: ... = QStateMachine.Error.NoError
     """
     """
 
     NoInitialStateError: ...
     """
-    PySide.QtCore.QStateMachine.Error.NoInitialState...
+    QStateMachine.Error.NoInitialState...
     """
 
     NormalPriority: ...
     """
-    PySide.QtCore.QStateMachine.EventPriority.NormalPrior...
+    QStateMachine.EventPriority.NormalPrior...
     """
 
     RestorePolicy: ...
     """
-    <type 'PySide.QtCore.QStateMachine.RestorePolicy'>
+    <type 'QStateMachine.RestorePolicy'>
     """
 
     RestoreProperties: ...
     """
-    PySide.QtCore.QStateMachine.RestorePolicy.RestoreP...
+    QStateMachine.RestorePolicy.RestoreP...
     """
 
     SignalEvent: ...
     """
-    <type 'PySide.QtCore.QStateMachine.SignalEvent'>
+    <type 'QStateMachine.SignalEvent'>
     """
 
     WrappedEvent: ...
     """
-    <type 'PySide.QtCore.QStateMachine.WrappedEvent'>
+    <type 'QStateMachine.WrappedEvent'>
     """
 
     __new__: ...
@@ -11631,7 +11616,7 @@ class QStateMachine(QState):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     stopped: ...
@@ -11726,7 +11711,7 @@ class QStateMachine(QState):
         ...
     ...
 
-class QStringListModel(PySide.QtCore.QAbstractListModel):
+class QStringListModel(QAbstractListModel):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -11734,7 +11719,7 @@ class QStringListModel(PySide.QtCore.QAbstractListModel):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -11774,29 +11759,29 @@ class QStringListModel(PySide.QtCore.QAbstractListModel):
     ...
 
 class QSysInfo(Shiboken.Object):
-    BigEndian: ... = PySide.QtCore.QSysInfo.Endian.BigEndian
+    BigEndian: ... = QSysInfo.Endian.BigEndian
     """
     """
 
-    ByteOrder: ... = PySide.QtCore.QSysInfo.Endian.ByteOrder
+    ByteOrder: ... = QSysInfo.Endian.ByteOrder
     """
     """
 
     Endian: ...
     """
-    <type 'PySide.QtCore.QSysInfo.Endian'>
+    <type 'QSysInfo.Endian'>
     """
 
-    LittleEndian: ... = PySide.QtCore.QSysInfo.Endian.LittleEndian
+    LittleEndian: ... = QSysInfo.Endian.LittleEndian
     """
     """
 
     Sizes: ...
     """
-    <type 'PySide.QtCore.QSysInfo.Sizes'>
+    <type 'QSysInfo.Sizes'>
     """
 
-    WordSize: ... = PySide.QtCore.QSysInfo.Sizes.WordSize
+    WordSize: ... = QSysInfo.Sizes.WordSize
     """
     """
 
@@ -11814,54 +11799,54 @@ class QSysInfo(Shiboken.Object):
 class QSystemSemaphore(Shiboken.Object):
     AccessMode: ...
     """
-    <type 'PySide.QtCore.QSystemSemaphore.AccessMode'>
+    <type 'QSystemSemaphore.AccessMode'>
     """
 
     AlreadyExists: ...
     """
-    PySide.QtCore.QSystemSemaphore.SystemSemaphoreError.Al...
+    QSystemSemaphore.SystemSemaphoreError.Al...
     """
 
-    Create: ... = PySide.QtCore.QSystemSemaphore.AccessMode.Create
+    Create: ... = QSystemSemaphore.AccessMode.Create
     """
     """
 
     KeyError: ...
     """
-    PySide.QtCore.QSystemSemaphore.SystemSemaphoreError.KeyErro...
+    QSystemSemaphore.SystemSemaphoreError.KeyErro...
     """
 
-    NoError: ... = PySide.QtCore.QSystemSemaphore.SystemSemaphoreError.NoError
+    NoError: ... = QSystemSemaphore.SystemSemaphoreError.NoError
     """
     """
 
     NotFound: ...
     """
-    PySide.QtCore.QSystemSemaphore.SystemSemaphoreError.NotFoun...
+    QSystemSemaphore.SystemSemaphoreError.NotFoun...
     """
 
-    Open: ... = PySide.QtCore.QSystemSemaphore.AccessMode.Open
+    Open: ... = QSystemSemaphore.AccessMode.Open
     """
     """
 
     OutOfResources: ...
     """
-    PySide.QtCore.QSystemSemaphore.SystemSemaphoreError.O...
+    QSystemSemaphore.SystemSemaphoreError.O...
     """
 
     PermissionDenied: ...
     """
-    PySide.QtCore.QSystemSemaphore.SystemSemaphoreError...
+    QSystemSemaphore.SystemSemaphoreError...
     """
 
     SystemSemaphoreError: ...
     """
-    <type 'PySide.QtCore.QSystemSemaphore.SystemSem...
+    <type 'QSystemSemaphore.SystemSem...
     """
 
     UnknownError: ...
     """
-    PySide.QtCore.QSystemSemaphore.SystemSemaphoreError.Unk...
+    QSystemSemaphore.SystemSemaphoreError.Unk...
     """
 
     __new__: ...
@@ -11901,7 +11886,7 @@ class QTemporaryFile(QFile):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def createLocalFile(*args, **kwargs):
@@ -11935,10 +11920,10 @@ class QTemporaryFile(QFile):
         ...
     ...
 
-class QTextBoundaryFinder(Shiboken.Object):
+class QStrBoundaryFinder(Shiboken.Object):
     BoundaryReason: ...
     """
-    <type 'PySide.QtCore.QTextBoundaryFinder.BoundaryReas...
+    <type 'QStrBoundaryFinder.BoundaryReas...
     """
 
     BoundaryReasons: ...
@@ -11948,35 +11933,35 @@ class QTextBoundaryFinder(Shiboken.Object):
 
     BoundaryType: ...
     """
-    <type 'PySide.QtCore.QTextBoundaryFinder.BoundaryType'>
+    <type 'QStrBoundaryFinder.BoundaryType'>
     """
 
-    EndWord: ... = PySide.QtCore.QTextBoundaryFinder.BoundaryReason.EndWord
-    """
-    """
-
-    Grapheme: ... = PySide.QtCore.QTextBoundaryFinder.BoundaryType.Grapheme
+    EndWord: ... = QStrBoundaryFinder.BoundaryReason.EndWord
     """
     """
 
-    Line: ... = PySide.QtCore.QTextBoundaryFinder.BoundaryType.Line
+    Grapheme: ... = QStrBoundaryFinder.BoundaryType.Grapheme
+    """
+    """
+
+    Line: ... = QStrBoundaryFinder.BoundaryType.Line
     """
     """
 
     NotAtBoundary: ...
     """
-    PySide.QtCore.QTextBoundaryFinder.BoundaryReason.NotAt...
+    QStrBoundaryFinder.BoundaryReason.NotAt...
     """
 
-    Sentence: ... = PySide.QtCore.QTextBoundaryFinder.BoundaryType.Sentence
-    """
-    """
-
-    StartWord: ... = PySide.QtCore.QTextBoundaryFinder.BoundaryReason.StartWord
+    Sentence: ... = QStrBoundaryFinder.BoundaryType.Sentence
     """
     """
 
-    Word: ... = PySide.QtCore.QTextBoundaryFinder.BoundaryType.Word
+    StartWord: ... = QStrBoundaryFinder.BoundaryReason.StartWord
+    """
+    """
+
+    Word: ... = QStrBoundaryFinder.BoundaryType.Word
     """
     """
 
@@ -12027,10 +12012,10 @@ class QTextBoundaryFinder(Shiboken.Object):
         ...
     ...
 
-class QTextCodec(Shiboken.Object):
+class QStrCodec(Shiboken.Object):
     ConversionFlag: ...
     """
-    <type 'PySide.QtCore.QTextCodec.ConversionFlag'>
+    <type 'QStrCodec.ConversionFlag'>
     """
 
     ConversionFlags: ...
@@ -12040,24 +12025,24 @@ class QTextCodec(Shiboken.Object):
 
     ConvertInvalidToNull: ...
     """
-    PySide.QtCore.QTextCodec.ConversionFlag.Convert...
+    QStrCodec.ConversionFlag.Convert...
     """
 
     ConverterState: ...
     """
-    <type 'PySide.QtCore.QTextCodec.ConverterState'>
+    <type 'QStrCodec.ConverterState'>
     """
 
     DefaultConversion: ...
     """
-    PySide.QtCore.QTextCodec.ConversionFlag.DefaultCon...
+    QStrCodec.ConversionFlag.DefaultCon...
     """
 
-    FreeFunction: ... = PySide.QtCore.QTextCodec.ConversionFlag.FreeFunction
+    FreeFunction: ... = QStrCodec.ConversionFlag.FreeFunction
     """
     """
 
-    IgnoreHeader: ... = PySide.QtCore.QTextCodec.ConversionFlag.IgnoreHeader
+    IgnoreHeader: ... = QStrCodec.ConversionFlag.IgnoreHeader
     """
     """
 
@@ -12098,7 +12083,7 @@ class QTextCodec(Shiboken.Object):
         """ """
         ...
     @staticmethod
-    def codecForUtfText(*args, **kwargs):
+    def codecForUtfStr(*args, **kwargs):
         """ """
         ...
     @staticmethod
@@ -12147,7 +12132,7 @@ class QTextCodec(Shiboken.Object):
         ...
     ...
 
-class QTextDecoder(Shiboken.Object):
+class QStrDecoder(Shiboken.Object):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -12165,7 +12150,7 @@ class QTextDecoder(Shiboken.Object):
         ...
     ...
 
-class QTextEncoder(Shiboken.Object):
+class QStrEncoder(Shiboken.Object):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -12183,45 +12168,45 @@ class QTextEncoder(Shiboken.Object):
         ...
     ...
 
-class QTextStream(Shiboken.Object):
+class QStrStream(Shiboken.Object):
     AlignAccountingStyle: ...
     """
-    PySide.QtCore.QTextStream.FieldAlignment.AlignA...
+    QStrStream.FieldAlignment.AlignA...
     """
 
-    AlignCenter: ... = PySide.QtCore.QTextStream.FieldAlignment.AlignCenter
-    """
-    """
-
-    AlignLeft: ... = PySide.QtCore.QTextStream.FieldAlignment.AlignLeft
+    AlignCenter: ... = QStrStream.FieldAlignment.AlignCenter
     """
     """
 
-    AlignRight: ... = PySide.QtCore.QTextStream.FieldAlignment.AlignRight
+    AlignLeft: ... = QStrStream.FieldAlignment.AlignLeft
+    """
+    """
+
+    AlignRight: ... = QStrStream.FieldAlignment.AlignRight
     """
     """
 
     FieldAlignment: ...
     """
-    <type 'PySide.QtCore.QTextStream.FieldAlignment'>
+    <type 'QStrStream.FieldAlignment'>
     """
 
     FixedNotation: ...
     """
-    PySide.QtCore.QTextStream.RealNumberNotation.FixedNota...
+    QStrStream.RealNumberNotation.FixedNota...
     """
 
-    ForcePoint: ... = PySide.QtCore.QTextStream.NumberFlag.ForcePoint
+    ForcePoint: ... = QStrStream.NumberFlag.ForcePoint
     """
     """
 
-    ForceSign: ... = PySide.QtCore.QTextStream.NumberFlag.ForceSign
+    ForceSign: ... = QStrStream.NumberFlag.ForceSign
     """
     """
 
     NumberFlag: ...
     """
-    <type 'PySide.QtCore.QTextStream.NumberFlag'>
+    <type 'QStrStream.NumberFlag'>
     """
 
     NumberFlags: ...
@@ -12229,51 +12214,51 @@ class QTextStream(Shiboken.Object):
     <type 'NumberFlags'>
     """
 
-    Ok: ... = PySide.QtCore.QTextStream.Status.Ok
+    Ok: ... = QStrStream.Status.Ok
     """
     """
 
-    ReadCorruptData: ... = PySide.QtCore.QTextStream.Status.ReadCorruptData
+    ReadCorruptData: ... = QStrStream.Status.ReadCorruptData
     """
     """
 
-    ReadPastEnd: ... = PySide.QtCore.QTextStream.Status.ReadPastEnd
+    ReadPastEnd: ... = QStrStream.Status.ReadPastEnd
     """
     """
 
     RealNumberNotation: ...
     """
-    <type 'PySide.QtCore.QTextStream.RealNumberNotati...
+    <type 'QStrStream.RealNumberNotati...
     """
 
     ScientificNotation: ...
     """
-    PySide.QtCore.QTextStream.RealNumberNotation.Scie...
+    QStrStream.RealNumberNotation.Scie...
     """
 
-    ShowBase: ... = PySide.QtCore.QTextStream.NumberFlag.ShowBase
+    ShowBase: ... = QStrStream.NumberFlag.ShowBase
     """
     """
 
     SmartNotation: ...
     """
-    PySide.QtCore.QTextStream.RealNumberNotation.SmartNota...
+    QStrStream.RealNumberNotation.SmartNota...
     """
 
     Status: ...
     """
-    <type 'PySide.QtCore.QTextStream.Status'>
+    <type 'QStrStream.Status'>
     """
 
-    UppercaseBase: ... = PySide.QtCore.QTextStream.NumberFlag.UppercaseBase
-    """
-    """
-
-    UppercaseDigits: ... = PySide.QtCore.QTextStream.NumberFlag.UppercaseDigits
+    UppercaseBase: ... = QStrStream.NumberFlag.UppercaseBase
     """
     """
 
-    WriteFailed: ... = PySide.QtCore.QTextStream.Status.WriteFailed
+    UppercaseDigits: ... = QStrStream.NumberFlag.UppercaseDigits
+    """
+    """
+
+    WriteFailed: ... = QStrStream.Status.WriteFailed
     """
     """
 
@@ -12419,7 +12404,7 @@ class QTextStream(Shiboken.Object):
         ...
     ...
 
-class QTextStreamManipulator(Shiboken.Object):
+class QStrStreamManipulator(Shiboken.Object):
     def __copy__(self, *args, **kwargs):
         """ """
         ...
@@ -12429,42 +12414,42 @@ class QTextStreamManipulator(Shiboken.Object):
     ...
 
 class QThread(QObject):
-    HighPriority: ... = PySide.QtCore.QThread.Priority.HighPriority
+    HighPriority: ... = QThread.Priority.HighPriority
     """
     """
 
-    HighestPriority: ... = PySide.QtCore.QThread.Priority.HighestPriority
+    HighestPriority: ... = QThread.Priority.HighestPriority
     """
     """
 
-    IdlePriority: ... = PySide.QtCore.QThread.Priority.IdlePriority
+    IdlePriority: ... = QThread.Priority.IdlePriority
     """
     """
 
-    InheritPriority: ... = PySide.QtCore.QThread.Priority.InheritPriority
+    InheritPriority: ... = QThread.Priority.InheritPriority
     """
     """
 
-    LowPriority: ... = PySide.QtCore.QThread.Priority.LowPriority
+    LowPriority: ... = QThread.Priority.LowPriority
     """
     """
 
-    LowestPriority: ... = PySide.QtCore.QThread.Priority.LowestPriority
+    LowestPriority: ... = QThread.Priority.LowestPriority
     """
     """
 
-    NormalPriority: ... = PySide.QtCore.QThread.Priority.NormalPriority
+    NormalPriority: ... = QThread.Priority.NormalPriority
     """
     """
 
     Priority: ...
     """
-    <type 'PySide.QtCore.QThread.Priority'>
+    <type 'QThread.Priority'>
     """
 
     TimeCriticalPriority: ...
     """
-    PySide.QtCore.QThread.Priority.TimeCriticalPrio...
+    QThread.Priority.TimeCriticalPrio...
     """
 
     __new__: ...
@@ -12484,7 +12469,7 @@ class QThread(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     terminated: ...
@@ -12577,7 +12562,7 @@ class QThreadPool(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     @staticmethod
     def globalInstance(*args, **kwargs):
@@ -12746,63 +12731,63 @@ class QTime(Shiboken.Object):
     ...
 
 class QTimeLine(QObject):
-    Backward: ... = PySide.QtCore.QTimeLine.Direction.Backward
+    Backward: ... = QTimeLine.Direction.Backward
     """
     """
 
-    CosineCurve: ... = PySide.QtCore.QTimeLine.CurveShape.CosineCurve
+    CosineCurve: ... = QTimeLine.CurveShape.CosineCurve
     """
     """
 
     CurveShape: ...
     """
-    <type 'PySide.QtCore.QTimeLine.CurveShape'>
+    <type 'QTimeLine.CurveShape'>
     """
 
     Direction: ...
     """
-    <type 'PySide.QtCore.QTimeLine.Direction'>
+    <type 'QTimeLine.Direction'>
     """
 
-    EaseInCurve: ... = PySide.QtCore.QTimeLine.CurveShape.EaseInCurve
-    """
-    """
-
-    EaseInOutCurve: ... = PySide.QtCore.QTimeLine.CurveShape.EaseInOutCurve
+    EaseInCurve: ... = QTimeLine.CurveShape.EaseInCurve
     """
     """
 
-    EaseOutCurve: ... = PySide.QtCore.QTimeLine.CurveShape.EaseOutCurve
+    EaseInOutCurve: ... = QTimeLine.CurveShape.EaseInOutCurve
     """
     """
 
-    Forward: ... = PySide.QtCore.QTimeLine.Direction.Forward
+    EaseOutCurve: ... = QTimeLine.CurveShape.EaseOutCurve
     """
     """
 
-    LinearCurve: ... = PySide.QtCore.QTimeLine.CurveShape.LinearCurve
+    Forward: ... = QTimeLine.Direction.Forward
     """
     """
 
-    NotRunning: ... = PySide.QtCore.QTimeLine.State.NotRunning
+    LinearCurve: ... = QTimeLine.CurveShape.LinearCurve
     """
     """
 
-    Paused: ... = PySide.QtCore.QTimeLine.State.Paused
+    NotRunning: ... = QTimeLine.State.NotRunning
     """
     """
 
-    Running: ... = PySide.QtCore.QTimeLine.State.Running
+    Paused: ... = QTimeLine.State.Paused
     """
     """
 
-    SineCurve: ... = PySide.QtCore.QTimeLine.CurveShape.SineCurve
+    Running: ... = QTimeLine.State.Running
+    """
+    """
+
+    SineCurve: ... = QTimeLine.CurveShape.SineCurve
     """
     """
 
     State: ...
     """
-    <type 'PySide.QtCore.QTimeLine.State'>
+    <type 'QTimeLine.State'>
     """
 
     __new__: ...
@@ -12827,7 +12812,7 @@ class QTimeLine(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     valueChanged: ...
@@ -12939,7 +12924,7 @@ class QTimer(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     timeout: ...
@@ -13013,7 +12998,7 @@ class QTranslator(QObject):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
     def __init__(self, *args, **kwargs):
         """
@@ -13034,7 +13019,7 @@ class QTranslator(QObject):
 class QUrl(Shiboken.Object):
     FormattingOption: ...
     """
-    <type 'PySide.QtCore.QUrl.FormattingOption'>
+    <type 'QUrl.FormattingOption'>
     """
 
     FormattingOptions: ...
@@ -13042,57 +13027,57 @@ class QUrl(Shiboken.Object):
     <type 'FormattingOptions'>
     """
 
-    # None: ... = PySide.QtCore.QUrl.FormattingOption.None
+    # None: ... = QUrl.FormattingOption.None
     """
     """
 
     ParsingMode: ...
     """
-    <type 'PySide.QtCore.QUrl.ParsingMode'>
+    <type 'QUrl.ParsingMode'>
     """
 
-    RemoveAuthority: ... = PySide.QtCore.QUrl.FormattingOption.RemoveAuthority
-    """
-    """
-
-    RemoveFragment: ... = PySide.QtCore.QUrl.FormattingOption.RemoveFragment
+    RemoveAuthority: ... = QUrl.FormattingOption.RemoveAuthority
     """
     """
 
-    RemovePassword: ... = PySide.QtCore.QUrl.FormattingOption.RemovePassword
+    RemoveFragment: ... = QUrl.FormattingOption.RemoveFragment
     """
     """
 
-    RemovePath: ... = PySide.QtCore.QUrl.FormattingOption.RemovePath
+    RemovePassword: ... = QUrl.FormattingOption.RemovePassword
     """
     """
 
-    RemovePort: ... = PySide.QtCore.QUrl.FormattingOption.RemovePort
+    RemovePath: ... = QUrl.FormattingOption.RemovePath
     """
     """
 
-    RemoveQuery: ... = PySide.QtCore.QUrl.FormattingOption.RemoveQuery
+    RemovePort: ... = QUrl.FormattingOption.RemovePort
     """
     """
 
-    RemoveScheme: ... = PySide.QtCore.QUrl.FormattingOption.RemoveScheme
+    RemoveQuery: ... = QUrl.FormattingOption.RemoveQuery
     """
     """
 
-    RemoveUserInfo: ... = PySide.QtCore.QUrl.FormattingOption.RemoveUserInfo
+    RemoveScheme: ... = QUrl.FormattingOption.RemoveScheme
     """
     """
 
-    StrictMode: ... = PySide.QtCore.QUrl.ParsingMode.StrictMode
+    RemoveUserInfo: ... = QUrl.FormattingOption.RemoveUserInfo
+    """
+    """
+
+    StrictMode: ... = QUrl.ParsingMode.StrictMode
     """
     """
 
     StripTrailingSlash: ...
     """
-    PySide.QtCore.QUrl.FormattingOption.StripTrailing...
+    QUrl.FormattingOption.StripTrailing...
     """
 
-    TolerantMode: ... = PySide.QtCore.QUrl.ParsingMode.TolerantMode
+    TolerantMode: ... = QUrl.ParsingMode.TolerantMode
     """
     """
 
@@ -13403,7 +13388,7 @@ class QVariantAnimation(QAbstractAnimation):
 
     staticMetaObject: ...
     """
-    <PySide.QtCore.QMetaObject object>
+    <QMetaObject object>
     """
 
     valueChanged: ...
@@ -13955,103 +13940,103 @@ class QXmlStreamNotationDeclaration(Shiboken.Object):
     ...
 
 class QXmlStreamReader(Shiboken.Object):
-    Characters: ... = PySide.QtCore.QXmlStreamReader.TokenType.Characters
+    Characters: ... = QXmlStreamReader.TokenType.Characters
     """
     """
 
-    Comment: ... = PySide.QtCore.QXmlStreamReader.TokenType.Comment
+    Comment: ... = QXmlStreamReader.TokenType.Comment
     """
     """
 
-    CustomError: ... = PySide.QtCore.QXmlStreamReader.Error.CustomError
+    CustomError: ... = QXmlStreamReader.Error.CustomError
     """
     """
 
-    DTD: ... = PySide.QtCore.QXmlStreamReader.TokenType.DTD
+    DTD: ... = QXmlStreamReader.TokenType.DTD
     """
     """
 
-    EndDocument: ... = PySide.QtCore.QXmlStreamReader.TokenType.EndDocument
+    EndDocument: ... = QXmlStreamReader.TokenType.EndDocument
     """
     """
 
-    EndElement: ... = PySide.QtCore.QXmlStreamReader.TokenType.EndElement
+    EndElement: ... = QXmlStreamReader.TokenType.EndElement
     """
     """
 
     EntityReference: ...
     """
-    PySide.QtCore.QXmlStreamReader.TokenType.EntityRefer...
+    QXmlStreamReader.TokenType.EntityRefer...
     """
 
     Error: ...
     """
-    <type 'PySide.QtCore.QXmlStreamReader.Error'>
+    <type 'QXmlStreamReader.Error'>
     """
 
     ErrorOnUnexpectedElement: ...
     """
-    PySide.QtCore.QXmlStreamReader.ReadElementT...
+    QXmlStreamReader.ReadElementT...
     """
 
     IncludeChildElements: ...
     """
-    PySide.QtCore.QXmlStreamReader.ReadElementTextB...
+    QXmlStreamReader.ReadElementStrB...
     """
 
-    Invalid: ... = PySide.QtCore.QXmlStreamReader.TokenType.Invalid
-    """
-    """
-
-    NoError: ... = PySide.QtCore.QXmlStreamReader.Error.NoError
+    Invalid: ... = QXmlStreamReader.TokenType.Invalid
     """
     """
 
-    NoToken: ... = PySide.QtCore.QXmlStreamReader.TokenType.NoToken
+    NoError: ... = QXmlStreamReader.Error.NoError
+    """
+    """
+
+    NoToken: ... = QXmlStreamReader.TokenType.NoToken
     """
     """
 
     NotWellFormedError: ...
     """
-    PySide.QtCore.QXmlStreamReader.Error.NotWellForme...
+    QXmlStreamReader.Error.NotWellForme...
     """
 
     PrematureEndOfDocumentError: ...
     """
-    PySide.QtCore.QXmlStreamReader.Error.Pre...
+    QXmlStreamReader.Error.Pre...
     """
 
     ProcessingInstruction: ...
     """
-    PySide.QtCore.QXmlStreamReader.TokenType.Proce...
+    QXmlStreamReader.TokenType.Proce...
     """
 
-    ReadElementTextBehaviour: ...
+    ReadElementStrBehaviour: ...
     """
-    <type 'PySide.QtCore.QXmlStreamReader.ReadE...
+    <type 'QXmlStreamReader.ReadE...
     """
 
     SkipChildElements: ...
     """
-    PySide.QtCore.QXmlStreamReader.ReadElementTextBeha...
+    QXmlStreamReader.ReadElementStrBeha...
     """
 
-    StartDocument: ... = PySide.QtCore.QXmlStreamReader.TokenType.StartDocument
+    StartDocument: ... = QXmlStreamReader.TokenType.StartDocument
     """
     """
 
-    StartElement: ... = PySide.QtCore.QXmlStreamReader.TokenType.StartElement
+    StartElement: ... = QXmlStreamReader.TokenType.StartElement
     """
     """
 
     TokenType: ...
     """
-    <type 'PySide.QtCore.QXmlStreamReader.TokenType'>
+    <type 'QXmlStreamReader.TokenType'>
     """
 
     UnexpectedElementError: ...
     """
-    PySide.QtCore.QXmlStreamReader.Error.Unexpect...
+    QXmlStreamReader.Error.Unexpect...
     """
 
     __new__: ...
@@ -14189,7 +14174,7 @@ class QXmlStreamReader(Shiboken.Object):
     def raiseError(self, *args, **kwargs):
         """ """
         ...
-    def readElementText(self, *args, **kwargs):
+    def readElementStr(self, *args, **kwargs):
         """ """
         ...
     def readNext(self, *args, **kwargs):
@@ -14306,7 +14291,7 @@ class QXmlStreamWriter(Shiboken.Object):
     def writeStartElement(self, *args, **kwargs):
         """ """
         ...
-    def writeTextElement(self, *args, **kwargs):
+    def writeStrElement(self, *args, **kwargs):
         """ """
         ...
     ...
@@ -14314,150 +14299,150 @@ class QXmlStreamWriter(Shiboken.Object):
 class Qt(Shiboken.Object):
     AA_AttributeCount: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_Attribute...
+    Qt.ApplicationAttribute.AA_Attribute...
     """
 
     AA_CaptureMultimediaKeys: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_Ca...
+    Qt.ApplicationAttribute.AA_Ca...
     """
 
     AA_DontCreateNativeWidgetSiblings: ...
     """
-    PySide.QtCore.Qt.ApplicationAttrib...
+    Qt.ApplicationAttrib...
     """
 
     AA_DontShowIconsInMenus: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_Don...
+    Qt.ApplicationAttribute.AA_Don...
     """
 
     AA_DontUseNativeMenuBar: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_Don...
+    Qt.ApplicationAttribute.AA_Don...
     """
 
     AA_ImmediateWidgetCreation: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_...
+    Qt.ApplicationAttribute.AA_...
     """
 
     AA_MSWindowsUseDirect3DByDefault: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribu...
+    Qt.ApplicationAttribu...
     """
 
     AA_MacDontSwapCtrlAndMeta: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_M...
+    Qt.ApplicationAttribute.AA_M...
     """
 
     AA_MacPluginApplication: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_Mac...
+    Qt.ApplicationAttribute.AA_Mac...
     """
 
     AA_NativeWindows: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_NativeWind...
+    Qt.ApplicationAttribute.AA_NativeWind...
     """
 
     AA_S60DisablePartialScreenInputMode: ...
     """
-    PySide.QtCore.Qt.ApplicationAttr...
+    Qt.ApplicationAttr...
     """
 
     AA_S60DontConstructApplicationPanes: ...
     """
-    PySide.QtCore.Qt.ApplicationAttr...
+    Qt.ApplicationAttr...
     """
 
     AA_X11InitThreads: ...
     """
-    PySide.QtCore.Qt.ApplicationAttribute.AA_X11InitTh...
+    Qt.ApplicationAttribute.AA_X11InitTh...
     """
 
-    ALT: ... = PySide.QtCore.Qt.Modifier.ALT
+    ALT: ... = Qt.Modifier.ALT
     """
     """
 
-    AbsoluteSize: ... = PySide.QtCore.Qt.SizeMode.AbsoluteSize
+    AbsoluteSize: ... = Qt.SizeMode.AbsoluteSize
     """
     """
 
     AccessibleDescriptionRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.AccessibleDe...
+    Qt.ItemDataRole.AccessibleDe...
     """
 
-    AccessibleTextRole: ... = PySide.QtCore.Qt.ItemDataRole.AccessibleTextRole
+    AccessibleStrRole: ... = Qt.ItemDataRole.AccessibleStrRole
     """
     """
 
-    ActionMask: ... = PySide.QtCore.Qt.DropAction.ActionMask
+    ActionMask: ... = Qt.DropAction.ActionMask
     """
     """
 
     ActionsContextMenu: ...
     """
-    PySide.QtCore.Qt.ContextMenuPolicy.ActionsContext...
+    Qt.ContextMenuPolicy.ActionsContext...
     """
 
     ActiveWindowFocusReason: ...
     """
-    PySide.QtCore.Qt.FocusReason.ActiveWindowFoc...
+    Qt.FocusReason.ActiveWindowFoc...
     """
 
-    AlignAbsolute: ... = PySide.QtCore.Qt.AlignmentFlag.AlignAbsolute
-    """
-    """
-
-    AlignBottom: ... = PySide.QtCore.Qt.AlignmentFlag.AlignBottom
+    AlignAbsolute: ... = Qt.AlignmentFlag.AlignAbsolute
     """
     """
 
-    AlignCenter: ... = PySide.QtCore.Qt.AlignmentFlag.AlignCenter
+    AlignBottom: ... = Qt.AlignmentFlag.AlignBottom
     """
     """
 
-    AlignHCenter: ... = PySide.QtCore.Qt.AlignmentFlag.AlignHCenter
+    AlignCenter: ... = Qt.AlignmentFlag.AlignCenter
+    """
+    """
+
+    AlignHCenter: ... = Qt.AlignmentFlag.AlignHCenter
     """
     """
 
     AlignHorizontal_Mask: ...
     """
-    PySide.QtCore.Qt.AlignmentFlag.AlignHorizontal_...
+    Qt.AlignmentFlag.AlignHorizontal_...
     """
 
-    AlignJustify: ... = PySide.QtCore.Qt.AlignmentFlag.AlignJustify
-    """
-    """
-
-    AlignLeading: ... = PySide.QtCore.Qt.AlignmentFlag.AlignLeading
+    AlignJustify: ... = Qt.AlignmentFlag.AlignJustify
     """
     """
 
-    AlignLeft: ... = PySide.QtCore.Qt.AlignmentFlag.AlignLeft
+    AlignLeading: ... = Qt.AlignmentFlag.AlignLeading
     """
     """
 
-    AlignRight: ... = PySide.QtCore.Qt.AlignmentFlag.AlignRight
+    AlignLeft: ... = Qt.AlignmentFlag.AlignLeft
     """
     """
 
-    AlignTop: ... = PySide.QtCore.Qt.AlignmentFlag.AlignTop
+    AlignRight: ... = Qt.AlignmentFlag.AlignRight
     """
     """
 
-    AlignTrailing: ... = PySide.QtCore.Qt.AlignmentFlag.AlignTrailing
+    AlignTop: ... = Qt.AlignmentFlag.AlignTop
     """
     """
 
-    AlignVCenter: ... = PySide.QtCore.Qt.AlignmentFlag.AlignVCenter
+    AlignTrailing: ... = Qt.AlignmentFlag.AlignTrailing
     """
     """
 
-    AlignVertical_Mask: ... = PySide.QtCore.Qt.AlignmentFlag.AlignVertical_Mask
+    AlignVCenter: ... = Qt.AlignmentFlag.AlignVCenter
+    """
+    """
+
+    AlignVertical_Mask: ... = Qt.AlignmentFlag.AlignVertical_Mask
     """
     """
 
@@ -14468,488 +14453,488 @@ class Qt(Shiboken.Object):
 
     AlignmentFlag: ...
     """
-    <type 'PySide.QtCore.Qt.AlignmentFlag'>
+    <type 'Qt.AlignmentFlag'>
     """
 
     AllDockWidgetAreas: ...
     """
-    PySide.QtCore.Qt.DockWidgetArea.AllDockWidgetArea...
+    Qt.DockWidgetArea.AllDockWidgetArea...
     """
 
-    AllToolBarAreas: ... = PySide.QtCore.Qt.ToolBarArea.AllToolBarAreas
+    AllToolBarAreas: ... = Qt.ToolBarArea.AllToolBarAreas
     """
     """
 
     AlphaDither_Mask: ...
     """
-    PySide.QtCore.Qt.ImageConversionFlag.AlphaDither_Ma...
+    Qt.ImageConversionFlag.AlphaDither_Ma...
     """
 
-    AltModifier: ... = PySide.QtCore.Qt.KeyboardModifier.AltModifier
+    AltModifier: ... = Qt.KeyboardModifier.AltModifier
     """
     """
 
     AnchorAttribute: ...
     """
-    <type 'PySide.QtCore.Qt.AnchorAttribute'>
+    <type 'Qt.AnchorAttribute'>
     """
 
-    AnchorBottom: ... = PySide.QtCore.Qt.AnchorPoint.AnchorBottom
+    AnchorBottom: ... = Qt.AnchorPoint.AnchorBottom
     """
     """
 
     AnchorHorizontalCenter: ...
     """
-    PySide.QtCore.Qt.AnchorPoint.AnchorHorizontal...
+    Qt.AnchorPoint.AnchorHorizontal...
     """
 
-    AnchorHref: ... = PySide.QtCore.Qt.AnchorAttribute.AnchorHref
-    """
-    """
-
-    AnchorLeft: ... = PySide.QtCore.Qt.AnchorPoint.AnchorLeft
+    AnchorHref: ... = Qt.AnchorAttribute.AnchorHref
     """
     """
 
-    AnchorName: ... = PySide.QtCore.Qt.AnchorAttribute.AnchorName
+    AnchorLeft: ... = Qt.AnchorPoint.AnchorLeft
+    """
+    """
+
+    AnchorName: ... = Qt.AnchorAttribute.AnchorName
     """
     """
 
     AnchorPoint: ...
     """
-    <type 'PySide.QtCore.Qt.AnchorPoint'>
+    <type 'Qt.AnchorPoint'>
     """
 
-    AnchorRight: ... = PySide.QtCore.Qt.AnchorPoint.AnchorRight
+    AnchorRight: ... = Qt.AnchorPoint.AnchorRight
     """
     """
 
-    AnchorTop: ... = PySide.QtCore.Qt.AnchorPoint.AnchorTop
+    AnchorTop: ... = Qt.AnchorPoint.AnchorTop
     """
     """
 
     AnchorVerticalCenter: ...
     """
-    PySide.QtCore.Qt.AnchorPoint.AnchorVerticalCent...
+    Qt.AnchorPoint.AnchorVerticalCent...
     """
 
     ApplicationAttribute: ...
     """
-    <type 'PySide.QtCore.Qt.ApplicationAttribute'>
+    <type 'Qt.ApplicationAttribute'>
     """
 
-    ApplicationModal: ... = PySide.QtCore.Qt.WindowModality.ApplicationModal
+    ApplicationModal: ... = Qt.WindowModality.ApplicationModal
     """
     """
 
     ApplicationShortcut: ...
     """
-    PySide.QtCore.Qt.ShortcutContext.ApplicationShor...
+    Qt.ShortcutContext.ApplicationShor...
     """
 
-    ArrowCursor: ... = PySide.QtCore.Qt.CursorShape.ArrowCursor
+    ArrowCursor: ... = Qt.CursorShape.ArrowCursor
     """
     """
 
     ArrowType: ...
     """
-    <type 'PySide.QtCore.Qt.ArrowType'>
+    <type 'Qt.ArrowType'>
     """
 
-    AscendingOrder: ... = PySide.QtCore.Qt.SortOrder.AscendingOrder
+    AscendingOrder: ... = Qt.SortOrder.AscendingOrder
     """
     """
 
     AspectRatioMode: ...
     """
-    <type 'PySide.QtCore.Qt.AspectRatioMode'>
+    <type 'Qt.AspectRatioMode'>
     """
 
-    AutoColor: ... = PySide.QtCore.Qt.ImageConversionFlag.AutoColor
+    AutoColor: ... = Qt.ImageConversionFlag.AutoColor
     """
     """
 
     AutoCompatConnection: ...
     """
-    PySide.QtCore.Qt.ConnectionType.AutoCompatConne...
+    Qt.ConnectionType.AutoCompatConne...
     """
 
-    AutoConnection: ... = PySide.QtCore.Qt.ConnectionType.AutoConnection
-    """
-    """
-
-    AutoDither: ... = PySide.QtCore.Qt.ImageConversionFlag.AutoDither
+    AutoConnection: ... = Qt.ConnectionType.AutoConnection
     """
     """
 
-    AutoText: ... = PySide.QtCore.Qt.TextFormat.AutoText
+    AutoDither: ... = Qt.ImageConversionFlag.AutoDither
     """
     """
 
-    AvoidDither: ... = PySide.QtCore.Qt.ImageConversionFlag.AvoidDither
+    AutoStr: ... = Qt.StrFormat.AutoStr
+    """
+    """
+
+    AvoidDither: ... = Qt.ImageConversionFlag.AvoidDither
     """
     """
 
     Axis: ...
     """
-    <type 'PySide.QtCore.Qt.Axis'>
+    <type 'Qt.Axis'>
     """
 
-    BDiagPattern: ... = PySide.QtCore.Qt.BrushStyle.BDiagPattern
+    BDiagPattern: ... = Qt.BrushStyle.BDiagPattern
     """
     """
 
     BGMode: ...
     """
-    <type 'PySide.QtCore.Qt.BGMode'>
+    <type 'Qt.BGMode'>
     """
 
     BackgroundColorRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.BackgroundColorRol...
+    Qt.ItemDataRole.BackgroundColorRol...
     """
 
-    BackgroundRole: ... = PySide.QtCore.Qt.ItemDataRole.BackgroundRole
-    """
-    """
-
-    BacktabFocusReason: ... = PySide.QtCore.Qt.FocusReason.BacktabFocusReason
+    BackgroundRole: ... = Qt.ItemDataRole.BackgroundRole
     """
     """
 
-    BevelJoin: ... = PySide.QtCore.Qt.PenJoinStyle.BevelJoin
+    BacktabFocusReason: ... = Qt.FocusReason.BacktabFocusReason
     """
     """
 
-    BitmapCursor: ... = PySide.QtCore.Qt.CursorShape.BitmapCursor
+    BevelJoin: ... = Qt.PenJoinStyle.BevelJoin
     """
     """
 
-    BlankCursor: ... = PySide.QtCore.Qt.CursorShape.BlankCursor
+    BitmapCursor: ... = Qt.CursorShape.BitmapCursor
+    """
+    """
+
+    BlankCursor: ... = Qt.CursorShape.BlankCursor
     """
     """
 
     BlockingQueuedConnection: ...
     """
-    PySide.QtCore.Qt.ConnectionType.BlockingQue...
+    Qt.ConnectionType.BlockingQue...
     """
 
     BottomDockWidgetArea: ...
     """
-    PySide.QtCore.Qt.DockWidgetArea.BottomDockWidge...
+    Qt.DockWidgetArea.BottomDockWidge...
     """
 
-    BottomLeftCorner: ... = PySide.QtCore.Qt.Corner.BottomLeftCorner
+    BottomLeftCorner: ... = Qt.Corner.BottomLeftCorner
     """
     """
 
     BottomLeftSection: ...
     """
-    PySide.QtCore.Qt.WindowFrameSection.BottomLeftSect...
+    Qt.WindowFrameSection.BottomLeftSect...
     """
 
-    BottomRightCorner: ... = PySide.QtCore.Qt.Corner.BottomRightCorner
+    BottomRightCorner: ... = Qt.Corner.BottomRightCorner
     """
     """
 
     BottomRightSection: ...
     """
-    PySide.QtCore.Qt.WindowFrameSection.BottomRightSe...
+    Qt.WindowFrameSection.BottomRightSe...
     """
 
-    BottomSection: ... = PySide.QtCore.Qt.WindowFrameSection.BottomSection
+    BottomSection: ... = Qt.WindowFrameSection.BottomSection
     """
     """
 
-    BottomToolBarArea: ... = PySide.QtCore.Qt.ToolBarArea.BottomToolBarArea
+    BottomToolBarArea: ... = Qt.ToolBarArea.BottomToolBarArea
     """
     """
 
     BrushStyle: ...
     """
-    <type 'PySide.QtCore.Qt.BrushStyle'>
+    <type 'Qt.BrushStyle'>
     """
 
-    BusyCursor: ... = PySide.QtCore.Qt.CursorShape.BusyCursor
+    BusyCursor: ... = Qt.CursorShape.BusyCursor
     """
     """
 
     BypassGraphicsProxyWidget: ...
     """
-    PySide.QtCore.Qt.WindowType.BypassGraphics...
+    Qt.WindowType.BypassGraphics...
     """
 
-    CTRL: ... = PySide.QtCore.Qt.Modifier.CTRL
-    """
-    """
-
-    CaseInsensitive: ... = PySide.QtCore.Qt.CaseSensitivity.CaseInsensitive
+    CTRL: ... = Qt.Modifier.CTRL
     """
     """
 
-    CaseSensitive: ... = PySide.QtCore.Qt.CaseSensitivity.CaseSensitive
+    CaseInsensitive: ... = Qt.CaseSensitivity.CaseInsensitive
+    """
+    """
+
+    CaseSensitive: ... = Qt.CaseSensitivity.CaseSensitive
     """
     """
 
     CaseSensitivity: ...
     """
-    <type 'PySide.QtCore.Qt.CaseSensitivity'>
+    <type 'Qt.CaseSensitivity'>
     """
 
     CheckState: ...
     """
-    <type 'PySide.QtCore.Qt.CheckState'>
+    <type 'Qt.CheckState'>
     """
 
-    CheckStateRole: ... = PySide.QtCore.Qt.ItemDataRole.CheckStateRole
-    """
-    """
-
-    Checked: ... = PySide.QtCore.Qt.CheckState.Checked
+    CheckStateRole: ... = Qt.ItemDataRole.CheckStateRole
     """
     """
 
-    ClickFocus: ... = PySide.QtCore.Qt.FocusPolicy.ClickFocus
+    Checked: ... = Qt.CheckState.Checked
+    """
+    """
+
+    ClickFocus: ... = Qt.FocusPolicy.ClickFocus
     """
     """
 
     ClipOperation: ...
     """
-    <type 'PySide.QtCore.Qt.ClipOperation'>
+    <type 'Qt.ClipOperation'>
     """
 
-    ClosedHandCursor: ... = PySide.QtCore.Qt.CursorShape.ClosedHandCursor
-    """
-    """
-
-    ColorMode_Mask: ... = PySide.QtCore.Qt.ImageConversionFlag.ColorMode_Mask
+    ClosedHandCursor: ... = Qt.CursorShape.ClosedHandCursor
     """
     """
 
-    ColorOnly: ... = PySide.QtCore.Qt.ImageConversionFlag.ColorOnly
+    ColorMode_Mask: ... = Qt.ImageConversionFlag.ColorMode_Mask
+    """
+    """
+
+    ColorOnly: ... = Qt.ImageConversionFlag.ColorOnly
     """
     """
 
     ConicalGradientPattern: ...
     """
-    PySide.QtCore.Qt.BrushStyle.ConicalGradientPa...
+    Qt.BrushStyle.ConicalGradientPa...
     """
 
     ConnectionType: ...
     """
-    <type 'PySide.QtCore.Qt.ConnectionType'>
+    <type 'Qt.ConnectionType'>
     """
 
     ContainsItemBoundingRect: ...
     """
-    PySide.QtCore.Qt.ItemSelectionMode.Contains...
+    Qt.ItemSelectionMode.Contains...
     """
 
     ContainsItemShape: ...
     """
-    PySide.QtCore.Qt.ItemSelectionMode.ContainsItemSha...
+    Qt.ItemSelectionMode.ContainsItemSha...
     """
 
     ContextMenuPolicy: ...
     """
-    <type 'PySide.QtCore.Qt.ContextMenuPolicy'>
+    <type 'Qt.ContextMenuPolicy'>
     """
 
-    ControlModifier: ... = PySide.QtCore.Qt.KeyboardModifier.ControlModifier
+    ControlModifier: ... = Qt.KeyboardModifier.ControlModifier
     """
     """
 
     CoordinateSystem: ...
     """
-    <type 'PySide.QtCore.Qt.CoordinateSystem'>
+    <type 'Qt.CoordinateSystem'>
     """
 
-    CopyAction: ... = PySide.QtCore.Qt.DropAction.CopyAction
+    CopyAction: ... = Qt.DropAction.CopyAction
     """
     """
 
     Corner: ...
     """
-    <type 'PySide.QtCore.Qt.Corner'>
+    <type 'Qt.Corner'>
     """
 
-    CrossCursor: ... = PySide.QtCore.Qt.CursorShape.CrossCursor
+    CrossCursor: ... = Qt.CursorShape.CrossCursor
     """
     """
 
-    CrossPattern: ... = PySide.QtCore.Qt.BrushStyle.CrossPattern
+    CrossPattern: ... = Qt.BrushStyle.CrossPattern
     """
     """
 
     CursorMoveStyle: ...
     """
-    <type 'PySide.QtCore.Qt.CursorMoveStyle'>
+    <type 'Qt.CursorMoveStyle'>
     """
 
     CursorShape: ...
     """
-    <type 'PySide.QtCore.Qt.CursorShape'>
+    <type 'Qt.CursorShape'>
     """
 
     CustomContextMenu: ...
     """
-    PySide.QtCore.Qt.ContextMenuPolicy.CustomContextMe...
+    Qt.ContextMenuPolicy.CustomContextMe...
     """
 
-    CustomCursor: ... = PySide.QtCore.Qt.CursorShape.CustomCursor
-    """
-    """
-
-    CustomDashLine: ... = PySide.QtCore.Qt.PenStyle.CustomDashLine
+    CustomCursor: ... = Qt.CursorShape.CustomCursor
     """
     """
 
-    CustomGesture: ... = PySide.QtCore.Qt.GestureType.CustomGesture
+    CustomDashLine: ... = Qt.PenStyle.CustomDashLine
     """
     """
 
-    CustomizeWindowHint: ... = PySide.QtCore.Qt.WindowType.CustomizeWindowHint
+    CustomGesture: ... = Qt.GestureType.CustomGesture
     """
     """
 
-    DashDotDotLine: ... = PySide.QtCore.Qt.PenStyle.DashDotDotLine
+    CustomizeWindowHint: ... = Qt.WindowType.CustomizeWindowHint
     """
     """
 
-    DashDotLine: ... = PySide.QtCore.Qt.PenStyle.DashDotLine
+    DashDotDotLine: ... = Qt.PenStyle.DashDotDotLine
     """
     """
 
-    DashLine: ... = PySide.QtCore.Qt.PenStyle.DashLine
+    DashDotLine: ... = Qt.PenStyle.DashDotLine
+    """
+    """
+
+    DashLine: ... = Qt.PenStyle.DashLine
     """
     """
 
     DateFormat: ...
     """
-    <type 'PySide.QtCore.Qt.DateFormat'>
+    <type 'Qt.DateFormat'>
     """
 
     DayOfWeek: ...
     """
-    <type 'PySide.QtCore.Qt.DayOfWeek'>
+    <type 'Qt.DayOfWeek'>
     """
 
     DecorationPropertyRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.DecorationPrope...
+    Qt.ItemDataRole.DecorationPrope...
     """
 
-    DecorationRole: ... = PySide.QtCore.Qt.ItemDataRole.DecorationRole
+    DecorationRole: ... = Qt.ItemDataRole.DecorationRole
     """
     """
 
     DefaultContextMenu: ...
     """
-    PySide.QtCore.Qt.ContextMenuPolicy.DefaultContext...
+    Qt.ContextMenuPolicy.DefaultContext...
     """
 
     DefaultLocaleLongDate: ...
     """
-    PySide.QtCore.Qt.DateFormat.DefaultLocaleLongD...
+    Qt.DateFormat.DefaultLocaleLongD...
     """
 
     DefaultLocaleShortDate: ...
     """
-    PySide.QtCore.Qt.DateFormat.DefaultLocaleShor...
+    Qt.DateFormat.DefaultLocaleShor...
     """
 
-    Dense1Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense1Pattern
-    """
-    """
-
-    Dense2Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense2Pattern
+    Dense1Pattern: ... = Qt.BrushStyle.Dense1Pattern
     """
     """
 
-    Dense3Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense3Pattern
+    Dense2Pattern: ... = Qt.BrushStyle.Dense2Pattern
     """
     """
 
-    Dense4Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense4Pattern
+    Dense3Pattern: ... = Qt.BrushStyle.Dense3Pattern
     """
     """
 
-    Dense5Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense5Pattern
+    Dense4Pattern: ... = Qt.BrushStyle.Dense4Pattern
     """
     """
 
-    Dense6Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense6Pattern
+    Dense5Pattern: ... = Qt.BrushStyle.Dense5Pattern
     """
     """
 
-    Dense7Pattern: ... = PySide.QtCore.Qt.BrushStyle.Dense7Pattern
+    Dense6Pattern: ... = Qt.BrushStyle.Dense6Pattern
     """
     """
 
-    DescendingOrder: ... = PySide.QtCore.Qt.SortOrder.DescendingOrder
+    Dense7Pattern: ... = Qt.BrushStyle.Dense7Pattern
     """
     """
 
-    Desktop: ... = PySide.QtCore.Qt.WindowType.Desktop
+    DescendingOrder: ... = Qt.SortOrder.DescendingOrder
+    """
+    """
+
+    Desktop: ... = Qt.WindowType.Desktop
     """
     """
 
     DeviceCoordinates: ...
     """
-    PySide.QtCore.Qt.CoordinateSystem.DeviceCoordinate...
+    Qt.CoordinateSystem.DeviceCoordinate...
     """
 
-    DiagCrossPattern: ... = PySide.QtCore.Qt.BrushStyle.DiagCrossPattern
+    DiagCrossPattern: ... = Qt.BrushStyle.DiagCrossPattern
     """
     """
 
-    Dialog: ... = PySide.QtCore.Qt.WindowType.Dialog
+    Dialog: ... = Qt.WindowType.Dialog
     """
     """
 
     DiffuseAlphaDither: ...
     """
-    PySide.QtCore.Qt.ImageConversionFlag.DiffuseAlpha...
+    Qt.ImageConversionFlag.DiffuseAlpha...
     """
 
-    DiffuseDither: ... = PySide.QtCore.Qt.ImageConversionFlag.DiffuseDither
+    DiffuseDither: ... = Qt.ImageConversionFlag.DiffuseDither
     """
     """
 
-    DirectConnection: ... = PySide.QtCore.Qt.ConnectionType.DirectConnection
+    DirectConnection: ... = Qt.ConnectionType.DirectConnection
     """
     """
 
     DisplayPropertyRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.DisplayPropertyRol...
+    Qt.ItemDataRole.DisplayPropertyRol...
     """
 
-    DisplayRole: ... = PySide.QtCore.Qt.ItemDataRole.DisplayRole
-    """
-    """
-
-    DitherMode_Mask: ... = PySide.QtCore.Qt.ImageConversionFlag.DitherMode_Mask
+    DisplayRole: ... = Qt.ItemDataRole.DisplayRole
     """
     """
 
-    Dither_Mask: ... = PySide.QtCore.Qt.ImageConversionFlag.Dither_Mask
+    DitherMode_Mask: ... = Qt.ImageConversionFlag.DitherMode_Mask
+    """
+    """
+
+    Dither_Mask: ... = Qt.ImageConversionFlag.Dither_Mask
     """
     """
 
     DockWidgetArea: ...
     """
-    <type 'PySide.QtCore.Qt.DockWidgetArea'>
+    <type 'Qt.DockWidgetArea'>
     """
 
     DockWidgetAreaSizes: ...
     """
-    <type 'PySide.QtCore.Qt.DockWidgetAreaSizes'>
+    <type 'Qt.DockWidgetAreaSizes'>
     """
 
     DockWidgetArea_Mask: ...
     """
-    PySide.QtCore.Qt.DockWidgetArea.DockWidgetArea_M...
+    Qt.DockWidgetArea.DockWidgetArea_M...
     """
 
     DockWidgetAreas: ...
@@ -14959,36 +14944,36 @@ class Qt(Shiboken.Object):
 
     DontStartGestureOnChildren: ...
     """
-    PySide.QtCore.Qt.GestureFlag.DontStartGes...
+    Qt.GestureFlag.DontStartGes...
     """
 
-    DotLine: ... = PySide.QtCore.Qt.PenStyle.DotLine
-    """
-    """
-
-    DownArrow: ... = PySide.QtCore.Qt.ArrowType.DownArrow
+    DotLine: ... = Qt.PenStyle.DotLine
     """
     """
 
-    DragCopyCursor: ... = PySide.QtCore.Qt.CursorShape.DragCopyCursor
+    DownArrow: ... = Qt.ArrowType.DownArrow
     """
     """
 
-    DragLinkCursor: ... = PySide.QtCore.Qt.CursorShape.DragLinkCursor
+    DragCopyCursor: ... = Qt.CursorShape.DragCopyCursor
     """
     """
 
-    DragMoveCursor: ... = PySide.QtCore.Qt.CursorShape.DragMoveCursor
+    DragLinkCursor: ... = Qt.CursorShape.DragLinkCursor
     """
     """
 
-    Drawer: ... = PySide.QtCore.Qt.WindowType.Drawer
+    DragMoveCursor: ... = Qt.CursorShape.DragMoveCursor
+    """
+    """
+
+    Drawer: ... = Qt.WindowType.Drawer
     """
     """
 
     DropAction: ...
     """
-    <type 'PySide.QtCore.Qt.DropAction'>
+    <type 'Qt.DropAction'>
     """
 
     DropActions: ...
@@ -14996,98 +14981,98 @@ class Qt(Shiboken.Object):
     <type 'DropActions'>
     """
 
-    EditRole: ... = PySide.QtCore.Qt.ItemDataRole.EditRole
+    EditRole: ... = Qt.ItemDataRole.EditRole
     """
     """
 
-    ElideLeft: ... = PySide.QtCore.Qt.TextElideMode.ElideLeft
+    ElideLeft: ... = Qt.StrElideMode.ElideLeft
     """
     """
 
-    ElideMiddle: ... = PySide.QtCore.Qt.TextElideMode.ElideMiddle
+    ElideMiddle: ... = Qt.StrElideMode.ElideMiddle
     """
     """
 
-    ElideNone: ... = PySide.QtCore.Qt.TextElideMode.ElideNone
+    ElideNone: ... = Qt.StrElideMode.ElideNone
     """
     """
 
-    ElideRight: ... = PySide.QtCore.Qt.TextElideMode.ElideRight
+    ElideRight: ... = Qt.StrElideMode.ElideRight
     """
     """
 
     EventPriority: ...
     """
-    <type 'PySide.QtCore.Qt.EventPriority'>
+    <type 'Qt.EventPriority'>
     """
 
-    ExactHit: ... = PySide.QtCore.Qt.HitTestAccuracy.ExactHit
+    ExactHit: ... = Qt.HitTestAccuracy.ExactHit
     """
     """
 
-    FDiagPattern: ... = PySide.QtCore.Qt.BrushStyle.FDiagPattern
+    FDiagPattern: ... = Qt.BrushStyle.FDiagPattern
     """
     """
 
     FastTransformation: ...
     """
-    PySide.QtCore.Qt.TransformationMode.FastTransform...
+    Qt.TransformationMode.FastTransform...
     """
 
     FillRule: ...
     """
-    <type 'PySide.QtCore.Qt.FillRule'>
+    <type 'Qt.FillRule'>
     """
 
-    FlatCap: ... = PySide.QtCore.Qt.PenCapStyle.FlatCap
+    FlatCap: ... = Qt.PenCapStyle.FlatCap
     """
     """
 
     FocusPolicy: ...
     """
-    <type 'PySide.QtCore.Qt.FocusPolicy'>
+    <type 'Qt.FocusPolicy'>
     """
 
     FocusReason: ...
     """
-    <type 'PySide.QtCore.Qt.FocusReason'>
+    <type 'Qt.FocusReason'>
     """
 
-    FontRole: ... = PySide.QtCore.Qt.ItemDataRole.FontRole
-    """
-    """
-
-    ForbiddenCursor: ... = PySide.QtCore.Qt.CursorShape.ForbiddenCursor
+    FontRole: ... = Qt.ItemDataRole.FontRole
     """
     """
 
-    ForegroundRole: ... = PySide.QtCore.Qt.ItemDataRole.ForegroundRole
+    ForbiddenCursor: ... = Qt.CursorShape.ForbiddenCursor
     """
     """
 
-    FramelessWindowHint: ... = PySide.QtCore.Qt.WindowType.FramelessWindowHint
+    ForegroundRole: ... = Qt.ItemDataRole.ForegroundRole
     """
     """
 
-    Friday: ... = PySide.QtCore.Qt.DayOfWeek.Friday
+    FramelessWindowHint: ... = Qt.WindowType.FramelessWindowHint
     """
     """
 
-    FuzzyHit: ... = PySide.QtCore.Qt.HitTestAccuracy.FuzzyHit
+    Friday: ... = Qt.DayOfWeek.Friday
     """
     """
 
-    GestureCanceled: ... = PySide.QtCore.Qt.GestureState.GestureCanceled
+    FuzzyHit: ... = Qt.HitTestAccuracy.FuzzyHit
     """
     """
 
-    GestureFinished: ... = PySide.QtCore.Qt.GestureState.GestureFinished
+    GestureCanceled: ... = Qt.GestureState.GestureCanceled
+    """
+    """
+
+    GestureFinished: ... = Qt.GestureState.GestureFinished
     """
     """
 
     GestureFlag: ...
     """
-    <type 'PySide.QtCore.Qt.GestureFlag'>
+    <type 'Qt.GestureFlag'>
     """
 
     GestureFlags: ...
@@ -15095,106 +15080,106 @@ class Qt(Shiboken.Object):
     <type 'GestureFlags'>
     """
 
-    GestureStarted: ... = PySide.QtCore.Qt.GestureState.GestureStarted
+    GestureStarted: ... = Qt.GestureState.GestureStarted
     """
     """
 
     GestureState: ...
     """
-    <type 'PySide.QtCore.Qt.GestureState'>
+    <type 'Qt.GestureState'>
     """
 
     GestureType: ...
     """
-    <type 'PySide.QtCore.Qt.GestureType'>
+    <type 'Qt.GestureType'>
     """
 
-    GestureUpdated: ... = PySide.QtCore.Qt.GestureState.GestureUpdated
+    GestureUpdated: ... = Qt.GestureState.GestureUpdated
     """
     """
 
     GlobalColor: ...
     """
-    <type 'PySide.QtCore.Qt.GlobalColor'>
+    <type 'Qt.GlobalColor'>
     """
 
     GroupSwitchModifier: ...
     """
-    PySide.QtCore.Qt.KeyboardModifier.GroupSwitchMod...
+    Qt.KeyboardModifier.GroupSwitchMod...
     """
 
-    HighEventPriority: ... = PySide.QtCore.Qt.EventPriority.HighEventPriority
+    HighEventPriority: ... = Qt.EventPriority.HighEventPriority
     """
     """
 
     HitTestAccuracy: ...
     """
-    <type 'PySide.QtCore.Qt.HitTestAccuracy'>
+    <type 'Qt.HitTestAccuracy'>
     """
 
-    HorPattern: ... = PySide.QtCore.Qt.BrushStyle.HorPattern
-    """
-    """
-
-    Horizontal: ... = PySide.QtCore.Qt.Orientation.Horizontal
+    HorPattern: ... = Qt.BrushStyle.HorPattern
     """
     """
 
-    IBeamCursor: ... = PySide.QtCore.Qt.CursorShape.IBeamCursor
+    Horizontal: ... = Qt.Orientation.Horizontal
     """
     """
 
-    ISODate: ... = PySide.QtCore.Qt.DateFormat.ISODate
+    IBeamCursor: ... = Qt.CursorShape.IBeamCursor
     """
     """
 
-    IgnoreAction: ... = PySide.QtCore.Qt.DropAction.IgnoreAction
+    ISODate: ... = Qt.DateFormat.ISODate
     """
     """
 
-    IgnoreAspectRatio: ... = PySide.QtCore.Qt.AspectRatioMode.IgnoreAspectRatio
+    IgnoreAction: ... = Qt.DropAction.IgnoreAction
+    """
+    """
+
+    IgnoreAspectRatio: ... = Qt.AspectRatioMode.IgnoreAspectRatio
     """
     """
 
     IgnoredGesturesPropagateToParent: ...
     """
-    PySide.QtCore.Qt.GestureFlag.Ignore...
+    Qt.GestureFlag.Ignore...
     """
 
-    ImAnchorPosition: ... = PySide.QtCore.Qt.InputMethodQuery.ImAnchorPosition
+    ImAnchorPosition: ... = Qt.InputMethodQuery.ImAnchorPosition
     """
     """
 
     ImCurrentSelection: ...
     """
-    PySide.QtCore.Qt.InputMethodQuery.ImCurrentSelect...
+    Qt.InputMethodQuery.ImCurrentSelect...
     """
 
-    ImCursorPosition: ... = PySide.QtCore.Qt.InputMethodQuery.ImCursorPosition
-    """
-    """
-
-    ImFont: ... = PySide.QtCore.Qt.InputMethodQuery.ImFont
+    ImCursorPosition: ... = Qt.InputMethodQuery.ImCursorPosition
     """
     """
 
-    ImMaximumTextLength: ...
-    """
-    PySide.QtCore.Qt.InputMethodQuery.ImMaximumTextL...
-    """
-
-    ImMicroFocus: ... = PySide.QtCore.Qt.InputMethodQuery.ImMicroFocus
+    ImFont: ... = Qt.InputMethodQuery.ImFont
     """
     """
 
-    ImSurroundingText: ...
+    ImMaximumStrLength: ...
     """
-    PySide.QtCore.Qt.InputMethodQuery.ImSurroundingTex...
+    Qt.InputMethodQuery.ImMaximumStrL...
+    """
+
+    ImMicroFocus: ... = Qt.InputMethodQuery.ImMicroFocus
+    """
+    """
+
+    ImSurroundingStr: ...
+    """
+    Qt.InputMethodQuery.ImSurroundingTex...
     """
 
     ImageConversionFlag: ...
     """
-    <type 'PySide.QtCore.Qt.ImageConversionFlag'>
+    <type 'Qt.ImageConversionFlag'>
     """
 
     ImageConversionFlags: ...
@@ -15204,81 +15189,81 @@ class Qt(Shiboken.Object):
 
     ImhDialableCharactersOnly: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhDialab...
+    Qt.InputMethodHint.ImhDialab...
     """
 
-    ImhDigitsOnly: ... = PySide.QtCore.Qt.InputMethodHint.ImhDigitsOnly
+    ImhDigitsOnly: ... = Qt.InputMethodHint.ImhDigitsOnly
     """
     """
 
     ImhEmailCharactersOnly: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhEmailChar...
+    Qt.InputMethodHint.ImhEmailChar...
     """
 
     ImhExclusiveInputMask: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhExclusiveI...
+    Qt.InputMethodHint.ImhExclusiveI...
     """
 
     ImhFormattedNumbersOnly: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhFormatte...
+    Qt.InputMethodHint.ImhFormatte...
     """
 
-    ImhHiddenText: ... = PySide.QtCore.Qt.InputMethodHint.ImhHiddenText
+    ImhHiddenStr: ... = Qt.InputMethodHint.ImhHiddenStr
     """
     """
 
-    ImhLowercaseOnly: ... = PySide.QtCore.Qt.InputMethodHint.ImhLowercaseOnly
+    ImhLowercaseOnly: ... = Qt.InputMethodHint.ImhLowercaseOnly
     """
     """
 
     ImhNoAutoUppercase: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhNoAutoUpperca...
+    Qt.InputMethodHint.ImhNoAutoUpperca...
     """
 
-    ImhNoPredictiveText: ...
+    ImhNoPredictiveStr: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhNoPredictive...
+    Qt.InputMethodHint.ImhNoPredictive...
     """
 
-    ImhNone: ... = PySide.QtCore.Qt.InputMethodHint.ImhNone
+    ImhNone: ... = Qt.InputMethodHint.ImhNone
     """
     """
 
     ImhPreferLowercase: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhPreferLowerca...
+    Qt.InputMethodHint.ImhPreferLowerca...
     """
 
-    ImhPreferNumbers: ... = PySide.QtCore.Qt.InputMethodHint.ImhPreferNumbers
+    ImhPreferNumbers: ... = Qt.InputMethodHint.ImhPreferNumbers
     """
     """
 
     ImhPreferUppercase: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhPreferUpperca...
+    Qt.InputMethodHint.ImhPreferUpperca...
     """
 
-    ImhUppercaseOnly: ... = PySide.QtCore.Qt.InputMethodHint.ImhUppercaseOnly
+    ImhUppercaseOnly: ... = Qt.InputMethodHint.ImhUppercaseOnly
     """
     """
 
     ImhUrlCharactersOnly: ...
     """
-    PySide.QtCore.Qt.InputMethodHint.ImhUrlCharacte...
+    Qt.InputMethodHint.ImhUrlCharacte...
     """
 
     InitialSortOrderRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.InitialSortOrderR...
+    Qt.ItemDataRole.InitialSortOrderR...
     """
 
     InputMethodHint: ...
     """
-    <type 'PySide.QtCore.Qt.InputMethodHint'>
+    <type 'Qt.InputMethodHint'>
     """
 
     InputMethodHints: ...
@@ -15288,31 +15273,31 @@ class Qt(Shiboken.Object):
 
     InputMethodQuery: ...
     """
-    <type 'PySide.QtCore.Qt.InputMethodQuery'>
+    <type 'Qt.InputMethodQuery'>
     """
 
-    IntersectClip: ... = PySide.QtCore.Qt.ClipOperation.IntersectClip
+    IntersectClip: ... = Qt.ClipOperation.IntersectClip
     """
     """
 
     IntersectsItemBoundingRect: ...
     """
-    PySide.QtCore.Qt.ItemSelectionMode.Inters...
+    Qt.ItemSelectionMode.Inters...
     """
 
     IntersectsItemShape: ...
     """
-    PySide.QtCore.Qt.ItemSelectionMode.IntersectsIte...
+    Qt.ItemSelectionMode.IntersectsIte...
     """
 
     ItemDataRole: ...
     """
-    <type 'PySide.QtCore.Qt.ItemDataRole'>
+    <type 'Qt.ItemDataRole'>
     """
 
     ItemFlag: ...
     """
-    <type 'PySide.QtCore.Qt.ItemFlag'>
+    <type 'Qt.ItemFlag'>
     """
 
     ItemFlags: ...
@@ -15320,1737 +15305,1737 @@ class Qt(Shiboken.Object):
     <type 'ItemFlags'>
     """
 
-    ItemIsDragEnabled: ... = PySide.QtCore.Qt.ItemFlag.ItemIsDragEnabled
+    ItemIsDragEnabled: ... = Qt.ItemFlag.ItemIsDragEnabled
     """
     """
 
-    ItemIsDropEnabled: ... = PySide.QtCore.Qt.ItemFlag.ItemIsDropEnabled
+    ItemIsDropEnabled: ... = Qt.ItemFlag.ItemIsDropEnabled
     """
     """
 
-    ItemIsEditable: ... = PySide.QtCore.Qt.ItemFlag.ItemIsEditable
+    ItemIsEditable: ... = Qt.ItemFlag.ItemIsEditable
     """
     """
 
-    ItemIsEnabled: ... = PySide.QtCore.Qt.ItemFlag.ItemIsEnabled
+    ItemIsEnabled: ... = Qt.ItemFlag.ItemIsEnabled
     """
     """
 
-    ItemIsSelectable: ... = PySide.QtCore.Qt.ItemFlag.ItemIsSelectable
+    ItemIsSelectable: ... = Qt.ItemFlag.ItemIsSelectable
     """
     """
 
-    ItemIsTristate: ... = PySide.QtCore.Qt.ItemFlag.ItemIsTristate
+    ItemIsTristate: ... = Qt.ItemFlag.ItemIsTristate
     """
     """
 
-    ItemIsUserCheckable: ... = PySide.QtCore.Qt.ItemFlag.ItemIsUserCheckable
+    ItemIsUserCheckable: ... = Qt.ItemFlag.ItemIsUserCheckable
     """
     """
 
     ItemSelectionMode: ...
     """
-    <type 'PySide.QtCore.Qt.ItemSelectionMode'>
+    <type 'Qt.ItemSelectionMode'>
     """
 
-    KeepAspectRatio: ... = PySide.QtCore.Qt.AspectRatioMode.KeepAspectRatio
+    KeepAspectRatio: ... = Qt.AspectRatioMode.KeepAspectRatio
     """
     """
 
     KeepAspectRatioByExpanding: ...
     """
-    PySide.QtCore.Qt.AspectRatioMode.KeepAspe...
+    Qt.AspectRatioMode.KeepAspe...
     """
 
     Key: ...
     """
-    <type 'PySide.QtCore.Qt.Key'>
+    <type 'Qt.Key'>
     """
 
-    Key_0: ... = PySide.QtCore.Qt.Key.Key_0
+    Key_0: ... = Qt.Key.Key_0
     """
     """
 
-    Key_1: ... = PySide.QtCore.Qt.Key.Key_1
+    Key_1: ... = Qt.Key.Key_1
     """
     """
 
-    Key_2: ... = PySide.QtCore.Qt.Key.Key_2
+    Key_2: ... = Qt.Key.Key_2
     """
     """
 
-    Key_3: ... = PySide.QtCore.Qt.Key.Key_3
+    Key_3: ... = Qt.Key.Key_3
     """
     """
 
-    Key_4: ... = PySide.QtCore.Qt.Key.Key_4
+    Key_4: ... = Qt.Key.Key_4
     """
     """
 
-    Key_5: ... = PySide.QtCore.Qt.Key.Key_5
+    Key_5: ... = Qt.Key.Key_5
     """
     """
 
-    Key_6: ... = PySide.QtCore.Qt.Key.Key_6
+    Key_6: ... = Qt.Key.Key_6
     """
     """
 
-    Key_7: ... = PySide.QtCore.Qt.Key.Key_7
+    Key_7: ... = Qt.Key.Key_7
     """
     """
 
-    Key_8: ... = PySide.QtCore.Qt.Key.Key_8
+    Key_8: ... = Qt.Key.Key_8
     """
     """
 
-    Key_9: ... = PySide.QtCore.Qt.Key.Key_9
+    Key_9: ... = Qt.Key.Key_9
     """
     """
 
-    Key_A: ... = PySide.QtCore.Qt.Key.Key_A
+    Key_A: ... = Qt.Key.Key_A
     """
     """
 
-    Key_AE: ... = PySide.QtCore.Qt.Key.Key_AE
+    Key_AE: ... = Qt.Key.Key_AE
     """
     """
 
-    Key_Aacute: ... = PySide.QtCore.Qt.Key.Key_Aacute
+    Key_Aacute: ... = Qt.Key.Key_Aacute
     """
     """
 
-    Key_Acircumflex: ... = PySide.QtCore.Qt.Key.Key_Acircumflex
+    Key_Acircumflex: ... = Qt.Key.Key_Acircumflex
     """
     """
 
-    Key_AddFavorite: ... = PySide.QtCore.Qt.Key.Key_AddFavorite
+    Key_AddFavorite: ... = Qt.Key.Key_AddFavorite
     """
     """
 
-    Key_Adiaeresis: ... = PySide.QtCore.Qt.Key.Key_Adiaeresis
+    Key_Adiaeresis: ... = Qt.Key.Key_Adiaeresis
     """
     """
 
-    Key_Agrave: ... = PySide.QtCore.Qt.Key.Key_Agrave
+    Key_Agrave: ... = Qt.Key.Key_Agrave
     """
     """
 
-    Key_Alt: ... = PySide.QtCore.Qt.Key.Key_Alt
+    Key_Alt: ... = Qt.Key.Key_Alt
     """
     """
 
-    Key_AltGr: ... = PySide.QtCore.Qt.Key.Key_AltGr
+    Key_AltGr: ... = Qt.Key.Key_AltGr
     """
     """
 
-    Key_Ampersand: ... = PySide.QtCore.Qt.Key.Key_Ampersand
+    Key_Ampersand: ... = Qt.Key.Key_Ampersand
     """
     """
 
-    Key_Any: ... = PySide.QtCore.Qt.Key.Key_Any
+    Key_Any: ... = Qt.Key.Key_Any
     """
     """
 
-    Key_Apostrophe: ... = PySide.QtCore.Qt.Key.Key_Apostrophe
+    Key_Apostrophe: ... = Qt.Key.Key_Apostrophe
     """
     """
 
-    Key_ApplicationLeft: ... = PySide.QtCore.Qt.Key.Key_ApplicationLeft
+    Key_ApplicationLeft: ... = Qt.Key.Key_ApplicationLeft
     """
     """
 
-    Key_ApplicationRight: ... = PySide.QtCore.Qt.Key.Key_ApplicationRight
+    Key_ApplicationRight: ... = Qt.Key.Key_ApplicationRight
     """
     """
 
-    Key_Aring: ... = PySide.QtCore.Qt.Key.Key_Aring
+    Key_Aring: ... = Qt.Key.Key_Aring
     """
     """
 
-    Key_AsciiCircum: ... = PySide.QtCore.Qt.Key.Key_AsciiCircum
+    Key_AsciiCircum: ... = Qt.Key.Key_AsciiCircum
     """
     """
 
-    Key_AsciiTilde: ... = PySide.QtCore.Qt.Key.Key_AsciiTilde
+    Key_AsciiTilde: ... = Qt.Key.Key_AsciiTilde
     """
     """
 
-    Key_Asterisk: ... = PySide.QtCore.Qt.Key.Key_Asterisk
+    Key_Asterisk: ... = Qt.Key.Key_Asterisk
     """
     """
 
-    Key_At: ... = PySide.QtCore.Qt.Key.Key_At
+    Key_At: ... = Qt.Key.Key_At
     """
     """
 
-    Key_Atilde: ... = PySide.QtCore.Qt.Key.Key_Atilde
+    Key_Atilde: ... = Qt.Key.Key_Atilde
     """
     """
 
-    Key_AudioCycleTrack: ... = PySide.QtCore.Qt.Key.Key_AudioCycleTrack
+    Key_AudioCycleTrack: ... = Qt.Key.Key_AudioCycleTrack
     """
     """
 
-    Key_AudioForward: ... = PySide.QtCore.Qt.Key.Key_AudioForward
+    Key_AudioForward: ... = Qt.Key.Key_AudioForward
     """
     """
 
-    Key_AudioRandomPlay: ... = PySide.QtCore.Qt.Key.Key_AudioRandomPlay
+    Key_AudioRandomPlay: ... = Qt.Key.Key_AudioRandomPlay
     """
     """
 
-    Key_AudioRepeat: ... = PySide.QtCore.Qt.Key.Key_AudioRepeat
+    Key_AudioRepeat: ... = Qt.Key.Key_AudioRepeat
     """
     """
 
-    Key_AudioRewind: ... = PySide.QtCore.Qt.Key.Key_AudioRewind
+    Key_AudioRewind: ... = Qt.Key.Key_AudioRewind
     """
     """
 
-    Key_Away: ... = PySide.QtCore.Qt.Key.Key_Away
+    Key_Away: ... = Qt.Key.Key_Away
     """
     """
 
-    Key_B: ... = PySide.QtCore.Qt.Key.Key_B
+    Key_B: ... = Qt.Key.Key_B
     """
     """
 
-    Key_Back: ... = PySide.QtCore.Qt.Key.Key_Back
+    Key_Back: ... = Qt.Key.Key_Back
     """
     """
 
-    Key_BackForward: ... = PySide.QtCore.Qt.Key.Key_BackForward
+    Key_BackForward: ... = Qt.Key.Key_BackForward
     """
     """
 
-    Key_Backslash: ... = PySide.QtCore.Qt.Key.Key_Backslash
+    Key_Backslash: ... = Qt.Key.Key_Backslash
     """
     """
 
-    Key_Backspace: ... = PySide.QtCore.Qt.Key.Key_Backspace
+    Key_Backspace: ... = Qt.Key.Key_Backspace
     """
     """
 
-    Key_Backtab: ... = PySide.QtCore.Qt.Key.Key_Backtab
+    Key_Backtab: ... = Qt.Key.Key_Backtab
     """
     """
 
-    Key_Bar: ... = PySide.QtCore.Qt.Key.Key_Bar
+    Key_Bar: ... = Qt.Key.Key_Bar
     """
     """
 
-    Key_BassBoost: ... = PySide.QtCore.Qt.Key.Key_BassBoost
+    Key_BassBoost: ... = Qt.Key.Key_BassBoost
     """
     """
 
-    Key_BassDown: ... = PySide.QtCore.Qt.Key.Key_BassDown
+    Key_BassDown: ... = Qt.Key.Key_BassDown
     """
     """
 
-    Key_BassUp: ... = PySide.QtCore.Qt.Key.Key_BassUp
+    Key_BassUp: ... = Qt.Key.Key_BassUp
     """
     """
 
-    Key_Battery: ... = PySide.QtCore.Qt.Key.Key_Battery
+    Key_Battery: ... = Qt.Key.Key_Battery
     """
     """
 
-    Key_Bluetooth: ... = PySide.QtCore.Qt.Key.Key_Bluetooth
+    Key_Bluetooth: ... = Qt.Key.Key_Bluetooth
     """
     """
 
-    Key_Book: ... = PySide.QtCore.Qt.Key.Key_Book
+    Key_Book: ... = Qt.Key.Key_Book
     """
     """
 
-    Key_BraceLeft: ... = PySide.QtCore.Qt.Key.Key_BraceLeft
+    Key_BraceLeft: ... = Qt.Key.Key_BraceLeft
     """
     """
 
-    Key_BraceRight: ... = PySide.QtCore.Qt.Key.Key_BraceRight
+    Key_BraceRight: ... = Qt.Key.Key_BraceRight
     """
     """
 
-    Key_BracketLeft: ... = PySide.QtCore.Qt.Key.Key_BracketLeft
+    Key_BracketLeft: ... = Qt.Key.Key_BracketLeft
     """
     """
 
-    Key_BracketRight: ... = PySide.QtCore.Qt.Key.Key_BracketRight
+    Key_BracketRight: ... = Qt.Key.Key_BracketRight
     """
     """
 
-    Key_BrightnessAdjust: ... = PySide.QtCore.Qt.Key.Key_BrightnessAdjust
+    Key_BrightnessAdjust: ... = Qt.Key.Key_BrightnessAdjust
     """
     """
 
-    Key_C: ... = PySide.QtCore.Qt.Key.Key_C
+    Key_C: ... = Qt.Key.Key_C
     """
     """
 
-    Key_CD: ... = PySide.QtCore.Qt.Key.Key_CD
+    Key_CD: ... = Qt.Key.Key_CD
     """
     """
 
-    Key_Calculator: ... = PySide.QtCore.Qt.Key.Key_Calculator
+    Key_Calculator: ... = Qt.Key.Key_Calculator
     """
     """
 
-    Key_Calendar: ... = PySide.QtCore.Qt.Key.Key_Calendar
+    Key_Calendar: ... = Qt.Key.Key_Calendar
     """
     """
 
-    Key_Call: ... = PySide.QtCore.Qt.Key.Key_Call
+    Key_Call: ... = Qt.Key.Key_Call
     """
     """
 
-    Key_Camera: ... = PySide.QtCore.Qt.Key.Key_Camera
+    Key_Camera: ... = Qt.Key.Key_Camera
     """
     """
 
-    Key_CameraFocus: ... = PySide.QtCore.Qt.Key.Key_CameraFocus
+    Key_CameraFocus: ... = Qt.Key.Key_CameraFocus
     """
     """
 
-    Key_Cancel: ... = PySide.QtCore.Qt.Key.Key_Cancel
+    Key_Cancel: ... = Qt.Key.Key_Cancel
     """
     """
 
-    Key_CapsLock: ... = PySide.QtCore.Qt.Key.Key_CapsLock
+    Key_CapsLock: ... = Qt.Key.Key_CapsLock
     """
     """
 
-    Key_Ccedilla: ... = PySide.QtCore.Qt.Key.Key_Ccedilla
+    Key_Ccedilla: ... = Qt.Key.Key_Ccedilla
     """
     """
 
-    Key_Clear: ... = PySide.QtCore.Qt.Key.Key_Clear
+    Key_Clear: ... = Qt.Key.Key_Clear
     """
     """
 
-    Key_ClearGrab: ... = PySide.QtCore.Qt.Key.Key_ClearGrab
+    Key_ClearGrab: ... = Qt.Key.Key_ClearGrab
     """
     """
 
-    Key_Close: ... = PySide.QtCore.Qt.Key.Key_Close
+    Key_Close: ... = Qt.Key.Key_Close
     """
     """
 
-    Key_Codeinput: ... = PySide.QtCore.Qt.Key.Key_Codeinput
+    Key_Codeinput: ... = Qt.Key.Key_Codeinput
     """
     """
 
-    Key_Colon: ... = PySide.QtCore.Qt.Key.Key_Colon
+    Key_Colon: ... = Qt.Key.Key_Colon
     """
     """
 
-    Key_Comma: ... = PySide.QtCore.Qt.Key.Key_Comma
+    Key_Comma: ... = Qt.Key.Key_Comma
     """
     """
 
-    Key_Community: ... = PySide.QtCore.Qt.Key.Key_Community
+    Key_Community: ... = Qt.Key.Key_Community
     """
     """
 
-    Key_Context1: ... = PySide.QtCore.Qt.Key.Key_Context1
+    Key_Context1: ... = Qt.Key.Key_Context1
     """
     """
 
-    Key_Context2: ... = PySide.QtCore.Qt.Key.Key_Context2
+    Key_Context2: ... = Qt.Key.Key_Context2
     """
     """
 
-    Key_Context3: ... = PySide.QtCore.Qt.Key.Key_Context3
+    Key_Context3: ... = Qt.Key.Key_Context3
     """
     """
 
-    Key_Context4: ... = PySide.QtCore.Qt.Key.Key_Context4
+    Key_Context4: ... = Qt.Key.Key_Context4
     """
     """
 
-    Key_ContrastAdjust: ... = PySide.QtCore.Qt.Key.Key_ContrastAdjust
+    Key_ContrastAdjust: ... = Qt.Key.Key_ContrastAdjust
     """
     """
 
-    Key_Control: ... = PySide.QtCore.Qt.Key.Key_Control
+    Key_Control: ... = Qt.Key.Key_Control
     """
     """
 
-    Key_Copy: ... = PySide.QtCore.Qt.Key.Key_Copy
+    Key_Copy: ... = Qt.Key.Key_Copy
     """
     """
 
-    Key_Cut: ... = PySide.QtCore.Qt.Key.Key_Cut
+    Key_Cut: ... = Qt.Key.Key_Cut
     """
     """
 
-    Key_D: ... = PySide.QtCore.Qt.Key.Key_D
+    Key_D: ... = Qt.Key.Key_D
     """
     """
 
-    Key_DOS: ... = PySide.QtCore.Qt.Key.Key_DOS
+    Key_DOS: ... = Qt.Key.Key_DOS
     """
     """
 
-    Key_Dead_Abovedot: ... = PySide.QtCore.Qt.Key.Key_Dead_Abovedot
+    Key_Dead_Abovedot: ... = Qt.Key.Key_Dead_Abovedot
     """
     """
 
-    Key_Dead_Abovering: ... = PySide.QtCore.Qt.Key.Key_Dead_Abovering
+    Key_Dead_Abovering: ... = Qt.Key.Key_Dead_Abovering
     """
     """
 
-    Key_Dead_Acute: ... = PySide.QtCore.Qt.Key.Key_Dead_Acute
+    Key_Dead_Acute: ... = Qt.Key.Key_Dead_Acute
     """
     """
 
-    Key_Dead_Belowdot: ... = PySide.QtCore.Qt.Key.Key_Dead_Belowdot
+    Key_Dead_Belowdot: ... = Qt.Key.Key_Dead_Belowdot
     """
     """
 
-    Key_Dead_Breve: ... = PySide.QtCore.Qt.Key.Key_Dead_Breve
+    Key_Dead_Breve: ... = Qt.Key.Key_Dead_Breve
     """
     """
 
-    Key_Dead_Caron: ... = PySide.QtCore.Qt.Key.Key_Dead_Caron
+    Key_Dead_Caron: ... = Qt.Key.Key_Dead_Caron
     """
     """
 
-    Key_Dead_Cedilla: ... = PySide.QtCore.Qt.Key.Key_Dead_Cedilla
+    Key_Dead_Cedilla: ... = Qt.Key.Key_Dead_Cedilla
     """
     """
 
-    Key_Dead_Circumflex: ... = PySide.QtCore.Qt.Key.Key_Dead_Circumflex
+    Key_Dead_Circumflex: ... = Qt.Key.Key_Dead_Circumflex
     """
     """
 
-    Key_Dead_Diaeresis: ... = PySide.QtCore.Qt.Key.Key_Dead_Diaeresis
+    Key_Dead_Diaeresis: ... = Qt.Key.Key_Dead_Diaeresis
     """
     """
 
-    Key_Dead_Doubleacute: ... = PySide.QtCore.Qt.Key.Key_Dead_Doubleacute
+    Key_Dead_Doubleacute: ... = Qt.Key.Key_Dead_Doubleacute
     """
     """
 
-    Key_Dead_Grave: ... = PySide.QtCore.Qt.Key.Key_Dead_Grave
+    Key_Dead_Grave: ... = Qt.Key.Key_Dead_Grave
     """
     """
 
-    Key_Dead_Hook: ... = PySide.QtCore.Qt.Key.Key_Dead_Hook
+    Key_Dead_Hook: ... = Qt.Key.Key_Dead_Hook
     """
     """
 
-    Key_Dead_Horn: ... = PySide.QtCore.Qt.Key.Key_Dead_Horn
+    Key_Dead_Horn: ... = Qt.Key.Key_Dead_Horn
     """
     """
 
-    Key_Dead_Iota: ... = PySide.QtCore.Qt.Key.Key_Dead_Iota
+    Key_Dead_Iota: ... = Qt.Key.Key_Dead_Iota
     """
     """
 
-    Key_Dead_Macron: ... = PySide.QtCore.Qt.Key.Key_Dead_Macron
+    Key_Dead_Macron: ... = Qt.Key.Key_Dead_Macron
     """
     """
 
-    Key_Dead_Ogonek: ... = PySide.QtCore.Qt.Key.Key_Dead_Ogonek
+    Key_Dead_Ogonek: ... = Qt.Key.Key_Dead_Ogonek
     """
     """
 
     Key_Dead_Semivoiced_Sound: ...
     """
-    PySide.QtCore.Qt.Key.Key_Dead_Semivoiced_S...
+    Qt.Key.Key_Dead_Semivoiced_S...
     """
 
-    Key_Dead_Tilde: ... = PySide.QtCore.Qt.Key.Key_Dead_Tilde
+    Key_Dead_Tilde: ... = Qt.Key.Key_Dead_Tilde
     """
     """
 
-    Key_Dead_Voiced_Sound: ... = PySide.QtCore.Qt.Key.Key_Dead_Voiced_Sound
+    Key_Dead_Voiced_Sound: ... = Qt.Key.Key_Dead_Voiced_Sound
     """
     """
 
-    Key_Delete: ... = PySide.QtCore.Qt.Key.Key_Delete
+    Key_Delete: ... = Qt.Key.Key_Delete
     """
     """
 
-    Key_Direction_L: ... = PySide.QtCore.Qt.Key.Key_Direction_L
+    Key_Direction_L: ... = Qt.Key.Key_Direction_L
     """
     """
 
-    Key_Direction_R: ... = PySide.QtCore.Qt.Key.Key_Direction_R
+    Key_Direction_R: ... = Qt.Key.Key_Direction_R
     """
     """
 
-    Key_Display: ... = PySide.QtCore.Qt.Key.Key_Display
+    Key_Display: ... = Qt.Key.Key_Display
     """
     """
 
-    Key_Documents: ... = PySide.QtCore.Qt.Key.Key_Documents
+    Key_Documents: ... = Qt.Key.Key_Documents
     """
     """
 
-    Key_Dollar: ... = PySide.QtCore.Qt.Key.Key_Dollar
+    Key_Dollar: ... = Qt.Key.Key_Dollar
     """
     """
 
-    Key_Down: ... = PySide.QtCore.Qt.Key.Key_Down
+    Key_Down: ... = Qt.Key.Key_Down
     """
     """
 
-    Key_E: ... = PySide.QtCore.Qt.Key.Key_E
+    Key_E: ... = Qt.Key.Key_E
     """
     """
 
-    Key_ETH: ... = PySide.QtCore.Qt.Key.Key_ETH
+    Key_ETH: ... = Qt.Key.Key_ETH
     """
     """
 
-    Key_Eacute: ... = PySide.QtCore.Qt.Key.Key_Eacute
+    Key_Eacute: ... = Qt.Key.Key_Eacute
     """
     """
 
-    Key_Ecircumflex: ... = PySide.QtCore.Qt.Key.Key_Ecircumflex
+    Key_Ecircumflex: ... = Qt.Key.Key_Ecircumflex
     """
     """
 
-    Key_Ediaeresis: ... = PySide.QtCore.Qt.Key.Key_Ediaeresis
+    Key_Ediaeresis: ... = Qt.Key.Key_Ediaeresis
     """
     """
 
-    Key_Egrave: ... = PySide.QtCore.Qt.Key.Key_Egrave
+    Key_Egrave: ... = Qt.Key.Key_Egrave
     """
     """
 
-    Key_Eisu_Shift: ... = PySide.QtCore.Qt.Key.Key_Eisu_Shift
+    Key_Eisu_Shift: ... = Qt.Key.Key_Eisu_Shift
     """
     """
 
-    Key_Eisu_toggle: ... = PySide.QtCore.Qt.Key.Key_Eisu_toggle
+    Key_Eisu_toggle: ... = Qt.Key.Key_Eisu_toggle
     """
     """
 
-    Key_Eject: ... = PySide.QtCore.Qt.Key.Key_Eject
+    Key_Eject: ... = Qt.Key.Key_Eject
     """
     """
 
-    Key_End: ... = PySide.QtCore.Qt.Key.Key_End
+    Key_End: ... = Qt.Key.Key_End
     """
     """
 
-    Key_Enter: ... = PySide.QtCore.Qt.Key.Key_Enter
+    Key_Enter: ... = Qt.Key.Key_Enter
     """
     """
 
-    Key_Equal: ... = PySide.QtCore.Qt.Key.Key_Equal
+    Key_Equal: ... = Qt.Key.Key_Equal
     """
     """
 
-    Key_Escape: ... = PySide.QtCore.Qt.Key.Key_Escape
+    Key_Escape: ... = Qt.Key.Key_Escape
     """
     """
 
-    Key_Excel: ... = PySide.QtCore.Qt.Key.Key_Excel
+    Key_Excel: ... = Qt.Key.Key_Excel
     """
     """
 
-    Key_Exclam: ... = PySide.QtCore.Qt.Key.Key_Exclam
+    Key_Exclam: ... = Qt.Key.Key_Exclam
     """
     """
 
-    Key_Execute: ... = PySide.QtCore.Qt.Key.Key_Execute
+    Key_Execute: ... = Qt.Key.Key_Execute
     """
     """
 
-    Key_Explorer: ... = PySide.QtCore.Qt.Key.Key_Explorer
+    Key_Explorer: ... = Qt.Key.Key_Explorer
     """
     """
 
-    Key_F: ... = PySide.QtCore.Qt.Key.Key_F
+    Key_F: ... = Qt.Key.Key_F
     """
     """
 
-    Key_F1: ... = PySide.QtCore.Qt.Key.Key_F1
+    Key_F1: ... = Qt.Key.Key_F1
     """
     """
 
-    Key_F10: ... = PySide.QtCore.Qt.Key.Key_F10
+    Key_F10: ... = Qt.Key.Key_F10
     """
     """
 
-    Key_F11: ... = PySide.QtCore.Qt.Key.Key_F11
+    Key_F11: ... = Qt.Key.Key_F11
     """
     """
 
-    Key_F12: ... = PySide.QtCore.Qt.Key.Key_F12
+    Key_F12: ... = Qt.Key.Key_F12
     """
     """
 
-    Key_F13: ... = PySide.QtCore.Qt.Key.Key_F13
+    Key_F13: ... = Qt.Key.Key_F13
     """
     """
 
-    Key_F14: ... = PySide.QtCore.Qt.Key.Key_F14
+    Key_F14: ... = Qt.Key.Key_F14
     """
     """
 
-    Key_F15: ... = PySide.QtCore.Qt.Key.Key_F15
+    Key_F15: ... = Qt.Key.Key_F15
     """
     """
 
-    Key_F16: ... = PySide.QtCore.Qt.Key.Key_F16
+    Key_F16: ... = Qt.Key.Key_F16
     """
     """
 
-    Key_F17: ... = PySide.QtCore.Qt.Key.Key_F17
+    Key_F17: ... = Qt.Key.Key_F17
     """
     """
 
-    Key_F18: ... = PySide.QtCore.Qt.Key.Key_F18
+    Key_F18: ... = Qt.Key.Key_F18
     """
     """
 
-    Key_F19: ... = PySide.QtCore.Qt.Key.Key_F19
+    Key_F19: ... = Qt.Key.Key_F19
     """
     """
 
-    Key_F2: ... = PySide.QtCore.Qt.Key.Key_F2
+    Key_F2: ... = Qt.Key.Key_F2
     """
     """
 
-    Key_F20: ... = PySide.QtCore.Qt.Key.Key_F20
+    Key_F20: ... = Qt.Key.Key_F20
     """
     """
 
-    Key_F21: ... = PySide.QtCore.Qt.Key.Key_F21
+    Key_F21: ... = Qt.Key.Key_F21
     """
     """
 
-    Key_F22: ... = PySide.QtCore.Qt.Key.Key_F22
+    Key_F22: ... = Qt.Key.Key_F22
     """
     """
 
-    Key_F23: ... = PySide.QtCore.Qt.Key.Key_F23
+    Key_F23: ... = Qt.Key.Key_F23
     """
     """
 
-    Key_F24: ... = PySide.QtCore.Qt.Key.Key_F24
+    Key_F24: ... = Qt.Key.Key_F24
     """
     """
 
-    Key_F25: ... = PySide.QtCore.Qt.Key.Key_F25
+    Key_F25: ... = Qt.Key.Key_F25
     """
     """
 
-    Key_F26: ... = PySide.QtCore.Qt.Key.Key_F26
+    Key_F26: ... = Qt.Key.Key_F26
     """
     """
 
-    Key_F27: ... = PySide.QtCore.Qt.Key.Key_F27
+    Key_F27: ... = Qt.Key.Key_F27
     """
     """
 
-    Key_F28: ... = PySide.QtCore.Qt.Key.Key_F28
+    Key_F28: ... = Qt.Key.Key_F28
     """
     """
 
-    Key_F29: ... = PySide.QtCore.Qt.Key.Key_F29
+    Key_F29: ... = Qt.Key.Key_F29
     """
     """
 
-    Key_F3: ... = PySide.QtCore.Qt.Key.Key_F3
+    Key_F3: ... = Qt.Key.Key_F3
     """
     """
 
-    Key_F30: ... = PySide.QtCore.Qt.Key.Key_F30
+    Key_F30: ... = Qt.Key.Key_F30
     """
     """
 
-    Key_F31: ... = PySide.QtCore.Qt.Key.Key_F31
+    Key_F31: ... = Qt.Key.Key_F31
     """
     """
 
-    Key_F32: ... = PySide.QtCore.Qt.Key.Key_F32
+    Key_F32: ... = Qt.Key.Key_F32
     """
     """
 
-    Key_F33: ... = PySide.QtCore.Qt.Key.Key_F33
+    Key_F33: ... = Qt.Key.Key_F33
     """
     """
 
-    Key_F34: ... = PySide.QtCore.Qt.Key.Key_F34
+    Key_F34: ... = Qt.Key.Key_F34
     """
     """
 
-    Key_F35: ... = PySide.QtCore.Qt.Key.Key_F35
+    Key_F35: ... = Qt.Key.Key_F35
     """
     """
 
-    Key_F4: ... = PySide.QtCore.Qt.Key.Key_F4
+    Key_F4: ... = Qt.Key.Key_F4
     """
     """
 
-    Key_F5: ... = PySide.QtCore.Qt.Key.Key_F5
+    Key_F5: ... = Qt.Key.Key_F5
     """
     """
 
-    Key_F6: ... = PySide.QtCore.Qt.Key.Key_F6
+    Key_F6: ... = Qt.Key.Key_F6
     """
     """
 
-    Key_F7: ... = PySide.QtCore.Qt.Key.Key_F7
+    Key_F7: ... = Qt.Key.Key_F7
     """
     """
 
-    Key_F8: ... = PySide.QtCore.Qt.Key.Key_F8
+    Key_F8: ... = Qt.Key.Key_F8
     """
     """
 
-    Key_F9: ... = PySide.QtCore.Qt.Key.Key_F9
+    Key_F9: ... = Qt.Key.Key_F9
     """
     """
 
-    Key_Favorites: ... = PySide.QtCore.Qt.Key.Key_Favorites
+    Key_Favorites: ... = Qt.Key.Key_Favorites
     """
     """
 
-    Key_Finance: ... = PySide.QtCore.Qt.Key.Key_Finance
+    Key_Finance: ... = Qt.Key.Key_Finance
     """
     """
 
-    Key_Flip: ... = PySide.QtCore.Qt.Key.Key_Flip
+    Key_Flip: ... = Qt.Key.Key_Flip
     """
     """
 
-    Key_Forward: ... = PySide.QtCore.Qt.Key.Key_Forward
+    Key_Forward: ... = Qt.Key.Key_Forward
     """
     """
 
-    Key_G: ... = PySide.QtCore.Qt.Key.Key_G
+    Key_G: ... = Qt.Key.Key_G
     """
     """
 
-    Key_Game: ... = PySide.QtCore.Qt.Key.Key_Game
+    Key_Game: ... = Qt.Key.Key_Game
     """
     """
 
-    Key_Go: ... = PySide.QtCore.Qt.Key.Key_Go
+    Key_Go: ... = Qt.Key.Key_Go
     """
     """
 
-    Key_Greater: ... = PySide.QtCore.Qt.Key.Key_Greater
+    Key_Greater: ... = Qt.Key.Key_Greater
     """
     """
 
-    Key_H: ... = PySide.QtCore.Qt.Key.Key_H
+    Key_H: ... = Qt.Key.Key_H
     """
     """
 
-    Key_Hangul: ... = PySide.QtCore.Qt.Key.Key_Hangul
+    Key_Hangul: ... = Qt.Key.Key_Hangul
     """
     """
 
-    Key_Hangul_Banja: ... = PySide.QtCore.Qt.Key.Key_Hangul_Banja
+    Key_Hangul_Banja: ... = Qt.Key.Key_Hangul_Banja
     """
     """
 
-    Key_Hangul_End: ... = PySide.QtCore.Qt.Key.Key_Hangul_End
+    Key_Hangul_End: ... = Qt.Key.Key_Hangul_End
     """
     """
 
-    Key_Hangul_Hanja: ... = PySide.QtCore.Qt.Key.Key_Hangul_Hanja
+    Key_Hangul_Hanja: ... = Qt.Key.Key_Hangul_Hanja
     """
     """
 
-    Key_Hangul_Jamo: ... = PySide.QtCore.Qt.Key.Key_Hangul_Jamo
+    Key_Hangul_Jamo: ... = Qt.Key.Key_Hangul_Jamo
     """
     """
 
-    Key_Hangul_Jeonja: ... = PySide.QtCore.Qt.Key.Key_Hangul_Jeonja
+    Key_Hangul_Jeonja: ... = Qt.Key.Key_Hangul_Jeonja
     """
     """
 
-    Key_Hangul_PostHanja: ... = PySide.QtCore.Qt.Key.Key_Hangul_PostHanja
+    Key_Hangul_PostHanja: ... = Qt.Key.Key_Hangul_PostHanja
     """
     """
 
-    Key_Hangul_PreHanja: ... = PySide.QtCore.Qt.Key.Key_Hangul_PreHanja
+    Key_Hangul_PreHanja: ... = Qt.Key.Key_Hangul_PreHanja
     """
     """
 
-    Key_Hangul_Romaja: ... = PySide.QtCore.Qt.Key.Key_Hangul_Romaja
+    Key_Hangul_Romaja: ... = Qt.Key.Key_Hangul_Romaja
     """
     """
 
-    Key_Hangul_Special: ... = PySide.QtCore.Qt.Key.Key_Hangul_Special
+    Key_Hangul_Special: ... = Qt.Key.Key_Hangul_Special
     """
     """
 
-    Key_Hangul_Start: ... = PySide.QtCore.Qt.Key.Key_Hangul_Start
+    Key_Hangul_Start: ... = Qt.Key.Key_Hangul_Start
     """
     """
 
-    Key_Hangup: ... = PySide.QtCore.Qt.Key.Key_Hangup
+    Key_Hangup: ... = Qt.Key.Key_Hangup
     """
     """
 
-    Key_Hankaku: ... = PySide.QtCore.Qt.Key.Key_Hankaku
+    Key_Hankaku: ... = Qt.Key.Key_Hankaku
     """
     """
 
-    Key_Help: ... = PySide.QtCore.Qt.Key.Key_Help
+    Key_Help: ... = Qt.Key.Key_Help
     """
     """
 
-    Key_Henkan: ... = PySide.QtCore.Qt.Key.Key_Henkan
+    Key_Henkan: ... = Qt.Key.Key_Henkan
     """
     """
 
-    Key_Hibernate: ... = PySide.QtCore.Qt.Key.Key_Hibernate
+    Key_Hibernate: ... = Qt.Key.Key_Hibernate
     """
     """
 
-    Key_Hiragana: ... = PySide.QtCore.Qt.Key.Key_Hiragana
+    Key_Hiragana: ... = Qt.Key.Key_Hiragana
     """
     """
 
-    Key_Hiragana_Katakana: ... = PySide.QtCore.Qt.Key.Key_Hiragana_Katakana
+    Key_Hiragana_Katakana: ... = Qt.Key.Key_Hiragana_Katakana
     """
     """
 
-    Key_History: ... = PySide.QtCore.Qt.Key.Key_History
+    Key_History: ... = Qt.Key.Key_History
     """
     """
 
-    Key_Home: ... = PySide.QtCore.Qt.Key.Key_Home
+    Key_Home: ... = Qt.Key.Key_Home
     """
     """
 
-    Key_HomePage: ... = PySide.QtCore.Qt.Key.Key_HomePage
+    Key_HomePage: ... = Qt.Key.Key_HomePage
     """
     """
 
-    Key_HotLinks: ... = PySide.QtCore.Qt.Key.Key_HotLinks
+    Key_HotLinks: ... = Qt.Key.Key_HotLinks
     """
     """
 
-    Key_Hyper_L: ... = PySide.QtCore.Qt.Key.Key_Hyper_L
+    Key_Hyper_L: ... = Qt.Key.Key_Hyper_L
     """
     """
 
-    Key_Hyper_R: ... = PySide.QtCore.Qt.Key.Key_Hyper_R
+    Key_Hyper_R: ... = Qt.Key.Key_Hyper_R
     """
     """
 
-    Key_I: ... = PySide.QtCore.Qt.Key.Key_I
+    Key_I: ... = Qt.Key.Key_I
     """
     """
 
-    Key_Iacute: ... = PySide.QtCore.Qt.Key.Key_Iacute
+    Key_Iacute: ... = Qt.Key.Key_Iacute
     """
     """
 
-    Key_Icircumflex: ... = PySide.QtCore.Qt.Key.Key_Icircumflex
+    Key_Icircumflex: ... = Qt.Key.Key_Icircumflex
     """
     """
 
-    Key_Idiaeresis: ... = PySide.QtCore.Qt.Key.Key_Idiaeresis
+    Key_Idiaeresis: ... = Qt.Key.Key_Idiaeresis
     """
     """
 
-    Key_Igrave: ... = PySide.QtCore.Qt.Key.Key_Igrave
+    Key_Igrave: ... = Qt.Key.Key_Igrave
     """
     """
 
-    Key_Insert: ... = PySide.QtCore.Qt.Key.Key_Insert
+    Key_Insert: ... = Qt.Key.Key_Insert
     """
     """
 
-    Key_J: ... = PySide.QtCore.Qt.Key.Key_J
+    Key_J: ... = Qt.Key.Key_J
     """
     """
 
-    Key_K: ... = PySide.QtCore.Qt.Key.Key_K
+    Key_K: ... = Qt.Key.Key_K
     """
     """
 
-    Key_Kana_Lock: ... = PySide.QtCore.Qt.Key.Key_Kana_Lock
+    Key_Kana_Lock: ... = Qt.Key.Key_Kana_Lock
     """
     """
 
-    Key_Kana_Shift: ... = PySide.QtCore.Qt.Key.Key_Kana_Shift
+    Key_Kana_Shift: ... = Qt.Key.Key_Kana_Shift
     """
     """
 
-    Key_Kanji: ... = PySide.QtCore.Qt.Key.Key_Kanji
+    Key_Kanji: ... = Qt.Key.Key_Kanji
     """
     """
 
-    Key_Katakana: ... = PySide.QtCore.Qt.Key.Key_Katakana
+    Key_Katakana: ... = Qt.Key.Key_Katakana
     """
     """
 
     Key_KeyboardBrightnessDown: ...
     """
-    PySide.QtCore.Qt.Key.Key_KeyboardBrightne...
+    Qt.Key.Key_KeyboardBrightne...
     """
 
     Key_KeyboardBrightnessUp: ...
     """
-    PySide.QtCore.Qt.Key.Key_KeyboardBrightness...
+    Qt.Key.Key_KeyboardBrightness...
     """
 
-    Key_KeyboardLightOnOff: ... = PySide.QtCore.Qt.Key.Key_KeyboardLightOnOff
-    """
-    """
-
-    Key_L: ... = PySide.QtCore.Qt.Key.Key_L
+    Key_KeyboardLightOnOff: ... = Qt.Key.Key_KeyboardLightOnOff
     """
     """
 
-    Key_LastNumberRedial: ... = PySide.QtCore.Qt.Key.Key_LastNumberRedial
+    Key_L: ... = Qt.Key.Key_L
     """
     """
 
-    Key_Launch0: ... = PySide.QtCore.Qt.Key.Key_Launch0
+    Key_LastNumberRedial: ... = Qt.Key.Key_LastNumberRedial
     """
     """
 
-    Key_Launch1: ... = PySide.QtCore.Qt.Key.Key_Launch1
+    Key_Launch0: ... = Qt.Key.Key_Launch0
     """
     """
 
-    Key_Launch2: ... = PySide.QtCore.Qt.Key.Key_Launch2
+    Key_Launch1: ... = Qt.Key.Key_Launch1
     """
     """
 
-    Key_Launch3: ... = PySide.QtCore.Qt.Key.Key_Launch3
+    Key_Launch2: ... = Qt.Key.Key_Launch2
     """
     """
 
-    Key_Launch4: ... = PySide.QtCore.Qt.Key.Key_Launch4
+    Key_Launch3: ... = Qt.Key.Key_Launch3
     """
     """
 
-    Key_Launch5: ... = PySide.QtCore.Qt.Key.Key_Launch5
+    Key_Launch4: ... = Qt.Key.Key_Launch4
     """
     """
 
-    Key_Launch6: ... = PySide.QtCore.Qt.Key.Key_Launch6
+    Key_Launch5: ... = Qt.Key.Key_Launch5
     """
     """
 
-    Key_Launch7: ... = PySide.QtCore.Qt.Key.Key_Launch7
+    Key_Launch6: ... = Qt.Key.Key_Launch6
     """
     """
 
-    Key_Launch8: ... = PySide.QtCore.Qt.Key.Key_Launch8
+    Key_Launch7: ... = Qt.Key.Key_Launch7
     """
     """
 
-    Key_Launch9: ... = PySide.QtCore.Qt.Key.Key_Launch9
+    Key_Launch8: ... = Qt.Key.Key_Launch8
     """
     """
 
-    Key_LaunchA: ... = PySide.QtCore.Qt.Key.Key_LaunchA
+    Key_Launch9: ... = Qt.Key.Key_Launch9
     """
     """
 
-    Key_LaunchB: ... = PySide.QtCore.Qt.Key.Key_LaunchB
+    Key_LaunchA: ... = Qt.Key.Key_LaunchA
     """
     """
 
-    Key_LaunchC: ... = PySide.QtCore.Qt.Key.Key_LaunchC
+    Key_LaunchB: ... = Qt.Key.Key_LaunchB
     """
     """
 
-    Key_LaunchD: ... = PySide.QtCore.Qt.Key.Key_LaunchD
+    Key_LaunchC: ... = Qt.Key.Key_LaunchC
     """
     """
 
-    Key_LaunchE: ... = PySide.QtCore.Qt.Key.Key_LaunchE
+    Key_LaunchD: ... = Qt.Key.Key_LaunchD
     """
     """
 
-    Key_LaunchF: ... = PySide.QtCore.Qt.Key.Key_LaunchF
+    Key_LaunchE: ... = Qt.Key.Key_LaunchE
     """
     """
 
-    Key_LaunchG: ... = PySide.QtCore.Qt.Key.Key_LaunchG
+    Key_LaunchF: ... = Qt.Key.Key_LaunchF
     """
     """
 
-    Key_LaunchH: ... = PySide.QtCore.Qt.Key.Key_LaunchH
+    Key_LaunchG: ... = Qt.Key.Key_LaunchG
     """
     """
 
-    Key_LaunchMail: ... = PySide.QtCore.Qt.Key.Key_LaunchMail
+    Key_LaunchH: ... = Qt.Key.Key_LaunchH
     """
     """
 
-    Key_LaunchMedia: ... = PySide.QtCore.Qt.Key.Key_LaunchMedia
+    Key_LaunchMail: ... = Qt.Key.Key_LaunchMail
     """
     """
 
-    Key_Left: ... = PySide.QtCore.Qt.Key.Key_Left
+    Key_LaunchMedia: ... = Qt.Key.Key_LaunchMedia
     """
     """
 
-    Key_Less: ... = PySide.QtCore.Qt.Key.Key_Less
+    Key_Left: ... = Qt.Key.Key_Left
     """
     """
 
-    Key_LightBulb: ... = PySide.QtCore.Qt.Key.Key_LightBulb
+    Key_Less: ... = Qt.Key.Key_Less
     """
     """
 
-    Key_LogOff: ... = PySide.QtCore.Qt.Key.Key_LogOff
+    Key_LightBulb: ... = Qt.Key.Key_LightBulb
     """
     """
 
-    Key_M: ... = PySide.QtCore.Qt.Key.Key_M
+    Key_LogOff: ... = Qt.Key.Key_LogOff
     """
     """
 
-    Key_MailForward: ... = PySide.QtCore.Qt.Key.Key_MailForward
+    Key_M: ... = Qt.Key.Key_M
     """
     """
 
-    Key_Market: ... = PySide.QtCore.Qt.Key.Key_Market
+    Key_MailForward: ... = Qt.Key.Key_MailForward
     """
     """
 
-    Key_Massyo: ... = PySide.QtCore.Qt.Key.Key_Massyo
+    Key_Market: ... = Qt.Key.Key_Market
     """
     """
 
-    Key_MediaLast: ... = PySide.QtCore.Qt.Key.Key_MediaLast
+    Key_Massyo: ... = Qt.Key.Key_Massyo
     """
     """
 
-    Key_MediaNext: ... = PySide.QtCore.Qt.Key.Key_MediaNext
+    Key_MediaLast: ... = Qt.Key.Key_MediaLast
     """
     """
 
-    Key_MediaPause: ... = PySide.QtCore.Qt.Key.Key_MediaPause
+    Key_MediaNext: ... = Qt.Key.Key_MediaNext
     """
     """
 
-    Key_MediaPlay: ... = PySide.QtCore.Qt.Key.Key_MediaPlay
+    Key_MediaPause: ... = Qt.Key.Key_MediaPause
     """
     """
 
-    Key_MediaPrevious: ... = PySide.QtCore.Qt.Key.Key_MediaPrevious
+    Key_MediaPlay: ... = Qt.Key.Key_MediaPlay
     """
     """
 
-    Key_MediaRecord: ... = PySide.QtCore.Qt.Key.Key_MediaRecord
+    Key_MediaPrevious: ... = Qt.Key.Key_MediaPrevious
     """
     """
 
-    Key_MediaStop: ... = PySide.QtCore.Qt.Key.Key_MediaStop
+    Key_MediaRecord: ... = Qt.Key.Key_MediaRecord
+    """
+    """
+
+    Key_MediaStop: ... = Qt.Key.Key_MediaStop
     """
     """
 
     Key_MediaTogglePlayPause: ...
     """
-    PySide.QtCore.Qt.Key.Key_MediaTogglePlayPau...
+    Qt.Key.Key_MediaTogglePlayPau...
     """
 
-    Key_Meeting: ... = PySide.QtCore.Qt.Key.Key_Meeting
+    Key_Meeting: ... = Qt.Key.Key_Meeting
     """
     """
 
-    Key_Memo: ... = PySide.QtCore.Qt.Key.Key_Memo
+    Key_Memo: ... = Qt.Key.Key_Memo
     """
     """
 
-    Key_Menu: ... = PySide.QtCore.Qt.Key.Key_Menu
+    Key_Menu: ... = Qt.Key.Key_Menu
     """
     """
 
-    Key_MenuKB: ... = PySide.QtCore.Qt.Key.Key_MenuKB
+    Key_MenuKB: ... = Qt.Key.Key_MenuKB
     """
     """
 
-    Key_MenuPB: ... = PySide.QtCore.Qt.Key.Key_MenuPB
+    Key_MenuPB: ... = Qt.Key.Key_MenuPB
     """
     """
 
-    Key_Messenger: ... = PySide.QtCore.Qt.Key.Key_Messenger
+    Key_Messenger: ... = Qt.Key.Key_Messenger
     """
     """
 
-    Key_Meta: ... = PySide.QtCore.Qt.Key.Key_Meta
+    Key_Meta: ... = Qt.Key.Key_Meta
     """
     """
 
-    Key_Minus: ... = PySide.QtCore.Qt.Key.Key_Minus
+    Key_Minus: ... = Qt.Key.Key_Minus
     """
     """
 
-    Key_Mode_switch: ... = PySide.QtCore.Qt.Key.Key_Mode_switch
+    Key_Mode_switch: ... = Qt.Key.Key_Mode_switch
     """
     """
 
-    Key_MonBrightnessDown: ... = PySide.QtCore.Qt.Key.Key_MonBrightnessDown
+    Key_MonBrightnessDown: ... = Qt.Key.Key_MonBrightnessDown
     """
     """
 
-    Key_MonBrightnessUp: ... = PySide.QtCore.Qt.Key.Key_MonBrightnessUp
+    Key_MonBrightnessUp: ... = Qt.Key.Key_MonBrightnessUp
     """
     """
 
-    Key_Muhenkan: ... = PySide.QtCore.Qt.Key.Key_Muhenkan
+    Key_Muhenkan: ... = Qt.Key.Key_Muhenkan
     """
     """
 
-    Key_Multi_key: ... = PySide.QtCore.Qt.Key.Key_Multi_key
+    Key_Multi_key: ... = Qt.Key.Key_Multi_key
     """
     """
 
-    Key_MultipleCandidate: ... = PySide.QtCore.Qt.Key.Key_MultipleCandidate
+    Key_MultipleCandidate: ... = Qt.Key.Key_MultipleCandidate
     """
     """
 
-    Key_Music: ... = PySide.QtCore.Qt.Key.Key_Music
+    Key_Music: ... = Qt.Key.Key_Music
     """
     """
 
-    Key_MySites: ... = PySide.QtCore.Qt.Key.Key_MySites
+    Key_MySites: ... = Qt.Key.Key_MySites
     """
     """
 
-    Key_N: ... = PySide.QtCore.Qt.Key.Key_N
+    Key_N: ... = Qt.Key.Key_N
     """
     """
 
-    Key_News: ... = PySide.QtCore.Qt.Key.Key_News
+    Key_News: ... = Qt.Key.Key_News
     """
     """
 
-    Key_No: ... = PySide.QtCore.Qt.Key.Key_No
+    Key_No: ... = Qt.Key.Key_No
     """
     """
 
-    Key_Ntilde: ... = PySide.QtCore.Qt.Key.Key_Ntilde
+    Key_Ntilde: ... = Qt.Key.Key_Ntilde
     """
     """
 
-    Key_NumLock: ... = PySide.QtCore.Qt.Key.Key_NumLock
+    Key_NumLock: ... = Qt.Key.Key_NumLock
     """
     """
 
-    Key_NumberSign: ... = PySide.QtCore.Qt.Key.Key_NumberSign
+    Key_NumberSign: ... = Qt.Key.Key_NumberSign
     """
     """
 
-    Key_O: ... = PySide.QtCore.Qt.Key.Key_O
+    Key_O: ... = Qt.Key.Key_O
     """
     """
 
-    Key_Oacute: ... = PySide.QtCore.Qt.Key.Key_Oacute
+    Key_Oacute: ... = Qt.Key.Key_Oacute
     """
     """
 
-    Key_Ocircumflex: ... = PySide.QtCore.Qt.Key.Key_Ocircumflex
+    Key_Ocircumflex: ... = Qt.Key.Key_Ocircumflex
     """
     """
 
-    Key_Odiaeresis: ... = PySide.QtCore.Qt.Key.Key_Odiaeresis
+    Key_Odiaeresis: ... = Qt.Key.Key_Odiaeresis
     """
     """
 
-    Key_OfficeHome: ... = PySide.QtCore.Qt.Key.Key_OfficeHome
+    Key_OfficeHome: ... = Qt.Key.Key_OfficeHome
     """
     """
 
-    Key_Ograve: ... = PySide.QtCore.Qt.Key.Key_Ograve
+    Key_Ograve: ... = Qt.Key.Key_Ograve
     """
     """
 
-    Key_Ooblique: ... = PySide.QtCore.Qt.Key.Key_Ooblique
+    Key_Ooblique: ... = Qt.Key.Key_Ooblique
     """
     """
 
-    Key_OpenUrl: ... = PySide.QtCore.Qt.Key.Key_OpenUrl
+    Key_OpenUrl: ... = Qt.Key.Key_OpenUrl
     """
     """
 
-    Key_Option: ... = PySide.QtCore.Qt.Key.Key_Option
+    Key_Option: ... = Qt.Key.Key_Option
     """
     """
 
-    Key_Otilde: ... = PySide.QtCore.Qt.Key.Key_Otilde
+    Key_Otilde: ... = Qt.Key.Key_Otilde
     """
     """
 
-    Key_P: ... = PySide.QtCore.Qt.Key.Key_P
+    Key_P: ... = Qt.Key.Key_P
     """
     """
 
-    Key_PageDown: ... = PySide.QtCore.Qt.Key.Key_PageDown
+    Key_PageDown: ... = Qt.Key.Key_PageDown
     """
     """
 
-    Key_PageUp: ... = PySide.QtCore.Qt.Key.Key_PageUp
+    Key_PageUp: ... = Qt.Key.Key_PageUp
     """
     """
 
-    Key_ParenLeft: ... = PySide.QtCore.Qt.Key.Key_ParenLeft
+    Key_ParenLeft: ... = Qt.Key.Key_ParenLeft
     """
     """
 
-    Key_ParenRight: ... = PySide.QtCore.Qt.Key.Key_ParenRight
+    Key_ParenRight: ... = Qt.Key.Key_ParenRight
     """
     """
 
-    Key_Paste: ... = PySide.QtCore.Qt.Key.Key_Paste
+    Key_Paste: ... = Qt.Key.Key_Paste
     """
     """
 
-    Key_Pause: ... = PySide.QtCore.Qt.Key.Key_Pause
+    Key_Pause: ... = Qt.Key.Key_Pause
     """
     """
 
-    Key_Percent: ... = PySide.QtCore.Qt.Key.Key_Percent
+    Key_Percent: ... = Qt.Key.Key_Percent
     """
     """
 
-    Key_Period: ... = PySide.QtCore.Qt.Key.Key_Period
+    Key_Period: ... = Qt.Key.Key_Period
     """
     """
 
-    Key_Phone: ... = PySide.QtCore.Qt.Key.Key_Phone
+    Key_Phone: ... = Qt.Key.Key_Phone
     """
     """
 
-    Key_Pictures: ... = PySide.QtCore.Qt.Key.Key_Pictures
+    Key_Pictures: ... = Qt.Key.Key_Pictures
     """
     """
 
-    Key_Play: ... = PySide.QtCore.Qt.Key.Key_Play
+    Key_Play: ... = Qt.Key.Key_Play
     """
     """
 
-    Key_Plus: ... = PySide.QtCore.Qt.Key.Key_Plus
+    Key_Plus: ... = Qt.Key.Key_Plus
     """
     """
 
-    Key_PowerDown: ... = PySide.QtCore.Qt.Key.Key_PowerDown
+    Key_PowerDown: ... = Qt.Key.Key_PowerDown
     """
     """
 
-    Key_PowerOff: ... = PySide.QtCore.Qt.Key.Key_PowerOff
+    Key_PowerOff: ... = Qt.Key.Key_PowerOff
     """
     """
 
-    Key_PreviousCandidate: ... = PySide.QtCore.Qt.Key.Key_PreviousCandidate
+    Key_PreviousCandidate: ... = Qt.Key.Key_PreviousCandidate
     """
     """
 
-    Key_Print: ... = PySide.QtCore.Qt.Key.Key_Print
+    Key_Print: ... = Qt.Key.Key_Print
     """
     """
 
-    Key_Printer: ... = PySide.QtCore.Qt.Key.Key_Printer
+    Key_Printer: ... = Qt.Key.Key_Printer
     """
     """
 
-    Key_Q: ... = PySide.QtCore.Qt.Key.Key_Q
+    Key_Q: ... = Qt.Key.Key_Q
     """
     """
 
-    Key_Question: ... = PySide.QtCore.Qt.Key.Key_Question
+    Key_Question: ... = Qt.Key.Key_Question
     """
     """
 
-    Key_QuoteDbl: ... = PySide.QtCore.Qt.Key.Key_QuoteDbl
+    Key_QuoteDbl: ... = Qt.Key.Key_QuoteDbl
     """
     """
 
-    Key_QuoteLeft: ... = PySide.QtCore.Qt.Key.Key_QuoteLeft
+    Key_QuoteLeft: ... = Qt.Key.Key_QuoteLeft
     """
     """
 
-    Key_R: ... = PySide.QtCore.Qt.Key.Key_R
+    Key_R: ... = Qt.Key.Key_R
     """
     """
 
-    Key_Refresh: ... = PySide.QtCore.Qt.Key.Key_Refresh
+    Key_Refresh: ... = Qt.Key.Key_Refresh
     """
     """
 
-    Key_Reload: ... = PySide.QtCore.Qt.Key.Key_Reload
+    Key_Reload: ... = Qt.Key.Key_Reload
     """
     """
 
-    Key_Reply: ... = PySide.QtCore.Qt.Key.Key_Reply
+    Key_Reply: ... = Qt.Key.Key_Reply
     """
     """
 
-    Key_Return: ... = PySide.QtCore.Qt.Key.Key_Return
+    Key_Return: ... = Qt.Key.Key_Return
     """
     """
 
-    Key_Right: ... = PySide.QtCore.Qt.Key.Key_Right
+    Key_Right: ... = Qt.Key.Key_Right
     """
     """
 
-    Key_Romaji: ... = PySide.QtCore.Qt.Key.Key_Romaji
+    Key_Romaji: ... = Qt.Key.Key_Romaji
     """
     """
 
-    Key_RotateWindows: ... = PySide.QtCore.Qt.Key.Key_RotateWindows
+    Key_RotateWindows: ... = Qt.Key.Key_RotateWindows
     """
     """
 
-    Key_RotationKB: ... = PySide.QtCore.Qt.Key.Key_RotationKB
+    Key_RotationKB: ... = Qt.Key.Key_RotationKB
     """
     """
 
-    Key_RotationPB: ... = PySide.QtCore.Qt.Key.Key_RotationPB
+    Key_RotationPB: ... = Qt.Key.Key_RotationPB
     """
     """
 
-    Key_S: ... = PySide.QtCore.Qt.Key.Key_S
+    Key_S: ... = Qt.Key.Key_S
     """
     """
 
-    Key_Save: ... = PySide.QtCore.Qt.Key.Key_Save
+    Key_Save: ... = Qt.Key.Key_Save
     """
     """
 
-    Key_ScreenSaver: ... = PySide.QtCore.Qt.Key.Key_ScreenSaver
+    Key_ScreenSaver: ... = Qt.Key.Key_ScreenSaver
     """
     """
 
-    Key_ScrollLock: ... = PySide.QtCore.Qt.Key.Key_ScrollLock
+    Key_ScrollLock: ... = Qt.Key.Key_ScrollLock
     """
     """
 
-    Key_Search: ... = PySide.QtCore.Qt.Key.Key_Search
+    Key_Search: ... = Qt.Key.Key_Search
     """
     """
 
-    Key_Select: ... = PySide.QtCore.Qt.Key.Key_Select
+    Key_Select: ... = Qt.Key.Key_Select
     """
     """
 
-    Key_Semicolon: ... = PySide.QtCore.Qt.Key.Key_Semicolon
+    Key_Semicolon: ... = Qt.Key.Key_Semicolon
     """
     """
 
-    Key_Send: ... = PySide.QtCore.Qt.Key.Key_Send
+    Key_Send: ... = Qt.Key.Key_Send
     """
     """
 
-    Key_Shift: ... = PySide.QtCore.Qt.Key.Key_Shift
+    Key_Shift: ... = Qt.Key.Key_Shift
     """
     """
 
-    Key_Shop: ... = PySide.QtCore.Qt.Key.Key_Shop
+    Key_Shop: ... = Qt.Key.Key_Shop
     """
     """
 
-    Key_SingleCandidate: ... = PySide.QtCore.Qt.Key.Key_SingleCandidate
+    Key_SingleCandidate: ... = Qt.Key.Key_SingleCandidate
     """
     """
 
-    Key_Slash: ... = PySide.QtCore.Qt.Key.Key_Slash
+    Key_Slash: ... = Qt.Key.Key_Slash
     """
     """
 
-    Key_Sleep: ... = PySide.QtCore.Qt.Key.Key_Sleep
+    Key_Sleep: ... = Qt.Key.Key_Sleep
     """
     """
 
-    Key_Space: ... = PySide.QtCore.Qt.Key.Key_Space
+    Key_Space: ... = Qt.Key.Key_Space
     """
     """
 
-    Key_Spell: ... = PySide.QtCore.Qt.Key.Key_Spell
+    Key_Spell: ... = Qt.Key.Key_Spell
     """
     """
 
-    Key_SplitScreen: ... = PySide.QtCore.Qt.Key.Key_SplitScreen
+    Key_SplitScreen: ... = Qt.Key.Key_SplitScreen
     """
     """
 
-    Key_Standby: ... = PySide.QtCore.Qt.Key.Key_Standby
+    Key_Standby: ... = Qt.Key.Key_Standby
     """
     """
 
-    Key_Stop: ... = PySide.QtCore.Qt.Key.Key_Stop
+    Key_Stop: ... = Qt.Key.Key_Stop
     """
     """
 
-    Key_Subtitle: ... = PySide.QtCore.Qt.Key.Key_Subtitle
+    Key_Subtitle: ... = Qt.Key.Key_Subtitle
     """
     """
 
-    Key_Super_L: ... = PySide.QtCore.Qt.Key.Key_Super_L
+    Key_Super_L: ... = Qt.Key.Key_Super_L
     """
     """
 
-    Key_Super_R: ... = PySide.QtCore.Qt.Key.Key_Super_R
+    Key_Super_R: ... = Qt.Key.Key_Super_R
     """
     """
 
-    Key_Support: ... = PySide.QtCore.Qt.Key.Key_Support
+    Key_Support: ... = Qt.Key.Key_Support
     """
     """
 
-    Key_Suspend: ... = PySide.QtCore.Qt.Key.Key_Suspend
+    Key_Suspend: ... = Qt.Key.Key_Suspend
     """
     """
 
-    Key_SysReq: ... = PySide.QtCore.Qt.Key.Key_SysReq
+    Key_SysReq: ... = Qt.Key.Key_SysReq
     """
     """
 
-    Key_T: ... = PySide.QtCore.Qt.Key.Key_T
+    Key_T: ... = Qt.Key.Key_T
     """
     """
 
-    Key_THORN: ... = PySide.QtCore.Qt.Key.Key_THORN
+    Key_THORN: ... = Qt.Key.Key_THORN
     """
     """
 
-    Key_Tab: ... = PySide.QtCore.Qt.Key.Key_Tab
+    Key_Tab: ... = Qt.Key.Key_Tab
     """
     """
 
-    Key_TaskPane: ... = PySide.QtCore.Qt.Key.Key_TaskPane
+    Key_TaskPane: ... = Qt.Key.Key_TaskPane
     """
     """
 
-    Key_Terminal: ... = PySide.QtCore.Qt.Key.Key_Terminal
+    Key_Terminal: ... = Qt.Key.Key_Terminal
     """
     """
 
-    Key_Time: ... = PySide.QtCore.Qt.Key.Key_Time
+    Key_Time: ... = Qt.Key.Key_Time
     """
     """
 
-    Key_ToDoList: ... = PySide.QtCore.Qt.Key.Key_ToDoList
+    Key_ToDoList: ... = Qt.Key.Key_ToDoList
     """
     """
 
-    Key_ToggleCallHangup: ... = PySide.QtCore.Qt.Key.Key_ToggleCallHangup
+    Key_ToggleCallHangup: ... = Qt.Key.Key_ToggleCallHangup
     """
     """
 
-    Key_Tools: ... = PySide.QtCore.Qt.Key.Key_Tools
+    Key_Tools: ... = Qt.Key.Key_Tools
     """
     """
 
-    Key_TopMenu: ... = PySide.QtCore.Qt.Key.Key_TopMenu
+    Key_TopMenu: ... = Qt.Key.Key_TopMenu
     """
     """
 
-    Key_Touroku: ... = PySide.QtCore.Qt.Key.Key_Touroku
+    Key_Touroku: ... = Qt.Key.Key_Touroku
     """
     """
 
-    Key_Travel: ... = PySide.QtCore.Qt.Key.Key_Travel
+    Key_Travel: ... = Qt.Key.Key_Travel
     """
     """
 
-    Key_TrebleDown: ... = PySide.QtCore.Qt.Key.Key_TrebleDown
+    Key_TrebleDown: ... = Qt.Key.Key_TrebleDown
     """
     """
 
-    Key_TrebleUp: ... = PySide.QtCore.Qt.Key.Key_TrebleUp
+    Key_TrebleUp: ... = Qt.Key.Key_TrebleUp
     """
     """
 
-    Key_U: ... = PySide.QtCore.Qt.Key.Key_U
+    Key_U: ... = Qt.Key.Key_U
     """
     """
 
-    Key_UWB: ... = PySide.QtCore.Qt.Key.Key_UWB
+    Key_UWB: ... = Qt.Key.Key_UWB
     """
     """
 
-    Key_Uacute: ... = PySide.QtCore.Qt.Key.Key_Uacute
+    Key_Uacute: ... = Qt.Key.Key_Uacute
     """
     """
 
-    Key_Ucircumflex: ... = PySide.QtCore.Qt.Key.Key_Ucircumflex
+    Key_Ucircumflex: ... = Qt.Key.Key_Ucircumflex
     """
     """
 
-    Key_Udiaeresis: ... = PySide.QtCore.Qt.Key.Key_Udiaeresis
+    Key_Udiaeresis: ... = Qt.Key.Key_Udiaeresis
     """
     """
 
-    Key_Ugrave: ... = PySide.QtCore.Qt.Key.Key_Ugrave
+    Key_Ugrave: ... = Qt.Key.Key_Ugrave
     """
     """
 
-    Key_Underscore: ... = PySide.QtCore.Qt.Key.Key_Underscore
+    Key_Underscore: ... = Qt.Key.Key_Underscore
     """
     """
 
-    Key_Up: ... = PySide.QtCore.Qt.Key.Key_Up
+    Key_Up: ... = Qt.Key.Key_Up
     """
     """
 
-    Key_V: ... = PySide.QtCore.Qt.Key.Key_V
+    Key_V: ... = Qt.Key.Key_V
     """
     """
 
-    Key_Video: ... = PySide.QtCore.Qt.Key.Key_Video
+    Key_Video: ... = Qt.Key.Key_Video
     """
     """
 
-    Key_View: ... = PySide.QtCore.Qt.Key.Key_View
+    Key_View: ... = Qt.Key.Key_View
     """
     """
 
-    Key_VoiceDial: ... = PySide.QtCore.Qt.Key.Key_VoiceDial
+    Key_VoiceDial: ... = Qt.Key.Key_VoiceDial
     """
     """
 
-    Key_VolumeDown: ... = PySide.QtCore.Qt.Key.Key_VolumeDown
+    Key_VolumeDown: ... = Qt.Key.Key_VolumeDown
     """
     """
 
-    Key_VolumeMute: ... = PySide.QtCore.Qt.Key.Key_VolumeMute
+    Key_VolumeMute: ... = Qt.Key.Key_VolumeMute
     """
     """
 
-    Key_VolumeUp: ... = PySide.QtCore.Qt.Key.Key_VolumeUp
+    Key_VolumeUp: ... = Qt.Key.Key_VolumeUp
     """
     """
 
-    Key_W: ... = PySide.QtCore.Qt.Key.Key_W
+    Key_W: ... = Qt.Key.Key_W
     """
     """
 
-    Key_WLAN: ... = PySide.QtCore.Qt.Key.Key_WLAN
+    Key_WLAN: ... = Qt.Key.Key_WLAN
     """
     """
 
-    Key_WWW: ... = PySide.QtCore.Qt.Key.Key_WWW
+    Key_WWW: ... = Qt.Key.Key_WWW
     """
     """
 
-    Key_WakeUp: ... = PySide.QtCore.Qt.Key.Key_WakeUp
+    Key_WakeUp: ... = Qt.Key.Key_WakeUp
     """
     """
 
-    Key_WebCam: ... = PySide.QtCore.Qt.Key.Key_WebCam
+    Key_WebCam: ... = Qt.Key.Key_WebCam
     """
     """
 
-    Key_Word: ... = PySide.QtCore.Qt.Key.Key_Word
+    Key_Word: ... = Qt.Key.Key_Word
     """
     """
 
-    Key_X: ... = PySide.QtCore.Qt.Key.Key_X
+    Key_X: ... = Qt.Key.Key_X
     """
     """
 
-    Key_Xfer: ... = PySide.QtCore.Qt.Key.Key_Xfer
+    Key_Xfer: ... = Qt.Key.Key_Xfer
     """
     """
 
-    Key_Y: ... = PySide.QtCore.Qt.Key.Key_Y
+    Key_Y: ... = Qt.Key.Key_Y
     """
     """
 
-    Key_Yacute: ... = PySide.QtCore.Qt.Key.Key_Yacute
+    Key_Yacute: ... = Qt.Key.Key_Yacute
     """
     """
 
-    Key_Yes: ... = PySide.QtCore.Qt.Key.Key_Yes
+    Key_Yes: ... = Qt.Key.Key_Yes
     """
     """
 
-    Key_Z: ... = PySide.QtCore.Qt.Key.Key_Z
+    Key_Z: ... = Qt.Key.Key_Z
     """
     """
 
-    Key_Zenkaku: ... = PySide.QtCore.Qt.Key.Key_Zenkaku
+    Key_Zenkaku: ... = Qt.Key.Key_Zenkaku
     """
     """
 
-    Key_Zenkaku_Hankaku: ... = PySide.QtCore.Qt.Key.Key_Zenkaku_Hankaku
+    Key_Zenkaku_Hankaku: ... = Qt.Key.Key_Zenkaku_Hankaku
     """
     """
 
-    Key_Zoom: ... = PySide.QtCore.Qt.Key.Key_Zoom
+    Key_Zoom: ... = Qt.Key.Key_Zoom
     """
     """
 
-    Key_ZoomIn: ... = PySide.QtCore.Qt.Key.Key_ZoomIn
+    Key_ZoomIn: ... = Qt.Key.Key_ZoomIn
     """
     """
 
-    Key_ZoomOut: ... = PySide.QtCore.Qt.Key.Key_ZoomOut
+    Key_ZoomOut: ... = Qt.Key.Key_ZoomOut
     """
     """
 
-    Key_acute: ... = PySide.QtCore.Qt.Key.Key_acute
+    Key_acute: ... = Qt.Key.Key_acute
     """
     """
 
-    Key_brokenbar: ... = PySide.QtCore.Qt.Key.Key_brokenbar
+    Key_brokenbar: ... = Qt.Key.Key_brokenbar
     """
     """
 
-    Key_cedilla: ... = PySide.QtCore.Qt.Key.Key_cedilla
+    Key_cedilla: ... = Qt.Key.Key_cedilla
     """
     """
 
-    Key_cent: ... = PySide.QtCore.Qt.Key.Key_cent
+    Key_cent: ... = Qt.Key.Key_cent
     """
     """
 
-    Key_copyright: ... = PySide.QtCore.Qt.Key.Key_copyright
+    Key_copyright: ... = Qt.Key.Key_copyright
     """
     """
 
-    Key_currency: ... = PySide.QtCore.Qt.Key.Key_currency
+    Key_currency: ... = Qt.Key.Key_currency
     """
     """
 
-    Key_degree: ... = PySide.QtCore.Qt.Key.Key_degree
+    Key_degree: ... = Qt.Key.Key_degree
     """
     """
 
-    Key_diaeresis: ... = PySide.QtCore.Qt.Key.Key_diaeresis
+    Key_diaeresis: ... = Qt.Key.Key_diaeresis
     """
     """
 
-    Key_division: ... = PySide.QtCore.Qt.Key.Key_division
+    Key_division: ... = Qt.Key.Key_division
     """
     """
 
-    Key_exclamdown: ... = PySide.QtCore.Qt.Key.Key_exclamdown
+    Key_exclamdown: ... = Qt.Key.Key_exclamdown
     """
     """
 
-    Key_guillemotleft: ... = PySide.QtCore.Qt.Key.Key_guillemotleft
+    Key_guillemotleft: ... = Qt.Key.Key_guillemotleft
     """
     """
 
-    Key_guillemotright: ... = PySide.QtCore.Qt.Key.Key_guillemotright
+    Key_guillemotright: ... = Qt.Key.Key_guillemotright
     """
     """
 
-    Key_hyphen: ... = PySide.QtCore.Qt.Key.Key_hyphen
+    Key_hyphen: ... = Qt.Key.Key_hyphen
     """
     """
 
-    Key_iTouch: ... = PySide.QtCore.Qt.Key.Key_iTouch
+    Key_iTouch: ... = Qt.Key.Key_iTouch
     """
     """
 
-    Key_macron: ... = PySide.QtCore.Qt.Key.Key_macron
+    Key_macron: ... = Qt.Key.Key_macron
     """
     """
 
-    Key_masculine: ... = PySide.QtCore.Qt.Key.Key_masculine
+    Key_masculine: ... = Qt.Key.Key_masculine
     """
     """
 
-    Key_mu: ... = PySide.QtCore.Qt.Key.Key_mu
+    Key_mu: ... = Qt.Key.Key_mu
     """
     """
 
-    Key_multiply: ... = PySide.QtCore.Qt.Key.Key_multiply
+    Key_multiply: ... = Qt.Key.Key_multiply
     """
     """
 
-    Key_nobreakspace: ... = PySide.QtCore.Qt.Key.Key_nobreakspace
+    Key_nobreakspace: ... = Qt.Key.Key_nobreakspace
     """
     """
 
-    Key_notsign: ... = PySide.QtCore.Qt.Key.Key_notsign
+    Key_notsign: ... = Qt.Key.Key_notsign
     """
     """
 
-    Key_onehalf: ... = PySide.QtCore.Qt.Key.Key_onehalf
+    Key_onehalf: ... = Qt.Key.Key_onehalf
     """
     """
 
-    Key_onequarter: ... = PySide.QtCore.Qt.Key.Key_onequarter
+    Key_onequarter: ... = Qt.Key.Key_onequarter
     """
     """
 
-    Key_onesuperior: ... = PySide.QtCore.Qt.Key.Key_onesuperior
+    Key_onesuperior: ... = Qt.Key.Key_onesuperior
     """
     """
 
-    Key_ordfeminine: ... = PySide.QtCore.Qt.Key.Key_ordfeminine
+    Key_ordfeminine: ... = Qt.Key.Key_ordfeminine
     """
     """
 
-    Key_paragraph: ... = PySide.QtCore.Qt.Key.Key_paragraph
+    Key_paragraph: ... = Qt.Key.Key_paragraph
     """
     """
 
-    Key_periodcentered: ... = PySide.QtCore.Qt.Key.Key_periodcentered
+    Key_periodcentered: ... = Qt.Key.Key_periodcentered
     """
     """
 
-    Key_plusminus: ... = PySide.QtCore.Qt.Key.Key_plusminus
+    Key_plusminus: ... = Qt.Key.Key_plusminus
     """
     """
 
-    Key_questiondown: ... = PySide.QtCore.Qt.Key.Key_questiondown
+    Key_questiondown: ... = Qt.Key.Key_questiondown
     """
     """
 
-    Key_registered: ... = PySide.QtCore.Qt.Key.Key_registered
+    Key_registered: ... = Qt.Key.Key_registered
     """
     """
 
-    Key_section: ... = PySide.QtCore.Qt.Key.Key_section
+    Key_section: ... = Qt.Key.Key_section
     """
     """
 
-    Key_ssharp: ... = PySide.QtCore.Qt.Key.Key_ssharp
+    Key_ssharp: ... = Qt.Key.Key_ssharp
     """
     """
 
-    Key_sterling: ... = PySide.QtCore.Qt.Key.Key_sterling
+    Key_sterling: ... = Qt.Key.Key_sterling
     """
     """
 
-    Key_threequarters: ... = PySide.QtCore.Qt.Key.Key_threequarters
+    Key_threequarters: ... = Qt.Key.Key_threequarters
     """
     """
 
-    Key_threesuperior: ... = PySide.QtCore.Qt.Key.Key_threesuperior
+    Key_threesuperior: ... = Qt.Key.Key_threesuperior
     """
     """
 
-    Key_twosuperior: ... = PySide.QtCore.Qt.Key.Key_twosuperior
+    Key_twosuperior: ... = Qt.Key.Key_twosuperior
     """
     """
 
-    Key_unknown: ... = PySide.QtCore.Qt.Key.Key_unknown
+    Key_unknown: ... = Qt.Key.Key_unknown
     """
     """
 
-    Key_ydiaeresis: ... = PySide.QtCore.Qt.Key.Key_ydiaeresis
+    Key_ydiaeresis: ... = Qt.Key.Key_ydiaeresis
     """
     """
 
-    Key_yen: ... = PySide.QtCore.Qt.Key.Key_yen
+    Key_yen: ... = Qt.Key.Key_yen
     """
     """
 
     KeyboardModifier: ...
     """
-    <type 'PySide.QtCore.Qt.KeyboardModifier'>
+    <type 'Qt.KeyboardModifier'>
     """
 
     KeyboardModifierMask: ...
     """
-    PySide.QtCore.Qt.KeyboardModifier.KeyboardModif...
+    Qt.KeyboardModifier.KeyboardModif...
     """
 
     KeyboardModifiers: ...
@@ -17058,171 +17043,171 @@ class Qt(Shiboken.Object):
     <type 'KeyboardModifiers'>
     """
 
-    KeypadModifier: ... = PySide.QtCore.Qt.KeyboardModifier.KeypadModifier
+    KeypadModifier: ... = Qt.KeyboardModifier.KeypadModifier
     """
     """
 
-    LastCursor: ... = PySide.QtCore.Qt.CursorShape.LastCursor
+    LastCursor: ... = Qt.CursorShape.LastCursor
     """
     """
 
-    LastGestureType: ... = PySide.QtCore.Qt.GestureType.LastGestureType
+    LastGestureType: ... = Qt.GestureType.LastGestureType
     """
     """
 
     LayoutDirection: ...
     """
-    <type 'PySide.QtCore.Qt.LayoutDirection'>
+    <type 'Qt.LayoutDirection'>
     """
 
     LayoutDirectionAuto: ...
     """
-    PySide.QtCore.Qt.LayoutDirection.LayoutDirection...
+    Qt.LayoutDirection.LayoutDirection...
     """
 
-    LeftArrow: ... = PySide.QtCore.Qt.ArrowType.LeftArrow
+    LeftArrow: ... = Qt.ArrowType.LeftArrow
     """
     """
 
-    LeftButton: ... = PySide.QtCore.Qt.MouseButton.LeftButton
+    LeftButton: ... = Qt.MouseButton.LeftButton
     """
     """
 
     LeftDockWidgetArea: ...
     """
-    PySide.QtCore.Qt.DockWidgetArea.LeftDockWidgetAre...
+    Qt.DockWidgetArea.LeftDockWidgetAre...
     """
 
-    LeftSection: ... = PySide.QtCore.Qt.WindowFrameSection.LeftSection
-    """
-    """
-
-    LeftToRight: ... = PySide.QtCore.Qt.LayoutDirection.LeftToRight
+    LeftSection: ... = Qt.WindowFrameSection.LeftSection
     """
     """
 
-    LeftToolBarArea: ... = PySide.QtCore.Qt.ToolBarArea.LeftToolBarArea
+    LeftToRight: ... = Qt.LayoutDirection.LeftToRight
+    """
+    """
+
+    LeftToolBarArea: ... = Qt.ToolBarArea.LeftToolBarArea
     """
     """
 
     LinearGradientPattern: ...
     """
-    PySide.QtCore.Qt.BrushStyle.LinearGradientPatt...
+    Qt.BrushStyle.LinearGradientPatt...
     """
 
-    LinkAction: ... = PySide.QtCore.Qt.DropAction.LinkAction
+    LinkAction: ... = Qt.DropAction.LinkAction
     """
     """
 
     LinksAccessibleByKeyboard: ...
     """
-    PySide.QtCore.Qt.TextInteractionFlag.Links...
+    Qt.StrInteractionFlag.Links...
     """
 
     LinksAccessibleByMouse: ...
     """
-    PySide.QtCore.Qt.TextInteractionFlag.LinksAcc...
+    Qt.StrInteractionFlag.LinksAcc...
     """
 
-    LocalDate: ... = PySide.QtCore.Qt.DateFormat.LocalDate
-    """
-    """
-
-    LocalTime: ... = PySide.QtCore.Qt.TimeSpec.LocalTime
+    LocalDate: ... = Qt.DateFormat.LocalDate
     """
     """
 
-    LocaleDate: ... = PySide.QtCore.Qt.DateFormat.LocaleDate
+    LocalTime: ... = Qt.TimeSpec.LocalTime
     """
     """
 
-    LogText: ... = PySide.QtCore.Qt.TextFormat.LogText
+    LocaleDate: ... = Qt.DateFormat.LocaleDate
+    """
+    """
+
+    LogStr: ... = Qt.StrFormat.LogStr
     """
     """
 
     LogicalCoordinates: ...
     """
-    PySide.QtCore.Qt.CoordinateSystem.LogicalCoordina...
+    Qt.CoordinateSystem.LogicalCoordina...
     """
 
-    LogicalMoveStyle: ... = PySide.QtCore.Qt.CursorMoveStyle.LogicalMoveStyle
-    """
-    """
-
-    LowEventPriority: ... = PySide.QtCore.Qt.EventPriority.LowEventPriority
+    LogicalMoveStyle: ... = Qt.CursorMoveStyle.LogicalMoveStyle
     """
     """
 
-    META: ... = PySide.QtCore.Qt.Modifier.META
+    LowEventPriority: ... = Qt.EventPriority.LowEventPriority
     """
     """
 
-    MODIFIER_MASK: ... = PySide.QtCore.Qt.Modifier.MODIFIER_MASK
+    META: ... = Qt.Modifier.META
     """
     """
 
-    MPenCapStyle: ... = PySide.QtCore.Qt.PenCapStyle.MPenCapStyle
+    MODIFIER_MASK: ... = Qt.Modifier.MODIFIER_MASK
     """
     """
 
-    MPenJoinStyle: ... = PySide.QtCore.Qt.PenJoinStyle.MPenJoinStyle
+    MPenCapStyle: ... = Qt.PenCapStyle.MPenCapStyle
     """
     """
 
-    MPenStyle: ... = PySide.QtCore.Qt.PenStyle.MPenStyle
+    MPenJoinStyle: ... = Qt.PenJoinStyle.MPenJoinStyle
+    """
+    """
+
+    MPenStyle: ... = Qt.PenStyle.MPenStyle
     """
     """
 
     MSWindowsFixedSizeDialogHint: ...
     """
-    PySide.QtCore.Qt.WindowType.MSWindowsFi...
+    Qt.WindowType.MSWindowsFi...
     """
 
-    MSWindowsOwnDC: ... = PySide.QtCore.Qt.WindowType.MSWindowsOwnDC
+    MSWindowsOwnDC: ... = Qt.WindowType.MSWindowsOwnDC
     """
     """
 
     MacWindowToolBarButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.MacWindowTool...
+    Qt.WindowType.MacWindowTool...
     """
 
-    MaskInColor: ... = PySide.QtCore.Qt.MaskMode.MaskInColor
+    MaskInColor: ... = Qt.MaskMode.MaskInColor
     """
     """
 
     MaskMode: ...
     """
-    <type 'PySide.QtCore.Qt.MaskMode'>
+    <type 'Qt.MaskMode'>
     """
 
-    MaskOutColor: ... = PySide.QtCore.Qt.MaskMode.MaskOutColor
-    """
-    """
-
-    MatchCaseSensitive: ... = PySide.QtCore.Qt.MatchFlag.MatchCaseSensitive
+    MaskOutColor: ... = Qt.MaskMode.MaskOutColor
     """
     """
 
-    MatchContains: ... = PySide.QtCore.Qt.MatchFlag.MatchContains
+    MatchCaseSensitive: ... = Qt.MatchFlag.MatchCaseSensitive
     """
     """
 
-    MatchEndsWith: ... = PySide.QtCore.Qt.MatchFlag.MatchEndsWith
+    MatchContains: ... = Qt.MatchFlag.MatchContains
     """
     """
 
-    MatchExactly: ... = PySide.QtCore.Qt.MatchFlag.MatchExactly
+    MatchEndsWith: ... = Qt.MatchFlag.MatchEndsWith
     """
     """
 
-    MatchFixedString: ... = PySide.QtCore.Qt.MatchFlag.MatchFixedString
+    MatchExactly: ... = Qt.MatchFlag.MatchExactly
+    """
+    """
+
+    MatchFixedString: ... = Qt.MatchFlag.MatchFixedString
     """
     """
 
     MatchFlag: ...
     """
-    <type 'PySide.QtCore.Qt.MatchFlag'>
+    <type 'Qt.MatchFlag'>
     """
 
     MatchFlags: ...
@@ -17230,77 +17215,77 @@ class Qt(Shiboken.Object):
     <type 'MatchFlags'>
     """
 
-    MatchRecursive: ... = PySide.QtCore.Qt.MatchFlag.MatchRecursive
+    MatchRecursive: ... = Qt.MatchFlag.MatchRecursive
     """
     """
 
-    MatchRegExp: ... = PySide.QtCore.Qt.MatchFlag.MatchRegExp
+    MatchRegExp: ... = Qt.MatchFlag.MatchRegExp
     """
     """
 
-    MatchStartsWith: ... = PySide.QtCore.Qt.MatchFlag.MatchStartsWith
+    MatchStartsWith: ... = Qt.MatchFlag.MatchStartsWith
     """
     """
 
-    MatchWildcard: ... = PySide.QtCore.Qt.MatchFlag.MatchWildcard
+    MatchWildcard: ... = Qt.MatchFlag.MatchWildcard
     """
     """
 
-    MatchWrap: ... = PySide.QtCore.Qt.MatchFlag.MatchWrap
+    MatchWrap: ... = Qt.MatchFlag.MatchWrap
     """
     """
 
-    MaximumSize: ... = PySide.QtCore.Qt.SizeHint.MaximumSize
+    MaximumSize: ... = Qt.SizeHint.MaximumSize
     """
     """
 
-    MenuBarFocusReason: ... = PySide.QtCore.Qt.FocusReason.MenuBarFocusReason
+    MenuBarFocusReason: ... = Qt.FocusReason.MenuBarFocusReason
     """
     """
 
-    MetaModifier: ... = PySide.QtCore.Qt.KeyboardModifier.MetaModifier
+    MetaModifier: ... = Qt.KeyboardModifier.MetaModifier
     """
     """
 
-    MidButton: ... = PySide.QtCore.Qt.MouseButton.MidButton
+    MidButton: ... = Qt.MouseButton.MidButton
     """
     """
 
-    MiddleButton: ... = PySide.QtCore.Qt.MouseButton.MiddleButton
+    MiddleButton: ... = Qt.MouseButton.MiddleButton
     """
     """
 
-    MinimumDescent: ... = PySide.QtCore.Qt.SizeHint.MinimumDescent
+    MinimumDescent: ... = Qt.SizeHint.MinimumDescent
     """
     """
 
-    MinimumSize: ... = PySide.QtCore.Qt.SizeHint.MinimumSize
+    MinimumSize: ... = Qt.SizeHint.MinimumSize
     """
     """
 
-    MiterJoin: ... = PySide.QtCore.Qt.PenJoinStyle.MiterJoin
+    MiterJoin: ... = Qt.PenJoinStyle.MiterJoin
     """
     """
 
     Modifier: ...
     """
-    <type 'PySide.QtCore.Qt.Modifier'>
+    <type 'Qt.Modifier'>
     """
 
-    Monday: ... = PySide.QtCore.Qt.DayOfWeek.Monday
+    Monday: ... = Qt.DayOfWeek.Monday
     """
     """
 
-    MonoOnly: ... = PySide.QtCore.Qt.ImageConversionFlag.MonoOnly
+    MonoOnly: ... = Qt.ImageConversionFlag.MonoOnly
     """
     """
 
     MouseButton: ...
     """
-    <type 'PySide.QtCore.Qt.MouseButton'>
+    <type 'Qt.MouseButton'>
     """
 
-    MouseButtonMask: ... = PySide.QtCore.Qt.MouseButton.MouseButtonMask
+    MouseButtonMask: ... = Qt.MouseButton.MouseButtonMask
     """
     """
 
@@ -17309,169 +17294,169 @@ class Qt(Shiboken.Object):
     <type 'MouseButtons'>
     """
 
-    MouseFocusReason: ... = PySide.QtCore.Qt.FocusReason.MouseFocusReason
+    MouseFocusReason: ... = Qt.FocusReason.MouseFocusReason
     """
     """
 
-    MoveAction: ... = PySide.QtCore.Qt.DropAction.MoveAction
+    MoveAction: ... = Qt.DropAction.MoveAction
     """
     """
 
     NDockWidgetAreas: ...
     """
-    PySide.QtCore.Qt.DockWidgetAreaSizes.NDockWidgetAre...
+    Qt.DockWidgetAreaSizes.NDockWidgetAre...
     """
 
-    NSizeHints: ... = PySide.QtCore.Qt.SizeHint.NSizeHints
+    NSizeHints: ... = Qt.SizeHint.NSizeHints
     """
     """
 
-    NToolBarAreas: ... = PySide.QtCore.Qt.ToolBarAreaSizes.NToolBarAreas
+    NToolBarAreas: ... = Qt.ToolBarAreaSizes.NToolBarAreas
     """
     """
 
     NavigationMode: ...
     """
-    <type 'PySide.QtCore.Qt.NavigationMode'>
+    <type 'Qt.NavigationMode'>
     """
 
     NavigationModeCursorAuto: ...
     """
-    PySide.QtCore.Qt.NavigationMode.NavigationM...
+    Qt.NavigationMode.NavigationM...
     """
 
     NavigationModeCursorForceVisible: ...
     """
-    PySide.QtCore.Qt.NavigationMode.Nav...
+    Qt.NavigationMode.Nav...
     """
 
     NavigationModeKeypadDirectional: ...
     """
-    PySide.QtCore.Qt.NavigationMode.Navi...
+    Qt.NavigationMode.Navi...
     """
 
     NavigationModeKeypadTabOrder: ...
     """
-    PySide.QtCore.Qt.NavigationMode.Navigat...
+    Qt.NavigationMode.Navigat...
     """
 
     NavigationModeNone: ...
     """
-    PySide.QtCore.Qt.NavigationMode.NavigationModeNon...
+    Qt.NavigationMode.NavigationModeNon...
     """
 
-    NoAlpha: ... = PySide.QtCore.Qt.ImageConversionFlag.NoAlpha
-    """
-    """
-
-    NoArrow: ... = PySide.QtCore.Qt.ArrowType.NoArrow
+    NoAlpha: ... = Qt.ImageConversionFlag.NoAlpha
     """
     """
 
-    NoBrush: ... = PySide.QtCore.Qt.BrushStyle.NoBrush
+    NoArrow: ... = Qt.ArrowType.NoArrow
     """
     """
 
-    NoButton: ... = PySide.QtCore.Qt.MouseButton.NoButton
+    NoBrush: ... = Qt.BrushStyle.NoBrush
     """
     """
 
-    NoClip: ... = PySide.QtCore.Qt.ClipOperation.NoClip
+    NoButton: ... = Qt.MouseButton.NoButton
     """
     """
 
-    NoContextMenu: ... = PySide.QtCore.Qt.ContextMenuPolicy.NoContextMenu
+    NoClip: ... = Qt.ClipOperation.NoClip
     """
     """
 
-    NoDockWidgetArea: ... = PySide.QtCore.Qt.DockWidgetArea.NoDockWidgetArea
+    NoContextMenu: ... = Qt.ContextMenuPolicy.NoContextMenu
     """
     """
 
-    NoFocus: ... = PySide.QtCore.Qt.FocusPolicy.NoFocus
+    NoDockWidgetArea: ... = Qt.DockWidgetArea.NoDockWidgetArea
     """
     """
 
-    NoFocusReason: ... = PySide.QtCore.Qt.FocusReason.NoFocusReason
+    NoFocus: ... = Qt.FocusPolicy.NoFocus
+    """
+    """
+
+    NoFocusReason: ... = Qt.FocusReason.NoFocusReason
     """
     """
 
     NoFormatConversion: ...
     """
-    PySide.QtCore.Qt.ImageConversionFlag.NoFormatConv...
+    Qt.ImageConversionFlag.NoFormatConv...
     """
 
-    NoGesture: ... = PySide.QtCore.Qt.GestureState.NoGesture
-    """
-    """
-
-    NoItemFlags: ... = PySide.QtCore.Qt.ItemFlag.NoItemFlags
+    NoGesture: ... = Qt.GestureState.NoGesture
     """
     """
 
-    NoModifier: ... = PySide.QtCore.Qt.KeyboardModifier.NoModifier
+    NoItemFlags: ... = Qt.ItemFlag.NoItemFlags
+    """
+    """
+
+    NoModifier: ... = Qt.KeyboardModifier.NoModifier
     """
     """
 
     NoOpaqueDetection: ...
     """
-    PySide.QtCore.Qt.ImageConversionFlag.NoOpaqueDetec...
+    Qt.ImageConversionFlag.NoOpaqueDetec...
     """
 
-    NoPen: ... = PySide.QtCore.Qt.PenStyle.NoPen
-    """
-    """
-
-    NoSection: ... = PySide.QtCore.Qt.WindowFrameSection.NoSection
+    NoPen: ... = Qt.PenStyle.NoPen
     """
     """
 
-    NoTextInteraction: ...
-    """
-    PySide.QtCore.Qt.TextInteractionFlag.NoTextInterac...
-    """
-
-    NoToolBarArea: ... = PySide.QtCore.Qt.ToolBarArea.NoToolBarArea
+    NoSection: ... = Qt.WindowFrameSection.NoSection
     """
     """
 
-    NonModal: ... = PySide.QtCore.Qt.WindowModality.NonModal
+    NoStrInteraction: ...
+    """
+    Qt.StrInteractionFlag.NoStrInterac...
+    """
+
+    NoToolBarArea: ... = Qt.ToolBarArea.NoToolBarArea
+    """
+    """
+
+    NonModal: ... = Qt.WindowModality.NonModal
     """
     """
 
     NormalEventPriority: ...
     """
-    PySide.QtCore.Qt.EventPriority.NormalEventPriori...
+    Qt.EventPriority.NormalEventPriori...
     """
 
-    OddEvenFill: ... = PySide.QtCore.Qt.FillRule.OddEvenFill
-    """
-    """
-
-    OffsetFromUTC: ... = PySide.QtCore.Qt.TimeSpec.OffsetFromUTC
+    OddEvenFill: ... = Qt.FillRule.OddEvenFill
     """
     """
 
-    OpaqueMode: ... = PySide.QtCore.Qt.BGMode.OpaqueMode
+    OffsetFromUTC: ... = Qt.TimeSpec.OffsetFromUTC
     """
     """
 
-    OpenHandCursor: ... = PySide.QtCore.Qt.CursorShape.OpenHandCursor
+    OpaqueMode: ... = Qt.BGMode.OpaqueMode
+    """
+    """
+
+    OpenHandCursor: ... = Qt.CursorShape.OpenHandCursor
     """
     """
 
     OrderedAlphaDither: ...
     """
-    PySide.QtCore.Qt.ImageConversionFlag.OrderedAlpha...
+    Qt.ImageConversionFlag.OrderedAlpha...
     """
 
-    OrderedDither: ... = PySide.QtCore.Qt.ImageConversionFlag.OrderedDither
+    OrderedDither: ... = Qt.ImageConversionFlag.OrderedDither
     """
     """
 
     Orientation: ...
     """
-    <type 'PySide.QtCore.Qt.Orientation'>
+    <type 'Qt.Orientation'>
     """
 
     Orientations: ...
@@ -17479,476 +17464,476 @@ class Qt(Shiboken.Object):
     <type 'Orientations'>
     """
 
-    OtherFocusReason: ... = PySide.QtCore.Qt.FocusReason.OtherFocusReason
+    OtherFocusReason: ... = Qt.FocusReason.OtherFocusReason
     """
     """
 
-    PanGesture: ... = PySide.QtCore.Qt.GestureType.PanGesture
+    PanGesture: ... = Qt.GestureType.PanGesture
     """
     """
 
-    PartiallyChecked: ... = PySide.QtCore.Qt.CheckState.PartiallyChecked
+    PartiallyChecked: ... = Qt.CheckState.PartiallyChecked
     """
     """
 
     PenCapStyle: ...
     """
-    <type 'PySide.QtCore.Qt.PenCapStyle'>
+    <type 'Qt.PenCapStyle'>
     """
 
     PenJoinStyle: ...
     """
-    <type 'PySide.QtCore.Qt.PenJoinStyle'>
+    <type 'Qt.PenJoinStyle'>
     """
 
     PenStyle: ...
     """
-    <type 'PySide.QtCore.Qt.PenStyle'>
+    <type 'Qt.PenStyle'>
     """
 
-    PinchGesture: ... = PySide.QtCore.Qt.GestureType.PinchGesture
-    """
-    """
-
-    PlainText: ... = PySide.QtCore.Qt.TextFormat.PlainText
+    PinchGesture: ... = Qt.GestureType.PinchGesture
     """
     """
 
-    PointingHandCursor: ... = PySide.QtCore.Qt.CursorShape.PointingHandCursor
+    PlainStr: ... = Qt.StrFormat.PlainStr
     """
     """
 
-    Popup: ... = PySide.QtCore.Qt.WindowType.Popup
+    PointingHandCursor: ... = Qt.CursorShape.PointingHandCursor
     """
     """
 
-    PopupFocusReason: ... = PySide.QtCore.Qt.FocusReason.PopupFocusReason
+    Popup: ... = Qt.WindowType.Popup
     """
     """
 
-    PreferDither: ... = PySide.QtCore.Qt.ImageConversionFlag.PreferDither
+    PopupFocusReason: ... = Qt.FocusReason.PopupFocusReason
     """
     """
 
-    PreferredSize: ... = PySide.QtCore.Qt.SizeHint.PreferredSize
+    PreferDither: ... = Qt.ImageConversionFlag.PreferDither
+    """
+    """
+
+    PreferredSize: ... = Qt.SizeHint.PreferredSize
     """
     """
 
     PreventContextMenu: ...
     """
-    PySide.QtCore.Qt.ContextMenuPolicy.PreventContext...
+    Qt.ContextMenuPolicy.PreventContext...
     """
 
-    QueuedConnection: ... = PySide.QtCore.Qt.ConnectionType.QueuedConnection
+    QueuedConnection: ... = Qt.ConnectionType.QueuedConnection
     """
     """
 
     RadialGradientPattern: ...
     """
-    PySide.QtCore.Qt.BrushStyle.RadialGradientPatt...
+    Qt.BrushStyle.RadialGradientPatt...
     """
 
     ReceivePartialGestures: ...
     """
-    PySide.QtCore.Qt.GestureFlag.ReceivePartialGe...
+    Qt.GestureFlag.ReceivePartialGe...
     """
 
-    RelativeSize: ... = PySide.QtCore.Qt.SizeMode.RelativeSize
-    """
-    """
-
-    RepeatTile: ... = PySide.QtCore.Qt.TileRule.RepeatTile
+    RelativeSize: ... = Qt.SizeMode.RelativeSize
     """
     """
 
-    ReplaceClip: ... = PySide.QtCore.Qt.ClipOperation.ReplaceClip
+    RepeatTile: ... = Qt.TileRule.RepeatTile
     """
     """
 
-    RichText: ... = PySide.QtCore.Qt.TextFormat.RichText
+    ReplaceClip: ... = Qt.ClipOperation.ReplaceClip
     """
     """
 
-    RightArrow: ... = PySide.QtCore.Qt.ArrowType.RightArrow
+    RichStr: ... = Qt.StrFormat.RichStr
     """
     """
 
-    RightButton: ... = PySide.QtCore.Qt.MouseButton.RightButton
+    RightArrow: ... = Qt.ArrowType.RightArrow
+    """
+    """
+
+    RightButton: ... = Qt.MouseButton.RightButton
     """
     """
 
     RightDockWidgetArea: ...
     """
-    PySide.QtCore.Qt.DockWidgetArea.RightDockWidgetA...
+    Qt.DockWidgetArea.RightDockWidgetA...
     """
 
-    RightSection: ... = PySide.QtCore.Qt.WindowFrameSection.RightSection
-    """
-    """
-
-    RightToLeft: ... = PySide.QtCore.Qt.LayoutDirection.RightToLeft
+    RightSection: ... = Qt.WindowFrameSection.RightSection
     """
     """
 
-    RightToolBarArea: ... = PySide.QtCore.Qt.ToolBarArea.RightToolBarArea
+    RightToLeft: ... = Qt.LayoutDirection.RightToLeft
     """
     """
 
-    RoundCap: ... = PySide.QtCore.Qt.PenCapStyle.RoundCap
+    RightToolBarArea: ... = Qt.ToolBarArea.RightToolBarArea
     """
     """
 
-    RoundJoin: ... = PySide.QtCore.Qt.PenJoinStyle.RoundJoin
+    RoundCap: ... = Qt.PenCapStyle.RoundCap
     """
     """
 
-    RoundTile: ... = PySide.QtCore.Qt.TileRule.RoundTile
+    RoundJoin: ... = Qt.PenJoinStyle.RoundJoin
     """
     """
 
-    SHIFT: ... = PySide.QtCore.Qt.Modifier.SHIFT
+    RoundTile: ... = Qt.TileRule.RoundTile
     """
     """
 
-    Saturday: ... = PySide.QtCore.Qt.DayOfWeek.Saturday
+    SHIFT: ... = Qt.Modifier.SHIFT
+    """
+    """
+
+    Saturday: ... = Qt.DayOfWeek.Saturday
     """
     """
 
     ScrollBarAlwaysOff: ...
     """
-    PySide.QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysO...
+    Qt.ScrollBarPolicy.ScrollBarAlwaysO...
     """
 
-    ScrollBarAlwaysOn: ... = PySide.QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOn
+    ScrollBarAlwaysOn: ... = Qt.ScrollBarPolicy.ScrollBarAlwaysOn
     """
     """
 
-    ScrollBarAsNeeded: ... = PySide.QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded
+    ScrollBarAsNeeded: ... = Qt.ScrollBarPolicy.ScrollBarAsNeeded
     """
     """
 
     ScrollBarPolicy: ...
     """
-    <type 'PySide.QtCore.Qt.ScrollBarPolicy'>
+    <type 'Qt.ScrollBarPolicy'>
     """
 
-    Sheet: ... = PySide.QtCore.Qt.WindowType.Sheet
+    Sheet: ... = Qt.WindowType.Sheet
     """
     """
 
-    ShiftModifier: ... = PySide.QtCore.Qt.KeyboardModifier.ShiftModifier
+    ShiftModifier: ... = Qt.KeyboardModifier.ShiftModifier
     """
     """
 
     ShortcutContext: ...
     """
-    <type 'PySide.QtCore.Qt.ShortcutContext'>
+    <type 'Qt.ShortcutContext'>
     """
 
-    ShortcutFocusReason: ... = PySide.QtCore.Qt.FocusReason.ShortcutFocusReason
-    """
-    """
-
-    SizeAllCursor: ... = PySide.QtCore.Qt.CursorShape.SizeAllCursor
+    ShortcutFocusReason: ... = Qt.FocusReason.ShortcutFocusReason
     """
     """
 
-    SizeBDiagCursor: ... = PySide.QtCore.Qt.CursorShape.SizeBDiagCursor
+    SizeAllCursor: ... = Qt.CursorShape.SizeAllCursor
     """
     """
 
-    SizeFDiagCursor: ... = PySide.QtCore.Qt.CursorShape.SizeFDiagCursor
+    SizeBDiagCursor: ... = Qt.CursorShape.SizeBDiagCursor
+    """
+    """
+
+    SizeFDiagCursor: ... = Qt.CursorShape.SizeFDiagCursor
     """
     """
 
     SizeHint: ...
     """
-    <type 'PySide.QtCore.Qt.SizeHint'>
+    <type 'Qt.SizeHint'>
     """
 
-    SizeHintRole: ... = PySide.QtCore.Qt.ItemDataRole.SizeHintRole
+    SizeHintRole: ... = Qt.ItemDataRole.SizeHintRole
     """
     """
 
-    SizeHorCursor: ... = PySide.QtCore.Qt.CursorShape.SizeHorCursor
+    SizeHorCursor: ... = Qt.CursorShape.SizeHorCursor
     """
     """
 
     SizeMode: ...
     """
-    <type 'PySide.QtCore.Qt.SizeMode'>
+    <type 'Qt.SizeMode'>
     """
 
-    SizeVerCursor: ... = PySide.QtCore.Qt.CursorShape.SizeVerCursor
+    SizeVerCursor: ... = Qt.CursorShape.SizeVerCursor
     """
     """
 
     SmoothTransformation: ...
     """
-    PySide.QtCore.Qt.TransformationMode.SmoothTrans...
+    Qt.TransformationMode.SmoothTrans...
     """
 
-    SolidLine: ... = PySide.QtCore.Qt.PenStyle.SolidLine
+    SolidLine: ... = Qt.PenStyle.SolidLine
     """
     """
 
-    SolidPattern: ... = PySide.QtCore.Qt.BrushStyle.SolidPattern
+    SolidPattern: ... = Qt.BrushStyle.SolidPattern
     """
     """
 
     SortOrder: ...
     """
-    <type 'PySide.QtCore.Qt.SortOrder'>
+    <type 'Qt.SortOrder'>
     """
 
-    SplashScreen: ... = PySide.QtCore.Qt.WindowType.SplashScreen
-    """
-    """
-
-    SplitHCursor: ... = PySide.QtCore.Qt.CursorShape.SplitHCursor
+    SplashScreen: ... = Qt.WindowType.SplashScreen
     """
     """
 
-    SplitVCursor: ... = PySide.QtCore.Qt.CursorShape.SplitVCursor
+    SplitHCursor: ... = Qt.CursorShape.SplitHCursor
     """
     """
 
-    SquareCap: ... = PySide.QtCore.Qt.PenCapStyle.SquareCap
+    SplitVCursor: ... = Qt.CursorShape.SplitVCursor
+    """
+    """
+
+    SquareCap: ... = Qt.PenCapStyle.SquareCap
     """
     """
 
     StatusTipPropertyRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.StatusTipPropert...
+    Qt.ItemDataRole.StatusTipPropert...
     """
 
-    StatusTipRole: ... = PySide.QtCore.Qt.ItemDataRole.StatusTipRole
-    """
-    """
-
-    StretchTile: ... = PySide.QtCore.Qt.TileRule.StretchTile
+    StatusTipRole: ... = Qt.ItemDataRole.StatusTipRole
     """
     """
 
-    StrongFocus: ... = PySide.QtCore.Qt.FocusPolicy.StrongFocus
+    StretchTile: ... = Qt.TileRule.StretchTile
     """
     """
 
-    SubWindow: ... = PySide.QtCore.Qt.WindowType.SubWindow
+    StrongFocus: ... = Qt.FocusPolicy.StrongFocus
     """
     """
 
-    Sunday: ... = PySide.QtCore.Qt.DayOfWeek.Sunday
+    SubWindow: ... = Qt.WindowType.SubWindow
     """
     """
 
-    SvgMiterJoin: ... = PySide.QtCore.Qt.PenJoinStyle.SvgMiterJoin
+    Sunday: ... = Qt.DayOfWeek.Sunday
     """
     """
 
-    SwipeGesture: ... = PySide.QtCore.Qt.GestureType.SwipeGesture
+    SvgMiterJoin: ... = Qt.PenJoinStyle.SvgMiterJoin
     """
     """
 
-    SystemLocaleDate: ... = PySide.QtCore.Qt.DateFormat.SystemLocaleDate
+    SwipeGesture: ... = Qt.GestureType.SwipeGesture
+    """
+    """
+
+    SystemLocaleDate: ... = Qt.DateFormat.SystemLocaleDate
     """
     """
 
     SystemLocaleLongDate: ...
     """
-    PySide.QtCore.Qt.DateFormat.SystemLocaleLongDat...
+    Qt.DateFormat.SystemLocaleLongDat...
     """
 
     SystemLocaleShortDate: ...
     """
-    PySide.QtCore.Qt.DateFormat.SystemLocaleShortD...
+    Qt.DateFormat.SystemLocaleShortD...
     """
 
-    TabFocus: ... = PySide.QtCore.Qt.FocusPolicy.TabFocus
-    """
-    """
-
-    TabFocusReason: ... = PySide.QtCore.Qt.FocusReason.TabFocusReason
+    TabFocus: ... = Qt.FocusPolicy.TabFocus
     """
     """
 
-    TapAndHoldGesture: ... = PySide.QtCore.Qt.GestureType.TapAndHoldGesture
+    TabFocusReason: ... = Qt.FocusReason.TabFocusReason
     """
     """
 
-    TapGesture: ... = PySide.QtCore.Qt.GestureType.TapGesture
+    TapAndHoldGesture: ... = Qt.GestureType.TapAndHoldGesture
     """
     """
 
-    TargetMoveAction: ... = PySide.QtCore.Qt.DropAction.TargetMoveAction
+    TapGesture: ... = Qt.GestureType.TapGesture
     """
     """
 
-    TextAlignmentRole: ... = PySide.QtCore.Qt.ItemDataRole.TextAlignmentRole
+    TargetMoveAction: ... = Qt.DropAction.TargetMoveAction
     """
     """
 
-    TextBrowserInteraction: ...
-    """
-    PySide.QtCore.Qt.TextInteractionFlag.TextBrow...
-    """
-
-    TextBypassShaping: ... = PySide.QtCore.Qt.TextFlag.TextBypassShaping
+    StrAlignmentRole: ... = Qt.ItemDataRole.StrAlignmentRole
     """
     """
 
-    TextColorRole: ... = PySide.QtCore.Qt.ItemDataRole.TextColorRole
+    StrBrowserInteraction: ...
+    """
+    Qt.StrInteractionFlag.StrBrow...
+    """
+
+    StrBypassShaping: ... = Qt.StrFlag.StrBypassShaping
     """
     """
 
-    TextDate: ... = PySide.QtCore.Qt.DateFormat.TextDate
+    StrColorRole: ... = Qt.ItemDataRole.StrColorRole
     """
     """
 
-    TextDontClip: ... = PySide.QtCore.Qt.TextFlag.TextDontClip
+    StrDate: ... = Qt.DateFormat.StrDate
     """
     """
 
-    TextDontPrint: ... = PySide.QtCore.Qt.TextFlag.TextDontPrint
+    StrDontClip: ... = Qt.StrFlag.StrDontClip
     """
     """
 
-    TextEditable: ... = PySide.QtCore.Qt.TextInteractionFlag.TextEditable
+    StrDontPrint: ... = Qt.StrFlag.StrDontPrint
     """
     """
 
-    TextEditorInteraction: ...
-    """
-    PySide.QtCore.Qt.TextInteractionFlag.TextEdito...
-    """
-
-    TextElideMode: ...
-    """
-    <type 'PySide.QtCore.Qt.TextElideMode'>
-    """
-
-    TextExpandTabs: ... = PySide.QtCore.Qt.TextFlag.TextExpandTabs
+    StrEditable: ... = Qt.StrInteractionFlag.StrEditable
     """
     """
 
-    TextFlag: ...
+    StrEditorInteraction: ...
     """
-    <type 'PySide.QtCore.Qt.TextFlag'>
-    """
-
-    TextForceLeftToRight: ... = PySide.QtCore.Qt.TextFlag.TextForceLeftToRight
-    """
+    Qt.StrInteractionFlag.StrEdito...
     """
 
-    TextForceRightToLeft: ... = PySide.QtCore.Qt.TextFlag.TextForceRightToLeft
+    StrElideMode: ...
     """
-    """
-
-    TextFormat: ...
-    """
-    <type 'PySide.QtCore.Qt.TextFormat'>
+    <type 'Qt.StrElideMode'>
     """
 
-    TextHideMnemonic: ... = PySide.QtCore.Qt.TextFlag.TextHideMnemonic
+    StrExpandTabs: ... = Qt.StrFlag.StrExpandTabs
     """
     """
 
-    TextIncludeTrailingSpaces: ...
+    StrFlag: ...
     """
-    PySide.QtCore.Qt.TextFlag.TextIncludeTrail...
-    """
-
-    TextInteractionFlag: ...
-    """
-    <type 'PySide.QtCore.Qt.TextInteractionFlag'>
+    <type 'Qt.StrFlag'>
     """
 
-    TextInteractionFlags: ...
-    """
-    <type 'TextInteractionFlags'>
-    """
-
-    TextJustificationForced: ...
-    """
-    PySide.QtCore.Qt.TextFlag.TextJustificationF...
-    """
-
-    TextLongestVariant: ... = PySide.QtCore.Qt.TextFlag.TextLongestVariant
+    StrForceLeftToRight: ... = Qt.StrFlag.StrForceLeftToRight
     """
     """
 
-    TextSelectableByKeyboard: ...
-    """
-    PySide.QtCore.Qt.TextInteractionFlag.TextSe...
-    """
-
-    TextSelectableByMouse: ...
-    """
-    PySide.QtCore.Qt.TextInteractionFlag.TextSelec...
-    """
-
-    TextShowMnemonic: ... = PySide.QtCore.Qt.TextFlag.TextShowMnemonic
+    StrForceRightToLeft: ... = Qt.StrFlag.StrForceRightToLeft
     """
     """
 
-    TextSingleLine: ... = PySide.QtCore.Qt.TextFlag.TextSingleLine
+    StrFormat: ...
+    """
+    <type 'Qt.StrFormat'>
+    """
+
+    StrHideMnemonic: ... = Qt.StrFlag.StrHideMnemonic
     """
     """
 
-    TextWordWrap: ... = PySide.QtCore.Qt.TextFlag.TextWordWrap
+    StrIncludeTrailingSpaces: ...
+    """
+    Qt.StrFlag.StrIncludeTrail...
+    """
+
+    StrInteractionFlag: ...
+    """
+    <type 'Qt.StrInteractionFlag'>
+    """
+
+    StrInteractionFlags: ...
+    """
+    <type 'StrInteractionFlags'>
+    """
+
+    StrJustificationForced: ...
+    """
+    Qt.StrFlag.StrJustificationF...
+    """
+
+    StrLongestVariant: ... = Qt.StrFlag.StrLongestVariant
     """
     """
 
-    TextWrapAnywhere: ... = PySide.QtCore.Qt.TextFlag.TextWrapAnywhere
+    StrSelectableByKeyboard: ...
+    """
+    Qt.StrInteractionFlag.StrSe...
+    """
+
+    StrSelectableByMouse: ...
+    """
+    Qt.StrInteractionFlag.StrSelec...
+    """
+
+    StrShowMnemonic: ... = Qt.StrFlag.StrShowMnemonic
     """
     """
 
-    TexturePattern: ... = PySide.QtCore.Qt.BrushStyle.TexturePattern
+    StrSingleLine: ... = Qt.StrFlag.StrSingleLine
+    """
+    """
+
+    StrWordWrap: ... = Qt.StrFlag.StrWordWrap
+    """
+    """
+
+    StrWrapAnywhere: ... = Qt.StrFlag.StrWrapAnywhere
+    """
+    """
+
+    StrurePattern: ... = Qt.BrushStyle.StrurePattern
     """
     """
 
     ThresholdAlphaDither: ...
     """
-    PySide.QtCore.Qt.ImageConversionFlag.ThresholdA...
+    Qt.ImageConversionFlag.ThresholdA...
     """
 
-    ThresholdDither: ... = PySide.QtCore.Qt.ImageConversionFlag.ThresholdDither
+    ThresholdDither: ... = Qt.ImageConversionFlag.ThresholdDither
     """
     """
 
-    Thursday: ... = PySide.QtCore.Qt.DayOfWeek.Thursday
+    Thursday: ... = Qt.DayOfWeek.Thursday
     """
     """
 
     TileRule: ...
     """
-    <type 'PySide.QtCore.Qt.TileRule'>
+    <type 'Qt.TileRule'>
     """
 
     TimeSpec: ...
     """
-    <type 'PySide.QtCore.Qt.TimeSpec'>
+    <type 'Qt.TimeSpec'>
     """
 
-    TitleBarArea: ... = PySide.QtCore.Qt.WindowFrameSection.TitleBarArea
+    TitleBarArea: ... = Qt.WindowFrameSection.TitleBarArea
     """
     """
 
-    Tool: ... = PySide.QtCore.Qt.WindowType.Tool
+    Tool: ... = Qt.WindowType.Tool
     """
     """
 
     ToolBarArea: ...
     """
-    <type 'PySide.QtCore.Qt.ToolBarArea'>
+    <type 'Qt.ToolBarArea'>
     """
 
     ToolBarAreaSizes: ...
     """
-    <type 'PySide.QtCore.Qt.ToolBarAreaSizes'>
+    <type 'Qt.ToolBarAreaSizes'>
     """
 
-    ToolBarArea_Mask: ... = PySide.QtCore.Qt.ToolBarArea.ToolBarArea_Mask
+    ToolBarArea_Mask: ... = Qt.ToolBarArea.ToolBarArea_Mask
     """
     """
 
@@ -17959,832 +17944,832 @@ class Qt(Shiboken.Object):
 
     ToolButtonFollowStyle: ...
     """
-    PySide.QtCore.Qt.ToolButtonStyle.ToolButtonFol...
+    Qt.ToolButtonStyle.ToolButtonFol...
     """
 
     ToolButtonIconOnly: ...
     """
-    PySide.QtCore.Qt.ToolButtonStyle.ToolButtonIconOn...
+    Qt.ToolButtonStyle.ToolButtonIconOn...
     """
 
     ToolButtonStyle: ...
     """
-    <type 'PySide.QtCore.Qt.ToolButtonStyle'>
+    <type 'Qt.ToolButtonStyle'>
     """
 
-    ToolButtonTextBesideIcon: ...
+    ToolButtonStrBesideIcon: ...
     """
-    PySide.QtCore.Qt.ToolButtonStyle.ToolButton...
-    """
-
-    ToolButtonTextOnly: ...
-    """
-    PySide.QtCore.Qt.ToolButtonStyle.ToolButtonTextOn...
+    Qt.ToolButtonStyle.ToolButton...
     """
 
-    ToolButtonTextUnderIcon: ...
+    ToolButtonStrOnly: ...
     """
-    PySide.QtCore.Qt.ToolButtonStyle.ToolButtonT...
+    Qt.ToolButtonStyle.ToolButtonStrOn...
     """
 
-    ToolTip: ... = PySide.QtCore.Qt.WindowType.ToolTip
+    ToolButtonStrUnderIcon: ...
+    """
+    Qt.ToolButtonStyle.ToolButtonT...
+    """
+
+    ToolTip: ... = Qt.WindowType.ToolTip
     """
     """
 
     ToolTipPropertyRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.ToolTipPropertyRol...
+    Qt.ItemDataRole.ToolTipPropertyRol...
     """
 
-    ToolTipRole: ... = PySide.QtCore.Qt.ItemDataRole.ToolTipRole
-    """
-    """
-
-    TopDockWidgetArea: ... = PySide.QtCore.Qt.DockWidgetArea.TopDockWidgetArea
+    ToolTipRole: ... = Qt.ItemDataRole.ToolTipRole
     """
     """
 
-    TopLeftCorner: ... = PySide.QtCore.Qt.Corner.TopLeftCorner
+    TopDockWidgetArea: ... = Qt.DockWidgetArea.TopDockWidgetArea
     """
     """
 
-    TopLeftSection: ... = PySide.QtCore.Qt.WindowFrameSection.TopLeftSection
+    TopLeftCorner: ... = Qt.Corner.TopLeftCorner
     """
     """
 
-    TopRightCorner: ... = PySide.QtCore.Qt.Corner.TopRightCorner
+    TopLeftSection: ... = Qt.WindowFrameSection.TopLeftSection
     """
     """
 
-    TopRightSection: ... = PySide.QtCore.Qt.WindowFrameSection.TopRightSection
+    TopRightCorner: ... = Qt.Corner.TopRightCorner
     """
     """
 
-    TopSection: ... = PySide.QtCore.Qt.WindowFrameSection.TopSection
+    TopRightSection: ... = Qt.WindowFrameSection.TopRightSection
     """
     """
 
-    TopToolBarArea: ... = PySide.QtCore.Qt.ToolBarArea.TopToolBarArea
+    TopSection: ... = Qt.WindowFrameSection.TopSection
     """
     """
 
-    TouchPointMoved: ... = PySide.QtCore.Qt.TouchPointState.TouchPointMoved
+    TopToolBarArea: ... = Qt.ToolBarArea.TopToolBarArea
     """
     """
 
-    TouchPointPressed: ... = PySide.QtCore.Qt.TouchPointState.TouchPointPressed
+    TouchPointMoved: ... = Qt.TouchPointState.TouchPointMoved
     """
     """
 
-    TouchPointPrimary: ... = PySide.QtCore.Qt.TouchPointState.TouchPointPrimary
+    TouchPointPressed: ... = Qt.TouchPointState.TouchPointPressed
+    """
+    """
+
+    TouchPointPrimary: ... = Qt.TouchPointState.TouchPointPrimary
     """
     """
 
     TouchPointReleased: ...
     """
-    PySide.QtCore.Qt.TouchPointState.TouchPointReleas...
+    Qt.TouchPointState.TouchPointReleas...
     """
 
     TouchPointState: ...
     """
-    <type 'PySide.QtCore.Qt.TouchPointState'>
+    <type 'Qt.TouchPointState'>
     """
 
     TouchPointStateMask: ...
     """
-    PySide.QtCore.Qt.TouchPointState.TouchPointState...
+    Qt.TouchPointState.TouchPointState...
     """
 
     TouchPointStationary: ...
     """
-    PySide.QtCore.Qt.TouchPointState.TouchPointStat...
+    Qt.TouchPointState.TouchPointStat...
     """
 
     TransformationMode: ...
     """
-    <type 'PySide.QtCore.Qt.TransformationMode'>
+    <type 'Qt.TransformationMode'>
     """
 
-    TransparentMode: ... = PySide.QtCore.Qt.BGMode.TransparentMode
+    TransparentMode: ... = Qt.BGMode.TransparentMode
     """
     """
 
-    Tuesday: ... = PySide.QtCore.Qt.DayOfWeek.Tuesday
+    Tuesday: ... = Qt.DayOfWeek.Tuesday
     """
     """
 
     UIEffect: ...
     """
-    <type 'PySide.QtCore.Qt.UIEffect'>
+    <type 'Qt.UIEffect'>
     """
 
-    UI_AnimateCombo: ... = PySide.QtCore.Qt.UIEffect.UI_AnimateCombo
-    """
-    """
-
-    UI_AnimateMenu: ... = PySide.QtCore.Qt.UIEffect.UI_AnimateMenu
+    UI_AnimateCombo: ... = Qt.UIEffect.UI_AnimateCombo
     """
     """
 
-    UI_AnimateToolBox: ... = PySide.QtCore.Qt.UIEffect.UI_AnimateToolBox
+    UI_AnimateMenu: ... = Qt.UIEffect.UI_AnimateMenu
     """
     """
 
-    UI_AnimateTooltip: ... = PySide.QtCore.Qt.UIEffect.UI_AnimateTooltip
+    UI_AnimateToolBox: ... = Qt.UIEffect.UI_AnimateToolBox
     """
     """
 
-    UI_FadeMenu: ... = PySide.QtCore.Qt.UIEffect.UI_FadeMenu
+    UI_AnimateTooltip: ... = Qt.UIEffect.UI_AnimateTooltip
     """
     """
 
-    UI_FadeTooltip: ... = PySide.QtCore.Qt.UIEffect.UI_FadeTooltip
+    UI_FadeMenu: ... = Qt.UIEffect.UI_FadeMenu
     """
     """
 
-    UI_General: ... = PySide.QtCore.Qt.UIEffect.UI_General
+    UI_FadeTooltip: ... = Qt.UIEffect.UI_FadeTooltip
     """
     """
 
-    UNICODE_ACCEL: ... = PySide.QtCore.Qt.Modifier.UNICODE_ACCEL
+    UI_General: ... = Qt.UIEffect.UI_General
     """
     """
 
-    UTC: ... = PySide.QtCore.Qt.TimeSpec.UTC
+    UNICODE_ACCEL: ... = Qt.Modifier.UNICODE_ACCEL
     """
     """
 
-    Unchecked: ... = PySide.QtCore.Qt.CheckState.Unchecked
+    UTC: ... = Qt.TimeSpec.UTC
     """
     """
 
-    UniqueConnection: ... = PySide.QtCore.Qt.ConnectionType.UniqueConnection
+    Unchecked: ... = Qt.CheckState.Unchecked
     """
     """
 
-    UniteClip: ... = PySide.QtCore.Qt.ClipOperation.UniteClip
+    UniqueConnection: ... = Qt.ConnectionType.UniqueConnection
     """
     """
 
-    UpArrow: ... = PySide.QtCore.Qt.ArrowType.UpArrow
+    UniteClip: ... = Qt.ClipOperation.UniteClip
     """
     """
 
-    UpArrowCursor: ... = PySide.QtCore.Qt.CursorShape.UpArrowCursor
+    UpArrow: ... = Qt.ArrowType.UpArrow
     """
     """
 
-    UserRole: ... = PySide.QtCore.Qt.ItemDataRole.UserRole
+    UpArrowCursor: ... = Qt.CursorShape.UpArrowCursor
     """
     """
 
-    VerPattern: ... = PySide.QtCore.Qt.BrushStyle.VerPattern
+    UserRole: ... = Qt.ItemDataRole.UserRole
     """
     """
 
-    Vertical: ... = PySide.QtCore.Qt.Orientation.Vertical
+    VerPattern: ... = Qt.BrushStyle.VerPattern
     """
     """
 
-    VisualMoveStyle: ... = PySide.QtCore.Qt.CursorMoveStyle.VisualMoveStyle
+    Vertical: ... = Qt.Orientation.Vertical
     """
     """
 
-    WA_AcceptDrops: ... = PySide.QtCore.Qt.WidgetAttribute.WA_AcceptDrops
+    VisualMoveStyle: ... = Qt.CursorMoveStyle.VisualMoveStyle
+    """
+    """
+
+    WA_AcceptDrops: ... = Qt.WidgetAttribute.WA_AcceptDrops
     """
     """
 
     WA_AcceptTouchEvents: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_AcceptTouch...
+    Qt.WidgetAttribute.WA_AcceptTouch...
     """
 
     WA_AlwaysShowToolTips: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_AlwaysShow...
+    Qt.WidgetAttribute.WA_AlwaysShow...
     """
 
-    WA_AttributeCount: ... = PySide.QtCore.Qt.WidgetAttribute.WA_AttributeCount
+    WA_AttributeCount: ... = Qt.WidgetAttribute.WA_AttributeCount
     """
     """
 
     WA_AutoOrientation: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_AutoOrientati...
+    Qt.WidgetAttribute.WA_AutoOrientati...
     """
 
     WA_CanHostQMdiSubWindowTitleBar: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_...
+    Qt.WidgetAttribute.WA_...
     """
 
     WA_ContentsPropagated: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_ContentsPr...
+    Qt.WidgetAttribute.WA_ContentsPr...
     """
 
     WA_CustomWhatsThis: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_CustomWhatsTh...
+    Qt.WidgetAttribute.WA_CustomWhatsTh...
     """
 
-    WA_DeleteOnClose: ... = PySide.QtCore.Qt.WidgetAttribute.WA_DeleteOnClose
+    WA_DeleteOnClose: ... = Qt.WidgetAttribute.WA_DeleteOnClose
     """
     """
 
-    WA_Disabled: ... = PySide.QtCore.Qt.WidgetAttribute.WA_Disabled
+    WA_Disabled: ... = Qt.WidgetAttribute.WA_Disabled
     """
     """
 
     WA_DontCreateNativeAncestors: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_Don...
+    Qt.WidgetAttribute.WA_Don...
     """
 
     WA_DontShowOnScreen: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_DontShowOnSc...
+    Qt.WidgetAttribute.WA_DontShowOnSc...
     """
 
     WA_DropSiteRegistered: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_DropSiteRe...
+    Qt.WidgetAttribute.WA_DropSiteRe...
     """
 
     WA_ForceAcceptDrops: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_ForceAcceptD...
+    Qt.WidgetAttribute.WA_ForceAcceptD...
     """
 
-    WA_ForceDisabled: ... = PySide.QtCore.Qt.WidgetAttribute.WA_ForceDisabled
+    WA_ForceDisabled: ... = Qt.WidgetAttribute.WA_ForceDisabled
     """
     """
 
     WA_ForceUpdatesDisabled: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_ForceUpd...
+    Qt.WidgetAttribute.WA_ForceUpd...
     """
 
     WA_GrabbedShortcut: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_GrabbedShortc...
+    Qt.WidgetAttribute.WA_GrabbedShortc...
     """
 
-    WA_GroupLeader: ... = PySide.QtCore.Qt.WidgetAttribute.WA_GroupLeader
+    WA_GroupLeader: ... = Qt.WidgetAttribute.WA_GroupLeader
     """
     """
 
-    WA_Hover: ... = PySide.QtCore.Qt.WidgetAttribute.WA_Hover
+    WA_Hover: ... = Qt.WidgetAttribute.WA_Hover
     """
     """
 
     WA_InputMethodEnabled: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_InputMetho...
+    Qt.WidgetAttribute.WA_InputMetho...
     """
 
     WA_InputMethodTransparent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_InputM...
+    Qt.WidgetAttribute.WA_InputM...
     """
 
-    WA_InvalidSize: ... = PySide.QtCore.Qt.WidgetAttribute.WA_InvalidSize
+    WA_InvalidSize: ... = Qt.WidgetAttribute.WA_InvalidSize
     """
     """
 
-    WA_KeyCompression: ... = PySide.QtCore.Qt.WidgetAttribute.WA_KeyCompression
+    WA_KeyCompression: ... = Qt.WidgetAttribute.WA_KeyCompression
     """
     """
 
     WA_KeyboardFocusChange: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_KeyboardF...
+    Qt.WidgetAttribute.WA_KeyboardF...
     """
 
-    WA_LaidOut: ... = PySide.QtCore.Qt.WidgetAttribute.WA_LaidOut
+    WA_LaidOut: ... = Qt.WidgetAttribute.WA_LaidOut
     """
     """
 
     WA_LayoutOnEntireRect: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_LayoutOnEn...
+    Qt.WidgetAttribute.WA_LayoutOnEn...
     """
 
     WA_LayoutUsesWidgetRect: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_LayoutUs...
+    Qt.WidgetAttribute.WA_LayoutUs...
     """
 
     WA_LockLandscapeOrientation: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_Lock...
+    Qt.WidgetAttribute.WA_Lock...
     """
 
     WA_LockPortraitOrientation: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_LockP...
+    Qt.WidgetAttribute.WA_LockP...
     """
 
     WA_MSWindowsUseDirect3D: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MSWindow...
+    Qt.WidgetAttribute.WA_MSWindow...
     """
 
     WA_MacAlwaysShowToolWindow: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacAl...
+    Qt.WidgetAttribute.WA_MacAl...
     """
 
     WA_MacBrushedMetal: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacBrushedMet...
+    Qt.WidgetAttribute.WA_MacBrushedMet...
     """
 
     WA_MacFrameworkScaled: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacFramewo...
+    Qt.WidgetAttribute.WA_MacFramewo...
     """
 
-    WA_MacMetalStyle: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MacMetalStyle
+    WA_MacMetalStyle: ... = Qt.WidgetAttribute.WA_MacMetalStyle
     """
     """
 
-    WA_MacMiniSize: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MacMiniSize
+    WA_MacMiniSize: ... = Qt.WidgetAttribute.WA_MacMiniSize
     """
     """
 
     WA_MacNoClickThrough: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacNoClickT...
+    Qt.WidgetAttribute.WA_MacNoClickT...
     """
 
-    WA_MacNoShadow: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MacNoShadow
+    WA_MacNoShadow: ... = Qt.WidgetAttribute.WA_MacNoShadow
     """
     """
 
-    WA_MacNormalSize: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MacNormalSize
+    WA_MacNormalSize: ... = Qt.WidgetAttribute.WA_MacNormalSize
     """
     """
 
     WA_MacOpaqueSizeGrip: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacOpaqueSi...
+    Qt.WidgetAttribute.WA_MacOpaqueSi...
     """
 
     WA_MacShowFocusRect: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacShowFocus...
+    Qt.WidgetAttribute.WA_MacShowFocus...
     """
 
-    WA_MacSmallSize: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MacSmallSize
+    WA_MacSmallSize: ... = Qt.WidgetAttribute.WA_MacSmallSize
     """
     """
 
     WA_MacVariableSize: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_MacVariableSi...
+    Qt.WidgetAttribute.WA_MacVariableSi...
     """
 
-    WA_Mapped: ... = PySide.QtCore.Qt.WidgetAttribute.WA_Mapped
+    WA_Mapped: ... = Qt.WidgetAttribute.WA_Mapped
     """
     """
 
-    WA_MergeSoftkeys: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MergeSoftkeys
+    WA_MergeSoftkeys: ... = Qt.WidgetAttribute.WA_MergeSoftkeys
     """
     """
 
     WA_MergeSoftkeysRecursively: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_Merg...
+    Qt.WidgetAttribute.WA_Merg...
     """
 
-    WA_MouseNoMask: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MouseNoMask
-    """
-    """
-
-    WA_MouseTracking: ... = PySide.QtCore.Qt.WidgetAttribute.WA_MouseTracking
+    WA_MouseNoMask: ... = Qt.WidgetAttribute.WA_MouseNoMask
     """
     """
 
-    WA_Moved: ... = PySide.QtCore.Qt.WidgetAttribute.WA_Moved
+    WA_MouseTracking: ... = Qt.WidgetAttribute.WA_MouseTracking
     """
     """
 
-    WA_NativeWindow: ... = PySide.QtCore.Qt.WidgetAttribute.WA_NativeWindow
+    WA_Moved: ... = Qt.WidgetAttribute.WA_Moved
     """
     """
 
-    WA_NoBackground: ... = PySide.QtCore.Qt.WidgetAttribute.WA_NoBackground
+    WA_NativeWindow: ... = Qt.WidgetAttribute.WA_NativeWindow
+    """
+    """
+
+    WA_NoBackground: ... = Qt.WidgetAttribute.WA_NoBackground
     """
     """
 
     WA_NoChildEventsForParent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_NoChil...
+    Qt.WidgetAttribute.WA_NoChil...
     """
 
     WA_NoChildEventsFromChildren: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_NoC...
+    Qt.WidgetAttribute.WA_NoC...
     """
 
     WA_NoMousePropagation: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_NoMousePro...
+    Qt.WidgetAttribute.WA_NoMousePro...
     """
 
-    WA_NoMouseReplay: ... = PySide.QtCore.Qt.WidgetAttribute.WA_NoMouseReplay
+    WA_NoMouseReplay: ... = Qt.WidgetAttribute.WA_NoMouseReplay
     """
     """
 
     WA_NoSystemBackground: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_NoSystemBa...
+    Qt.WidgetAttribute.WA_NoSystemBa...
     """
 
     WA_NoX11EventCompression: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_NoX11Ev...
+    Qt.WidgetAttribute.WA_NoX11Ev...
     """
 
     WA_OpaquePaintEvent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_OpaquePaintE...
+    Qt.WidgetAttribute.WA_OpaquePaintE...
     """
 
-    WA_OutsideWSRange: ... = PySide.QtCore.Qt.WidgetAttribute.WA_OutsideWSRange
+    WA_OutsideWSRange: ... = Qt.WidgetAttribute.WA_OutsideWSRange
     """
     """
 
-    WA_PaintOnScreen: ... = PySide.QtCore.Qt.WidgetAttribute.WA_PaintOnScreen
+    WA_PaintOnScreen: ... = Qt.WidgetAttribute.WA_PaintOnScreen
     """
     """
 
     WA_PaintOutsidePaintEvent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_PaintO...
+    Qt.WidgetAttribute.WA_PaintO...
     """
 
-    WA_PaintUnclipped: ... = PySide.QtCore.Qt.WidgetAttribute.WA_PaintUnclipped
+    WA_PaintUnclipped: ... = Qt.WidgetAttribute.WA_PaintUnclipped
     """
     """
 
     WA_PendingMoveEvent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_PendingMoveE...
+    Qt.WidgetAttribute.WA_PendingMoveE...
     """
 
     WA_PendingResizeEvent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_PendingRes...
+    Qt.WidgetAttribute.WA_PendingRes...
     """
 
-    WA_PendingUpdate: ... = PySide.QtCore.Qt.WidgetAttribute.WA_PendingUpdate
-    """
-    """
-
-    WA_QuitOnClose: ... = PySide.QtCore.Qt.WidgetAttribute.WA_QuitOnClose
+    WA_PendingUpdate: ... = Qt.WidgetAttribute.WA_PendingUpdate
     """
     """
 
-    WA_Resized: ... = PySide.QtCore.Qt.WidgetAttribute.WA_Resized
+    WA_QuitOnClose: ... = Qt.WidgetAttribute.WA_QuitOnClose
     """
     """
 
-    WA_RightToLeft: ... = PySide.QtCore.Qt.WidgetAttribute.WA_RightToLeft
+    WA_Resized: ... = Qt.WidgetAttribute.WA_Resized
     """
     """
 
-    WA_SetCursor: ... = PySide.QtCore.Qt.WidgetAttribute.WA_SetCursor
+    WA_RightToLeft: ... = Qt.WidgetAttribute.WA_RightToLeft
     """
     """
 
-    WA_SetFont: ... = PySide.QtCore.Qt.WidgetAttribute.WA_SetFont
+    WA_SetCursor: ... = Qt.WidgetAttribute.WA_SetCursor
+    """
+    """
+
+    WA_SetFont: ... = Qt.WidgetAttribute.WA_SetFont
     """
     """
 
     WA_SetLayoutDirection: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_SetLayoutD...
+    Qt.WidgetAttribute.WA_SetLayoutD...
     """
 
-    WA_SetLocale: ... = PySide.QtCore.Qt.WidgetAttribute.WA_SetLocale
-    """
-    """
-
-    WA_SetPalette: ... = PySide.QtCore.Qt.WidgetAttribute.WA_SetPalette
+    WA_SetLocale: ... = Qt.WidgetAttribute.WA_SetLocale
     """
     """
 
-    WA_SetStyle: ... = PySide.QtCore.Qt.WidgetAttribute.WA_SetStyle
+    WA_SetPalette: ... = Qt.WidgetAttribute.WA_SetPalette
     """
     """
 
-    WA_SetWindowIcon: ... = PySide.QtCore.Qt.WidgetAttribute.WA_SetWindowIcon
+    WA_SetStyle: ... = Qt.WidgetAttribute.WA_SetStyle
+    """
+    """
+
+    WA_SetWindowIcon: ... = Qt.WidgetAttribute.WA_SetWindowIcon
     """
     """
 
     WA_SetWindowModality: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_SetWindowMo...
+    Qt.WidgetAttribute.WA_SetWindowMo...
     """
 
-    WA_ShowModal: ... = PySide.QtCore.Qt.WidgetAttribute.WA_ShowModal
+    WA_ShowModal: ... = Qt.WidgetAttribute.WA_ShowModal
     """
     """
 
     WA_ShowWithoutActivating: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_ShowWit...
+    Qt.WidgetAttribute.WA_ShowWit...
     """
 
-    WA_StaticContents: ... = PySide.QtCore.Qt.WidgetAttribute.WA_StaticContents
+    WA_StaticContents: ... = Qt.WidgetAttribute.WA_StaticContents
     """
     """
 
-    WA_StyleSheet: ... = PySide.QtCore.Qt.WidgetAttribute.WA_StyleSheet
+    WA_StyleSheet: ... = Qt.WidgetAttribute.WA_StyleSheet
     """
     """
 
     WA_StyledBackground: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_StyledBackgr...
+    Qt.WidgetAttribute.WA_StyledBackgr...
     """
 
     WA_SymbianNoSystemRotation: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_Symbi...
+    Qt.WidgetAttribute.WA_Symbi...
     """
 
     WA_TintedBackground: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_TintedBackgr...
+    Qt.WidgetAttribute.WA_TintedBackgr...
     """
 
     WA_TouchPadAcceptSingleTouchEvents: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute....
+    Qt.WidgetAttribute....
     """
 
     WA_TranslucentBackground: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_Translu...
+    Qt.WidgetAttribute.WA_Translu...
     """
 
     WA_TransparentForMouseEvents: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_Tra...
+    Qt.WidgetAttribute.WA_Tra...
     """
 
-    WA_UnderMouse: ... = PySide.QtCore.Qt.WidgetAttribute.WA_UnderMouse
+    WA_UnderMouse: ... = Qt.WidgetAttribute.WA_UnderMouse
     """
     """
 
     WA_UpdatesDisabled: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_UpdatesDisabl...
+    Qt.WidgetAttribute.WA_UpdatesDisabl...
     """
 
     WA_WState_AcceptedTouchBeginEvent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.W...
+    Qt.WidgetAttribute.W...
     """
 
     WA_WState_CompressKeys: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WState_Co...
+    Qt.WidgetAttribute.WA_WState_Co...
     """
 
     WA_WState_ConfigPending: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WState_C...
+    Qt.WidgetAttribute.WA_WState_C...
     """
 
-    WA_WState_Created: ... = PySide.QtCore.Qt.WidgetAttribute.WA_WState_Created
+    WA_WState_Created: ... = Qt.WidgetAttribute.WA_WState_Created
     """
     """
 
-    WA_WState_DND: ... = PySide.QtCore.Qt.WidgetAttribute.WA_WState_DND
+    WA_WState_DND: ... = Qt.WidgetAttribute.WA_WState_DND
     """
     """
 
     WA_WState_ExplicitShowHide: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WStat...
+    Qt.WidgetAttribute.WA_WStat...
     """
 
-    WA_WState_Hidden: ... = PySide.QtCore.Qt.WidgetAttribute.WA_WState_Hidden
+    WA_WState_Hidden: ... = Qt.WidgetAttribute.WA_WState_Hidden
     """
     """
 
     WA_WState_InPaintEvent: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WState_In...
+    Qt.WidgetAttribute.WA_WState_In...
     """
 
     WA_WState_OwnSizePolicy: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WState_O...
+    Qt.WidgetAttribute.WA_WState_O...
     """
 
     WA_WState_Polished: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WState_Polish...
+    Qt.WidgetAttribute.WA_WState_Polish...
     """
 
     WA_WState_Reparented: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WState_Repa...
+    Qt.WidgetAttribute.WA_WState_Repa...
     """
 
-    WA_WState_Visible: ... = PySide.QtCore.Qt.WidgetAttribute.WA_WState_Visible
+    WA_WState_Visible: ... = Qt.WidgetAttribute.WA_WState_Visible
     """
     """
 
     WA_WState_WindowOpacitySet: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WStat...
+    Qt.WidgetAttribute.WA_WStat...
     """
 
-    WA_WindowModified: ... = PySide.QtCore.Qt.WidgetAttribute.WA_WindowModified
+    WA_WindowModified: ... = Qt.WidgetAttribute.WA_WindowModified
     """
     """
 
     WA_WindowPropagation: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_WindowPropa...
+    Qt.WidgetAttribute.WA_WindowPropa...
     """
 
     WA_X11BypassTransientForHint: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11...
+    Qt.WidgetAttribute.WA_X11...
     """
 
     WA_X11DoNotAcceptFocus: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11DoNotA...
+    Qt.WidgetAttribute.WA_X11DoNotA...
     """
 
     WA_X11NetWmWindowTypeCombo: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11Ne...
+    Qt.WidgetAttribute.WA_X11Ne...
     """
 
     WA_X11NetWmWindowTypeDND: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11NetW...
+    Qt.WidgetAttribute.WA_X11NetW...
     """
 
     WA_X11NetWmWindowTypeDesktop: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11...
+    Qt.WidgetAttribute.WA_X11...
     """
 
     WA_X11NetWmWindowTypeDialog: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11N...
+    Qt.WidgetAttribute.WA_X11N...
     """
 
     WA_X11NetWmWindowTypeDock: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11Net...
+    Qt.WidgetAttribute.WA_X11Net...
     """
 
     WA_X11NetWmWindowTypeDropDownMenu: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.W...
+    Qt.WidgetAttribute.W...
     """
 
     WA_X11NetWmWindowTypeMenu: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11Net...
+    Qt.WidgetAttribute.WA_X11Net...
     """
 
     WA_X11NetWmWindowTypeNotification: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.W...
+    Qt.WidgetAttribute.W...
     """
 
     WA_X11NetWmWindowTypePopupMenu: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X...
+    Qt.WidgetAttribute.WA_X...
     """
 
     WA_X11NetWmWindowTypeSplash: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11N...
+    Qt.WidgetAttribute.WA_X11N...
     """
 
     WA_X11NetWmWindowTypeToolBar: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11...
+    Qt.WidgetAttribute.WA_X11...
     """
 
     WA_X11NetWmWindowTypeToolTip: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11...
+    Qt.WidgetAttribute.WA_X11...
     """
 
     WA_X11NetWmWindowTypeUtility: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11...
+    Qt.WidgetAttribute.WA_X11...
     """
 
     WA_X11OpenGLOverlay: ...
     """
-    PySide.QtCore.Qt.WidgetAttribute.WA_X11OpenGLOve...
+    Qt.WidgetAttribute.WA_X11OpenGLOve...
     """
 
-    WaitCursor: ... = PySide.QtCore.Qt.CursorShape.WaitCursor
-    """
-    """
-
-    Wednesday: ... = PySide.QtCore.Qt.DayOfWeek.Wednesday
+    WaitCursor: ... = Qt.CursorShape.WaitCursor
     """
     """
 
-    WhatsThisCursor: ... = PySide.QtCore.Qt.CursorShape.WhatsThisCursor
+    Wednesday: ... = Qt.DayOfWeek.Wednesday
+    """
+    """
+
+    WhatsThisCursor: ... = Qt.CursorShape.WhatsThisCursor
     """
     """
 
     WhatsThisPropertyRole: ...
     """
-    PySide.QtCore.Qt.ItemDataRole.WhatsThisPropert...
+    Qt.ItemDataRole.WhatsThisPropert...
     """
 
-    WhatsThisRole: ... = PySide.QtCore.Qt.ItemDataRole.WhatsThisRole
+    WhatsThisRole: ... = Qt.ItemDataRole.WhatsThisRole
     """
     """
 
-    WheelFocus: ... = PySide.QtCore.Qt.FocusPolicy.WheelFocus
+    WheelFocus: ... = Qt.FocusPolicy.WheelFocus
     """
     """
 
     WhiteSpaceMode: ...
     """
-    <type 'PySide.QtCore.Qt.WhiteSpaceMode'>
+    <type 'Qt.WhiteSpaceMode'>
     """
 
     WhiteSpaceModeUndefined: ...
     """
-    PySide.QtCore.Qt.WhiteSpaceMode.WhiteSpaceMo...
+    Qt.WhiteSpaceMode.WhiteSpaceMo...
     """
 
-    WhiteSpaceNoWrap: ... = PySide.QtCore.Qt.WhiteSpaceMode.WhiteSpaceNoWrap
-    """
-    """
-
-    WhiteSpaceNormal: ... = PySide.QtCore.Qt.WhiteSpaceMode.WhiteSpaceNormal
+    WhiteSpaceNoWrap: ... = Qt.WhiteSpaceMode.WhiteSpaceNoWrap
     """
     """
 
-    WhiteSpacePre: ... = PySide.QtCore.Qt.WhiteSpaceMode.WhiteSpacePre
+    WhiteSpaceNormal: ... = Qt.WhiteSpaceMode.WhiteSpaceNormal
     """
     """
 
-    Widget: ... = PySide.QtCore.Qt.WindowType.Widget
+    WhiteSpacePre: ... = Qt.WhiteSpaceMode.WhiteSpacePre
+    """
+    """
+
+    Widget: ... = Qt.WindowType.Widget
     """
     """
 
     WidgetAttribute: ...
     """
-    <type 'PySide.QtCore.Qt.WidgetAttribute'>
+    <type 'Qt.WidgetAttribute'>
     """
 
-    WidgetShortcut: ... = PySide.QtCore.Qt.ShortcutContext.WidgetShortcut
+    WidgetShortcut: ... = Qt.ShortcutContext.WidgetShortcut
     """
     """
 
     WidgetWithChildrenShortcut: ...
     """
-    PySide.QtCore.Qt.ShortcutContext.WidgetWi...
+    Qt.ShortcutContext.WidgetWi...
     """
 
-    WindingFill: ... = PySide.QtCore.Qt.FillRule.WindingFill
-    """
-    """
-
-    Window: ... = PySide.QtCore.Qt.WindowType.Window
+    WindingFill: ... = Qt.FillRule.WindingFill
     """
     """
 
-    WindowActive: ... = PySide.QtCore.Qt.WindowState.WindowActive
+    Window: ... = Qt.WindowType.Window
+    """
+    """
+
+    WindowActive: ... = Qt.WindowState.WindowActive
     """
     """
 
     WindowCancelButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowCancelButto...
+    Qt.WindowType.WindowCancelButto...
     """
 
     WindowCloseButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowCloseButtonH...
+    Qt.WindowType.WindowCloseButtonH...
     """
 
     WindowContextHelpButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowContex...
+    Qt.WindowType.WindowContex...
     """
 
     WindowFlags: ...
@@ -18794,75 +18779,75 @@ class Qt(Shiboken.Object):
 
     WindowFrameSection: ...
     """
-    <type 'PySide.QtCore.Qt.WindowFrameSection'>
+    <type 'Qt.WindowFrameSection'>
     """
 
-    WindowFullScreen: ... = PySide.QtCore.Qt.WindowState.WindowFullScreen
+    WindowFullScreen: ... = Qt.WindowState.WindowFullScreen
     """
     """
 
     WindowMaximizeButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowMaximizeB...
+    Qt.WindowType.WindowMaximizeB...
     """
 
-    WindowMaximized: ... = PySide.QtCore.Qt.WindowState.WindowMaximized
+    WindowMaximized: ... = Qt.WindowState.WindowMaximized
     """
     """
 
     WindowMinMaxButtonsHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowMinMaxButt...
+    Qt.WindowType.WindowMinMaxButt...
     """
 
     WindowMinimizeButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowMinimizeB...
+    Qt.WindowType.WindowMinimizeB...
     """
 
-    WindowMinimized: ... = PySide.QtCore.Qt.WindowState.WindowMinimized
+    WindowMinimized: ... = Qt.WindowState.WindowMinimized
     """
     """
 
-    WindowModal: ... = PySide.QtCore.Qt.WindowModality.WindowModal
+    WindowModal: ... = Qt.WindowModality.WindowModal
     """
     """
 
     WindowModality: ...
     """
-    <type 'PySide.QtCore.Qt.WindowModality'>
+    <type 'Qt.WindowModality'>
     """
 
-    WindowNoState: ... = PySide.QtCore.Qt.WindowState.WindowNoState
+    WindowNoState: ... = Qt.WindowState.WindowNoState
     """
     """
 
-    WindowOkButtonHint: ... = PySide.QtCore.Qt.WindowType.WindowOkButtonHint
+    WindowOkButtonHint: ... = Qt.WindowType.WindowOkButtonHint
     """
     """
 
     WindowShadeButtonHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowShadeButtonH...
+    Qt.WindowType.WindowShadeButtonH...
     """
 
-    WindowShortcut: ... = PySide.QtCore.Qt.ShortcutContext.WindowShortcut
+    WindowShortcut: ... = Qt.ShortcutContext.WindowShortcut
     """
     """
 
     WindowSoftkeysRespondHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowSoftkeys...
+    Qt.WindowType.WindowSoftkeys...
     """
 
     WindowSoftkeysVisibleHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowSoftkeys...
+    Qt.WindowType.WindowSoftkeys...
     """
 
     WindowState: ...
     """
-    <type 'PySide.QtCore.Qt.WindowState'>
+    <type 'Qt.WindowState'>
     """
 
     WindowStates: ...
@@ -18872,157 +18857,157 @@ class Qt(Shiboken.Object):
 
     WindowStaysOnBottomHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowStaysOnBot...
+    Qt.WindowType.WindowStaysOnBot...
     """
 
     WindowStaysOnTopHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowStaysOnTopHin...
+    Qt.WindowType.WindowStaysOnTopHin...
     """
 
     WindowSystemMenuHint: ...
     """
-    PySide.QtCore.Qt.WindowType.WindowSystemMenuHin...
+    Qt.WindowType.WindowSystemMenuHin...
     """
 
-    WindowTitleHint: ... = PySide.QtCore.Qt.WindowType.WindowTitleHint
+    WindowTitleHint: ... = Qt.WindowType.WindowTitleHint
     """
     """
 
     WindowType: ...
     """
-    <type 'PySide.QtCore.Qt.WindowType'>
+    <type 'Qt.WindowType'>
     """
 
-    WindowType_Mask: ... = PySide.QtCore.Qt.WindowType.WindowType_Mask
+    WindowType_Mask: ... = Qt.WindowType.WindowType_Mask
     """
     """
 
     X11BypassWindowManagerHint: ...
     """
-    PySide.QtCore.Qt.WindowType.X11BypassWind...
+    Qt.WindowType.X11BypassWind...
     """
 
-    XAxis: ... = PySide.QtCore.Qt.Axis.XAxis
-    """
-    """
-
-    XButton1: ... = PySide.QtCore.Qt.MouseButton.XButton1
+    XAxis: ... = Qt.Axis.XAxis
     """
     """
 
-    XButton2: ... = PySide.QtCore.Qt.MouseButton.XButton2
+    XButton1: ... = Qt.MouseButton.XButton1
     """
     """
 
-    YAxis: ... = PySide.QtCore.Qt.Axis.YAxis
+    XButton2: ... = Qt.MouseButton.XButton2
     """
     """
 
-    ZAxis: ... = PySide.QtCore.Qt.Axis.ZAxis
+    YAxis: ... = Qt.Axis.YAxis
     """
     """
 
-    black: ... = PySide.QtCore.Qt.GlobalColor.black
+    ZAxis: ... = Qt.Axis.ZAxis
     """
     """
 
-    blue: ... = PySide.QtCore.Qt.GlobalColor.blue
+    black: ... = Qt.GlobalColor.black
     """
     """
 
-    color0: ... = PySide.QtCore.Qt.GlobalColor.color0
+    blue: ... = Qt.GlobalColor.blue
     """
     """
 
-    color1: ... = PySide.QtCore.Qt.GlobalColor.color1
+    color0: ... = Qt.GlobalColor.color0
     """
     """
 
-    cyan: ... = PySide.QtCore.Qt.GlobalColor.cyan
+    color1: ... = Qt.GlobalColor.color1
     """
     """
 
-    darkBlue: ... = PySide.QtCore.Qt.GlobalColor.darkBlue
+    cyan: ... = Qt.GlobalColor.cyan
     """
     """
 
-    darkCyan: ... = PySide.QtCore.Qt.GlobalColor.darkCyan
+    darkBlue: ... = Qt.GlobalColor.darkBlue
     """
     """
 
-    darkGray: ... = PySide.QtCore.Qt.GlobalColor.darkGray
+    darkCyan: ... = Qt.GlobalColor.darkCyan
     """
     """
 
-    darkGreen: ... = PySide.QtCore.Qt.GlobalColor.darkGreen
+    darkGray: ... = Qt.GlobalColor.darkGray
     """
     """
 
-    darkMagenta: ... = PySide.QtCore.Qt.GlobalColor.darkMagenta
+    darkGreen: ... = Qt.GlobalColor.darkGreen
     """
     """
 
-    darkRed: ... = PySide.QtCore.Qt.GlobalColor.darkRed
+    darkMagenta: ... = Qt.GlobalColor.darkMagenta
     """
     """
 
-    darkYellow: ... = PySide.QtCore.Qt.GlobalColor.darkYellow
+    darkRed: ... = Qt.GlobalColor.darkRed
     """
     """
 
-    gray: ... = PySide.QtCore.Qt.GlobalColor.gray
+    darkYellow: ... = Qt.GlobalColor.darkYellow
     """
     """
 
-    green: ... = PySide.QtCore.Qt.GlobalColor.green
+    gray: ... = Qt.GlobalColor.gray
     """
     """
 
-    lightGray: ... = PySide.QtCore.Qt.GlobalColor.lightGray
+    green: ... = Qt.GlobalColor.green
     """
     """
 
-    magenta: ... = PySide.QtCore.Qt.GlobalColor.magenta
+    lightGray: ... = Qt.GlobalColor.lightGray
     """
     """
 
-    red: ... = PySide.QtCore.Qt.GlobalColor.red
+    magenta: ... = Qt.GlobalColor.magenta
     """
     """
 
-    transparent: ... = PySide.QtCore.Qt.GlobalColor.transparent
+    red: ... = Qt.GlobalColor.red
     """
     """
 
-    white: ... = PySide.QtCore.Qt.GlobalColor.white
+    transparent: ... = Qt.GlobalColor.transparent
     """
     """
 
-    yellow: ... = PySide.QtCore.Qt.GlobalColor.yellow
+    white: ... = Qt.GlobalColor.white
+    """
+    """
+
+    yellow: ... = Qt.GlobalColor.yellow
     """
     """
 
     ...
 
 class QtMsgType:
-    QtCriticalMsg: ... = PySide.QtCore.QtMsgType.QtCriticalMsg
+    QtCriticalMsg: ... = QtMsgType.QtCriticalMsg
     """
     """
 
-    QtDebugMsg: ... = PySide.QtCore.QtMsgType.QtDebugMsg
+    QtDebugMsg: ... = QtMsgType.QtDebugMsg
     """
     """
 
-    QtFatalMsg: ... = PySide.QtCore.QtMsgType.QtFatalMsg
+    QtFatalMsg: ... = QtMsgType.QtFatalMsg
     """
     """
 
-    QtSystemMsg: ... = PySide.QtCore.QtMsgType.QtSystemMsg
+    QtSystemMsg: ... = QtMsgType.QtSystemMsg
     """
     """
 
-    QtWarningMsg: ... = PySide.QtCore.QtMsgType.QtWarningMsg
+    QtWarningMsg: ... = QtMsgType.QtWarningMsg
     """
     """
 
@@ -19177,7 +19162,7 @@ class Signal:
     Signal
     """
 
-    Receiver = typing.Union[typing.Callable[..., None], Slot, Signal]
+    Receiver = Union[Callable[..., None], Slot, Signal]
 
     __new__: ...
     """
@@ -19304,15 +19289,15 @@ def qrand(*args, **kwargs):
     """ """
     ...
 
-QtCriticalMsg: ... = PySide.QtCore.QtMsgType.QtCriticalMsg
+QtCriticalMsg: ... = QtMsgType.QtCriticalMsg
 
-QtDebugMsg: ... = PySide.QtCore.QtMsgType.QtDebugMsg
+QtDebugMsg: ... = QtMsgType.QtDebugMsg
 
-QtFatalMsg: ... = PySide.QtCore.QtMsgType.QtFatalMsg
+QtFatalMsg: ... = QtMsgType.QtFatalMsg
 
-QtSystemMsg: ... = PySide.QtCore.QtMsgType.QtSystemMsg
+QtSystemMsg: ... = QtMsgType.QtSystemMsg
 
-QtWarningMsg: ... = PySide.QtCore.QtMsgType.QtWarningMsg
+QtWarningMsg: ... = QtMsgType.QtWarningMsg
 
 __all__: ...
 """

@@ -3,11 +3,11 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
-import cast_unknown as cast
+import wulifang.vendor.cast_unknown as cast
 import nuke
 import nukescripts  # type: ignore # pylint: disable=import-error
 
-from wlf.decorators import run_async, run_in_main_thread
+from wulifang._util import run_in_thread, run_in_main_thread
 
 from . import batch
 from .config import Config
@@ -100,7 +100,7 @@ class BatchPanel(nukescripts.PythonPanel):
         if name == b"setting":
             _ = self.show_setting()
 
-    @run_async
+    @run_in_thread()
     @run_in_main_thread
     def show_setting(self):
         """Show comp setting."""

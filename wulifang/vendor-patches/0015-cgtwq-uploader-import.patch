@@ -1,0 +1,109 @@
+diff -ru a/vendor/cgtwq_uploader/__main__.py b/vendor/cgtwq_uploader/__main__.py
+--- a/vendor/cgtwq_uploader/__main__.py	2023-06-28 18:55:20.986354000 +0800
++++ b/vendor/cgtwq_uploader/__main__.py	2023-06-29 11:13:01.010248300 +0800
+@@ -4,8 +4,8 @@
+ from __future__ import (absolute_import, division, print_function,
+                         unicode_literals)
+ 
+-from wlf.uitools import main_show_dialog
+-from wlf import mp_logging
++from wulifang.vendor.wlf.uitools import main_show_dialog
++from wulifang.vendor.wlf import mp_logging
+ 
+ from .view import Dialog
+ 
+diff -ru a/vendor/cgtwq_uploader/control.py b/vendor/cgtwq_uploader/control.py
+--- a/vendor/cgtwq_uploader/control.py	2023-06-28 18:55:20.988306000 +0800
++++ b/vendor/cgtwq_uploader/control.py	2023-06-29 11:13:50.467128600 +0800
+@@ -10,18 +10,18 @@
+ from collections import namedtuple
+ from multiprocessing.dummy import Pool
+ 
+-from Qt.QtCore import QCoreApplication, QModelIndex, QObject, Qt, Signal
+-from Qt.QtGui import QBrush, QColor
+-from six.moves import range
++from wulifang.vendor.Qt.QtCore import QCoreApplication, QModelIndex, QObject, Qt, Signal
++from wulifang.vendor.Qt.QtGui import QBrush, QColor
++from wulifang.vendor.six.moves import range
+ 
+-import cgtwq
+-from cgtwq.helper.qt import ask_login
+-from cgtwq.helper.wlf import DatabaseError, get_entry_by_file
+-from wlf.env import has_nuke
+-from wlf.fileutil import copy, is_same
+-from wlf.mimetools import is_mimetype
+-from wlf.path import PurePath
+-from wlf.progress import CancelledError, progress
++import wulifang.vendor.cgtwq as cgtwq
++from wulifang.vendor.cgtwq.helper.qt import ask_login
++from wulifang.vendor.cgtwq.helper.wlf import DatabaseError, get_entry_by_file
++from wulifang.vendor.wlf.env import has_nuke
++from wulifang.vendor.wlf.fileutil import copy, is_same
++from wulifang.vendor.wlf.mimetools import is_mimetype
++from wulifang.vendor.wlf.path import PurePath
++from wulifang.vendor.wlf.progress import CancelledError, progress
+ 
+ from .model import (ROLE_CHECKABLE, ROLE_DEST, DirectoryModel,
+                     VersionFilterProxyModel)
+diff -ru a/vendor/cgtwq_uploader/filetools.py b/vendor/cgtwq_uploader/filetools.py
+--- a/vendor/cgtwq_uploader/filetools.py	2023-06-28 18:55:20.991233000 +0800
++++ b/vendor/cgtwq_uploader/filetools.py	2023-06-29 11:13:59.947147500 +0800
+@@ -5,7 +5,7 @@
+ 
+ import os
+ 
+-from wlf.path import PurePath
++from wulifang.vendor.wlf.path import PurePath
+ 
+ ROOT = os.path.abspath(os.path.dirname(__file__))
+ 
+diff -ru a/vendor/cgtwq_uploader/model.py b/vendor/cgtwq_uploader/model.py
+--- a/vendor/cgtwq_uploader/model.py	2023-06-28 18:55:20.993185000 +0800
++++ b/vendor/cgtwq_uploader/model.py	2023-06-29 11:14:17.139730600 +0800
+@@ -6,11 +6,11 @@
+ 
+ import os
+ 
+-from Qt.QtCore import QDir, QPersistentModelIndex, QSortFilterProxyModel, Qt
+-from Qt.QtWidgets import QFileSystemModel
+-from six.moves import range
++from wulifang.vendor.Qt.QtCore import QDir, QPersistentModelIndex, QSortFilterProxyModel, Qt
++from wulifang.vendor.Qt.QtWidgets import QFileSystemModel
++from wulifang.vendor.six.moves import range
+ 
+-from wlf.fileutil import version_filter
++from wulifang.vendor.wlf.fileutil import version_filter
+ 
+ ROLE_DEST = Qt.UserRole + 1
+ ROLE_CHECKABLE = Qt.UserRole + 2
+diff -ru a/vendor/cgtwq_uploader/util.py b/vendor/cgtwq_uploader/util.py
+--- a/vendor/cgtwq_uploader/util.py	2023-06-28 18:55:20.994162000 +0800
++++ b/vendor/cgtwq_uploader/util.py	2023-06-29 11:14:26.067396700 +0800
+@@ -5,8 +5,8 @@
+ 
+ import logging
+ import os
+-import cgtwq
+-from wlf.config import Config as _Config
++import wulifang.vendor.cgtwq
++from wulifang.vendor.wlf.config import Config as _Config
+ 
+ 
+ class Config(_Config):
+diff -ru a/vendor/cgtwq_uploader/view.py b/vendor/cgtwq_uploader/view.py
+--- a/vendor/cgtwq_uploader/view.py	2023-06-28 18:55:20.996114000 +0800
++++ b/vendor/cgtwq_uploader/view.py	2023-06-29 11:14:40.522760800 +0800
+@@ -5,10 +5,10 @@
+ 
+ import webbrowser
+ 
+-from Qt.QtCore import QEvent, Qt, Signal
+-from Qt.QtWidgets import QStyle
++from wulifang.vendor.Qt.QtCore import QEvent, Qt, Signal
++from wulifang.vendor.Qt.QtWidgets import QStyle
+ 
+-from wlf.uitools.template.dialog_with_dir import DialogWithDir
++from wulifang.vendor.wlf.uitools.template.dialog_with_dir import DialogWithDir
+ 
+ from . import filetools
+ from .__about__ import __version__

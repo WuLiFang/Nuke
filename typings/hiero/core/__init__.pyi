@@ -6,7 +6,9 @@ hiero.core - # Copyright (c) 2011 The Foundry Visionmongers Ltd.  All Rights Res
 
 """
 
-import typing
+# spell-checker: words   visionmongers subtracks cliptype shiboken retime timecode
+from typing import Any, Text, overload, Optional
+from wulifang._compat.str import Str
 
 class Annotation(SubTrackItem):
     """
@@ -57,10 +59,10 @@ class Annotation(SubTrackItem):
 
         Returns:
             a tuple with all of the elements contained in this annotation.
-            tuple of hiero.core.Element sub-class objects
+            tuple of Element sub-class objects
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -72,7 +74,7 @@ class Annotation(SubTrackItem):
 class AnnotationElement(Shiboken.Object):
     """
     Base class for types of elements that may be added to an Annotation.
-    This class shold not be used directly and AnnotationElement objects should not be created.
+    This class should not be used directly and AnnotationElement objects should not be created.
     """
 
     __new__: ...
@@ -92,7 +94,7 @@ class AnnotationElement(Shiboken.Object):
         x.__nonzero__() <==> x != 0
         """
         ...
-    def color(self) -> typing.Tuple[typing.Tuple[red, green, blue, alpha]]:
+    def color(self) -> tuple[tuple[float, float, float, float]]:
         """
         with the components represented as floating point values in the range [0, 1].
 
@@ -115,7 +117,7 @@ class AnnotationElement(Shiboken.Object):
             alpha: The new alpha component.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
         Returns a description of the object. Equivalent to str(object).
 
@@ -173,7 +175,7 @@ class AnnotationStroke(AnnotationElement):
         floats or integers, e.g. [(100, 200), (123.456, 300)].
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -228,7 +230,7 @@ class AnnotationText(AnnotationElement):
     """
     """
 
-    eVTop: ... = core.Hiero.Python.AnnotationText.VerticalJustification.eVTop
+    eVTop: ... = AnnotationText.VerticalJustification.eVTop
     """
     """
     def __copy__(self, *args, **kwargs):
@@ -253,7 +255,7 @@ class AnnotationText(AnnotationElement):
             The text box position and size in the form (x, y, width, height)
         """
         ...
-    def fontPath(self) -> typing.Text:
+    def fontPath(self) -> Text:
         """
         Returns the current font path for this annotation text object.
 
@@ -342,14 +344,14 @@ class AnnotationText(AnnotationElement):
             justify: One of eVBaseline, eVTop, eVCenter, eVBottom.
         """
         ...
-    def text(self) -> typing.Text:
+    def text(self) -> Text:
         """
 
         Returns:
             A string containing the current text for this annotation text object.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -384,7 +386,7 @@ class ApplicationSettings(Shiboken.Object):
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
         ...
-    def boolValue(self, key, defaultValue) -> typing.Text:
+    def boolValue(self, key, defaultValue) -> Text:
         """
         Note: use self.value(key, defaultValue) if you just want to retrieve a string setting
 
@@ -475,12 +477,12 @@ class AudioTrack(TrackBase):
         adds a tag to the audio track item.
 
         Args:
-            tag: the hiero.core.Tag to add to the audio track
+            tag: the Tag to add to the audio track
         """
         ...
-    @typing.overload
+    @overload
     def addTrackItem(self, clip: TrackItem) -> TrackItem: ...
-    @typing.overload
+    @overload
     def addTrackItem(self, clip: Clip, audioChannel: int, position: int) -> TrackItem:
         """
         if the first parameter is a Clip object, the second and third parameters must be specified and this method creates a new track item with the specified audio channel and adds it to this audio track at the given position.
@@ -489,7 +491,7 @@ class AudioTrack(TrackBase):
         This method can only be called if the track has already been added to a Sequence.
 
         Args:
-            clip: a hiero.core.Clip object or a hiero.core.TrackItem object, to add to this audio track.
+            clip: a Clip object or a TrackItem object, to add to this audio track.
             audioChannel: int; audio channel that will be associated with the track item. Do not specify if clip is a TrackItem.
             position: int; insert position. Do not specify if clip is a TrackItem.
         """
@@ -518,7 +520,7 @@ class AudioTrack(TrackBase):
             name: the name of the new track item
         """
         ...
-    def items(self) -> typing.Tuple[TrackItem, ...]:
+    def items(self) -> tuple[TrackItem, ...]:
         """
 
         Returns:
@@ -540,7 +542,7 @@ class AudioTrack(TrackBase):
             tag: Tag
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -596,7 +598,7 @@ class BackgroundRenderObserver(Shiboken.Object):
 
 class Bin(Shiboken.Object):
     """
-    Container object for hiero.core.BinItem objects (wrapping hiero.core.Clip and hiero.core.Sequence objects) and other hiero.core.Bin objects.
+    Container object for BinItem objects (wrapping Clip and Sequence objects) and other Bin objects.
     """
 
     ItemType: ...
@@ -608,27 +610,27 @@ class Bin(Shiboken.Object):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    kBin: ... = core.Hiero.Python.Bin.ItemType.kBin
+    kBin: ... = Bin.ItemType.kBin
     """
     """
 
-    kClip: ... = core.Hiero.Python.Bin.ItemType.kClip
+    kClip: ... = Bin.ItemType.kClip
     """
     """
 
-    kEffect: ... = core.Hiero.Python.Bin.ItemType.kEffect
+    kEffect: ... = Bin.ItemType.kEffect
     """
     """
 
-    kNone: ... = core.Hiero.Python.Bin.ItemType.kNone
+    kNone: ... = Bin.ItemType.kNone
     """
     """
 
-    kSequence: ... = core.Hiero.Python.Bin.ItemType.kSequence
+    kSequence: ... = Bin.ItemType.kSequence
     """
     """
 
-    kTag: ... = core.Hiero.Python.Bin.ItemType.kTag
+    kTag: ... = Bin.ItemType.kTag
     """
     """
     def __contains__(self, *args, **kwargs):
@@ -704,17 +706,17 @@ class Bin(Shiboken.Object):
         adds the item to the bin object.
 
         Args:
-            object: Bin, hiero.core.BinItem, or hiero.core.Tag object, to be added as a sub item of the bin
+            object: Bin, BinItem, or Tag object, to be added as a sub item of the bin
         """
         ...
-    def bins(self) -> typing.Tuple[Bin, ...]:
+    def bins(self) -> tuple[Bin, ...]:
         """
 
         Returns:
             a tuple with all of the sub bins contained by this object.
         """
         ...
-    def clips(self) -> typing.Tuple[BinItem, ...]:
+    def clips(self) -> tuple[BinItem, ...]:
         """
 
         Returns:
@@ -738,11 +740,11 @@ class Bin(Shiboken.Object):
 
         Args:
             filename: path to the file to import the sequence from
-            timeBase: optional argument of type hiero.core.TimeBase specifying the timebase for the created sequence
+            timeBase: optional argument of type TimeBase specifying the timebase for the created sequence
             frameRate: optional float argument specifying the frame rate for the created sequence
 
         Returns:
-            hiero.core.Sequence the created sequence
+            Sequence the created sequence
         """
         ...
     def isNull(self) -> bool:
@@ -752,11 +754,11 @@ class Bin(Shiboken.Object):
             True if the object is invalid.
         """
         ...
-    def items(self, typeFilter) -> typing.Tuple[BinItem, ...]:
+    def items(self, typeFilter) -> tuple[BinItem, ...]:
         """
 
         Args:
-            typeFilter: combination of hiero.core.Bin.ItemType flags
+            typeFilter: combination of Bin.ItemType flags
 
         Returns:
             a tuple with all of the objects contained by this bin, filtered by the typeFilter argument, if supplied.
@@ -803,17 +805,17 @@ class Bin(Shiboken.Object):
         removes the item from the bin object. If the object is not a child item of the bin object, throws an exception.
 
         Args:
-            object: Bin, hiero.core.BinItem, or hiero.core.Tag object to be removed as a sub item of the bin
+            object: Bin, BinItem, or Tag object to be removed as a sub item of the bin
         """
         ...
-    def sequences(self) -> typing.Tuple[BinItem, ...]:
+    def sequences(self) -> tuple[BinItem, ...]:
         """
 
         Returns:
             a tuple with all of the BinItem's containing sequences contained by this bin.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -894,7 +896,7 @@ class BinItem(Shiboken.Object):
         x.__repr__() <==> repr(x)
         """
         ...
-    def activeItem(self) -> Clip or hiero.core.Sequence:
+    def activeItem(self) -> Clip or Sequence:
         """
 
         Returns:
@@ -912,7 +914,7 @@ class BinItem(Shiboken.Object):
 
         Args:
             comment: a comment string to set on the snapshot
-            sequence: a hiero.core.Sequence object to create the Snapshot from
+            sequence: a Sequence object to create the Snapshot from
 
         Overloads:
             self.addSnapshot(sequence, comment) -> adds a new snapshot for the object, using the sequence as the new snapshot, setting the comment.
@@ -965,10 +967,10 @@ class BinItem(Shiboken.Object):
         """
 
         Returns:
-            True if the object contains a invalid hiero.core.Sequence or hiero.core.Clip object.
+            True if the object contains a invalid Sequence or Clip object.
         """
         ...
-    def items(self) -> typing.Tuple[Version, ...]:
+    def items(self) -> tuple[Version, ...]:
         """
 
         Returns:
@@ -985,7 +987,7 @@ class BinItem(Shiboken.Object):
         finds the minimum (first) version and sets it as the active version on this bin item. Offline versions and hidden versions will be ignored during the search.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
@@ -1053,14 +1055,14 @@ class BinItem(Shiboken.Object):
             index: index of the version to make active
         """
         ...
-    def snapshots(self) -> typing.Tuple[Snapshot, ...]:
+    def snapshots(self) -> tuple[Snapshot, ...]:
         """
 
         Returns:
             a tuple of all of the snapshots contained by this object.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -1081,7 +1083,7 @@ class BinItem(Shiboken.Object):
         """
         decrements the current/active version and returns the newly active Version object of the bin item.
         WARNING - DEPRECATED ( versionDown ): This method is deprecated and will not be present in future versions of the Python API.
-        Only available versions can now be obtained from BinItem. To find new versions, please use hiero.core.VersionScanner. To obtain the next version, please use BinItem.prevVersion().
+        Only available versions can now be obtained from BinItem. To find new versions, please use VersionScanner. To obtain the next version, please use BinItem.prevVersion().
         """
         ...
     def versionMaxAvailable(self) -> Version:
@@ -1116,7 +1118,7 @@ class BinItem(Shiboken.Object):
         """
         increments the current/active version and returns the newly active Version object of the bin item.
         WARNING - DEPRECATED ( versionUp ): This method is deprecated and will not be present in future versions of the Python API.
-        Only available versions can now be obtained from BinItem. To find new versions, please use hiero.core.VersionScanner. To obtain the next version, please use BinItem.nextVersion().
+        Only available versions can now be obtained from BinItem. To find new versions, please use VersionScanner. To obtain the next version, please use BinItem.nextVersion().
         """
         ...
     ...
@@ -1152,11 +1154,11 @@ class Clip(SequenceBase):
     """
     """
 
-    kOffLocalise: ... = core.Hiero.Python.Clip.LocalisationPolicy.kOffLocalise
+    kOffLocalise: ... = Clip.LocalisationPolicy.kOffLocalise
     """
     """
 
-    kOnLocalise: ... = core.Hiero.Python.Clip.LocalisationPolicy.kOnLocalise
+    kOnLocalise: ... = Clip.LocalisationPolicy.kOnLocalise
     """
     """
     def __copy__(self, *args, **kwargs):
@@ -1212,7 +1214,7 @@ class Clip(SequenceBase):
 
         Args:
             script: Nuke script object to add nodes
-            additionalNodes: typing.List[nodes to be added post read]
+            additionalNodes: List[nodes to be added post read]
             additionalNodesCallback: callback to allow custom additional node per item function([Clip|TrackItem|Track|Sequence])
             firstFrame: Custom offset to move start frame of clip
             trimmed: If True, a TimeClip node will be added to trim the range output by the Read node. The range defaults to the clip's soft trim range. If soft trims are not enabled on the clip, the range defaults to the clip range. The range can be overridden by passing trimStart and/or trimEnd values.
@@ -1244,14 +1246,14 @@ class Clip(SequenceBase):
             a deep copy of this object.
         """
         ...
-    def entityReference(self) -> typing.Text:
+    def entityReference(self) -> Text:
         """
 
         Returns:
             this clip's asset management system entity reference.
         """
         ...
-    def getAvailableOcioColourTransforms(self) -> typing.Text:
+    def getAvailableOcioColourTransforms(self) -> Text:
         """
 
         Returns:
@@ -1401,7 +1403,7 @@ class Clip(SequenceBase):
             the source in value for the clip.
         """
         ...
-    def sourceMediaColourTransform(self) -> typing.Text:
+    def sourceMediaColourTransform(self) -> Text:
         """
 
         Returns:
@@ -1434,7 +1436,7 @@ class ConformRule(Shiboken.Object):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    kConform: ... = core.Hiero.Python.ConformRule.Type.kConform
+    kConform: ... = ConformRule.Type.kConform
     """
     """
 
@@ -1442,7 +1444,7 @@ class ConformRule(Shiboken.Object):
     """
     """
 
-    kReconnect: ... = core.Hiero.Python.ConformRule.Type.kReconnect
+    kReconnect: ... = ConformRule.Type.kReconnect
     """
     """
     def __copy__(self, *args, **kwargs):
@@ -1506,14 +1508,14 @@ class ConformRule(Shiboken.Object):
             True for invalid, False otherwise
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
             the name of the conform rule (which was passed to the object in it's initializer).
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -1576,7 +1578,7 @@ class Conformer(Shiboken.Object):
         ...
     def nativeRuleFiltering(self):
         """
-        By changing the state of the flags for the rules and submitting the dictionary back to the Conformer the rules can be filterd out.
+        By changing the state of the flags for the rules and submitting the dictionary back to the Conformer the rules can be filtered out.
 
         Returns:
             a dictionary with the names of the native conforming rules and whether they are enabled for conforming.
@@ -1594,7 +1596,7 @@ class Conformer(Shiboken.Object):
         ...
     def pythonRuleFiltering(self):
         """
-        By changing the state of the flags for the rules and submitting the dictionary back to the Conformer the rules can be filterd out.
+        By changing the state of the flags for the rules and submitting the dictionary back to the Conformer the rules can be filtered out.
 
         Returns:
             a dictionary with the names of the Python conforming rules and whether they are enabled for conforming.
@@ -1728,14 +1730,14 @@ class DataCollection(Shiboken.Object):
             value: value to assign to key
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
             a formatted list of the key/value pairs currently set on this object. Equivalent to str(object).
         """
         ...
-    def value(self, key) -> typing.Text:
+    def value(self, key) -> Text:
         """
 
         Args:
@@ -1750,7 +1752,7 @@ class DataCollection(Shiboken.Object):
 class EffectTrackItem(SubTrackItem):
     """
     Class representing an effect on a sequence.  EffectTrackItem is derived from SubTrackItem and thus EffectTrackItem objects can be placed and trimmed on VideoTrack subtracks.
-    The effect's node can be accessed with effect.node(), which can then be manipulated through the nuke Node API.To create effects, it is recommended you use the hiero.core.VideoTrack.createEffect() method.
+    The effect's node can be accessed with effect.node(), which can then be manipulated through the nuke Node API.To create effects, it is recommended you use the VideoTrack.createEffect() method.
 
     Usage:
     EffectTrackItem(effectType)
@@ -1814,7 +1816,7 @@ class EffectTrackItem(SubTrackItem):
         Returns true if the effect item is in a valid state and position and false otherwise.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
         alias of __EffectTrackItem_name
         Get the name of the effect's node.
@@ -1839,7 +1841,7 @@ class EffectTrackItem(SubTrackItem):
         ...
     ...
 
-class ExportStructure2(core.Hiero.Python.IExportStructure):
+class ExportStructure2(IExportStructure):
     """
     ExportStructure2 is the implementation of the datastructure used to represent
     the export tree, each node within the tree is represented by an ExportStructureElement.
@@ -1887,7 +1889,7 @@ class ExportStructure2(core.Hiero.Python.IExportStructure):
         ...
     ...
 
-class ExportStructureElement(core.Hiero.Python.IExportStructureElement):
+class ExportStructureElement(IExportStructureElement):
     """
     ExportStructureElement represents a node within the export structure
     """
@@ -2111,7 +2113,7 @@ class Format(Shiboken.Object):
 
     @param: formatStr - the string representation of the format in the form returned by str(format)
 
-    Examples: F = hiero.core.Format(2048, 400, 2.37, 'MyFormat'), F = hiero.core.Format('2048 400 0 0 2048 400 2.37 MyFormat')
+    Examples: F = Format(2048, 400, 2.37, 'MyFormat'), F = Format('2048 400 0 0 2048 400 2.37 MyFormat')
     """
 
     __new__: ...
@@ -2199,7 +2201,7 @@ class Format(Shiboken.Object):
             whether or not this format object has valid data.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
@@ -2220,7 +2222,7 @@ class Format(Shiboken.Object):
             a 4 element tuple with the rectangle (x1, y1, x2, y2) of the production aperture.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -2264,7 +2266,7 @@ class IExportStructure(Shiboken.Object):
             IExportStructureElement derived object
         """
         ...
-    def exportRootPath(self) -> typing.Text:
+    def exportRootPath(self) -> Text:
         """
         retrieves the root path for the export structure.
         """
@@ -2367,7 +2369,7 @@ class IExportStructureElement(Shiboken.Object):
         should return True if this is a node with no children, otherwise it should return False.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
         should return the name of this element.
         """
@@ -2377,7 +2379,7 @@ class IExportStructureElement(Shiboken.Object):
         should return the parent node of this object.
         """
         ...
-    def path(self) -> typing.Text:
+    def path(self) -> Text:
         """
         should return the full path to this node, including the path of any parents of this node.
         """
@@ -2387,7 +2389,7 @@ class IExportStructureElement(Shiboken.Object):
         should return an object derived from TaskPreset, representing the task associated with this element of the export structure.
 
         Returns:
-            hiero.core.TaskPreset derived object
+            TaskPreset derived object
         """
         ...
     def removeChild(self, child):
@@ -2403,7 +2405,7 @@ class IExportStructureElement(Shiboken.Object):
         called to tell the node it's name.
 
         Args:
-            name: typing.Text
+            name: Text
         """
         ...
     def setPreset(self, preset):
@@ -2411,7 +2413,7 @@ class IExportStructureElement(Shiboken.Object):
         tells the object that the user has selected a new preset for this particular export element.
 
         Args:
-            preset: a hiero.core.TaskPreset derived object, which can be used to create a task to process later on during an export.
+            preset: a TaskPreset derived object, which can be used to create a task to process later on during an export.
         """
         ...
     def setPresetType(self, presetType):
@@ -2422,7 +2424,7 @@ class IExportStructureElement(Shiboken.Object):
             presetType: the name of the task preset to create/use.
         """
         ...
-    def toXml(self) -> typing.Text:
+    def toXml(self) -> Text:
         """
         should return a string of formatted xml which can be sent to the fromXml method later to read it back. The xml should include the preset data for this node, as well as the children, and should be in proper xml format. This can be done easily with xml.etree.cElementTree, especially because the taskRegistry has methods to write out xml for presets and other objects (taskRegistry._savePresetElement)
         """
@@ -2431,9 +2433,9 @@ class IExportStructureElement(Shiboken.Object):
 
 class IExporterRegistry(Shiboken.Object):
     """
-    IExporterRegistry provides a simple interface for our C++ Application to access python instance of hiero.core.TaskRegistry.
+    IExporterRegistry provides a simple interface for our C++ Application to access python instance of TaskRegistry.
 
-    This class should not be used directly; use hiero.core.TaskRegistry instead.
+    This class should not be used directly; use TaskRegistry instead.
     """
 
     __new__: ...
@@ -2451,7 +2453,7 @@ class IExporterRegistry(Shiboken.Object):
     def assignPresetToProject(self, TaskPreset, Project):
         """
         Called by the C++ application to assign a TaskPreset to .
-        a null hiero.core.Project will remove the project assignment and revernt the preset to local ownership.
+        a null Project will remove the project assignment and revernt the preset to local ownership.
 
         Args:
             param1: TaskPreset
@@ -2466,7 +2468,7 @@ class IExporterRegistry(Shiboken.Object):
             param1: TaskPreset instance for duplication
 
         Returns:
-            new hiero.core.TaskPreset instance
+            new TaskPreset instance
         """
         ...
     def copyAndAddProjectPreset(self, param1, param2):
@@ -2478,10 +2480,10 @@ class IExporterRegistry(Shiboken.Object):
             param2: Project to which cloned preset should be assigned
 
         Returns:
-            new hiero.core.TaskPreset instance
+            new TaskPreset instance
         """
         ...
-    def createAndAddProcessorPreset(self, arg1: typing.Text, TaskPreset):
+    def createAndAddProcessorPreset(self, arg1: Text, TaskPreset):
         """
         Called by the C++ application to create a new preset, using typetemplate as a template.
 
@@ -2489,48 +2491,46 @@ class IExporterRegistry(Shiboken.Object):
             string: string - Preset name
 
         Returns:
-            hiero.core.TaskPreset instance as type template
+            TaskPreset instance as type template
         """
         ...
     def createAndExecuteProcessor(
         self,
         TaskPreset,
-        arg2: typing.Optional[hiero.core.ItemWrapper],
-        arg3: typing.Text,
+        arg2: Optional[ItemWrapper],
+        arg3: Text,
     ):
         """
         Called by the C++ application to instantiate the Processor associated with specified preset and execute on the selected items.
 
         Args:
             param1: TaskPreset
-            list: typing.List[items for export]
+            list: List[items for export]
             name: name of submission object used for dispatching job to renderfarm
         """
         ...
     def discardPresetChanges(self, *args, **kwargs):
         """
-        self.startPresetChanges(hiero.core.Project) -> Discard any changes to the presets since startPresetChanges() was called.
+        self.startPresetChanges(Project) -> Discard any changes to the presets since startPresetChanges() was called.
 
         Args:
             param1: Project)
         """
         ...
-    def isOutputResolutionValid(
-        self, TaskPreset, arg2: typing.Optional[hiero.core.ItemWrapper]
-    ):
+    def isOutputResolutionValid(self, TaskPreset, arg2: Optional[ItemWrapper]):
         """
         Called by the C++ application to determinate if preset and selected items have valid resolution according the application mode.
         A warning message will be shown in case of any invalid output resolution.
 
         Args:
             param1: TaskPreset
-            list: typing.List[items for export]
+            list: List[items for export]
 
         Returns:
             An error string if disallowed, otherwise an empty string.
         """
         ...
-    def loadPresets(self, arg1: typing.Text):
+    def loadPresets(self, arg1: Text):
         """
         Called by the C++ application to load presets from a specified path.
 
@@ -2538,7 +2538,7 @@ class IExporterRegistry(Shiboken.Object):
             path: path as string
         """
         ...
-    def localPresets(self, *args, **kwargs) -> typing.List[TaskPreset]:
+    def localPresets(self, *args, **kwargs) -> List[TaskPreset]:
         """
         self.projectPresets() -> Returns a list of local presets assigned to the specified Project.
         """
@@ -2551,12 +2551,12 @@ class IExporterRegistry(Shiboken.Object):
             bool changed state
         """
         ...
-    def nukeShotExportPresets(self, Project) -> typing.List[TaskPreset]:
+    def nukeShotExportPresets(self, Project) -> List[TaskPreset]:
         """
         Get a list of presets which are contain Nuke shot exports.
         """
         ...
-    def presetFromXml(self, arg1: typing.Text):
+    def presetFromXml(self, arg1: Text):
         """
         Called by the C++ application to ask the TaskRegistry to deserialize a Task preset from xml.
 
@@ -2564,7 +2564,7 @@ class IExporterRegistry(Shiboken.Object):
             string: string - Preset XML
 
         Returns:
-            hiero.core.TaskPreset instance
+            TaskPreset instance
         """
         ...
     def presetToPrettyXml(self, TaskPreset):
@@ -2603,7 +2603,7 @@ class IExporterRegistry(Shiboken.Object):
             param2: Project - new project
         """
         ...
-    def projectExportHistoryXml(self, Project) -> typing.List[typing.Text]:
+    def projectExportHistoryXml(self, Project) -> List[Text]:
         """
         Returns a list of XML fragments containing the project export history.
 
@@ -2611,7 +2611,7 @@ class IExporterRegistry(Shiboken.Object):
             param1: project
         """
         ...
-    def projectPresets(self, Project) -> typing.List[TaskPreset]:
+    def projectPresets(self, Project) -> List[TaskPreset]:
         """
         Returns a list of project presets assigned to the specified Project.
 
@@ -2648,7 +2648,7 @@ class IExporterRegistry(Shiboken.Object):
             param1: TaskPreset
         """
         ...
-    def renameProcessorPreset(self, TaskPreset, arg2: typing.Text):
+    def renameProcessorPreset(self, TaskPreset, arg2: Text):
         """
         Called by the C++ application to rename a preset in the registry.
 
@@ -2662,10 +2662,10 @@ class IExporterRegistry(Shiboken.Object):
 
         Args:
             param1: project
-            list: typing.List[strings containing export history]
+            list: List[strings containing export history]
         """
         ...
-    def revertDefaultPresets(self, arg1: typing.Text):
+    def revertDefaultPresets(self, arg1: Text):
         """
         Called by the C++ application reconstruct the default presets.
 
@@ -2673,7 +2673,7 @@ class IExporterRegistry(Shiboken.Object):
             path: path as string
         """
         ...
-    def savePresets(self, arg1: typing.Text):
+    def savePresets(self, arg1: Text):
         """
         Called by the C++ application to save presets to a specified path.
 
@@ -2689,7 +2689,7 @@ class IExporterRegistry(Shiboken.Object):
             param1: Project)
         """
         ...
-    def submissionChanged(self, arg1: typing.Text, Project):
+    def submissionChanged(self, arg1: Text, Project):
         """
         Called by the C++ application when the submission choice changes in the Export Dialog.
 
@@ -2711,7 +2711,7 @@ class ITask(Shiboken.Object):
     """
     ITask provides a simple interface for our C++ Application to access Python instances of TaskBase.
 
-    This class should not be used directly; use hiero.core.TaskBase instead.
+    This class should not be used directly; use TaskBase instead.
     """
 
     __new__: ...
@@ -2783,7 +2783,7 @@ class ITask(Shiboken.Object):
 
 
         Args:
-            desc: typing.Text
+            desc: Text
         """
         ...
     def setDuplicate(self):
@@ -2859,7 +2859,7 @@ class ITaskPreset(Shiboken.Object):
     """
     ITaskPreset provides a simple interface for our C++ Application to access Python instances of TaskPreset.
 
-    This class should not be used directly; use hiero.core.TaskPresetBase instead.
+    This class should not be used directly; use TaskPresetBase instead.
     """
 
     ItemTypes: ...
@@ -2871,7 +2871,7 @@ class ITaskPreset(Shiboken.Object):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    kAllItems: ... = core.Hiero.Python.ITaskPreset.ItemTypes.kAllItems
+    kAllItems: ... = ITaskPreset.ItemTypes.kAllItems
     """
     """
 
@@ -2879,15 +2879,15 @@ class ITaskPreset(Shiboken.Object):
     """
     """
 
-    kClip: ... = core.Hiero.Python.ITaskPreset.ItemTypes.kClip
+    kClip: ... = ITaskPreset.ItemTypes.kClip
     """
     """
 
-    kSequence: ... = core.Hiero.Python.ITaskPreset.ItemTypes.kSequence
+    kSequence: ... = ITaskPreset.ItemTypes.kSequence
     """
     """
 
-    kTrackItem: ... = core.Hiero.Python.ITaskPreset.ItemTypes.kTrackItem
+    kTrackItem: ... = ITaskPreset.ItemTypes.kTrackItem
     """
     """
     def __init__(self, *args, **kwargs):
@@ -2989,17 +2989,17 @@ class ItemWrapper(Shiboken.Object):
         ...
     def bin(self) -> Bin:
         """
-        converts this ItemWrapper to a hiero.core.Bin object. If the item wrapper isn't wrapping a Bin object, it will return a non-functioning (isNull returns True) TrackItem object (meaning that it has all of the methods of a Bin object, but the methods don't do anything)
+        converts this ItemWrapper to a Bin object. If the item wrapper isn't wrapping a Bin object, it will return a non-functioning (isNull returns True) TrackItem object (meaning that it has all of the methods of a Bin object, but the methods don't do anything)
         """
         ...
     def binItem(self) -> BinItem:
         """
-        converts this ItemWrapper to a hiero.core.BinItem object. If the item wrapper isn't wrapping a BinItem object, it will return a non-functioning (isNull returns True) TrackItem object (meaning that it has all of the methods of a BinItem object, but the methods don't do anything)
+        converts this ItemWrapper to a BinItem object. If the item wrapper isn't wrapping a BinItem object, it will return a non-functioning (isNull returns True) TrackItem object (meaning that it has all of the methods of a BinItem object, but the methods don't do anything)
         """
         ...
     def clip(self) -> Clip:
         """
-        converts this ItemWrapper to a hiero.core.Clip object. If the item wrapper isn't wrapping a Clip object, it will return a non-functioning (isNull returns True) Clip object (meaning that it has all of the methods of a Clip object, but the methods don't do anything)
+        converts this ItemWrapper to a Clip object. If the item wrapper isn't wrapping a Clip object, it will return a non-functioning (isNull returns True) Clip object (meaning that it has all of the methods of a Clip object, but the methods don't do anything)
         """
         ...
     def ignore(self, *args, **kwargs):
@@ -3014,12 +3014,12 @@ class ItemWrapper(Shiboken.Object):
         ...
     def item(
         self,
-    ) -> Sequence | hiero.core.Clip | hiero.core.TrackItemBase | hiero.core.BinItem:
+    ) -> Sequence | Clip | TrackItemBase | BinItem:
         """
         Return the item contained within this wrapper.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
         Returns item name.
         """
@@ -3031,12 +3031,12 @@ class ItemWrapper(Shiboken.Object):
         ...
     def sequence(self) -> Sequence:
         """
-        converts this ItemWrapper to a hiero.core.Sequence object. If the item wrapper isn't wrapping a Sequence object, it will return a non-functioning (isNull returns True) Sequence object (meaning that it has all of the methods of a Sequence object, but the methods don't do anything)
+        converts this ItemWrapper to a Sequence object. If the item wrapper isn't wrapping a Sequence object, it will return a non-functioning (isNull returns True) Sequence object (meaning that it has all of the methods of a Sequence object, but the methods don't do anything)
         """
         ...
     def trackItem(self) -> TrackItem:
         """
-        converts this ItemWrapper to a hiero.core.TrackItemBase object. If the item wrapper isn't wrapping a TrackItem object, it will return a non-functioning (isNull returns True) TrackItem object (meaning that it has all of the methods of a TrackItem object, but the methods don't do anything)
+        converts this ItemWrapper to a TrackItemBase object. If the item wrapper isn't wrapping a TrackItem object, it will return a non-functioning (isNull returns True) TrackItem object (meaning that it has all of the methods of a TrackItem object, but the methods don't do anything)
         """
         ...
     ...
@@ -3425,7 +3425,7 @@ class MediaFileInfo(Shiboken.Object):
             integer frame
         """
         ...
-    def filename(self) -> typing.Text:
+    def filename(self) -> Text:
         """
         * /somepath/file.mov
         * /somepath/imagesequence.######.dpx (1-40)
@@ -3459,11 +3459,11 @@ class MediaSource(Shiboken.Object):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    kAudio: ... = core.Hiero.Python.MediaSource.MediaType.kAudio
+    kAudio: ... = MediaSource.MediaType.kAudio
     """
     """
 
-    kVideo: ... = core.Hiero.Python.MediaSource.MediaType.kVideo
+    kVideo: ... = MediaSource.MediaType.kVideo
     """
     """
     @staticmethod
@@ -3543,14 +3543,14 @@ class MediaSource(Shiboken.Object):
             the duration, in frames.
         """
         ...
-    def fileinfos(self) -> typing.Tuple[MediaFileInfo, ...]:
+    def fileinfos(self) -> tuple[MediaFileInfo, ...]:
         """
 
         Returns:
-            a tuple of hiero.core.MediaFileInfo objects, which can be used to retrieve all of the file fragments that are used by this MediaSource.
+            a tuple of MediaFileInfo objects, which can be used to retrieve all of the file fragments that are used by this MediaSource.
         """
         ...
-    def filename(self) -> typing.Text:
+    def filename(self) -> Text:
         """
         Deprecated; Please use the fileinfos() method instead.
 
@@ -3558,7 +3558,7 @@ class MediaSource(Shiboken.Object):
             the file name (and just the file name) of the first file used for the MediaSource.
         """
         ...
-    def filenameHead(self) -> typing.Text:
+    def filenameHead(self) -> Text:
         """
 
         Returns:
@@ -3570,7 +3570,7 @@ class MediaSource(Shiboken.Object):
         self.filenameHead() -> returns the number characters used for frame index. -1 if not an image sequence.
         """
         ...
-    def firstpath(self) -> typing.Text:
+    def firstpath(self) -> Text:
         """
         Deprecated; Please use the fileinfos() method instead.
 
@@ -3578,7 +3578,7 @@ class MediaSource(Shiboken.Object):
             the full path of the first file used for the MediaSource.
         """
         ...
-    def fragmentFilename(self, fragmentIndex) -> typing.Text:
+    def fragmentFilename(self, fragmentIndex) -> Text:
         """
         Deprecated; Please use the fileinfos() method instead
 
@@ -3589,7 +3589,7 @@ class MediaSource(Shiboken.Object):
             the file name (and just the file name) for the fragment of the MediaSource, specified by the fragmentIndex.
         """
         ...
-    def fragmentPath(self, fragmentIndex) -> typing.Text:
+    def fragmentPath(self, fragmentIndex) -> Text:
         """
         Deprecated; Please use the fileinfos() method instead.
 
@@ -3640,7 +3640,7 @@ class MediaSource(Shiboken.Object):
         """
 
         Returns:
-            a hiero.core.Metadata object with metadata for the MediaSource.
+            a Metadata object with metadata for the MediaSource.
         """
         ...
     def numChannels(self, *args, **kwargs):
@@ -3683,7 +3683,7 @@ class MediaSource(Shiboken.Object):
     def timecodeStart(self, *args, **kwargs):
         """ """
         ...
-    def toString(self, includeMetadata=False) -> typing.Text:
+    def toString(self, includeMetadata=False) -> Text:
         """
 
         Args:
@@ -3712,7 +3712,7 @@ class NamingScheme(Shiboken.Object):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
     @staticmethod
-    def clipName(clip) -> typing.Text:
+    def clipName(clip) -> Text:
         """
         extracts name from clip that will be used for displaying the clip object, based on the underlying file(s).
         Redefine this method if desired for customised naming schema. Use default_clipName for default functionality if needed.
@@ -3722,7 +3722,7 @@ class NamingScheme(Shiboken.Object):
         """
         ...
     @staticmethod
-    def default_clipName(clip) -> typing.Text:
+    def default_clipName(clip) -> Text:
         """
         extracts name from clip that will be used for displaying the clip object, based on the underlying file(s).
         Do not redefine this method. It preserves accessibility to default functionality when redefining clipName.
@@ -3732,7 +3732,7 @@ class NamingScheme(Shiboken.Object):
         """
         ...
     @staticmethod
-    def default_rootName(clip) -> typing.Text:
+    def default_rootName(clip) -> Text:
         """
         extracts name from clip that will be used for displaying the bin item object, based on the underlying file(s).
         Do not redefine this method. It preserves accessibility to default functionality when redefining rootName.
@@ -3742,7 +3742,7 @@ class NamingScheme(Shiboken.Object):
         """
         ...
     @staticmethod
-    def default_versionName(clip) -> typing.Text:
+    def default_versionName(clip) -> Text:
         """
         extracts name from clip that will be used for displaying the version object, based on the underlying file(s).
         Do not redefine this method. It preserves accessibility to default functionality when redefining versionName.
@@ -3752,7 +3752,7 @@ class NamingScheme(Shiboken.Object):
         """
         ...
     @staticmethod
-    def rootName(clip) -> typing.Text:
+    def rootName(clip) -> Text:
         """
         extracts name from clip that will be used for displaying the bin item object, based on the underlying file(s).
         Redefine this method if desired for customised naming schema. Use default_rootName for default functionality if needed.
@@ -3762,7 +3762,7 @@ class NamingScheme(Shiboken.Object):
         """
         ...
     @staticmethod
-    def versionName(clip) -> typing.Text:
+    def versionName(clip) -> Text:
         """
         extracts name from clip that will be used for displaying the version object, based on the underlying file(s).
         Redefine this method if desired for customised naming schema. Use default_versionName for default functionality if needed.
@@ -3852,9 +3852,9 @@ class ProcessorPreset(FnExporterBase.TaskPresetBase):
 
 class Project(Shiboken.Object):
     """
-    Object for manipulating projects. Can be created using hiero.core.newProject() or by the following code:
-    hiero.core.openProject(projectPath)
-    project = hiero.core.projects()[-1]
+    Object for manipulating projects. Can be created using newProject() or by the following code:
+    openProject(projectPath)
+    project = projects()[-1]
     """
 
     __new__: ...
@@ -3939,7 +3939,7 @@ class Project(Shiboken.Object):
         Appends a view to this project's list of views. Returns False if name is empty or a view already exists with the same name.
 
         Args:
-            name: typing.Text
+            name: Text
             color: optional; string in the format #RGB, #RRGGBB, #RRRGGGBBB, #RRRRGGGGBBBB or a name from the list of colors defined in the list of SVG color keyword names
         """
         ...
@@ -3953,7 +3953,7 @@ class Project(Shiboken.Object):
 
         Returns:
             all audio track items in a project.
-            an array of hiero.core.TrackItem objects.
+            an array of TrackItem objects.
         """
         ...
     def audioTracks(self, partialName):
@@ -3966,10 +3966,10 @@ class Project(Shiboken.Object):
 
         Returns:
             all audio tracks in a project.
-            an array of hiero.core.AudioTrack objects.
+            an array of AudioTrack objects.
         """
         ...
-    def beginUndo(self, name: typing.Text) -> UndoGroup:
+    def beginUndo(self, name: Text) -> UndoGroup:
         """
         starts a new undo action, which will group all other undo actions until self.endUndo() is called. Be aware that this method only works on the main thread, and will throw an exception otherwise.
         Note that for operations inside the undo to work Project.endUndo() must be called.  It is recommended that you use this in a with block to ensure that this happens.  For example:
@@ -3987,7 +3987,7 @@ class Project(Shiboken.Object):
 
         Returns:
             all bins in a project. Searches recursively, so will return bins within other bins in the list.
-            an array of hiero.core.Bin objects.
+            an array of Bin objects.
         """
         ...
     def buildTrackName(self):
@@ -4015,7 +4015,7 @@ class Project(Shiboken.Object):
 
         Returns:
             all clips in a project.
-            an array of hiero.core.Clip objects.
+            an array of Clip objects.
         """
         ...
     def clipsBin(self) -> Bin:
@@ -4042,7 +4042,7 @@ class Project(Shiboken.Object):
         Removes the view with the matching name from this project's list of views. Returns False if no matching view is found or if the view to be deleted is the only view in the project.
 
         Args:
-            name: typing.Text
+            name: Text
         """
         ...
     def editable(self) -> bool:
@@ -4095,40 +4095,40 @@ class Project(Shiboken.Object):
             whether or not access to the project is restricted.
         """
         ...
-    def lutSetting16Bit(self) -> typing.Text:
+    def lutSetting16Bit(self) -> Text:
         """
 
         Returns:
             the project's 16 bit lut setting name.
         """
         ...
-    def lutSetting8Bit(self) -> typing.Text:
+    def lutSetting8Bit(self) -> Text:
         """
 
         Returns:
             the project's 8 bit lut setting name.
         """
         ...
-    def lutSettingFloat(self) -> typing.Text:
+    def lutSettingFloat(self) -> Text:
         """
 
         Returns:
             the project's float lut setting name.
         """
         ...
-    def lutSettingLog(self) -> typing.Text:
+    def lutSettingLog(self) -> Text:
         """
 
         Returns:
             the project's log lut setting name.
         """
         ...
-    def lutSettingViewer(self, *args, **kwargs) -> typing.Text:
+    def lutSettingViewer(self, *args, **kwargs) -> Text:
         """
         self.lutSettingsViewer() -> returns the project's viewer lut setting name.
         """
         ...
-    def lutSettingWorkingSpace(self) -> typing.Text:
+    def lutSettingWorkingSpace(self) -> Text:
         """
 
         Returns:
@@ -4142,21 +4142,21 @@ class Project(Shiboken.Object):
             the project setting for using OCIO in nuke script export.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
             the name of the project.
         """
         ...
-    def ocioConfigName(self) -> typing.Text:
+    def ocioConfigName(self) -> Text:
         """
 
         Returns:
             the ocio config name loaded by NukeStudio. When using a custom ocio config an empty string is returned.
         """
         ...
-    def ocioConfigPath(self) -> typing.Text:
+    def ocioConfigPath(self) -> Text:
         """
 
         Returns:
@@ -4168,14 +4168,14 @@ class Project(Shiboken.Object):
         gets project's default outputFormat for new sequences.
         """
         ...
-    def path(self) -> typing.Text:
+    def path(self) -> Text:
         """
 
         Returns:
             the path to the project.
         """
         ...
-    def projectRoot(self) -> typing.Text:
+    def projectRoot(self) -> Text:
         """
         Get root path of the project used by default when sending to nuke or using {projectroot} token in export.
         """
@@ -4185,7 +4185,7 @@ class Project(Shiboken.Object):
         triggers a redo of the next item in the redo stack. Only works on the main thread. If called from any other thread, throws an exception.
         """
         ...
-    def redoItemText(self) -> typing.Text:
+    def redoItemText(self) -> Text:
         """
 
         Returns:
@@ -4215,7 +4215,7 @@ class Project(Shiboken.Object):
 
         Returns:
             all sequences in a project. User can filter by by partial name.
-            an array of hiero.core.Sequence objects.
+            an array of Sequence objects.
         """
         ...
     def setDeletable(self, deletable):
@@ -4298,7 +4298,7 @@ class Project(Shiboken.Object):
         Replaces the project's views with two views named "left" and "right".
         """
         ...
-    def shotPresetName(self) -> typing.Text:
+    def shotPresetName(self) -> Text:
         """
         get the name of Shot Preset which is usedwhen sending to nuke or creating a comp.
         """
@@ -4320,7 +4320,7 @@ class Project(Shiboken.Object):
         gets project's default displayType for new sequences.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -4337,12 +4337,10 @@ class Project(Shiboken.Object):
 
         Returns:
             all track items in a project.
-            an array of hiero.core.TrackItem objects.
+            an array of TrackItem objects.
         """
         ...
-    def tracks(
-        self, partialName: typing.Text = ...
-    ) -> typing.List[typing.Union[VideoTrack, AudioTrack]]:
+    def tracks(self, partialName: Text = ...) -> List[Union[VideoTrack, AudioTrack]]:
         """
         Example: finds all tracks in a project with 30Sec in the name:
         tracks = myProject.tracks('30Sec')
@@ -4352,7 +4350,7 @@ class Project(Shiboken.Object):
 
         Returns:
             all tracks in a project.
-            an array of hiero.core.VideoTrack and hiero.core.AudioTrack objects.
+            an array of VideoTrack and AudioTrack objects.
         """
         ...
     def undo(self):
@@ -4360,7 +4358,7 @@ class Project(Shiboken.Object):
         triggers an undo on the last item previously added to the undo stack. Only works on the main thread. If called from any other thread, throws an exception.
         """
         ...
-    def undoItemText(self) -> typing.Text:
+    def undoItemText(self) -> Text:
         """
 
         Returns:
@@ -4377,7 +4375,7 @@ class Project(Shiboken.Object):
 
         Returns:
             all video track items in a project.
-            an array of hiero.core.TrackItem objects.
+            an array of TrackItem objects.
         """
         ...
     def videoTracks(self, partialName):
@@ -4390,10 +4388,10 @@ class Project(Shiboken.Object):
 
         Returns:
             all video tracks in a project.
-            an array of hiero.core.VideoTrack objects.
+            an array of VideoTrack objects.
         """
         ...
-    def views(self) -> typing.List[typing.Text]:
+    def views(self) -> List[Text]:
         """
         Returns a list of this project's views.
         """
@@ -4467,7 +4465,7 @@ class ReformatState(Shiboken.Object):
             the original resize turn flag, which may be a deprecated value if it was loaded from an old project.
         """
         ...
-    def originalType(self) -> typing.Text:
+    def originalType(self) -> Text:
         """
 
         Returns:
@@ -4502,7 +4500,7 @@ class ReformatState(Shiboken.Object):
             the resize turn flag. Note: the turn option has been removed, this method should not be called.
         """
         ...
-    def resizeType(self) -> typing.Text:
+    def resizeType(self) -> Text:
         """
 
         Returns:
@@ -4563,12 +4561,12 @@ class ReformatState(Shiboken.Object):
         the turn option has been removed, this method exists only for compatibility reasons
         """
         ...
-    def setResizeType(self, newResizeType: typing.Text):
+    def setResizeType(self, newResizeType: Text):
         """
         sets the resize type of the state.
 
         Args:
-            newResizeType: typing.Text
+            newResizeType: Text
         """
         ...
     def setScale(self):
@@ -4576,22 +4574,22 @@ class ReformatState(Shiboken.Object):
         the scale option has been removed, this method exists only for compatibility reasons
         """
         ...
-    def setType(self, newType: typing.Text):
+    def setType(self, newType: Text):
         """
         sets the reformat type of the state.
 
         Args:
-            newType: typing.Text
+            newType: Text
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
             a description of the object. Equivalent to str(object).
         """
         ...
-    def type(self) -> typing.Text:
+    def type(self) -> Text:
         """
 
         Returns:
@@ -4630,7 +4628,7 @@ class RenderProgressObserver(Shiboken.Object):
         RenderProgressObserver.updateProgress() -> called on progress of frame renders
 
         Args:
-            progressList: typing.List[tuples containing (filePath, frame, progress)]
+            progressList: List[tuples containing (filePath, frame, progress)]
         """
         ...
     ...
@@ -4781,7 +4779,7 @@ class Sequence(SequenceBase):
             audioTrackIndex: index of the audio track to start adding items to if the clip has audio
 
         Returns:
-            list of created hiero.core.TrackItems
+            list of created TrackItems
         """
         ...
     def addToNukeScript(self, script) -> None:
@@ -4797,7 +4795,7 @@ class Sequence(SequenceBase):
             additionalNodesCallback: callback to allow custom additional node per item function([Clip|TrackItem|Track|Sequence])
             offset: Optional, Global frame offset applied across whole script
             skipOffline: If True, offline clips are not included in the export
-            mediaToSkip: typing.List[MediaSources which should be excluded from the export]
+            mediaToSkip: List[MediaSources which should be excluded from the export]
             disconnected: If True, tracks other than that containing the masterTrackItem are not connected to any inputs
             masterTrackItem: Used for controlling the script output if disconnected is specified
             includeAnnotations: If True, annotations are included in the exported script
@@ -4823,7 +4821,7 @@ class Sequence(SequenceBase):
             the audio track for the specified index.
         """
         ...
-    def audioTracks(self) -> typing.Tuple[AudioTrack, ...]:
+    def audioTracks(self) -> tuple[AudioTrack, ...]:
         """
 
         Returns:
@@ -4844,7 +4842,7 @@ class Sequence(SequenceBase):
 
         Args:
             toTimebase: timebase to change to
-            roundingMode: rounding mode to use when converting timebases (hiero.core.TimeBase.kRoundNearest, hiero.core.TimeBase.kRound32Pulldown)
+            roundingMode: rounding mode to use when converting timebases (TimeBase.kRoundNearest, TimeBase.kRound32Pulldown)
         """
         ...
     def clone(self) -> Sequence:
@@ -4898,13 +4896,13 @@ class Sequence(SequenceBase):
         Args:
             filePath: path to the file to import tracks from
             srcTimebase: timebase to use when reading the source file
-            roundingMode: rounding mode to use when converting timebases (hiero.core.TimeBase.kRoundNearest, hiero.core.TimeBase.kRound32Pulldown)
+            roundingMode: rounding mode to use when converting timebases (TimeBase.kRoundNearest, TimeBase.kRound32Pulldown)
 
         Returns:
             tracks: tuple of created tracks
         """
         ...
-    def items(self) -> typing.Tuple[VideoTrack and hiero.core.AudioTrack, ...]:
+    def items(self) -> tuple[VideoTrack and AudioTrack, ...]:
         """
 
         Returns:
@@ -4913,7 +4911,7 @@ class Sequence(SequenceBase):
         ...
     def matchMedia(self, path):
         """
-        match media using the current rule configuration in hiero.core.conformer().
+        match media using the current rule configuration in conformer().
 
         Args:
             path: path to the folder with the media to connect
@@ -4946,7 +4944,7 @@ class Sequence(SequenceBase):
         removes the track from the Sequence.
 
         Args:
-            track: track to remove (hiero.core.AudioTrack or VideoTrack object)
+            track: track to remove (AudioTrack or VideoTrack object)
         """
         ...
     def replaceClips(self, path):
@@ -4967,7 +4965,7 @@ class Sequence(SequenceBase):
             the top-most video track item for the specified time that is enabled and has media.
         """
         ...
-    def trackItemsAt(self, time, mediaType) -> typing.Tuple[TrackItem, ...]:
+    def trackItemsAt(self, time, mediaType) -> tuple[TrackItem, ...]:
         """
         finds enabled track items for the specified time, ordered from top-track to bottom-track (or for audio, min channel to max channel).
 
@@ -4986,7 +4984,7 @@ class Sequence(SequenceBase):
             the video track for the specified index.
         """
         ...
-    def videoTracks(self) -> typing.Tuple[VideoTrack, ...]:
+    def videoTracks(self) -> tuple[VideoTrack, ...]:
         """
 
         Returns:
@@ -5054,7 +5052,7 @@ class SequenceBase(Shiboken.Object):
         ...
     def addTag(self, tag) -> Tag:
         """
-        adds a hiero.core.Tag object to the Clip or Sequence.
+        adds a Tag object to the Clip or Sequence.
 
         Args:
             tag: the tag object to add
@@ -5062,7 +5060,7 @@ class SequenceBase(Shiboken.Object):
         ...
     def addTagToRange(self, tag, inTime, outTime) -> Tag:
         """
-        adds a hiero.core.Tag object to the specified range of the Clip or Sequence.
+        adds a Tag object to the specified range of the Clip or Sequence.
 
         Args:
             tag: the tag object to add
@@ -5167,7 +5165,7 @@ class SequenceBase(Shiboken.Object):
             a collection of metadata for the object.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
@@ -5193,7 +5191,7 @@ class SequenceBase(Shiboken.Object):
             the Project object that this is attached to, or None if the object is not attached to a project.
         """
         ...
-    def rawView(self) -> typing.Text:
+    def rawView(self) -> Text:
         """
 
         Returns:
@@ -5224,10 +5222,10 @@ class SequenceBase(Shiboken.Object):
     def setFormat(self, format):
         """
         set the format of the Sequence or Clip.
-        Example: myClipSequence.setFormat( hiero.core.Format(2048, 400, 2.37, 'MyFormat') )
+        Example: myClipSequence.setFormat( Format(2048, 400, 2.37, 'MyFormat') )
 
         Args:
-            format: a hiero.core.Format object to set for the Clip or Sequence.
+            format: a Format object to set for the Clip or Sequence.
         """
         ...
     def setFramerate(self, framerate):
@@ -5318,7 +5316,7 @@ class SequenceBase(Shiboken.Object):
             the out time set for the soft trims.
         """
         ...
-    def tags(self) -> typing.Tuple[Tag, ...]:
+    def tags(self) -> tuple[Tag, ...]:
         """
 
         Returns:
@@ -5350,7 +5348,7 @@ class SequenceBase(Shiboken.Object):
             the timeline offset value.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -5396,7 +5394,7 @@ class Snapshot(Shiboken.Object):
         x.__repr__() <==> repr(x)
         """
         ...
-    def comment(self) -> typing.Text:
+    def comment(self) -> Text:
         """
 
         Returns:
@@ -5410,21 +5408,21 @@ class Snapshot(Shiboken.Object):
             True if the object is invalid, False otherwise.
         """
         ...
-    def item(self) -> Clip or hiero.core.Sequence:
+    def item(self) -> Clip or Sequence:
         """
 
         Returns:
             the clip or sequence stored with this snapshot.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
             the name of this snapshot.
         """
         ...
-    def setComment(self, comment) -> typing.Text:
+    def setComment(self, comment) -> Text:
         """
         sets the comment on this snapshot object.
 
@@ -5432,7 +5430,7 @@ class Snapshot(Shiboken.Object):
             comment: string to set the comment to
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -5490,7 +5488,7 @@ class SubTrackItem(TrackItemBase):
             int index, -1 if the item has not been added to a track
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -5538,7 +5536,7 @@ class Tag(Shiboken.Object):
             object guid as string
         """
         ...
-    def icon(self) -> typing.Text:
+    def icon(self) -> Text:
         """
         If the file doesn't exist, it will search for it in the plugin paths and the project folder and return the located file.
 
@@ -5567,14 +5565,14 @@ class Tag(Shiboken.Object):
             the clip's metadata.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
             the label of the tag.
         """
         ...
-    def note(self) -> typing.Text:
+    def note(self) -> Text:
         """
 
         Returns:
@@ -5643,7 +5641,7 @@ class Tag(Shiboken.Object):
             visible: visibility state
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -5657,7 +5655,7 @@ class Tag(Shiboken.Object):
         ...
     ...
 
-class TaskBase(core.Hiero.Python.ITask):
+class TaskBase(ITask):
     """
     TaskBase is the base class from which all Tasks must derrive.
     """
@@ -5696,7 +5694,7 @@ class TaskBase(core.Hiero.Python.ITask):
         ...
     def editId(self):
         """
-        Returns a str containing the id of this edit.  See hiero.core.TrackItem.eventNumber().
+        Returns a str containing the id of this edit.  See TrackItem.eventNumber().
         """
         ...
     def edlEditId(self):
@@ -6002,7 +6000,7 @@ class TaskData(__builtin__.dict):
         ...
     ...
 
-class TaskGroup(core.Hiero.Python.ITask):
+class TaskGroup(ITask):
     """
     TaskGroup is a Task which maintains a list of child Tasks.
     """
@@ -6045,7 +6043,7 @@ class TaskPreset(TaskPresetBase):
         ...
     ...
 
-class TaskPresetBase(core.Hiero.Python.ITaskPreset):
+class TaskPresetBase(ITaskPreset):
     """
     TaskPreset is the base class from which all Task Presets must derrive
     The purpose of a Task Preset is to store and data which must be serialized to file
@@ -6121,7 +6119,7 @@ class TaskPresetBase(core.Hiero.Python.ITaskPreset):
         return ResolveTable object
         """
         ...
-    def getResolveEntryCount(self, arg1: typing.Literal["self) (DEPRICATED"]):
+    def getResolveEntryCount(self, arg1: Literal["self) (DEPRICATED"]):
         """
         Return the number of resolve entries in the resolve table
         """
@@ -6250,7 +6248,7 @@ class TaskPresetBase(core.Hiero.Python.ITaskPreset):
         ...
     ...
 
-class TaskRegistry(core.Hiero.Python.IExporterRegistry):
+class TaskRegistry(IExporterRegistry):
     def __init__(self):
         """ """
         ...
@@ -6577,11 +6575,11 @@ class TimeBase(Shiboken.Object):
     """
     """
 
-    kRoundNearest: ... = core.Hiero.Python.TimeBase.RoundingMode.kRoundNearest
+    kRoundNearest: ... = TimeBase.RoundingMode.kRoundNearest
     """
     """
     @staticmethod
-    def convert(t, arg2: typing.Literal["from"], to) -> int:
+    def convert(t, arg2: Literal["from"], to) -> int:
         """
         If either of the time bases is invalid, this method returns the t parameter unchanged.
 
@@ -6712,21 +6710,21 @@ class TimeBase(Shiboken.Object):
             the time base value, rounded to the nearest integer.
         """
         ...
-    def toRational(self) -> typing.Tuple[int, ...]:
+    def toRational(self) -> tuple[int, ...]:
         """
 
         Returns:
             a tuple of the numerator and the denominator of the time base.
         """
         ...
-    def toRationalString(self) -> typing.Text:
+    def toRationalString(self) -> Text:
         """
 
         Returns:
             a string containing the time base expressed as a ratio, for example '30000/1001'.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -6753,7 +6751,7 @@ class Timecode(Shiboken.Object):
     """
     """
 
-    kDisplayFrames: ... = core.Hiero.Python.Timecode.DisplayType.kDisplayFrames
+    kDisplayFrames: ... = Timecode.DisplayType.kDisplayFrames
     """
     """
 
@@ -6780,21 +6778,19 @@ class Timecode(Shiboken.Object):
         guesses the display type from a timecode string. This can be inferred from separators (though not guaranteed) or if no separators than just display as frames.
         Example:
         displayType = Timecode.displayTypeFromString('01:00:00:00')
-        print displayType # prints out hiero.core.Timecode.kDisplayTimecode
+        print displayType # prints out Timecode.kDisplayTimecode
         displayType = Timecode.displayTypeFromString('01:00:00;00')
-        print displayType # prints out hiero.core.Timecode.kDisplayDropFrameTimecode, because of the semi-colon (;)
+        print displayType # prints out Timecode.kDisplayDropFrameTimecode, because of the semi-colon (;)
 
         Args:
             s: string to detect time code format from
 
         Returns:
-            hiero.core.Timecode.DisplayType enumeration
+            Timecode.DisplayType enumeration
         """
         ...
     @staticmethod
-    def framesToHMSF(
-        time, timeBase, dropFrames
-    ) -> typing.Tuple[hour, minute, second, frame]:
+    def framesToHMSF(time, timeBase, dropFrames) -> tuple[hour, minute, second, frame]:
         """
         takes a time, timebase and whether or not it's got drop frames, and returns a tuple of the hour, minute, second and frame.
         Example:
@@ -6821,9 +6817,7 @@ class Timecode(Shiboken.Object):
         """
         ...
     @staticmethod
-    def timeToString(
-        time, timeBase, displayType, includeSign, timecodeOffset
-    ) -> typing.Text:
+    def timeToString(time, timeBase, displayType, includeSign, timecodeOffset) -> Text:
         """
 
         Args:
@@ -6930,7 +6924,7 @@ class TrackBase(Shiboken.Object):
         deprecated; use addTrackItem instead. Adds a track item to this track. Throws an exception if the item overlaps any existing items on the track.
 
         Args:
-            item: the hiero.core.TrackItem to add to this track
+            item: the TrackItem to add to this track
         """
         ...
     def addTag(self, tag) -> Tag:
@@ -6948,7 +6942,7 @@ class TrackBase(Shiboken.Object):
         Transition items can be reomoved from a track using the removeTransition function.
 
         Args:
-            transition: the hiero.core.Transition to add to this track
+            transition: the Transition to add to this track
         """
         ...
     def clearRange(self, start, end, ripple):
@@ -6992,7 +6986,7 @@ class TrackBase(Shiboken.Object):
             the metadata for this Track.
         """
         ...
-    def name(self) -> bytes:
+    def name(self) -> Str:
         """
 
         Returns:
@@ -7033,7 +7027,7 @@ class TrackBase(Shiboken.Object):
         removes a track item from this track.
 
         Args:
-            trackItem: the hiero.core.TrackItem to remove from this track
+            trackItem: the TrackItem to remove from this track
             option: options controlling the remove behavior. By default linked items are also removed. Note that if linked effects are not removed, this will put them in an invalid state.
         """
         ...
@@ -7050,7 +7044,7 @@ class TrackBase(Shiboken.Object):
         removes a transition from the timeline of this track.
 
         Args:
-            transition: the hiero.core.Transition to remove from this track's timeline
+            transition: the Transition to remove from this track's timeline
         """
         ...
     def setEnabled(self):
@@ -7063,22 +7057,22 @@ class TrackBase(Shiboken.Object):
         locks or unlocks the Track.
         """
         ...
-    def setName(self, string: typing.Text):
+    def setName(self, string: Text):
         """
         Sets the name of a track.
 
         Args:
-            string: typing.Text
+            string: Text
         """
         ...
-    def tags(self) -> typing.Tuple[Tag, ...]:
+    def tags(self) -> tuple[Tag, ...]:
         """
 
         Returns:
             a tuple of all of the tags applied to this object.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -7088,14 +7082,14 @@ class TrackBase(Shiboken.Object):
     def trackIndex(self, *args, **kwargs):
         """ """
         ...
-    def trackName(self) -> typing.Text:
+    def trackName(self) -> Text:
         """
 
         Returns:
             the name of the track. Identical to calling name().
         """
         ...
-    def transitions(self) -> typing.Tuple[Transition, ...]:
+    def transitions(self) -> tuple[Transition, ...]:
         """
 
         Returns:
@@ -7120,15 +7114,15 @@ class TrackItem(TrackItemBase):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    kAudio: ... = core.Hiero.Python.TrackItem.MediaType.kAudio
+    kAudio: ... = TrackItem.MediaType.kAudio
     """
     """
 
-    kUnknown: ... = core.Hiero.Python.TrackItem.MediaType.kUnknown
+    kUnknown: ... = TrackItem.MediaType.kUnknown
     """
     """
 
-    kVideo: ... = core.Hiero.Python.TrackItem.MediaType.kVideo
+    kVideo: ... = TrackItem.MediaType.kVideo
     """
     """
     def __copy__(self, *args, **kwargs):
@@ -7154,7 +7148,7 @@ class TrackItem(TrackItemBase):
         ...
     def addToNukeScript(
         self,
-        arg2: typing.Literal["script="],
+        arg2: Literal["script="],
         firstFrame=None,
         additionalNodes=[],
         additionalNodesCallback=None,
@@ -7200,7 +7194,7 @@ class TrackItem(TrackItemBase):
             integer event number
         """
         ...
-    def getAvailableOcioColourTransforms(self, *args, **kwargs) -> typing.Text:
+    def getAvailableOcioColourTransforms(self, *args, **kwargs) -> Text:
         """
         self.    getAvailableOcioColourTransforms() -> returns colour transform for the media source.
         """
@@ -7249,14 +7243,14 @@ class TrackItem(TrackItemBase):
         """
 
         Returns:
-            True if the track item represents a sequence. If it does, you can create a new hiero.core.Sequence object with this track item.
+            True if the track item represents a sequence. If it does, you can create a new Sequence object with this track item.
         """
         ...
     def isSource(self) -> bool:
         """
 
         Returns:
-            True if the track item represents a media source. If it does, you can create a new hiero.core.MediaSource object with this track item.
+            True if the track item represents a media source. If it does, you can create a new MediaSource object with this track item.
         """
         ...
     def link(self, trackItem):
@@ -7317,7 +7311,7 @@ class TrackItem(TrackItemBase):
             the lowest version on this track item.
         """
         ...
-    def name(self) -> bytes:
+    def name(self) -> Str:
         """
 
         Returns:
@@ -7416,7 +7410,7 @@ class TrackItem(TrackItemBase):
             index: the integer index to set the current version on this track item to
         """
         ...
-    def setName(self, name: bytes) -> None:
+    def setName(self, name: Str) -> None:
         """
         sets the name of the track item.
 
@@ -7438,11 +7432,11 @@ class TrackItem(TrackItemBase):
         If the TrackItem is not already in a Track, the duration will be set to the Clip's duration.
 
         Args:
-            clip: the hiero.core.Clip object to set as the source for this track item
+            clip: the Clip object to set as the source for this track item
             trackIndex: optional track index, for instance if you are adding an audio Clip and want to use its second audio track
 
         Returns:
-            the hiero.core.Clip object passed in
+            the Clip object passed in
         """
         ...
     def setSourceIn(self, time: float) -> None:
@@ -7501,10 +7495,10 @@ class TrackItem(TrackItemBase):
         ...
     def source(self):
         """
-        depending on the underlying type of the track item, returns a hiero.core.Clip object, a hiero.core.Sequence object or a hiero.core.MediaSource object.
+        depending on the underlying type of the track item, returns a Clip object, a Sequence object or a MediaSource object.
 
         Returns:
-            a hiero.core.Clip object, a hiero.core.Sequence object or a hiero.core.MediaSource object
+            a Clip object, a Sequence object or a MediaSource object
         """
         ...
     def sourceDuration(self) -> frames:
@@ -7523,7 +7517,7 @@ class TrackItem(TrackItemBase):
             the source in value for the track item.
         """
         ...
-    def sourceMediaColourTransform(self, *args, **kwargs) -> typing.Text:
+    def sourceMediaColourTransform(self, *args, **kwargs) -> Text:
         """
         self.setSourceMediaColourTransform() -> returns colour transform for the media source.
         """
@@ -7536,7 +7530,7 @@ class TrackItem(TrackItemBase):
             the source out value for the track item.
         """
         ...
-    def tags(self) -> typing.Tuple[Tag, ...]:
+    def tags(self) -> tuple[Tag, ...]:
         """
 
         Returns:
@@ -7575,7 +7569,7 @@ class TrackItem(TrackItemBase):
         """
         decrements the current version on this track item and returns the new version object. Creates a new version if there wasn't one before, but doesn't check that the versioned media source exists on disk.
         WARNING - DEPRECATED ( versionDown ): This method is deprecated and will not be present in future versions of the Python API.
-        Only available versions can now be obtained from TrackItem. To find new versions, please use hiero.core.VersionScanner. To obtain the next version, please use TrackItem.prevVersion().
+        Only available versions can now be obtained from TrackItem. To find new versions, please use VersionScanner. To obtain the next version, please use TrackItem.prevVersion().
         """
         ...
     def versionMaxAvailable(self) -> Version:
@@ -7618,7 +7612,7 @@ class TrackItem(TrackItemBase):
         """
         increments the current version on this track item and returns the new version object. Creates a new version if there wasn't one before, but doesn't check that the versioned media source exists on disk.
         WARNING - DEPRECATED ( versionUp ): This method is deprecated and will not be present in future versions of the Python API.
-        Only available versions can now be obtained from TrackItem. To find new versions, please use hiero.core.VersionScanner. To obtain the next version, please use TrackItem.nextVersion().
+        Only available versions can now be obtained from TrackItem. To find new versions, please use VersionScanner. To obtain the next version, please use TrackItem.nextVersion().
         """
         ...
     ...
@@ -7735,7 +7729,7 @@ class TrackItemBase(Shiboken.Object):
             True if the track item is invalid.
         """
         ...
-    def linkedItems(self) -> typing.Tuple[TrackItem, ...]:
+    def linkedItems(self) -> tuple[TrackItem, ...]:
         """
 
         Returns:
@@ -7750,7 +7744,7 @@ class TrackItemBase(Shiboken.Object):
             time: frame value. If positive, the item moves right. If negative, the item moves left.
         """
         ...
-    def parent(self) -> typing.Union[AudioTrack, VideoTrack]:
+    def parent(self) -> Union[AudioTrack, VideoTrack]:
         """
 
         Returns:
@@ -7760,17 +7754,17 @@ class TrackItemBase(Shiboken.Object):
     def parentSequence(self) -> Sequence:
         """ """
         ...
-    def parentTrack(self) -> typing.Union[VideoTrack, AudioTrack]:
+    def parentTrack(self) -> Union[VideoTrack, AudioTrack]:
         """ """
         ...
-    def project(self) -> typing.Optional[Project]:
+    def project(self) -> Optional[Project]:
         """
 
         Returns:
             the Project object that this is attached to, or None if the object is not attached to a project.
         """
         ...
-    def sequence(self) -> typing.Optional[Sequence]:
+    def sequence(self) -> Optional[Sequence]:
         """
 
         Returns:
@@ -7812,7 +7806,7 @@ class TrackItemBase(Shiboken.Object):
             the timeline in value for the track item.
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -7851,19 +7845,19 @@ class Transition(TrackItemBase):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    kDissolve: ... = core.Hiero.Python.Transition.Alignments.kDissolve
+    kDissolve: ... = Transition.Alignments.kDissolve
     """
     """
 
-    kFadeIn: ... = core.Hiero.Python.Transition.Alignments.kFadeIn
+    kFadeIn: ... = Transition.Alignments.kFadeIn
     """
     """
 
-    kFadeOut: ... = core.Hiero.Python.Transition.Alignments.kFadeOut
+    kFadeOut: ... = Transition.Alignments.kFadeOut
     """
     """
 
-    kUnknown: ... = core.Hiero.Python.Transition.Alignments.kUnknown
+    kUnknown: ... = Transition.Alignments.kUnknown
     """
     """
     @staticmethod
@@ -7876,8 +7870,8 @@ class Transition(TrackItemBase):
         @seealso: createDissolveTransition for Video equivalent
 
         Args:
-            trackItem1: the earlier hiero.core.TrackItem object to dissolve from. Must be an Audio TrackItem.
-            trackItem2: the later hiero.core.TrackItem object to crossfade to. Must be an Audio TrackItem.
+            trackItem1: the earlier TrackItem object to dissolve from. Must be an Audio TrackItem.
+            trackItem2: the later TrackItem object to crossfade to. Must be an Audio TrackItem.
             duration1: frames for the crossfade from
             duration2: frames for the crossfade to
         """
@@ -7914,8 +7908,8 @@ class Transition(TrackItemBase):
         @seealso: createAudioCrossTransition for Audio equivalent
 
         Args:
-            trackItem1: the earlier hiero.core.TrackItem object to dissolve from. Must be a Video TrackItem.
-            trackItem2: the later hiero.core.TrackItem object to dissolve to. Must be a Video TrackItem.
+            trackItem1: the earlier TrackItem object to dissolve from. Must be a Video TrackItem.
+            trackItem2: the later TrackItem object to dissolve to. Must be a Video TrackItem.
             duration1: frames for the dissolve from
             duration2: frames for the dissolve to
         """
@@ -7965,7 +7959,7 @@ class Transition(TrackItemBase):
 
         Returns:
             the alignment mode of this transition. Either kFadeIn, kDissolve, kFadeOut or kUnknown.
-            alignment type (hiero.core.Transition.Alignments)
+            alignment type (Transition.Alignments)
         """
         ...
     def guid(self, *args, **kwargs):
@@ -7974,16 +7968,16 @@ class Transition(TrackItemBase):
     def inTrackItem(self):
         """
         Get the in track item for this transition.
-        return: hiero.core.TrackItem
+        return: TrackItem
         """
         ...
     def outTrackItem(self):
         """
         Get the out track item for this transition.
-        return: hiero.core.TrackItem
+        return: TrackItem
         """
         ...
-    def parent(self) -> AudioTrack or hiero.core.VideoTrack:
+    def parent(self) -> AudioTrack or VideoTrack:
         """
 
         Returns:
@@ -7998,7 +7992,7 @@ class Transition(TrackItemBase):
         sets the alignment mode on this transition.
 
         Args:
-            alignment: alignment type (hiero.core.Transition.Alignments), either kFadeIn, kDissolve, or kFadeOut
+            alignment: alignment type (Transition.Alignments), either kFadeIn, kDissolve, or kFadeOut
         """
         ...
     def setTimelineIn(self, inTime):
@@ -8017,7 +8011,7 @@ class Transition(TrackItemBase):
             outTime: frame for the new out point
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -8028,7 +8022,7 @@ class Transition(TrackItemBase):
 
 class UndoGroup(Shiboken.Object):
     """
-    Helper class for beginning and ending undo on a project.  Recommended usage is to create with hiero.core.Project.beginUndo(name), using a with block for exception safety to ensure Project.endUndo() is called.  For example:
+    Helper class for beginning and ending undo on a project.  Recommended usage is to create with Project.beginUndo(name), using a with block for exception safety to ensure Project.endUndo() is called.  For example:
     with project.beginUndo('My Undo'):
       // Undoable edits
     """
@@ -8045,7 +8039,7 @@ class UndoGroup(Shiboken.Object):
         Allows usage in a with block to automatically end the undo.
         """
         ...
-    def __exit__(self):
+    def __exit__(self, *args) -> None:
         """
         Calls self.endUndo().  This allows usage in a with block to automatically end the undo.
         """
@@ -8062,7 +8056,7 @@ class UndoGroup(Shiboken.Object):
         ...
     def beginUndo(self):
         """
-        starts a new undo action on the project with the initialised name.  See hiero.core.Project.beginUndo()
+        starts a new undo action on the project with the initialised name.  See Project.beginUndo()
         """
         ...
     def endUndo(self):
@@ -8147,14 +8141,14 @@ class Version(Shiboken.Object):
             True if the object is invalid, False otherwise.
         """
         ...
-    def item(self) -> Clip or hiero.core.Sequence:
+    def item(self) -> Clip or Sequence:
         """
 
         Returns:
             the clip or sequence stored with this version.
         """
         ...
-    def name(self) -> typing.Text:
+    def name(self) -> Text:
         """
 
         Returns:
@@ -8171,14 +8165,14 @@ class Version(Shiboken.Object):
     def setHidden(self, *args, **kwargs):
         """ """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
             a description of the object. Equivalent to str(object).
         """
         ...
-    def versionIndex(self) -> typing.Text:
+    def versionIndex(self) -> Text:
         """
         WARNING - DEPRECATED ( versionIndex ): This method is deprecated and will not be present in future versions of the Python API.
         Version indices are no longer unique identifiers and should not be used as such.
@@ -8232,7 +8226,7 @@ class VideoTrack(TrackBase):
         This method will cut or delete sub-track items that overlap with the one being added.
 
         Args:
-            subTrackItem: a hiero.core.SubTrackItem object to add.
+            subTrackItem: a SubTrackItem object to add.
             subTrackIndex: the index of the sub-track to add to.
 
         Returns:
@@ -8244,12 +8238,12 @@ class VideoTrack(TrackBase):
         adds a tag to the video track item.
 
         Args:
-            tag: the hiero.core.Tag to add to the video track.
+            tag: the Tag to add to the video track.
         """
         ...
     def addToNukeScript(
         self,
-        arg2: typing.Literal["script="],
+        arg2: Literal["script="],
         additionalNodes=[],
         additionalNodesCallback=None,
         includeRetimes=False,
@@ -8268,21 +8262,21 @@ class VideoTrack(TrackBase):
 
         Args:
             script: Nuke script object to add nodes to.
-            additionalNodes: typing.List[nodes to be added post read, passed on to track]
+            additionalNodes: List[nodes to be added post read, passed on to track]
             additionalNodesCallback: callback to allow custom additional node per item function([Clip|TrackItem|Track|Sequence])
             includeRetimes: True/False include retimes
             retimeMethod: "Motion", "Blend", "Frame" - Knob setting for OFlow retime method
             offset: Optional, Global frame offset applied across whole script
             skipOffline: If True, offline clips are not included in the export
-            mediaToSkip: typing.List[MediaSources which should be excluded from the export]
+            mediaToSkip: List[MediaSources which should be excluded from the export]
             disconnected: If True, items on the track are not connected and no constant nodes are added to fill gaps
             includeAnnotations: If True, clip-level annotations will be included in the output
             includeEffects: If True, clip-level soft effects will be included in the output
         """
         ...
-    @typing.overload
+    @overload
     def addTrackItem(self, clip: TrackItem) -> TrackItem: ...
-    @typing.overload
+    @overload
     def addTrackItem(self, clip: Clip, position: int) -> TrackItem:
         """
         if the first parameter is a Clip object, the second parameter must be specified and this method creates a new track item and adds it to this video track at the given position.
@@ -8291,7 +8285,7 @@ class VideoTrack(TrackBase):
         This method can only be called if the track has already been added to a Sequence.
 
         Args:
-            clip: a hiero.core.Clip object or a hiero.core.TrackItem object, to add to this video track.
+            clip: a Clip object or a TrackItem object, to add to this video track.
             position: int; insert position. Do not specify if clip is a TrackItem.
         """
         ...
@@ -8360,7 +8354,7 @@ class VideoTrack(TrackBase):
             True if the VideoTrack object has blend-masking enabled.
         """
         ...
-    def items(self) -> typing.Tuple[TrackItem, ...]:
+    def items(self) -> tuple[TrackItem, ...]:
         """
 
         Returns:
@@ -8379,7 +8373,7 @@ class VideoTrack(TrackBase):
         removes a sub-track item from this track.
 
         Args:
-            subTrackItem: the hiero.core.SubTrackItem to remove from this track
+            subTrackItem: the SubTrackItem to remove from this track
             option: options controlling the remove behavior. By default linked items are also removed.
         """
         ...
@@ -8415,10 +8409,10 @@ class VideoTrack(TrackBase):
 
         Returns:
             a tuple with an entry for each sub track in this track, each entry being a tuple of items
-            tuple of hiero.core.SubTrackItem sub-class objects
+            tuple of SubTrackItem sub-class objects
         """
         ...
-    def toString(self) -> typing.Text:
+    def toString(self) -> Text:
         """
 
         Returns:
@@ -8434,7 +8428,7 @@ def LUTGroup(*args, **kwargs):
     """ """
     ...
 
-def LUTs() -> typing.Tuple[typing.Text, ...]:
+def LUTs() -> tuple[Text, ...]:
     """
 
     Returns:
@@ -8452,7 +8446,7 @@ def _Project_extractSettings(self) -> dict:
     """
     ...
 
-def __EffectTrackItem_name(self) -> typing.Text:
+def __EffectTrackItem_name(self) -> Text:
     """
     self.name() -> Get the name of the effect's node.
     """
@@ -8487,13 +8481,13 @@ def addPathRemap(windowsPathPrefix, osxPathPrefix, linuxPathPrefix) -> None:
     adds to the table of file path remapping prefixes that Hiero maintains. Pairs of path prefixes added to this table will be used to convert paths between Windows, OSX and Linux. When on Windows, Hiero will replace any Linux or OSX prefixes found with the corresponding Windows prefix. On OSX, Hiero will search for the Windows and Linux path prefixes and replace them with the corresponding OSX prefix. The same applies for OSX/Windows prefixes being replaced on Linux. These can also be configured through the user interface in the General tab of the Preferences dialog.
 
     Args:
-        windowsPathPrefix: typing.Text
-        osxPathPrefix: typing.Text
-        linuxPathPrefix: typing.Text
+        windowsPathPrefix: Text
+        osxPathPrefix: Text
+        linuxPathPrefix: Text
     """
     ...
 
-def addPluginPath(pluginPath: typing.Text) -> None:
+def addPluginPath(pluginPath: Text) -> None:
     """
     adds a new path to the list of plugin paths searched for Python plugins (in Python/Startup and Python/StartupUI folders). The user's .nuke folder will be the first in this list.
 
@@ -8502,14 +8496,14 @@ def addPluginPath(pluginPath: typing.Text) -> None:
         index: optional; if not specified or negative, the new path will be added to the end of the list
 
     Overloads:
-        hiero.core.addPluginPath(pluginPath, index) -> the same as above, except that the index specifies which item in the list of paths to place the new one before.
+        addPluginPath(pluginPath, index) -> the same as above, except that the index specifies which item in the list of paths to place the new one before.
     """
     ...
 
 def closeAllProjects(*args, **kwargs):
     """
-    hiero.core.closeProject() -> closes all of the existing projects without saving.
-    hiero.core.closeProject(bool dontSave) -> same as above, but if the parameter is set to false, unsaved projects will cause Hiero to popup a dialog for each unsaved project, asking the user if they'd like to save.
+    closeProject() -> closes all of the existing projects without saving.
+    closeProject(bool dontSave) -> same as above, but if the parameter is set to false, unsaved projects will cause Hiero to popup a dialog for each unsaved project, asking the user if they'd like to save.
 
     Args:
         dontSave: bool
@@ -8524,7 +8518,7 @@ def conformer() -> Conformer:
     """
     ...
 
-def defaultFrameRates() -> typing.Tuple[float, ...]:
+def defaultFrameRates() -> tuple[float, ...]:
     """
 
     Returns:
@@ -8533,9 +8527,9 @@ def defaultFrameRates() -> typing.Tuple[float, ...]:
     ...
 
 def executeInMainThread(
-    call: typing.Callable[..., None],
-    *args: typing.Any,
-    **kwargs: typing.Any,
+    call: Callable[..., None],
+    *args: Any,
+    **kwargs: Any,
 ) -> None:
     """
     Execute the callable 'call' with optional arguments 'args' and named arguments 'kwargs' in
@@ -8646,11 +8640,11 @@ def findItemsInBin(rootBin, filter=None, partialName=None, verbose=0):
     """
     Returns all items recursively in a Bin, found in rootBin.
     Example uses:
-    myBin = hiero.core.projects()[0].clipsBin()[0] # A hiero.core.Bin object
+    myBin = projects()[0].clipsBin()[0] # A Bin object
     allItemsInMyBin = findItemsInBin(myBin)
-    allClipsAndSequencesInMyBin = findItemsInBin(myBin, filter = [hiero.core.Sequence, hiero.core.Clip])
+    allClipsAndSequencesInMyBin = findItemsInBin(myBin, filter = [Sequence, Clip])
     allClipsWithPartialName = findItems(myProj, 'clips', 'C00')
-    allSubBinsOnly = findItems(myProj, hiero.core.Bin)
+    allSubBinsOnly = findItems(myProj, Bin)
 
     Args:
         rootBin: Bin object, to find the items on.
@@ -8675,10 +8669,10 @@ def findItemsInProject(proj=None, filter=None, partialName=None, verbose=0):
     allTracks = findItemsInProject(myProj, "Track")
     videoTracks = findItemsInProject(myProj, "VideoTrack")
     sequences = findItemsInProject(myProj, "Sequence") # Can also use plural: 'Sequences'
-    sequences = findItemsInProject(myProj, hiero.core.Sequence)
-    sequencesAndClips = findItemsInProject(myProj, [hiero.core.Sequence, hiero.core.Clip])
-    binsOnly = findItemsInProject(myProj, hiero.core.Bin)
-    hiero.core.findItems is deprecated. Please use hiero.core.findItemsInProject instead.
+    sequences = findItemsInProject(myProj, Sequence)
+    sequencesAndClips = findItemsInProject(myProj, [Sequence, Clip])
+    binsOnly = findItemsInProject(myProj, Bin)
+    findItems is deprecated. Please use findItemsInProject instead.
 
     Args:
         proj: Project object, to find the items on. If None, then the last project in the currently loaded projects will be used.
@@ -8712,7 +8706,7 @@ def findProjectTags(proj=None, tagName=None, iconName=None, verbose=0):
     """
     ...
 
-def formats() -> typing.Tuple[Format, ...]:
+def formats() -> tuple[Format, ...]:
     """
 
     Returns:
@@ -8740,19 +8734,19 @@ def getBundledPythonPath():
 
 def getFilenameList(*args, **kwargs):
     """
-    Deprecated. Do not use. Use hiero.core.filenameList() instead
+    Deprecated. Do not use. Use filenameList() instead
     """
     ...
 
 def getLibraryDirectory(subdirectory):
     """
-    deprecated; use hiero.core.libraryDirectory() instead.
+    deprecated; use libraryDirectory() instead.
     """
     ...
 
 def getPluginPath():
     """
-    deprecated; please use hiero.core.pluginPath instead.
+    deprecated; please use pluginPath instead.
     """
     ...
 
@@ -8785,7 +8779,7 @@ def isVideoFileExtension(fileExtension):
     """
     ...
 
-def libraryDirectory(subdirectory) -> typing.Text:
+def libraryDirectory(subdirectory) -> Text:
     """
 
     Args:
@@ -8816,7 +8810,7 @@ def openProject(path):
 
 def openProjectStartup(path, asStartup) -> Project:
     """
-    for internal use only, hiero.core.openProject(path) should be used instead.
+    for internal use only, openProject(path) should be used instead.
     """
     ...
 
@@ -8836,16 +8830,16 @@ def pathRemappings():
     """
     ...
 
-def pluginPath() -> typing.Tuple[typing.Text, ...]:
+def pluginPath() -> tuple[Text, ...]:
     """
     Returns a tuple of the search paths used by Hiero to load Python scripts.
     """
     ...
 
-def presetProjects() -> typing.Tuple[Project, ...]:
+def presetProjects() -> tuple[Project, ...]:
     """
-    hiero.core.projects() -> returns a tuple of all of the currently loaded preset projects.
-    @deprecated: Use hiero.core.projects(Project.kStartupProjects) instead
+    projects() -> returns a tuple of all of the currently loaded preset projects.
+    @deprecated: Use projects(Project.kStartupProjects) instead
     """
     ...
 
@@ -8857,7 +8851,7 @@ def project(name) -> Project:
     """
     ...
 
-def projects(projectTypes) -> typing.Tuple[Project, ...]:
+def projects(projectTypes) -> tuple[Project, ...]:
     """
 
     Args:
@@ -8867,7 +8861,7 @@ def projects(projectTypes) -> typing.Tuple[Project, ...]:
         a tuple of currently loaded projects which are user projects (not startup). Same effect as calling the method below passing Project.kUserProjects.
 
     Overloads:
-        hiero.core.projects(projectTypes) -> returns a tuple of currently loaded projects, filtered according to projectTypes. Use hiero.core.projects()[-1] to get the last loaded project.
+        projects(projectTypes) -> returns a tuple of currently loaded projects, filtered according to projectTypes. Use projects()[-1] to get the last loaded project.
     """
     ...
 
@@ -8880,7 +8874,7 @@ def quit(exitCode):
         exitCode: optional; integer value to set the process's exit code to
 
     Overloads:
-        hiero.core.quit(exitCode) -> same as the first version of this method, except that this one sets the exit code of the process to the exitCode variable.
+        quit(exitCode) -> same as the first version of this method, except that this one sets the exit code of the process to the exitCode variable.
     """
     ...
 
@@ -8892,7 +8886,7 @@ def redoSize(*args, **kwargs):
     """ """
     ...
 
-def remapPath(path) -> typing.Text:
+def remapPath(path) -> Text:
     """
     uses the platform specific path remapping rules from the user's preferences and applies them to the input path.
 
@@ -8907,7 +8901,7 @@ def setLocalisationForAllVersionsInProject(proj, policy):
 
     Args:
         proj: Project
-        policy: policy - the localisation policy from hiero.core.Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
+        policy: policy - the localisation policy from Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
     """
     ...
 
@@ -8916,8 +8910,8 @@ def setLocalisationPolicyOnBin(bin, policy, recursive=True):
     Sets localisation policy for all Clips found in a Bin and recursively found in all Sub-Bins
 
     Args:
-        clipList: clipList - a list of hiero.core.Clip objects
-        policy: policy - the localisation policy from hiero.core.Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
+        clipList: clipList - a list of Clip objects
+        policy: policy - the localisation policy from Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
         recursive: recursive (optional, default = True) - localises all Clips found recursively in a Bin Structure
     """
     ...
@@ -8927,8 +8921,8 @@ def setLocalisationPolicyOnSequence(sequence, policy):
     Sets localisation policy for all Clips used by TrackItems in a Sequence with a given policy.
 
     Args:
-        sequence: sequence - a hiero.core.Sequence
-        policy: policy - the localisation policy from hiero.core.Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
+        sequence: sequence - a Sequence
+        policy: policy - the localisation policy from Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
     """
     ...
 
@@ -8937,8 +8931,8 @@ def setLocalisationPolicyOnTrack(track, policy):
     Sets localisation policy for all Clips used by TrackItems in a Track with a given policy.
 
     Args:
-        track: track - a hiero.core.Track
-        policy: policy - the localisation policy from hiero.core.Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
+        track: track - a Track
+        policy: policy - the localisation policy from Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
     """
     ...
 
@@ -8947,8 +8941,8 @@ def setLocalisationPolicyOnTrackItem(trackItem, policy):
     Sets localisation policy for the source Clip of a TrackItem
 
     Args:
-        track: track - a  hiero.core.TrackItem
-        policy: policy - the localisation policy from hiero.core.Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
+        track: track - a  TrackItem
+        policy: policy - the localisation policy from Clip. Options: kOnLocalise, kAutoLocalise, kOffLocalise
     """
     ...
 
@@ -9017,5 +9011,5 @@ rawArgs: list
 
 taskRegistry: ...
 """
-<hiero.core.FnExportRegistry.TaskRegistry object>
+<FnExportRegistry.TaskRegistry object>
 """

@@ -7,11 +7,11 @@ import logging
 import re
 
 from wulifang.vendor.six import iteritems, itervalues, python_2_unicode_compatible
+from wulifang._util import cast_text, cast_str
 
 import hiero.core
 import hiero.ui
 
-from .. import codectools
 
 _LOGGER = logging.getLogger(__name__)
 TYPE_CHECKING = False
@@ -142,7 +142,7 @@ class AlignPlan:
 
     def add_base_item(self, item):
         # type: (hiero.core.TrackItem,) -> None
-        name = item.name().decode("utf-8")
+        name = cast_text(item.name())
         key = (name, self._counter.add(name))
         t_in0, t_out0, s_in0, s_out0 = (
             item.timelineIn(),
@@ -174,7 +174,7 @@ class AlignPlan:
             return
         # assume items is sorted
         track_length = track_items[-1].timelineOut() - track_items[0].timelineIn()
-        track_name = codectools.text(track.name())
+        track_name = cast_text(track.name())
 
         cleanups = []  # type: List[Callable[[],None]]
 
@@ -188,7 +188,7 @@ class AlignPlan:
                     # can not move back
                     self.moved_to_end_count.add(track_name)
 
-            if self._counter.get(codectools.text(i.name())) == 0:
+            if self._counter.get(cast_text(i.name())) == 0:
                 cleanups.append(_move_back)
             i.move(track_length)
 
@@ -213,7 +213,7 @@ class AlignPlan:
 
         _counter = _NameCounter()
         for i in track_items:
-            name = i.name().decode("utf-8")
+            name = cast_text(i.name())
             key = (name, _counter.add(name))
             times = self._m.get(key)
             if not times:
@@ -234,7 +234,7 @@ class AlignPlan:
             return _constructor
 
         for i in track_items:
-            name = codectools.text(i.name())
+            name = cast_text(i.name())
             _existed_name.add(name)
             _item_constructors[name] = _item_constructor_of(i)
         for name, c_current in _existed_name.items():
@@ -275,12 +275,12 @@ def remove_version_suffix(items):
     pattern = re.compile(r"^(.*)_v\d+$")
     result = {}  # type: Dict[Text, Text]
     for i in items:
-        name = codectools.text(i.name())
+        name = cast_text(i.name())
         match = pattern.match(name)
         if not match:
             continue
         base = match.group(1)
-        i.setName(codectools.binary(base))
+        i.setName(cast_str(base))
         result[name] = base
 
     return result

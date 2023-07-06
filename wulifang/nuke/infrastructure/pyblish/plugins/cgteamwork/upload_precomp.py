@@ -7,8 +7,8 @@ TYPE_CHECKING = False
 
 
 import nuke
-import wulifang.vendor.cast_unknown as cast
 from wulifang.vendor.pyblish import api
+from wulifang._util import cast_str, cast_text
 
 from .._copy_file import copy_file
 from ._context_work_file_dir import context_work_file_dir
@@ -23,13 +23,13 @@ class UploadPrecomp(api.InstancePlugin):
 
     def process(self, instance):
         # type: (api.Instance) -> None
-        nodes = nuke.allNodes(b"Precomp")
+        nodes = nuke.allNodes(cast_str("Precomp"))
         if not nodes:
             return
         ctx = instance.context
         dest = context_work_file_dir(ctx)
-        for n in nuke.allNodes(b"Precomp"):
-            src = cast.text(nuke.filename(n))
+        for n in nuke.allNodes(cast_str("Precomp")):
+            src = cast_text(nuke.filename(n))
             if src.startswith(dest.replace("\\", "/")):
                 continue
             n["file"].setValue(copy_file(src, dest))  # type: ignore

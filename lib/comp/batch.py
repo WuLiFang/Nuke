@@ -16,9 +16,9 @@ from jinja2 import Environment, FileSystemLoader
 
 from comp.__main__ import __absfile__
 from comp.config import IGNORE_EXISTED, MULTI_THREADING, START_MESSAGE, BatchCompConfig
-import cast_unknown as cast
-from wlf.decorators import run_with_memory_require
-from wlf.progress import CancelledError, progress
+import wulifang.vendor.cast_unknown as cast
+from wulifang.vendor.wlf.decorators import run_with_memory_require
+from wulifang.vendor.wlf.progress import CancelledError, progress
 
 LOGGER = logging.getLogger("com.wlf.batchcomp")
 

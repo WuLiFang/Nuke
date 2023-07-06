@@ -6,7 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 import re
 
-from pathlib2_unicode import Path
+from wulifang.vendor.pathlib2_unicode import Path
 
 LOGGER = logging.getLogger(__name__)
 

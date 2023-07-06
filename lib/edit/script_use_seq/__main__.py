@@ -9,9 +9,10 @@ import io
 import os
 import sys
 
-import cast_unknown as cast
 import nuke
-from pathlib2_unicode import Path
+
+import wulifang.vendor.cast_unknown as cast
+from wulifang.vendor.pathlib2_unicode import Path
 
 
 def main():

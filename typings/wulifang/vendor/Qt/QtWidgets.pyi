@@ -5,39 +5,27 @@
 Qt.QtWidgets
 """
 
-import typing
 from . import QtCore, QtGui
-
+from typing import Optional, overload, Text, List
+from wulifang._compat.str import Str
 class QAbstractButton(QWidget):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    clicked: ...
-    """
-    Signal
-    """
+    clicked: QtCore.Signal
 
-    pressed: ...
-    """
-    Signal
-    """
+    pressed: QtCore.Signal
 
-    released: ...
-    """
-    Signal
-    """
+    released: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    toggled: ...
-    """
-    Signal
-    """
+    toggled: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -230,20 +218,11 @@ class QAbstractItemDelegate(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    closeEditor: ...
-    """
-    Signal
-    """
+    closeEditor: QtCore.Signal
 
-    commitData: ...
-    """
-    Signal
-    """
+    commitData: QtCore.Signal
 
-    sizeHintChanged: ...
-    """
-    Signal
-    """
+    sizeHintChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -551,40 +530,22 @@ class QAbstractItemView(QAbstractScrollArea):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    clicked: ...
-    """
-    Signal
-    """
+    clicked: QtCore.Signal
 
-    doubleClicked: ...
-    """
-    Signal
-    """
+    doubleClicked: QtCore.Signal
 
-    entered: ...
-    """
-    Signal
-    """
+    entered: QtCore.Signal
 
-    pressed: ...
-    """
-    Signal
-    """
+    pressed: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    viewportEntered: ...
-    """
-    Signal
-    """
+    viewportEntered: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -1146,40 +1107,22 @@ class QAbstractSlider(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    actionTriggered: ...
-    """
-    Signal
-    """
+    actionTriggered: QtCore.Signal
 
-    rangeChanged: ...
-    """
-    Signal
-    """
+    rangeChanged: QtCore.Signal
 
-    sliderMoved: ...
-    """
-    Signal
-    """
+    sliderMoved: QtCore.Signal
 
-    sliderPressed: ...
-    """
-    Signal
-    """
+    sliderPressed: QtCore.Signal
 
-    sliderReleased: ...
-    """
-    Signal
-    """
+    sliderReleased: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    valueChanged: ...
-    """
-    Signal
-    """
+    valueChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -1346,10 +1289,7 @@ class QAbstractSpinBox(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    editingFinished: ...
-    """
-    Signal
-    """
+    editingFinished: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -1609,20 +1549,11 @@ class QAction(QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    changed: ...
-    """
-    Signal
-    """
+    changed: QtCore.Signal
 
-    hovered: ...
-    """
-    Signal
-    """
+    hovered: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -1638,19 +1569,19 @@ class QAction(QtCore.QObject):
     """
     Signal
     """
-    @typing.overload
-    def __init__(self, parent: typing.Optional[QtCore.QObject] = None, /): ...
-    @typing.overload
+    @overload
+    def __init__(self, parent: Optional[QtCore.QObject] = None, /): ...
+    @overload
     def __init__(
         self,
         icon: QtGui.QIcon,
-        text: typing.Text,
-        parent: typing.Optional[QtCore.QObject] = None,
+        text: Text,
+        parent: Optional[QtCore.QObject] = None,
         /,
     ): ...
-    @typing.overload
+    @overload
     def __init__(
-        self, text: typing.Text, parent: typing.Optional[QtCore.QObject] = None, /
+        self, text: Text, parent: Optional[QtCore.QObject] = None, /
     ):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -1809,7 +1740,7 @@ class QAction(QtCore.QObject):
     def statusTip(self, *args, **kwargs):
         """ """
         ...
-    def text(self) -> typing.Text:
+    def text(self) -> Text:
         """ """
         ...
     def toggle(self, *args, **kwargs):
@@ -1832,25 +1763,16 @@ class QActionGroup(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    hovered: ...
-    """
-    Signal
-    """
+    hovered: QtCore.Signal
 
-    selected: ...
-    """
-    Signal
-    """
+    selected: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    triggered: ...
-    """
-    Signal
-    """
+    triggered: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -1931,30 +1853,15 @@ class QApplication(QtCore.QCoreApplication):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    commitDataRequest: ...
-    """
-    Signal
-    """
+    commitDataRequest: QtCore.Signal
 
-    focusChanged: ...
-    """
-    Signal
-    """
+    focusChanged: QtCore.Signal
 
-    fontDatabaseChanged: ...
-    """
-    Signal
-    """
+    fontDatabaseChanged: QtCore.Signal
 
-    lastWindowClosed: ...
-    """
-    Signal
-    """
+    lastWindowClosed: QtCore.Signal
 
-    saveStateRequest: ...
-    """
-    Signal
-    """
+    saveStateRequest: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -2021,7 +1928,7 @@ class QApplication(QtCore.QCoreApplication):
         """ """
         ...
     @staticmethod
-    def exec_(*args, **kwargs):
+    def exec_() -> None:
         """ """
         ...
     @staticmethod
@@ -2193,7 +2100,7 @@ class QApplication(QtCore.QCoreApplication):
         """ """
         ...
     @staticmethod
-    def topLevelWidgets(*args, **kwargs):
+    def topLevelWidgets() -> list[QWidget]:
         """ """
         ...
     @staticmethod
@@ -2413,20 +2320,11 @@ class QButtonGroup(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    buttonClicked: ...
-    """
-    Signal
-    """
+    buttonClicked: QtCore.Signal
 
-    buttonPressed: ...
-    """
-    Signal
-    """
+    buttonPressed: QtCore.Signal
 
-    buttonReleased: ...
-    """
-    Signal
-    """
+    buttonReleased: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -2529,25 +2427,13 @@ class QCalendarWidget(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    clicked: ...
-    """
-    Signal
-    """
+    clicked: QtCore.Signal
 
-    currentPageChanged: ...
-    """
-    Signal
-    """
+    currentPageChanged: QtCore.Signal
 
-    selectionChanged: ...
-    """
-    Signal
-    """
+    selectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -2710,10 +2596,7 @@ class QCheckBox(QAbstractButton):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    stateChanged: ...
-    """
-    Signal
-    """
+    stateChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -2795,15 +2678,9 @@ class QColorDialog(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    colorSelected: ...
-    """
-    Signal
-    """
+    colorSelected: QtCore.Signal
 
-    currentColorChanged: ...
-    """
-    Signal
-    """
+    currentColorChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -2880,10 +2757,7 @@ class QColumnView(QAbstractItemView):
     <PySide.QtCore.QMetaObject object>
     """
 
-    updatePreviewWidget: ...
-    """
-    Signal
-    """
+    updatePreviewWidget: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -3036,35 +2910,20 @@ class QComboBox(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    currentIndexChanged: ...
-    """
-    Signal
-    """
+    currentIndexChanged: QtCore.Signal
 
-    editTextChanged: ...
-    """
-    Signal
-    """
+    editTextChanged: QtCore.Signal
 
-    highlighted: ...
-    """
-    Signal
-    """
+    highlighted: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    textChanged: ...
-    """
-    Signal
-    """
+    textChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -3439,15 +3298,9 @@ class QCompleter(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    highlighted: ...
-    """
-    Signal
-    """
+    highlighted: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -3579,10 +3432,7 @@ class QDataWidgetMapper(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentIndexChanged: ...
-    """
-    Signal
-    """
+    currentIndexChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -3749,25 +3599,16 @@ class QDateTimeEdit(QAbstractSpinBox):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    dateChanged: ...
-    """
-    Signal
-    """
+    dateChanged: QtCore.Signal
 
-    dateTimeChanged: ...
-    """
-    Signal
-    """
+    dateTimeChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    timeChanged: ...
-    """
-    Signal
-    """
+    timeChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -3961,25 +3802,16 @@ class QDesktopWidget(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    resized: ...
-    """
-    Signal
-    """
+    resized: QtCore.Signal
 
-    screenCountChanged: ...
-    """
-    Signal
-    """
+    screenCountChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    workAreaResized: ...
-    """
-    Signal
-    """
+    workAreaResized: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -4020,20 +3852,11 @@ class QDial(QAbstractSlider):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    dialMoved: ...
-    """
-    Signal
-    """
+    dialMoved: QtCore.Signal
 
-    dialPressed: ...
-    """
-    Signal
-    """
+    dialPressed: QtCore.Signal
 
-    dialReleased: ...
-    """
-    Signal
-    """
+    dialReleased: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -4116,20 +3939,11 @@ class QDialog(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    accepted: ...
-    """
-    Signal
-    """
+    accepted: QtCore.Signal
 
-    finished: ...
-    """
-    Signal
-    """
+    finished: QtCore.Signal
 
-    rejected: ...
-    """
-    Signal
-    """
+    rejected: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -4374,25 +4188,13 @@ class QDialogButtonBox(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    accepted: ...
-    """
-    Signal
-    """
+    accepted: QtCore.Signal
 
-    clicked: ...
-    """
-    Signal
-    """
+    clicked: QtCore.Signal
 
-    helpRequested: ...
-    """
-    Signal
-    """
+    helpRequested: QtCore.Signal
 
-    rejected: ...
-    """
-    Signal
-    """
+    rejected: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -4650,35 +4452,20 @@ class QDockWidget(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    allowedAreasChanged: ...
-    """
-    Signal
-    """
+    allowedAreasChanged: QtCore.Signal
 
-    dockLocationChanged: ...
-    """
-    Signal
-    """
+    dockLocationChanged: QtCore.Signal
 
-    featuresChanged: ...
-    """
-    Signal
-    """
+    featuresChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    topLevelChanged: ...
-    """
-    Signal
-    """
+    topLevelChanged: QtCore.Signal
 
-    visibilityChanged: ...
-    """
-    Signal
-    """
+    visibilityChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -4748,10 +4535,7 @@ class QDoubleSpinBox(QAbstractSpinBox):
     <PySide.QtCore.QMetaObject object>
     """
 
-    valueChanged: ...
-    """
-    Signal
-    """
+    valueChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -4973,37 +4757,28 @@ class QFileDialog(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentChanged: ...
-    """
-    Signal
-    """
+    currentChanged: QtCore.Signal
 
-    directoryEntered: ...
-    """
-    Signal
-    """
+    directoryEntered: QtCore.Signal
 
-    fileSelected: ...
-    """
-    Signal
-    """
+    fileSelected: QtCore.Signal
 
-    filesSelected: ...
-    """
-    Signal
-    """
+    filesSelected: QtCore.Signal
 
-    filterSelected: ...
-    """
-    Signal
-    """
+    filterSelected: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
     @staticmethod
-    def getExistingDirectory(*args, **kwargs):
+    def getExistingDirectory(
+        parent: Optional[QWidget] = ...,
+        caption: Str =...,
+        dir:str =...,
+        options:int = ...,
+
+        ) -> str:
         """ """
         ...
     @staticmethod
@@ -5265,20 +5040,11 @@ class QFileSystemModel(PySide.QtCore.QAbstractItemModel):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    directoryLoaded: ...
-    """
-    Signal
-    """
+    directoryLoaded: QtCore.Signal
 
-    fileRenamed: ...
-    """
-    Signal
-    """
+    fileRenamed: QtCore.Signal
 
-    rootPathChanged: ...
-    """
-    Signal
-    """
+    rootPathChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -5503,10 +5269,7 @@ class QFontComboBox(QComboBox):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentFontChanged: ...
-    """
-    Signal
-    """
+    currentFontChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -5568,15 +5331,9 @@ class QFontDialog(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentFontChanged: ...
-    """
-    Signal
-    """
+    currentFontChanged: QtCore.Signal
 
-    fontSelected: ...
-    """
-    Signal
-    """
+    fontSelected: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -6225,15 +5982,9 @@ class QGraphicsBlurEffect(QGraphicsEffect):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    blurHintsChanged: ...
-    """
-    Signal
-    """
+    blurHintsChanged: QtCore.Signal
 
-    blurRadiusChanged: ...
-    """
-    Signal
-    """
+    blurRadiusChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -6270,20 +6021,14 @@ class QGraphicsColorizeEffect(QGraphicsEffect):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    colorChanged: ...
-    """
-    Signal
-    """
+    colorChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    strengthChanged: ...
-    """
-    Signal
-    """
+    strengthChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -6312,20 +6057,11 @@ class QGraphicsDropShadowEffect(QGraphicsEffect):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    blurRadiusChanged: ...
-    """
-    Signal
-    """
+    blurRadiusChanged: QtCore.Signal
 
-    colorChanged: ...
-    """
-    Signal
-    """
+    colorChanged: QtCore.Signal
 
-    offsetChanged: ...
-    """
-    Signal
-    """
+    offsetChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -6429,10 +6165,7 @@ class QGraphicsEffect(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    enabledChanged: ...
-    """
-    Signal
-    """
+    enabledChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -7860,70 +7593,34 @@ class QGraphicsObject(PySide.QtCore.QObject, QGraphicsItem):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    childrenChanged: ...
-    """
-    Signal
-    """
+    childrenChanged: QtCore.Signal
 
-    enabledChanged: ...
-    """
-    Signal
-    """
+    enabledChanged: QtCore.Signal
 
-    heightChanged: ...
-    """
-    Signal
-    """
+    heightChanged: QtCore.Signal
 
-    opacityChanged: ...
-    """
-    Signal
-    """
+    opacityChanged: QtCore.Signal
 
-    parentChanged: ...
-    """
-    Signal
-    """
+    parentChanged: QtCore.Signal
 
-    rotationChanged: ...
-    """
-    Signal
-    """
+    rotationChanged: QtCore.Signal
 
-    scaleChanged: ...
-    """
-    Signal
-    """
+    scaleChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    visibleChanged: ...
-    """
-    Signal
-    """
+    visibleChanged: QtCore.Signal
 
-    widthChanged: ...
-    """
-    Signal
-    """
+    widthChanged: QtCore.Signal
 
-    xChanged: ...
-    """
-    Signal
-    """
+    xChanged: QtCore.Signal
 
-    yChanged: ...
-    """
-    Signal
-    """
+    yChanged: QtCore.Signal
 
-    zChanged: ...
-    """
-    Signal
-    """
+    zChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -7946,15 +7643,9 @@ class QGraphicsOpacityEffect(QGraphicsEffect):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    opacityChanged: ...
-    """
-    Signal
-    """
+    opacityChanged: QtCore.Signal
 
-    opacityMaskChanged: ...
-    """
-    Signal
-    """
+    opacityMaskChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -8321,20 +8012,11 @@ class QGraphicsRotation(QGraphicsTransform):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    angleChanged: ...
-    """
-    Signal
-    """
+    angleChanged: QtCore.Signal
 
-    axisChanged: ...
-    """
-    Signal
-    """
+    axisChanged: QtCore.Signal
 
-    originChanged: ...
-    """
-    Signal
-    """
+    originChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -8374,35 +8056,20 @@ class QGraphicsScale(QGraphicsTransform):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    originChanged: ...
-    """
-    Signal
-    """
+    originChanged: QtCore.Signal
 
-    scaleChanged: ...
-    """
-    Signal
-    """
+    scaleChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    xScaleChanged: ...
-    """
-    Signal
-    """
+    xScaleChanged: QtCore.Signal
 
-    yScaleChanged: ...
-    """
-    Signal
-    """
+    yScaleChanged: QtCore.Signal
 
-    zScaleChanged: ...
-    """
-    Signal
-    """
+    zScaleChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -8485,20 +8152,11 @@ class QGraphicsScene(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    changed: ...
-    """
-    Signal
-    """
+    changed: QtCore.Signal
 
-    sceneRectChanged: ...
-    """
-    Signal
-    """
+    sceneRectChanged: QtCore.Signal
 
-    selectionChanged: ...
-    """
-    Signal
-    """
+    selectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -9221,15 +8879,9 @@ class QGraphicsTextItem(QGraphicsObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    linkActivated: ...
-    """
-    Signal
-    """
+    linkActivated: QtCore.Signal
 
-    linkHovered: ...
-    """
-    Signal
-    """
+    linkHovered: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -9793,15 +9445,9 @@ class QGraphicsWidget(QGraphicsObject, QGraphicsLayoutItem):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    geometryChanged: ...
-    """
-    Signal
-    """
+    geometryChanged: QtCore.Signal
 
-    layoutChanged: ...
-    """
-    Signal
-    """
+    layoutChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -10183,20 +9829,14 @@ class QGroupBox(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    clicked: ...
-    """
-    Signal
-    """
+    clicked: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    toggled: ...
-    """
-    Signal
-    """
+    toggled: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -10316,60 +9956,27 @@ class QHeaderView(QAbstractItemView):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    geometriesChanged: ...
-    """
-    Signal
-    """
+    geometriesChanged: QtCore.Signal
 
-    sectionAutoResize: ...
-    """
-    Signal
-    """
+    sectionAutoResize: QtCore.Signal
 
-    sectionClicked: ...
-    """
-    Signal
-    """
+    sectionClicked: QtCore.Signal
 
-    sectionCountChanged: ...
-    """
-    Signal
-    """
+    sectionCountChanged: QtCore.Signal
 
-    sectionDoubleClicked: ...
-    """
-    Signal
-    """
+    sectionDoubleClicked: QtCore.Signal
 
-    sectionEntered: ...
-    """
-    Signal
-    """
+    sectionEntered: QtCore.Signal
 
-    sectionHandleDoubleClicked: ...
-    """
-    Signal
-    """
+    sectionHandleDoubleClicked: QtCore.Signal
 
-    sectionMoved: ...
-    """
-    Signal
-    """
+    sectionMoved: QtCore.Signal
 
-    sectionPressed: ...
-    """
-    Signal
-    """
+    sectionPressed: QtCore.Signal
 
-    sectionResized: ...
-    """
-    Signal
-    """
+    sectionResized: QtCore.Signal
 
-    sortIndicatorChanged: ...
-    """
-    Signal
-    """
+    sortIndicatorChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -10677,40 +10284,22 @@ class QInputDialog(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    doubleValueChanged: ...
-    """
-    Signal
-    """
+    doubleValueChanged: QtCore.Signal
 
-    doubleValueSelected: ...
-    """
-    Signal
-    """
+    doubleValueSelected: QtCore.Signal
 
-    intValueChanged: ...
-    """
-    Signal
-    """
+    intValueChanged: QtCore.Signal
 
-    intValueSelected: ...
-    """
-    Signal
-    """
+    intValueSelected: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    textValueChanged: ...
-    """
-    Signal
-    """
+    textValueChanged: QtCore.Signal
 
-    textValueSelected: ...
-    """
-    Signal
-    """
+    textValueSelected: QtCore.Signal
     @staticmethod
     def getDouble(*args, **kwargs):
         """ """
@@ -11070,10 +10659,7 @@ class QLCDNumber(QFrame):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    overflow: ...
-    """
-    Signal
-    """
+    overflow: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -11155,15 +10741,9 @@ class QLabel(QFrame):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    linkActivated: ...
-    """
-    Signal
-    """
+    linkActivated: QtCore.Signal
 
-    linkHovered: ...
-    """
-    Signal
-    """
+    linkHovered: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -11583,45 +11163,24 @@ class QLineEdit(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    cursorPositionChanged: ...
-    """
-    Signal
-    """
+    cursorPositionChanged: QtCore.Signal
 
-    editingFinished: ...
-    """
-    Signal
-    """
+    editingFinished: QtCore.Signal
 
-    lostFocus: ...
-    """
-    Signal
-    """
+    lostFocus: QtCore.Signal
 
-    returnPressed: ...
-    """
-    Signal
-    """
+    returnPressed: QtCore.Signal
 
-    selectionChanged: ...
-    """
-    Signal
-    """
+    selectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    textChanged: ...
-    """
-    Signal
-    """
+    textChanged: QtCore.Signal
 
-    textEdited: ...
-    """
-    Signal
-    """
+    textEdited: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -11840,7 +11399,7 @@ class QLineEdit(QWidget):
     def setSelection(self, *args, **kwargs):
         """ """
         ...
-    def setText(self, *args, **kwargs):
+    def setText(self, s: Str, /) -> None:
         """ """
         ...
     def setTextMargins(self, *args, **kwargs):
@@ -11852,7 +11411,7 @@ class QLineEdit(QWidget):
     def sizeHint(self, *args, **kwargs):
         """ """
         ...
-    def text(self, *args, **kwargs):
+    def text(self) -> Str:
         """ """
         ...
     def textMargins(self, *args, **kwargs):
@@ -11941,10 +11500,7 @@ class QListView(QAbstractItemView):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    indexesMoved: ...
-    """
-    Signal
-    """
+    indexesMoved: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -12161,55 +11717,25 @@ class QListWidget(QListView):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentItemChanged: ...
-    """
-    Signal
-    """
+    currentItemChanged: QtCore.Signal
 
-    currentRowChanged: ...
-    """
-    Signal
-    """
+    currentRowChanged: QtCore.Signal
 
-    currentTextChanged: ...
-    """
-    Signal
-    """
+    currentTextChanged: QtCore.Signal
 
-    itemActivated: ...
-    """
-    Signal
-    """
+    itemActivated: QtCore.Signal
 
-    itemChanged: ...
-    """
-    Signal
-    """
+    itemChanged: QtCore.Signal
 
-    itemClicked: ...
-    """
-    Signal
-    """
+    itemClicked: QtCore.Signal
 
-    itemDoubleClicked: ...
-    """
-    Signal
-    """
+    itemDoubleClicked: QtCore.Signal
 
-    itemEntered: ...
-    """
-    Signal
-    """
+    itemEntered: QtCore.Signal
 
-    itemPressed: ...
-    """
-    Signal
-    """
+    itemPressed: QtCore.Signal
 
-    itemSelectionChanged: ...
-    """
-    Signal
-    """
+    itemSelectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -12552,21 +12078,15 @@ class QMainWindow(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    iconSizeChanged: ...
-    """
-    Signal
-    """
+    iconSizeChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    toolButtonStyleChanged: ...
-    """
-    Signal
-    """
-    def __init__(self, *args, **kwargs):
+    toolButtonStyleChanged: QtCore.Signal
+    def __init__(self, parent: Optional[QWidget], /):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -12649,8 +12169,10 @@ class QMainWindow(QWidget):
     def setAnimated(self, *args, **kwargs):
         """ """
         ...
-    def setCentralWidget(self, *args, **kwargs):
-        """ """
+    def setCentralWidget(self, widget: QWidget) -> None:
+        """
+        Sets the given widget to be the main window's central widget.
+        """
         ...
     def setCorner(self, *args, **kwargs):
         """ """
@@ -12691,7 +12213,7 @@ class QMainWindow(QWidget):
     def splitDockWidget(self, *args, **kwargs):
         """ """
         ...
-    def statusBar(self, *args, **kwargs):
+    def statusBar(self) -> QStatusBar:
         """ """
         ...
     def tabPosition(self, *args, **kwargs):
@@ -12777,10 +12299,7 @@ class QMdiArea(QAbstractScrollArea):
     <PySide.QtCore.QMetaObject object>
     """
 
-    subWindowActivated: ...
-    """
-    Signal
-    """
+    subWindowActivated: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -12950,20 +12469,14 @@ class QMdiSubWindow(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    aboutToActivate: ...
-    """
-    Signal
-    """
+    aboutToActivate: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    windowStateChanged: ...
-    """
-    Signal
-    """
+    windowStateChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -13134,7 +12647,7 @@ class QMenu(QWidget):
         x.__getattribute__('name') <==> x.name
         """
         ...
-    def __init__(self, title: typing.Text, parent = typing.Optional[QWidget] = ...):
+    def __init__(self, title: Text, parent :Optional[QWidget] = ...):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
         """
@@ -13151,33 +12664,33 @@ class QMenu(QWidget):
     def activeAction(self, *args, **kwargs):
         """ """
         ...
-    @typing.overload
-    def addAction(self, text: typing.Text) -> QAction: ...
-    @typing.overload
+    @overload
+    def addAction(self, text: Text) -> QAction: ...
+    @overload
     def addAction(
         self,
-        text: typing.Text,
+        text: Text,
         receiver: QtCore.Signal.Receiver,
-        member: typing.Text = ...,
+        member: Text = ...,
     ) -> QAction: ...
-    @typing.overload
+    @overload
     def addAction(
         self,
         icon: QtGui.QIcon,
-        text: typing.Text,
+        text: Text,
         receiver: QtCore.Signal.Receiver,
-        member: typing.Text = ...,
+        member: Text = ...,
     ) -> QAction: ...
-    @typing.overload
+    @overload
     def addAction(self, action: QAction) -> QAction:
         """ """
         ...
-    @typing.overload
-    def addMenu(self, title: typing.Text) -> QMenu: ...
-    @typing.overload
+    @overload
+    def addMenu(self, title: Text) -> QMenu: ...
+    @overload
     def addMenu(self, menu: QMenu) -> QMenu: ...
-    @typing.overload
-    def addMenu(self, icon: QtGui.QIcon, title: typing.Text) -> QMenu:
+    @overload
+    def addMenu(self, icon: QtGui.QIcon, title: Text) -> QMenu:
         """ """
         ...
     def addSeparator(self, *args, **kwargs):
@@ -13296,30 +12809,18 @@ class QMenuBar(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    highlighted: ...
-    """
-    Signal
-    """
+    highlighted: QtCore.Signal
 
-    hovered: ...
-    """
-    Signal
-    """
+    hovered: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    triggered: ...
-    """
-    Signal
-    """
+    triggered: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -13340,12 +12841,12 @@ class QMenuBar(QWidget):
     def addAction(self, *args, **kwargs):
         """ """
         ...
-    @typing.overload
-    def addMenu(self, title: typing.Text) -> QMenu: ...
-    @typing.overload
+    @overload
+    def addMenu(self, title: Text) -> QMenu: ...
+    @overload
     def addMenu(self, menu: QMenu) -> QMenu: ...
-    @typing.overload
-    def addMenu(self, icon: QtGui.QIcon, title: typing.Text) -> QMenu:
+    @overload
+    def addMenu(self, icon: QtGui.QIcon, title: Text) -> QMenu:
         """ """
         ...
     def addSeparator(self, *args, **kwargs):
@@ -13601,15 +13102,15 @@ class QMessageBox(QDialog):
     """
     """
 
-    StandardButton: ...
-    """
-    <type 'PySide.QtGui.QMessageBox.StandardButton'>
-    """
+    class StandardButton:
+        """
+        <type 'PySide.QtGui.QMessageBox.StandardButton'>
+        """
 
-    StandardButtons: ...
-    """
-    <type 'StandardButtons'>
-    """
+    class StandardButtons:
+        """
+        <type 'StandardButtons'>
+        """
 
     Warning: ... = PySide.QtGui.QMessageBox.Icon.Warning
     """
@@ -13636,10 +13137,7 @@ class QMessageBox(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    buttonClicked: ...
-    """
-    Signal
-    """
+    buttonClicked: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -13657,8 +13155,8 @@ class QMessageBox(QDialog):
     def critical(
 
              parent: QWidget,
-        title: typing.Text,
-        text: typing.Text,
+        title: Text,
+        text: Text,
         buttons: StandardButtons = ...,
         defaultButton: StandardButton = ...,
     ) -> StandardButton:
@@ -13667,8 +13165,8 @@ class QMessageBox(QDialog):
     @staticmethod
     def information(
         parent: QWidget,
-        title: typing.Text,
-        text: typing.Text,
+        title: Text,
+        text: Text,
         buttons: StandardButtons = ...,
         defaultButton: StandardButton = ...,
     ) -> StandardButton:
@@ -13981,7 +13479,7 @@ class QPinchGesture(QGesture):
         ...
     ...
 
-class QPlainTextDocumentLayout(QtCore.QAbstractTextDocumentLayout):
+class QPlainTextDocumentLayout(QtGui.QAbstractTextDocumentLayout):
     __new__: ...
     """
     T.__new__(S, ...) -> a new object with type S, a subtype of T
@@ -14050,55 +13548,28 @@ class QPlainTextEdit(QAbstractScrollArea):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    blockCountChanged: ...
-    """
-    Signal
-    """
+    blockCountChanged: QtCore.Signal
 
-    copyAvailable: ...
-    """
-    Signal
-    """
+    copyAvailable: QtCore.Signal
 
-    cursorPositionChanged: ...
-    """
-    Signal
-    """
+    cursorPositionChanged: QtCore.Signal
 
-    modificationChanged: ...
-    """
-    Signal
-    """
+    modificationChanged: QtCore.Signal
 
-    redoAvailable: ...
-    """
-    Signal
-    """
+    redoAvailable: QtCore.Signal
 
-    selectionChanged: ...
-    """
-    Signal
-    """
+    selectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    textChanged: ...
-    """
-    Signal
-    """
+    textChanged: QtCore.Signal
 
-    undoAvailable: ...
-    """
-    Signal
-    """
+    undoAvailable: QtCore.Signal
 
-    updateRequest: ...
-    """
-    Signal
-    """
+    updateRequest: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -14403,10 +13874,7 @@ class QProgressBar(QWidget):
     <PySide.QtCore.QMetaObject object>
     """
 
-    valueChanged: ...
-    """
-    Signal
-    """
+    valueChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -14498,10 +13966,7 @@ class QProgressDialog(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    canceled: ...
-    """
-    Signal
-    """
+    canceled: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -14885,15 +14350,9 @@ class QShortcut(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    activatedAmbiguously: ...
-    """
-    Signal
-    """
+    activatedAmbiguously: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -15367,10 +14826,7 @@ class QSpinBox(QAbstractSpinBox):
     <PySide.QtCore.QMetaObject object>
     """
 
-    valueChanged: ...
-    """
-    Signal
-    """
+    valueChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -15441,10 +14897,7 @@ class QSplashScreen(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    messageChanged: ...
-    """
-    Signal
-    """
+    messageChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -15487,10 +14940,7 @@ class QSplitter(QFrame):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    splitterMoved: ...
-    """
-    Signal
-    """
+    splitterMoved: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -15697,20 +15147,14 @@ class QStackedLayout(QLayout):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentChanged: ...
-    """
-    Signal
-    """
+    currentChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    widgetRemoved: ...
-    """
-    Signal
-    """
+    widgetRemoved: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -15772,20 +15216,14 @@ class QStackedWidget(QFrame):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentChanged: ...
-    """
-    Signal
-    """
+    currentChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    widgetRemoved: ...
-    """
-    Signal
-    """
+    widgetRemoved: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -15806,7 +15244,7 @@ class QStackedWidget(QFrame):
     def event(self, *args, **kwargs):
         """ """
         ...
-    def indexOf(self, *args, **kwargs):
+    def indexOf(self, item: QWidget, /) -> int:
         """ """
         ...
     def insertWidget(self, *args, **kwargs):
@@ -15832,10 +15270,7 @@ class QStatusBar(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    messageChanged: ...
-    """
-    Signal
-    """
+    messageChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -15891,12 +15326,18 @@ class QStatusBar(QWidget):
     def showEvent(self, *args, **kwargs):
         """ """
         ...
-    def showMessage(self, *args, **kwargs):
+    def showMessage(self, s: Str,/) ->None:
         """ """
         ...
     ...
 
 class QStyle(PySide.QtCore.QObject):
+    class StandardPixmap(int):
+        """
+        <type 'PySide.QtGui.QStyle.StandardPixmap'>
+        """
+        name: Str
+
     CC_ComboBox: ... = PySide.QtGui.QStyle.ComplexControl.CC_ComboBox
     """
     """
@@ -18044,51 +17485,51 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StyleHint.SH_Wo...
     """
 
-    SP_ArrowBack: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ArrowBack
+    SP_ArrowBack: StandardPixmap
     """
     """
 
-    SP_ArrowDown: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ArrowDown
+    SP_ArrowDown: StandardPixmap
     """
     """
 
-    SP_ArrowForward: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ArrowForward
+    SP_ArrowForward: StandardPixmap
     """
     """
 
-    SP_ArrowLeft: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ArrowLeft
+    SP_ArrowLeft: StandardPixmap
     """
     """
 
-    SP_ArrowRight: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ArrowRight
+    SP_ArrowRight: StandardPixmap
     """
     """
 
-    SP_ArrowUp: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ArrowUp
+    SP_ArrowUp: StandardPixmap
     """
     """
 
-    SP_BrowserReload: ... = PySide.QtGui.QStyle.StandardPixmap.SP_BrowserReload
+    SP_BrowserReload: StandardPixmap
     """
     """
 
-    SP_BrowserStop: ... = PySide.QtGui.QStyle.StandardPixmap.SP_BrowserStop
+    SP_BrowserStop: StandardPixmap
     """
     """
 
-    SP_CommandLink: ... = PySide.QtGui.QStyle.StandardPixmap.SP_CommandLink
+    SP_CommandLink: StandardPixmap
     """
     """
 
-    SP_ComputerIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_ComputerIcon
+    SP_ComputerIcon: StandardPixmap
     """
     """
 
-    SP_CustomBase: ... = PySide.QtGui.QStyle.StandardPixmap.SP_CustomBase
+    SP_CustomBase: StandardPixmap
     """
     """
 
-    SP_DesktopIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DesktopIcon
+    SP_DesktopIcon: StandardPixmap
     """
     """
 
@@ -18147,23 +17588,23 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StandardPixmap.SP_DialogYesBu...
     """
 
-    SP_DirClosedIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DirClosedIcon
+    SP_DirClosedIcon: StandardPixmap
     """
     """
 
-    SP_DirHomeIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DirHomeIcon
+    SP_DirHomeIcon: StandardPixmap
     """
     """
 
-    SP_DirIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DirIcon
+    SP_DirIcon: StandardPixmap
     """
     """
 
-    SP_DirLinkIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DirLinkIcon
+    SP_DirLinkIcon: StandardPixmap
     """
     """
 
-    SP_DirOpenIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DirOpenIcon
+    SP_DirOpenIcon: StandardPixmap
     """
     """
 
@@ -18172,23 +17613,23 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StandardPixmap.SP_DockW...
     """
 
-    SP_DriveCDIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DriveCDIcon
+    SP_DriveCDIcon: StandardPixmap
     """
     """
 
-    SP_DriveDVDIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DriveDVDIcon
+    SP_DriveDVDIcon: StandardPixmap
     """
     """
 
-    SP_DriveFDIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DriveFDIcon
+    SP_DriveFDIcon: StandardPixmap
     """
     """
 
-    SP_DriveHDIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DriveHDIcon
+    SP_DriveHDIcon: StandardPixmap
     """
     """
 
-    SP_DriveNetIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_DriveNetIcon
+    SP_DriveNetIcon: StandardPixmap
     """
     """
 
@@ -18207,7 +17648,7 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StandardPixmap.SP_File...
     """
 
-    SP_FileDialogEnd: ... = PySide.QtGui.QStyle.StandardPixmap.SP_FileDialogEnd
+    SP_FileDialogEnd: StandardPixmap
     """
     """
 
@@ -18236,19 +17677,19 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StandardPixmap.SP_FileDial...
     """
 
-    SP_FileIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_FileIcon
+    SP_FileIcon: StandardPixmap
     """
     """
 
-    SP_FileLinkIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_FileLinkIcon
+    SP_FileLinkIcon: StandardPixmap
     """
     """
 
-    SP_MediaPause: ... = PySide.QtGui.QStyle.StandardPixmap.SP_MediaPause
+    SP_MediaPause: StandardPixmap
     """
     """
 
-    SP_MediaPlay: ... = PySide.QtGui.QStyle.StandardPixmap.SP_MediaPlay
+    SP_MediaPlay: StandardPixmap
     """
     """
 
@@ -18272,11 +17713,11 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StandardPixmap.SP_MediaSkipF...
     """
 
-    SP_MediaStop: ... = PySide.QtGui.QStyle.StandardPixmap.SP_MediaStop
+    SP_MediaStop: StandardPixmap
     """
     """
 
-    SP_MediaVolume: ... = PySide.QtGui.QStyle.StandardPixmap.SP_MediaVolume
+    SP_MediaVolume: StandardPixmap
     """
     """
 
@@ -18355,18 +17796,14 @@ class QStyle(PySide.QtCore.QObject):
     PySide.QtGui.QStyle.StandardPixmap...
     """
 
-    SP_TrashIcon: ... = PySide.QtGui.QStyle.StandardPixmap.SP_TrashIcon
+    SP_TrashIcon: StandardPixmap
     """
     """
 
-    SP_VistaShield: ... = PySide.QtGui.QStyle.StandardPixmap.SP_VistaShield
+    SP_VistaShield: StandardPixmap
     """
     """
 
-    StandardPixmap: ...
-    """
-    <type 'PySide.QtGui.QStyle.StandardPixmap'>
-    """
 
     State: ...
     """
@@ -18598,7 +18035,7 @@ class QStyle(PySide.QtCore.QObject):
     def sizeFromContents(self, *args, **kwargs):
         """ """
         ...
-    def standardIcon(self, *args, **kwargs):
+    def standardIcon(self, _args1: StandardPixmap) -> QtGui.QIcon:
         """ """
         ...
     def standardIconImplementation(self, *args, **kwargs):
@@ -20128,15 +19565,9 @@ class QSystemTrayIcon(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activated: ...
-    """
-    Signal
-    """
+    activated: QtCore.Signal
 
-    messageClicked: ...
-    """
-    Signal
-    """
+    messageClicked: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -20190,8 +19621,8 @@ class QSystemTrayIcon(PySide.QtCore.QObject):
         ...
     def showMessage(
         self,
-        title: typing.Text,
-        msg: typing.Text,
+        title: Text,
+        msg: Text,
         icon: QSystemTrayIcon.MessageIcon = QSystemTrayIcon.MessageIcon.Information, 
         msecs: int=10000,
     ) -> None:
@@ -20276,30 +19707,18 @@ class QTabBar(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentChanged: ...
-    """
-    Signal
-    """
+    currentChanged: QtCore.Signal
 
-    selected: ...
-    """
-    Signal
-    """
+    selected: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    tabCloseRequested: ...
-    """
-    Signal
-    """
+    tabCloseRequested: QtCore.Signal
 
-    tabMoved: ...
-    """
-    Signal
-    """
+    tabMoved: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -20380,8 +19799,7 @@ class QTabBar(QWidget):
     def selectionBehaviorOnRemove(self, *args, **kwargs):
         """ """
         ...
-    def setCurrentIndex(self, *args, **kwargs):
-        """ """
+    def setCurrentIndex(self, i: int, /) -> None:
         ...
     def setDocumentMode(self, *args, **kwargs):
         """ """
@@ -20536,25 +19954,16 @@ class QTabWidget(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentChanged: ...
-    """
-    Signal
-    """
+    currentChanged: QtCore.Signal
 
-    selected: ...
-    """
-    Signal
-    """
+    selected: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    tabCloseRequested: ...
-    """
-    Signal
-    """
+    tabCloseRequested: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -20960,80 +20369,35 @@ class QTableWidget(QTableView):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    cellActivated: ...
-    """
-    Signal
-    """
+    cellActivated: QtCore.Signal
 
-    cellChanged: ...
-    """
-    Signal
-    """
+    cellChanged: QtCore.Signal
 
-    cellClicked: ...
-    """
-    Signal
-    """
+    cellClicked: QtCore.Signal
 
-    cellDoubleClicked: ...
-    """
-    Signal
-    """
+    cellDoubleClicked: QtCore.Signal
 
-    cellEntered: ...
-    """
-    Signal
-    """
+    cellEntered: QtCore.Signal
 
-    cellPressed: ...
-    """
-    Signal
-    """
+    cellPressed: QtCore.Signal
 
-    currentCellChanged: ...
-    """
-    Signal
-    """
+    currentCellChanged: QtCore.Signal
 
-    currentItemChanged: ...
-    """
-    Signal
-    """
+    currentItemChanged: QtCore.Signal
 
-    itemActivated: ...
-    """
-    Signal
-    """
+    itemActivated: QtCore.Signal
 
-    itemChanged: ...
-    """
-    Signal
-    """
+    itemChanged: QtCore.Signal
 
-    itemClicked: ...
-    """
-    Signal
-    """
+    itemClicked: QtCore.Signal
 
-    itemDoubleClicked: ...
-    """
-    Signal
-    """
+    itemDoubleClicked: QtCore.Signal
 
-    itemEntered: ...
-    """
-    Signal
-    """
+    itemEntered: QtCore.Signal
 
-    itemPressed: ...
-    """
-    Signal
-    """
+    itemPressed: QtCore.Signal
 
-    itemSelectionChanged: ...
-    """
-    Signal
-    """
+    itemSelectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -21493,35 +20857,17 @@ class QTextBrowser(QTextEdit):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    anchorClicked: ...
-    """
-    Signal
-    """
+    anchorClicked: QtCore.Signal
 
-    backwardAvailable: ...
-    """
-    Signal
-    """
+    backwardAvailable: QtCore.Signal
 
-    forwardAvailable: ...
-    """
-    Signal
-    """
+    forwardAvailable: QtCore.Signal
 
-    highlighted: ...
-    """
-    Signal
-    """
+    highlighted: QtCore.Signal
 
-    historyChanged: ...
-    """
-    Signal
-    """
+    historyChanged: QtCore.Signal
 
-    sourceChanged: ...
-    """
-    Signal
-    """
+    sourceChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -21674,55 +21020,29 @@ class QTextEdit(QAbstractScrollArea):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    copyAvailable: ...
-    """
-    Signal
-    """
+    copyAvailable: QtCore.Signal
 
-    currentCharFormatChanged: ...
-    """
-    Signal
-    """
+    currentCharFormatChanged: QtCore.Signal
 
-    currentColorChanged: ...
-    """
-    Signal
-    """
+    currentColorChanged: QtCore.Signal
 
-    currentFontChanged: ...
-    """
-    Signal
-    """
+    currentFontChanged: QtCore.Signal
 
-    cursorPositionChanged: ...
-    """
-    Signal
-    """
+    cursorPositionChanged: QtCore.Signal
 
-    redoAvailable: ...
-    """
-    Signal
-    """
+    redoAvailable: QtCore.Signal
 
-    selectionChanged: ...
-    """
-    Signal
-    """
+    selectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    textChanged: ...
-    """
-    Signal
-    """
+    textChanged: QtCore.Signal
 
-    undoAvailable: ...
-    """
-    Signal
-    """
+
+    undoAvailable: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -21986,7 +21306,7 @@ class QTextEdit(QAbstractScrollArea):
     def setTabStopWidth(self, *args, **kwargs):
         """ """
         ...
-    def setText(self, *args, **kwargs):
+    def setText(self, s: Str, /) -> None:
         """ """
         ...
     def setTextBackgroundColor(self, *args, **kwargs):
@@ -22034,7 +21354,7 @@ class QTextEdit(QAbstractScrollArea):
     def toHtml(self, *args, **kwargs):
         """ """
         ...
-    def toPlainText(self, *args, **kwargs):
+    def toPlainText(self ) -> Str:
         """ """
         ...
     def undo(self, *args, **kwargs):
@@ -22077,50 +21397,26 @@ class QToolBar(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    actionTriggered: ...
-    """
-    Signal
-    """
+    actionTriggered: QtCore.Signal
 
-    allowedAreasChanged: ...
-    """
-    Signal
-    """
+    allowedAreasChanged: QtCore.Signal
 
-    iconSizeChanged: ...
-    """
-    Signal
-    """
+    iconSizeChanged: QtCore.Signal
 
-    movableChanged: ...
-    """
-    Signal
-    """
+    movableChanged: QtCore.Signal
 
-    orientationChanged: ...
-    """
-    Signal
-    """
+    orientationChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    toolButtonStyleChanged: ...
-    """
-    Signal
-    """
+    toolButtonStyleChanged: QtCore.Signal
 
-    topLevelChanged: ...
-    """
-    Signal
-    """
+    topLevelChanged: QtCore.Signal
 
-    visibilityChanged: ...
-    """
-    Signal
-    """
+    visibilityChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -22227,10 +21523,7 @@ class QToolBox(QFrame):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentChanged: ...
-    """
-    Signal
-    """
+    currentChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -22343,10 +21636,7 @@ class QToolButton(QAbstractButton):
     <PySide.QtCore.QMetaObject object>
     """
 
-    triggered: ...
-    """
-    Signal
-    """
+    triggered: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -22476,15 +21766,9 @@ class QTreeView(QAbstractItemView):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    collapsed: ...
-    """
-    Signal
-    """
+    collapsed: QtCore.Signal
 
-    expanded: ...
-    """
-    Signal
-    """
+    expanded: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -22779,55 +22063,25 @@ class QTreeWidget(QTreeView):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentItemChanged: ...
-    """
-    Signal
-    """
+    currentItemChanged: QtCore.Signal
 
-    itemActivated: ...
-    """
-    Signal
-    """
+    itemActivated: QtCore.Signal
 
-    itemChanged: ...
-    """
-    Signal
-    """
+    itemChanged: QtCore.Signal
 
-    itemClicked: ...
-    """
-    Signal
-    """
+    itemClicked: QtCore.Signal
 
-    itemCollapsed: ...
-    """
-    Signal
-    """
+    itemCollapsed: QtCore.Signal
 
-    itemDoubleClicked: ...
-    """
-    Signal
-    """
+    itemDoubleClicked: QtCore.Signal
 
-    itemEntered: ...
-    """
-    Signal
-    """
+    itemEntered: QtCore.Signal
 
-    itemExpanded: ...
-    """
-    Signal
-    """
+    itemExpanded: QtCore.Signal
 
-    itemPressed: ...
-    """
-    Signal
-    """
+    itemPressed: QtCore.Signal
 
-    itemSelectionChanged: ...
-    """
-    Signal
-    """
+    itemSelectionChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -23464,45 +22718,24 @@ class QUndoGroup(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    activeStackChanged: ...
-    """
-    Signal
-    """
+    activeStackChanged: QtCore.Signal
 
-    canRedoChanged: ...
-    """
-    Signal
-    """
+    canRedoChanged: QtCore.Signal
 
-    canUndoChanged: ...
-    """
-    Signal
-    """
+    canUndoChanged: QtCore.Signal
 
-    cleanChanged: ...
-    """
-    Signal
-    """
+    cleanChanged: QtCore.Signal
 
-    indexChanged: ...
-    """
-    Signal
-    """
+    indexChanged: QtCore.Signal
 
-    redoTextChanged: ...
-    """
-    Signal
-    """
+    redoTextChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    undoTextChanged: ...
-    """
-    Signal
-    """
+    undoTextChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -23558,40 +22791,22 @@ class QUndoStack(PySide.QtCore.QObject):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    canRedoChanged: ...
-    """
-    Signal
-    """
+    canRedoChanged: QtCore.Signal
 
-    canUndoChanged: ...
-    """
-    Signal
-    """
+    canUndoChanged: QtCore.Signal
 
-    cleanChanged: ...
-    """
-    Signal
-    """
+    cleanChanged: QtCore.Signal
 
-    indexChanged: ...
-    """
-    Signal
-    """
+    indexChanged: QtCore.Signal
 
-    redoTextChanged: ...
-    """
-    Signal
-    """
+    redoTextChanged: QtCore.Signal
 
     staticMetaObject: ...
     """
     <PySide.QtCore.QMetaObject object>
     """
 
-    undoTextChanged: ...
-    """
-    Signal
-    """
+    undoTextChanged: QtCore.Signal
     def __init__(self, *args, **kwargs):
         """
         x.__init__(...) initializes x; see help(type(x)) for signature
@@ -23785,10 +23000,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    customContextMenuRequested: ...
-    """
-    Signal
-    """
+    customContextMenuRequested: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -23823,7 +23035,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def actionEvent(self, *args, **kwargs):
         """ """
         ...
-    def actions(self) -> typing.List[QAction]:
+    def actions(self) -> List[QAction]:
         """ """
         ...
     def activateWindow(self, *args, **kwargs):
@@ -23963,7 +23175,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def frameSize(self, *args, **kwargs):
         """ """
         ...
-    def geometry(self, *args, **kwargs):
+    def geometry(self) -> QtCore.QRect:
         """ """
         ...
     def getContentsMargins(self, *args, **kwargs):
@@ -24188,8 +23400,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def previousInFocusChain(self, *args, **kwargs):
         """ """
         ...
-    def raise_(self, *args, **kwargs):
-        """ """
+    def raise_(self) -> None:
         ...
     def rect(self, *args, **kwargs):
         """ """
@@ -24215,7 +23426,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def resetInputContext(self, *args, **kwargs):
         """ """
         ...
-    def resize(self, *args, **kwargs):
+    def resize(self, w: int, h: int ,/) -> None:
         """ """
         ...
     def resizeEvent(self, *args, **kwargs):
@@ -24290,7 +23501,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def setForegroundRole(self, *args, **kwargs):
         """ """
         ...
-    def setGeometry(self, *args, **kwargs):
+    def setGeometry(self, v: QtCore.QRect, /) -> None:
         """ """
         ...
     def setGraphicsEffect(self, *args, **kwargs):
@@ -24404,10 +23615,10 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def setWindowState(self, *args, **kwargs):
         """ """
         ...
-    def setWindowTitle(self, *args, **kwargs):
+    def setWindowTitle(self, s: Str, /) -> None:
         """ """
         ...
-    def show(self, *args, **kwargs):
+    def show(self) -> None:
         """ """
         ...
     def showEvent(self, *args, **kwargs):
@@ -24443,7 +23654,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def statusTip(self, *args, **kwargs):
         """ """
         ...
-    def style(self, *args, **kwargs):
+    def style(self) -> QStyle:
         """ """
         ...
     def styleSheet(self, *args, **kwargs):
@@ -24503,7 +23714,7 @@ class QWidget(QtCore.QObject, QtGui.QPaintDevice):
     def winId(self, *args, **kwargs):
         """ """
         ...
-    def window(self, *args, **kwargs):
+    def window(self) -> QWidget:
         """ """
         ...
     def windowFilePath(self, *args, **kwargs):
@@ -24828,30 +24039,15 @@ class QWizard(QDialog):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    currentIdChanged: ...
-    """
-    Signal
-    """
+    currentIdChanged: QtCore.Signal
 
-    customButtonClicked: ...
-    """
-    Signal
-    """
+    customButtonClicked: QtCore.Signal
 
-    helpRequested: ...
-    """
-    Signal
-    """
+    helpRequested: QtCore.Signal
 
-    pageAdded: ...
-    """
-    Signal
-    """
+    pageAdded: QtCore.Signal
 
-    pageRemoved: ...
-    """
-    Signal
-    """
+    pageRemoved: QtCore.Signal
 
     staticMetaObject: ...
     """
@@ -25011,10 +24207,7 @@ class QWizardPage(QWidget):
     T.__new__(S, ...) -> a new object with type S, a subtype of T
     """
 
-    completeChanged: ...
-    """
-    Signal
-    """
+    completeChanged: QtCore.Signal
 
     staticMetaObject: ...
     """

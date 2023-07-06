@@ -7,15 +7,16 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, Dict, Tuple, Iterator
-    from .. import types
+    import wulifang._types as _types
 
 import os
 import time
 import wulifang
-from wulifang.vendor.concurrent import futures
+from wulifang._compat import futures
 from wulifang.vendor import six
-
-from wulifang import filename as fn
+from wulifang._util import (
+    FileSequence,
+)
 
 
 class FileService:
@@ -32,7 +33,10 @@ class FileService:
             try:
                 stat = os.stat(path)
                 if stat.st_size < 16 << 10:
-                    wulifang.message.debug("small file: path=%s, size=%0.2fKiB" % (path, stat.st_size / (1 << 10)))
+                    wulifang.message.debug(
+                        "small file: path=%s, size=%0.2fKiB"
+                        % (path, stat.st_size / (1 << 10))
+                    )
                 self._cache[key] = (now, stat.st_size > 0)
             except OSError:
                 self._cache[key] = (now, False)
@@ -44,7 +48,10 @@ class FileService:
 
         with futures.ThreadPoolExecutor(8) as executor:
             for f, is_exist in executor.map(
-                lambda f: (f, self.exists(fn.expand_frame(filename, f), max_age)),
+                lambda f: (
+                    f,
+                    self.exists(FileSequence.expand_frame(filename, f), max_age),
+                ),
                 six.moves.range(first, last + 1),
             ):
                 if not is_exist:
@@ -52,5 +59,5 @@ class FileService:
 
 
 def _(v):
-    # type: (FileService) -> types.FileService
+    # type: (FileService) -> _types.FileService
     return v

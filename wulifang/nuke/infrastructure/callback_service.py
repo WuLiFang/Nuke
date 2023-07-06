@@ -3,17 +3,18 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import nuke
+
+import wulifang
+from wulifang._util import cast_str, cast_text, cast_binary
+
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
     from typing import Text, Callable
-    from .. import types
-    from ..types.callback_service import Callback, Cancel
-
-
-import nuke
-
-import wulifang
+    from .. import _types
+    from .._types.callback_service import Callback, Cancel, DropDataCallback
+    from wulifang._compat.str import Str
 
 
 class CallbackService:
@@ -27,7 +28,7 @@ class CallbackService:
         # type: (...) -> Cancel
         kwargs = {}
         if node_class:
-            kwargs["nodeClass"] = node_class.encode("utf-8")
+            kwargs["nodeClass"] = cast_str(node_class)
 
         add(cb, **kwargs)
 
@@ -37,29 +38,7 @@ class CallbackService:
         wulifang.cleanup.add(cancel)
         return cancel
 
-    def _use_add_only(
-        self,
-        add,  # type: Callable[..., None]
-        cb,  # type: Callback
-    ):
-        # type: (...) -> Cancel
-        class local:
-            is_cancelled = False
-
-        def handle():
-            if local.is_cancelled:
-                return
-            cb()
-
-        add(handle)
-
-        def cancel():
-            local.is_cancelled = True
-
-        wulifang.cleanup.add(cancel)
-        return cancel
-
-    def on_render_start(self, cb, node_class=""):
+    def on_will_render(self, cb, node_class=""):
         # type: (Callback, Text) -> Cancel
         return self._use(
             nuke.addBeforeRender,
@@ -78,15 +57,31 @@ class CallbackService:
         )
 
     def on_drop_data(self, cb):
-        # type: (Callback) -> Cancel
+        # type: (DropDataCallback) -> Cancel
         if not nuke.GUI:
             return lambda: None
         import nukescripts
 
-        return self._use_add_only(
-            nukescripts.addDropDataCallback,
-            cb,
-        )
+        class local:
+            is_cancelled = False
+
+        def on_drop_data(mime_type, data):
+            # type: (Str, Str) -> ...
+            if local.is_cancelled:
+                return
+            return cb(cast_text(mime_type), cast_binary(data))
+
+        def cancel():
+            local.is_cancelled = True
+            try:
+                nukescripts.drop._gDropDataCallbacks.remove(on_drop_data)  # type: ignore
+            except:
+                pass
+
+        nukescripts.addDropDataCallback(on_drop_data)
+
+        wulifang.cleanup.add(cancel)
+        return cancel
 
     def on_user_create(self, cb):
         # type: (Callback) -> Cancel
@@ -130,5 +125,5 @@ class CallbackService:
 
 
 def _(v):
-    # type: (CallbackService) -> types.CallbackService
+    # type: (CallbackService) -> _types.CallbackService
     return v

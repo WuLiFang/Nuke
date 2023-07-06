@@ -1,0 +1,1923 @@
+diff -ru a/vendor/sentry_sdk/__init__.py b/vendor/sentry_sdk/__init__.py
+--- a/vendor/sentry_sdk/__init__.py	2023-06-26 14:51:25.648156000 +0800
++++ b/vendor/sentry_sdk/__init__.py	2023-06-26 18:02:50.981859000 +0800
+@@ -1,11 +1,11 @@
+-from sentry_sdk.hub import Hub, init
+-from sentry_sdk.scope import Scope
+-from sentry_sdk.transport import Transport, HttpTransport
+-from sentry_sdk.client import Client
++from wulifang.vendor.sentry_sdk.hub import Hub, init
++from wulifang.vendor.sentry_sdk.scope import Scope
++from wulifang.vendor.sentry_sdk.transport import Transport, HttpTransport
++from wulifang.vendor.sentry_sdk.client import Client
+ 
+-from sentry_sdk.api import *  # noqa
++from wulifang.vendor.sentry_sdk.api import *  # noqa
+ 
+-from sentry_sdk.consts import VERSION  # noqa
++from wulifang.vendor.sentry_sdk.consts import VERSION  # noqa
+ 
+ __all__ = [  # noqa
+     "Hub",
+@@ -34,7 +34,7 @@
+ ]
+ 
+ # Initialize the debug support after everything is loaded
+-from sentry_sdk.debug import init_debug_support
++from wulifang.vendor.sentry_sdk.debug import init_debug_support
+ 
+ init_debug_support()
+ del init_debug_support
+diff -ru a/vendor/sentry_sdk/_compat.py b/vendor/sentry_sdk/_compat.py
+--- a/vendor/sentry_sdk/_compat.py	2023-06-26 14:51:25.649132000 +0800
++++ b/vendor/sentry_sdk/_compat.py	2023-06-26 18:00:57.628241200 +0800
+@@ -1,6 +1,6 @@
+ import sys
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Optional
+diff -ru a/vendor/sentry_sdk/_functools.py b/vendor/sentry_sdk/_functools.py
+--- a/vendor/sentry_sdk/_functools.py	2023-06-26 14:51:25.650108000 +0800
++++ b/vendor/sentry_sdk/_functools.py	2023-06-26 18:00:57.610673000 +0800
+@@ -5,7 +5,7 @@
+ 
+ from functools import partial
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+diff -ru a/vendor/sentry_sdk/_queue.py b/vendor/sentry_sdk/_queue.py
+--- a/vendor/sentry_sdk/_queue.py	2023-06-26 14:51:25.650108000 +0800
++++ b/vendor/sentry_sdk/_queue.py	2023-06-26 18:00:57.609697500 +0800
+@@ -16,7 +16,7 @@
+ from collections import deque
+ from time import time
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+diff -ru a/vendor/sentry_sdk/api.py b/vendor/sentry_sdk/api.py
+--- a/vendor/sentry_sdk/api.py	2023-06-26 14:51:25.652060000 +0800
++++ b/vendor/sentry_sdk/api.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,9 +1,9 @@
+ import inspect
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.scope import Scope
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.scope import Scope
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -15,8 +15,8 @@
+     from typing import ContextManager
+     from typing import Union
+ 
+-    from sentry_sdk._types import Event, Hint, Breadcrumb, BreadcrumbHint, ExcInfo
+-    from sentry_sdk.tracing import Span, Transaction
++    from wulifang.vendor.sentry_sdk._types import Event, Hint, Breadcrumb, BreadcrumbHint, ExcInfo
++    from wulifang.vendor.sentry_sdk.tracing import Span, Transaction
+ 
+     T = TypeVar("T")
+     F = TypeVar("F", bound=Callable[..., Any])
+diff -ru a/vendor/sentry_sdk/attachments.py b/vendor/sentry_sdk/attachments.py
+--- a/vendor/sentry_sdk/attachments.py	2023-06-26 14:51:25.653036000 +0800
++++ b/vendor/sentry_sdk/attachments.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,8 +1,8 @@
+ import os
+ import mimetypes
+ 
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.envelope import Item, PayloadRef
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.envelope import Item, PayloadRef
+ 
+ if MYPY:
+     from typing import Optional, Union, Callable
+diff -ru a/vendor/sentry_sdk/client.py b/vendor/sentry_sdk/client.py
+--- a/vendor/sentry_sdk/client.py	2023-06-26 14:51:25.654012000 +0800
++++ b/vendor/sentry_sdk/client.py	2023-06-26 18:00:57.681921000 +0800
+@@ -4,8 +4,8 @@
+ from datetime import datetime
+ import socket
+ 
+-from sentry_sdk._compat import string_types, text_type, iteritems
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._compat import string_types, text_type, iteritems
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     current_stacktrace,
+     disable_capture_event,
+@@ -15,15 +15,15 @@
+     handle_in_app,
+     logger,
+ )
+-from sentry_sdk.serializer import serialize
+-from sentry_sdk.transport import make_transport
+-from sentry_sdk.consts import DEFAULT_OPTIONS, SDK_INFO, ClientConstructor
+-from sentry_sdk.integrations import setup_integrations
+-from sentry_sdk.utils import ContextVar
+-from sentry_sdk.sessions import SessionFlusher
+-from sentry_sdk.envelope import Envelope
++from wulifang.vendor.sentry_sdk.serializer import serialize
++from wulifang.vendor.sentry_sdk.transport import make_transport
++from wulifang.vendor.sentry_sdk.consts import DEFAULT_OPTIONS, SDK_INFO, ClientConstructor
++from wulifang.vendor.sentry_sdk.integrations import setup_integrations
++from wulifang.vendor.sentry_sdk.utils import ContextVar
++from wulifang.vendor.sentry_sdk.sessions import SessionFlusher
++from wulifang.vendor.sentry_sdk.envelope import Envelope
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -31,9 +31,9 @@
+     from typing import Dict
+     from typing import Optional
+ 
+-    from sentry_sdk.scope import Scope
+-    from sentry_sdk._types import Event, Hint
+-    from sentry_sdk.session import Session
++    from wulifang.vendor.sentry_sdk.scope import Scope
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk.session import Session
+ 
+ 
+ _client_init_debug = ContextVar("client_init_debug")
+@@ -405,7 +405,7 @@
+         self.close()
+ 
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     # Make mypy, PyCharm and other static analyzers think `get_options` is a
+diff -ru a/vendor/sentry_sdk/consts.py b/vendor/sentry_sdk/consts.py
+--- a/vendor/sentry_sdk/consts.py	2023-06-26 14:51:25.654012000 +0800
++++ b/vendor/sentry_sdk/consts.py	2023-06-26 18:01:12.538556700 +0800
+@@ -1,7 +1,7 @@
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+-    import sentry_sdk
++    import wulifang.vendor.sentry_sdk as sentry_sdk
+ 
+     from typing import Optional
+     from typing import Callable
+@@ -13,9 +13,9 @@
+     from typing import Sequence
+     from typing_extensions import TypedDict
+ 
+-    from sentry_sdk.integrations import Integration
++    from wulifang.vendor.sentry_sdk.integrations import Integration
+ 
+-    from sentry_sdk._types import (
++    from wulifang.vendor.sentry_sdk._types import (
+         BreadcrumbProcessor,
+         Event,
+         EventProcessor,
+diff -ru a/vendor/sentry_sdk/debug.py b/vendor/sentry_sdk/debug.py
+--- a/vendor/sentry_sdk/debug.py	2023-06-26 14:51:25.654988000 +0800
++++ b/vendor/sentry_sdk/debug.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,10 +1,10 @@
+ import sys
+ import logging
+ 
+-from sentry_sdk import utils
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import logger
+-from sentry_sdk.client import _client_init_debug
++from wulifang.vendor.sentry_sdk import utils
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import logger
++from wulifang.vendor.sentry_sdk.client import _client_init_debug
+ from logging import LogRecord
+ 
+ 
+diff -ru a/vendor/sentry_sdk/envelope.py b/vendor/sentry_sdk/envelope.py
+--- a/vendor/sentry_sdk/envelope.py	2023-06-26 14:51:25.655964000 +0800
++++ b/vendor/sentry_sdk/envelope.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,10 +2,10 @@
+ import json
+ import mimetypes
+ 
+-from sentry_sdk._compat import text_type
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.session import Session
+-from sentry_sdk.utils import json_dumps, capture_internal_exceptions
++from wulifang.vendor.sentry_sdk._compat import text_type
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.session import Session
++from wulifang.vendor.sentry_sdk.utils import json_dumps, capture_internal_exceptions
+ 
+ if MYPY:
+     from typing import Any
+@@ -15,7 +15,7 @@
+     from typing import List
+     from typing import Iterator
+ 
+-    from sentry_sdk._types import Event, EventDataCategory
++    from wulifang.vendor.sentry_sdk._types import Event, EventDataCategory
+ 
+ 
+ class Envelope(object):
+diff -ru a/vendor/sentry_sdk/hub.py b/vendor/sentry_sdk/hub.py
+--- a/vendor/sentry_sdk/hub.py	2023-06-26 14:51:25.656940000 +0800
++++ b/vendor/sentry_sdk/hub.py	2023-06-26 18:00:57.681921000 +0800
+@@ -4,19 +4,19 @@
+ from datetime import datetime
+ from contextlib import contextmanager
+ 
+-from sentry_sdk._compat import with_metaclass
+-from sentry_sdk.scope import Scope
+-from sentry_sdk.client import Client
+-from sentry_sdk.tracing import Span, Transaction
+-from sentry_sdk.session import Session
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._compat import with_metaclass
++from wulifang.vendor.sentry_sdk.scope import Scope
++from wulifang.vendor.sentry_sdk.client import Client
++from wulifang.vendor.sentry_sdk.tracing import Span, Transaction
++from wulifang.vendor.sentry_sdk.session import Session
++from wulifang.vendor.sentry_sdk.utils import (
+     exc_info_from_error,
+     event_from_exception,
+     logger,
+     ContextVar,
+ )
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Union
+@@ -32,15 +32,15 @@
+     from typing import overload
+     from typing import ContextManager
+ 
+-    from sentry_sdk.integrations import Integration
+-    from sentry_sdk._types import (
++    from wulifang.vendor.sentry_sdk.integrations import Integration
++    from wulifang.vendor.sentry_sdk._types import (
+         Event,
+         Hint,
+         Breadcrumb,
+         BreadcrumbHint,
+         ExcInfo,
+     )
+-    from sentry_sdk.consts import ClientConstructor
++    from wulifang.vendor.sentry_sdk.consts import ClientConstructor
+ 
+     T = TypeVar("T")
+ 
+@@ -108,7 +108,7 @@
+     return rv
+ 
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     # Make mypy, PyCharm and other static analyzers think `init` is a type to
+diff -ru a/vendor/sentry_sdk/integrations/__init__.py b/vendor/sentry_sdk/integrations/__init__.py
+--- a/vendor/sentry_sdk/integrations/__init__.py	2023-06-26 14:51:25.663772000 +0800
++++ b/vendor/sentry_sdk/integrations/__init__.py	2023-06-26 18:15:11.930462800 +0800
+@@ -3,10 +3,10 @@
+ 
+ from threading import Lock
+ 
+-from sentry_sdk._compat import iteritems
+-from sentry_sdk.utils import logger
++from wulifang.vendor.sentry_sdk._compat import iteritems
++from wulifang.vendor.sentry_sdk.utils import logger
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Callable
+@@ -52,31 +52,31 @@
+ 
+ 
+ _AUTO_ENABLING_INTEGRATIONS = (
+-    "sentry_sdk.integrations.django.DjangoIntegration",
+-    "sentry_sdk.integrations.flask.FlaskIntegration",
+-    "sentry_sdk.integrations.bottle.BottleIntegration",
+-    "sentry_sdk.integrations.falcon.FalconIntegration",
+-    "sentry_sdk.integrations.sanic.SanicIntegration",
+-    "sentry_sdk.integrations.celery.CeleryIntegration",
+-    "sentry_sdk.integrations.rq.RqIntegration",
+-    "sentry_sdk.integrations.aiohttp.AioHttpIntegration",
+-    "sentry_sdk.integrations.tornado.TornadoIntegration",
+-    "sentry_sdk.integrations.sqlalchemy.SqlalchemyIntegration",
+-    "sentry_sdk.integrations.boto3.Boto3Integration",
++    "wulifang.vendor.sentry_sdk.integrations.django.DjangoIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.flask.FlaskIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.bottle.BottleIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.falcon.FalconIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.sanic.SanicIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.celery.CeleryIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.rq.RqIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.aiohttp.AioHttpIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.tornado.TornadoIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.sqlalchemy.SqlalchemyIntegration",
++    "wulifang.vendor.sentry_sdk.integrations.boto3.Boto3Integration",
+ )
+ 
+ 
+ iter_default_integrations = _generate_default_integrations_iterator(
+     integrations=(
+         # stdlib/base runtime integrations
+-        "sentry_sdk.integrations.logging.LoggingIntegration",
+-        "sentry_sdk.integrations.stdlib.StdlibIntegration",
+-        "sentry_sdk.integrations.excepthook.ExcepthookIntegration",
+-        "sentry_sdk.integrations.dedupe.DedupeIntegration",
+-        "sentry_sdk.integrations.atexit.AtexitIntegration",
+-        "sentry_sdk.integrations.modules.ModulesIntegration",
+-        "sentry_sdk.integrations.argv.ArgvIntegration",
+-        "sentry_sdk.integrations.threading.ThreadingIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.logging.LoggingIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.stdlib.StdlibIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.excepthook.ExcepthookIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.dedupe.DedupeIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.atexit.AtexitIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.modules.ModulesIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.argv.ArgvIntegration",
++        "wulifang.vendor.sentry_sdk.integrations.threading.ThreadingIntegration",
+     ),
+     auto_enabling_integrations=_AUTO_ENABLING_INTEGRATIONS,
+ )
+diff -ru a/vendor/sentry_sdk/integrations/_wsgi_common.py b/vendor/sentry_sdk/integrations/_wsgi_common.py
+--- a/vendor/sentry_sdk/integrations/_wsgi_common.py	2023-06-26 14:51:25.664748000 +0800
++++ b/vendor/sentry_sdk/integrations/_wsgi_common.py	2023-06-26 18:01:12.538556700 +0800
+@@ -1,13 +1,13 @@
+ import json
+ 
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.utils import AnnotatedValue
+-from sentry_sdk._compat import text_type, iteritems
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.utils import AnnotatedValue
++from wulifang.vendor.sentry_sdk._compat import text_type, iteritems
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+-    import sentry_sdk
++    import wulifang.vendor.sentry_sdk as sentry_sdk
+ 
+     from typing import Any
+     from typing import Dict
+diff -ru a/vendor/sentry_sdk/integrations/aiohttp.py b/vendor/sentry_sdk/integrations/aiohttp.py
+--- a/vendor/sentry_sdk/integrations/aiohttp.py	2023-06-26 14:51:25.665724000 +0800
++++ b/vendor/sentry_sdk/integrations/aiohttp.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,16 +1,16 @@
+ import sys
+ import weakref
+ 
+-from sentry_sdk._compat import reraise
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations.logging import ignore_logger
+-from sentry_sdk.integrations._wsgi_common import (
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations.logging import ignore_logger
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import (
+     _filter_headers,
+     request_body_within_bounds,
+ )
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     event_from_exception,
+     transaction_from_function,
+@@ -27,7 +27,7 @@
+ except ImportError:
+     raise DidNotEnable("AIOHTTP not installed")
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from aiohttp.web_request import Request
+@@ -39,8 +39,8 @@
+     from typing import Callable
+     from typing import Union
+ 
+-    from sentry_sdk.utils import ExcInfo
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk.utils import ExcInfo
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ 
+ TRANSACTION_STYLE_VALUES = ("handler_name", "method_and_path_pattern")
+diff -ru a/vendor/sentry_sdk/integrations/argv.py b/vendor/sentry_sdk/integrations/argv.py
+--- a/vendor/sentry_sdk/integrations/argv.py	2023-06-26 14:51:25.665724000 +0800
++++ b/vendor/sentry_sdk/integrations/argv.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,16 +2,16 @@
+ 
+ import sys
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Optional
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ 
+ class ArgvIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/asgi.py b/vendor/sentry_sdk/integrations/asgi.py
+--- a/vendor/sentry_sdk/integrations/asgi.py	2023-06-26 14:51:25.666700000 +0800
++++ b/vendor/sentry_sdk/integrations/asgi.py	2023-06-26 18:00:57.682897100 +0800
+@@ -8,18 +8,18 @@
+ import inspect
+ import urllib
+ 
+-from sentry_sdk._functools import partial
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.integrations._wsgi_common import _filter_headers
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._functools import partial
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import _filter_headers
++from wulifang.vendor.sentry_sdk.utils import (
+     ContextVar,
+     event_from_exception,
+     transaction_from_function,
+     HAS_REAL_CONTEXTVARS,
+     CONTEXTVARS_ERROR_MESSAGE,
+ )
+-from sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk.tracing import Transaction
+ 
+ if MYPY:
+     from typing import Dict
+@@ -29,7 +29,7 @@
+ 
+     from typing_extensions import Literal
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ 
+ _asgi_middleware_applied = ContextVar("sentry_asgi_middleware_applied")
+diff -ru a/vendor/sentry_sdk/integrations/atexit.py b/vendor/sentry_sdk/integrations/atexit.py
+--- a/vendor/sentry_sdk/integrations/atexit.py	2023-06-26 14:51:25.667676000 +0800
++++ b/vendor/sentry_sdk/integrations/atexit.py	2023-06-26 18:00:57.681921000 +0800
+@@ -4,11 +4,11 @@
+ import sys
+ import atexit
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import logger
+-from sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import logger
++from wulifang.vendor.sentry_sdk.integrations import Integration
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+ 
+diff -ru a/vendor/sentry_sdk/integrations/aws_lambda.py b/vendor/sentry_sdk/integrations/aws_lambda.py
+--- a/vendor/sentry_sdk/integrations/aws_lambda.py	2023-06-26 14:51:25.668652000 +0800
++++ b/vendor/sentry_sdk/integrations/aws_lambda.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,20 +2,20 @@
+ from os import environ
+ import sys
+ 
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk._compat import reraise
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk.utils import (
+     AnnotatedValue,
+     capture_internal_exceptions,
+     event_from_exception,
+     logger,
+     TimeoutThread,
+ )
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.integrations._wsgi_common import _filter_headers
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import _filter_headers
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -23,7 +23,7 @@
+     from typing import Callable
+     from typing import Optional
+ 
+-    from sentry_sdk._types import EventProcessor, Event, Hint
++    from wulifang.vendor.sentry_sdk._types import EventProcessor, Event, Hint
+ 
+     F = TypeVar("F", bound=Callable[..., Any])
+ 
+diff -ru a/vendor/sentry_sdk/integrations/beam.py b/vendor/sentry_sdk/integrations/beam.py
+--- a/vendor/sentry_sdk/integrations/beam.py	2023-06-26 14:51:25.669628000 +0800
++++ b/vendor/sentry_sdk/integrations/beam.py	2023-06-26 18:00:57.682897100 +0800
+@@ -2,14 +2,14 @@
+ 
+ import sys
+ import types
+-from sentry_sdk._functools import wraps
++from wulifang.vendor.sentry_sdk._functools import wraps
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk._compat import reraise
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.integrations.logging import ignore_logger
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.integrations.logging import ignore_logger
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -18,8 +18,8 @@
+     from typing import Optional
+     from typing import Callable
+ 
+-    from sentry_sdk.client import Client
+-    from sentry_sdk._types import ExcInfo
++    from wulifang.vendor.sentry_sdk.client import Client
++    from wulifang.vendor.sentry_sdk._types import ExcInfo
+ 
+     T = TypeVar("T")
+     F = TypeVar("F", bound=Callable[..., Any])
+diff -ru a/vendor/sentry_sdk/integrations/boto3.py b/vendor/sentry_sdk/integrations/boto3.py
+--- a/vendor/sentry_sdk/integrations/boto3.py	2023-06-26 14:51:25.669628000 +0800
++++ b/vendor/sentry_sdk/integrations/boto3.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,11 +1,11 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk import Hub
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.tracing import Span
++from wulifang.vendor.sentry_sdk import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.tracing import Span
+ 
+-from sentry_sdk._functools import partial
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._functools import partial
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+diff -ru a/vendor/sentry_sdk/integrations/bottle.py b/vendor/sentry_sdk/integrations/bottle.py
+--- a/vendor/sentry_sdk/integrations/bottle.py	2023-06-26 14:51:25.670604000 +0800
++++ b/vendor/sentry_sdk/integrations/bottle.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,26 +1,26 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     event_from_exception,
+     transaction_from_function,
+ )
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
+-from sentry_sdk.integrations._wsgi_common import RequestExtractor
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import RequestExtractor
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+-    from sentry_sdk.integrations.wsgi import _ScopedResponse
++    from wulifang.vendor.sentry_sdk.integrations.wsgi import _ScopedResponse
+     from typing import Any
+     from typing import Dict
+     from typing import Callable
+     from typing import Optional
+     from bottle import FileUpload, FormsDict, LocalRequest  # type: ignore
+ 
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ try:
+     from bottle import (
+diff -ru a/vendor/sentry_sdk/integrations/celery.py b/vendor/sentry_sdk/integrations/celery.py
+--- a/vendor/sentry_sdk/integrations/celery.py	2023-06-26 14:51:25.671580000 +0800
++++ b/vendor/sentry_sdk/integrations/celery.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,14 +2,14 @@
+ 
+ import sys
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk._compat import reraise
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations.logging import ignore_logger
+-from sentry_sdk._types import MYPY
+-from sentry_sdk._functools import wraps
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations.logging import ignore_logger
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._functools import wraps
+ 
+ if MYPY:
+     from typing import Any
+@@ -17,7 +17,7 @@
+     from typing import Callable
+     from typing import Optional
+ 
+-    from sentry_sdk._types import EventProcessor, Event, Hint, ExcInfo
++    from wulifang.vendor.sentry_sdk._types import EventProcessor, Event, Hint, ExcInfo
+ 
+     F = TypeVar("F", bound=Callable[..., Any])
+ 
+diff -ru a/vendor/sentry_sdk/integrations/chalice.py b/vendor/sentry_sdk/integrations/chalice.py
+--- a/vendor/sentry_sdk/integrations/chalice.py	2023-06-26 14:51:25.672556000 +0800
++++ b/vendor/sentry_sdk/integrations/chalice.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,15 +1,15 @@
+ import sys
+ 
+-from sentry_sdk._compat import reraise
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations.aws_lambda import _make_request_event_processor
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations.aws_lambda import _make_request_event_processor
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     event_from_exception,
+ )
+-from sentry_sdk._types import MYPY
+-from sentry_sdk._functools import wraps
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._functools import wraps
+ 
+ import chalice  # type: ignore
+ from chalice import Chalice, ChaliceViewError
+diff -ru a/vendor/sentry_sdk/integrations/dedupe.py b/vendor/sentry_sdk/integrations/dedupe.py
+--- a/vendor/sentry_sdk/integrations/dedupe.py	2023-06-26 14:51:25.672556000 +0800
++++ b/vendor/sentry_sdk/integrations/dedupe.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,14 +1,14 @@
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import ContextVar
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import ContextVar
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Optional
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ 
+ class DedupeIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/django/__init__.py b/vendor/sentry_sdk/integrations/django/__init__.py
+--- a/vendor/sentry_sdk/integrations/django/__init__.py	2023-06-26 14:51:25.689148000 +0800
++++ b/vendor/sentry_sdk/integrations/django/__init__.py	2023-06-26 18:00:57.682897100 +0800
+@@ -5,12 +5,12 @@
+ import threading
+ import weakref
+ 
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.scope import add_global_event_processor
+-from sentry_sdk.serializer import add_global_repr_processor
+-from sentry_sdk.tracing import record_sql_queries
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.serializer import add_global_repr_processor
++from wulifang.vendor.sentry_sdk.tracing import record_sql_queries
++from wulifang.vendor.sentry_sdk.utils import (
+     HAS_REAL_CONTEXTVARS,
+     CONTEXTVARS_ERROR_MESSAGE,
+     logger,
+@@ -19,10 +19,10 @@
+     transaction_from_function,
+     walk_exception_chain,
+ )
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations.logging import ignore_logger
+-from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
+-from sentry_sdk.integrations._wsgi_common import RequestExtractor
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations.logging import ignore_logger
++from wulifang.vendor.sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import RequestExtractor
+ 
+ try:
+     from django import VERSION as DJANGO_VERSION
+@@ -36,13 +36,13 @@
+     raise DidNotEnable("Django not installed")
+ 
+ 
+-from sentry_sdk.integrations.django.transactions import LEGACY_RESOLVER
+-from sentry_sdk.integrations.django.templates import (
++from wulifang.vendor.sentry_sdk.integrations.django.transactions import LEGACY_RESOLVER
++from wulifang.vendor.sentry_sdk.integrations.django.templates import (
+     get_template_frame_from_exception,
+     patch_templates,
+ )
+-from sentry_sdk.integrations.django.middleware import patch_django_middlewares
+-from sentry_sdk.integrations.django.views import patch_views
++from wulifang.vendor.sentry_sdk.integrations.django.middleware import patch_django_middlewares
++from wulifang.vendor.sentry_sdk.integrations.django.views import patch_views
+ 
+ 
+ if MYPY:
+@@ -58,8 +58,8 @@
+     from django.http.request import QueryDict
+     from django.utils.datastructures import MultiValueDict
+ 
+-    from sentry_sdk.integrations.wsgi import _ScopedResponse
+-    from sentry_sdk._types import Event, Hint, EventProcessor, NotImplementedType
++    from wulifang.vendor.sentry_sdk.integrations.wsgi import _ScopedResponse
++    from wulifang.vendor.sentry_sdk._types import Event, Hint, EventProcessor, NotImplementedType
+ 
+ 
+ if DJANGO_VERSION < (1, 10):
+@@ -292,7 +292,7 @@
+             + CONTEXTVARS_ERROR_MESSAGE
+         )
+ 
+-    from sentry_sdk.integrations.django.asgi import patch_channels_asgi_handler_impl
++    from wulifang.vendor.sentry_sdk.integrations.django.asgi import patch_channels_asgi_handler_impl
+ 
+     patch_channels_asgi_handler_impl(AsgiHandler)
+ 
+@@ -314,7 +314,7 @@
+             "We detected that you are using Django 3." + CONTEXTVARS_ERROR_MESSAGE
+         )
+ 
+-    from sentry_sdk.integrations.django.asgi import patch_django_asgi_handler_impl
++    from wulifang.vendor.sentry_sdk.integrations.django.asgi import patch_django_asgi_handler_impl
+ 
+     patch_django_asgi_handler_impl(ASGIHandler)
+ 
+@@ -362,7 +362,7 @@
+     BaseHandler.get_response = sentry_patched_get_response
+ 
+     if hasattr(BaseHandler, "get_response_async"):
+-        from sentry_sdk.integrations.django.asgi import patch_get_response_async
++        from wulifang.vendor.sentry_sdk.integrations.django.asgi import patch_get_response_async
+ 
+         patch_get_response_async(BaseHandler, _before_get_response)
+ 
+diff -ru a/vendor/sentry_sdk/integrations/django/asgi.py b/vendor/sentry_sdk/integrations/django/asgi.py
+--- a/vendor/sentry_sdk/integrations/django/asgi.py	2023-06-26 14:51:25.690124000 +0800
++++ b/vendor/sentry_sdk/integrations/django/asgi.py	2023-06-26 18:00:57.682897100 +0800
+@@ -8,10 +8,10 @@
+ 
+ import asyncio
+ 
+-from sentry_sdk import Hub, _functools
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk import Hub, _functools
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+-from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
++from wulifang.vendor.sentry_sdk.integrations.asgi import SentryAsgiMiddleware
+ 
+ if MYPY:
+     from typing import Any
+@@ -24,7 +24,7 @@
+ def patch_django_asgi_handler_impl(cls):
+     # type: (Any) -> None
+ 
+-    from sentry_sdk.integrations.django import DjangoIntegration
++    from wulifang.vendor.sentry_sdk.integrations.django import DjangoIntegration
+ 
+     old_app = cls.__call__
+ 
+@@ -57,7 +57,7 @@
+     # type: (Any) -> None
+ 
+     import channels  # type: ignore
+-    from sentry_sdk.integrations.django import DjangoIntegration
++    from wulifang.vendor.sentry_sdk.integrations.django import DjangoIntegration
+ 
+     if channels.__version__ < "3.0.0":
+ 
+diff -ru a/vendor/sentry_sdk/integrations/django/middleware.py b/vendor/sentry_sdk/integrations/django/middleware.py
+--- a/vendor/sentry_sdk/integrations/django/middleware.py	2023-06-26 14:51:25.691100000 +0800
++++ b/vendor/sentry_sdk/integrations/django/middleware.py	2023-06-26 18:00:57.682897100 +0800
+@@ -4,10 +4,10 @@
+ 
+ from django import VERSION as DJANGO_VERSION
+ 
+-from sentry_sdk import Hub
+-from sentry_sdk._functools import wraps
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk import Hub
++from wulifang.vendor.sentry_sdk._functools import wraps
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.utils import (
+     ContextVar,
+     transaction_from_function,
+     capture_internal_exceptions,
+@@ -19,7 +19,7 @@
+     from typing import Optional
+     from typing import TypeVar
+ 
+-    from sentry_sdk.tracing import Span
++    from wulifang.vendor.sentry_sdk.tracing import Span
+ 
+     F = TypeVar("F", bound=Callable[..., Any])
+ 
+@@ -71,7 +71,7 @@
+ 
+ def _wrap_middleware(middleware, middleware_name):
+     # type: (Any, str) -> Any
+-    from sentry_sdk.integrations.django import DjangoIntegration
++    from wulifang.vendor.sentry_sdk.integrations.django import DjangoIntegration
+ 
+     def _check_middleware_span(old_method):
+         # type: (Callable[..., Any]) -> Optional[Span]
+diff -ru a/vendor/sentry_sdk/integrations/django/templates.py b/vendor/sentry_sdk/integrations/django/templates.py
+--- a/vendor/sentry_sdk/integrations/django/templates.py	2023-06-26 14:51:25.692076000 +0800
++++ b/vendor/sentry_sdk/integrations/django/templates.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,8 +1,8 @@
+ from django.template import TemplateSyntaxError
+ from django import VERSION as DJANGO_VERSION
+ 
+-from sentry_sdk import _functools, Hub
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk import _functools, Hub
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -45,7 +45,7 @@
+ def patch_templates():
+     # type: () -> None
+     from django.template.response import SimpleTemplateResponse
+-    from sentry_sdk.integrations.django import DjangoIntegration
++    from wulifang.vendor.sentry_sdk.integrations.django import DjangoIntegration
+ 
+     real_rendered_content = SimpleTemplateResponse.rendered_content
+ 
+diff -ru a/vendor/sentry_sdk/integrations/django/transactions.py b/vendor/sentry_sdk/integrations/django/transactions.py
+--- a/vendor/sentry_sdk/integrations/django/transactions.py	2023-06-26 14:51:25.693052000 +0800
++++ b/vendor/sentry_sdk/integrations/django/transactions.py	2023-06-26 18:00:57.682897100 +0800
+@@ -7,7 +7,7 @@
+ 
+ import re
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from django.urls.resolvers import URLResolver
+diff -ru a/vendor/sentry_sdk/integrations/django/views.py b/vendor/sentry_sdk/integrations/django/views.py
+--- a/vendor/sentry_sdk/integrations/django/views.py	2023-06-26 14:51:25.694028000 +0800
++++ b/vendor/sentry_sdk/integrations/django/views.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,6 +1,6 @@
+-from sentry_sdk.hub import Hub
+-from sentry_sdk._types import MYPY
+-from sentry_sdk import _functools
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk import _functools
+ 
+ if MYPY:
+     from typing import Any
+@@ -13,7 +13,7 @@
+ 
+ 
+ try:
+-    from sentry_sdk.integrations.django.asgi import wrap_async_view
++    from wulifang.vendor.sentry_sdk.integrations.django.asgi import wrap_async_view
+ except (ImportError, SyntaxError):
+     wrap_async_view = None  # type: ignore
+ 
+@@ -22,7 +22,7 @@
+     # type: () -> None
+ 
+     from django.core.handlers.base import BaseHandler
+-    from sentry_sdk.integrations.django import DjangoIntegration
++    from wulifang.vendor.sentry_sdk.integrations.django import DjangoIntegration
+ 
+     old_make_view_atomic = BaseHandler.make_view_atomic
+ 
+diff -ru a/vendor/sentry_sdk/integrations/excepthook.py b/vendor/sentry_sdk/integrations/excepthook.py
+--- a/vendor/sentry_sdk/integrations/excepthook.py	2023-06-26 14:51:25.673532000 +0800
++++ b/vendor/sentry_sdk/integrations/excepthook.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,10 +1,10 @@
+ import sys
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+-from sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk.integrations import Integration
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Callable
+diff -ru a/vendor/sentry_sdk/integrations/executing.py b/vendor/sentry_sdk/integrations/executing.py
+--- a/vendor/sentry_sdk/integrations/executing.py	2023-06-26 14:51:25.674508000 +0800
++++ b/vendor/sentry_sdk/integrations/executing.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,15 +1,15 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk import Hub
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.scope import add_global_event_processor
+-from sentry_sdk.utils import walk_exception_chain, iter_stacks
++from wulifang.vendor.sentry_sdk import Hub
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.utils import walk_exception_chain, iter_stacks
+ 
+ if MYPY:
+     from typing import Optional
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ try:
+     import executing
+diff -ru a/vendor/sentry_sdk/integrations/falcon.py b/vendor/sentry_sdk/integrations/falcon.py
+--- a/vendor/sentry_sdk/integrations/falcon.py	2023-06-26 14:51:25.675484000 +0800
++++ b/vendor/sentry_sdk/integrations/falcon.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,19 +1,19 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations._wsgi_common import RequestExtractor
+-from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import RequestExtractor
++from wulifang.vendor.sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+     from typing import Dict
+     from typing import Optional
+ 
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ try:
+     import falcon  # type: ignore
+diff -ru a/vendor/sentry_sdk/integrations/flask.py b/vendor/sentry_sdk/integrations/flask.py
+--- a/vendor/sentry_sdk/integrations/flask.py	2023-06-26 14:51:25.675484000 +0800
++++ b/vendor/sentry_sdk/integrations/flask.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,15 +1,15 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
+-from sentry_sdk.integrations._wsgi_common import RequestExtractor
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import RequestExtractor
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+-    from sentry_sdk.integrations.wsgi import _ScopedResponse
++    from wulifang.vendor.sentry_sdk.integrations.wsgi import _ScopedResponse
+     from typing import Any
+     from typing import Dict
+     from werkzeug.datastructures import ImmutableMultiDict
+@@ -17,7 +17,7 @@
+     from typing import Union
+     from typing import Callable
+ 
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ 
+ try:
+diff -ru a/vendor/sentry_sdk/integrations/gcp.py b/vendor/sentry_sdk/integrations/gcp.py
+--- a/vendor/sentry_sdk/integrations/gcp.py	2023-06-26 14:51:25.676460000 +0800
++++ b/vendor/sentry_sdk/integrations/gcp.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,20 +2,20 @@
+ from os import environ
+ import sys
+ 
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk._compat import reraise
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk.utils import (
+     AnnotatedValue,
+     capture_internal_exceptions,
+     event_from_exception,
+     logger,
+     TimeoutThread,
+ )
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.integrations._wsgi_common import _filter_headers
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import _filter_headers
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ # Constants
+ TIMEOUT_WARNING_BUFFER = 1.5  # Buffer time required to send timeout warning to Sentry
+@@ -27,7 +27,7 @@
+     from typing import Callable
+     from typing import Optional
+ 
+-    from sentry_sdk._types import EventProcessor, Event, Hint
++    from wulifang.vendor.sentry_sdk._types import EventProcessor, Event, Hint
+ 
+     F = TypeVar("F", bound=Callable[..., Any])
+ 
+diff -ru a/vendor/sentry_sdk/integrations/gnu_backtrace.py b/vendor/sentry_sdk/integrations/gnu_backtrace.py
+--- a/vendor/sentry_sdk/integrations/gnu_backtrace.py	2023-06-26 14:51:25.677436000 +0800
++++ b/vendor/sentry_sdk/integrations/gnu_backtrace.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,11 +1,11 @@
+ import re
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.scope import add_global_event_processor
+-from sentry_sdk.utils import capture_internal_exceptions
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+diff -ru a/vendor/sentry_sdk/integrations/logging.py b/vendor/sentry_sdk/integrations/logging.py
+--- a/vendor/sentry_sdk/integrations/logging.py	2023-06-26 14:51:25.678412000 +0800
++++ b/vendor/sentry_sdk/integrations/logging.py	2023-06-26 18:00:57.681921000 +0800
+@@ -3,17 +3,17 @@
+ import logging
+ import datetime
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import (
+     to_string,
+     event_from_exception,
+     current_stacktrace,
+     capture_internal_exceptions,
+ )
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk._compat import iteritems
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk._compat import iteritems
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from logging import LogRecord
+diff -ru a/vendor/sentry_sdk/integrations/modules.py b/vendor/sentry_sdk/integrations/modules.py
+--- a/vendor/sentry_sdk/integrations/modules.py	2023-06-26 14:51:25.678412000 +0800
++++ b/vendor/sentry_sdk/integrations/modules.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,10 +1,10 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -12,7 +12,7 @@
+     from typing import Tuple
+     from typing import Iterator
+ 
+-    from sentry_sdk._types import Event
++    from wulifang.vendor.sentry_sdk._types import Event
+ 
+ 
+ _installed_modules = None
+diff -ru a/vendor/sentry_sdk/integrations/pure_eval.py b/vendor/sentry_sdk/integrations/pure_eval.py
+--- a/vendor/sentry_sdk/integrations/pure_eval.py	2023-06-26 14:51:25.679388000 +0800
++++ b/vendor/sentry_sdk/integrations/pure_eval.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,17 +2,17 @@
+ 
+ import ast
+ 
+-from sentry_sdk import Hub, serializer
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.scope import add_global_event_processor
+-from sentry_sdk.utils import walk_exception_chain, iter_stacks
++from wulifang.vendor.sentry_sdk import Hub, serializer
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.utils import walk_exception_chain, iter_stacks
+ 
+ if MYPY:
+     from typing import Optional, Dict, Any, Tuple, List
+     from types import FrameType
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ try:
+     import executing
+diff -ru a/vendor/sentry_sdk/integrations/pyramid.py b/vendor/sentry_sdk/integrations/pyramid.py
+--- a/vendor/sentry_sdk/integrations/pyramid.py	2023-06-26 14:51:25.680364000 +0800
++++ b/vendor/sentry_sdk/integrations/pyramid.py	2023-06-26 18:00:57.682897100 +0800
+@@ -7,28 +7,28 @@
+ from pyramid.httpexceptions import HTTPException
+ from pyramid.request import Request
+ 
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+-from sentry_sdk._compat import reraise, iteritems
+-
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.integrations._wsgi_common import RequestExtractor
+-from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk._compat import reraise, iteritems
++
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import RequestExtractor
++from wulifang.vendor.sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from pyramid.response import Response
+     from typing import Any
+-    from sentry_sdk.integrations.wsgi import _ScopedResponse
++    from wulifang.vendor.sentry_sdk.integrations.wsgi import _ScopedResponse
+     from typing import Callable
+     from typing import Dict
+     from typing import Optional
+     from webob.cookies import RequestCookies  # type: ignore
+     from webob.compat import cgi_FieldStorage  # type: ignore
+ 
+-    from sentry_sdk.utils import ExcInfo
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk.utils import ExcInfo
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ 
+ if getattr(Request, "authenticated_userid", None):
+diff -ru a/vendor/sentry_sdk/integrations/redis.py b/vendor/sentry_sdk/integrations/redis.py
+--- a/vendor/sentry_sdk/integrations/redis.py	2023-06-26 14:51:25.680364000 +0800
++++ b/vendor/sentry_sdk/integrations/redis.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,10 +1,10 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk import Hub
+-from sentry_sdk.utils import capture_internal_exceptions, logger
+-from sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk import Hub
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, logger
++from wulifang.vendor.sentry_sdk.integrations import Integration
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+diff -ru a/vendor/sentry_sdk/integrations/rq.py b/vendor/sentry_sdk/integrations/rq.py
+--- a/vendor/sentry_sdk/integrations/rq.py	2023-06-26 14:51:25.681340000 +0800
++++ b/vendor/sentry_sdk/integrations/rq.py	2023-06-26 18:00:57.682897100 +0800
+@@ -2,10 +2,10 @@
+ 
+ import weakref
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk.utils import capture_internal_exceptions, event_from_exception
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, event_from_exception
+ 
+ 
+ try:
+@@ -16,7 +16,7 @@
+ except ImportError:
+     raise DidNotEnable("RQ not installed")
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -25,8 +25,8 @@
+ 
+     from rq.job import Job
+ 
+-    from sentry_sdk.utils import ExcInfo
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk.utils import ExcInfo
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ 
+ class RqIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/sanic.py b/vendor/sentry_sdk/integrations/sanic.py
+--- a/vendor/sentry_sdk/integrations/sanic.py	2023-06-26 14:51:25.682316000 +0800
++++ b/vendor/sentry_sdk/integrations/sanic.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,19 +2,19 @@
+ import weakref
+ from inspect import isawaitable
+ 
+-from sentry_sdk._compat import urlparse, reraise
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._compat import urlparse, reraise
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     event_from_exception,
+     HAS_REAL_CONTEXTVARS,
+     CONTEXTVARS_ERROR_MESSAGE,
+ )
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations._wsgi_common import RequestExtractor, _filter_headers
+-from sentry_sdk.integrations.logging import ignore_logger
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import RequestExtractor, _filter_headers
++from wulifang.vendor.sentry_sdk.integrations.logging import ignore_logger
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -26,7 +26,7 @@
+ 
+     from sanic.request import Request, RequestParameters
+ 
+-    from sentry_sdk._types import Event, EventProcessor, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, EventProcessor, Hint
+ 
+ try:
+     from sanic import Sanic, __version__ as SANIC_VERSION
+diff -ru a/vendor/sentry_sdk/integrations/serverless.py b/vendor/sentry_sdk/integrations/serverless.py
+--- a/vendor/sentry_sdk/integrations/serverless.py	2023-06-26 14:51:25.683292000 +0800
++++ b/vendor/sentry_sdk/integrations/serverless.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,12 +1,12 @@
+ import sys
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.utils import event_from_exception
+-from sentry_sdk._compat import reraise
+-from sentry_sdk._functools import wraps
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.utils import event_from_exception
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk._functools import wraps
+ 
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+diff -ru a/vendor/sentry_sdk/integrations/spark/__init__.py b/vendor/sentry_sdk/integrations/spark/__init__.py
+--- a/vendor/sentry_sdk/integrations/spark/__init__.py	2023-06-26 14:51:25.694028000 +0800
++++ b/vendor/sentry_sdk/integrations/spark/__init__.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,4 +1,4 @@
+-from sentry_sdk.integrations.spark.spark_driver import SparkIntegration
+-from sentry_sdk.integrations.spark.spark_worker import SparkWorkerIntegration
++from wulifang.vendor.sentry_sdk.integrations.spark.spark_driver import SparkIntegration
++from wulifang.vendor.sentry_sdk.integrations.spark.spark_worker import SparkWorkerIntegration
+ 
+ __all__ = ["SparkIntegration", "SparkWorkerIntegration"]
+diff -ru a/vendor/sentry_sdk/integrations/spark/spark_driver.py b/vendor/sentry_sdk/integrations/spark/spark_driver.py
+--- a/vendor/sentry_sdk/integrations/spark/spark_driver.py	2023-06-26 14:51:25.695004000 +0800
++++ b/vendor/sentry_sdk/integrations/spark/spark_driver.py	2023-06-26 18:00:57.682897100 +0800
+@@ -1,15 +1,15 @@
+-from sentry_sdk import configure_scope
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.utils import capture_internal_exceptions
++from wulifang.vendor.sentry_sdk import configure_scope
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+     from typing import Optional
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ 
+ class SparkIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/spark/spark_worker.py b/vendor/sentry_sdk/integrations/spark/spark_worker.py
+--- a/vendor/sentry_sdk/integrations/spark/spark_worker.py	2023-06-26 14:51:25.695980000 +0800
++++ b/vendor/sentry_sdk/integrations/spark/spark_worker.py	2023-06-26 18:00:57.682897100 +0800
+@@ -2,10 +2,10 @@
+ 
+ import sys
+ 
+-from sentry_sdk import configure_scope
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk import configure_scope
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     exc_info_from_error,
+     single_exception_from_error_tuple,
+@@ -13,13 +13,13 @@
+     event_hint_with_exc_info,
+ )
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+     from typing import Optional
+ 
+-    from sentry_sdk._types import ExcInfo, Event, Hint
++    from wulifang.vendor.sentry_sdk._types import ExcInfo, Event, Hint
+ 
+ 
+ class SparkWorkerIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/sqlalchemy.py b/vendor/sentry_sdk/integrations/sqlalchemy.py
+--- a/vendor/sentry_sdk/integrations/sqlalchemy.py	2023-06-26 14:51:25.684268000 +0800
++++ b/vendor/sentry_sdk/integrations/sqlalchemy.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,9 +1,9 @@
+ from __future__ import absolute_import
+ 
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.tracing import record_sql_queries
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.tracing import record_sql_queries
+ 
+ try:
+     from sqlalchemy.engine import Engine  # type: ignore
+@@ -17,7 +17,7 @@
+     from typing import ContextManager
+     from typing import Optional
+ 
+-    from sentry_sdk.tracing import Span
++    from wulifang.vendor.sentry_sdk.tracing import Span
+ 
+ 
+ class SqlalchemyIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/stdlib.py b/vendor/sentry_sdk/integrations/stdlib.py
+--- a/vendor/sentry_sdk/integrations/stdlib.py	2023-06-26 14:51:25.684268000 +0800
++++ b/vendor/sentry_sdk/integrations/stdlib.py	2023-06-26 18:00:57.681921000 +0800
+@@ -3,13 +3,13 @@
+ import sys
+ import platform
+ 
+-from sentry_sdk.hub import Hub
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.scope import add_global_event_processor
+-from sentry_sdk.tracing import EnvironHeaders
+-from sentry_sdk.utils import capture_internal_exceptions, safe_repr
++from wulifang.vendor.sentry_sdk.hub import Hub
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.scope import add_global_event_processor
++from wulifang.vendor.sentry_sdk.tracing import EnvironHeaders
++from wulifang.vendor.sentry_sdk.utils import capture_internal_exceptions, safe_repr
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -18,7 +18,7 @@
+     from typing import Optional
+     from typing import List
+ 
+-    from sentry_sdk._types import Event, Hint
++    from wulifang.vendor.sentry_sdk._types import Event, Hint
+ 
+ 
+ try:
+diff -ru a/vendor/sentry_sdk/integrations/threading.py b/vendor/sentry_sdk/integrations/threading.py
+--- a/vendor/sentry_sdk/integrations/threading.py	2023-06-26 14:51:25.686220000 +0800
++++ b/vendor/sentry_sdk/integrations/threading.py	2023-06-26 18:00:57.681921000 +0800
+@@ -3,11 +3,11 @@
+ import sys
+ from threading import Thread, current_thread
+ 
+-from sentry_sdk import Hub
+-from sentry_sdk._compat import reraise
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.integrations import Integration
+-from sentry_sdk.utils import event_from_exception, capture_internal_exceptions
++from wulifang.vendor.sentry_sdk import Hub
++from wulifang.vendor.sentry_sdk._compat import reraise
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.integrations import Integration
++from wulifang.vendor.sentry_sdk.utils import event_from_exception, capture_internal_exceptions
+ 
+ if MYPY:
+     from typing import Any
+@@ -15,7 +15,7 @@
+     from typing import Callable
+     from typing import Optional
+ 
+-    from sentry_sdk._types import ExcInfo
++    from wulifang.vendor.sentry_sdk._types import ExcInfo
+ 
+     F = TypeVar("F", bound=Callable[..., Any])
+ 
+diff -ru a/vendor/sentry_sdk/integrations/tornado.py b/vendor/sentry_sdk/integrations/tornado.py
+--- a/vendor/sentry_sdk/integrations/tornado.py	2023-06-26 14:51:25.687196000 +0800
++++ b/vendor/sentry_sdk/integrations/tornado.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,22 +1,22 @@
+ import weakref
+ from inspect import iscoroutinefunction
+ 
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.utils import (
+     HAS_REAL_CONTEXTVARS,
+     CONTEXTVARS_ERROR_MESSAGE,
+     event_from_exception,
+     capture_internal_exceptions,
+     transaction_from_function,
+ )
+-from sentry_sdk.integrations import Integration, DidNotEnable
+-from sentry_sdk.integrations._wsgi_common import (
++from wulifang.vendor.sentry_sdk.integrations import Integration, DidNotEnable
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import (
+     RequestExtractor,
+     _filter_headers,
+     _is_json_content_type,
+ )
+-from sentry_sdk.integrations.logging import ignore_logger
+-from sentry_sdk._compat import iteritems
++from wulifang.vendor.sentry_sdk.integrations.logging import ignore_logger
++from wulifang.vendor.sentry_sdk._compat import iteritems
+ 
+ try:
+     from tornado import version_info as TORNADO_VERSION  # type: ignore
+@@ -25,7 +25,7 @@
+ except ImportError:
+     raise DidNotEnable("Tornado not installed")
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -33,7 +33,7 @@
+     from typing import Dict
+     from typing import Callable
+ 
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+ 
+ class TornadoIntegration(Integration):
+diff -ru a/vendor/sentry_sdk/integrations/trytond.py b/vendor/sentry_sdk/integrations/trytond.py
+--- a/vendor/sentry_sdk/integrations/trytond.py	2023-06-26 14:51:25.687196000 +0800
++++ b/vendor/sentry_sdk/integrations/trytond.py	2023-06-26 18:09:57.634789600 +0800
+@@ -1,8 +1,8 @@
+-import sentry_sdk.hub
+-import sentry_sdk.utils
+-import sentry_sdk.integrations
+-import sentry_sdk.integrations.wsgi
+-from sentry_sdk._types import MYPY
++import wulifang.vendor.sentry_sdk.hub as sentry_sdk__hub
++import wulifang.vendor.sentry_sdk.utils as sentry_sdk__utils
++import wulifang.vendor.sentry_sdk.integrations as sentry_sdk__integrations
++import wulifang.vendor.sentry_sdk.integrations.wsgi as sentry_sdk__integrations__wsgi
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ from trytond.exceptions import TrytonException  # type: ignore
+ from trytond.wsgi import app  # type: ignore
+@@ -14,7 +14,7 @@
+ # TODO: trytond-worker, trytond-cron and trytond-admin intergations
+ 
+ 
+-class TrytondWSGIIntegration(sentry_sdk.integrations.Integration):
++class TrytondWSGIIntegration(sentry_sdk__integrations.Integration):
+     identifier = "trytond_wsgi"
+ 
+     def __init__(self):  # type: () -> None
+@@ -23,10 +23,10 @@
+     @staticmethod
+     def setup_once():  # type: () -> None
+ 
+-        app.wsgi_app = sentry_sdk.integrations.wsgi.SentryWsgiMiddleware(app.wsgi_app)
++        app.wsgi_app = sentry_sdk__integrations__wsgi.SentryWsgiMiddleware(app.wsgi_app)
+ 
+         def error_handler(e):  # type: (Exception) -> None
+-            hub = sentry_sdk.hub.Hub.current
++            hub = sentry_sdk__hub.Hub.current
+ 
+             if hub.get_integration(TrytondWSGIIntegration) is None:
+                 return
+@@ -35,7 +35,7 @@
+             else:
+                 # If an integration is there, a client has to be there.
+                 client = hub.client  # type: Any
+-                event, hint = sentry_sdk.utils.event_from_exception(
++                event, hint = sentry_sdk__utils.event_from_exception(
+                     e,
+                     client_options=client.options,
+                     mechanism={"type": "trytond", "handled": False},
+diff -ru a/vendor/sentry_sdk/integrations/wsgi.py b/vendor/sentry_sdk/integrations/wsgi.py
+--- a/vendor/sentry_sdk/integrations/wsgi.py	2023-06-26 14:51:25.688172000 +0800
++++ b/vendor/sentry_sdk/integrations/wsgi.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,18 +1,18 @@
+ import sys
+ 
+-from sentry_sdk._functools import partial
+-from sentry_sdk.hub import Hub, _should_send_default_pii
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk._functools import partial
++from wulifang.vendor.sentry_sdk.hub import Hub, _should_send_default_pii
++from wulifang.vendor.sentry_sdk.utils import (
+     ContextVar,
+     capture_internal_exceptions,
+     event_from_exception,
+ )
+-from sentry_sdk._compat import PY2, reraise, iteritems
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk.sessions import auto_session_tracking
+-from sentry_sdk.integrations._wsgi_common import _filter_headers
++from wulifang.vendor.sentry_sdk._compat import PY2, reraise, iteritems
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk.sessions import auto_session_tracking
++from wulifang.vendor.sentry_sdk.integrations._wsgi_common import _filter_headers
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Callable
+@@ -24,8 +24,8 @@
+     from typing import TypeVar
+     from typing import Protocol
+ 
+-    from sentry_sdk.utils import ExcInfo
+-    from sentry_sdk._types import EventProcessor
++    from wulifang.vendor.sentry_sdk.utils import ExcInfo
++    from wulifang.vendor.sentry_sdk._types import EventProcessor
+ 
+     WsgiResponseIter = TypeVar("WsgiResponseIter")
+     WsgiResponseHeaders = TypeVar("WsgiResponseHeaders")
+diff -ru a/vendor/sentry_sdk/scope.py b/vendor/sentry_sdk/scope.py
+--- a/vendor/sentry_sdk/scope.py	2023-06-26 14:51:25.657916000 +0800
++++ b/vendor/sentry_sdk/scope.py	2023-06-26 18:00:57.681921000 +0800
+@@ -2,11 +2,11 @@
+ from collections import deque
+ from itertools import chain
+ 
+-from sentry_sdk._functools import wraps
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.utils import logger, capture_internal_exceptions
+-from sentry_sdk.tracing import Transaction
+-from sentry_sdk.attachments import Attachment
++from wulifang.vendor.sentry_sdk._functools import wraps
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.utils import logger, capture_internal_exceptions
++from wulifang.vendor.sentry_sdk.tracing import Transaction
++from wulifang.vendor.sentry_sdk.attachments import Attachment
+ 
+ if MYPY:
+     from typing import Any
+@@ -17,7 +17,7 @@
+     from typing import Callable
+     from typing import TypeVar
+ 
+-    from sentry_sdk._types import (
++    from wulifang.vendor.sentry_sdk._types import (
+         Breadcrumb,
+         Event,
+         EventProcessor,
+@@ -27,8 +27,8 @@
+         Type,
+     )
+ 
+-    from sentry_sdk.tracing import Span
+-    from sentry_sdk.session import Session
++    from wulifang.vendor.sentry_sdk.tracing import Span
++    from wulifang.vendor.sentry_sdk.session import Session
+ 
+     F = TypeVar("F", bound=Callable[..., Any])
+     T = TypeVar("T")
+diff -ru a/vendor/sentry_sdk/serializer.py b/vendor/sentry_sdk/serializer.py
+--- a/vendor/sentry_sdk/serializer.py	2023-06-26 14:51:25.658892000 +0800
++++ b/vendor/sentry_sdk/serializer.py	2023-06-26 18:08:49.019214200 +0800
+@@ -3,7 +3,7 @@
+ 
+ from datetime import datetime
+ 
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.utils import (
+     AnnotatedValue,
+     capture_internal_exception,
+     disable_capture_event,
+@@ -13,11 +13,11 @@
+     strip_string,
+ )
+ 
+-import sentry_sdk.utils
++import wulifang.vendor.sentry_sdk.utils as sentry_sdk__utils
+ 
+-from sentry_sdk._compat import text_type, PY2, string_types, number_types, iteritems
++from wulifang.vendor.sentry_sdk._compat import text_type, PY2, string_types, number_types, iteritems
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from datetime import timedelta
+@@ -34,7 +34,7 @@
+     from typing import Type
+     from typing import Union
+ 
+-    from sentry_sdk._types import NotImplementedType, Event
++    from wulifang.vendor.sentry_sdk._types import NotImplementedType, Event
+ 
+     Span = Dict[str, Any]
+ 
+@@ -435,7 +435,7 @@
+             # consume if the usual string truncation in _serialize_node_impl
+             # would have taken place, not accounting for the metadata attached
+             # as event["_meta"].
+-            descriptions_budget_bytes = span_count * sentry_sdk.utils.MAX_STRING_LENGTH
++            descriptions_budget_bytes = span_count * sentry_sdk__utils.MAX_STRING_LENGTH
+ 
+             # If by not truncating descriptions we ended up with more bytes than
+             # per the usual string truncation, check if the event is too large
+diff -ru a/vendor/sentry_sdk/session.py b/vendor/sentry_sdk/session.py
+--- a/vendor/sentry_sdk/session.py	2023-06-26 14:51:25.658892000 +0800
++++ b/vendor/sentry_sdk/session.py	2023-06-26 18:00:57.681921000 +0800
+@@ -1,8 +1,8 @@
+ import uuid
+ from datetime import datetime
+ 
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.utils import format_timestamp
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.utils import format_timestamp
+ 
+ if MYPY:
+     from typing import Optional
+@@ -10,7 +10,7 @@
+     from typing import Any
+     from typing import Dict
+ 
+-    from sentry_sdk._types import SessionStatus
++    from wulifang.vendor.sentry_sdk._types import SessionStatus
+ 
+ 
+ def _minute_trunc(ts):
+diff -ru a/vendor/sentry_sdk/sessions.py b/vendor/sentry_sdk/sessions.py
+--- a/vendor/sentry_sdk/sessions.py	2023-06-26 14:51:25.659868000 +0800
++++ b/vendor/sentry_sdk/sessions.py	2023-06-26 18:01:12.465357500 +0800
+@@ -3,11 +3,11 @@
+ from threading import Thread, Lock
+ from contextlib import contextmanager
+ 
+-import sentry_sdk
+-from sentry_sdk.envelope import Envelope
+-from sentry_sdk.session import Session
+-from sentry_sdk._types import MYPY
+-from sentry_sdk.utils import format_timestamp
++import wulifang.vendor.sentry_sdk as sentry_sdk
++from wulifang.vendor.sentry_sdk.envelope import Envelope
++from wulifang.vendor.sentry_sdk.session import Session
++from wulifang.vendor.sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk.utils import format_timestamp
+ 
+ if MYPY:
+     from typing import Callable
+diff -ru a/vendor/sentry_sdk/tracing.py b/vendor/sentry_sdk/tracing.py
+--- a/vendor/sentry_sdk/tracing.py	2023-06-26 14:51:25.660844000 +0800
++++ b/vendor/sentry_sdk/tracing.py	2023-06-26 18:01:12.465357500 +0800
+@@ -8,15 +8,15 @@
+ from datetime import datetime, timedelta
+ from numbers import Real
+ 
+-import sentry_sdk
++import wulifang.vendor.sentry_sdk as sentry_sdk
+ 
+-from sentry_sdk.utils import (
++from wulifang.vendor.sentry_sdk.utils import (
+     capture_internal_exceptions,
+     logger,
+     to_string,
+ )
+-from sentry_sdk._compat import PY2
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._compat import PY2
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if PY2:
+     from collections import Mapping
+@@ -33,7 +33,7 @@
+     from typing import List
+     from typing import Tuple
+ 
+-    from sentry_sdk._types import SamplingContext
++    from wulifang.vendor.sentry_sdk._types import SamplingContext
+ 
+ _traceparent_header_format_re = re.compile(
+     "^[ \t]*"  # whitespace
+diff -ru a/vendor/sentry_sdk/transport.py b/vendor/sentry_sdk/transport.py
+--- a/vendor/sentry_sdk/transport.py	2023-06-26 14:51:25.661820000 +0800
++++ b/vendor/sentry_sdk/transport.py	2023-06-26 18:12:56.172910500 +0800
+@@ -1,17 +1,17 @@
+ from __future__ import print_function
+ 
+ import io
+-import urllib3  # type: ignore
++import wulifang.vendor.urllib3 as urllib3  # type: ignore
+ import certifi
+ import gzip
+ 
+ from datetime import datetime, timedelta
+ 
+-from sentry_sdk.utils import Dsn, logger, capture_internal_exceptions, json_dumps
+-from sentry_sdk.worker import BackgroundWorker
+-from sentry_sdk.envelope import Envelope
++from wulifang.vendor.sentry_sdk.utils import Dsn, logger, capture_internal_exceptions, json_dumps
++from wulifang.vendor.sentry_sdk.worker import BackgroundWorker
++from wulifang.vendor.sentry_sdk.envelope import Envelope
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any
+@@ -26,7 +26,7 @@
+     from urllib3.poolmanager import PoolManager  # type: ignore
+     from urllib3.poolmanager import ProxyManager
+ 
+-    from sentry_sdk._types import Event, EndpointType
++    from wulifang.vendor.sentry_sdk._types import Event, EndpointType
+ 
+     DataCategory = Optional[str]
+ 
+@@ -122,7 +122,7 @@
+         self, options  # type: Dict[str, Any]
+     ):
+         # type: (...) -> None
+-        from sentry_sdk.consts import VERSION
++        from wulifang.vendor.sentry_sdk.consts import VERSION
+ 
+         Transport.__init__(self, options)
+         assert self.parsed_dsn is not None
+@@ -139,7 +139,7 @@
+             ca_certs=options["ca_certs"],
+         )
+ 
+-        from sentry_sdk import Hub
++        from wulifang.vendor.sentry_sdk import Hub
+ 
+         self.hub_cls = Hub
+ 
+diff -ru a/vendor/sentry_sdk/utils.py b/vendor/sentry_sdk/utils.py
+--- a/vendor/sentry_sdk/utils.py	2023-06-26 14:51:25.662796000 +0800
++++ b/vendor/sentry_sdk/utils.py	2023-06-26 18:01:12.464381700 +0800
+@@ -8,10 +8,10 @@
+ 
+ from datetime import datetime
+ 
+-import sentry_sdk
+-from sentry_sdk._compat import urlparse, text_type, implements_str, PY2
++import wulifang.vendor.sentry_sdk as sentry_sdk
++from wulifang.vendor.sentry_sdk._compat import urlparse, text_type, implements_str, PY2
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from types import FrameType
+@@ -28,7 +28,7 @@
+     from typing import Union
+     from typing import Type
+ 
+-    from sentry_sdk._types import ExcInfo, EndpointType
++    from wulifang.vendor.sentry_sdk._types import ExcInfo, EndpointType
+ 
+ 
+ epoch = datetime(1970, 1, 1)
+diff -ru a/vendor/sentry_sdk/worker.py b/vendor/sentry_sdk/worker.py
+--- a/vendor/sentry_sdk/worker.py	2023-06-26 14:51:25.662796000 +0800
++++ b/vendor/sentry_sdk/worker.py	2023-06-26 18:00:57.628241200 +0800
+@@ -2,12 +2,12 @@
+ import threading
+ 
+ from time import sleep, time
+-from sentry_sdk._compat import check_thread_support
+-from sentry_sdk._queue import Queue, Full
+-from sentry_sdk.utils import logger
+-from sentry_sdk.consts import DEFAULT_QUEUE_SIZE
++from wulifang.vendor.sentry_sdk._compat import check_thread_support
++from wulifang.vendor.sentry_sdk._queue import Queue, Full
++from wulifang.vendor.sentry_sdk.utils import logger
++from wulifang.vendor.sentry_sdk.consts import DEFAULT_QUEUE_SIZE
+ 
+-from sentry_sdk._types import MYPY
++from wulifang.vendor.sentry_sdk._types import MYPY
+ 
+ if MYPY:
+     from typing import Any

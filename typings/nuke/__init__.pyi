@@ -1,6 +1,10 @@
+# -*- coding=UTF-8 -*-
+# pyright: strict, reportUnusedImport=none
 """\
 This module provides all the Nuke-specific functions and Classes.
 """
+
+# spell-checker: words nukemath
 
 import _nukemath as math
 import _geo as geo

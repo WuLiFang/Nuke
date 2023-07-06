@@ -11,14 +11,14 @@ if TYPE_CHECKING:
 import os
 import shutil
 
-import wulifang.vendor.cast_unknown as cast
+from wulifang._util import cast_text
 import wulifang
 
 
 def copy_file(src, dst):
     # type: (Text, Text) -> Text
-    src = cast.text(src)
-    dst = cast.text(dst)
+    src = cast_text(src)
+    dst = cast_text(dst)
     if os.path.isdir(dst):
         dst = os.path.join(dst, os.path.basename(dst))
     wulifang.message.debug("copy:\n\t\t%s\n\t->\t%s" % (src, dst))
