@@ -1,4 +1,4 @@
-FROM python:3 AS build
+FROM python:3-bullseye AS build
 
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -e

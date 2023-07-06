@@ -4,7 +4,7 @@ name: docs
 
 steps:
   - name: build
-    image: python:3
+    image: python:3-bullseye
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
