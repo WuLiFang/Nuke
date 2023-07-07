@@ -8,14 +8,15 @@ import os
 
 import nuke
 
-from wulifang._util import cast_str
+from wulifang._util import cast_str, cast_text
 import wulifang.nuke
 
 
 def init_gui():
-    if nuke.NUKE_VERSION_MAJOR < 11:
+    path_input = cast_text(os.getenv("NUKE_TAB_STATS_DIR_4F14D65B"))
+    if nuke.NUKE_VERSION_MAJOR < 11 or path_input == "-":
         return
-    p = os.path.expanduser("~/.nuke/com.wlf-studio.tab-stats")
+    p = os.path.expanduser(path_input or "~/.nuke/com.wlf-studio.tab-stats")
     try:
         os.mkdir(p)
     except OSError:
@@ -28,6 +29,10 @@ def init_gui():
 #
 # nuke 会把 tab 菜单使用数据文件 (tab_stats.dat) 保存在第一个插件的位置，
 # 通过不含任何代码的此插件将统计文件存放路径固定。
+# 
+# 通过环境变量设置:
+#   NUKE_TAB_STATS_DIR_4F14D65B: 保存目录
+#     默认为 "~/.nuke/com.wlf-studio.tab-stats"。为单个减号(-)时此功能禁用。
 """
         )
 
