@@ -30,7 +30,6 @@ from ._iterkeys import iterkeys
 from ._itervalues import itervalues
 from ._json_storage_item import JSONStorageItem
 from ._layer_from_filename import layer_from_filename
-from ._lazy_loader import LazyLoader
 from ._null_time import NULL_TIME
 from ._remove_frame_placeholder import remove_frame_placeholder
 from ._remove_prefix import remove_prefix
@@ -41,3 +40,4 @@ from ._shot_from_filename import shot_from_filename
 from ._tag_from_filename import tag_from_filename
 from ._timezone import TZ_CHINA, TZ_UTC, FixedTimezone
 from ._workspace_path import workspace_path
+from ._lazy_getter import lazy_getter

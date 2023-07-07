@@ -16,7 +16,7 @@ from wulifang._util import (
     assert_isinstance,
     is_ascii,
     assert_not_none,
-    LazyLoader,
+    lazy_getter,
 )
 from wulifang.nuke._util import (
     Progress,
@@ -139,15 +139,13 @@ def _ext_by_plugin(__dir):
 
 
 class _ImportAny(_Action):
-    _known_ext = LazyLoader(
-        lambda: set(
-            _ext_by_plugin(os.path.join(cast_text(nuke.EXE_PATH), "../plugins"))
-        )
-    )
+    @lazy_getter
+    def _known_ext():
+        return _ext_by_plugin(os.path.join(cast_text(nuke.EXE_PATH), "../plugins"))
 
     def do(self, ctx):
         # type: (_FileContext) -> None
-        if not ctx.match_ext(*self._known_ext.get()):
+        if not ctx.match_ext(*self._known_ext()):
             ctx.res.nodes.append(
                 create_node(
                     "StickyNote",
