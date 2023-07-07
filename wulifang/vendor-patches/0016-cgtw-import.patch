@@ -1,0 +1,46 @@
+diff -ru a/vendor/cgtwq/__version__.py b/vendor/cgtwq/__version__.py
+--- a/vendor/cgtwq/__version__.py	2023-06-29 16:45:46.661901000 +0800
++++ b/vendor/cgtwq/__version__.py	2023-07-07 16:29:50.991529500 +0800
+@@ -16,5 +16,5 @@
+ LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
+ LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
+ LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1639551965)
+-LAST_GIT_COMMIT_SUBJECT = 'fix: should import configparser from six'
++LAST_GIT_COMMIT_SUBJECT = 'fix: should import configparser from wulifang.vendor.six'
+ LAST_GIT_COMMIT_BODY = ''
+diff -ru a/vendor/cgtwq/_field_sign.py b/vendor/cgtwq/_field_sign.py
+--- a/vendor/cgtwq/_field_sign.py	2023-06-29 16:45:46.665805000 +0800
++++ b/vendor/cgtwq/_field_sign.py	2023-07-07 16:29:50.991529500 +0800
+@@ -8,7 +8,7 @@
+     from typing import Text, Any, Sequence
+ 
+ 
+-from six import python_2_unicode_compatible  # type: ignore
++from wulifang.vendor.six import python_2_unicode_compatible  # type: ignore
+ from ._util import cast_text
+ from ._filter import Filter
+ 
+diff -ru a/vendor/cgtwq/_row_id.py b/vendor/cgtwq/_row_id.py
+--- a/vendor/cgtwq/_row_id.py	2023-06-29 16:45:46.680445000 +0800
++++ b/vendor/cgtwq/_row_id.py	2023-07-07 16:27:05.927983400 +0800
+@@ -7,7 +7,7 @@
+ if TYPE_CHECKING:
+     from typing import Text, Any
+ 
+-from six import python_2_unicode_compatible  # type: ignore
++from wulifang.vendor.six import python_2_unicode_compatible  # type: ignore
+ 
+ 
+ @python_2_unicode_compatible
+diff -ru a/vendor/cgtwq/desktop/_client_impl.py b/vendor/cgtwq/desktop/_client_impl.py
+--- a/vendor/cgtwq/desktop/_client_impl.py	2023-06-29 16:45:46.721436000 +0800
++++ b/vendor/cgtwq/desktop/_client_impl.py	2023-07-07 16:29:50.992506400 +0800
+@@ -12,7 +12,7 @@
+ import sys
+ 
+ import psutil
+-from six.moves import configparser
++from wulifang.vendor.six.moves import configparser
+ 
+ from .._client_impl import ClientImpl as BaseClientImpl
+ from .._util import cast_text
