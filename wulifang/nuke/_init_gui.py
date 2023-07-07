@@ -220,7 +220,6 @@ class _Menu(_MenuItem):
         # type: (nuke.Menu) -> nuke.Menu
         m = parent.menu(cast_str(self.name))
         if isinstance(m, nuke.Menu):
-            m.setVisible(True)
             return m
         m = parent.addMenu(
             cast_str(self.name),
