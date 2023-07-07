@@ -44,6 +44,7 @@ from . import (
     _enable_later,
     _file_mtime_check,
     _fix_read,
+    _fixed_tab_stats_path,
     _jump_to_wlf_write_frame,
     _match_drop_frame,
     _missing_frame_check,
@@ -554,6 +555,7 @@ def init_gui():
     autolabel = AutolabelService(wulifang.file)
     wulifang.cleanup.add(lambda: nuke.removeAutolabel(autolabel.autolabel))
 
+    _fixed_tab_stats_path.init_gui()
     nuke.addAutolabel(autolabel.autolabel)
     _init_menu()
     _node_menu.init_gui()
