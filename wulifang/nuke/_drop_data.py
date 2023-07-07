@@ -21,6 +21,7 @@ from wulifang._util import (
 from wulifang.nuke._util import (
     Progress,
     knob_of,
+    parse_file_input,
     create_node,
 )
 from wulifang.vendor.six.moves import urllib_parse
@@ -50,7 +51,7 @@ def _should_ignore(data):
     return False
 
 
-def _resolve_filename_by_path(path):
+def _resolve_file_input_by_path(path):
     # type: (Text) -> Iterator[Text]
     if os.path.isdir(path):
         for dirpath, _, _ in os.walk(path):
@@ -61,15 +62,15 @@ def _resolve_filename_by_path(path):
         yield path
 
 
-def _resolve_filename(data):
+def _resolve_file_input(data):
     # type: (Text) -> Iterator[Text]
 
     url = urllib_parse.urlparse(data)
     if url.scheme == "file":
-        for i in _resolve_filename_by_path(urllib_parse.unquote(url.path)):
+        for i in _resolve_file_input_by_path(urllib_parse.unquote(url.path)):
             yield i
     else:
-        for i in _resolve_filename_by_path(data):
+        for i in _resolve_file_input_by_path(data):
             yield i
 
 
@@ -83,11 +84,11 @@ class _FileContext:
         def __init__(self):
             RuntimeError.__init__(self, "cancelled")
 
-    def __init__(self, res, filename):
+    def __init__(self, __res, __file_input):
         # type: (Result,Text) -> None
-        self.res = res
-        self.filename = filename
-        _, ext = os.path.splitext(self.filename)
+        self.res = __res
+        self.file = parse_file_input(__file_input)
+        _, ext = os.path.splitext(self.file.name())
         self.ext = ext
         self.ext_lower = ext.lower()
 
@@ -116,7 +117,7 @@ class _ImportDeepEXR(_Action):
             return
         n = nuke.nodes.DeepRead()
         assert_isinstance(n[cast_str("file")], nuke.File_Knob).fromUserText(
-            cast_str(ctx.filename)
+            cast_str(ctx.file.raw())
         )
         if n.hasError():
             nuke.delete(n)
@@ -141,7 +142,7 @@ def _ext_by_plugin(__dir):
 class _ImportAny(_Action):
     @lazy_getter
     def _known_ext():
-        return _ext_by_plugin(os.path.join(cast_text(nuke.EXE_PATH), "../plugins"))
+        return set(_ext_by_plugin(os.path.join(cast_text(nuke.EXE_PATH), "../plugins")))
 
     def do(self, ctx):
         # type: (_FileContext) -> None
@@ -149,14 +150,14 @@ class _ImportAny(_Action):
             ctx.res.nodes.append(
                 create_node(
                     "StickyNote",
-                    label="未支持导入此文件类型（%s）:\n%s" % (ctx.ext, ctx.filename),
+                    label="未支持导入此文件类型（%s）:\n%s" % (ctx.ext, ctx.file.raw()),
                 )
             )
             return
 
         n = nuke.createNode(cast_str("Read"))
         assert_isinstance(n[cast_str("file")], nuke.File_Knob).fromUserText(
-            cast_str(ctx.filename)
+            cast_str(ctx.file.raw())
         )
         if n.hasError():
             nuke.delete(n)
@@ -202,13 +203,13 @@ class _Import3D(_Action):
             n,
             "file",
             nuke.File_Knob,
-        ).fromUserText(cast_str(ctx.filename))
+        ).fromUserText(cast_str(ctx.file.raw()))
         if nuke.expression(cast_str("%s.animated" % (cast_text(n.name()),))):
             knob_of(n, "read_from_file", nuke.Boolean_Knob).setValue(False)
         else:
             nuke.delete(n)
             n = nuke.createNode(cast_str("ReadGeo2"))
-            knob_of(n, "file", nuke.File_Knob).fromUserText(cast_str(ctx.filename))
+            knob_of(n, "file", nuke.File_Knob).fromUserText(cast_str(ctx.file.raw()))
             knob_of(n, "all_objects", nuke.Boolean_Knob).setValue(True)
         if n.hasError():
             nuke.delete(n)
@@ -222,12 +223,12 @@ class _ImportNK(_Action):
         if not ctx.match_ext(".nk", ".nkc", ".nknc", ".nkind"):
             return
         n = assert_isinstance(
-            nuke.nodes.Group(label=cast_str(ctx.filename)),
+            nuke.nodes.Group(label=cast_str(ctx.file.raw())),
             nuke.Group,
         )
         n.setName(cast_str("Group_import_1"))
         with n:
-            nuke.scriptReadFile(cast_str(ctx.filename))
+            nuke.scriptReadFile(cast_str(ctx.file.raw()))
         k = nuke.PyScript_Knob(
             cast_str("expand"),
             cast_str("展开组"),
@@ -243,7 +244,7 @@ class _ImportVectorField(_Action):
         if not ctx.match_ext(".vf"):
             return
         n = nuke.nodes.Vectorfield(
-            vfield_file=cast_str(ctx.filename),
+            vfield_file=cast_str(ctx.file.raw()),
             file_type=cast_str("vf"),
             label=cast_str("[value this.vfield_file]"),
         )
@@ -259,7 +260,7 @@ class _FilenameCheck(_Action):
         if self._is_ascii_path_only is not None:
             return self._is_ascii_path_only
         self._is_ascii_path_only = nuke.ask(
-            cast_str("%s\n使用非英文路径可能导致Nuke出错，全部忽略？" % (ctx.filename,)),
+            cast_str("%s\n使用非英文路径可能导致Nuke出错，全部忽略？" % (ctx.file.name(),)),
         )
         return self._is_ascii_path_only
 
@@ -267,14 +268,14 @@ class _FilenameCheck(_Action):
         # type: (_FileContext) -> None
 
         ignore_pat = (r"thumbs\.db$", r".*\.lock$", r".* - 副本\b")
-        basename = os.path.basename(ctx.filename)
+        basename = os.path.basename(ctx.file.name())
         if basename.startswith("."):
             raise ctx.Cancelled()
 
         for pat in ignore_pat:
             if re.match(pat, basename, flags=re.I | re.U):
                 raise ctx.Cancelled()
-        if not is_ascii(ctx.filename):
+        if not is_ascii(ctx.file.name()):
             if self.is_ascii_path_only(ctx):
                 raise ctx.Cancelled()
 
@@ -286,7 +287,7 @@ class _FilenameCheck(_Action):
                             "autolabel {{'<div align=\"center\">'+autolabel()+'</div>'}} "
                             "label {{{}\n\n"
                             '<span style="color:red;text-align:center;font-weight:bold">'
-                            "mov,mp4格式使用非英文路径将可能导致崩溃</span>}}".format(ctx.filename)
+                            "mov,mp4格式使用非英文路径将可能导致崩溃</span>}}".format(ctx.file.name())
                         ),
                         inpanel=False,
                     )
@@ -323,7 +324,7 @@ def drop_data(mime_type, data):
 
     actions = tuple(_actions())
     with Progress("处理拖放文件") as p:
-        for i in _resolve_filename(text):
+        for i in _resolve_file_input(text):
             p.set_message(i)
             p.increase()
             ctx = _FileContext(res, i)
