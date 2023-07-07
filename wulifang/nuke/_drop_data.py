@@ -6,7 +6,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import os
 import re
 import logging
-import mimetypes
 
 import nuke
 
@@ -17,6 +16,7 @@ from wulifang._util import (
     assert_isinstance,
     is_ascii,
     assert_not_none,
+    LazyLoader,
 )
 from wulifang.nuke._util import (
     Progress,
@@ -124,58 +124,39 @@ class _ImportDeepEXR(_Action):
         ctx.res.nodes.append(n)
 
 
+def _ext_by_plugin(__dir):
+    # type: (Text) -> Iterator[Text]
+    try:
+        files = os.listdir(__dir)
+    except OSError:
+        return
+
+    for file in files:
+        s = file.lower()
+        if "reader" not in s:
+            continue
+        yield ".%s" % (s[: s.index("reader")],)
+
+
 class _ImportAny(_Action):
-    # powershell under NukeX.YvZ/plugins:
-    # > ls *Reader.dll | % { $_.Name -replace '(.*)Reader.dll','.$1' }
-    _known_ext = (
-        # ".abc",
-        ".arri",
-        ".avi",
-        ".cin",
-        ".crw",
-        ".dng",
-        ".dpx",
-        ".exr",
-        # ".fbx",
-        ".fpi",
-        ".gif",
-        ".hdr",
-        ".iff",
-        ".jpeg",
-        # ".mov32",
-        # ".mov64",
-        ".mov",
-        ".mxf",
-        # ".nkc",
-        # ".nk",
-        ".obj",
-        ".pic",
-        ".png",
-        ".psd",
-        ".r3d",
-        ".rla",
-        ".sgi",
-        ".targa",
-        ".tiff",
-        ".xpm",
-        ".yuv",
+    _known_ext = LazyLoader(
+        lambda: set(
+            _ext_by_plugin(os.path.join(cast_text(nuke.EXE_PATH), "../plugins"))
+        )
     )
 
     def do(self, ctx):
         # type: (_FileContext) -> None
-        if not ctx.match_ext(*self._known_ext):
-            mime, _ = mimetypes.guess_type(ctx.filename)
-            if not (mime and mime.startswith(("image/", "video/"))):
-                ctx.res.nodes.append(
-                    create_node(
-                        "StickyNote",
-                        label="未支持导入此文件类型（%s）:\n%s" % (mime, ctx.filename),
-                    )
+        if not ctx.match_ext(*self._known_ext.get()):
+            ctx.res.nodes.append(
+                create_node(
+                    "StickyNote",
+                    label="未支持导入此文件类型（%s）:\n%s" % (ctx.ext, ctx.filename),
                 )
-                return
+            )
+            return
 
         n = nuke.createNode(cast_str("Read"))
-
         assert_isinstance(n[cast_str("file")], nuke.File_Knob).fromUserText(
             cast_str(ctx.filename)
         )
@@ -187,9 +168,26 @@ class _ImportAny(_Action):
 
 
 class _Import3D(_Action):
+
+    _known_ext = (
+        ".abc",
+        ".abcScene",
+        ".fbx",
+        ".fbxScene",
+        ".Unreal",
+        ".usda",
+        ".usdaScene",
+        ".usdc",
+        ".usdcScene",
+        ".usd",
+        ".usdScene",
+        ".usdz",
+        ".usdzScene",
+    )
+
     def do(self, ctx):
         # type: (_FileContext) -> None
-        if not ctx.match_ext(".fbx", ".abc"):
+        if not ctx.match_ext(*self._known_ext):
             return
 
         n = nuke.createNode(
@@ -223,7 +221,7 @@ class _Import3D(_Action):
 class _ImportNK(_Action):
     def do(self, ctx):
         # type: (_FileContext) -> None
-        if not ctx.match_ext(".nk", ".nkc"):
+        if not ctx.match_ext(".nk", ".nkc", ".nknc", ".nkind"):
             return
         n = assert_isinstance(
             nuke.nodes.Group(label=cast_str(ctx.filename)),

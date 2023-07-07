@@ -30,6 +30,7 @@ from ._iterkeys import iterkeys
 from ._itervalues import itervalues
 from ._json_storage_item import JSONStorageItem
 from ._layer_from_filename import layer_from_filename
+from ._lazy_loader import LazyLoader
 from ._null_time import NULL_TIME
 from ._remove_frame_placeholder import remove_frame_placeholder
 from ._remove_prefix import remove_prefix
