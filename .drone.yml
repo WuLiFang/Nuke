@@ -26,92 +26,6 @@ steps:
       - bash ./scripts/ci-build-docs.sh
 ---
 kind: pipeline
-name: nuke10.0v4
-
-steps:
-  - name: test
-    image: docker:stable-git
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    environment:
-      foundry_LICENSE:
-        from_secret: foundry_LICENSE
-    commands:
-      - >-
-        docker build
-        --build-arg HTTP_PROXY
-        --build-arg HTTPS_PROXY
-        --build-arg PIP_INDEX_URL
-        --build-arg PIP_TRUSTED_HOST
-        --build-arg "VERSION=10.0v4"
-        --build-arg foundry_LICENSE
-        --file test.Dockerfile
-        .
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
----
-kind: pipeline
-name: nuke10.5v7
-
-steps:
-  - name: test
-    image: docker:stable-git
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    environment:
-      PIP_NO_BUILD_ISOLATION: false
-      foundry_LICENSE:
-        from_secret: foundry_LICENSE
-    commands:
-      - >-
-        docker build
-        --build-arg HTTP_PROXY
-        --build-arg HTTPS_PROXY
-        --build-arg PIP_INDEX_URL
-        --build-arg PIP_TRUSTED_HOST
-        --build-arg "VERSION=10.5v7"
-        --build-arg foundry_LICENSE
-        --file test.Dockerfile
-        .
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
----
-kind: pipeline
-name: nuke11
-
-steps:
-  - name: test
-    image: docker:stable-git
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    environment:
-      PIP_NO_BUILD_ISOLATION: false
-      foundry_LICENSE:
-        from_secret: foundry_LICENSE
-    commands:
-      - >-
-        docker build
-        --build-arg HTTP_PROXY
-        --build-arg HTTPS_PROXY
-        --build-arg PIP_INDEX_URL
-        --build-arg PIP_TRUSTED_HOST
-        --build-arg "VERSION=11"
-        --build-arg foundry_LICENSE
-        --file test.Dockerfile
-        .
-volumes:
-  - name: dockersock
-    host:
-      path: /var/run/docker.sock
----
-kind: pipeline
 name: notification
 
 clone:
@@ -134,9 +48,6 @@ steps:
       to:
         from_secret: YOUDU_TO
 depends_on:
-  - nuke10.0v4
-  - nuke10.5v7
-  - nuke11
   - docs
 trigger:
   status:
