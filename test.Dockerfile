@@ -27,7 +27,6 @@ COPY --chown=nuke ./dev-requirements.txt ./requirements.txt ./
 COPY --chown=nuke ./vendor ./vendor
 COPY --chown=nuke ./Makefile ./
 COPY --chown=nuke ./scripts ./scripts
-COPY --chown=nuke ./patches ./patches
 RUN make .venv/.sentinel lib/site-packages/.sentinel
 COPY --chown=nuke . .
 
