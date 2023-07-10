@@ -215,10 +215,9 @@ class _Switch(object):
                     j
                     for i in nodes
                     for j in i.dependencies(nuke.INPUTS | nuke.HIDDEN_INPUTS)
-                    if i
                 )
-                ret.update(set(deps))
                 nodes = [n for n in deps if n not in ret and n not in nodes]
+                ret.update(set(deps))
             return ret
 
         h = hashlib.md5()
