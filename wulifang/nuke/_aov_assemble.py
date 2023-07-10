@@ -92,7 +92,11 @@ class _Context(object):
             self._layer_spec_index_by_name[i.name] = index
             for j in i.alias:
                 self._layer_spec_index_by_name[j] = index
-        # self._output = None  # type: Optional[nuke.Node]
+        self.output = (
+            self.obtain_rgb_node(spec.output_layer_name)
+            or inputs.by_layer.get(spec.output_layer_name)
+            or inputs.by_layer.get("rgb")
+        )
 
     def layer(self, name):
         # type: (Text) -> Optional[_types.AOVLayer]
@@ -108,13 +112,19 @@ class _Context(object):
             return
         existing = self._inputs.by_layer.get(layer.name)
         if existing:
+            if self.output and any(
+                cast_text(i) == layer.name for i in nuke.layers(self.output)
+            ):
+                input0 = self.output
+            else:
+                input0 = existing
+
             if cast_text(existing.Class()) != "Shuffle":
                 add_rgba_layer(layer.name)
                 n = create_node(
                     "Shuffle",
                     "in %s\nout rgb" % layer.name,
-                    inputs=(existing,),
-                    hide_input=True,
+                    inputs=(input0,),
                 )
                 self._inputs.by_layer[layer.name] = n
                 return n
@@ -272,12 +282,6 @@ def assemble(nodes, spec=None):
                     )
                 )
 
-    output = (
-        ctx.obtain_rgb_node(spec.output_layer_name)
-        or input.by_layer.get(spec.output_layer_name)
-        or input.by_layer.get("rgb")
-    )
-
     # prepare input nodes
 
     # rename
@@ -287,36 +291,36 @@ def assemble(nodes, spec=None):
             if not src_node:
                 continue
             src_layers = set(cast_text(i) for i in nuke.layers(src_node))
-            output = copy_layer(
-                output,
+            ctx.output = copy_layer(
+                ctx.output,
                 layer.name,
                 src_node,
                 next(j for j in (alias, layer.name, "rgba") if j in src_layers),
             )
-            input.by_layer[layer.name] = output
+            input.by_layer[layer.name] = ctx.output
     # copy
     for layer in (i for i in spec.layers if i.operation == "COPY"):
         src_node = input.by_layer.get(layer.name)
         if not src_node:
             continue
         src_layers = set(cast_text(i) for i in nuke.layers(src_node))
-        output = copy_layer(
-            output,
+        ctx.output = copy_layer(
+            ctx.output,
             layer.name,
             src_node,
             next(j for j in (layer.name, "rgba") if j in src_layers),
         )
 
     # plus
-    dot_before_plus = create_node("Dot", inputs=(output,))
+    dot_before_plus = create_node("Dot", inputs=(ctx.output,))
     remove_node = create_node("Remove", "channels rgb", inputs=(dot_before_plus,))
-    output = remove_node
+    ctx.output = remove_node
 
     for layer in (i for i in spec.layers if i.operation == "PLUS"):
         src_node = ctx.obtain_rgb_node(layer.name)
         if src_node:
-            output_layers = set(cast_text(i) for i in nuke.layers(output))
-            output = create_node(
+            output_layers = set(cast_text(i) for i in nuke.layers(ctx.output))
+            ctx.output = create_node(
                 "Merge2",
                 "\n".join(
                     (
@@ -326,7 +330,7 @@ def assemble(nodes, spec=None):
                         % (layer.name if layer.name not in output_layers else "none",),
                     )
                 ),
-                inputs=(output, src_node),
+                inputs=(ctx.output, src_node),
                 label=layer.label,
             )
 
@@ -338,16 +342,16 @@ def assemble(nodes, spec=None):
                 r"""which {{{\[python %s.which(\"%s\")]}}}"""
                 % (
                     _SWITCH_GLOBAL_CLASS,
-                    _Switch.hash(node=output),
+                    _Switch.hash(node=ctx.output),
                 ),
                 "onCreate {%s}" % (_SWITCH_ON_CREATE,),
             )
         ),
         label="%s 组装\n自动开关" % (spec.name,),
-        inputs=(dot_before_plus, output),
+        inputs=(dot_before_plus, ctx.output),
     )
 
-    if remove_node is output:
+    if remove_node is ctx.output:
         knob_of(switch, "disable", class_=nuke.Boolean_Knob).setValue(True)
 
     auto_place(switch, recursive=True, async_=True)
