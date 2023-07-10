@@ -113,6 +113,8 @@ class _Context(object):
                 n = create_node(
                     "Shuffle",
                     "in %s\nout rgb" % layer.name,
+                    inputs=(existing,),
+                    hide_input=True,
                 )
                 self._inputs.by_layer[layer.name] = n
                 return n
