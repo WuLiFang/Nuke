@@ -18,7 +18,7 @@ def init_gui():
         return
     p = os.path.expanduser(path_input or "~/.nuke/com.wlf-studio.tab-stats")
     try:
-        os.mkdir(p)
+        os.makedirs(p)
     except OSError:
         pass
     with io.open(p + "/init.py", "w", encoding="utf-8") as f:
