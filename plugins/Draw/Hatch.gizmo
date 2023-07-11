@@ -4,11 +4,10 @@ Group {
  name Hatch1
  addUserKnob {20 Hatch l "Hatch v0.1.1"}
  addUserKnob {4 output l "output (输出)" t "要输出的内容\n\nline: 排线\ndot: 点" M {line dot "" "" "" ""}}
- output dot
  addUserKnob {3 size l "size (尺寸)" t 单元的长和宽（像素）。}
  size 41
  addUserKnob {7 rotate l "rotate (旋转)" t 旋转角度。 R 0 180}
- rotate 45
+ rotate 135
  addUserKnob {12 origin l "origin (原点)" t 坐标原点位置。}
  addUserKnob {26 ""}
  addUserKnob {26 docs l "" +STARTLINE T "基于输入进行图案填充，无输入节点时使用 0.5 作为输入。\n每个通道单独计算，支持彩色输入。\n鼠标悬停于调节选项可查看说明。\n\n提示：为优化性能，只从像素所属单元的中心点采样。\n需受其他像素影响时可将先将输入模糊。\n\n© 2023 北京吾立方数码科技有限公司"}
