@@ -1,0 +1,56 @@
+#! C:/Program Files/Nuke10.5v7/nuke-10.5.7.dll -nx
+version 10.5 v7
+Group {
+ name Hatch1
+ addUserKnob {20 Hatch l "Hatch v0.1.0"}
+ addUserKnob {4 output l "output (输出)" t "要输出的内容\n\nline: 排线\ndot: 点" M {line dot "" "" "" ""}}
+ addUserKnob {3 size l "size (尺寸)" t 单元的长和宽（像素）。}
+ size 41
+ addUserKnob {7 rotate l "rotate (旋转)" t "旋转角度。" R 0 180}
+ rotate 45
+ addUserKnob {26 ""}
+ addUserKnob {26 docs l "" +STARTLINE T "基于输入进行图案填充，无输入节点时使用 0.5 作为输入。\n每个通道单独计算，支持彩色输入。\n鼠标悬停于调节选项可查看说明。\n\n提示：为优化性能，只从像素所属单元的中心点采样。\n需受其他像素影响时可将先将输入模糊。\n\n© 2023 北京吾立方数码科技有限公司"}
+ addUserKnob {20 gpu l GPU}
+ addUserKnob {41 "Local GPU: " T BlinkScript1.gpuName}
+ addUserKnob {41 "Use GPU if Available" T BlinkScript1.useGPUIfAvailable}
+}
+ Constant {
+  inputs 0
+  color 0.5
+  name Constant1
+  xpos 90
+  ypos -180
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 0
+  ypos -210
+ }
+ Switch {
+  inputs 2
+  which {{"\[inputs parent]==0"}}
+  name Switch1
+  selected true
+  xpos 0
+  ypos -100
+ }
+ BlinkScript {
+  ProgramGroup 1
+  KernelDescription "2 \"HatchKernal\" iterate componentWise fb7af0a48d12da35585c55c42a260bb8c5949504a3a49a07640ce65d6d522ca9 2 \"src\" Read Ranged2D \"dst\" Write Point 3 \"size\" Int 1 AAAAAA== \"rotate\" Float 1 AAAAAA== \"output\" Int 1 AAAAAA== 3 \"size\" 1 1 \"rotate\" 1 1 \"output\" 1 1 2 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA="
+  kernelSource "// HatchKernel v0.1.0\n// TODO: release v1 after 2023-09-11\nkernel HatchKernal : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  int size;\n  float rotate;\n  // -5: index is even\n  // -4: index\n  // -3: raw pos\n  // -2: pos\n  // -1: offset\n  // 0: line\n  // 1: dot\n  int output;\n\nlocal:\n  void init() \{\n    src.setRange(-size, -size, size, size);\n  \}\n  \n  float2 rotate2D(float2 v, float radians)\n  \{\n    return float2(\n      v.x * cos(radians) - v.y * sin(radians),\n      v.x * sin(radians) + v.y * cos(radians)\n    );\n  \}\n\n  float2 centerOffset(float2 p0)\n  \{\n    int2 index = int2(floor(p0.x / size), floor(p0.y / size));\n    float2 center = float2(\n      index.x * size + float(size) / 2,\n      index.y * size + float(size) / 2\n    );\n    return center - p0;\n  \}\n\n  void process(int3 rawPos)\n  \{\n    float2 pos = rotate2D(float2(rawPos.x, rawPos.y), rotate);\n    int comp = rawPos.z;\n    float2 offset = centerOffset(pos);\n    float v = src(int(offset.x), int(offset.y));\n\n    if (output == -5) \{\n        int2 index = int2(floor(pos.x / size), floor(pos.y / size));\n        if (comp == 0) \{\n          dst() = abs(index.x % 2);\n        \} else if (comp == 1) \{\n          dst() = abs(index.y % 2);\n        \} else \{\n          dst() = 0;\n        \}\n    \} else if (output == -4) \{\n        int2 index = int2(floor(pos.x / size), floor(pos.y / size));\n        if (comp == 0) \{\n          dst() = index.x;\n        \} else if (comp == 1) \{\n          dst() = index.y;\n        \} else \{\n          dst() = 0;\n        \}\n    \} else if (output == -3) \{\n        if (comp == 0) \{\n          dst() = rawPos.x;\n        \} else if (comp == 1) \{\n          dst() = rawPos.y;\n        \} else \{\n          dst() = 0;\n        \}\n    \} else if (output == -2) \{\n        if (comp == 0) \{\n          dst() = pos.x;\n        \} else if (comp == 1) \{\n          dst() = pos.y;\n        \} else \{\n          dst() = 0;\n        \}\n    \} else if (output == -1) \{\n        if (comp == 0) \{\n          dst() = offset.x;\n        \} else if (comp == 1) \{\n          dst() = offset.y;\n        \} else \{\n          dst() = 0;\n        \}\n    \} else if (output == 0) \{\n        float h = v * float(size);\n        float y = dot(offset, float2(0.0, 1.0));\n        dst() = fabs(y) <= h / 2.0;\n    \} else if (output == 1) \{\n        float r = v * float(size) / 2.0;\n        float d = length(offset);\n        dst() = d <= r;        \n    \} else \{\n      dst() = 0;\n    \}\n  \}\n\};\n"
+  rebuild ""
+  HatchKernal_size {{parent.size}}
+  HatchKernal_rotate {{"parent.rotate / 180 * pi"}}
+  HatchKernal_output {{parent.output}}
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos 0
+  ypos -68
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos -20
+ }
+end_group
