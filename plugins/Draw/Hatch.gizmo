@@ -2,7 +2,7 @@
 version 10.5 v7
 Group {
  name Hatch1
- addUserKnob {20 Hatch l "Hatch v0.1.2"}
+ addUserKnob {20 Hatch l "Hatch v0.1.3"}
  addUserKnob {4 input l "input (输入)" t "输入采样方式\n\nraw: 原始输入\ncenter: 单元中心\nrotate around center: 绕中心旋转" M {raw center "rotate around center"}}
  addUserKnob {7 rotateAroundCenter l "" t 绕单元中心旋转的角度。 R 0 360}
  rotateAroundCenter 90
@@ -11,6 +11,9 @@ Group {
  addUserKnob {7 rotate l "rotate (旋转)" t 旋转角度。 R 0 180}
  rotate 135
  addUserKnob {12 origin l "origin (原点)" t 坐标原点位置。}
+ addUserKnob {7 renderScale l "renderScale (渲染精度)" t "以指定尺寸缩放后再处理\n在保证效果的前提下用尽量小的值来减少性能开销。" R 0.1 4}
+ renderScale 1
+ addUserKnob {41 filter l "filter (过滤器)" t "缩放过滤器，渲染精度为 1 时无效。" T Reformat2.filter}
  addUserKnob {4 output l "output (输出)" t "要输出的内容\n\ninput: 输入采样\nline: 排线\ndot: 点" M {input line dot}}
  output line
  addUserKnob {26 ""}
@@ -27,29 +30,37 @@ nuke.thisNode()["rotateAroundCenter"].setVisible(nuke.value("input") == "rotate 
   color 0.5
   name Constant1
   xpos 90
-  ypos -180
+  ypos -228
  }
  Input {
   inputs 0
   name Input
   xpos 0
-  ypos -210
+  ypos -256
  }
  Switch {
   inputs 2
   which {{"\[inputs parent]==0"}}
   name Switch1
   xpos 0
-  ypos -100
+  ypos -152
+ }
+ Reformat {
+  type scale
+  name Reformat1
+  scale {{parent.renderScale}}
+  xpos 0
+  ypos -120
+  disable {{"parent.renderScale == 1"}}
  }
  BlinkScript {
   ProgramGroup 1
-  KernelDescription "2 \"HatchKernal\" iterate componentWise 3f8a0d8f40b3cd696330a12ed8f4071f9f70927db75a5ddfb72093bbc5a85b89 2 \"src\" Read Ranged2D \"dst\" Write Point 6 \"input\" Int 1 AAAAAA== \"size\" Float 2 AAAAAAAAAAA= \"origin\" Float 2 AAAAAAAAAAA= \"rotate\" Float 1 AAAAAA== \"rotateAroundCenter\" Float 1 AAAAAA== \"output\" Int 1 AAAAAA== 6 \"input\" 1 1 \"size\" 2 1 \"origin\" 2 1 \"rotate\" 1 1 \"rotateAroundCenter\" 1 1 \"output\" 1 1 2 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA="
-  kernelSource "// HatchKernel v0.1.2\n// TODO: release v1 after 2023-09-11\nkernel HatchKernal : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  // 0: raw\n  // 1: center\n  // 3: rotate around center\n  int input;\n  float2 size;\n  float2 origin;\n  float rotate;\n  float rotateAroundCenter;\n  // 0: input\n  // 1: line\n  // 2: dot\n  // -1: offset0\n  // -2: offset1\n  // -3: p0 (raw)\n  // -4: p1 (after rotate)\n  // -5: center0\n  // -6: center1\n  // -7: index\n  // -8: index is even\n  int output;\n\nlocal:\n  void init() \{\n    src.setRange(-size.x, -size.x, size.y, size.y);\n  \}\n  \n  float2 rotate2D(float2 v, float radians)\n  \{\n    if (radians == 0)\{\n      return v;\n    \}\n    return float2(\n      v.x * cos(radians) - v.y * sin(radians),\n      v.x * sin(radians) + v.y * cos(radians)\n    );\n  \}\n\n\n  void process(int3 pos)\n  \{\n    float2 p0 = float2(pos.x, pos.y);\n    int comp = pos.z;\n    float2 p1 = rotate2D(p0-origin, rotate);\n    int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));\n    float2 center1 = float2(\n      float(index.x) * size.x + size.x / 2,\n      float(index.y) * size.y + size.y / 2\n    );\n    float2 center0 = rotate2D(center1, -rotate);\n    center0.x = floor(center0.x);\n    center0.y = floor(center0.y);\n    float2 offset1 = p1 - center1;\n    float2 offset0 = p0 - center0;\n    float v;\n    if (input == 0) \{\n      v = src(0, 0);\n    \} else if (input == 1) \{\n      v = src(-int(offset0.x), -int(offset0.y));\n    \} else if (input == 2) \{\n      float2 offset = rotate2D(offset0, rotateAroundCenter) - offset0;\n      v = src(-int(offset.x), -int(offset.y));\n    \} else if (input == 3) \{\n      float2 offset = rotate2D(offset0, rotateAroundCenter);\n      v = src(-int(offset.x), -int(offset.y));\n    \} else \{\n      v = 0;\n    \}\n    \n    if (output == 0) \{\n      dst() = v;\n    \} else if (output == 1) \{\n      float h = v * size.y;\n      dst() = fabs(offset1.y) <= h / 2.0;\n    \} else if (output == 2) \{\n      dst() = length(offset1 / size) <= v / 2.0;\n    \} else if (output == -1) \{\n      if (comp == 0) \{\n        dst() = offset0.x;\n      \} else if (comp == 1) \{\n        dst() = offset0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -2) \{\n      if (comp == 0) \{\n        dst() = offset1.x;\n      \} else if (comp == 1) \{\n        dst() = offset1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -3) \{\n      if (comp == 0) \{\n        dst() = p0.x;\n      \} else if (comp == 1) \{\n        dst() = p0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -4) \{\n      if (comp == 0) \{\n        dst() = p1.x;\n      \} else if (comp == 1) \{\n        dst() = p1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -5) \{\n      if (comp == 0) \{\n        dst() = center0.x;\n      \} else if (comp == 1) \{\n        dst() = center0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -6) \{\n      if (comp == 0) \{\n        dst() = center1.x;\n      \} else if (comp == 1) \{\n        dst() = center1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -7) \{\n      if (comp == 0) \{\n        dst() = index.x;\n      \} else if (comp == 1) \{\n        dst() = index.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -8) \{\n      if (comp == 0) \{\n        dst() = abs(index.x % 2);\n      \} else if (comp == 1) \{\n        dst() = abs(index.y % 2);\n      \} else \{\n        dst() = 0;\n      \}\n    \} else \{\n      dst() = 0;\n    \}\n  \}\n\};\n"
+  KernelDescription "2 \"HatchKernal\" iterate componentWise dea285e4655ab41b39d2432e1c9a0a7370a6891d10671ecb05c6bfcf08b564bc 2 \"src\" Read Ranged2D \"dst\" Write Point 6 \"input\" Int 1 AAAAAA== \"size\" Float 2 AAAAAAAAAAA= \"origin\" Float 2 AAAAAAAAAAA= \"rotate\" Float 1 AAAAAA== \"rotateAroundCenter\" Float 1 AAAAAA== \"output\" Int 1 AAAAAA== 6 \"input\" 1 1 \"size\" 2 1 \"origin\" 2 1 \"rotate\" 1 1 \"rotateAroundCenter\" 1 1 \"output\" 1 1 2 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA="
+  kernelSource "// HatchKernel v0.1.3\n// TODO: release v1 after 2023-09-11\nkernel HatchKernal : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  // 0: raw\n  // 1: center\n  // 3: rotate around center\n  int input;\n  float2 size;\n  float2 origin;\n  float rotate;\n  float rotateAroundCenter;\n  // 0: input\n  // 1: line\n  // 2: dot\n  // -1: offset0\n  // -2: offset1\n  // -3: p0 (raw)\n  // -4: p1 (after rotate)\n  // -5: center0\n  // -6: center1\n  // -7: index\n  // -8: index is even\n  int output;\n\nlocal:\n  void init() \{\n    src.setRange(-size.x, -size.x, size.y, size.y);\n  \}\n  \n  float2 rotate2D(float2 v, float radians)\n  \{\n    if (radians == 0)\{\n      return v;\n    \}\n    return float2(\n      v.x * cos(radians) - v.y * sin(radians),\n      v.x * sin(radians) + v.y * cos(radians)\n    );\n  \}\n\n\n  void process(int3 pos)\n  \{\n    float2 p0 = float2(pos.x, pos.y);\n    int comp = pos.z;\n    float2 p1 = rotate2D(p0-origin, rotate);\n    int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));\n    float2 center1 = float2(\n      float(index.x) * size.x + size.x / 2,\n      float(index.y) * size.y + size.y / 2\n    );\n    float2 center0 = rotate2D(center1, -rotate);\n    center0.x = floor(center0.x);\n    center0.y = floor(center0.y);\n    float2 offset1 = p1 - center1;\n    float2 offset0 = p0 - center0;\n    float v;\n    if (input == 0) \{\n      v = src(0, 0);\n    \} else if (input == 1) \{\n      v = src(-int(offset0.x), -int(offset0.y));\n    \} else if (input == 2) \{\n      float2 offset = rotate2D(offset0, rotateAroundCenter) - offset0;\n      v = src(-int(offset.x), -int(offset.y));\n    \} else if (input == 3) \{\n      float2 offset = rotate2D(offset0, rotateAroundCenter);\n      v = src(-int(offset.x), -int(offset.y));\n    \} else \{\n      v = 0;\n    \}\n    \n    if (output == 0) \{\n      dst() = v;\n    \} else if (output == 1) \{\n      float h = v * size.y;\n      dst() = fabs(offset1.y) <= h / 2.0;\n    \} else if (output == 2) \{\n      dst() = length(offset1 / size) <= v / 2.0;\n    \} else if (output == -1) \{\n      if (comp == 0) \{\n        dst() = offset0.x;\n      \} else if (comp == 1) \{\n        dst() = offset0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -2) \{\n      if (comp == 0) \{\n        dst() = offset1.x;\n      \} else if (comp == 1) \{\n        dst() = offset1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -3) \{\n      if (comp == 0) \{\n        dst() = p0.x;\n      \} else if (comp == 1) \{\n        dst() = p0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -4) \{\n      if (comp == 0) \{\n        dst() = p1.x;\n      \} else if (comp == 1) \{\n        dst() = p1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -5) \{\n      if (comp == 0) \{\n        dst() = center0.x;\n      \} else if (comp == 1) \{\n        dst() = center0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -6) \{\n      if (comp == 0) \{\n        dst() = center1.x;\n      \} else if (comp == 1) \{\n        dst() = center1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -7) \{\n      if (comp == 0) \{\n        dst() = index.x;\n      \} else if (comp == 1) \{\n        dst() = index.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -8) \{\n      if (comp == 0) \{\n        dst() = abs(index.x % 2);\n      \} else if (comp == 1) \{\n        dst() = abs(index.y % 2);\n      \} else \{\n        dst() = 0;\n      \}\n    \} else \{\n      dst() = 0;\n    \}\n  \}\n\};\n"
   rebuild ""
   HatchKernal_input {{parent.input}}
-  HatchKernal_size {{parent.size.w} {parent.size.h}}
-  HatchKernal_origin {{parent.origin.x} {parent.origin.y}}
+  HatchKernal_size {{"parent.size.w * parent.renderScale"} {"parent.size.h * parent.renderScale"}}
+  HatchKernal_origin {{"parent.origin.x * parent.renderScale"} {"parent.origin.y * parent.renderScale"}}
   HatchKernal_rotate {{"parent.rotate / 180 * pi"}}
   HatchKernal_rotateAroundCenter {{"parent.rotateAroundCenter / 180 * pi"}}
   HatchKernal_output {{parent.output}}
@@ -60,11 +71,21 @@ for k in nuke.thisNode().allKnobs():
   rebuild_finalise ""
   name BlinkScript1
   xpos 0
-  ypos -68
+  ypos -88
+ }
+ Reformat {
+  type "to box"
+  box_width {{"\[python nuke.toNode(\\\"Switch1\\\").format().width()]"}}
+  box_height {{"\[python nuke.toNode(\\\"Switch1\\\").format().height()]"}}
+  box_fixed true
+  name Reformat2
+  xpos 0
+  ypos -50
+  disable {{"parent.renderScale == 1"}}
  }
  Output {
   name Output1
   xpos 0
-  ypos -20
+  ypos -18
  }
 end_group

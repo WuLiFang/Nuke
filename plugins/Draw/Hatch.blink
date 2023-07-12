@@ -1,5 +1,5 @@
-// HatchKernel v0.1.2
-// TODO: release v1 after 2023-09-11
+// HatchKernel v0.1.3
+// TODO: release v1 after 2023-09-12
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
   Image<eRead, eAccessRanged2D, eEdgeClamped> src;
