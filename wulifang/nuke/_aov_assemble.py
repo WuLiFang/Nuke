@@ -147,24 +147,7 @@ class _Context(object):
 
 
 class _Switch(object):
-    knob_ignore = (
-        "xpos",
-        "ypos",
-        "selected",
-        "name",
-        "gl_color",
-        "tile_color",
-        "label",
-        "note_font",
-        "note_font_size",
-        "note_font_color",
-        "hide_input",
-        "cached",
-        "dope_sheet",
-        "bookmark",
-        "postage_stamp",
-        "postage_stamp_frame",
-    )
+    KF_NO_RENDERER = 0x0000000000004000
 
     @staticmethod
     def _str_output(v):
@@ -201,7 +184,10 @@ class _Switch(object):
                     nuke.WRITE_ALL | nuke.WRITE_NON_DEFAULT_ONLY | nuke.TO_VALUE
                 )
             ).split("\n"):
-                if i.partition(" ")[0] in cls.knob_ignore:
+                if not i:
+                    continue
+                k = node.knob(cls._str_input(i.partition(" ")[0]))
+                if not k or k.getFlag(cls.KF_NO_RENDERER):
                     continue
                 yield i
 
@@ -222,9 +208,10 @@ class _Switch(object):
 
         h = hashlib.md5()
         for n in upstream(node):
+            h.update(cls._str_output(n.Class()).encode("utf-8"))
             for i in knob_input(n):
                 h.update(i.encode("utf-8"))
-                h.update("\n\n".encode("utf-8"))
+            h.update("\n\n".encode("utf-8"))
         return h.hexdigest()
 
     @classmethod
