@@ -3,6 +3,8 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import sys
+
 from ._compat import text_type, binary_type
 
 
@@ -13,5 +15,8 @@ def cast_text(v):
     if v is None:
         return ""
     if isinstance(v, binary_type):
-        return v.decode("utf-8")
+        try:
+            return v.decode("utf-8")
+        except UnicodeDecodeError:
+            return v.decode(sys.getfilesystemencoding())
     return text_type(v)
