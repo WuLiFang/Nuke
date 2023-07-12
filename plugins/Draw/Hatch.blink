@@ -76,7 +76,7 @@ local:
     } else if (input == 1) {
       v = src(-int(offset0.x), -int(offset0.y));
     } else if (input == 2) {
-      float2 p3 = rotate2D(center0 + offset0 * unitScale, unitRotate, center0);
+      float2 p3 = rotate2D(center0 + offset0 / unitScale, unitRotate, center0);
       float2 offset = p3 - p0;
       v = src(int(offset.x), int(offset.y));
     } else {
