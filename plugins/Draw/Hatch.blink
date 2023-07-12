@@ -1,4 +1,4 @@
-// HatchKernel v0.1.1
+// HatchKernel v0.1.2
 // TODO: release v1 after 2023-09-11
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -6,98 +6,145 @@ kernel HatchKernal : ImageComputationKernel<eComponentWise>
   Image<eWrite, eAccessPoint> dst;
 
 param:
-  int size;
+  // 0: raw
+  // 1: center
+  // 3: rotate around center
+  int input;
+  float2 size;
   float2 origin;
   float rotate;
-  // -5: index is even
-  // -4: index
-  // -3: raw pos
-  // -2: pos
-  // -1: offset
-  // 0: line
-  // 1: dot
+  float rotateAroundCenter;
+  // 0: input
+  // 1: line
+  // 2: dot
+  // -1: offset0
+  // -2: offset1
+  // -3: p0 (raw)
+  // -4: p1 (after rotate)
+  // -5: center0
+  // -6: center1
+  // -7: index
+  // -8: index is even
   int output;
 
 local:
   void init() {
-    src.setRange(-size, -size, size, size);
+    src.setRange(-size.x, -size.x, size.y, size.y);
   }
   
   float2 rotate2D(float2 v, float radians)
   {
+    if (radians == 0){
+      return v;
+    }
     return float2(
       v.x * cos(radians) - v.y * sin(radians),
       v.x * sin(radians) + v.y * cos(radians)
     );
   }
 
-  float2 centerOffset(float2 p0)
+
+  void process(int3 pos)
   {
-    int2 index = int2(floor(p0.x / size), floor(p0.y / size));
-    float2 center = float2(
-      index.x * size + float(size) / 2,
-      index.y * size + float(size) / 2
+    float2 p0 = float2(pos.x, pos.y);
+    int comp = pos.z;
+    float2 p1 = rotate2D(p0-origin, rotate);
+    int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));
+    float2 center1 = float2(
+      float(index.x) * size.x + size.x / 2,
+      float(index.y) * size.y + size.y / 2
     );
-    return center - p0;
-  }
-
-  void process(int3 rawPos)
-  {
-    float2 pos = rotate2D(float2(rawPos.x, rawPos.y)-origin, rotate);
-    int comp = rawPos.z;
-    float2 offset = centerOffset(pos);
-    float v = src(int(offset.x), int(offset.y));
-
-    if (output == -5) {
-        int2 index = int2(floor(pos.x / size), floor(pos.y / size));
-        if (comp == 0) {
-          dst() = abs(index.x % 2);
-        } else if (comp == 1) {
-          dst() = abs(index.y % 2);
-        } else {
-          dst() = 0;
-        }
-    } else if (output == -4) {
-        int2 index = int2(floor(pos.x / size), floor(pos.y / size));
-        if (comp == 0) {
-          dst() = index.x;
-        } else if (comp == 1) {
-          dst() = index.y;
-        } else {
-          dst() = 0;
-        }
-    } else if (output == -3) {
-        if (comp == 0) {
-          dst() = rawPos.x;
-        } else if (comp == 1) {
-          dst() = rawPos.y;
-        } else {
-          dst() = 0;
-        }
-    } else if (output == -2) {
-        if (comp == 0) {
-          dst() = pos.x;
-        } else if (comp == 1) {
-          dst() = pos.y;
-        } else {
-          dst() = 0;
-        }
-    } else if (output == -1) {
-        if (comp == 0) {
-          dst() = offset.x;
-        } else if (comp == 1) {
-          dst() = offset.y;
-        } else {
-          dst() = 0;
-        }
-    } else if (output == 0) {
-        float h = v * float(size);
-        float y = dot(offset, float2(0.0, 1.0));
-        dst() = fabs(y) <= h / 2.0;
+    float2 center0 = rotate2D(center1, -rotate);
+    center0.x = floor(center0.x);
+    center0.y = floor(center0.y);
+    float2 offset1 = p1 - center1;
+    float2 offset0 = p0 - center0;
+    float v;
+    if (input == 0) {
+      v = src(0, 0);
+    } else if (input == 1) {
+      v = src(-int(offset0.x), -int(offset0.y));
+    } else if (input == 2) {
+      float2 offset = rotate2D(offset0, rotateAroundCenter) - offset0;
+      v = src(-int(offset.x), -int(offset.y));
+    } else if (input == 3) {
+      float2 offset = rotate2D(offset0, rotateAroundCenter);
+      v = src(-int(offset.x), -int(offset.y));
+    } else {
+      v = 0;
+    }
+    
+    if (output == 0) {
+      dst() = v;
     } else if (output == 1) {
-        float r = v * float(size) / 2.0;
-        float d = length(offset);
-        dst() = d <= r;        
+      float h = v * size.y;
+      dst() = fabs(offset1.y) <= h / 2.0;
+    } else if (output == 2) {
+      dst() = length(offset1 / size) <= v / 2.0;
+    } else if (output == -1) {
+      if (comp == 0) {
+        dst() = offset0.x;
+      } else if (comp == 1) {
+        dst() = offset0.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -2) {
+      if (comp == 0) {
+        dst() = offset1.x;
+      } else if (comp == 1) {
+        dst() = offset1.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -3) {
+      if (comp == 0) {
+        dst() = p0.x;
+      } else if (comp == 1) {
+        dst() = p0.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -4) {
+      if (comp == 0) {
+        dst() = p1.x;
+      } else if (comp == 1) {
+        dst() = p1.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -5) {
+      if (comp == 0) {
+        dst() = center0.x;
+      } else if (comp == 1) {
+        dst() = center0.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -6) {
+      if (comp == 0) {
+        dst() = center1.x;
+      } else if (comp == 1) {
+        dst() = center1.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -7) {
+      if (comp == 0) {
+        dst() = index.x;
+      } else if (comp == 1) {
+        dst() = index.y;
+      } else {
+        dst() = 0;
+      }
+    } else if (output == -8) {
+      if (comp == 0) {
+        dst() = abs(index.x % 2);
+      } else if (comp == 1) {
+        dst() = abs(index.y % 2);
+      } else {
+        dst() = 0;
+      }
     } else {
       dst() = 0;
     }
