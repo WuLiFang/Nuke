@@ -8,7 +8,7 @@ kernel HatchKernal : ImageComputationKernel<eComponentWise>
 param:
   // 0: raw
   // 1: center
-  // 3: rotate around center
+  // 2: rotate around center
   int input;
   float2 size;
   float2 origin;
