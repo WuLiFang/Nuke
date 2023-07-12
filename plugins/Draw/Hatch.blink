@@ -1,4 +1,4 @@
-// HatchKernel v0.1.6
+// HatchKernel v0.1.7
 // TODO: release v1 after 2023-09-12
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -8,12 +8,13 @@ kernel HatchKernal : ImageComputationKernel<eComponentWise>
 param:
   // 0: raw
   // 1: center
-  // 2: rotate around center
+  // 2: transform around center
   int input;
   float2 size;
   float2 origin;
   float rotate;
-  float rotateAroundCenter;
+  float unitRotate;
+  float2 unitScale;
   // 0: input
   // 1: line
   // 2: dot
@@ -42,7 +43,18 @@ local:
       v.x * sin(radians) + v.y * cos(radians)
     );
   }
-  
+
+  float2 rotate2D(float2 v, float radians, float2 center)
+  {
+    if (center.x == 0 && center.y == 0){
+      return rotate2D(v, radians);
+    }
+    return rotate2D(
+      v - center,
+      radians
+    ) + center;
+  }
+
   void process(int3 pos)
   {
     float2 p0 = float2(pos.x, pos.y);
@@ -64,11 +76,9 @@ local:
     } else if (input == 1) {
       v = src(-int(offset0.x), -int(offset0.y));
     } else if (input == 2) {
-      float2 offset = rotate2D(offset0, rotateAroundCenter) - offset0;
-      v = src(-int(offset.x), -int(offset.y));
-    } else if (input == 3) {
-      float2 offset = rotate2D(offset0, rotateAroundCenter);
-      v = src(-int(offset.x), -int(offset.y));
+      float2 p3 = rotate2D(center0 + offset0 * unitScale, unitRotate, center0);
+      float2 offset = p3 - p0;
+      v = src(int(offset.x), int(offset.y));
     } else {
       v = 0;
     }
