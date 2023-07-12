@@ -21,8 +21,9 @@ Group {
  addUserKnob {20 gpu l GPU}
  addUserKnob {41 "Local GPU: " T BlinkScript1.gpuName}
  addUserKnob {41 "Use GPU if Available" T BlinkScript1.useGPUIfAvailable}
- updateUI {
+ knobChanged {
 nuke.thisNode()["rotateAroundCenter"].setVisible(nuke.value("input") == "rotate around center")
+nuke.thisNode().knobs()["filter"].setVisible(nuke.numvalue("renderScale") != 1)
  }
 }
  Constant {
@@ -49,6 +50,7 @@ nuke.thisNode()["rotateAroundCenter"].setVisible(nuke.value("input") == "rotate 
   type scale
   name Reformat1
   scale {{parent.renderScale}}
+  filter {{parent.filter}}
   xpos 0
   ypos -120
   disable {{"parent.renderScale == 1"}}
