@@ -44,7 +44,7 @@ Group {
   HatchKernal_origin {{parent.origin.x} {parent.origin.y}}
   HatchKernal_rotate {{"parent.rotate / 180 * pi"}}
   HatchKernal_output {{parent.output}}
-  onCreate {nuke.thisNode()["HatchKernal_origin"].setVisible(False)}
+  onCreate {nuke.thisNode()["HatchKernal_origin"].setFlag(0x0000000000008000)}
   rebuild_finalise ""
   name BlinkScript1
   xpos 0
