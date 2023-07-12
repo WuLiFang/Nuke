@@ -1,4 +1,4 @@
-// HatchKernel v0.1.3
+// HatchKernel v0.1.4
 // TODO: release v1 after 2023-09-12
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -34,7 +34,7 @@ local:
   
   float2 rotate2D(float2 v, float radians)
   {
-    if (radians == 0){
+    if (radians == 0 || (v.x == 0 && v.y == 0)){
       return v;
     }
     return float2(
@@ -42,8 +42,7 @@ local:
       v.x * sin(radians) + v.y * cos(radians)
     );
   }
-
-
+  
   void process(int3 pos)
   {
     float2 p0 = float2(pos.x, pos.y);
@@ -54,7 +53,7 @@ local:
       float(index.x) * size.x + size.x / 2,
       float(index.y) * size.y + size.y / 2
     );
-    float2 center0 = rotate2D(center1, -rotate);
+    float2 center0 = rotate2D(center1, -rotate) + origin;
     center0.x = floor(center0.x);
     center0.y = floor(center0.y);
     float2 offset1 = p1 - center1;
