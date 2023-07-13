@@ -41,19 +41,28 @@ nuke.thisNode().knobs()["filter"].setVisible(nuke.numvalue("renderScale") != 1)
 nuke.thisNode()["pattern"].setVisible(nuke.value("output") == "pattern")
  }
 }
- Expression {
+ Reformat {
   inputs 0
+  type "to box"
+  box_width {{"\[python min(nuke.numvalue(\\\"parent.size.w\\\"),\\ nuke.toNode(\\\"Switch1\\\").format().width())]"}}
+  box_height {{"\[python min(nuke.numvalue(\\\"parent.size.h\\\"),\\ nuke.toNode(\\\"Switch1\\\").format().height())]"}}
+  box_fixed true
+  name Reformat3
+  xpos 180
+  ypos -190
+ }
+ Expression {
   expr0 "x / width"
   expr1 "y / height"
   name Expression1
   xpos 180
-  ypos -152
+  ypos -158
  }
  Input {
   inputs 0
   name pattern
   xpos 90
-  ypos -184
+  ypos -220
   number 1
  }
  Switch {
@@ -61,27 +70,27 @@ nuke.thisNode()["pattern"].setVisible(nuke.value("output") == "pattern")
   which {{"\[string equal \[input parent 1] 0]"}}
   name Switch2
   xpos 90
-  ypos -120
+  ypos -126
  }
  Constant {
   inputs 0
   color 0.5
   name Constant1
   xpos 90
-  ypos -320
+  ypos -358
  }
  Input {
   inputs 0
   name Input
   xpos 0
-  ypos -348
+  ypos -388
  }
  Switch {
   inputs 2
   which {{"\[string equal \[input parent 0] 0]"}}
   name Switch1
   xpos 0
-  ypos -244
+  ypos -282
  }
  Reformat {
   type scale
@@ -89,7 +98,7 @@ nuke.thisNode()["pattern"].setVisible(nuke.value("output") == "pattern")
   filter {{parent.filter}}
   name Reformat1
   xpos 0
-  ypos -212
+  ypos -250
   disable {{"parent.renderScale == 1"}}
  }
  BlinkScript {
@@ -116,7 +125,7 @@ for k in nuke.thisNode().allKnobs():
     k.setFlag(0x0000000000008000)
 }
   xpos 0
-  ypos -88
+  ypos -94
  }
  Reformat {
   type "to box"
@@ -125,12 +134,12 @@ for k in nuke.thisNode().allKnobs():
   box_fixed true
   name Reformat2
   xpos 0
-  ypos -50
+  ypos -52
   disable {{"parent.renderScale == 1"}}
  }
  Output {
   name Output1
   xpos 0
-  ypos -18
+  ypos -20
  }
 end_group
