@@ -18,8 +18,8 @@ Group {
  addUserKnob {4 output l "output (输出)" t "要输出的内容\n\ninput: 输入采样\nline: 排线\ndot-outside: 外切的点\ndot-inside: 内切的点\npattern: 图案" M {input line dot-outside dot-inside pattern}}
  output line
  addUserKnob {20 pattern l "pattern (图案)" n 1}
- addUserKnob {14 patternScaleMin l "scaleMin (最小缩放)" t "输入值为 0 时图案的缩放。"}
- addUserKnob {14 patternScaleMax l "scaleMax (最大缩放)" t "输入值为 1 时图案的缩放。"}
+ addUserKnob {14 patternScaleMin l "scaleMin (最小缩放)" t "输入值为 0 时图案的缩放。" R 0 1}
+ addUserKnob {14 patternScaleMax l "scaleMax (最大缩放)" t "输入值为 1 时图案的缩放。" R 0 1}
  patternScaleMax 1
  addUserKnob {7 patternValueMin l "valueMin (最小亮度)" t "输入值为 0 时图案的亮度。"}
  addUserKnob {7 patternValueMax l "valueMax (最大亮度)" t "输入值为 1 时图案的亮度。"}
