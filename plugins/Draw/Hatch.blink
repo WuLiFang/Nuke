@@ -1,4 +1,4 @@
-// HatchKernel v0.1.8
+// HatchKernel v0.1.9
 // TODO: release v1 after 2023-09-12
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -18,7 +18,8 @@ param:
   float2 unitScale;
   // 0: input
   // 1: line
-  // 2: dot
+  // 2: dot outside
+  // 3: dot inside
   // -1: offset0
   // -2: offset1
   // -3: p0 (raw)
@@ -94,6 +95,8 @@ local:
       dst() = fabs(offset1.y) <= h / 2.0f;
     } else if (output == 2) {
       dst() = length(offset1 / size) <= v * sqrt(2.0f) / 2.0f;
+    } else if (output == 3) {
+      dst() = length(offset1 / size) <= v / 2.0f;
     } else if (output == -1) {
       if (comp == 0) {
         dst() = offset0.x;
