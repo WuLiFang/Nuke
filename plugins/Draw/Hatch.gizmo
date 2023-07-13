@@ -2,24 +2,35 @@
 version 10.5 v7
 Group {
  name Hatch1
- addUserKnob {20 Hatch l "Hatch v0.1.9"}
+ inputs 2
+ addUserKnob {20 Hatch l "Hatch v0.1.10"}
  addUserKnob {4 input l "input (输入)" t "输入采样方式\n\nraw: 原始输入\ncenter: 单元中心\ntransform: 变换\nreflection: 类似反射的效果，受单元旋转影响" M {raw center transform reflection}}
- addUserKnob {7 unitRotate l "unitRotate (单元旋转)" t 绕单元中心旋转的角度。 R 0 360}
+ addUserKnob {7 unitRotate l "unitRotate (单元旋转)" t 绕单元中心旋转的角度。 R -180 180}
  unitRotate 90
  addUserKnob {14 unitScale l "unitScale (单元缩放)" t 绕单元中心缩放的倍数。}
  unitScale 1
  addUserKnob {14 size l "size (尺寸)" t 单元的长和宽（像素）。}
  size 41
- addUserKnob {7 rotate l "rotate (旋转)" t 旋转角度。 R 0 180}
- rotate 135
+ addUserKnob {7 rotate l "rotate (旋转)" t 旋转角度。 R -180 180}
+ rotate -45
  addUserKnob {12 origin l "origin (原点)" t 坐标原点位置。}
+ addUserKnob {26 ""}
+ addUserKnob {4 output l "output (输出)" t "要输出的内容\n\ninput: 输入采样\nline: 排线\ndot-outside: 外切的点\ndot-inside: 内切的点\npattern: 图案" M {input line dot-outside dot-inside pattern}}
+ output line
+ addUserKnob {20 pattern l "pattern (图案)" n 1}
+ addUserKnob {14 patternScaleMin l "scaleMin (最小缩放)" t "输入值为 0 时图案的缩放。"}
+ addUserKnob {14 patternScaleMax l "scaleMax (最大缩放)" t "输入值为 1 时图案的缩放。"}
+ patternScaleMax 1
+ addUserKnob {7 patternValueMin l "valueMin (最小亮度)" t "输入值为 0 时图案的亮度。"}
+ addUserKnob {7 patternValueMax l "valueMax (最大亮度)" t "输入值为 1 时图案的亮度。"}
+ patternValueMax 1
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {26 ""}
  addUserKnob {7 renderScale l "renderScale (渲染精度)" t "以指定尺寸缩放后再处理\n在保证效果的前提下用尽量小的值来减少性能开销。" R 0.1 4}
  renderScale 1
  addUserKnob {41 filter l "filter (过滤器)" t "缩放过滤器，渲染精度为 1 时无效。" T Reformat2.filter}
- addUserKnob {4 output l "output (输出)" t "要输出的内容\n\ninput: 输入采样\nline: 排线\ndot-outside: 外切的点\ndot-inside: 内切的点" M {input line dot-outside dot-inside}}
- output line
  addUserKnob {26 ""}
- addUserKnob {26 docs l "" +STARTLINE T "基于输入进行图案填充，无输入节点时使用 0.5 作为输入。\n每个通道单独计算，支持彩色输入。\n\n鼠标悬停于调节选项可查看说明。\n\n© 2023 北京吾立方数码科技有限公司"}
+ addUserKnob {26 docs l "" +STARTLINE T "图案填充\n每个通道单独计算，支持彩色输入。\n\n主输入:\t范围 \[0.0, 1.0]，影响输出，默认为 0.5 纯色。\npattern:\t输出时使用的图案，默认为像素位置。输出不为 pattern 时无效。\n\n鼠标悬停于调节选项可查看说明。\n\n© 2023 北京吾立方数码科技有限公司"}
  addUserKnob {20 gpu l GPU}
  addUserKnob {41 "Local GPU: " T BlinkScript1.gpuName}
  addUserKnob {41 "Use GPU if Available" T BlinkScript1.useGPUIfAvailable}
@@ -27,41 +38,65 @@ Group {
 nuke.thisNode()["unitRotate"].setVisible(nuke.value("input") in ("transform", "reflection"))
 nuke.thisNode()["unitScale"].setVisible(nuke.value("input") == "transform")
 nuke.thisNode().knobs()["filter"].setVisible(nuke.numvalue("renderScale") != 1)
+nuke.thisNode()["pattern"].setVisible(nuke.value("output") == "pattern")
  }
 }
+ Expression {
+  inputs 0
+  expr0 "x / width"
+  expr1 "y / height"
+  name Expression1
+  xpos 180
+  ypos -152
+ }
+ Input {
+  inputs 0
+  name pattern
+  xpos 90
+  ypos -184
+  number 1
+ }
+ Switch {
+  inputs 2
+  which {{"\[string equal \[input parent 1] 0]"}}
+  name Switch2
+  xpos 90
+  ypos -120
+ }
  Constant {
   inputs 0
   color 0.5
   name Constant1
   xpos 90
-  ypos -228
+  ypos -320
  }
  Input {
   inputs 0
   name Input
   xpos 0
-  ypos -256
+  ypos -348
  }
  Switch {
   inputs 2
-  which {{"\[inputs parent]==0"}}
+  which {{"\[string equal \[input parent 0] 0]"}}
   name Switch1
   xpos 0
-  ypos -152
+  ypos -244
  }
  Reformat {
   type scale
-  name Reformat1
   scale {{parent.renderScale}}
   filter {{parent.filter}}
+  name Reformat1
   xpos 0
-  ypos -120
+  ypos -212
   disable {{"parent.renderScale == 1"}}
  }
  BlinkScript {
+  inputs 2
   ProgramGroup 1
-  KernelDescription "2 \"HatchKernal\" iterate componentWise 7cbed7c289818b98f4bb7ebca1ca878d79af08238cae615e720bdd8e380bdb60 2 \"src\" Read Ranged2D \"dst\" Write Point 7 \"input\" Int 1 AAAAAA== \"size\" Float 2 AAAAAAAAAAA= \"origin\" Float 2 AAAAAAAAAAA= \"rotate\" Float 1 AAAAAA== \"unitRotate\" Float 1 AAAAAA== \"unitScale\" Float 2 AAAAAAAAAAA= \"output\" Int 1 AAAAAA== 7 \"input\" 1 1 \"size\" 2 1 \"origin\" 2 1 \"rotate\" 1 1 \"unitRotate\" 1 1 \"unitScale\" 2 1 \"output\" 1 1 2 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA="
-  kernelSource "// HatchKernel v0.1.9\n// TODO: release v1 after 2023-09-12\nkernel HatchKernal : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  // 0: raw\n  // 1: center\n  // 2: transform\n  // 3: reflection\n  int input;\n  float2 size;\n  float2 origin;\n  float rotate;\n  float unitRotate;\n  float2 unitScale;\n  // 0: input\n  // 1: line\n  // 2: dot outside\n  // 3: dot inside\n  // -1: offset0\n  // -2: offset1\n  // -3: p0 (raw)\n  // -4: p1 (after rotate)\n  // -5: center0\n  // -6: center1\n  // -7: index\n  // -8: index is even\n  int output;\n\nlocal:\n  void init() \{\n    src.setRange(-size.x, -size.x, size.y, size.y);\n  \}\n  \n  float2 rotate2D(float2 v, float radians)\n  \{\n    if (radians == 0 || (v.x == 0 && v.y == 0))\{\n      return v;\n    \}\n    return float2(\n      v.x * cos(radians) - v.y * sin(radians),\n      v.x * sin(radians) + v.y * cos(radians)\n    );\n  \}\n\n  float2 rotate2D(float2 v, float radians, float2 center)\n  \{\n    if (center.x == 0 && center.y == 0)\{\n      return rotate2D(v, radians);\n    \}\n    return rotate2D(\n      v - center,\n      radians\n    ) + center;\n  \}\n\n  void process(int3 pos)\n  \{\n    float2 p0 = float2(pos.x, pos.y);\n    int comp = pos.z;\n    float2 p1 = rotate2D(p0-origin, rotate);\n    int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));\n    float2 center1 = float2(\n      float(index.x) * size.x + size.x / 2,\n      float(index.y) * size.y + size.y / 2\n    );\n    float2 center0 = rotate2D(center1, -rotate) + origin;\n    center0.x = floor(center0.x);\n    center0.y = floor(center0.y);\n    float2 offset1 = p1 - center1;\n    float2 offset0 = p0 - center0;\n    float v;\n    if (input == 0) \{\n      v = src(0, 0);\n    \} else if (input == 1) \{\n      v = src(-int(offset0.x), -int(offset0.y));\n    \} else if (input == 2) \{\n      float2 p3 = rotate2D(center0 + offset0 / unitScale, unitRotate, center0);\n      float2 offset = p3 - p0;\n      v = src(int(offset.x), int(offset.y));\n    \} else if (input == 3) \{\n      float2 offset = rotate2D(offset0, unitRotate) - offset0;\n      v = src(-int(offset.x), -int(offset.y));\n    \} else \{\n      v = 0;\n    \}\n    \n    if (output == 0) \{\n      dst() = v;\n    \} else if (output == 1) \{\n      float h = v * size.y;\n      dst() = fabs(offset1.y) <= h / 2.0f;\n    \} else if (output == 2) \{\n      dst() = length(offset1 / size) <= v * sqrt(2.0f) / 2.0f;\n    \} else if (output == 3) \{\n      dst() = length(offset1 / size) <= v / 2.0f;\n    \} else if (output == -1) \{\n      if (comp == 0) \{\n        dst() = offset0.x;\n      \} else if (comp == 1) \{\n        dst() = offset0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -2) \{\n      if (comp == 0) \{\n        dst() = offset1.x;\n      \} else if (comp == 1) \{\n        dst() = offset1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -3) \{\n      if (comp == 0) \{\n        dst() = p0.x;\n      \} else if (comp == 1) \{\n        dst() = p0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -4) \{\n      if (comp == 0) \{\n        dst() = p1.x;\n      \} else if (comp == 1) \{\n        dst() = p1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -5) \{\n      if (comp == 0) \{\n        dst() = center0.x;\n      \} else if (comp == 1) \{\n        dst() = center0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -6) \{\n      if (comp == 0) \{\n        dst() = center1.x;\n      \} else if (comp == 1) \{\n        dst() = center1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -7) \{\n      if (comp == 0) \{\n        dst() = index.x;\n      \} else if (comp == 1) \{\n        dst() = index.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -8) \{\n      if (comp == 0) \{\n        dst() = abs(index.x % 2);\n      \} else if (comp == 1) \{\n        dst() = abs(index.y % 2);\n      \} else \{\n        dst() = 0;\n      \}\n    \} else \{\n      dst() = 0;\n    \}\n  \}\n\};\n"
+  KernelDescription "2 \"HatchKernal\" iterate componentWise e6252434d8d96bef98ab1e35c04279c80995b8ab4723009abe73a30d85f0ee70 3 \"src\" Read Ranged2D \"pattern\" Read Random \"dst\" Write Point 11 \"input\" Int 1 AAAAAA== \"size\" Float 2 AAAkQgAAJEI= \"origin\" Float 2 AAAAAAAAAAA= \"rotate\" Float 1 AAAAAA== \"unitRotate\" Float 1 AAAAAA== \"unitScale\" Float 2 AACAPwAAgD8= \"patternScaleMin\" Float 2 AAAAAAAAAAA= \"patternScaleMax\" Float 2 AACAPwAAgD8= \"patternValueMin\" Float 1 AAAAAA== \"patternValueMax\" Float 1 AACAPw== \"output\" Int 1 AAAAAA== 11 \"input\" 1 1 \"size\" 2 1 \"origin\" 2 1 \"rotate\" 1 1 \"unitRotate\" 1 1 \"unitScale\" 2 1 \"patternScaleMin\" 2 1 \"patternScaleMax\" 2 1 \"patternValueMin\" 1 1 \"patternValueMax\" 1 1 \"output\" 1 1 4 \"srcrangeMin\" Int 2 1 AAAAAAAAAAA= \"srcrangeMax\" Int 2 1 AAAAAAAAAAA= \"patternOrigin\" Float 2 1 AAAAAAAAAAA= \"patternSize\" Float 2 1 AAAAAAAAAAA="
+  kernelSource "// HatchKernel v0.1.10\n// TODO: release v1 after 2023-09-13\nkernel HatchKernal : ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> src;\n  Image<eRead, eAccessRandom, eEdgeClamped> pattern;\n  Image<eWrite, eAccessPoint> dst;\n\nparam:\n  // 0: raw\n  // 1: center\n  // 2: transform\n  // 3: reflection\n  int input;\n  float2 size;\n  float2 origin;\n  float rotate;\n  float unitRotate;\n  float2 unitScale;\n  float2 patternScaleMin;\n  float2 patternScaleMax;\n  float patternValueMin;\n  float patternValueMax;\n  // 0: input\n  // 1: line\n  // 2: dot outside\n  // 3: dot inside\n  // 4: pattern\n  // -1: offset0\n  // -2: offset1\n  // -3: p0 (raw)\n  // -4: p1 (after rotate)\n  // -5: center0\n  // -6: center1\n  // -7: index\n  // -8: index is even\n  int output;\n\nlocal:\n\n  float2 patternOrigin;\n  float2 patternSize;\n  void init() \{\n    src.setRange(-size.x, -size.x, size.y, size.y);\n    patternOrigin = float2(\n      pattern.bounds.x1,\n      pattern.bounds.y1\n    );\n    patternSize = float2(\n      pattern.bounds.x2 - pattern.bounds.x1,\n      pattern.bounds.y2 - pattern.bounds.y1\n    );\n  \}\n\n  void define() \{\n    defineParam(size, \"size\", float2(41.0f, 41.0f));\n    defineParam(unitScale, \"unitScale\", float2(1.0f, 1.0f));\n    defineParam(patternScaleMax, \"patternScaleMax\", float2(1.0f, 1.0f));\n    defineParam(patternValueMax, \"patternValueMax\", 1.0f);\n  \}\n  \n  float2 rotate2D(float2 v, float radians)\n  \{\n    if (radians == 0 || (v.x == 0 && v.y == 0))\{\n      return v;\n    \}\n    return float2(\n      v.x * cos(radians) - v.y * sin(radians),\n      v.x * sin(radians) + v.y * cos(radians)\n    );\n  \}\n\n  float2 rotate2D(float2 v, float radians, float2 center)\n  \{\n    if (center.x == 0 && center.y == 0)\{\n      return rotate2D(v, radians);\n    \}\n    return rotate2D(\n      v - center,\n      radians\n    ) + center;\n  \}\n\n  float linear(float p, float p0, float p1)\n  \{\n    if (p0 == p1)\n    \{\n      return p0;\n    \}\n    return p0 + p * (p1 - p0);\n  \}\n  float2 linear(float2 p, float2 p0, float2 p1) \n  \{\n    return float2(\n      linear(p.x, p0.x, p1.x),\n      linear(p.y, p0.y, p1.y)\n    );\n  \}\n\n  void process(int3 pos)\n  \{\n    float2 p0 = float2(pos.x, pos.y);\n    int comp = pos.z;\n    float2 p1 = rotate2D(p0-origin, rotate);\n    int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));\n    float2 center1 = float2(\n      float(index.x) * size.x + size.x / 2,\n      float(index.y) * size.y + size.y / 2\n    );\n    float2 center0 = rotate2D(center1, -rotate) + origin;\n    center0.x = floor(center0.x);\n    center0.y = floor(center0.y);\n    float2 offset1 = p1 - center1;\n    float2 offset0 = p0 - center0;\n    float v;\n    if (input == 0) \{\n      v = src(0, 0);\n    \} else if (input == 1) \{\n      v = src(-int(offset0.x), -int(offset0.y));\n    \} else if (input == 2) \{\n      float2 p3 = rotate2D(center0 + offset0 / unitScale, unitRotate, center0);\n      float2 offset = p3 - p0;\n      v = src(int(offset.x), int(offset.y));\n    \} else if (input == 3) \{\n      float2 offset = rotate2D(offset0, unitRotate) - offset0;\n      v = src(-int(offset.x), -int(offset.y));\n    \} else \{\n      v = 0;\n    \}\n    \n    if (output == 0) \{\n      dst() = v;\n    \} else if (output == 1) \{\n      float h = v * size.y;\n      dst() = fabs(offset1.y) <= h / 2.0f;\n    \} else if (output == 2) \{\n      dst() = length(offset1 / size) <= v * sqrt(2.0f) / 2.0f;\n    \} else if (output == 3) \{\n      dst() = length(offset1 / size) <= v / 2.0f;\n    \} else if (output == 4) \{\n      float2 p3 = (offset1\n        / size \n        / linear(\n          float2(v, v),\n          patternScaleMin,\n          patternScaleMax\n        )\n        + float2(0.5f, 0.5f)\n      ) * patternSize \n        + patternOrigin;\n      dst() = bilinear(\n        pattern,\n        p3.x,\n        p3.y\n      ) * linear(\n        v,\n        patternValueMin,\n        patternValueMax\n      );\n    \} else if (output == -1) \{\n      if (comp == 0) \{\n        dst() = offset0.x;\n      \} else if (comp == 1) \{\n        dst() = offset0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -2) \{\n      if (comp == 0) \{\n        dst() = offset1.x;\n      \} else if (comp == 1) \{\n        dst() = offset1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -3) \{\n      if (comp == 0) \{\n        dst() = p0.x;\n      \} else if (comp == 1) \{\n        dst() = p0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -4) \{\n      if (comp == 0) \{\n        dst() = p1.x;\n      \} else if (comp == 1) \{\n        dst() = p1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -5) \{\n      if (comp == 0) \{\n        dst() = center0.x;\n      \} else if (comp == 1) \{\n        dst() = center0.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -6) \{\n      if (comp == 0) \{\n        dst() = center1.x;\n      \} else if (comp == 1) \{\n        dst() = center1.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -7) \{\n      if (comp == 0) \{\n        dst() = index.x;\n      \} else if (comp == 1) \{\n        dst() = index.y;\n      \} else \{\n        dst() = 0;\n      \}\n    \} else if (output == -8) \{\n      if (comp == 0) \{\n        dst() = abs(index.x % 2);\n      \} else if (comp == 1) \{\n        dst() = abs(index.y % 2);\n      \} else \{\n        dst() = 0;\n      \}\n    \} else \{\n      dst() = 0;\n    \}\n  \}\n\};\n"
   rebuild ""
   HatchKernal_input {{parent.input}}
   HatchKernal_size {{"parent.size.w * parent.renderScale"} {"parent.size.h * parent.renderScale"}}
@@ -69,13 +104,17 @@ nuke.thisNode().knobs()["filter"].setVisible(nuke.numvalue("renderScale") != 1)
   HatchKernal_rotate {{"parent.rotate / 180 * pi"}}
   HatchKernal_unitRotate {{"parent.unitRotate / 180 * pi"}}
   HatchKernal_unitScale {{parent.unitScale.w} {parent.unitScale.h}}
+  HatchKernal_patternScaleMin {{parent.patternScaleMin.w} {parent.patternScaleMin.h}}
+  HatchKernal_patternScaleMax {{parent.patternScaleMax.w} {parent.patternScaleMax.h}}
+  HatchKernal_patternValueMin {{parent.patternValueMin}}
+  HatchKernal_patternValueMax {{parent.patternValueMax}}
   HatchKernal_output {{parent.output}}
+  rebuild_finalise ""
+  name BlinkScript1
   onCreate {
 for k in nuke.thisNode().allKnobs():
     k.setFlag(0x0000000000008000)
-  }
-  rebuild_finalise ""
-  name BlinkScript1
+}
   xpos 0
   ypos -88
  }

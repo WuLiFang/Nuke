@@ -1,8 +1,9 @@
-// HatchKernel v0.1.9
-// TODO: release v1 after 2023-09-12
+// HatchKernel v0.1.10
+// TODO: release v1 after 2023-09-13
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
   Image<eRead, eAccessRanged2D, eEdgeClamped> src;
+  Image<eRead, eAccessRandom, eEdgeClamped> pattern;
   Image<eWrite, eAccessPoint> dst;
 
 param:
@@ -16,10 +17,15 @@ param:
   float rotate;
   float unitRotate;
   float2 unitScale;
+  float2 patternScaleMin;
+  float2 patternScaleMax;
+  float patternValueMin;
+  float patternValueMax;
   // 0: input
   // 1: line
   // 2: dot outside
   // 3: dot inside
+  // 4: pattern
   // -1: offset0
   // -2: offset1
   // -3: p0 (raw)
@@ -31,8 +37,26 @@ param:
   int output;
 
 local:
+
+  float2 patternOrigin;
+  float2 patternSize;
   void init() {
     src.setRange(-size.x, -size.x, size.y, size.y);
+    patternOrigin = float2(
+      pattern.bounds.x1,
+      pattern.bounds.y1
+    );
+    patternSize = float2(
+      pattern.bounds.x2 - pattern.bounds.x1,
+      pattern.bounds.y2 - pattern.bounds.y1
+    );
+  }
+
+  void define() {
+    defineParam(size, "size", float2(41.0f, 41.0f));
+    defineParam(unitScale, "unitScale", float2(1.0f, 1.0f));
+    defineParam(patternScaleMax, "patternScaleMax", float2(1.0f, 1.0f));
+    defineParam(patternValueMax, "patternValueMax", 1.0f);
   }
   
   float2 rotate2D(float2 v, float radians)
@@ -55,6 +79,22 @@ local:
       v - center,
       radians
     ) + center;
+  }
+
+  float linear(float p, float p0, float p1)
+  {
+    if (p0 == p1)
+    {
+      return p0;
+    }
+    return p0 + p * (p1 - p0);
+  }
+  float2 linear(float2 p, float2 p0, float2 p1) 
+  {
+    return float2(
+      linear(p.x, p0.x, p1.x),
+      linear(p.y, p0.y, p1.y)
+    );
   }
 
   void process(int3 pos)
@@ -97,6 +137,26 @@ local:
       dst() = length(offset1 / size) <= v * sqrt(2.0f) / 2.0f;
     } else if (output == 3) {
       dst() = length(offset1 / size) <= v / 2.0f;
+    } else if (output == 4) {
+      float2 p3 = (offset1
+        / size 
+        / linear(
+          float2(v, v),
+          patternScaleMin,
+          patternScaleMax
+        )
+        + float2(0.5f, 0.5f)
+      ) * patternSize 
+        + patternOrigin;
+      dst() = bilinear(
+        pattern,
+        p3.x,
+        p3.y
+      ) * linear(
+        v,
+        patternValueMin,
+        patternValueMax
+      );
     } else if (output == -1) {
       if (comp == 0) {
         dst() = offset0.x;
