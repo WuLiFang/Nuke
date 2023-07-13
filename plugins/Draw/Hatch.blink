@@ -1,4 +1,4 @@
-// HatchKernel v0.1.7
+// HatchKernel v0.1.8
 // TODO: release v1 after 2023-09-12
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -8,7 +8,8 @@ kernel HatchKernal : ImageComputationKernel<eComponentWise>
 param:
   // 0: raw
   // 1: center
-  // 2: transform around center
+  // 2: transform
+  // 3: reflection
   int input;
   float2 size;
   float2 origin;
@@ -79,6 +80,9 @@ local:
       float2 p3 = rotate2D(center0 + offset0 / unitScale, unitRotate, center0);
       float2 offset = p3 - p0;
       v = src(int(offset.x), int(offset.y));
+    } else if (input == 3) {
+      float2 offset = rotate2D(offset0, unitRotate) - offset0;
+      v = src(-int(offset.x), -int(offset.y));
     } else {
       v = 0;
     }
