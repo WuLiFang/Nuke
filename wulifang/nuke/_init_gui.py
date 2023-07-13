@@ -50,6 +50,7 @@ from . import (
     _missing_frame_check,
     _multi_node_edit,
     _node_menu,
+    _node_suggestion,
     _preference,
     _project_settings,
     _prune_node,
@@ -568,5 +569,6 @@ def init_gui():
     _file_mtime_check.init_gui()
     _random_gl_color.init_gui()
     _jump_to_wlf_write_frame.init_gui()
+    _node_suggestion.init_gui()
     _init_cgtw()
     _g.init_once = True
