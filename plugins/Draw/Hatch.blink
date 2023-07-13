@@ -1,4 +1,4 @@
-// HatchKernel v0.1.10
+// HatchKernel v0.1.11
 // TODO: release v1 after 2023-09-13
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -37,9 +37,16 @@ param:
   int output;
 
 local:
-
   float2 patternOrigin;
   float2 patternSize;
+
+  void define() {
+    defineParam(size, "size", float2(41.0f, 41.0f));
+    defineParam(unitScale, "unitScale", float2(1.0f, 1.0f));
+    defineParam(patternScaleMax, "patternScaleMax", float2(1.0f, 1.0f));
+    defineParam(patternValueMax, "patternValueMax", 1.0f);
+  }
+
   void init() {
     src.setRange(-size.x, -size.x, size.y, size.y);
     patternOrigin = float2(
@@ -52,16 +59,10 @@ local:
     );
   }
 
-  void define() {
-    defineParam(size, "size", float2(41.0f, 41.0f));
-    defineParam(unitScale, "unitScale", float2(1.0f, 1.0f));
-    defineParam(patternScaleMax, "patternScaleMax", float2(1.0f, 1.0f));
-    defineParam(patternValueMax, "patternValueMax", 1.0f);
-  }
-  
+
   float2 rotate2D(float2 v, float radians)
   {
-    if (radians == 0 || (v.x == 0 && v.y == 0)){
+    if (radians == 0.0f || (v.x == 0.0f && v.y == 0.0f)){
       return v;
     }
     return float2(
@@ -72,7 +73,7 @@ local:
 
   float2 rotate2D(float2 v, float radians, float2 center)
   {
-    if (center.x == 0 && center.y == 0){
+    if (center.x == 0.0f && center.y == 0.0f){
       return rotate2D(v, radians);
     }
     return rotate2D(
@@ -83,8 +84,7 @@ local:
 
   float linear(float p, float p0, float p1)
   {
-    if (p0 == p1)
-    {
+    if (p0 == p1) {
       return p0;
     }
     return p0 + p * (p1 - p0);
@@ -99,13 +99,17 @@ local:
 
   void process(int3 pos)
   {
-    float2 p0 = float2(pos.x, pos.y);
     int comp = pos.z;
+    if (size.x == 0 || size.y == 0) {
+      dst() = comp == 0;
+      return;
+    }
+    float2 p0 = float2(pos.x, pos.y);
     float2 p1 = rotate2D(p0-origin, rotate);
     int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));
     float2 center1 = float2(
-      float(index.x) * size.x + size.x / 2,
-      float(index.y) * size.y + size.y / 2
+      float(index.x) * size.x + size.x / 2.0f,
+      float(index.y) * size.y + size.y / 2.0f
     );
     float2 center0 = rotate2D(center1, -rotate) + origin;
     center0.x = floor(center0.x);
@@ -138,13 +142,18 @@ local:
     } else if (output == 3) {
       dst() = length(offset1 / size) <= v / 2.0f;
     } else if (output == 4) {
-      float2 p3 = (offset1
-        / size 
-        / linear(
+      float2 s = linear(
           float2(v, v),
           patternScaleMin,
           patternScaleMax
-        )
+      );
+      if (s.x == 0 || s.y == 0) {
+        dst() = 0;
+        return;
+      }
+      float2 p3 = (offset1
+        / size 
+        / s
         + float2(0.5f, 0.5f)
       ) * patternSize 
         + patternOrigin;
