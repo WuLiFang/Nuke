@@ -1,4 +1,4 @@
-// HatchKernel v0.1.11
+// HatchKernel v0.1.12
 // TODO: release v1 after 2023-09-13
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
@@ -21,6 +21,7 @@ param:
   float2 patternScaleMax;
   float patternValueMin;
   float patternValueMax;
+  float rowOffsetX;
   // 0: input
   // 1: line
   // 2: dot outside
@@ -106,11 +107,9 @@ local:
     }
     float2 p0 = float2(pos.x, pos.y);
     float2 p1 = rotate2D(p0-origin, rotate);
-    int2 index = int2(floor(p1.x / size.x), floor(p1.y / size.y));
-    float2 center1 = float2(
-      float(index.x) * size.x + size.x / 2.0f,
-      float(index.y) * size.y + size.y / 2.0f
-    );
+    int indexY = floor(p1.y / size.y);
+    int2 index = int2(floor((p1.x - indexY*rowOffsetX) / size.x), indexY);
+    float2 center1 = float2(index) * size + float2(rowOffsetX*index.y, 0.0f) + size / 2.0f;
     float2 center0 = rotate2D(center1, -rotate) + origin;
     center0.x = floor(center0.x);
     center0.y = floor(center0.y);
