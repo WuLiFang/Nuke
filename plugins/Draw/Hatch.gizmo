@@ -35,6 +35,9 @@ Group {
  addUserKnob {20 gpu l GPU}
  addUserKnob {41 "Local GPU: " T BlinkScript1.gpuName}
  addUserKnob {41 "Use GPU if Available" T BlinkScript1.useGPUIfAvailable}
+ onCreate {
+nuke.thisNode()["renderScale"].setFlag(0x0000000000000014)
+ }
  knobChanged {
 nuke.thisNode()["unitRotate"].setVisible(nuke.value("input") in ("transform", "reflection"))
 nuke.thisNode()["unitScale"].setVisible(nuke.value("input") == "transform")
