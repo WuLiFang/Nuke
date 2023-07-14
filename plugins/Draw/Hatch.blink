@@ -1,5 +1,5 @@
-// HatchKernel v0.1.12
-// TODO: release v1 after 2023-09-13
+// HatchKernel v0.1.13
+// TODO: release v1 after 2023-09-14
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
   Image<eRead, eAccessRanged2D, eEdgeClamped> src;
@@ -107,9 +107,9 @@ local:
     }
     float2 p0 = float2(pos.x, pos.y);
     float2 p1 = rotate2D(p0-origin, rotate);
-    int indexY = floor(p1.y / size.y);
-    int2 index = int2(floor((p1.x - indexY*rowOffsetX) / size.x), indexY);
-    float2 center1 = float2(index) * size + float2(rowOffsetX*index.y, 0.0f) + size / 2.0f;
+    float indexY = floor(p1.y / size.y);
+    float2 index = float2(floor((p1.x - indexY*rowOffsetX) / size.x), indexY);
+    float2 center1 = index * size + float2(rowOffsetX*index.y, 0.0f) + size / 2.0f;
     float2 center0 = rotate2D(center1, -rotate) + origin;
     center0.x = floor(center0.x);
     center0.y = floor(center0.y);
@@ -223,9 +223,9 @@ local:
       }
     } else if (output == -8) {
       if (comp == 0) {
-        dst() = abs(index.x % 2);
+        dst() = abs(int(index.x) % 2);
       } else if (comp == 1) {
-        dst() = abs(index.y % 2);
+        dst() = abs(int(index.y) % 2);
       } else {
         dst() = 0;
       }
