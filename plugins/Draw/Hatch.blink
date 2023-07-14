@@ -1,9 +1,9 @@
-// HatchKernel v0.1.13
+// HatchKernel v0.1.14
 // TODO: release v1 after 2023-09-14
 kernel HatchKernal : ImageComputationKernel<eComponentWise>
 {
   Image<eRead, eAccessRanged2D, eEdgeClamped> src;
-  Image<eRead, eAccessRandom, eEdgeClamped> pattern;
+  Image<eRead, eAccessRandom> pattern;
   Image<eWrite, eAccessPoint> dst;
 
 param:
@@ -102,7 +102,7 @@ local:
   {
     int comp = pos.z;
     if (size.x == 0 || size.y == 0) {
-      dst() = comp == 0;
+      dst() = 0.0f;
       return;
     }
     float2 p0 = float2(pos.x, pos.y);
@@ -146,8 +146,8 @@ local:
           patternScaleMin,
           patternScaleMax
       );
-      if (s.x == 0 || s.y == 0) {
-        dst() = 0;
+      if (s.x == 0.0f || s.y == 0.0f) {
+        dst() = 0.0f;
         return;
       }
       float2 p3 = (offset1
@@ -158,8 +158,8 @@ local:
         + patternOrigin;
       dst() = bilinear(
         pattern,
-        p3.x,
-        p3.y
+        clamp(p3.x, float(pattern.bounds.x1), float(pattern.bounds.x2)),
+        clamp(p3.y, float(pattern.bounds.y1), float(pattern.bounds.y2))
       ) * linear(
         v,
         patternValueMin,
@@ -171,7 +171,7 @@ local:
       } else if (comp == 1) {
         dst() = offset0.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -2) {
       if (comp == 0) {
@@ -179,7 +179,7 @@ local:
       } else if (comp == 1) {
         dst() = offset1.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -3) {
       if (comp == 0) {
@@ -187,7 +187,7 @@ local:
       } else if (comp == 1) {
         dst() = p0.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -4) {
       if (comp == 0) {
@@ -195,7 +195,7 @@ local:
       } else if (comp == 1) {
         dst() = p1.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -5) {
       if (comp == 0) {
@@ -203,7 +203,7 @@ local:
       } else if (comp == 1) {
         dst() = center0.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -6) {
       if (comp == 0) {
@@ -211,7 +211,7 @@ local:
       } else if (comp == 1) {
         dst() = center1.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -7) {
       if (comp == 0) {
@@ -219,7 +219,7 @@ local:
       } else if (comp == 1) {
         dst() = index.y;
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else if (output == -8) {
       if (comp == 0) {
@@ -227,10 +227,10 @@ local:
       } else if (comp == 1) {
         dst() = abs(int(index.y) % 2);
       } else {
-        dst() = 0;
+        dst() = 0.0f;
       }
     } else {
-      dst() = 0;
+      dst() = 0.0f;
     }
   }
 };
