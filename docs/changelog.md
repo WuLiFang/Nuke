@@ -4,7 +4,7 @@
 
 ### 特性
 
-- **nuke:** 添加 `Hatch`（图案填充） 节点 ([b77402b](https://github.com/WuLiFang/Nuke/commit/b77402b1a50decf7368504dc70afca0f9b95bb97))
+- **nuke:** 添加 `Hatch`（图案填充）节点 ([b77402b](https://github.com/WuLiFang/Nuke/commit/b77402b1a50decf7368504dc70afca0f9b95bb97))
 - **nuke:** 添加节点建议 ([c028115](https://github.com/WuLiFang/Nuke/commit/c0281159d84461abfb4ecd586517039a8ed4f7d2))
 - **nuke:** 允许禁用固定 tab 菜单统计路径功能 ([43159b7](https://github.com/WuLiFang/Nuke/commit/43159b75c1692ec18fefe72c88211c9b2a3eb9b7))
 - **nuke:** 查找最大 bbox 的节点 ([ec3cb82](https://github.com/WuLiFang/Nuke/commit/ec3cb82585cc6c916d66e39825bd5bec455ebddd))
