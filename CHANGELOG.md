@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2023.2.0](https://github.com/WuLiFang/Nuke/compare/v2023.1.0...v2023.2.0) (2023-07-17)
+
+### Features
+
+- **nuke:** pack-project: add progress ([d225537](https://github.com/WuLiFang/Nuke/commit/d2255379e07a7bb0316d2b738d72c9ba4638f462))
+
 ## [2023.1.0](https://github.com/WuLiFang/Nuke/compare/v2023.0.0...v2023.1.0) (2023-07-17)
 
 ### Features

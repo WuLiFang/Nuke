@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2023.1.0'
-RELEASE_DATE = datetime.fromtimestamp(1689575638)
-LAST_GIT_COMMIT_DESCRIBE = 'v2023.0.0-46-g75233e1'
-LAST_GIT_COMMIT_HASH = '75233e166109c5ffd8054a3ff573e1dee7f081d8'
+VERSION = '2023.2.0'
+RELEASE_DATE = datetime.fromtimestamp(1689588609)
+LAST_GIT_COMMIT_DESCRIBE = 'v2023.1.0-4-g85262ab'
+LAST_GIT_COMMIT_HASH = '85262abdc703675792389dda881a1ed67cd33017'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1689315644)
-LAST_GIT_COMMIT_SUBJECT = 'chore(nuke): Hatch: update ui'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1689588316)
+LAST_GIT_COMMIT_SUBJECT = 'build: clean pyc file'
 LAST_GIT_COMMIT_BODY = ''
