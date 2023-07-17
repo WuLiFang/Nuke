@@ -1,5 +1,11 @@
 # 更新日志
 
+## [2023.2.0](https://github.com/WuLiFang/Nuke/compare/v2023.1.0...v2023.2.0) (2023-07-17)
+
+### 特性
+
+- **nuke:** 打包: 添加进度条 ([d225537](https://github.com/WuLiFang/Nuke/commit/d2255379e07a7bb0316d2b738d72c9ba4638f462))
+
 ## [2023.1.0](https://github.com/WuLiFang/Nuke/compare/v2023.0.0...v2023.1.0) (2023-07-17)
 
 ### 特性
