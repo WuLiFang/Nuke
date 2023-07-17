@@ -16,7 +16,6 @@ import shutil
 import nuke
 
 
-import wulifang
 from wulifang._compat import futures
 from wulifang._util import (
     TZ_CHINA,
@@ -30,6 +29,7 @@ from wulifang.nuke._util import (
     iter_deep_all_nodes,
     gizmo_to_group,
     knob_of,
+    Progress,
 )
 
 # spell-checker: words Changeds
@@ -42,6 +42,7 @@ class _Context(object):
         self.script_dir = cast_text(os.path.dirname(self.script_name))
         self.file_dir = cast_text(self.script_name) + ".files"
         self.file_dir_base = os.path.basename(self.file_dir)
+        self.executor = futures.ThreadPoolExecutor(max_workers=32)
         try:
             os.makedirs(self.file_dir)
         except:
@@ -59,6 +60,7 @@ class _Context(object):
         return self
 
     def __exit__(self, *_):
+        self.executor.shutdown()
         self.log_file.close()
 
     def _log(self, msg):
@@ -69,7 +71,6 @@ class _Context(object):
 
     def log(self, msg):
         # type: (Text) -> None
-        wulifang.message.info(msg)
         self._log(msg)
 
     def get_src(self, k):
@@ -148,7 +149,6 @@ def _save_by_expr(ctx, src_expr):
         files = []
 
     seq = FileSequence(os.path.normcase(src_base))
-    executor = futures.ThreadPoolExecutor(max_workers=32)
 
     def _copy_file(i):
         # type: (Text) -> None
@@ -158,9 +158,8 @@ def _save_by_expr(ctx, src_expr):
             return
         shutil.copy2(src, dst)
 
-    with executor:
-        for _ in executor.map(_copy_file, (i for i in files if os.path.normcase(i) in seq)):  # type: ignore
-            pass
+    for _ in ctx.executor.map(_copy_file, (i for i in files if os.path.normcase(i) in seq)):  # type: ignore
+        pass
 
     return "/".join((ctx.file_dir_base, _dir_with_hash, src_base))
 
@@ -172,15 +171,28 @@ def pack_project():
         nuke.message(cast_str("请先保存工程"))
         return
 
-    with nuke.Undo(cast_str("打包工程")), _Context() as ctx:
+    with nuke.Undo(cast_str("打包工程")), _Context() as ctx, Progress(
+        "打包工程",
+        estimate_secs=600,
+    ) as p:
         knob_of(
             nuke.root(),
             "project_directory",
             nuke.File_Knob,
         ).setValue(cast_str("[python {nuke.script_directory()}]"))
 
+        p.set_message("Gizmo 转换为 Group")
         for n in iter_deep_all_nodes():
+            p.increase()
             if isinstance(n, nuke.Gizmo):
+                p.set_message(
+                    "Gizmo 转换为 Group: %s"
+                    % (
+                        cast_text(
+                            n.fullName(),
+                        )
+                    )
+                )
                 name = cast_text(n.fullName())
                 if n.Class() in nuke.knobChangeds:
                     ctx.log("%s: 此类型节点有脚本回调，无法转为 Group" % (name,))
@@ -188,9 +200,13 @@ def pack_project():
                 gizmo_to_group(n)
                 ctx.log("将 %s 转为了 Group" % (name,))
 
+        p.set_message("打包素材")
         for n in iter_deep_all_nodes():
+            p.increase()
             for _, k in iteritems(n.knobs()):
                 if isinstance(k, nuke.File_Knob):
+                    p.set_message("复制文件: %s" % cast_text(k.fullyQualifiedName()))
+                    p.increase()
                     old_src = ctx.get_src(k)
                     if not old_src or old_src.startswith(ctx.file_dir_base):
                         continue
@@ -200,6 +216,8 @@ def pack_project():
                     )
                     k.setText(cast_str(new_src))
                 if isinstance(k, nuke.FreeType_Knob):
+                    p.set_message("重置字体: %s" % cast_text(k.fullyQualifiedName()))
+                    p.increase()
                     old_value = k.getValue()
                     if cast_text(old_value[0]) != "Utopia":
                         k.setValue(cast_str("Utopia"), cast_str("Regular"))

@@ -10,6 +10,7 @@ import gc
 
 import nuke
 from wulifang._util import cast_str
+from wulifang.vendor.Qt.QtCore import QCoreApplication
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -49,6 +50,7 @@ class Progress:
     ):
         self._must_not_cancelled()
         self.__task.setMessage(cast_str(s))
+        QCoreApplication.processEvents()
 
     def value(self):
         "[0.0, 1.0]"
@@ -64,6 +66,7 @@ class Progress:
         self._value = v
         self.__task.setProgress(int(self._value * 100))
         self._last_update_at = time.time()
+        QCoreApplication.processEvents()
 
     def elapsed_secs(self):
         return time.time() - self._start_at
@@ -91,4 +94,3 @@ class Progress:
     def _must_not_cancelled(self):
         if self._is_cancelled():
             raise Progress.Cancelled()
-            
