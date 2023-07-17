@@ -28,7 +28,7 @@ lib/site-packages/.sentinel: requirements.txt
 	# https://github.com/microsoft/vscode/issues/36630
 	rm -rf lib/site-packages
 	"$(PYTHON27)" -m pip install -r requirements.txt --target lib/site-packages
-	rm -rfv lib/site-packages/**/*.pyc
+	find lib/site-packages -name *.pyc -print -delete
 	touch $@
 
 docs/_build/html: PYTHONPATH=

@@ -13,4 +13,5 @@ vendor/__init__.py: vendor-requirements.txt vendor-patches/*.patch ../vendor/*.w
 	rm -rf vendor/*
 	cd vendor; "$(PYTHON27)" -m pip install -r ../vendor-requirements.txt --target . --upgrade
 	set -ex; for file in vendor-patches/*.patch; do patch -u -p1 < $$file; done
+	find . -name *.pyc -print -delete
 	touch $@
