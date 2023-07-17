@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2023.1.0](https://github.com/WuLiFang/Nuke/compare/v2023.0.0...v2023.1.0) (2023-07-17)
+
+### Features
+
+- **nuke:** add `Hatch` node ([b77402b](https://github.com/WuLiFang/Nuke/commit/b77402b1a50decf7368504dc70afca0f9b95bb97))
+- **nuke:** add node suggestion ([c028115](https://github.com/WuLiFang/Nuke/commit/c0281159d84461abfb4ecd586517039a8ed4f7d2))
+- **nuke:** allow disable fixed tab stats path ([43159b7](https://github.com/WuLiFang/Nuke/commit/43159b75c1692ec18fefe72c88211c9b2a3eb9b7))
+- **nuke:** find max bbox node ([ec3cb82](https://github.com/WuLiFang/Nuke/commit/ec3cb82585cc6c916d66e39825bd5bec455ebddd))
+- **nuke:** fixed tab stats path ([c312bcf](https://github.com/WuLiFang/Nuke/commit/c312bcfb5d46670ff67e8b8f284ad7192a8a381b))
+- supports nuke13 ([840755d](https://github.com/WuLiFang/Nuke/commit/840755daa340f992e8ec8ab5cd6e4364c171d765))
+
+### Bug Fixes
+
+- **nuke:** can not drop sequence folder ([daf18ea](https://github.com/WuLiFang/Nuke/commit/daf18eaddbd4fa0be7d542a226610200b7a5f5bb))
+- **nuke:** error while rendering to non-ascii path ([69c0aa4](https://github.com/WuLiFang/Nuke/commit/69c0aa4a29805e8869513a8eb0539e7e3ba7ce29))
+
 ## [2023.0.0](https://github.com/WuLiFang/Nuke/compare/v2022.2.2...v2023.0.0) (2023-06-02)
 
 ### Features
