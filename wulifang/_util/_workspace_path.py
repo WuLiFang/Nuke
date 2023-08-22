@@ -15,4 +15,5 @@ _ROOT = os.path.dirname(os.path.dirname(_DIR))
 
 def workspace_path(*paths):
     # type: (Text) -> Text
-    return os.path.join(_ROOT, *paths)
+    # `nuke.pluginAddPath` not supports backslash
+    return os.path.join(_ROOT, *paths).replace("\\", "/")
