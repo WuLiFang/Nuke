@@ -1,0 +1,183 @@
+#! /Applications/Nuke6.3v4/NukeX6.3v4.app/../Nuke6.3v4.app/Contents/MacOS/Nuke6.3v4 -nx
+version 6.3 v4
+Group {
+ name Refractor1
+ inputs 2
+ addUserKnob {20 Refraction}
+ addUserKnob {7 scale l Scale R -100 100}
+ scale 1
+ addUserKnob {7 gain l Gain R -100 100}
+ gain -50
+ addUserKnob {7 blur l Blur R 0 100}
+ addUserKnob {26 ""}
+ addUserKnob {7 chromaShift l ChromaShift R -10 10}
+ addUserKnob {7 glasabs l "Light Absorption" R 0 5}
+ glasabs 1
+ addUserKnob {26 ""}
+ addUserKnob {7 fresnel l Fresnel R -1 1}
+ addUserKnob {7 fnwidth l Width}
+ fnwidth 1
+ addUserKnob {7 falloff l Falloff}
+ falloff 0.5
+ addUserKnob {7 fnsize l Multiplier R 0 4}
+ fnsize 1
+ addUserKnob {26 ""}
+ addUserKnob {7 edgeBlur l "Edge Blur" R 0 5}
+ edgeBlur 1.5
+}
+ Input {
+  inputs 0
+  name Refraction_UVs
+  label Refraction
+  xpos -301
+  ypos -246
+ }
+ AddChannels {
+  channels rgb
+  name AddChannels2
+  xpos -301
+  ypos -193
+ }
+ Unpremult {
+  name Unpremult1
+  xpos -301
+  ypos -115
+ }
+ Grade {
+  channels {rgba.red rgba.green -rgba.blue}
+  blackpoint 0.5
+  black_clamp false
+  name Grade1
+  xpos -301
+  ypos -73
+ }
+ Grade {
+  channels {rgba.red rgba.green -rgba.blue}
+  white {{parent.gain i}}
+  black_clamp false
+  maskChannelInput rgba.blue
+  name Grade_Gain
+  xpos -301
+  ypos -39
+ }
+ Premult {
+  name Premult1
+  xpos -301
+  ypos 10
+ }
+ Input {
+  inputs 0
+  name Plate
+  label Plate
+  xpos -411
+  ypos -246
+  number 1
+ }
+ AddChannels {
+  channels rgb
+  name AddChannels1
+  xpos -411
+  ypos -194
+ }
+add_layer {REFRACTION REFRACTION.red REFRACTION.green REFRACTION.blue REFRACTION.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out REFRACTION
+  name ShuffleCopy1
+  xpos -411
+  ypos 10
+ }
+set N567c750 [stack 0]
+ IDistort {
+  channels {-rgba.red -rgba.green rgba.blue}
+  uv REFRACTION
+  uv_scale {{parent.scale-parent.chromaShift i}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur i}}
+  name IDistort5
+  xpos -270
+  ypos 109
+ }
+push $N567c750
+ IDistort {
+  channels {rgba.red -rgba.green -rgba.blue}
+  uv REFRACTION
+  uv_scale {{parent.scale+parent.chromaShift i}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur i}}
+  name IDistort4
+  xpos -563
+  ypos 106
+ }
+push $N567c750
+ IDistort {
+  channels {-rgba.red rgba.green -rgba.blue}
+  uv REFRACTION
+  uv_scale {{parent.scale i}}
+  blur REFRACTION.blue
+  blur_scale {{parent.blur i}}
+  name IDistort1
+  xpos -411
+  ypos 105
+ }
+ ShuffleCopy {
+  inputs 2
+  red red
+  name ShuffleCopy2
+  xpos -411
+  ypos 168
+ }
+ ShuffleCopy {
+  inputs 2
+  blue blue
+  name ShuffleCopy3
+  xpos -411
+  ypos 230
+ }
+ Grade {
+  gamma {{parent.glasabs}}
+  maskChannelInput REFRACTION.alpha
+  name Grade2
+  xpos -411
+  ypos 282
+ }
+ Grade {
+  channels {-REFRACTION.red -REFRACTION.green REFRACTION.blue -REFRACTION.alpha}
+  multiply {{parent.fnsize}}
+  add {{"3 * (parent.fnwidth-1)"}}
+  gamma {{parent.falloff}}
+  name Grade4
+  xpos -411
+  ypos 339
+ }
+ Grade {
+  add {{parent.fresnel}}
+  maskChannelInput REFRACTION.blue
+  name Grade3
+  xpos -411
+  ypos 386
+ }
+ EdgeBlur {
+  controlchannel REFRACTION.alpha
+  size {{parent.edgeBlur i}}
+  name EdgeBlur1
+  xpos -411
+  ypos 452
+ }
+set Nfd09d70 [stack 0]
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos -125
+  ypos 710
+ }
+push $Nfd09d70
+ Output {
+  name Output1
+  xpos -411
+  ypos 530
+ }
+end_group
