@@ -65,8 +65,10 @@ class Progress:
         assert 0.0 <= v <= 1.0, "progress value should in range [0.0, 1.0]"
         self._value = v
         self.__task.setProgress(int(self._value * 100))
-        self._last_update_at = time.time()
-        QCoreApplication.processEvents()
+        now = time.time()
+        if now - self._last_update_at > 1:
+            QCoreApplication.processEvents()
+        self._last_update_at = now
 
     def elapsed_secs(self):
         return time.time() - self._start_at

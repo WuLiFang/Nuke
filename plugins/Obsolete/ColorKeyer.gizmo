@@ -1,10 +1,18 @@
 #! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
 version 10.0 v4
 add_layer {DiffuseFilter DiffuseFilter.red DiffuseFilter.green DiffuseFilter.blue DiffuseFilter.alpha}
-Gizmo {
+Group {
+ name ColorKeyer1
  tile_color 0xff00ff
- label "\n"
- note_font 微软雅黑
+ onCreate {
+class __ColorKeyer_fa032f54e413:
+    @classmethod
+    def autolabel(cls):
+        color = nuke.thisNode()["color"].value()[:3]
+        hex = "".join(("%02X" % round(i*255) for i in color))
+        return '<div style="text-align: center;">%s</div><div style="background: #%s;">&#8203;</div>' % (autolabel(), hex)
+ }
+ autolabel __ColorKeyer_fa032f54e413.autolabel()
  addUserKnob {20 ColorKeyer l "ColorKeyer v1.0.1"}
  addUserKnob {41 input T Shuffle2.in}
  addUserKnob {41 color T Constant1.color}
@@ -19,22 +27,17 @@ Gizmo {
   channels rgb
   color {0.1935017854 0.08294677734 0 0.999997437}
   name Constant1
-  gl_color 0xffa43200
-  note_font 微软雅黑
   xpos 400
   ypos -731
  }
  Input {
   inputs 0
   name Input
-  gl_color 0x5332ff00
   xpos 290
   ypos -706
  }
  Dot {
   name Dot8
-  gl_color 0x5bff3200
-  note_font 微软雅黑
   xpos 324
   ypos -680
  }
@@ -42,24 +45,18 @@ set Ndd370000 [stack 0]
  Shuffle {
   in DiffuseFilter
   name Shuffle2
-  gl_color 0xff32aa00
-  note_font 微软雅黑
   xpos 290
   ypos -646
  }
  Difference {
   inputs 2
   name Difference1
-  gl_color 0xff32d700
-  note_font 微软雅黑
   xpos 400
   ypos -646
  }
  Invert {
   channels alpha
   name Invert1
-  gl_color 0x32aaff00
-  note_font 微软雅黑
   xpos 400
   ypos -602
  }
@@ -67,24 +64,18 @@ set Ndd370000 [stack 0]
   channels alpha
   blackpoint {{"1 - parent.threshold"}}
   name Grade1
-  gl_color 0xff9b3200
-  note_font 微软雅黑
   xpos 400
   ypos -558
  }
  Invert {
   channels alpha
   name Invert2
-  gl_color 0xdd32ff00
-  note_font 微软雅黑
   xpos 400
   ypos -514
   disable {{"! parent.invert"}}
  }
  Dot {
   name Dot10
-  gl_color 0xffd63200
-  note_font 微软雅黑
   xpos 434
   ypos -413
  }
@@ -96,8 +87,6 @@ push $Ndd370000
   from0 {{{parent.Keyer1.output}}}
   to0 rgba.alpha
   name Copy2
-  gl_color 0x32ff6c00
-  note_font 微软雅黑
   xpos 510
   ypos -662
  }
@@ -105,8 +94,6 @@ set Nb4dbd800 [stack 0]
  ChannelMerge {
   inputs 2
   name ChannelMerge2
-  gl_color 0xe6ff3200
-  note_font 微软雅黑
   xpos 620
   ypos -478
  }
@@ -116,8 +103,6 @@ push $Nb4dbd800
   inputs 2
   operation in
   name ChannelMerge1
-  gl_color 0xe6ff3200
-  note_font 微软雅黑
   xpos 510
   ypos -434
  }
@@ -126,8 +111,6 @@ push $N9a2fb400
   inputs 3
   which {{parent.combine}}
   name Switch1
-  gl_color 0x324cff00
-  note_font 微软雅黑
   xpos 620
   ypos -418
  }
@@ -138,14 +121,11 @@ push $N3cfb3b00
   from0 rgba.alpha
   to0 {{{parent.Keyer1.output}}}
   name Copy1
-  gl_color 0xff523200
-  note_font 微软雅黑
   xpos 620
   ypos -390
  }
  Output {
   name Output1
-  gl_color 0x7aff3200
   xpos 620
   ypos -346
  }
@@ -153,8 +133,6 @@ push $N3cfb3b00
   inputs 0
   operation "luminance key"
   name Keyer1
-  gl_color 0x32d2ff00
-  note_font 微软雅黑
   xpos 730
   ypos -723
  }

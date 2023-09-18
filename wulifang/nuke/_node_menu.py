@@ -32,10 +32,12 @@ class _Command(object):
         # type: (nuke.Menu) -> None
 
         node = cast_str(self.node)
+        # not display version in menu
+        name = self.node.rstrip("0123456789")
         cmd = menu.addCommand(
-            cast_str(self.node),
+            cast_str(name),
             lambda: nuke.createNode(node),
-            icon=cast_str("%s.png" % (self.node,)),
+            icon=cast_str("%s.png" % (name,)),
         )
 
         def cleanup():

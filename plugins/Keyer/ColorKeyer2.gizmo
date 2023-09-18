@@ -1,0 +1,138 @@
+#! C:/Program Files/Nuke10.0v4/nuke-10.0.4.dll -nx
+version 10.0 v4
+Group {
+ name ColorKeyer1
+ tile_color 0xff00ff
+ onCreate {
+class __ColorKeyer_12a19e7b8aee:
+    @classmethod
+    def autolabel(cls):
+        color = nuke.thisNode()["color"].value()[:3]
+        hex = "".join(("%02X" % round(i*255) for i in color))
+        return '<div style="text-align: center;">%s</div><div style="background: #%s;">&#8203;</div>' % (autolabel(), hex)
+ }
+ autolabel __ColorKeyer_12a19e7b8aee.autolabel()
+ addUserKnob {20 ColorKeyer l "ColorKeyer v2.0.0"}
+ addUserKnob {41 input T Shuffle2.in}
+ addUserKnob {41 color T Constant1.color}
+ addUserKnob {7 threshold}
+ threshold 0.015
+ addUserKnob {6 invert -STARTLINE}
+ addUserKnob {41 output T Keyer1.output}
+ addUserKnob {41 combine l "" -STARTLINE T Keyer1.combine}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {1 1 1 1}
+  name Constant1
+  xpos 400
+  ypos -731
+ }
+ Input {
+  inputs 0
+  name Input
+  xpos 290
+  ypos -706
+ }
+ Dot {
+  name Dot8
+  xpos 324
+  ypos -680
+ }
+set Ndd370000 [stack 0]
+ Shuffle {
+  in rgba
+  name Shuffle2
+  xpos 290
+  ypos -646
+ }
+ Difference {
+  inputs 2
+  name Difference1
+  xpos 400
+  ypos -646
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos 400
+  ypos -602
+ }
+ Grade {
+  channels alpha
+  blackpoint {{"1 - parent.threshold"}}
+  name Grade1
+  xpos 400
+  ypos -558
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  xpos 400
+  ypos -514
+  disable {{"! parent.invert"}}
+ }
+ Dot {
+  name Dot10
+  xpos 434
+  ypos -413
+ }
+set N9a2fb400 [stack 0]
+push $Ndd370000
+push $Ndd370000
+ Copy {
+  inputs 2
+  from0 {{{parent.Keyer1.output}}}
+  to0 rgba.alpha
+  name Copy2
+  xpos 510
+  ypos -662
+ }
+set Nb4dbd800 [stack 0]
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge2
+  xpos 620
+  ypos -478
+ }
+push $N9a2fb400
+push $Nb4dbd800
+ ChannelMerge {
+  inputs 2
+  operation in
+  name ChannelMerge1
+  xpos 510
+  ypos -434
+ }
+push $N9a2fb400
+ Switch {
+  inputs 3
+  which {{parent.combine}}
+  name Switch1
+  xpos 620
+  ypos -418
+ }
+set N3cfb3b00 [stack 0]
+push $N3cfb3b00
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 {{{parent.Keyer1.output}}}
+  name Copy1
+  xpos 620
+  ypos -390
+ }
+ Output {
+  name Output1
+  xpos 620
+  ypos -346
+ }
+ Keyer {
+  inputs 0
+  operation "luminance key"
+  name Keyer1
+  xpos 730
+  ypos -723
+ }
+end_group

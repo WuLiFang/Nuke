@@ -69,6 +69,7 @@ from . import (
     _split_layer_group_by_re,
     _split_layers,
     _split_rgba,
+    _split_color,
 )
 
 TYPE_CHECKING = False
@@ -438,6 +439,13 @@ def _init_menu():
                     "Shuffle: 正则拆分图层组... #ZZCFTCZ",
                     lambda: _split_layer_group_by_re.dialog(_must_selected_nodes()),
                     icon="Shuffle.png",
+                ),
+                _Command(
+                    "ColorKeyer: 拆分颜色 #CFYS",
+                    lambda: tuple(
+                        tuple(_split_color.split(i)) for i in _must_selected_nodes()
+                    ),
+                    icon="ColorKeyer.png",
                 ),
                 _Command(
                     "Copy: 重命名通道... #CMMTD",
