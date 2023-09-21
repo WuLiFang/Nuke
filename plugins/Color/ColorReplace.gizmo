@@ -19,7 +19,7 @@ class __ColorReplace_2a543b442f8b:
     @classmethod
     def _color_enabled(cls, src, dst):
         n = nuke.thisNode()
-        if src.array() != dst.array():
+        if src.array() != [0,0,0] or src.array() != dst.array():
             return True
         if src.isAnimated() or dst.isAnimated():
             return True
@@ -63,7 +63,7 @@ __ColorReplace_2a543b442f8b.update_ui()
  }
  autolabel __ColorReplace_2a543b442f8b.autolabel()
  updateUI __ColorReplace_2a543b442f8b.update_ui()
- addUserKnob {20 ColorReplace l "ColorReplace v0.1.0"}
+ addUserKnob {20 ColorReplace l "ColorReplace v0.1.1"}
  addUserKnob {26 color1 l "" +STARTLINE T color1}
  addUserKnob {41 src1 l src T Expression1.src}
  addUserKnob {41 dst1 l dst T Expression1.dst}
@@ -132,10 +132,8 @@ __ColorReplace_2a543b442f8b.update_ui()
   ypos -530
   addUserKnob {20 User}
   addUserKnob {18 src}
-  src {0 0 0}
   addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
   addUserKnob {18 dst}
-  dst {0 0 0}
   addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
  }
  Expression {

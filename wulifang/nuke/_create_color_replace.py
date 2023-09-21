@@ -69,5 +69,8 @@ def create(__node):
                 knob_of(n, "src%d" % (node_index + 1), nuke.Color_Knob).setValue(
                     src[:3]
                 )
+                knob_of(n, "dst%d" % (node_index + 1), nuke.Color_Knob).setValue(
+                    src[:3]
+                )
 
             yield n
