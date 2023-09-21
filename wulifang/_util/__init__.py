@@ -41,3 +41,6 @@ from ._tag_from_filename import tag_from_filename
 from ._timezone import TZ_CHINA, TZ_UTC, FixedTimezone
 from ._workspace_path import workspace_path
 from ._lazy_getter import lazy_getter
+from ._clamp import clamp
+from ._hex_color import hex_color
+from ._iter_chunk import iter_chunk

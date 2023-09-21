@@ -39,6 +39,7 @@ from . import (
     _add_dot_on_node_connection,
     _aov_assemble,
     _auto_place,
+    _create_color_replace,
     _create_motion_distort,
     _drop_data,
     _enable_later,
@@ -64,12 +65,12 @@ from . import (
     _rotopaint_dopesheet,
     _rotopaint_motion_distort,
     _rotopaint_uv_map,
+    _split_color,
     _split_exr,
     _split_file_by_backdrop,
     _split_layer_group_by_re,
     _split_layers,
     _split_rgba,
-    _split_color,
 )
 
 TYPE_CHECKING = False
@@ -446,6 +447,13 @@ def _init_menu():
                         tuple(_split_color.split(i)) for i in _must_selected_nodes()
                     ),
                     icon="ColorKeyer.png",
+                ),
+                _Command(
+                    "ColorReplace: 替换颜色 #THYS",
+                    lambda: tuple(
+                        tuple(_create_color_replace.create(i)) for i in _must_selected_nodes()
+                    ),
+                    icon="ColorReplace.svg",
                 ),
                 _Command(
                     "Copy: 重命名通道... #CMMTD",

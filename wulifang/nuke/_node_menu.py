@@ -13,6 +13,8 @@ import os.path
 import wulifang
 from wulifang._util import cast_str, cast_text, workspace_path
 
+_DIR_IGNORE = ("Obsolete", "third_party")
+
 
 def _obtain_menu(parent, name, icon):
     # type: (nuke.Menu, Text, Text) -> nuke.Menu
@@ -34,19 +36,21 @@ class _Command(object):
         node = cast_str(self.node)
         # not display version in menu
         name = self.node.rstrip("0123456789")
+
+        icon = "%s.png"
+        if os.path.exists(workspace_path("assets", "icons", "%s.svg" % name)):
+            icon = "%s.svg" % name
+
         cmd = menu.addCommand(
             cast_str(name),
             lambda: nuke.createNode(node),
-            icon=cast_str("%s.png" % (name,)),
+            icon=cast_str(icon),
         )
 
         def cleanup():
             menu.removeItem(cmd.name())
 
         wulifang.cleanup.add(cleanup)
-
-
-_DIR_IGNORE = ("Obsolete", "third_party")
 
 
 def _render(parent, dir_):

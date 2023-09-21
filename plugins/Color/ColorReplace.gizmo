@@ -1,0 +1,386 @@
+#! C:/Program Files/Nuke12.2v9/nuke-12.2.9.dll -nx
+version 10.0 v4
+Group {
+ name ColorReplace1
+ tile_color 0x7aa9ffff
+ onCreate {
+class __ColorReplace_2a543b442f8b:
+    _COLOR_COUNT = 16
+
+    @classmethod
+    def _hex_color(cls, color):
+        return "#" + "".join(("%02X" % max(0, min(255, round(i*255))) for i in color))
+
+    @classmethod
+    def _color(cls, index):
+        n = nuke.thisNode()
+        return n["src%d" % (index+1,)], n["dst%d" % (index+1,)]
+
+    @classmethod
+    def _color_enabled(cls, src, dst):
+        n = nuke.thisNode()
+        if src.array() != dst.array():
+            return True
+        if src.isAnimated() or dst.isAnimated():
+            return True
+        if src.hasExpression() or dst.hasExpression():
+            return True
+        return False
+
+    @classmethod
+    def autolabel(cls):
+        b = ""
+        for index in range(cls._COLOR_COUNT):
+            src, dst = cls._color(index)
+            if cls._color_enabled(src, dst):
+                b += """<span style="background: %s; color: transparent;">___</span>→<span style="background: %s; color: transparent;">___</span>
+""" % (cls._hex_color(src.array()), cls._hex_color(dst.array()))
+        if not b:
+            return
+        return '<center>%s\n%s</center>' % (autolabel(), b.strip())
+    
+    @classmethod
+    def update_ui(cls):
+        next_color_visible = True
+        n = nuke.thisNode()
+        knobs = n.knobs()
+        for index in range(cls._COLOR_COUNT):
+            src, dst = cls._color(index)
+            enabled = cls._color_enabled(src, dst)
+            visible = next_color_visible or enabled
+            next_color_visible = enabled
+            num = index + 1
+            for k in (
+                knobs["color%d" % num],
+                knobs["src%d" % num],
+                knobs["dst%d" % num],
+            ):
+                if k.visible() == visible:
+                    continue
+                k.setVisible(visible)
+
+__ColorReplace_2a543b442f8b.update_ui()
+ }
+ autolabel __ColorReplace_2a543b442f8b.autolabel()
+ updateUI __ColorReplace_2a543b442f8b.update_ui()
+ addUserKnob {20 ColorReplace l "ColorReplace v0.1.0"}
+ addUserKnob {26 color1 l "" +STARTLINE T color1}
+ addUserKnob {41 src1 l src T Expression1.src}
+ addUserKnob {41 dst1 l dst T Expression1.dst}
+ addUserKnob {26 color2 l "" +STARTLINE T color2}
+ addUserKnob {41 src2 l src T Expression2.src}
+ addUserKnob {41 dst2 l dst T Expression2.dst}
+ addUserKnob {26 color3 l "" +STARTLINE T color3}
+ addUserKnob {41 src3 l src T Expression3.src}
+ addUserKnob {41 dst3 l dst T Expression3.dst}
+ addUserKnob {26 color4 l "" +STARTLINE T color4}
+ addUserKnob {41 src4 l src T Expression4.src}
+ addUserKnob {41 dst4 l dst T Expression4.dst}
+ addUserKnob {26 color5 l "" +STARTLINE T color5}
+ addUserKnob {41 src5 l src T Expression5.src}
+ addUserKnob {41 dst5 l dst T Expression5.dst}
+ addUserKnob {26 color6 l "" +STARTLINE T color6}
+ addUserKnob {41 src6 l src T Expression6.src}
+ addUserKnob {41 dst6 l dst T Expression6.dst}
+ addUserKnob {26 color7 l "" +STARTLINE T color7}
+ addUserKnob {41 src7 l src T Expression7.src}
+ addUserKnob {41 dst7 l dst T Expression7.dst}
+ addUserKnob {26 color8 l "" +STARTLINE T color8}
+ addUserKnob {41 src8 l src T Expression8.src}
+ addUserKnob {41 dst8 l dst T Expression8.dst}
+ addUserKnob {26 color9 l "" +STARTLINE T color9}
+ addUserKnob {41 src9 l src T Expression9.src}
+ addUserKnob {41 dst9 l dst T Expression9.dst}
+ addUserKnob {26 color10 l "" +STARTLINE T color10}
+ addUserKnob {41 src10 l src T Expression10.src}
+ addUserKnob {41 dst10 l dst T Expression10.dst}
+ addUserKnob {26 color11 l "" +STARTLINE T color11}
+ addUserKnob {41 src11 l src T Expression11.src}
+ addUserKnob {41 dst11 l dst T Expression11.dst}
+ addUserKnob {26 color12 l "" +STARTLINE T color12}
+ addUserKnob {41 src12 l src T Expression12.src}
+ addUserKnob {41 dst12 l dst T Expression12.dst}
+ addUserKnob {26 color13 l "" +STARTLINE T color13}
+ addUserKnob {41 src13 l src T Expression13.src}
+ addUserKnob {41 dst13 l dst T Expression13.dst}
+ addUserKnob {26 color14 l "" +STARTLINE T color14}
+ addUserKnob {41 src14 l src T Expression14.src}
+ addUserKnob {41 dst14 l dst T Expression14.dst}
+ addUserKnob {26 color15 l "" +STARTLINE T color15}
+ addUserKnob {41 src15 l src T Expression15.src}
+ addUserKnob {41 dst15 l dst T Expression15.dst}
+ addUserKnob {26 color16 l "" +STARTLINE T color16}
+ addUserKnob {41 src16 l src T Expression16.src}
+ addUserKnob {41 dst16 l dst T Expression16.dst}
+ addUserKnob {26 docs l "" +STARTLINE T "<div style=\"font-size: large\">颜色替换</div><p>将与 src 颜色完全相同的像素替换为 dst 颜色</p><p>单节点最多 16 组颜色<p><p>© 2023 北京吾立方数码科技有限公司</p>"}
+}
+ Input {
+  inputs 0
+  name Input
+  xpos 0
+  ypos -562
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression1
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -530
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  src {0 0 0}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  dst {0 0 0}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression2
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -498
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression3
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -466
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression4
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -434
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression5
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -402
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression6
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -370
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression7
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -338
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression8
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -306
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression9
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -274
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression10
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -242
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression11
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -210
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression12
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -178
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression13
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -146
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression14
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -114
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression15
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -82
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Expression {
+  temp_name0 match
+  temp_expr0 "r == src.r && g == src.g && b == src.b"
+  expr0 "match ? dst.r : r"
+  expr1 "match ? dst.g : g"
+  expr2 "match ? dst.b : b"
+  name Expression16
+  disable {{"src == dst"}}
+  xpos 0
+  ypos -50
+  addUserKnob {20 User}
+  addUserKnob {18 src}
+  addUserKnob {6 src_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 dst}
+  addUserKnob {6 dst_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos -18
+ }
+end_group

@@ -39,3 +39,4 @@ from ._undoable import undoable
 from ._unsafe_set_knob_value import unsafe_set_knob_value
 from ._wlf_write_node import wlf_write_node
 from ._process_events import process_events
+from ._sample_node_by_grid import sample_node_by_grid

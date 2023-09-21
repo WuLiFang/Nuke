@@ -1516,6 +1516,11 @@ class Color_Knob(Array_Knob):
         Return name for dimension n. The argument n is an integer.
         """
         ...
+    def array(self) -> list[float]:
+        """
+        List of knob values.
+        """
+        ...
     ...
 
 class Disable_Knob(Boolean_Knob):
