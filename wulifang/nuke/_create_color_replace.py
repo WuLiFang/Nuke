@@ -33,13 +33,19 @@ def create(__node):
         return
 
     existing_color_hex = set()  # type: set[Text]
+    def _add_existing_color(__node):
+        # type: (nuke.Node) -> None
+        if not cast_text(__node.name()).startswith("ColorReplace"):
+            return
+        for color_index in range(16):
+            src = optional_knob_of(__node, "src%d" % (color_index + 1), nuke.Color_Knob)
+            if src:
+                v = src.array()
+                existing_color_hex.add(hex_color(v))
+        for i in __node.dependent():
+            _add_existing_color(i)
     for i in __node.dependent():
-        if cast_text(i.name()).startswith("ColorReplace"):
-            for node_index in range(16):
-                src = optional_knob_of(i, "src%d" % (node_index + 1), nuke.Color_Knob)
-                if src:
-                    v = src.array()
-                    existing_color_hex.add(hex_color(v))
+        _add_existing_color(i)
 
     total_chunk = math.ceil(len(c) / 16.0)
     with Progress("创建节点") as p:
