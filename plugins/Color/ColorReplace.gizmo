@@ -4,7 +4,7 @@ Group {
  name ColorReplace1
  tile_color 0x7aa9ffff
  onCreate {
-class __ColorReplace_2a543b442f8b:
+class __ColorReplace_f6d7a71b4413:
     _COLOR_COUNT = 16
 
     @classmethod
@@ -14,7 +14,7 @@ class __ColorReplace_2a543b442f8b:
     @classmethod
     def _color(cls, index):
         n = nuke.thisNode()
-        return n["src%d" % (index+1,)], n["dst%d" % (index+1,)]
+        return n["src%d" % (index+1,)], n["dst%d" % (index+1,)], n["label%d" % (index+1,)]
 
     @classmethod
     def _color_enabled(cls, src, dst):
@@ -31,8 +31,12 @@ class __ColorReplace_2a543b442f8b:
     def autolabel(cls):
         b = ""
         for index in range(cls._COLOR_COUNT):
-            src, dst = cls._color(index)
+            src, dst, label = cls._color(index)
             if cls._color_enabled(src, dst):
+                label_value = label.value()
+                if label_value:
+                    b += """%s
+""" % (label_value,)
                 b += """<span style="background: %s; color: transparent;">___</span>→<span style="background: %s; color: transparent;">___</span>
 """ % (cls._hex_color(src.array()), cls._hex_color(dst.array()))
         if not b:
@@ -45,13 +49,14 @@ class __ColorReplace_2a543b442f8b:
         n = nuke.thisNode()
         knobs = n.knobs()
         for index in range(cls._COLOR_COUNT):
-            src, dst = cls._color(index)
+            src, dst, _ = cls._color(index)
             enabled = cls._color_enabled(src, dst)
             visible = next_color_visible or enabled
             next_color_visible = enabled
             num = index + 1
             for k in (
                 knobs["color%d" % num],
+                knobs["label%d" % num],
                 knobs["src%d" % num],
                 knobs["dst%d" % num],
             ):
@@ -59,57 +64,73 @@ class __ColorReplace_2a543b442f8b:
                     continue
                 k.setVisible(visible)
 
-__ColorReplace_2a543b442f8b.update_ui()
+__ColorReplace_f6d7a71b4413.update_ui()
  }
- autolabel __ColorReplace_2a543b442f8b.autolabel()
- updateUI __ColorReplace_2a543b442f8b.update_ui()
- addUserKnob {20 ColorReplace l "ColorReplace v0.1.1"}
+ autolabel __ColorReplace_f6d7a71b4413.autolabel()
+ updateUI __ColorReplace_f6d7a71b4413.update_ui()
+ addUserKnob {20 ColorReplace l "ColorReplace v0.1.2"}
  addUserKnob {26 color1 l "" +STARTLINE T color1}
+ addUserKnob {1 label1 l "" -STARTLINE}
  addUserKnob {41 src1 l src T Expression1.src}
  addUserKnob {41 dst1 l dst T Expression1.dst}
  addUserKnob {26 color2 l "" +STARTLINE T color2}
+ addUserKnob {1 label2 l "" -STARTLINE}
  addUserKnob {41 src2 l src T Expression2.src}
  addUserKnob {41 dst2 l dst T Expression2.dst}
  addUserKnob {26 color3 l "" +STARTLINE T color3}
+ addUserKnob {1 label3 l "" -STARTLINE}
  addUserKnob {41 src3 l src T Expression3.src}
  addUserKnob {41 dst3 l dst T Expression3.dst}
  addUserKnob {26 color4 l "" +STARTLINE T color4}
+ addUserKnob {1 label4 l "" -STARTLINE}
  addUserKnob {41 src4 l src T Expression4.src}
  addUserKnob {41 dst4 l dst T Expression4.dst}
  addUserKnob {26 color5 l "" +STARTLINE T color5}
+ addUserKnob {1 label5 l "" -STARTLINE}
  addUserKnob {41 src5 l src T Expression5.src}
  addUserKnob {41 dst5 l dst T Expression5.dst}
  addUserKnob {26 color6 l "" +STARTLINE T color6}
+ addUserKnob {1 label6 l "" -STARTLINE}
  addUserKnob {41 src6 l src T Expression6.src}
  addUserKnob {41 dst6 l dst T Expression6.dst}
  addUserKnob {26 color7 l "" +STARTLINE T color7}
+ addUserKnob {1 label7 l "" -STARTLINE}
  addUserKnob {41 src7 l src T Expression7.src}
  addUserKnob {41 dst7 l dst T Expression7.dst}
  addUserKnob {26 color8 l "" +STARTLINE T color8}
+ addUserKnob {1 label8 l "" -STARTLINE}
  addUserKnob {41 src8 l src T Expression8.src}
  addUserKnob {41 dst8 l dst T Expression8.dst}
  addUserKnob {26 color9 l "" +STARTLINE T color9}
+ addUserKnob {1 label9 l "" -STARTLINE}
  addUserKnob {41 src9 l src T Expression9.src}
  addUserKnob {41 dst9 l dst T Expression9.dst}
  addUserKnob {26 color10 l "" +STARTLINE T color10}
+ addUserKnob {1 label10 l "" -STARTLINE}
  addUserKnob {41 src10 l src T Expression10.src}
  addUserKnob {41 dst10 l dst T Expression10.dst}
  addUserKnob {26 color11 l "" +STARTLINE T color11}
+ addUserKnob {1 label11 l "" -STARTLINE}
  addUserKnob {41 src11 l src T Expression11.src}
  addUserKnob {41 dst11 l dst T Expression11.dst}
  addUserKnob {26 color12 l "" +STARTLINE T color12}
+ addUserKnob {1 label12 l "" -STARTLINE}
  addUserKnob {41 src12 l src T Expression12.src}
  addUserKnob {41 dst12 l dst T Expression12.dst}
  addUserKnob {26 color13 l "" +STARTLINE T color13}
+ addUserKnob {1 label13 l "" -STARTLINE}
  addUserKnob {41 src13 l src T Expression13.src}
  addUserKnob {41 dst13 l dst T Expression13.dst}
  addUserKnob {26 color14 l "" +STARTLINE T color14}
+ addUserKnob {1 label14 l "" -STARTLINE}
  addUserKnob {41 src14 l src T Expression14.src}
  addUserKnob {41 dst14 l dst T Expression14.dst}
  addUserKnob {26 color15 l "" +STARTLINE T color15}
+ addUserKnob {1 label15 l "" -STARTLINE}
  addUserKnob {41 src15 l src T Expression15.src}
  addUserKnob {41 dst15 l dst T Expression15.dst}
  addUserKnob {26 color16 l "" +STARTLINE T color16}
+ addUserKnob {1 label16 l "" -STARTLINE}
  addUserKnob {41 src16 l src T Expression16.src}
  addUserKnob {41 dst16 l dst T Expression16.dst}
  addUserKnob {26 docs l "" +STARTLINE T "<div style=\"font-size: large\">颜色替换</div><p>将与 src 颜色完全相同的像素替换为 dst 颜色</p><p>单节点最多 16 组颜色<p><p>© 2023 北京吾立方数码科技有限公司</p>"}
