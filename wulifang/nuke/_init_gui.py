@@ -45,6 +45,7 @@ from . import (
     _enable_later,
     _file_mtime_check,
     _fix_read,
+    _fix_unicode_decode_error,
     _fixed_tab_stats_path,
     _jump_to_wlf_write_frame,
     _match_drop_frame,
@@ -297,6 +298,10 @@ def _init_menu():
                     "清理无用节点 #QLWYJD",
                     lambda: _prune_node.show(_prune_node.prune(nuke.allNodes())),
                 ),
+                _Command(
+                    "修复字符解码错误(UnicodeDecodeError) #XFZFJMCW",
+                    lambda: _fix_unicode_decode_error.fix_unicode_decode_error(),
+                ),
                 _Menu(
                     "性能计时",
                     (
@@ -451,7 +456,8 @@ def _init_menu():
                 _Command(
                     "ColorReplace: 替换颜色 #THYS",
                     lambda: tuple(
-                        tuple(_create_color_replace.create(i)) for i in _must_selected_nodes()
+                        tuple(_create_color_replace.create(i))
+                        for i in _must_selected_nodes()
                     ),
                     icon="ColorReplace.svg",
                 ),
@@ -586,5 +592,6 @@ def init_gui():
     _random_gl_color.init_gui()
     _jump_to_wlf_write_frame.init_gui()
     _node_suggestion.init_gui()
+    _fix_unicode_decode_error.init_gui()
     _init_cgtw()
     _g.init_once = True

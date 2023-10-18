@@ -2960,7 +2960,7 @@ class Knob:
         @return: None.
         """
         ...
-    def fromScript(self, *args, **kwargs):
+    def fromScript(self, __script: Str) -> None:
         """
         Initialise from script.
         """
@@ -8101,7 +8101,7 @@ def nodeDelete(s) -> bool:
     """
     ...
 
-def nodePaste(s) -> Node:
+def nodePaste(s: Str) -> Node:
     """
     Paste nodes from a script file or the clipboard.
     This function executes the script stored in a file. It is assumed the script is the result of
