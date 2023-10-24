@@ -44,6 +44,7 @@ from . import (
     _drop_data,
     _enable_later,
     _file_mtime_check,
+    _fix_cryptomatte_name_lost,
     _fix_read,
     _fix_unicode_decode_error,
     _fixed_tab_stats_path,
@@ -418,6 +419,14 @@ def _init_menu():
                     ),
                     icon="Read.png",
                 ),
+                _Command(
+                    "Cryptomatte: 修复名称丢失 #XFMCDS",
+                    lambda: _fix_cryptomatte_name_lost.show(
+                        _fix_cryptomatte_name_lost.fix(_must_selected_nodes()),
+                        verbose=True,
+                    ),
+                    icon="Cryptomatte.png",
+                ),
                 _Menu(
                     "Merge: 组装 AOV",
                     (
@@ -593,5 +602,6 @@ def init_gui():
     _jump_to_wlf_write_frame.init_gui()
     _node_suggestion.init_gui()
     _fix_unicode_decode_error.init_gui()
+    _fix_cryptomatte_name_lost.init_gui()
     _init_cgtw()
     _g.init_once = True
