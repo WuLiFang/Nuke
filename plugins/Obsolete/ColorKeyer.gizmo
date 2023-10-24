@@ -5,15 +5,30 @@ Group {
  name ColorKeyer1
  tile_color 0xff00ff
  onCreate {
-class __ColorKeyer_fa032f54e413:
+class __ColorKeyer_5f0187fbd3a9:
+    @classmethod
+    def _linear_to_srgb(cls, v):
+        if v <= 0.0:
+            return 0.0
+        elif v >= 1:
+            return 1.0
+        elif v < 0.0031308:
+            return v * 12.92
+        else:
+            return v ** (1 / 2.4) * 1.055 - 0.055
+
+    @classmethod
+    def _hex_color(cls, color):
+        return "#" + "".join(("%02X" % int(cls._linear_to_srgb(i)*255)) for i in color)
+
     @classmethod
     def autolabel(cls):
         color = nuke.thisNode()["color"].value()[:3]
-        hex = "".join(("%02X" % round(i*255) for i in color))
-        return '<div style="text-align: center;">%s</div><div style="background: #%s;">&#8203;</div>' % (autolabel(), hex)
+        hex = cls._hex_color(color)
+        return '<div style="text-align: center;">%s</div><div style="background: %s;">&#8203;</div>' % (autolabel(), hex)
  }
- autolabel __ColorKeyer_fa032f54e413.autolabel()
- addUserKnob {20 ColorKeyer l "ColorKeyer v1.0.1"}
+ autolabel __ColorKeyer_5f0187fbd3a9.autolabel()
+ addUserKnob {20 ColorKeyer l "ColorKeyer v1.0.2"}
  addUserKnob {41 input T Shuffle2.in}
  addUserKnob {41 color T Constant1.color}
  addUserKnob {7 threshold}
