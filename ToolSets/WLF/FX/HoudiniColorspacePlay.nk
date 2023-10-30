@@ -1,0 +1,31 @@
+#! C:/Program Files/Nuke13.2v8/nuke-13.2.8.dll -nx
+version 10.0 v4
+Group {
+ name HoudiniColorspacePlay1
+ label 拍屏色彩空间转换
+}
+ Input {
+  inputs 0
+  name Input
+  xpos -898
+  ypos 427
+ }
+ OCIOColorSpace {
+  in_colorspace scene_linear
+  out_colorspace color_picking
+  name OCIOColorSpace11
+  xpos -898
+  ypos 467
+ }
+ Colorspace {
+  colorspace_in sRGB
+  name Colorspace11
+  xpos -898
+  ypos 503
+ }
+ Output {
+  name Output1
+  xpos -898
+  ypos 603
+ }
+end_group
