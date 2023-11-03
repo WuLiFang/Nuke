@@ -8,13 +8,16 @@ if TYPE_CHECKING:
     from typing import Text, Iterable, Optional, Iterator
 
 import nuke
+import json
 
-from wulifang.nuke._util import knob_of
+from wulifang.nuke._util import knob_of, Progress
 from wulifang._util import cast_str, cast_text, create_html_url
+from wulifang.vendor.six.moves import range
 import wulifang.nuke
 import webbrowser
 from ._cryptomatte_list import CryptomatteList
 from ._cryptomatte_manifest import CryptomatteManifest
+import re
 
 
 class ResultItem:
@@ -22,6 +25,7 @@ class ResultItem:
         # type: ( nuke.Node) -> None
         self.node_name = cast_text(node.fullName())
         self.logs = []  # type: list[Text]
+        self.manifest = None  # type: Optional[CryptomatteManifest]
         self.ok = False
 
 
@@ -52,83 +56,187 @@ class _Context:
         return False
 
 
-def _one_way_match_score(a, b):
-    # type: (Text,Text) -> float
-    if a == b:
-        return 1
+class _NameMatcher:
+    _SEPARATOR_PATTERN = re.compile(r"[:\/]")
+    _MAX_LEN = 16 << 10
 
-    if len(a) < 2:
-        return 0.2
+    def __init__(self, a, b):
+        # type: (Text, Text) -> None
+        if len(a) > len(b):
+            a, b = b, a
+        if len(b) > self._MAX_LEN:
+            raise ValueError("name is too long (length=%d)" % (len(b),))
+        self.a = a
+        self.b = b
 
-    if a.endswith(b):
-        return 0.9
-    if a.startswith(b):
-        return 0.8
-    if a in b:
-        return 0.7
+    def _common_prefix(self, a, b):
+        # type: (Text,Text) -> Text
+        for index in range(len(a)):
+            if a[index] != b[index]:
+                return a[:index]
+        return a
 
-    return 0
+    def _common_suffix(self, a, b):
+        # type: (Text,Text) -> Text
+        for index in range(len(a)):
+            if a[len(a) - 1 - index] != b[len(b) - 1 - index]:
+                return a[len(a) - index :]
+        return a
+
+    def _base_score(self, a, b):
+        # type: (Text, Text) -> tuple[float, Text]
+        if a == b:
+            return 1, "相同"
+
+        if len(a) > len(b):
+            a, b = b, a
+
+        if len(a) < 2:
+            return 0.01 * len(a) / self._MAX_LEN, "输入过短"
+
+        common_suffix = self._common_suffix(a, b)
+        if len(common_suffix) > len(a) / 2:
+            return 0.6 + 0.09 * len(common_suffix) / len(a) + 0.01 * len(
+                a
+            ) / self._MAX_LEN, "共通后缀 '%s'" % (common_suffix,)
+
+        if not self._SEPARATOR_PATTERN.match(a):
+            common_prefix = self._common_prefix(a, b)
+            if len(common_prefix) > len(a) / 2:
+                return 0.4 + 0.09 * len(common_prefix) / len(a) + 0.01 * len(
+                    a
+                ) / self._MAX_LEN, "共通前缀 '%s'" % (common_prefix,)
+
+        if a in b:
+            return 0.3 + 0.09 * len(a) / len(b) + 0.01 * len(
+                a
+            ) / self._MAX_LEN, "包含 '%s'" % (a,)
+
+        return 0, "不匹配"
+
+    def _solutions(self):
+        yield self._base_score(self.a, self.b)
+        a_parts = self._SEPARATOR_PATTERN.split(self.a)
+        if len(a_parts) > 1:
+            b_parts = self._SEPARATOR_PATTERN.split(self.b)
+            score, comment = self._base_score(a_parts[-1], b_parts[-1])
+            if score > 0.5:
+                yield score * 0.8, "最后一部分:" + comment
+
+    def score(self):
+        # type: () -> tuple[float, Text]
+
+        solutions = sorted(self._solutions(), key=lambda x: x[0], reverse=True)
+        return solutions[0]
 
 
-def _match_score(a, b):
-    # type: (Text,Text) -> float
-    return max(_one_way_match_score(a, b), _one_way_match_score(b, a))
+class _MatchContext:
+    def __init__(self, parent, manifest, list):
+        # type: (_Context, CryptomatteManifest, CryptomatteList) -> None
+        self.parent = parent
+        self.manifest = manifest
+        self.list = list
+        self.used_name = set(list.raw)  # type: set[str]
+
+
+class _Layer:
+    def __init__(self, ctx, name):
+        # type: ( _MatchContext, Text) -> None
+        self.ctx = ctx
+        self.name = name
+        self.name_fixed = name
+        self.did_fix = name in ctx.manifest.raw
+        self._raw_matches = tuple(
+            (j, _NameMatcher(self.name, j).score()) for j in self.ctx.manifest.raw
+        )
+
+    def _matches(self):
+        for i, score in self._raw_matches:
+            if i in self.ctx.used_name:
+                continue
+            if score[0] > 0:
+                yield score[0], i, score[1]
+
+    def best_match(self):
+        matches = sorted(self._matches(), reverse=True)
+        if matches:
+            return matches[0]
+
+    def fix(self):
+        if self.did_fix:
+            return
+        self.did_fix = True
+        match = self.best_match()
+        if not match:
+            self.ctx.parent.log("无法找到匹配:\n\t%s" % (self.name,))
+            return
+        score, name, explain = match
+        self.name_fixed = name
+        self.ctx.used_name.add(name)
+        self.ctx.parent.log(
+            "替换为最佳匹配:\n\t评分 %.2f\t%s\n\t\t%s\n\t->\t%s"
+            % (score, explain, self.name, self.name_fixed)
+        )
+        self.ctx.parent.res.ok = True
 
 
 def fix(nodes):
     # type: (Iterable[nuke.Node]) -> Iterator[ResultItem]
-
-    for n in nodes:
-        if (
-            cast_text(n.Class()) not in ("Cryptomatte")
-            or knob_of(n, "disable", nuke.Boolean_Knob).value()
-        ):
-            continue
-
-        ctx = _Context(n)
-        try:
-            _, manifest = CryptomatteManifest.from_cryptomatte(n)
-        except ValueError:
-            ctx.log("无法获取清单")
-            continue
-
-        l = CryptomatteList.from_cryptomatte(n)
-        if l.has_wildcard():
-            ctx.log("暂不支持通配符")
-            continue
-
-        used_name = set(l.raw)
-        new_value = list()  # type: list[str]
-        lost_count = 0
-        for i in l.raw:
-            if i in manifest.raw:
-                new_value.append(i)
+    with Progress("修复 Cryptomatte 名称丢失", estimate_secs=120) as p:
+        for n in nodes:
+            if (
+                cast_text(n.Class()) not in ("Cryptomatte")
+                or knob_of(n, "disable", nuke.Boolean_Knob).value()
+            ):
                 continue
-            lost_count += 1
-            matches = (
-                (j, _match_score(i, j)) for j in manifest.raw if j not in used_name
-            )
-            matches = sorted((k for k in matches if k[1] > 0), key=lambda x: x[1])
-            if not matches:
-                ctx.log("名称不存在于清单中，无法找到匹配: %s" % (i,))
-                new_value.append(i)
+            p.set_message(cast_text(n.fullName()))
+            p.increase()
+
+            ctx = _Context(n)
+            try:
+                _, manifest = CryptomatteManifest.from_cryptomatte(n)
+                ctx.res.manifest = manifest
+            except ValueError:
+                ctx.log("无法获取清单")
+                yield ctx.res
                 continue
-            best_match, score = matches[0]
-            ctx.log(
-                "名称不存在于清单中，替换为最佳匹配(评分 %.2f):\n\t%s\n->\t%s" % (score, i, best_match)
-            )
-            new_value.append(best_match)
-            used_name.add(best_match)
-            ctx.res.ok = True
-        if lost_count == 0:
-            continue
-        if ctx.res.ok:
-            CryptomatteList(new_value).to_cryptomatte(n)
-        yield ctx.res
+
+            l = CryptomatteList.from_cryptomatte(n)
+            if l.has_wildcard():
+                ctx.log("暂不支持通配符")
+                yield ctx.res
+                continue
+
+            m_ctx = _MatchContext(ctx, manifest, l)
+            layers = [_Layer(m_ctx, i) for i in l.raw]
+            did_fix = False
+            while True:
+                remains = sorted(
+                    (i for i in layers if not i.did_fix),
+                    key=lambda x: x.best_match() or (-1,),
+                    reverse=True,
+                )
+                if not remains:
+                    break
+                remains[0].fix()
+                did_fix = True
+
+            if not did_fix:
+                continue
+
+            if ctx.res.ok:
+                CryptomatteList([i.name_fixed for i in layers]).to_cryptomatte(n)
+            yield ctx.res
 
 
 def _html(items):
     # type: (list[ResultItem]) -> Iterator[Text]
+    yield "<!DOCTYPE html>"
+    yield '<html lang="zh-Hans">'
+    yield "<head>"
+    yield "<title>修复结果</title>"
+    yield "</head>"
+    yield "<body>"
     yield "<h1>修复结果</h1>"
     yield "<div>%d 成功, %d 失败</div>" % (
         sum(i.ok for i in items),
@@ -138,10 +246,20 @@ def _html(items):
     for i in items:
         yield "<li>"
         yield "[%s]%s " % ("成功" if i.ok else "失败", i.node_name)
-        if i.logs:
-            yield """<pre style="margin: 0 20px;">%s</pre>""" % ("\n".join(i.logs),)
+        if i.manifest:
+            yield """<details><summary style="
+    position: sticky;
+    top: 0;
+    background: white;
+">清单</summary><pre>%s</pre></details>""" % (
+                json.dumps(i.manifest.raw, ensure_ascii=False, indent=2)
+            )
+        for j in i.logs:
+            yield """<pre style="margin: 5px 20px;">%s</pre>""" % (j,)
         yield "</li>"
     yield "</ul>"
+    yield "</body>"
+    yield "</html>"
 
 
 def show(items, verbose=False):
