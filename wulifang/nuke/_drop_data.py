@@ -75,8 +75,9 @@ def _resolve_file_input(data):
 
 
 class Result:
-    nodes = []  # type: list[nuke.Node]
-    prevent_default = False
+    def __init__(self):
+        self.nodes = []  # type: list[nuke.Node]
+        self.prevent_default = False
 
 
 class _FileContext:
@@ -336,7 +337,6 @@ def drop_data(mime_type, data):
             first_frame = nuke.numvalue(cast_str("root.first_frame"))
             if first_frame != 1:
                 p.set_message("偏移视频帧范围")
-                print(res.nodes)
                 for n in (i for i in res.nodes if _should_offset_range(i)):
                     assert_isinstance(
                         n[cast_str("frame_mode")],
