@@ -25,6 +25,7 @@ from wulifang.nuke._util import (
     create_node,
 )
 from wulifang.vendor.six.moves import urllib_parse
+from ._auto_place import auto_place
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
@@ -168,7 +169,6 @@ class _ImportAny(_Action):
 
 
 class _Import3D(_Action):
-
     _known_ext = (
         ".abc",
         ".abcScene",
@@ -346,6 +346,11 @@ def drop_data(mime_type, data):
                         n[cast_str("frame")],
                         nuke.String_Knob,
                     ).setValue(cast_str("{:.0f}".format(first_frame)))
+
+            # auto place and zoom
+            auto_place(res.nodes)
+            for i in res.nodes:
+                i.setSelected(True)
             n = res.nodes[0]
             nuke.zoom(
                 assert_not_none(nuke.zoom()),
