@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2023.2.0'
-RELEASE_DATE = datetime.fromtimestamp(1689588608)
-LAST_GIT_COMMIT_DESCRIBE = 'v2023.1.0-4-g85262ab'
-LAST_GIT_COMMIT_HASH = '85262abdc703675792389dda881a1ed67cd33017'
+VERSION = '2024.0.0'
+RELEASE_DATE = datetime.fromtimestamp(1704680467)
+LAST_GIT_COMMIT_DESCRIBE = 'v2023.2.0-20-gef32879'
+LAST_GIT_COMMIT_HASH = 'ef328796d62f00f4df089348077b7b5c80fd63c0'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1689588316)
-LAST_GIT_COMMIT_SUBJECT = 'build: clean pyc file'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1704680366)
+LAST_GIT_COMMIT_SUBJECT = 'feat: update expire time to 2024-07-01'
 LAST_GIT_COMMIT_BODY = ''
