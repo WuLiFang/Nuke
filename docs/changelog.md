@@ -1,5 +1,24 @@
 # 更新日志
 
+## [2024.0.0](https://github.com/WuLiFang/Nuke/compare/v2023.2.0...v2024.0.0) (2024-01-08)
+
+### 特性
+
+- **nuke:** 添加工具集 `third_party/Emission2307` ([a6bb660](https://github.com/WuLiFang/Nuke/commit/a6bb6600e6179d10942af5ca249ecfb8738926d4))
+- **nuke:** 支持颜色替换 ([fc50d98](https://github.com/WuLiFang/Nuke/commit/fc50d98759daa4e02fddb27c9b4ade11d0d85b20))
+- **nuke:** 支持修复 cryptomatte 名称丢失 ([f6ea862](https://github.com/WuLiFang/Nuke/commit/f6ea8621fde8e01efc4d9008ea0c531b555222ba))
+- **nuke:** 支持修复 UnicodeDecodeError ([f7e192d](https://github.com/WuLiFang/Nuke/commit/f7e192debfb7a211f17d5341c9de78f9eb89bac7))
+- **nuke:** 支持按颜色拆分图层 ([29e455c](https://github.com/WuLiFang/Nuke/commit/29e455c589bcf11f5b927b0bca25865bbfde8e1c))
+- 更新过期日期至 2024-07-01 ([ef32879](https://github.com/WuLiFang/Nuke/commit/ef328796d62f00f4df089348077b7b5c80fd63c0))
+
+### 修复
+
+- **nuke:** ColorKeyer: 应在自动标签中时使用 sRGB 颜色 ([3c6673e](https://github.com/WuLiFang/Nuke/commit/3c6673ec42ebab01f5d86ae0296c94fe6ab84ca2))
+- **nuke:** ColorReplace: 应在自动标签中使用 sRGB 颜色 ([c9d1ae1](https://github.com/WuLiFang/Nuke/commit/c9d1ae1a209177ea5bd5cceebc097abeb43fe099))
+- **nuke:** 拖放: 删除之前拖放创建的节点导致出错 ([2fe12c6](https://github.com/WuLiFang/Nuke/commit/2fe12c69b00236fb7619bc6471e9b9fa1e257165))
+- **nuke:** wlf_Write: python3 中出错 ([c63cb69](https://github.com/WuLiFang/Nuke/commit/c63cb698ea6d342fdf1d973867e3b09961dc4a1f))
+- 从网络硬盘加载插件时出错 ([0938f56](https://github.com/WuLiFang/Nuke/commit/0938f56ff227a28673e0a6266ac60ec7b2399381))
+
 ## [2023.2.0](https://github.com/WuLiFang/Nuke/compare/v2023.1.0...v2023.2.0) (2023-07-17)
 
 ### 特性
@@ -1080,3 +1099,6 @@ Nuke 和 CGTeamWork 通用插件更新:
 ## 0.2.0 (2017-08-25)
 
 ## 0.1.0 (2017-08-25)
+
+<!-- markdownlint-disable -->
+<!-- markdownlint-configure-file { "no-duplicate-heading": { "siblings_only": true } } -->
