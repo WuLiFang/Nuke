@@ -57,6 +57,7 @@ from . import (
     _preference,
     _project_settings,
     _prune_node,
+    _psd_breakout_layers,
     _python2_project_warning,
     _random_gl_color,
     _remove_duplicated_read,
@@ -604,6 +605,7 @@ def init_gui():
     _node_suggestion.init_gui()
     _fix_unicode_decode_error.init_gui()
     _fix_cryptomatte_name_lost.init_gui()
+    _psd_breakout_layers.init_gui()
     _python2_project_warning.init_gui()
     _init_cgtw()
     _g.init_once = True
