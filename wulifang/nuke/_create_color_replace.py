@@ -33,6 +33,7 @@ def create(__node):
         return
 
     existing_color_hex = set()  # type: set[Text]
+
     def _add_existing_color(__node):
         # type: (nuke.Node) -> None
         if not cast_text(__node.name()).startswith("ColorReplace"):
@@ -44,6 +45,7 @@ def create(__node):
                 existing_color_hex.add(hex_color(v))
         for i in __node.dependent():
             _add_existing_color(i)
+
     for i in __node.dependent():
         _add_existing_color(i)
 

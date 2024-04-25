@@ -76,14 +76,10 @@ _BLEND_MAP = {
 _CHUNK_SIZE = 32
 
 
-def breakout_layers(node, sRGB=True):
+def split(__node, s_rgb=True):
     # type: (nuke.Node, bool) -> None
-
-    if not node:
-        return
-
     with nuke.Undo(cast_str("PSD拆层")), capture_exception():
-        metaData = node.metadata()
+        metaData = __node.metadata()
         layers = _get_layers(metaData)
 
         x_spacing = 80
@@ -96,23 +92,23 @@ def breakout_layers(node, sRGB=True):
 
         spacing = 70
 
-        x0 = node.xpos()
-        y0 = node.ypos()
+        x0 = __node.xpos()
+        y0 = __node.ypos()
         y = y0 + spacing * 2
         x = x0
         top_y = y
         last_layer = None
 
-        if not sRGB:
+        if not s_rgb:
             input_node = create_node(
                 "Colorspace",
                 "channels all\ncolorspace_out all",
-                inputs=(node,),
+                inputs=(__node,),
                 xpos=x0,
                 ypos=y,
             )
         else:
-            input_node = node
+            input_node = __node
         i = 0
 
         def filtered_layers():
@@ -219,7 +215,7 @@ mix %f
                     xpos=x,
                     ypos=y,
                 )
-                knob_of(psdMerge, "sRGB", nuke.Boolean_Knob).setValue(sRGB)
+                knob_of(psdMerge, "sRGB", nuke.Boolean_Knob).setValue(s_rgb)
                 try:
                     if l.attrs["mask/disable"] != True:
                         knob_of(
@@ -254,7 +250,7 @@ mix %f
 
             x = x + x_spacing * 2 + backdrop_x_fudge * 2 + 50
 
-        if not sRGB and last_layer:
+        if not s_rgb and last_layer:
             create_node(
                 "Colorspace",
                 """\
@@ -267,6 +263,13 @@ colorspace_in sRGB
             )
 
 
+def _breakout_layers_impl(node, sRGB=True):
+    # type: (nuke.Node, bool) -> None
+    if not node:
+        return
+    split(node, s_rgb=sRGB)
+
+
 def init_gui():
     raw = nukescripts.psd.breakoutLayers
 
@@ -274,4 +277,4 @@ def init_gui():
         nukescripts.psd.breakoutLayers = raw
 
     wulifang.cleanup.add(cleanup)
-    nukescripts.psd.breakoutLayers = breakout_layers
+    nukescripts.psd.breakoutLayers = _breakout_layers_impl
