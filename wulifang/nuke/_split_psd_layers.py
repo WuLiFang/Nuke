@@ -199,8 +199,10 @@ box {%f %f %f %f}
             # spell-checker: word blendmode
             try:
                 operation = _BLEND_MAP[cast_text(l.attrs["blendmode"])]
-            except:
-                print("unknown blending mode %s" % (l.attrs["blendmode"],))
+            except KeyError:
+                wulifang.message.error(
+                    "unknown blending mode %s" % (l.attrs["blendmode"],)
+                )
                 operation = "normal"
 
             if last_layer:
