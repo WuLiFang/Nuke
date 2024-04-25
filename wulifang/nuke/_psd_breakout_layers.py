@@ -15,8 +15,6 @@ from wulifang.nuke._util import knob_of, create_node
 from wulifang._compat.str import Str
 
 
-
-
 class _Layer:
     def __init__(self):
         self.attrs = {}  # type: dict[Text, Text | float]
@@ -46,6 +44,38 @@ def _get_layers(metadata):
     return layers
 
 
+# spell-checker: word lbrn lddg smud fsub fdiv colr
+_BLEND_MAP = {
+    "norm": "normal",
+    "scrn": "screen",
+    "div ": "color dodge",
+    "over": "overlay",
+    "mul ": "multiply",
+    "dark": "darken",
+    "idiv": "color burn",
+    "lbrn": "linear burn",
+    "lite": "lighten",
+    "lddg": "linear dodge",
+    "lgCl": "lighter color",
+    "sLit": "soft light",
+    "hLit": "hard light",
+    "lLit": "linear light",
+    "vLit": "vivid light",
+    "pLit": "pin light",
+    "hMix": "hard mix",
+    "diff": "difference",
+    "smud": "exclusion",
+    "fsub": "subtract",
+    "fdiv": "divide",
+    "hue ": "hue",
+    "sat ": "saturation",
+    "colr": "color",
+    "lum ": "luminosity",
+}
+
+_CHUNK_SIZE = 32
+
+
 def breakout_layers(node, sRGB=True):
     # type: (nuke.Node, bool) -> None
 
@@ -53,33 +83,6 @@ def breakout_layers(node, sRGB=True):
         return
 
     with nuke.Undo(cast_str("PSD拆层")), capture_exception():
-        blendMap = {}  # type: dict[Text,Text]
-        blendMap["norm"] = "normal"
-        blendMap["scrn"] = "screen"
-        blendMap["div "] = "color dodge"
-        blendMap["over"] = "overlay"
-        blendMap["mul "] = "multiply"
-        blendMap["dark"] = "darken"
-        blendMap["idiv"] = "color burn"
-        blendMap["lbrn"] = "linear burn"
-        blendMap["lite"] = "lighten"
-        blendMap["lddg"] = "linear dodge"
-        blendMap["lgCl"] = "lighter color"
-        blendMap["sLit"] = "soft light"
-        blendMap["hLit"] = "hard light"
-        blendMap["lLit"] = "linear light"
-        blendMap["vLit"] = "vivid light"
-        blendMap["pLit"] = "pin light"
-        blendMap["hMix"] = "hard mix"
-        blendMap["diff"] = "difference"
-        blendMap["smud"] = "exclusion"
-        blendMap["fsub"] = "subtract"
-        blendMap["fdiv"] = "divide"
-        blendMap["hue "] = "hue"
-        blendMap["sat "] = "saturation"
-        blendMap["colr"] = "color"
-        blendMap["lum "] = "luminosity"
-
         metaData = node.metadata()
         layers = _get_layers(metaData)
 
@@ -93,77 +96,69 @@ def breakout_layers(node, sRGB=True):
 
         spacing = 70
 
-        x = node.xpos()
-        y = node.ypos()
-        curY = y + spacing * 2
+        x0 = node.xpos()
+        y0 = node.ypos()
+        y = y0 + spacing * 2
+        x = x0
+        top_y = y
+        last_layer = None
 
         if not sRGB:
-            colorSpace = nuke.nodes.Colorspace()
-            knob_of(colorSpace, "channels", nuke.ChannelMask_Knob).setValue(
-                cast_str("all")
+            input_node = create_node(
+                "Colorspace",
+                "channels all\ncolorspace_out all",
+                inputs=(node,),
+                xpos=x0,
+                ypos=y,
             )
-            knob_of(colorSpace, "colorspace_out", nuke.Enumeration_Knob).setValue(
-                cast_str("all")
-            )
-            colorSpace.setInput(0, node)
-            colorSpace.setXYpos(x, curY)
-
-            inputNode = colorSpace
         else:
-            inputNode = node
-
-        curX = x
-        curY = y + spacing * 2
-        topY = curY
-
-        lastLayer = None
-
+            input_node = node
         i = 0
 
-        for l in layers:
+        def filtered_layers():
+            for i in layers:
+                # hidden divider or start of group
+                try:
+                    if int(i.attrs["divider/type"]) > 0:
+                        continue
+                except (ValueError, KeyError):
+                    pass
+                yield i
 
-            try:
-                v = l.attrs["divider/type"]
-                if isinstance(v, (int, float)) and v > 0:
-                    ## hidden divider or start of group
-                    continue
-            except:
-                pass
-
-            i = i + 1
-            if i > 100:
-                nuke.message(cast_str("Too many layers, stopping at layer 100."))
-                break
+        for i, l in enumerate(
+            filtered_layers(),
+        ):
+            if (
+                i > 0
+                and i % _CHUNK_SIZE == 0
+                and not nuke.ask(cast_str("已经拆分出了 %d 个图层，继续？" % (i,)))
+            ):
+                return
 
             name = cast_text(l.attrs["nukeName"])
 
-            curY = topY
-
-            if i % 2:
-                tileColor = 2829621248
-            else:
-                tileColor = 1751668736
-
+            y = top_y
             backdrop = create_node(
                 "BackdropNode",
                 "note_font_size 18",
-                tile_color=tileColor,
+                tile_color=0xA8A89800 if i % 2 else 0x68685800,
                 label=cast_text(l.attrs["name"]),
+                xpos=x + backdrop_x_fudge,
+                ypos=y + backdrop_y_fudge,
             )
-            backdrop.setXYpos(curX + backdrop_x_fudge, curY + backdrop_y_fudge)
 
-            curY += spacing // 2
+            y += spacing // 2
 
             dot = nuke.nodes.Dot()
-            dot.setInput(0, inputNode)
-            dot.setXYpos(curX + dot_x_fudge, curY + dot_y_fudge)
-            curY += spacing
+            dot.setInput(0, input_node)
+            dot.setXYpos(x + dot_x_fudge, y + dot_y_fudge)
+            y += spacing
 
-            inputNode = dot
+            input_node = dot
 
-            ## if no 'alpha' assume alpha of 1
+            # if no 'alpha' assume alpha of 1
             alpha_chan = "alpha"
-            if not cast_str(name + ".alpha") in inputNode.channels():
+            if not cast_str(name + ".alpha") in input_node.channels():
                 alpha_chan = "white"
             shuffle = create_node(
                 "Shuffle",
@@ -182,13 +177,13 @@ out rgba
 out2 none
 """
                 % (name, alpha_chan),
-                inputs=(inputNode,),
+                inputs=(input_node,),
                 label=name,
-                xpos=curX,
-                ypos=curY,
+                xpos=x,
+                ypos=y,
             )
 
-            curY += spacing
+            y += spacing
 
             crop = create_node(
                 "Crop",
@@ -197,21 +192,22 @@ box {%f %f %f %f}
                 """
                 % (l.attrs["x"], l.attrs["y"], l.attrs["r"], l.attrs["t"]),
                 inputs=(shuffle,),
-                xpos=curX,
-                ypos=curY,
+                xpos=x,
+                ypos=y,
             )
 
-            curY += spacing * 2
+            y += spacing * 2
 
             layer = crop
 
+            # spell-checker: word blendmode
             try:
-                operation = blendMap[cast_text(l.attrs["blendmode"])]
+                operation = _BLEND_MAP[cast_text(l.attrs["blendmode"])]
             except:
                 print("unknown blending mode %s" % (l.attrs["blendmode"],))
                 operation = "normal"
 
-            if lastLayer:
+            if last_layer:
                 psdMerge = create_node(
                     "PSDMerge",
                     """\
@@ -219,9 +215,9 @@ operation %s
 mix %f
 """
                     % (operation, float(l.attrs["opacity"]) / 255.0),
-                    inputs=(lastLayer, layer),
-                    xpos=curX,
-                    ypos=curY,
+                    inputs=(last_layer, layer),
+                    xpos=x,
+                    ypos=y,
                 )
                 knob_of(psdMerge, "sRGB", nuke.Boolean_Knob).setValue(sRGB)
                 try:
@@ -235,36 +231,39 @@ mix %f
                             ).setValue(True)
                 except:
                     pass
-                lastLayer = psdMerge
+                last_layer = psdMerge
             else:
-                dot = nuke.nodes.Dot()
-                dot.setInput(0, layer)
-                dot.setXYpos(curX + dot_x_fudge, curY + dot_y_fudge)
-                lastLayer = dot
+                last_layer = create_node(
+                    "Dot",
+                    inputs=(layer,),
+                    xpos=x + dot_x_fudge,
+                    ypos=y + dot_y_fudge,
+                )
 
-            curY += spacing
+            y += spacing
 
+            # spell-checker: word bdwidth bdheight
             knob_of(backdrop, "bdwidth", nuke.Array_Knob).setValue(
                 x_spacing * 2 + backdrop_x_fudge * 2 + 50
             )
             knob_of(backdrop, "bdheight", nuke.Array_Knob).setValue(
-                (curY - backdrop.ypos()) - backdrop_y_fudge - 50
+                (y - backdrop.ypos()) - backdrop_y_fudge - 50
             )
 
-            curY += spacing
+            y += spacing
 
-            curX = curX + x_spacing * 2 + backdrop_x_fudge * 2 + 50
+            x = x + x_spacing * 2 + backdrop_x_fudge * 2 + 50
 
-        if not sRGB and lastLayer:
+        if not sRGB and last_layer:
             create_node(
                 "Colorspace",
                 """\
 channels all
 colorspace_in sRGB
     """,
-                inputs=(lastLayer,),
-                xpos=lastLayer.xpos(),
-                ypos=lastLayer.ypos() + 2 * spacing,
+                inputs=(last_layer,),
+                xpos=last_layer.xpos(),
+                ypos=last_layer.ypos() + 2 * spacing,
             )
 
 
