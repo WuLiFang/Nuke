@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2024.1.0](https://github.com/WuLiFang/Nuke/compare/v2024.0.0...v2024.1.0) (2024-05-06)
+
+### Features
+
+- **nuke:** add python2 project warning ([fc7ac0e](https://github.com/WuLiFang/Nuke/commit/fc7ac0e142860f97d7cc143ed8d3232e6e7b1e57))
+- **nuke:** replace builtin psd layer breakout to support cjk layer name ([7c37886](https://github.com/WuLiFang/Nuke/commit/7c37886be5a658505847775f87e2d39d54ff3afe))
+- update expire time to 2025-01-01 ([6f10dac](https://github.com/WuLiFang/Nuke/commit/6f10dac56e95cfd7e84f598c58964e944ec4410f))
+
 ## [2024.0.0](https://github.com/WuLiFang/Nuke/compare/v2023.2.0...v2024.0.0) (2024-01-08)
 
 ### Features
