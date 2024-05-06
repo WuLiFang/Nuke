@@ -1,5 +1,13 @@
 # 更新日志
 
+## [2024.1.0](https://github.com/WuLiFang/Nuke/compare/v2024.0.0...v2024.1.0) (2024-05-06)
+
+### 特性
+
+- **nuke:** 添加 python2 项目警告 ([fc7ac0e](https://github.com/WuLiFang/Nuke/commit/fc7ac0e142860f97d7cc143ed8d3232e6e7b1e57))
+- **nuke:** 替换内置的 PSD 拆层以支持中文图层名 ([7c37886](https://github.com/WuLiFang/Nuke/commit/7c37886be5a658505847775f87e2d39d54ff3afe))
+- 更新过期日期至 2025-01-01 ([6f10dac](https://github.com/WuLiFang/Nuke/commit/6f10dac56e95cfd7e84f598c58964e944ec4410f))
+
 ## [2024.0.0](https://github.com/WuLiFang/Nuke/compare/v2023.2.0...v2024.0.0) (2024-01-08)
 
 ### 特性
