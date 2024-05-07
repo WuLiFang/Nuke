@@ -59,7 +59,17 @@ _SUBSTITUTE = JSONStorageItem(
     "substitute@873f3fe8-d657-4131-a4c1-a40f51491f11", lambda: "#shot/avi#shot_work#i"
 )
 
-_SUBSTITUTE_HELP = "语法为:{分隔符}{查找}{分隔符}{替换}{分隔符}，每个一行。\n支持正则，分隔符后可附选项标志（i: 忽略大小写）。"
+_SUBSTITUTE_HELP = """\
+语法为:{分隔符}{查找}{分隔符}{替换}{分隔符}，每个一行。
+支持正则，分隔符后可附选项标志（i: 忽略大小写）。
+示例：
+  #abc#def#
+    把 abc 替换成 def
+  #abc#def#i
+    把 abc 替换成 def，忽略大小写
+  @###@123@
+    把 ### 替换成 123
+"""
 
 _RESULT_ITEM_TYPENAME = "ResultItem_20b600a1e1a7"
 
