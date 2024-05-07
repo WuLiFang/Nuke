@@ -369,6 +369,7 @@ def _init_menu():
                 _Command(
                     "替换文件路径... #THWJLJ",
                     lambda: _replace_file_path.dialog(_must_selected_nodes()),
+                    icon="Read.png",
                 ),
                 _Command(
                     "转换为序列路径 #ZHWXLLJ",
@@ -540,12 +541,13 @@ def _init_menu():
                 _Command(
                     "批量替换文件路径... #PLTHWJLJ",
                     lambda: _replace_file_path.batch_dialog(),
+                    icon="Read.png",
                 ),
                 _LegacyCommandPlaceholder(
-                    "TODO: 转换为序列工程...",
+                    "TODO: 批量转换为序列路径...",
                 ),
                 _LegacyCommandPlaceholder(
-                    "TODO: 按素材名组装...",
+                    "TODO: 批量按素材名组装...",
                     icon="Merge.png",
                 ),
             ),
