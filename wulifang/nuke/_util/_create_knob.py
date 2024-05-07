@@ -35,7 +35,7 @@ def create_knob(
     if label is not None:
         k.setLabel(cast_str(label))
     if value is not None:
-        if isinstance(k, nuke.String_Knob):
+        if isinstance(k, (nuke.String_Knob, nuke.Text_Knob)):
             k.setValue(cast_str(assert_isinstance(value, (text_type, binary_type))))
         elif isinstance(k, nuke.Array_Knob):
             if isinstance(value, (int, float)):

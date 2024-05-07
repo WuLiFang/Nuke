@@ -62,6 +62,7 @@ from . import (
     _remove_duplicated_read,
     _rename_channels,
     _render_png,
+    _replace_file_path,
     _replace_glow_mask_with_width,
     _replace_with_relative_path,
     _replace_with_sequence_path,
@@ -366,6 +367,10 @@ def _init_menu():
                 ),
                 _Command("查找最大 BBox #CZZD-BBOX", show_max_bbox_node, readonly=True),
                 _Command(
+                    "替换文件路径... #THWJLJ",
+                    lambda: _replace_file_path.dialog(_must_selected_nodes()),
+                ),
+                _Command(
                     "转换为序列路径 #ZHWXLLJ",
                     lambda: _replace_with_sequence_path.show(
                         _replace_with_sequence_path.replace(_must_selected_nodes())
@@ -531,6 +536,10 @@ def _init_menu():
                     "拆分 EXR... #CF-EXR",
                     lambda: _split_exr.dialog(),
                     icon="Write.png",
+                ),
+                _Command(
+                    "批量替换文件路径... #PLTHWJLJ",
+                    lambda: _replace_file_path.batch_dialog(),
                 ),
                 _LegacyCommandPlaceholder(
                     "TODO: 转换为序列工程...",
