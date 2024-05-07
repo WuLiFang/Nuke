@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Precomp分割合成工程 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="环境变量" href="../env-vars.html" />
+    <link rel="prev" title="Grade校色" href="grade.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="precomp">
+<h1>Precomp分割合成工程<a class="headerlink" href="#precomp" title="永久链接至标题">¶</a></h1>
+<p>过多素材或过多节点可能导致内存不足无法渲染, 此时可以通过分割单个Nuke工程为多个来解决</p>
+<section id="id1">
+<h2>使用节点<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<section id="id2">
+<h3>Precomp<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>Precomp节点是Nuke自带的预合成节点, 可以读取nk文件作为素材。</p>
+</section>
+</section>
+<section id="id3">
+<h2>步骤<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li><p>选中要替换的输入节点</p></li>
+<li><p>复制一份</p></li>
+<li><p>CTRL+SHIFT+P</p></li>
+<li><p>将得到的节点输出替换</p></li>
+<li><p>用插件 <code class="docutils literal notranslate"><span class="pre">发布</span></code> 工程, 本地预合成文件将会自动上传至CGTeamWork并替换为路径</p></li>
+<li><p>用 <code class="docutils literal notranslate"><span class="pre">提交到Deadline</span></code> 提交渲染, 提交时注意勾选 <code class="docutils literal notranslate"><span class="pre">优先渲染预合成节点</span></code></p></li>
+</ol>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html">指南</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="grade.html">Grade校色</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Precomp分割合成工程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">使用节点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">步骤</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../re.html">正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">更新日志</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features.html">功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../guide.html">指南</a><ul>
+      <li>Previous: <a href="grade.html" title="上一章">Grade校色</a></li>
+      <li>Next: <a href="../env-vars.html" title="下一章">环境变量</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/guide/precomp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,2006 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>更新日志 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="prev" title="正则表达式" href="re.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>更新日志<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<section id="id2">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2024.0.0...v2024.1.0">2024.1.0</a> (2024-05-06)<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<section id="id3">
+<h3>特性<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> 添加 python2 项目警告 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/fc7ac0e142860f97d7cc143ed8d3232e6e7b1e57">fc7ac0e</a>)</p></li>
+<li><p><strong>nuke:</strong> 替换内置的 PSD 拆层以支持中文图层名 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/7c37886be5a658505847775f87e2d39d54ff3afe">7c37886</a>)</p></li>
+<li><p>更新过期日期至 2025-01-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6f10dac56e95cfd7e84f598c58964e944ec4410f">6f10dac</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2023.2.0...v2024.0.0">2024.0.0</a> (2024-01-08)<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<section id="id5">
+<h3>特性<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> 添加工具集 <code class="docutils literal notranslate"><span class="pre">third_party/Emission2307</span></code> (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/a6bb6600e6179d10942af5ca249ecfb8738926d4">a6bb660</a>)</p></li>
+<li><p><strong>nuke:</strong> 支持颜色替换 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/fc50d98759daa4e02fddb27c9b4ade11d0d85b20">fc50d98</a>)</p></li>
+<li><p><strong>nuke:</strong> 支持修复 cryptomatte 名称丢失 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f6ea8621fde8e01efc4d9008ea0c531b555222ba">f6ea862</a>)</p></li>
+<li><p><strong>nuke:</strong> 支持修复 UnicodeDecodeError (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f7e192debfb7a211f17d5341c9de78f9eb89bac7">f7e192d</a>)</p></li>
+<li><p><strong>nuke:</strong> 支持按颜色拆分图层 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/29e455c589bcf11f5b927b0bca25865bbfde8e1c">29e455c</a>)</p></li>
+<li><p>更新过期日期至 2024-07-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ef328796d62f00f4df089348077b7b5c80fd63c0">ef32879</a>)</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>修复<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> ColorKeyer: 应在自动标签中时使用 sRGB 颜色 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3c6673ec42ebab01f5d86ae0296c94fe6ab84ca2">3c6673e</a>)</p></li>
+<li><p><strong>nuke:</strong> ColorReplace: 应在自动标签中使用 sRGB 颜色 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c9d1ae1a209177ea5bd5cceebc097abeb43fe099">c9d1ae1</a>)</p></li>
+<li><p><strong>nuke:</strong> 拖放: 删除之前拖放创建的节点导致出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/2fe12c69b00236fb7619bc6471e9b9fa1e257165">2fe12c6</a>)</p></li>
+<li><p><strong>nuke:</strong> wlf_Write: python3 中出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c63cb698ea6d342fdf1d973867e3b09961dc4a1f">c63cb69</a>)</p></li>
+<li><p>从网络硬盘加载插件时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0938f56ff227a28673e0a6266ac60ec7b2399381">0938f56</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2023.1.0...v2023.2.0">2023.2.0</a> (2023-07-17)<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<section id="id8">
+<h3>特性<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> 打包: 添加进度条 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/d2255379e07a7bb0316d2b738d72c9ba4638f462">d225537</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2023.0.0...v2023.1.0">2023.1.0</a> (2023-07-17)<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<section id="id10">
+<h3>特性<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> 添加 <code class="docutils literal notranslate"><span class="pre">Hatch</span></code>（图案填充）节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/b77402b1a50decf7368504dc70afca0f9b95bb97">b77402b</a>)</p></li>
+<li><p><strong>nuke:</strong> 添加节点建议 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c0281159d84461abfb4ecd586517039a8ed4f7d2">c028115</a>)</p></li>
+<li><p><strong>nuke:</strong> 允许禁用固定 tab 菜单统计路径功能 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/43159b75c1692ec18fefe72c88211c9b2a3eb9b7">43159b7</a>)</p></li>
+<li><p><strong>nuke:</strong> 查找最大 bbox 的节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ec3cb82585cc6c916d66e39825bd5bec455ebddd">ec3cb82</a>)</p></li>
+<li><p><strong>nuke:</strong> 固定 tab 菜单统计路径 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c312bcfb5d46670ff67e8b8f284ad7192a8a381b">c312bcf</a>)</p></li>
+<li><p>支持 nuke13 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/840755daa340f992e8ec8ab5cd6e4364c171d765">840755d</a>)</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>修复<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> 不能拖放序列文件夹 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/daf18eaddbd4fa0be7d542a226610200b7a5f5bb">daf18ea</a>)</p></li>
+<li><p><strong>nuke:</strong> 渲染至非英文路径时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/69c0aa4a29805e8869513a8eb0539e7e3ba7ce29">69c0aa4</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id12">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2022.2.2...v2023.0.0">2023.0.0</a> (2023-06-02)<a class="headerlink" href="#id12" title="永久链接至标题">¶</a></h2>
+<section id="id13">
+<h3>特性<a class="headerlink" href="#id13" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>允许配置图片上传名称 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bee3af78ae8365081d71f73d9c5b12d1459af7bc">bee3af7</a>)</p></li>
+<li><p><strong>nuke:</strong> 日志记录小文件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/29a4cbc1afc0735ec88569c736636d515cee84a3">29a4cbc</a>)</p></li>
+<li><p><strong>nuke:</strong> 支持打包工程 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f59188d54b6ac712a3c4bd9eb896fcf50e73b218">f59188d</a>)</p></li>
+<li><p><strong>nuke:</strong> 打包工程: 将 freetype 控制设置为自带字体 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/50cb95a70a1871ef5338ea3c3677adaaeceec32f">50cb95a</a>)</p></li>
+<li><p><strong>nuke:</strong> 打包工程: 支持文件名表达式 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/00b8573c32582c2b973f48a7b76ede9e838fc007">00b8573</a>)</p></li>
+<li><p>支持吾立方清单文件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/d67846555d14bb79f41922b0abf86c083b0502a0">d678465</a>)</p></li>
+<li><p>更新过期时间至 2024-01-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f522b3d13fe32e515c2bfb9d5ae35286d1813def">f522b3d</a>)</p></li>
+</ul>
+</section>
+<section id="id14">
+<h3>修复<a class="headerlink" href="#id14" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在非 windows 系统上出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/8c22e2b66cc50c1bd0524fecb172ea9b711ccfb2">8c22e2b</a>)</p></li>
+<li><p><strong>hiero:</strong> 在选择变更时崩溃 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/48c4ee44fd06d9ff9d784c7fc69a10da87af4c2b">48c4ee4</a>)</p></li>
+<li><p><strong>hiero:</strong> 在没有轨道项可对齐时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0652050005b503b5c7be10c0efd8efdf7fbf0256">0652050</a>)</p></li>
+<li><p><strong>nuke:</strong> 不能在 nuke12 中变更首选项 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6bfb14bd4489a08cc61ffc8ebc733ec5920fb284">6bfb14b</a>)</p></li>
+<li><p><strong>nuke:</strong> 打包工程: 应处理在 group 中的文件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/b7e20b3742e5020a8525215c3d786ee39b3fa81b">b7e20b3</a>)</p></li>
+<li><p><strong>nuke:</strong> 不应在 init.py 中初始化 GUI (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0f9e1c3ac5593b97efc2cdb957d6d28c34016ef5">0f9e1c3</a>)</p></li>
+<li><p><strong>nuke:</strong> 更新 Write 节点预设 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ec285cde14f0e716095208c9fc12ced54176656e">ec285cd</a>)</p></li>
+<li><p><strong>nuke:</strong> 为 nuke 12 更新 Write 节点预设 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/cb8a32fe12928f90a0413c47a3bf5dbccc2b9ed4">cb8a32f</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id15">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2022.2.1...v2022.2.2">2022.2.2</a> (2022-06-22)<a class="headerlink" href="#id15" title="永久链接至标题">¶</a></h2>
+<section id="id16">
+<h3>修复<a class="headerlink" href="#id16" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 缺少打包依赖 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e7df8e3684ba0051bdc9c5665197e522cd693057">e7df8e3</a>)</p></li>
+<li><p><strong>wlf_Write:</strong> v1.58.1: 设置 jpg 子采样为 4:4:4 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/4ab4506265ffbdf9b4e62fc66f28ae3518b35a2e">4ab4506</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id17">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2022.2.0...v2022.2.1">2022.2.1</a> (2022-06-06)<a class="headerlink" href="#id17" title="永久链接至标题">¶</a></h2>
+<section id="id18">
+<h3>修复<a class="headerlink" href="#id18" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>nuke:</strong> 退出时崩溃 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f48388e9f13ebf23ac95e612607cb4e1f2305640">f48388e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id19">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2022.1.1...v2022.2.0">2022.2.0</a> (2022-06-06)<a class="headerlink" href="#id19" title="永久链接至标题">¶</a></h2>
+<section id="id20">
+<h3>特性<a class="headerlink" href="#id20" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>自动摆放拖放创建的节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/d529784ae94e111bf2464512ffabc1791d611c24">d529784</a>)</p></li>
+<li><p><strong>hiero:</strong> 添加轨道项操作 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/11af7e93ca1051b03c2522972dd2bb0d94b5f513">11af7e9</a>)</p></li>
+<li><p><strong>nuke:</strong> 为 Shuffle2 添加自动标签 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/8564f2b582d50007400644b23d8601b9a8e246a0">e435d0e</a>)</p></li>
+<li><p>支持 nuke 插件重新加载 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/09b4be36765216f833098ecc3d0276bb488f183c">09b4be3</a>)</p></li>
+<li><p>更新过期日期至 2023-06-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3211ace684eb0a7bfd34e1204b97f27328b1bbf3">d837097</a>)</p></li>
+<li><p><strong>wlf_Write:</strong> v1.58.0: 允许设置颜色空间 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/cec8335a66ee7538fefeb9c146c85ecc65ed5142">cec8335</a>)</p></li>
+</ul>
+</section>
+<section id="id21">
+<h3>修复<a class="headerlink" href="#id21" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>hiero:</strong> 退出时崩溃 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0854bf5bb39527d60894d08113fd8501aba0c0d5">0854bf5</a>)</p></li>
+<li><p><strong>hiero:</strong> 对 Hiero10.5v7 不起作用 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/1bb2082c2e3081b7a6762057bb6a1f628ccc1d53">1bb2082</a>)</p></li>
+<li><p><strong>nuke:</strong> 终端模式渲染时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/5272a375444e13a939f540fc9bb01a52182f7811">5272a37</a>)</p></li>
+<li><p><strong>nuke:</strong> 导入错误 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ea2c6671c612ef00434c8a98ee5e537e104c7292">ea2c667</a>)</p></li>
+<li><p><strong>nuke:</strong> 插件重新加载只在第二次运行后才有效果 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6719af74f74ca63e9373fa6d8419788df642df9c">6719af7</a>)</p></li>
+<li><p><strong>publish:</strong> Nuke12.2 中发布窗口错误 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/4cbbcce48dd3227ae58766d53b871c2161e2a195">4cbbcce</a>)</p></li>
+<li><p>Nuke12.2 中托盘消息不起作用 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6e6784aaec507ed2faed7d765750b35bfe8c1c04">6e6784a</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id22">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2022.1.0...v2022.1.1">2022.1.1</a> (2022-01-12)<a class="headerlink" href="#id22" title="永久链接至标题">¶</a></h2>
+<section id="id23">
+<h3>修复<a class="headerlink" href="#id23" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>wlf_Write: v1.57.1: mov 禁用条件错误 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c8959a15d700d9c6cbffb5972e8bec473f7baf1f">c8959a1</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id24">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2022.0.0...v2022.1.0">2022.1.0</a> (2022-01-12)<a class="headerlink" href="#id24" title="永久链接至标题">¶</a></h2>
+<section id="id25">
+<h3>特性<a class="headerlink" href="#id25" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>wlf_Write: 1.57.0: 添加 mov 相关控制 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/90c72febdb2f4c9e16b2ce51cc476b7204f9034e">90c72fe</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id26">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.4.1...v2022.0.0">2022.0.0</a> (2022-01-04)<a class="headerlink" href="#id26" title="永久链接至标题">¶</a></h2>
+<section id="id27">
+<h3>特性<a class="headerlink" href="#id27" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>更新过期日期至 2023-01-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/7c715675d749405f8b06075088aee7ee930b847d">7c71567</a>)</p></li>
+</ul>
+</section>
+<section id="id28">
+<h3>修复<a class="headerlink" href="#id28" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>丢失标识符 <code class="docutils literal notranslate"><span class="pre">shutil.SameFileError</span></code> (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/5d11a0cddd910098ed9b761247bded29d2170093">5d11a0c</a>)</p></li>
+<li><p>首选项面板布局 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3824d3a11a2d56b067496c5d38a7b22a746fafbe">3824d3a</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id29">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.4.0...v2021.4.1">2021.4.1</a> (2021-11-12)<a class="headerlink" href="#id29" title="永久链接至标题">¶</a></h2>
+<section id="id30">
+<h3>修复<a class="headerlink" href="#id30" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>cgteamwork:</strong> 在已上传的工作文件中出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/b3ee63311bf1fca32fff0abbba484c5be94a0916">b3ee633</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id31">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.3.1...v2021.4.0">2021.4.0</a> (2021-11-09)<a class="headerlink" href="#id31" title="永久链接至标题">¶</a></h2>
+<section id="id32">
+<h3>特性<a class="headerlink" href="#id32" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>cgteamwork:</strong> 上传图片至 review 文件框 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e949c1683ffe425a73b17c6878312f76a4f7f0c5">e949c16</a>)</p></li>
+</ul>
+</section>
+<section id="id33">
+<h3>修复<a class="headerlink" href="#id33" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 更新包 cgtwq 至 3.5.4 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/9815dbf4faa74c9d55ce676f8435d9573d44445a">9815dbf</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id34">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.3.0...v2021.3.1">2021.3.1</a> (2021-10-11)<a class="headerlink" href="#id34" title="永久链接至标题">¶</a></h2>
+<section id="id35">
+<h3>修复<a class="headerlink" href="#id35" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 更新包 cgtwq 至 3.5.1 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/30ebfda73f715a355d39a51c808b6adc99d1b7ab">30ebfda</a>)</p></li>
+<li><p><strong>依赖:</strong> 更新包 cgtwq 至 3.5.2 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bfcb5d9e8185de603e496215622f962d6f14e241">bfcb5d9</a>)</p></li>
+<li><p><strong>依赖:</strong> 更新包 cgtwq 至 3.5.3 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/dbd7e40dba85cdfff8ce1eacdc763c15d733d9c8">dbd7e40</a>)</p></li>
+<li><p>在找不到动画视频时显示的错误信息不对 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/7e6e574697c52273d9784713454aecbd20eef70b">7e6e574</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id36">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.2.0...v2021.3.0">2021.3.0</a> (2021-09-24)<a class="headerlink" href="#id36" title="永久链接至标题">¶</a></h2>
+<section id="id37">
+<h3>特性<a class="headerlink" href="#id37" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>支持 cgteamwork6.1 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0900c96beda58b56f9dfb96e29f478be9616841e">0900c96</a>)</p></li>
+<li><p>更新过期时间至 2022-06-1 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/1cbd7d3c4c1cf9aa412d239773cd3fb6ac8d27f5">1cbd7d3</a>)</p></li>
+</ul>
+</section>
+<section id="id38">
+<h3>修复<a class="headerlink" href="#id38" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>选择 precomp 后报错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0e1e75e8f26af44706937ac96ac9bc7e712391ac">0e1e75e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id39">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.1.0...v2021.2.0">2021.2.0</a> (2021-06-17)<a class="headerlink" href="#id39" title="永久链接至标题">¶</a></h2>
+<section id="id40">
+<h3>特性<a class="headerlink" href="#id40" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>pyblish:</strong> 检查组长状态 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6c20d908413bbf318e86d5e22f4b1b5ed12b121a">6c20d90</a>)</p></li>
+</ul>
+</section>
+<section id="id41">
+<h3>修复<a class="headerlink" href="#id41" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 更新 pyblish-lite 至 0.8.12 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/06013f5350b719d2b59f396bc5b714531bef7227">06013f5</a>)</p></li>
+<li><p><strong>发布:</strong> 日志中的错误信息不可读 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3f8f97eddb19b4ffb27b4fc75a07e52d1322c1f0">3f8f97e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id42">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.7...v2021.1.0">2021.1.0</a> (2021-04-12)<a class="headerlink" href="#id42" title="永久链接至标题">¶</a></h2>
+<section id="id43">
+<h3>功能<a class="headerlink" href="#id43" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在拖入非英文文件时要求确认 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e6d6614ace1b59b09a0a2b0338c677498e6d397a">e6d6614</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id44">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.5...v2021.0.6">2021.0.6</a> (2021-04-01)<a class="headerlink" href="#id44" title="永久链接至标题">¶</a></h2>
+<section id="id45">
+<h3>修复<a class="headerlink" href="#id45" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>NameError 于 __PrecompSwitch (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/374c7c9a97f74c217e675549413637b2e69feefc">374c7c9</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id46">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.4...v2021.0.5">2021.0.5</a> (2021-03-31)<a class="headerlink" href="#id46" title="永久链接至标题">¶</a></h2>
+<section id="id47">
+<h3>修复<a class="headerlink" href="#id47" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>处理标签文本不使用 utf8 编码的节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/5bf2d084f3350b4a11fdd119f897ad078eb8ab16">5bf2d08</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id48">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.3...v2021.0.4">2021.0.4</a> (2021-03-31)<a class="headerlink" href="#id48" title="永久链接至标题">¶</a></h2>
+<section id="id49">
+<h3>修复<a class="headerlink" href="#id49" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>拖放文件时出现 UnicodeDecodeError (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/391c82e378bdb4410d29e026fbae651e3e4f8bf6">391c82e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id50">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.2...v2021.0.3">2021.0.3</a> (2021-03-23)<a class="headerlink" href="#id50" title="永久链接至标题">¶</a></h2>
+<section id="id51">
+<h3>修复<a class="headerlink" href="#id51" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>转为序列工程:</strong> 在批量处理面板中点击设置按钮时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/59693aa358e4665aad059a0c9df16820ea2a31d7">59693aa</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id52">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.1...v2021.0.2">2021.0.2</a> (2021-03-23)<a class="headerlink" href="#id52" title="永久链接至标题">¶</a></h2>
+<section id="id53">
+<h3>修复<a class="headerlink" href="#id53" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>将面板数值转换为整数时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bb863406026dfa0ff564b535f7237f607f8eddea">bb86340</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id54">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v2021.0.0...v2021.0.1">2021.0.1</a> (2021-03-22)<a class="headerlink" href="#id54" title="永久链接至标题">¶</a></h2>
+<section id="id55">
+<h3>修复<a class="headerlink" href="#id55" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 更新软件包 jinja2 至 2.11.3 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/7deb77a0eb8a97a4c3de7d53afbd9341c8454a33">7deb77a</a>)</p></li>
+<li><p><strong>依赖:</strong> 更新软件包 psutil 至 5.8.0 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/06e617f04347552af2387b3f1e737c0b0dd0a652">06e617f</a>)</p></li>
+<li><p>自动摆放时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/77b3a5a2f5cb7aa2a35879cafe9ea5bbcd0eae8f">77b3a5a</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id56">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.25...v2021.0.0">2021.0.0</a> (2021-03-22)<a class="headerlink" href="#id56" title="永久链接至标题">¶</a></h2>
+<p>从此版本开始使用年份作为主版本</p>
+<p>大量重构确保传入 Nuke 的都为正确编码的数据以更好的支持中文</p>
+</section>
+<section id="id57">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.24...v0.20.25">0.20.25</a> (2021-03-12)<a class="headerlink" href="#id57" title="永久链接至标题">¶</a></h2>
+<section id="id58">
+<h3>修复<a class="headerlink" href="#id58" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 更新 cgtwq 至 3.0.2 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ca8dfafe2c937d0c9a269fc319d7ea66ccefd9dd">ca8dfaf</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id59">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.23...v0.20.24">0.20.24</a> (2021-03-11)<a class="headerlink" href="#id59" title="永久链接至标题">¶</a></h2>
+<section id="id60">
+<h3>修复<a class="headerlink" href="#id60" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>不应导入已删除的 <code class="docutils literal notranslate"><span class="pre">asset.cache</span></code> 模块 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/69831206fb591aa464cabd43cb003f674347177b">6983120</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id61">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.22...v0.20.23">0.20.23</a> (2021-03-11)<a class="headerlink" href="#id61" title="永久链接至标题">¶</a></h2>
+<section id="id62">
+<h3>功能<a class="headerlink" href="#id62" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>回调错误不取消后续其他回调的执行 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/b4b774a9566de0b7f717b9bbbd4ae22f52ab0281">b4b774a</a>)</p></li>
+<li><p>重写缺帧检查 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/9bba07a49b96063abc82561183f76572d412f56f">9bba07a</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id63">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.21...v0.20.22">0.20.22</a> (2021-03-09)<a class="headerlink" href="#id63" title="永久链接至标题">¶</a></h2>
+<section id="id64">
+<h3>修复<a class="headerlink" href="#id64" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>错误的属性名称导致 JPG 上传失败 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/d3cde692714afdff069a64a75abbdde2c6df8be6">d3cde69</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id65">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.20...v0.20.21">0.20.21</a> (2021-03-09)<a class="headerlink" href="#id65" title="永久链接至标题">¶</a></h2>
+<section id="id66">
+<h3>功能<a class="headerlink" href="#id66" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>使用 win32 api 来检查是否使用了本地文件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0ba976ce8a7a2e10bbba4268660d251e50c44fbd">0ba976c</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id67">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.19...v0.20.20">0.20.20</a> (2021-03-08)<a class="headerlink" href="#id67" title="永久链接至标题">¶</a></h2>
+<section id="id68">
+<h3>功能<a class="headerlink" href="#id68" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>不再记录 pyblish 错误到日志 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/252651a24f4cb01447311b8d04bca94e320a21bb">252651a</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id69">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.18...v0.20.19">0.20.19</a> (2021-03-08)<a class="headerlink" href="#id69" title="永久链接至标题">¶</a></h2>
+<section id="id70">
+<h3>功能<a class="headerlink" href="#id70" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>集成 sentry (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/52f7f83ce68a68e5ab89d60d6a05a92c3a1c9c6b">52f7f83</a>)</p></li>
+</ul>
+</section>
+<section id="id71">
+<h3>修复<a class="headerlink" href="#id71" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>使用了未定义的变量 <code class="docutils literal notranslate"><span class="pre">_iter_layer</span></code> (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/29cc348417843ab7664860468c35e819734e4a56">29cc348</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id72">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.17...v0.20.18">0.20.18</a> (2021-03-08)<a class="headerlink" href="#id72" title="永久链接至标题">¶</a></h2>
+<section id="id73">
+<h3>修复<a class="headerlink" href="#id73" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>预合成时出错 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/1f32e79c0b8bd661f25b3e30099d8ce046b819c8">1f32e79</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id74">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.16...v0.20.17">0.20.17</a> (2021-03-05)<a class="headerlink" href="#id74" title="永久链接至标题">¶</a></h2>
+<section id="id75">
+<h3>修复<a class="headerlink" href="#id75" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>当文件路径只包含英文字母时无法启动 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/78d40144d1931db98a824ba972454beed085de1e">78d4014</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id76">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.15...v0.20.16">0.20.16</a> (2021-03-05)<a class="headerlink" href="#id76" title="永久链接至标题">¶</a></h2>
+<section id="id77">
+<h3>修复<a class="headerlink" href="#id77" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>对 importlib_metadata 打的补丁可能不起作用 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/4a6009131648f7755417053b5ba50c49202ffec8">4a60091</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id78">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.14...v0.20.15">0.20.15</a> (2021-03-05)<a class="headerlink" href="#id78" title="永久链接至标题">¶</a></h2>
+<section id="id79">
+<h3>修复<a class="headerlink" href="#id79" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>当文件路径包含中文时无法启动 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/4936eb8f67dfcacf9067e9d48d3def544ee0cfc0">4936eb8</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id80">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.13...v0.20.14">0.20.14</a> (2021-02-24)<a class="headerlink" href="#id80" title="永久链接至标题">¶</a></h2>
+<section id="id81">
+<h3>功能<a class="headerlink" href="#id81" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在启动横幅中显示最近提交信息 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/404023e6e1b98ad74ecc12dd514de4249e8198a6">404023e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id82">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.12...v0.20.13">0.20.13</a> (2021-02-23)<a class="headerlink" href="#id82" title="永久链接至标题">¶</a></h2>
+<section id="id83">
+<h3>功能<a class="headerlink" href="#id83" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>将 pyblish 日志级别改为 info (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3d3065aac8454c2ebfb2b8d17a66895e66ef9e92">3d3065a</a>)</p></li>
+<li><p>空文件夹扫描支持路径模式匹配 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e93c86ac45943871bc668741f11296ac350a60f6">e93c86a</a>)</p></li>
+<li><p>延长许可时间至 2022-01-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/03cda3ddde32f0633e003b31d9b45741cb57e32c">03cda3d</a>)</p></li>
+</ul>
+</section>
+<section id="id84">
+<h3>修复<a class="headerlink" href="#id84" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>处理未配置好的 CGTW 项目 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/1f4d494b24e73711711fd86b860a8eff32cc5e77">1f4d494</a>)</p></li>
+<li><p>空文件夹扫描应设置窗口标题 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/49d285ed0eda05292271f235fcf969fc14054093">49d285e</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id85">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.11...v0.20.12">0.20.12</a> (2020-11-16)<a class="headerlink" href="#id85" title="永久链接至标题">¶</a></h2>
+<section id="id86">
+<h3>修复<a class="headerlink" href="#id86" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 降级 pendulum 至 v1 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ddfc3f45ab8652754f4f5af2a1390e018ed9d807">ddfc3f4</a>)</p></li>
+<li><p><strong>依赖:</strong> 不使用 poetry (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/4b8ee7f1a95c14aa5318bfadb8cd424d3ab339ba">4b8ee7f</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id87">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.10...v0.20.11">0.20.11</a> (2020-10-12)<a class="headerlink" href="#id87" title="永久链接至标题">¶</a></h2>
+<section id="id88">
+<h3>功能<a class="headerlink" href="#id88" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>正则分割图层组:</strong> 使用本地帮助文档 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0a1da07e01f4d72430948bd01d26d98ff27b3f14">0a1da07</a>)</p></li>
+<li><p>正则分割图层组 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/db6eb391a777c4e4dd5cc8a20b6175939105380b">db6eb39</a>)</p></li>
+</ul>
+</section>
+<section id="id89">
+<h3>修复<a class="headerlink" href="#id89" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>正则分割图层组:</strong> 错误的 merge 输入 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/9c494578b77c92fc1721b0cb58e0f6d51260f8f6">9c49457</a>)</p></li>
+<li><p><strong>正则分割图层组:</strong> 错误的对话框标题 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/2cfc1f9e6ade8fbedeb8c1ab2664658de96d854d">2cfc1f9</a>)</p></li>
+<li><p><strong>wlf_Write:</strong> v1.56.3 deadline 任务提交 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/955c09a69937633a740164070c82a16d628c10c0">955c09a</a>)</p></li>
+<li><p><strong>wlf_Write:</strong> v1.56.4 错误的序列输出条件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/39268b8aa7e379e2799074252c20ac3e2b4a8bf8">39268b8</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id90">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.9...v0.20.10">0.20.10</a> (2020-08-20)<a class="headerlink" href="#id90" title="永久链接至标题">¶</a></h2>
+<section id="id91">
+<h3>功能<a class="headerlink" href="#id91" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>rotopaint uv 映射 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/483f95d2c1e8a1fd1455bb95fbd7029c9c4ce2ba">483f95d</a>)</p></li>
+</ul>
+</section>
+<section id="id92">
+<h3>修复<a class="headerlink" href="#id92" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>运动扭曲:</strong> v0.2.2 修正向前运动 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/fbf639bbe82be1a7010f9eb8bc3e099b8c6b01d0">fbf639b</a>)</p></li>
+<li><p><strong>RotoPaint 运动扭曲:</strong> 修正向后运动 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/11f2c5674f0e7df5417ab21fcf5a34437c7a9bab">11f2c56</a>)</p></li>
+<li><p><strong>RotoPaint 运动扭曲:</strong> motion 层丢失提醒 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c145fdb3cac3cca13368e4917e6e3a71a69f4f64">c145fdb</a>)</p></li>
+<li><p><strong>RotoPaint 运动扭曲:</strong> 应当在采样完后再移动中心点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bb73f5329144b7b6f9949d51ccf95d626c31d9db">bb73f53</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id93">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.8...v0.20.9">0.20.9</a> (2020-08-18)<a class="headerlink" href="#id93" title="永久链接至标题">¶</a></h2>
+<section id="id94">
+<h3>功能<a class="headerlink" href="#id94" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>RotoPaint 运动扭曲:</strong> 在对话框确认后禁用代理 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/eb13fe5c5f789feaf7118cdbb1935d64a4a1b873">eb13fe5</a>)</p></li>
+</ul>
+</section>
+<section id="id95">
+<h3>修复<a class="headerlink" href="#id95" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>应该在 RotoPaint 运动扭曲前禁用代理 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f18847a6e447a7e74ab10c9cc577fae295c3243a">f18847a</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id96">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.7...v0.20.8">0.20.8</a> (2020-08-18)<a class="headerlink" href="#id96" title="永久链接至标题">¶</a></h2>
+<section id="id97">
+<h3>功能<a class="headerlink" href="#id97" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>rotopaint 运动扭曲 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f4406e6c2ff2a0012c8b16a9a73c571d0c7327e0">f4406e6</a>)</p></li>
+<li><p><strong>运动扭曲:</strong> v0.2.0 支持设置基准帧 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ed9c5139cc5da1a8c96ce3d3024f1627d9cfdcd1">ed9c513</a>)</p></li>
+<li><p>添加创建运动扭曲命令 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bf1c1cb02cdbe35d0ae4cd4e582b34977188fd9b">bf1c1cb</a>)</p></li>
+<li><p>添加第三方 RealGlow 节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e170849ec451431f1acdbf01baa3d40734516cfb">e170849</a>)</p></li>
+</ul>
+</section>
+<section id="id98">
+<h3>修复<a class="headerlink" href="#id98" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>MotionDistort:</strong> v0.2.1 错误的边界框设置 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/871bdbe8a9166f4890fe952611b5c11d7f112c40">871bdbe</a>)</p></li>
+<li><p>NukeX 有重复的 pyblish 窗口 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/30f029ba53a807712d8d5e8e02ba3aeb1ebcabcb">30f029b</a>)</p></li>
+<li><p>有重复的 pyblish 面板 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0d23ec52331d3371d64829df3619d9865245e0f3">0d23ec5</a>)</p></li>
+<li><p>NukeStudio pyblish 窗口 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/8298f114141dce519642a85a41861f363c6f20d0">8298f11</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id99">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.6...v0.20.7">0.20.7</a> (2020-07-29)<a class="headerlink" href="#id99" title="永久链接至标题">¶</a></h2>
+<section id="id100">
+<h3>功能<a class="headerlink" href="#id100" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>添加第三方节点 FilmicTonemappingOperator (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/b83f142c46c2376286d4657f62788dbb003dbae0">b83f142</a>)</p></li>
+<li><p>arnold 预合成 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/5edd665c041d3c4e6d35e7242cae87691b1fd3e3">5edd665</a>)</p></li>
+<li><p><strong>RotateCrop:</strong> v0.1.0 新节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/54cec0f0f5b0a281ebc470ad3135ae8dc11232cc">54cec0f</a>)</p></li>
+<li><p><strong>SoftGlow:</strong> v0.1.2 添加宽度通道控制 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/4194084f5757993d413b699b4abe367e702b0507">4194084</a>)</p></li>
+<li><p><strong>SoftGlow:</strong> v0.1.3 跳过尺寸小于 1 的辉光 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/03032095aca1af311a9015b6c86a77016e656fdd">0303209</a>)</p></li>
+</ul>
+</section>
+<section id="id101">
+<h3>修复<a class="headerlink" href="#id101" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>SoftGlow:</strong> v0.1.4 应该总是使用默认输入 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/cb612037bff924d399e02df770f945504dc0dcb4">cb61203</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id102">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.5...v0.20.6">0.20.6</a> (2020-07-05)<a class="headerlink" href="#id102" title="永久链接至标题">¶</a></h2>
+<section id="id103">
+<h3>功能<a class="headerlink" href="#id103" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>延长许可日期至 2021-07-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c56d413470211686c5ead85019ace23fcf301db0">c56d413</a>)</p></li>
+<li><p>添加 OnionSkin 节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f47a6efeffb0c3fd457c198cad71d360bed219a8">f47a6ef</a>)</p></li>
+<li><p>添加 SoftGlow 节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c1e8643d447f7b0d90acf92bce3f8174a3d9c188">c1e8643</a>)</p></li>
+<li><p><strong>SoftGlow:</strong> v0.1.1 添加更多控制 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bf249b63f6d23ba42aa8a74a5f0957c26ef97c7c">bf249b6</a>)</p></li>
+<li><p>在需要选择节点单未选择时弹出消息提示 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c4c80023a35339a558542641a71763a7fca35760">c4c8002</a>)</p></li>
+<li><p><strong>OnionSkin:</strong> 0.1.2 添加 effect_only 控制 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/09ccb1bca0c53c49d857249ccf541c1862779573">09ccb1b</a>)</p></li>
+<li><p>添加 OnionSkin.knob_hash 以使过期缓存失效 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/979614dacef9e97ab96803a2decca3b6ee826882">979614d</a>)</p></li>
+<li><p>添加 rotopaint 摄影表 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0e8dc1836bea1e5ac567d5fcc8a7ac6526e3d12a">0e8dc18</a>)</p></li>
+</ul>
+</section>
+<section id="id104">
+<h3>修复<a class="headerlink" href="#id104" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>激活发布面板时应变更选中的标签页 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/012b652945060a765bb55edad3e26f5e01213af6">012b652</a>)</p></li>
+<li><p>避免使用 nuke.openPanels() (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/b9604bf853573b9e9cbeb8cb5eba1248f1fa9372">b9604bf</a>)</p></li>
+<li><p>发布面板在关闭后再次激活无效 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/bd2c950182b1add1f3a9045f53ee6cb5061c2e47">bd2c950</a>)</p></li>
+<li><p><strong>OnionSkin:</strong> 0.1.1 帧超出范围时的结果错误 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/f88e9e98a28defd835de5ad4f59fcefa343b402d">f88e9e9</a>)</p></li>
+<li><p>在没有输入时尝试激活当前查看器输入 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/eed6775b0686717743d92c45501793e57d90c959">eed6775</a>)</p></li>
+<li><p>rotopaint 摄影表应处理两个关键帧在同一帧上的情况 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/fc3439fbe91069441a558ded9fc733650cb64f76">fc3439f</a>)</p></li>
+<li><p>rotopaint 摄影表产生未预期的过渡 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/2d58e212233cc505955bb2f89ae7e1a9a77ce45e">2d58e21</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id105">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.4...v0.20.5">0.20.5</a> (2020-05-19)<a class="headerlink" href="#id105" title="永久链接至标题">¶</a></h2>
+<section id="id106">
+<h3>功能<a class="headerlink" href="#id106" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>添加更多文件前缀项目匹配规则 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/c8bc54526aa6e387f6a93847d135baf2c676cc8f">c8bc545</a>)</p></li>
+<li><p>延长许可日期至 2021-01-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/d79a95c22ec92f4da0ee923240d8f6e3527ef5e1">d79a95c</a>)</p></li>
+<li><p><strong>wlf_Lightwrap:</strong> 添加通道控制 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/7f5a71d51881b01d65d4682ff963f4544e7c9dcb">7f5a71d</a>)</p></li>
+</ul>
+</section>
+<section id="id107">
+<h3>修复<a class="headerlink" href="#id107" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>依赖:</strong> 更新依赖 jinja2 至 v2.11.0 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6f3ff93e9c8d9e4d4a4817eecd44f63664db1bdf">6f3ff93</a>)</p></li>
+<li><p><strong>wlf_Lightwrap:</strong> 应该在 rgba 通道上模糊而不是 rgb 通道 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/a33604093cdff9c609da9ca04fbcbec3304b2c30">a336040</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id108">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.3...v0.20.4">0.20.4</a> (2020-01-10)<a class="headerlink" href="#id108" title="永久链接至标题">¶</a></h2>
+<section id="id109">
+<h3>功能<a class="headerlink" href="#id109" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>DirectionLightKeyer:</strong> 添加 axis 输入 (v0.5.0) (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e6b765b2449fcd57d25196bf2eb52d8eac52fd1e">e6b765b</a>)</p></li>
+<li><p>添加 <code class="docutils literal notranslate"><span class="pre">GenerateVector</span></code> 插件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/13e9f4eb1e273f35f69f63fb24945c6579d87a3e">13e9f4e</a>)</p></li>
+<li><p><strong>转换为序列工程:</strong> 添加 HTML 报告 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/55af938bdfe5c0986e8fbdbe57d9ce01ced06550">55af938</a>)</p></li>
+<li><p>添加 <code class="docutils literal notranslate"><span class="pre">WeightedErode</span></code> 节点 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/91e496b8e2e333f97bbf856b6d506afa07fe0717">91e496b</a>)</p></li>
+<li><p>支持转换单帧工程为序列工程 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/01872c1332c450c5bbb56b2215b37d980338cd0e">01872c1</a>)</p></li>
+<li><p>优化抽帧匹配的对话框 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ccc556dcd121296db9efe317d212a6e79008d45c">ccc556d</a>)</p></li>
+<li><p>更改 <code class="docutils literal notranslate"><span class="pre">GenerateVector</span></code> 的边界框(bbox)设置 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/a280f981a7c9109f200dc841aae8710d7ee6c5a4">a280f98</a>)</p></li>
+<li><p>支持匹配抽帧 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/9354576a83d09c9a1e6d8ca2bb0ab1b066693aa6">9354576</a>)</p></li>
+<li><p>延长许可日期至 2020-07-01 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/aee05f0df14e29e5722a59868c6ce4e67f7ea090">aee05f0</a>)</p></li>
+</ul>
+</section>
+<section id="id110">
+<h3>修复<a class="headerlink" href="#id110" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>资产监控可能导致崩溃 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/0504a2917f26c5a12fc7d84d7ba5309aaaa89cc6">0504a29</a>)</p></li>
+<li><p>自动标签(autolabel)在很多节点时导致卡顿 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/a936c3681f76dad83f7e9cc336e6923558239f64">a936c36</a>)</p></li>
+<li><p>windows 终端编码问题 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ad718c2b3345b3ee92c33de81f86032305eab9d3">ad718c2</a>)</p></li>
+<li><p>把吾立方硬盘映射配置移到其他插件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/6a5f1ee713a999f2eed22ff78d43e0b7726ef849">6a5f1ee</a>)</p></li>
+<li><p>验证许可时 unicode error (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3b25782b4af69cb64848cac22530d401a70cecd3">3b25782</a>)</p></li>
+<li><p><strong>依赖:</strong> 更新依赖 <code class="docutils literal notranslate"><span class="pre">cgtwq</span></code> (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/d3d5cb0e004bbf8da44db6fdab29097deac91c42">d3d5cb0</a>)</p></li>
+<li><p><strong>转换为序列工程:</strong> 修复批量模式 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/33ecf763c5b40dae9f3022a5bc0b4c6e46110b08">33ecf76</a>)</p></li>
+<li><p><strong>转换为序列工程:</strong> 应该递归搜索 nk 文件 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/3b2b364d6bdb1126bea729b1112ca158c6c78bd1">3b2b364</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id111">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.2...v0.20.3">0.20.3</a> (2019-07-02)<a class="headerlink" href="#id111" title="永久链接至标题">¶</a></h2>
+<section id="id112">
+<h3>杂项<a class="headerlink" href="#id112" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>延长许可日期到 2020 年 1 月 1 日</p></li>
+</ul>
+</section>
+</section>
+<section id="id113">
+<h2><a class="reference external" href="https://github.com/WuLiFang/Nuke/compare/v0.20.1...v0.20.2">0.20.2</a> (2019-05-23)<a class="headerlink" href="#id113" title="永久链接至标题">¶</a></h2>
+<section id="id114">
+<h3>修复<a class="headerlink" href="#id114" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>cgtw websocket 连接失败导致无法启动 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/863625e">863625e</a>)</p></li>
+</ul>
+</section>
+<section id="id115">
+<h3>构建系统<a class="headerlink" href="#id115" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>添加 Makefile (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/ae065b9">ae065b9</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id116">
+<h2>0.20.1 (2019-05-11)<a class="headerlink" href="#id116" title="永久链接至标题">¶</a></h2>
+<section id="id117">
+<h3>修复<a class="headerlink" href="#id117" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong>wlf_Write:</strong> 从 exr 渲染 png (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/e79c85b">e79c85b</a>)</p></li>
+<li><p>Windows 10 启动时出现 IOError[0] 错误 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/1ac29c3">1ac29c3</a>)</p></li>
+</ul>
+</section>
+<section id="id118">
+<h3>构建系统<a class="headerlink" href="#id118" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>修正文档构建 (<a class="reference external" href="https://github.com/WuLiFang/Nuke/commit/5fe318f">5fe318f</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id119">
+<h2>0.20.0 (2019-02-20)<a class="headerlink" href="#id119" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">WlfWrite</span></code> 1.56.1:</p>
+<ul>
+<li><p>支持 png</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id120">
+<h2>0.19.2 (2019-01-02)<a class="headerlink" href="#id120" title="永久链接至标题">¶</a></h2>
+<section id="id121">
+<h3>杂项<a class="headerlink" href="#id121" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>延长许可日期到 2019 年 7 月 1 日</p></li>
+</ul>
+</section>
+</section>
+<section id="id122">
+<h2>0.19.1 (2018-09-26)<a class="headerlink" href="#id122" title="永久链接至标题">¶</a></h2>
+<section id="id123">
+<h3>修复<a class="headerlink" href="#id123" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SphereMP</span></code> 0.2.2:</p>
+<ul>
+<li><p>输入摄像机在<code class="docutils literal notranslate"><span class="pre">Dot</span></code>节点之前时失效出错</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id124">
+<h2>0.19.0 (2018-08-17)<a class="headerlink" href="#id124" title="永久链接至标题">¶</a></h2>
+<section id="id125">
+<h3>功能<a class="headerlink" href="#id125" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>居中显示拖入创建的节点</p></li>
+</ul>
+</section>
+</section>
+<section id="id126">
+<h2>0.18.0 (2018-08-16)<a class="headerlink" href="#id126" title="永久链接至标题">¶</a></h2>
+<section id="id127">
+<h3>功能<a class="headerlink" href="#id127" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在锁定帧范围(<code class="docutils literal notranslate"><span class="pre">Project</span> <span class="pre">Settings</span></code> - <code class="docutils literal notranslate"><span class="pre">lock</span> <span class="pre">range</span></code>)启用时拖入视频自动将视频对齐工程首帧</p></li>
+</ul>
+</section>
+</section>
+<section id="id128">
+<h2>0.17.0 (2018-08-15)<a class="headerlink" href="#id128" title="永久链接至标题">¶</a></h2>
+<section id="id129">
+<h3>功能<a class="headerlink" href="#id129" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在未安装 CGTeamWork 的电脑上自动禁用相关功能更改</p></li>
+</ul>
+</section>
+<section id="id130">
+<h3>向下不兼容的更改<a class="headerlink" href="#id130" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>重构代码</p></li>
+</ul>
+</section>
+</section>
+<section id="id131">
+<h2>0.16.2 (2018-08-14)<a class="headerlink" href="#id131" title="永久链接至标题">¶</a></h2>
+<section id="id132">
+<h3>向下不兼容的更改<a class="headerlink" href="#id132" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>无视复制粘贴的拖放, 由 Nuke 自己处理</p></li>
+</ul>
+</section>
+</section>
+<section id="id133">
+<h2>0.16.1 (2018-08-13)<a class="headerlink" href="#id133" title="永久链接至标题">¶</a></h2>
+<section id="id134">
+<h3>修复<a class="headerlink" href="#id134" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>DeepEXR 拖放无视序列素材</p></li>
+<li><p>去掉拖放得到的 <code class="docutils literal notranslate"><span class="pre">VectorField</span></code> 节点标签中的花括号</p></li>
+</ul>
+</section>
+</section>
+<section id="id135">
+<h2>0.16.0 (2018-08-13)<a class="headerlink" href="#id135" title="永久链接至标题">¶</a></h2>
+<section id="id136">
+<h3>功能<a class="headerlink" href="#id136" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>拖放时自动导入 nk 文件为 <code class="docutils literal notranslate"><span class="pre">Group</span></code> 组节点, 组上有 <code class="docutils literal notranslate"><span class="pre">展开组</span></code> 的按钮以实现以前的效果</p></li>
+<li><p>拖放 DeepEXR 素材时自动创建 <code class="docutils literal notranslate"><span class="pre">DeepRead</span></code> 节点而不是 <code class="docutils literal notranslate"><span class="pre">Read</span></code>节点</p></li>
+</ul>
+</section>
+<section id="id137">
+<h3>向下不兼容的更改<a class="headerlink" href="#id137" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>拖放时不会自动设为当前所选节点的输入(Nuke 默认行为会自动改节点输入)</p></li>
+<li><p>拖放得到的节点如果报错将不会禁用保留, 而是直接删除, 在 <code class="docutils literal notranslate"><span class="pre">Error</span> <span class="pre">console</span></code> 中可以查看哪些素材导入失败</p></li>
+<li><p>如果拖入 fbx 文件时摄像机有动画则不会自动创建 <code class="docutils literal notranslate"><span class="pre">ReadGeo</span></code> 节点</p></li>
+</ul>
+</section>
+<section id="id138">
+<h3>修复<a class="headerlink" href="#id138" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>CGTeamWork 上拖入文件不能正确导入(<code class="docutils literal notranslate"><span class="pre">file://</span></code>协议识别出错)</p></li>
+</ul>
+</section>
+</section>
+<section id="id139">
+<h2>0.15.4 (2018-08-08)<a class="headerlink" href="#id139" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 节点 1.55.4:</p></li>
+</ul>
+<section id="id140">
+<h3>修复<a class="headerlink" href="#id140" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>会在 deadline 非分别渲染时尝试读取 EXR</p></li>
+</ul>
+</section>
+</section>
+<section id="id141">
+<h2>0.15.3<a class="headerlink" href="#id141" title="永久链接至标题">¶</a></h2>
+<section id="id142">
+<h3>功能<a class="headerlink" href="#id142" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>文档添加 <code class="docutils literal notranslate"><span class="pre">发布</span></code> 相关的内容</p></li>
+</ul>
+</section>
+<section id="id143">
+<h3>修复<a class="headerlink" href="#id143" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">编辑</span></code> - <code class="docutils literal notranslate"><span class="pre">修正读取错误</span></code>(F6) 处理中文路径时出错</p></li>
+<li><p>发布提交时有时不会带图片(因为在上传单帧之前就提交了)</p></li>
+</ul>
+</section>
+</section>
+<section id="id144">
+<h2>0.15.2 (2018-08-03)<a class="headerlink" href="#id144" title="永久链接至标题">¶</a></h2>
+<section id="id145">
+<h3>修复<a class="headerlink" href="#id145" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>直接点三角不能正确发布(0.15.1 引入)</p></li>
+</ul>
+</section>
+</section>
+<section id="id146">
+<h2>0.15.1 (2018-08-03)<a class="headerlink" href="#id146" title="永久链接至标题">¶</a></h2>
+<section id="id147">
+<h3>修复<a class="headerlink" href="#id147" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>工程退出时自动发布会在下个工程载入时才运行导致错误结果(0.15.0 引入)</p></li>
+<li><p>浮动发布面板布局时无法退出时自动发布</p></li>
+</ul>
+</section>
+</section>
+<section id="id148">
+<h2>0.15.0 (2018-08-03)<a class="headerlink" href="#id148" title="永久链接至标题">¶</a></h2>
+<section id="id149">
+<h3>功能<a class="headerlink" href="#id149" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>增强 Nuke 内置预合成创建面板( <code class="docutils literal notranslate"><span class="pre">CTRL+SHIFT+P</span></code> )</p>
+<p>汉化了界面, 并添加了 <code class="docutils literal notranslate"><span class="pre">预合成名称</span></code> 控制来快速设置工程路径和渲染路径</p>
+</li>
+<li><p>Pyblish <code class="docutils literal notranslate"><span class="pre">发布</span></code> 插件: <code class="docutils literal notranslate"><span class="pre">上传预合成文件</span></code></p>
+<p>预合成文件需要放到服务器才能 deadline 渲染</p>
+<p>此插件自动上传预合成文件到服务器并更改预合成节点读取文件路径到服务器</p>
+</li>
+<li><p>帮助文档新增 <code class="docutils literal notranslate"><span class="pre">指南</span></code> - <code class="docutils literal notranslate"><span class="pre">预合成分割</span></code></p></li>
+</ul>
+</section>
+<section id="id150">
+<h3>修复<a class="headerlink" href="#id150" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 节点 1.55.3</strong>: Deadline 上低于<code class="docutils literal notranslate"><span class="pre">exr阈值</span></code>的分别渲染任务渲染 MOV 时不读取之前渲染好的 EXR</p></li>
+</ul>
+</section>
+</section>
+<section id="id151">
+<h2>0.14.2 (2018-08-02)<a class="headerlink" href="#id151" title="永久链接至标题">¶</a></h2>
+<section id="id152">
+<h3>修复<a class="headerlink" href="#id152" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 节点 1.55.1</strong>: 在中途取消渲染单帧之后渲染视频会出错的问题</p></li>
+</ul>
+</section>
+</section>
+<section id="id153">
+<h2>0.14.1 (2018-07-27)<a class="headerlink" href="#id153" title="永久链接至标题">¶</a></h2>
+<section id="id154">
+<h3>功能<a class="headerlink" href="#id154" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">提交任务</span></code>时会自动附上当前单帧图效果</p></li>
+</ul>
+</section>
+<section id="id155">
+<h3>修复<a class="headerlink" href="#id155" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">提交任务</span></code>的备注在 CGTeamWork 上无法正确显示</p></li>
+</ul>
+</section>
+</section>
+<section id="id156">
+<h2>0.14.0 (2018-07-27)<a class="headerlink" href="#id156" title="永久链接至标题">¶</a></h2>
+<section id="id157">
+<h3>功能<a class="headerlink" href="#id157" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p>pyblish 发布插件: <code class="docutils literal notranslate"><span class="pre">提交任务</span></code></p>
+<p>因为合成阶段现在提交的是单帧而不是视频了, 所以合成阶段需要在上传单帧时就提交任务。</p>
+<p>此插件会在任务非检查状态时询问用户是否提交任务。</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id158">
+<h2>0.13.0 (2018-07-25)<a class="headerlink" href="#id158" title="永久链接至标题">¶</a></h2>
+<section id="id159">
+<h3>功能<a class="headerlink" href="#id159" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">编辑</span></code> 菜单 - <code class="docutils literal notranslate"><span class="pre">最佳实践</span></code> - <code class="docutils literal notranslate"><span class="pre">Glow节点不使用mask</span></code></p>
+<p>自动把使用遮罩的 Glow 节点改为使用 <code class="docutils literal notranslate"><span class="pre">width</span> <span class="pre">channel</span></code> (宽度通道)</p>
+<p>使用遮罩的 Glow 仅仅是把 Glow 过的图和没 Glow 过的图根据遮罩叠加起来, 并不是衰减效果。</p>
+<p>并且更耗内存, 可能导致渲染崩溃。</p>
+</li>
+</ul>
+</section>
+<section id="id160">
+<h3>向下不兼容的更改<a class="headerlink" href="#id160" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">编辑</span></code> 菜单 - <code class="docutils literal notranslate"><span class="pre">最佳实践</span></code> - <code class="docutils literal notranslate"><span class="pre">清理无用节点</span></code></p>
+<ul>
+<li><p>更改位置, 此前位于: <code class="docutils literal notranslate"><span class="pre">编辑</span></code> 菜单 - <code class="docutils literal notranslate"><span class="pre">整理</span></code> - <code class="docutils literal notranslate"><span class="pre">清理无用节点</span></code></p></li>
+<li><p>重新支持中文节点名称(之前某次更新引入的 bug)</p></li>
+<li><p>支持清理被禁用的无用节点(有表达式引用的禁用节点除外)</p></li>
+<li><p>优化速度</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">编辑</span></code> 菜单 - <code class="docutils literal notranslate"><span class="pre">最佳实践</span></code> - <code class="docutils literal notranslate"><span class="pre">合并重复读取节点</span></code></p>
+<ul>
+<li><p>更改位置, 此前位于: <code class="docutils literal notranslate"><span class="pre">编辑</span></code> 菜单 - <code class="docutils literal notranslate"><span class="pre">整理</span></code> - <code class="docutils literal notranslate"><span class="pre">合并重复读取节点</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PositionKeyer</span></code>节点 1.4.2: 规整代码</p></li>
+</ul>
+</section>
+</section>
+<section id="id161">
+<h2>0.12.0 (2018-07-24)<a class="headerlink" href="#id161" title="永久链接至标题">¶</a></h2>
+<section id="id162">
+<h3>功能<a class="headerlink" href="#id162" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">编辑</span></code>菜单 - <code class="docutils literal notranslate"><span class="pre">整理</span></code> - <code class="docutils literal notranslate"><span class="pre">合并重复读取节点</span></code>命令</p>
+<p>Nuke 中相同文件的多个读取节点会占用多份内存, 使用此命令节省内存占用。</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id163">
+<h2>0.11.0<a class="headerlink" href="#id163" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>升级至 cgteamwork 5.2</p></li>
+</ul>
+</section>
+<section id="id164">
+<h2>0.10.2 (2018-07-17)<a class="headerlink" href="#id164" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code>节点 1.55.0:</strong> - 提交 Deadline 分别渲染时自动启用序列输出, 无需为低于 100 帧的工程手动设置阈值</p></li>
+</ul>
+</section>
+<section id="id165">
+<h2>0.10.1<a class="headerlink" href="#id165" title="永久链接至标题">¶</a></h2>
+<section id="id166">
+<h3>功能<a class="headerlink" href="#id166" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">修正读取错误</span></code>(F6)</strong>: 在脚本编辑器中显示操作记录</p></li>
+</ul>
+</section>
+<section id="id167">
+<h3>向下不兼容的更改<a class="headerlink" href="#id167" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">修正读取错误</span></code>(F6)</strong>: 如果在使用新素材后依旧节点出错则会回退至老素材路径</p></li>
+</ul>
+</section>
+</section>
+<section id="id168">
+<h2>0.10.0 (2018-07-16)<a class="headerlink" href="#id168" title="永久链接至标题">¶</a></h2>
+<section id="id169">
+<h3>功能<a class="headerlink" href="#id169" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">修正读取错误</span></code>(F6) 增强</p>
+<ul>
+<li><p>支持除 <code class="docutils literal notranslate"><span class="pre">Read</span></code> 节点之外的其他读取文件的节点(例如: <code class="docutils literal notranslate"><span class="pre">DeepRead</span></code>, <code class="docutils literal notranslate"><span class="pre">Camera</span></code>)</p></li>
+<li><p>支持识别表达式</p></li>
+<li><p>支持识别仅格式不同的文件为同一文件(例如: <code class="docutils literal notranslate"><span class="pre">%04d</span></code> = <code class="docutils literal notranslate"><span class="pre">####</span></code>)</p></li>
+<li><p>运行完毕后提示结果给用户</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id170">
+<h2>0.9.3 (2018-07-16)<a class="headerlink" href="#id170" title="永久链接至标题">¶</a></h2>
+<section id="id171">
+<h3>向下不兼容的更改<a class="headerlink" href="#id171" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>插件面板(<code class="docutils literal notranslate"><span class="pre">多节点编辑</span></code>F2, <code class="docutils literal notranslate"><span class="pre">重命名通道</span></code>F4)在用户使用浮动节点控制面板时也使用浮动面板(之前为放入当前面板)</p></li>
+</ul>
+</section>
+</section>
+<section id="id172">
+<h2>0.9.2 (2018-07-12)<a class="headerlink" href="#id172" title="永久链接至标题">¶</a></h2>
+<section id="id173">
+<h3>修复<a class="headerlink" href="#id173" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 1.54.2:</strong> Deadline 在不分别渲染时会出错</p></li>
+</ul>
+</section>
+</section>
+<section id="id174">
+<h2>0.9.1 (2018-07-11)<a class="headerlink" href="#id174" title="永久链接至标题">¶</a></h2>
+<section id="id175">
+<h3>修复<a class="headerlink" href="#id175" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 1.54.1:</strong> 没选择<code class="docutils literal notranslate"><span class="pre">读取序列</span></code>也会读取序列</p></li>
+</ul>
+</section>
+</section>
+<section id="id176">
+<h2>0.9.0 (2018-07-11)<a class="headerlink" href="#id176" title="永久链接至标题">¶</a></h2>
+<section id="id177">
+<h3>功能<a class="headerlink" href="#id177" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 1.54.0:</strong> 支持 deadline 序列渲染完成后自动转换为 mov</p></li>
+</ul>
+</section>
+<section id="id178">
+<h3>向下不兼容的更改<a class="headerlink" href="#id178" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 1.54.0:</strong> <code class="docutils literal notranslate"><span class="pre">用序列渲染视频</span></code>按钮替换为<code class="docutils literal notranslate"><span class="pre">读取序列</span></code>勾选框, 勾选后再点击<code class="docutils literal notranslate"><span class="pre">渲染视频</span></code>即可实现用序列渲染视频, 并且缺帧会自动进行渲染补齐</p></li>
+</ul>
+</section>
+</section>
+<section id="id179">
+<h2>0.8.0 (2018-07-05)<a class="headerlink" href="#id179" title="永久链接至标题">¶</a></h2>
+<section id="id180">
+<h3>功能<a class="headerlink" href="#id180" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">通道重命名</span></code>(F4)支持<code class="docutils literal notranslate"><span class="pre">ID</span></code>层</p></li>
+<li><p>发布失败时会有气泡信息提示</p></li>
+<li><p>发布时会显示当前工程内存使用量</p></li>
+</ul>
+</section>
+<section id="id181">
+<h3>向下不兼容的更改<a class="headerlink" href="#id181" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>在发布时不检查素材是否更新, 因为已经有弹窗提示了</p></li>
+</ul>
+</section>
+<section id="id182">
+<h3>修复<a class="headerlink" href="#id182" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>为仙剑项目添加自定义转换以支持不符合以往规律的数据库名称(<code class="docutils literal notranslate"><span class="pre">XJCG</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">XJ</span></code>)</p></li>
+<li><p>批量合成出错(0.7 引入的 bug)</p></li>
+</ul>
+</section>
+</section>
+<section id="id183">
+<h2>0.7.3 (2018-06-29)<a class="headerlink" href="#id183" title="永久链接至标题">¶</a></h2>
+<section id="id184">
+<h3>修复<a class="headerlink" href="#id184" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>发布会导致工程变为已修改状态(已保存的文件发布后关闭会询问是否保存修改的文件)</p></li>
+</ul>
+</section>
+</section>
+<section id="id185">
+<h2>0.7.2 (2018-06-27)<a class="headerlink" href="#id185" title="永久链接至标题">¶</a></h2>
+<section id="id186">
+<h3>修复<a class="headerlink" href="#id186" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>设置了时间偏移的<code class="docutils literal notranslate"><span class="pre">Read</span></code>节点会导致错误的缺帧检查结果</p></li>
+<li><p>0.7.0 引入的 bug:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Read</span></code>节点帧范围识别错误</p></li>
+<li><p>插件节点不在菜单中显示和文档打不开</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">检查素材更新</span></code>命令无效</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id187">
+<h2>0.7.1 (2018-06-26)<a class="headerlink" href="#id187" title="永久链接至标题">¶</a></h2>
+<section id="id188">
+<h3>修复<a class="headerlink" href="#id188" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">自动合成</span></code>进度条导致报错</p></li>
+<li><p>素材获取的时候会获取到 nuke 缓存路径</p></li>
+</ul>
+</section>
+</section>
+<section id="id189">
+<h2>0.7.0 (2018-06-26)<a class="headerlink" href="#id189" title="永久链接至标题">¶</a></h2>
+<section id="id190">
+<h3>功能<a class="headerlink" href="#id190" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>素材保存位置检查, 使用了本地素材会阻止上传</p></li>
+</ul>
+</section>
+<section id="id191">
+<h3>向下不兼容的更改<a class="headerlink" href="#id191" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>更新依赖</p></li>
+<li><p>重构代码</p></li>
+<li><p>材更新和缺帧提示改回以前的弹窗方式提醒</p></li>
+</ul>
+</section>
+<section id="id192">
+<h3>修复<a class="headerlink" href="#id192" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>修正在未保存时使用<code class="docutils literal notranslate"><span class="pre">检查素材更新</span></code>会报错的问题</p></li>
+</ul>
+</section>
+</section>
+<section id="id193">
+<h2>0.6.4 (2018-06-13)<a class="headerlink" href="#id193" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>延长插件过期日期</p></li>
+<li><p>更新依赖</p></li>
+<li><p>渲染文件夹支持中文</p></li>
+<li><p>上传图片时如果组长状态为<code class="docutils literal notranslate"><span class="pre">等待</span></code>将设为<code class="docutils literal notranslate"><span class="pre">检查</span></code></p></li>
+</ul>
+</section>
+<section id="id194">
+<h2>0.6.3 (2018-04-26)<a class="headerlink" href="#id194" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>更新依赖</p></li>
+</ul>
+</section>
+<section id="id195">
+<h2>0.6.2<a class="headerlink" href="#id195" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>修正单帧上传</p></li>
+</ul>
+</section>
+<section id="id196">
+<h2>0.6.1 (2018-04-19)<a class="headerlink" href="#id196" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 1.53.4: 在序列转单帧的时候关闭 hash 检查</p></li>
+</ul>
+</section>
+<section id="id197">
+<h2>0.6.0<a class="headerlink" href="#id197" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>更新依赖</p></li>
+</ul>
+</section>
+<section id="id198">
+<h2>0.5.4 (2018-04-02)<a class="headerlink" href="#id198" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>修复首次导入上游视频时必定发布失败的问题</p></li>
+</ul>
+</section>
+<section id="id199">
+<h2>0.5.3 (2018-04-02)<a class="headerlink" href="#id199" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>修复保存并关闭时永远不能通过素材修改日期检查的问题</p></li>
+</ul>
+</section>
+<section id="id200">
+<h2>0.5.2 (2018-04-02)<a class="headerlink" href="#id200" title="永久链接至标题">¶</a></h2>
+<section id="id201">
+<h3>修复<a class="headerlink" href="#id201" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p>稍后启用</p></li>
+<li><p>转换单帧为序列</p></li>
+</ul>
+</section>
+</section>
+<section id="id202">
+<h2>0.5.1 (2018-03-29)<a class="headerlink" href="#id202" title="永久链接至标题">¶</a></h2>
+<section id="id203">
+<h3>修复<a class="headerlink" href="#id203" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pyblish</span></code>检查导致修改状态显示为修改过</p></li>
+<li><p>恢复 0.4 版本的 CGTeamWork 自动打开和登录的功能</p></li>
+<li><p>tab 菜单不能创建插件节点的问题</p></li>
+<li><p>上传单帧时没设置缩略图</p></li>
+<li><p>比较修改日期时忽略了时区</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pyblish</span></code>现在能在保存并退出时自动发布了</p></li>
+</ul>
+</section>
+</section>
+<section id="id204">
+<h2>0.5.0 (2018-03-29)<a class="headerlink" href="#id204" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>重构</p>
+<ul>
+<li><p>以不修改默认编码的方式支持中文, 以增强兼容性</p></li>
+<li><p>依赖库重构 改为使用自制的 CGTeamWork 客户端库</p></li>
+<li><p>规范开发流程 添加大量添加测试用例</p></li>
+</ul>
+</li>
+<li><p>引入<code class="docutils literal notranslate"><span class="pre">pyblish</span></code>作为发布框架</p></li>
+<li><p>移除色板集成, 因为改为使用色板服务器</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code>节点现在支持多视图</p></li>
+</ul>
+</section>
+<section id="id205">
+<h2>0.4.24 (2018-01-29)<a class="headerlink" href="#id205" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>支持虚拟环境导入 nuke 模块</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 节点 1.53.0:</strong> 适配 VR 立体工程, 调整面板</p></li>
+</ul>
+</section>
+<section id="id206">
+<h2>0.4.23 (2018-01-08)<a class="headerlink" href="#id206" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>自动合成支持 <code class="docutils literal notranslate"><span class="pre">OCC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SH</span></code> 的二合一层 <code class="docutils literal notranslate"><span class="pre">OCCSH</span></code></p></li>
+</ul>
+</section>
+<section id="id207">
+<h2>0.4.22 (2017-12-31)<a class="headerlink" href="#id207" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>全部模块使用 <code class="docutils literal notranslate"><span class="pre">absolute_import</span></code></p></li>
+</ul>
+</section>
+<section id="id208">
+<h2>0.4.21<a class="headerlink" href="#id208" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>修复增量版本保存会导致不上传 nk 文件至 CGTeamWork 的问题</p></li>
+<li><p>现在开始取消模块独立版本号, 任意模块更新都更新整体版本号</p></li>
+</ul>
+</section>
+<section id="id209">
+<h2>0.4.20 (2017-12-22)<a class="headerlink" href="#id209" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>完善文档</p></li>
+</ul>
+</section>
+<section id="id210">
+<h2>0.4.19 (2017-12-21)<a class="headerlink" href="#id210" title="永久链接至标题">¶</a></h2>
+<p>以下是自 0.3.2 以来的更新内容</p>
+<p>Nuke 插件更新:</p>
+<ul>
+<li><p>大量 Bug 修复</p></li>
+<li><p>许多编程方面的改进</p></li>
+<li><p>为此插件编写了文档, 在菜单 <code class="docutils literal notranslate"><span class="pre">帮助</span></code> - <code class="docutils literal notranslate"><span class="pre">吾立方插件文档</span></code> 中可查看。</p></li>
+<li><p>添加了 <code class="docutils literal notranslate"><span class="pre">素材命名要求.md</span></code></p></li>
+<li><p>在 Nuke 控制台输出中文的插件命令日志</p></li>
+<li><p>插件有了任务栏图标, 气泡提示统一从此处弹出</p></li>
+<li><p>因为 Nuke 的 <code class="docutils literal notranslate"><span class="pre">Localiztion</span></code> 功能会导致看到的素材不是最新的, 现在默认禁用了此功能</p>
+<p>要加快读取请使用 <code class="docutils literal notranslate"><span class="pre">DiskCache</span></code> 节点代替</p>
+</li>
+<li><p>所有耗时操作都有了进度条提示</p></li>
+<li><p>检查:</p>
+<ul class="simple">
+<li><p>缺帧检查: 保存时会检查素材缺帧并提示</p></li>
+<li><p>修改日期检查: 打开时如果有使用素材比本 nk 文件更新会有提示</p></li>
+</ul>
+</li>
+<li><p>redshift 预合成(F1):</p>
+<ul class="simple">
+<li><p>添加自动开关</p></li>
+<li><p>支持更多的 redshift 图层种类</p></li>
+<li><p>支持 <code class="docutils literal notranslate"><span class="pre">Read</span></code> 以外的节点</p></li>
+<li><p>如果没有 <code class="docutils literal notranslate"><span class="pre">plus</span></code> 模式的节点, <code class="docutils literal notranslate"><span class="pre">Remove</span></code> 节点将会默认禁用</p></li>
+<li><p>撤销改为直接撤销到预合成前</p></li>
+<li><p>在不会导致卡死的情况下会开启节点的 <code class="docutils literal notranslate"><span class="pre">Postage</span> <span class="pre">stamp</span></code> (邮票式预览)</p></li>
+<li><p>在节点的标签中使用中文的层名称</p></li>
+</ul>
+</li>
+<li><p>多节点编辑(F2):</p>
+<p>新增 可以同时编辑选中的多个同类型节点</p>
+</li>
+<li><p>编辑/修复错误读取节点(F6):</p>
+<p>适用的情况更广了</p>
+</li>
+<li><p>界面:</p>
+<ul class="simple">
+<li><p>添加了 <code class="docutils literal notranslate"><span class="pre">TimeOffset</span></code> 节点的默认标签</p></li>
+<li><p>现在会在 Nuke 的控制台输出开启脚本时的插件命令消耗时间</p></li>
+<li><p>工具集 (<code class="docutils literal notranslate"><span class="pre">ToolSets</span></code>) 菜单中增添了以下内容:</p>
+<ul>
+<li><p>刷新</p></li>
+<li><p>创建共享工具集</p></li>
+<li><p>打开共享工具集菜单</p></li>
+</ul>
+</li>
+<li><p>支持共享工具集给使用同一此插件副本的其他人</p></li>
+</ul>
+</li>
+<li><p>自动合成:</p>
+<ul class="simple">
+<li><p>除了背景层 <code class="docutils literal notranslate"><span class="pre">ZDefocus</span></code> 的 <code class="docutils literal notranslate"><span class="pre">depth</span> <span class="pre">layers</span></code> 默认值设为 5, 加快渲染</p></li>
+<li><p>支持新素材标签 <code class="docutils literal notranslate"><span class="pre">AO</span></code></p></li>
+<li><p>添加自动合成设置菜单, 提供更精细的自动合成控制</p></li>
+<li><p>叠加额外层时改为使用 <code class="docutils literal notranslate"><span class="pre">rgb</span></code> 通道而不是<code class="docutils literal notranslate"><span class="pre">rgba</span></code>通道</p></li>
+<li><p>添加命令行界面</p></li>
+<li><p>添加默认使用 <code class="docutils literal notranslate"><span class="pre">Emission.alpha</span></code> 的辉光节点</p></li>
+<li><p>增强了镜头的帧范围识别</p></li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">DiskCache</span></code> 节点提升合成体验</p></li>
+</ul>
+</li>
+<li><p>批量自动合成:</p>
+<ul class="simple">
+<li><p>更强的多线程, 自动决定是否使用多线程, 避免死机</p></li>
+<li><p>添加自动合成设置面板</p></li>
+<li><p>优化批量自动合成日志的排版</p></li>
+<li><p>能够生成 <code class="docutils literal notranslate"><span class="pre">镜头备注.txt</span></code> 方便记录备注</p></li>
+</ul>
+</li>
+<li><p>首选项:</p>
+<ul class="simple">
+<li><p>更改了 <code class="docutils literal notranslate"><span class="pre">RolloffContrast</span></code> 节点的默认值</p></li>
+<li><p>更改了 <code class="docutils literal notranslate"><span class="pre">Denoise2</span></code> 节点的默认值</p></li>
+</ul>
+</li>
+<li><p>自动摆放:</p>
+<ul class="simple">
+<li><p>更换逻辑完全重构, 速度更快效果更好</p></li>
+<li><p>支持异步动画</p></li>
+</ul>
+</li>
+<li><p>文件/文件夹拖放:</p>
+<ul class="simple">
+<li><p>中文路径 mov 拖入时用一个备注代替, 因为中文路径的 mov 会导致卡死。</p></li>
+</ul>
+</li>
+<li><p>上传 mov:</p>
+<ul class="simple">
+<li><p>上传时不会导致 Nuke 失去响应了</p></li>
+<li><p>现在成为 Nuke 和 CGTeamWork 通用插件, 可在 CGTeamWork 右键菜单中访问, 支持其他流程的上传。</p></li>
+<li><p>打开时默认使用最近工程的 mov 渲染目录</p></li>
+</ul>
+</li>
+<li><p>扫描空文件夹:</p>
+<p>实验性 位于 <code class="docutils literal notranslate"><span class="pre">工具</span></code> 菜单 用于查看哪个镜头还没出素材</p>
+</li>
+<li><p>节点:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code>:</p>
+<ul class="simple">
+<li><p>支持渲染 exr</p></li>
+<li><p>提示长镜头输出 exr</p></li>
+<li><p>支持从渲染出来的 exr 生成 mov</p></li>
+<li><p>减少读取单帧时不能渲染单帧的问题</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PositionKeyer</span></code>:</p>
+<ul class="simple">
+<li><p>添加<code class="docutils literal notranslate"><span class="pre">渐变</span></code>以外的两个新模式: <code class="docutils literal notranslate"><span class="pre">距离</span></code> 和 <code class="docutils literal notranslate"><span class="pre">球</span></code></p></li>
+<li><p>改进了取样的逻辑</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DepthFix</span></code>:</p>
+<p>添加尝试在错误输入情况下使用的提示</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Flicker</span></code>:</p>
+<p>新节点 灯光抖动生成器</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">MotionRotate</span></code>:</p>
+<p>新节点 可以旋转速度层来达到旋转运动模糊方向的效果</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">AntiAliasing</span></code>:</p>
+<p>新节点 较小的模糊可以用这个</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SphereMP</span></code>:</p>
+<p>成为插件, 此前是工具集</p>
+</li>
+</ul>
+</li>
+<li><p>通道重命名</p>
+<ul class="simple">
+<li><p>支持 <code class="docutils literal notranslate"><span class="pre">rgba.alpha</span></code> 通道</p></li>
+</ul>
+</li>
+<li><p>CGTeamWork 集成:</p>
+<ul>
+<li><p>特效素材检查:</p>
+<p>打开 nk 文件时会检查有无特效素材并自动打开文件夹</p>
+</li>
+<li><p>上游匹配检查:</p>
+<ul class="simple">
+<li><p>打开和保存 nk 文件时会自动导入上游视频并连接到主查看器的输入 5 上</p></li>
+<li><p>如果工程帧速率和帧长度和上游视频不一致会弹出警告</p></li>
+</ul>
+</li>
+<li><p>自动上传工作文件:</p>
+<p>保存时将会自动上传工作文件到服务器。</p>
+</li>
+<li><p>自动上传单帧:</p>
+<p>保存并退出时 <code class="docutils literal notranslate"><span class="pre">wlf_Write</span></code> 节点会自动渲染并上传单帧到服务器</p>
+</li>
+<li><p>检查制作者:</p>
+<p>保存时会检查 CGTeamWork 上分配的制作者, 如果不是当前登录用户将提示并不会上传任何文件。</p>
+</li>
+</ul>
+</li>
+<li><p>创建色板:</p>
+<ul class="simple">
+<li><p>现在是通用插件, 并且改为使用 html 格式来代替巨大的 jpg 图像。</p></li>
+</ul>
+</li>
+</ul>
+<p>Nuke 和 CGTeamWork 通用插件更新:</p>
+<ul class="simple">
+<li><p>创建色板:</p>
+<ul>
+<li><p>支持打包到本地</p></li>
+<li><p>支持实时更新</p></li>
+<li><p>支持视频(利用视频生成的 gif)</p></li>
+</ul>
+</li>
+<li><p>上传工具(上传 mov):</p>
+<ul>
+<li><p>用于上传成果的面板, 位于 <code class="docutils literal notranslate"><span class="pre">工具</span></code> 菜单</p></li>
+<li><p>上传时不会导致 Nuke 失去响应了</p></li>
+<li><p>支持带辅助信息的 <code class="docutils literal notranslate"><span class="pre">burn-in</span></code> 版本</p></li>
+<li><p>打开时默认使用最近工程的 mov 渲染目录</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id211">
+<h2>0.4.18 (2017-12-07)<a class="headerlink" href="#id211" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id212">
+<h2>0.4.17 (2017-11-28)<a class="headerlink" href="#id212" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id213">
+<h2>0.4.16 (2017-11-23)<a class="headerlink" href="#id213" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id214">
+<h2>0.4.15 (2017-11-19)<a class="headerlink" href="#id214" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id215">
+<h2>0.4.14 (2017-11-10)<a class="headerlink" href="#id215" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id216">
+<h2>0.4.12 (2017-11-01)<a class="headerlink" href="#id216" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id217">
+<h2>0.4.11 (2017-10-24)<a class="headerlink" href="#id217" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id218">
+<h2>0.4.10 (2017-10-21)<a class="headerlink" href="#id218" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id219">
+<h2>0.4.9 (2017-10-18)<a class="headerlink" href="#id219" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id220">
+<h2>0.4.8 (2017-10-18)<a class="headerlink" href="#id220" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id221">
+<h2>0.4.6 (2017-10-12)<a class="headerlink" href="#id221" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id222">
+<h2>0.4.5 (2017-10-10)<a class="headerlink" href="#id222" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id223">
+<h2>0.4.4 (2017-10-09)<a class="headerlink" href="#id223" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id224">
+<h2>0.4.3 (2017-10-06)<a class="headerlink" href="#id224" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id225">
+<h2>0.4.2 (2017-09-29)<a class="headerlink" href="#id225" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id226">
+<h2>0.4.1 (2017-09-25)<a class="headerlink" href="#id226" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id227">
+<h2>0.4.0 (2017-09-25)<a class="headerlink" href="#id227" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id228">
+<h2>0.3.10 (2017-09-21)<a class="headerlink" href="#id228" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id229">
+<h2>0.3.9 (2017-09-20)<a class="headerlink" href="#id229" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id230">
+<h2>0.3.8 (2017-09-19)<a class="headerlink" href="#id230" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id231">
+<h2>0.3.7 (2017-09-15)<a class="headerlink" href="#id231" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id232">
+<h2>0.3.6 (2017-09-14)<a class="headerlink" href="#id232" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id233">
+<h2>0.3.5 (2017-09-13)<a class="headerlink" href="#id233" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id234">
+<h2>0.3.4 (2017-09-11)<a class="headerlink" href="#id234" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id235">
+<h2>0.3.3 (2017-09-11)<a class="headerlink" href="#id235" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id236">
+<h2>0.3.2 (2017-09-06)<a class="headerlink" href="#id236" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>上传工具成为 Nuke 内置面板</p></li>
+<li><p>调整初始化信息</p></li>
+<li><p>修正 <code class="docutils literal notranslate"><span class="pre">wlf_Lightwrap</span></code></p></li>
+</ul>
+</section>
+<section id="id237">
+<h2>0.3.1 (2017-09-06)<a class="headerlink" href="#id237" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id238">
+<h2>0.3.0 (2017-09-05)<a class="headerlink" href="#id238" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id239">
+<h2>0.2.0 (2017-08-25)<a class="headerlink" href="#id239" title="永久链接至标题">¶</a></h2>
+</section>
+<section id="id240">
+<h2>0.1.0 (2017-08-25)<a class="headerlink" href="#id240" title="永久链接至标题">¶</a></h2>
+<!-- markdownlint-disable -->
+<!-- markdownlint-configure-file { "no-duplicate-heading": { "siblings_only": true } } -->
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="plug-ins.html">插件节点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="guide.html">指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="re.html">正则表达式</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">更新日志</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2024.1.0 (2024-05-06)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">特性</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2024.0.0 (2024-01-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">2023.2.0 (2023-07-17)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">特性</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">2023.1.0 (2023-07-17)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id12">2023.0.0 (2023-06-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id13">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id15">2022.2.2 (2022-06-22)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id16">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id17">2022.2.1 (2022-06-06)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id19">2022.2.0 (2022-06-06)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id20">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id22">2022.1.1 (2022-01-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id23">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id24">2022.1.0 (2022-01-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id25">特性</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id26">2022.0.0 (2022-01-04)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id27">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id28">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id29">2021.4.1 (2021-11-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id30">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id31">2021.4.0 (2021-11-09)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id32">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id33">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id34">2021.3.1 (2021-10-11)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id35">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id36">2021.3.0 (2021-09-24)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id37">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id38">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id39">2021.2.0 (2021-06-17)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id40">特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id41">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id42">2021.1.0 (2021-04-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id43">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id44">2021.0.6 (2021-04-01)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id45">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id46">2021.0.5 (2021-03-31)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id47">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id48">2021.0.4 (2021-03-31)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id49">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id50">2021.0.3 (2021-03-23)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id51">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id52">2021.0.2 (2021-03-23)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id53">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id54">2021.0.1 (2021-03-22)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id55">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id56">2021.0.0 (2021-03-22)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id57">0.20.25 (2021-03-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id58">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id59">0.20.24 (2021-03-11)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id60">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id61">0.20.23 (2021-03-11)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id62">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id63">0.20.22 (2021-03-09)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id64">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id65">0.20.21 (2021-03-09)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id66">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id67">0.20.20 (2021-03-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id68">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id69">0.20.19 (2021-03-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id70">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id71">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id72">0.20.18 (2021-03-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id73">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id74">0.20.17 (2021-03-05)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id75">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id76">0.20.16 (2021-03-05)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id77">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id78">0.20.15 (2021-03-05)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id79">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id80">0.20.14 (2021-02-24)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id81">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id82">0.20.13 (2021-02-23)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id83">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id84">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id85">0.20.12 (2020-11-16)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id86">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id87">0.20.11 (2020-10-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id88">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id89">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id90">0.20.10 (2020-08-20)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id91">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id92">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id93">0.20.9 (2020-08-18)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id94">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id95">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id96">0.20.8 (2020-08-18)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id97">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id98">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id99">0.20.7 (2020-07-29)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id100">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id101">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id102">0.20.6 (2020-07-05)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id103">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id104">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id105">0.20.5 (2020-05-19)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id106">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id107">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id108">0.20.4 (2020-01-10)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id109">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id110">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id111">0.20.3 (2019-07-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id112">杂项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id113">0.20.2 (2019-05-23)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id114">修复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id115">构建系统</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id116">0.20.1 (2019-05-11)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id117">修复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id118">构建系统</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id119">0.20.0 (2019-02-20)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id120">0.19.2 (2019-01-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id121">杂项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id122">0.19.1 (2018-09-26)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id123">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id124">0.19.0 (2018-08-17)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id125">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id126">0.18.0 (2018-08-16)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id127">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id128">0.17.0 (2018-08-15)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id129">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id130">向下不兼容的更改</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id131">0.16.2 (2018-08-14)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id132">向下不兼容的更改</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id133">0.16.1 (2018-08-13)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id134">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id135">0.16.0 (2018-08-13)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id136">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id137">向下不兼容的更改</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id138">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id139">0.15.4 (2018-08-08)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id140">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id141">0.15.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id142">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id143">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id144">0.15.2 (2018-08-03)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id145">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id146">0.15.1 (2018-08-03)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id147">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id148">0.15.0 (2018-08-03)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id149">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id150">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id151">0.14.2 (2018-08-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id152">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id153">0.14.1 (2018-07-27)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id154">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id155">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id156">0.14.0 (2018-07-27)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id157">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id158">0.13.0 (2018-07-25)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id159">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id160">向下不兼容的更改</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id161">0.12.0 (2018-07-24)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id162">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id163">0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id164">0.10.2 (2018-07-17)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id165">0.10.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id166">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id167">向下不兼容的更改</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id168">0.10.0 (2018-07-16)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id169">功能</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id170">0.9.3 (2018-07-16)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id171">向下不兼容的更改</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id172">0.9.2 (2018-07-12)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id173">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id174">0.9.1 (2018-07-11)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id175">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id176">0.9.0 (2018-07-11)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id177">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id178">向下不兼容的更改</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id179">0.8.0 (2018-07-05)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id180">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id181">向下不兼容的更改</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id182">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id183">0.7.3 (2018-06-29)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id184">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id185">0.7.2 (2018-06-27)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id186">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id187">0.7.1 (2018-06-26)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id188">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id189">0.7.0 (2018-06-26)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id190">功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id191">向下不兼容的更改</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id192">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id193">0.6.4 (2018-06-13)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id194">0.6.3 (2018-04-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id195">0.6.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id196">0.6.1 (2018-04-19)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id197">0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id198">0.5.4 (2018-04-02)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id199">0.5.3 (2018-04-02)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id200">0.5.2 (2018-04-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id201">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id202">0.5.1 (2018-03-29)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id203">修复</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id204">0.5.0 (2018-03-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id205">0.4.24 (2018-01-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id206">0.4.23 (2018-01-08)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id207">0.4.22 (2017-12-31)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id208">0.4.21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id209">0.4.20 (2017-12-22)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id210">0.4.19 (2017-12-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id211">0.4.18 (2017-12-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id212">0.4.17 (2017-11-28)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id213">0.4.16 (2017-11-23)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id214">0.4.15 (2017-11-19)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id215">0.4.14 (2017-11-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id216">0.4.12 (2017-11-01)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id217">0.4.11 (2017-10-24)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id218">0.4.10 (2017-10-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id219">0.4.9 (2017-10-18)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id220">0.4.8 (2017-10-18)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id221">0.4.6 (2017-10-12)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id222">0.4.5 (2017-10-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id223">0.4.4 (2017-10-09)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id224">0.4.3 (2017-10-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id225">0.4.2 (2017-09-29)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id226">0.4.1 (2017-09-25)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id227">0.4.0 (2017-09-25)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id228">0.3.10 (2017-09-21)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id229">0.3.9 (2017-09-20)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id230">0.3.8 (2017-09-19)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id231">0.3.7 (2017-09-15)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id232">0.3.6 (2017-09-14)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id233">0.3.5 (2017-09-13)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id234">0.3.4 (2017-09-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id235">0.3.3 (2017-09-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id236">0.3.2 (2017-09-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id237">0.3.1 (2017-09-06)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id238">0.3.0 (2017-09-05)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id239">0.2.0 (2017-08-25)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id240">0.1.0 (2017-08-25)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plug-ins.html">插件节点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features.html">功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="re.html" title="上一章">正则表达式</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/changelog.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

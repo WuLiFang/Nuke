@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>RotoPaint 运动扭曲 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="RotoPaint UV映射" href="rotopaint_uv_map.html" />
+    <link rel="prev" title="RotoPaint 摄影表" href="rotopaint_dopesheet.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="rotopaint">
+<h1>RotoPaint 运动扭曲<a class="headerlink" href="#rotopaint" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/Nuke10.5_2020-08-20_10-51-52.png" src="../_images/Nuke10.5_2020-08-20_10-51-52.png" />
+<img alt="../_images/Nuke10.5_2020-08-20_10-52-02.png" src="../_images/Nuke10.5_2020-08-20_10-52-02.png" />
+<p>基于 motion 层对 RotoPaint 形状进行创建动画。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>渲染器的运动模糊快门时间和偏移会影响输出运动向量的值。
+将快门偏移设为 0（帧首），快门时间设为 1 (帧首至帧尾) 才是正确的整帧运动向量。</p>
+</div>
+<p>和 <a class="reference internal" href="motion_distort.html"><span class="doc">运动扭曲</span></a> 不同此命令仅支持 RotoPaint 但输出为矢量形状方便修改。</p>
+<p>在菜单中选择 <span class="guilabel">编辑</span> - <span class="guilabel">RotoPaint 运动扭曲</span> 进行创建。</p>
+<p>执行命令将为所有选中的 RotoPaint 节点中无动画且可见的形状创建一个带动画的副本，并隐藏锁定原始形状。</p>
+<img alt="../_images/Nuke10.5_2020-08-18_15-17-53.png" src="../_images/Nuke10.5_2020-08-18_15-17-53.png" />
+<p>执行命令需要先进行设置。</p>
+<img alt="../_images/Nuke10.5_2020-08-18_15-29-18.png" src="../_images/Nuke10.5_2020-08-18_15-29-18.png" />
+<p>为形状创建的动画副本会带 <code class="docutils literal notranslate"><span class="pre">.MotionDistort</span></code> 后缀，
+重复执行此命令将会根据副本本身的基准帧重新生成动画，覆盖原有数据。</p>
+<div class="admonition tip">
+<p class="admonition-title">小技巧</p>
+<p>对生成的形状手动修改后，可再次用修改的帧作为基准帧生成之后或之前的帧。</p>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../re.html">正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">更新日志</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../features.html">功能</a><ul>
+      <li>Previous: <a href="rotopaint_dopesheet.html" title="上一章">RotoPaint 摄影表</a></li>
+      <li>Next: <a href="rotopaint_uv_map.html" title="下一章">RotoPaint UV映射</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/features/rotopaint_motion_distort.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

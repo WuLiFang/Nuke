@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>RotoPaint UV映射 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="转换为序列工程" href="script_use_seq.html" />
+    <link rel="prev" title="RotoPaint 运动扭曲" href="rotopaint_motion_distort.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="rotopaint-uv">
+<h1>RotoPaint UV映射<a class="headerlink" href="#rotopaint-uv" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/Nuke10.5_2020-08-19_14-59-01.png" src="../_images/Nuke10.5_2020-08-19_14-59-01.png" />
+<img alt="../_images/Nuke10.5_2020-08-19_15-05-25.png" src="../_images/Nuke10.5_2020-08-19_15-05-25.png" />
+<p>基于 uv 层对 RotoPaint 形状创建映射副本，并自动在后面添加一个 STMap 节点使得映射后的形状跟随 uv 运动。</p>
+<p>在菜单中选择 <span class="guilabel">编辑</span> - <span class="guilabel">RotoPaint UV映射</span> 进行创建。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>因为基于 UV 贴图，有以下限制：</p>
+<ul class="simple">
+<li><p>横跨 UV 接缝的形状无法正常映射，可通过拆分为多个形状进行避免。</p></li>
+<li><p>映射后的形状只能保证锚点位置匹配，图形的边会随 UV 变形，可通过增加更多锚点来保证形状接近。</p></li>
+<li><p>为形状添加动画时需要手动将原始形状匹配到每一帧的 UV 位置，不能自动跟踪。</p></li>
+</ul>
+</div>
+<img alt="../_images/Nuke10.5_2020-08-19_15-34-29.png" src="../_images/Nuke10.5_2020-08-19_15-34-29.png" />
+<p>执行命令将为所有选中的 RotoPaint 可见形状创建一个 uv 映射的副本，并隐藏锁定原始形状。</p>
+<img alt="../_images/Nuke10.5_2020-08-19_14-58-38.png" src="../_images/Nuke10.5_2020-08-19_14-58-38.png" />
+<p>执行命令需要节点包含 <code class="docutils literal notranslate"><span class="pre">uv_map</span></code> 层，如果没有则会默认使用 rgba.red 和 rgba.green 在节点前创建 ShuffleCopy 节点。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">uv_map</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">uv</span></code>，因为 <code class="docutils literal notranslate"><span class="pre">uv</span></code> 为 Nuke 内置图层名，等同于 <code class="docutils literal notranslate"><span class="pre">forward</span></code> 层，被 motion 使用。</p>
+</div>
+<p>会自动为选中节点创建 STMap 方便 Merge。</p>
+<p>为形状创建的映射副本会带 <code class="docutils literal notranslate"><span class="pre">.UVMap</span></code> 后缀，
+重复执行此命令将会删除之前生成的副本重新进行生成。</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../re.html">正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">更新日志</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../features.html">功能</a><ul>
+      <li>Previous: <a href="rotopaint_motion_distort.html" title="上一章">RotoPaint 运动扭曲</a></li>
+      <li>Next: <a href="script_use_seq.html" title="下一章">转换为序列工程</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/features/rotopaint_uv_map.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

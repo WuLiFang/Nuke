@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Hiero 移除名称中的版本 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="运动扭曲" href="motion_distort.html" />
+    <link rel="prev" title="Hiero 轨道项对齐" href="hiero_align_track_item.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="hiero">
+<h1>Hiero 移除名称中的版本<a class="headerlink" href="#hiero" title="永久链接至标题">¶</a></h1>
+<p>批量将所选对象名称中的 <code class="docutils literal notranslate"><span class="pre">_v{版本}</span></code> 后缀移除。</p>
+<p>当前仅支持对轨道项使用。</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../re.html">正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">更新日志</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../features.html">功能</a><ul>
+      <li>Previous: <a href="hiero_align_track_item.html" title="上一章">Hiero 轨道项对齐</a></li>
+      <li>Next: <a href="motion_distort.html" title="下一章">运动扭曲</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/features/hiero_remove_version_suffix.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

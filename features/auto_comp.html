@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>自动合成 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="自动标签" href="autolabel.html" />
+    <link rel="prev" title="功能" href="../features.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>自动合成<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<img alt="../_images/Nuke10.5_2021-12-07_18-05-19.png" src="../_images/Nuke10.5_2021-12-07_18-05-19.png" />
+<p>自动合成当前导入的素材。</p>
+<ol class="arabic">
+<li><figure class="align-default" id="id10">
+<img alt="../_images/comp_prepare.png" src="../_images/comp_prepare.png" />
+<figcaption>
+<p><span class="caption-text">导入素材</span><a class="headerlink" href="#id10" title="永久链接至图片">¶</a></p>
+</figcaption>
+</figure>
+</li>
+<li><figure class="align-default" id="id11">
+<img alt="../_images/comp_run.png" src="../_images/comp_run.png" />
+<figcaption>
+<p><span class="caption-text">执行</span><a class="headerlink" href="#id11" title="永久链接至图片">¶</a></p>
+</figcaption>
+</figure>
+</li>
+<li><figure class="align-default" id="id12">
+<img alt="../_images/comp_result.png" src="../_images/comp_result.png" />
+<figcaption>
+<p><span class="caption-text">结果</span><a class="headerlink" href="#id12" title="永久链接至图片">¶</a></p>
+</figcaption>
+</figure>
+</li>
+</ol>
+<img alt="../_images/comp_setting.png" src="../_images/comp_setting.png" />
+<p>可设置需要自动合成的内容。</p>
+<section id="comp-icon">
+<h2><img alt="comp_icon" src="../_images/comp_icon.png" /> 批量自动合成<a class="headerlink" href="#comp-icon" title="永久链接至标题">¶</a></h2>
+<img alt="../_images/chrome_2021-12-07_18-06-37.png" src="../_images/chrome_2021-12-07_18-06-37.png" />
+<img alt="../_images/batchcomp.png" src="../_images/batchcomp.png" />
+<p>合成/自动合成的批量版本
+直接自动合成大量镜头</p>
+<img alt="../_images/batchcomp_run.png" src="../_images/batchcomp_run.png" />
+<p>使用多线程, 内存不足时会等待足够的空闲内存再继续。</p>
+<figure class="align-default" id="id13">
+<img alt="../_images/batchcomp_result.png" src="../_images/batchcomp_result.png" />
+<figcaption>
+<p><span class="caption-text">批量合成日志</span><a class="headerlink" href="#id13" title="永久链接至图片">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id2">
+<h2>素材命名要求<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>自动合成对文件夹命名有要求</p>
+<section id="id3">
+<h3>范例<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>符合标准的命名:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SNJYW_ep123_01abcd_sc001abc_CH_B_asdasdqwe_asd</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SNJYW_EP01_01_sc001_CH_A</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EP01_01_sc001_CH_A</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EP01_sc001_CH_A</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CH_A</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CH</span></code></p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>详细定义<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>命名由3部分组成:</p>
+<blockquote>
+<div><ul>
+<li><p>前缀</p>
+<p>格式: [<cite>字符</cite><code class="docutils literal notranslate"><span class="pre">_</span></code>][<code class="docutils literal notranslate"><span class="pre">ep</span></code><cite>数字</cite><code class="docutils literal notranslate"><span class="pre">_</span></code>][<cite>数字</cite>[<cite>字母</cite>]<code class="docutils literal notranslate"><span class="pre">_</span></code>][<code class="docutils literal notranslate"><span class="pre">sc</span></code><cite>数字</cite>[<cite>字母</cite>]<code class="docutils literal notranslate"><span class="pre">_</span></code>]</p>
+</li>
+<li><p>标签</p>
+<p>格式: <cite>字母</cite>[<cite>字符</cite>]<code class="docutils literal notranslate"><span class="pre">_</span></code>[<cite>字母</cite>[<cite>字符</cite>][<code class="docutils literal notranslate"><span class="pre">_</span></code> 或 <code class="docutils literal notranslate"><span class="pre">.</span></code>]]</p>
+</li>
+<li><p>后缀</p>
+<p>格式不限</p>
+<p>后缀决定了相同标签的自动合成顺序</p>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>用方括号括起的部分为可选</p>
+<p>字符 = 字母 + 数字</p>
+<p>字符不包含 <code class="docutils literal notranslate"><span class="pre">.</span></code>, <code class="docutils literal notranslate"><span class="pre">\</span></code>, <code class="docutils literal notranslate"><span class="pre">_</span></code></p>
+</div>
+<p>匹配所用正则表达式:</p>
+<p><code class="regexp docutils literal notranslate"><span class="pre">(?i)(?:[^_]+_)?(?:ep\d+_)?(?:\d+[a-zA-Z]*_)?(?:sc\d+[a-zA-Z]*_)?((?:[a-zA-Z][^\._]*_?){,3})</span></code></p>
+</section>
+<section id="id5">
+<h3>标准标签<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h3>
+<p>推荐使用以下标签:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">BG_</span></code><cite>单个字母</cite></p>
+<p>例如: <code class="docutils literal notranslate"><span class="pre">BG_A</span></code>, <code class="docutils literal notranslate"><span class="pre">BG_B</span></code></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CH_</span></code><cite>单个字母</cite></p>
+<p>例如: <code class="docutils literal notranslate"><span class="pre">CH_A</span></code>, <code class="docutils literal notranslate"><span class="pre">CH_B</span></code></p>
+<p>CH层在自动合成中会叠加在所有BG层之上</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SH</span></code> 或 <code class="docutils literal notranslate"><span class="pre">SH_</span></code><cite>任意</cite></p>
+<p>例如: <code class="docutils literal notranslate"><span class="pre">SH</span></code>, <code class="docutils literal notranslate"><span class="pre">SH_CH</span></code></p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OCC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">OCC_</span></code><cite>任意</cite></p>
+<p>例如: <code class="docutils literal notranslate"><span class="pre">OCC</span></code> , <code class="docutils literal notranslate"><span class="pre">OCC_BG</span></code></p>
+</li>
+</ul>
+<p>如果文件名不含标准标签而父目录名称含标准标签时将使用父目录名称作为命名</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>部分常用别称会在识别时自动转换成标准标签</p>
+</div>
+</section>
+<section id="id6">
+<h3>版本<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>所有素材的后缀中应该含有 <code class="docutils literal notranslate"><span class="pre">_v数字.</span></code> 或者 <code class="docutils literal notranslate"><span class="pre">_v数字_</span></code></p>
+<blockquote>
+<div><p>例如: <code class="docutils literal notranslate"><span class="pre">CH_A_test_v1_abc.exr</span></code> , <code class="docutils literal notranslate"><span class="pre">CH_B_v0.exr</span></code></p>
+</div></blockquote>
+<p>第一个版本就要有版本号 无论之后是否会修改</p>
+<p>只有使用了版本号的素材才能在nuke中按 <code class="docutils literal notranslate"><span class="pre">Alt+↑</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Alt+↓</span></code> 切换版本</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>数字应为从0开始的正数</p>
+</div>
+</section>
+<section id="id7">
+<h3>摄像机命名<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>推荐使用形如: <code class="docutils literal notranslate"><span class="pre">镜头名_起始帧_结束帧_c版本.fbx</span></code> 的摄像机</p>
+<p>例如:</p>
+<p><code class="docutils literal notranslate"><span class="pre">SNJYW_EP01_01_sc001_1_999_c1.fbx</span></code></p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">c版本</span></code> 是nuke原生摄像机版本管理的规范</p>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>自动合成行为<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<section id="id9">
+<h3>合并顺序<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h3>
+<p>如果标签后半部分有内容则会按字母顺序决定层的先后顺序</p>
+<p>例如: BG_A(最底层) -&gt; BG_B -&gt; BG_C -&gt; BG_D -&gt; CH_A -&gt; CH_B -&gt; CH_C -&gt; CH_D(最顶层)</p>
+</section>
+<section id="shadow">
+<h3>Shadow阴影层<a class="headerlink" href="#shadow" title="永久链接至标题">¶</a></h3>
+<p>标签前缀为 <code class="docutils literal notranslate"><span class="pre">SH</span></code> 的素材将以阴影层标准方式合在最底层上</p>
+</section>
+<section id="occlusion">
+<h3>Occlusion闭塞层<a class="headerlink" href="#occlusion" title="永久链接至标题">¶</a></h3>
+<p>标签前缀为 <code class="docutils literal notranslate"><span class="pre">OCC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">AO</span></code> 的素材将以闭塞层标准方式合在最底层上</p>
+</section>
+<section id="fog">
+<h3>Fog灯光雾层<a class="headerlink" href="#fog" title="永久链接至标题">¶</a></h3>
+<p>标签前缀为 <code class="docutils literal notranslate"><span class="pre">FOG</span></code> 的素材将以滤色(screen)模式合在最底层上</p>
+</section>
+<section id="precomp">
+<h3>Precomp预合成<a class="headerlink" href="#precomp" title="永久链接至标题">¶</a></h3>
+<p>如果在设置中启用了 <span class="guilabel">预合成</span> , 则:</p>
+<p>多个同标签的素材将尝试预合成, 层名应该用 <code class="docutils literal notranslate"><span class="pre">.</span></code> 分割 例如: <cite>A.DiffuseLighting.exr</cite></p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">自动合成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#comp-icon"> 批量自动合成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">素材命名要求</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">自动合成行为</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../re.html">正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">更新日志</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">自动合成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#comp-icon"> 批量自动合成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">素材命名要求</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">自动合成行为</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="split_layer_group_by_re.html">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../features.html">功能</a><ul>
+      <li>Previous: <a href="../features.html" title="上一章">功能</a></li>
+      <li>Next: <a href="autolabel.html" title="下一章">自动标签</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/features/auto_comp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

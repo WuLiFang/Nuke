@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+
+<html lang="zh_cn">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>正则拆分图层组 &#8212; 吾立方 Nuke 插件 2024.1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="菜单" href="../menu.html" />
+    <link rel="prev" title="转换为序列工程" href="script_use_seq.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>正则拆分图层组<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>使用 <a class="reference internal" href="../re.html"><span class="doc">正则表达式</span></a> 包含图层名称进行匹配，
+并对每一个规则匹配的图层创建 Shuffle 和 Merge 节点。</p>
+<p>支持同时为多个节点进行分割，不同节点中匹配同样规则的图层 Shuffle 将被作为同一个 Merge 的输入。</p>
+<p>在菜单 <span class="guilabel">编辑</span> -  <span class="guilabel">正则分割图层组</span> 执行命令对选中节点进行此操作。</p>
+<img alt="../_images/Nuke10.5_2020-09-10_14-52-45.png" src="../_images/Nuke10.5_2020-09-10_14-52-45.png" />
+<p>点击后会弹出配置对话框。</p>
+<p><a class="reference internal" href="../re.html"><span class="doc">正则表达式</span></a>规则每行一条。
+默认规则为匹配不区大小写的 _col 和 _sdw 结尾的图层。</p>
+<p>填写匹配规则后点 OK 按钮执行</p>
+<p>对话框会自动读取上一次的设置，存储在 <cite>~/.nuke/com.wlf-studio.storage-48017c27.db</cite> 中。</p>
+<figure class="align-default" id="id2">
+<img alt="../_images/Nuke10.5_2020-09-10_12-08-06.png" src="../_images/Nuke10.5_2020-09-10_12-08-06.png" />
+<figcaption>
+<p><span class="caption-text">正则分割图层组执行后效果。</span><a class="headerlink" href="#id2" title="永久链接至图片">¶</a></p>
+</figcaption>
+</figure>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo" />
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>导航</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../guide.html">指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../re.html">正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">更新日志</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../plug-ins.html">插件节点</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../features.html">功能</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="auto_comp.html">自动合成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="autolabel.html">自动标签</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cgteamwork.html"> CGTeamWork 集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_align_track_item.html">Hiero 轨道项对齐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hiero_remove_version_suffix.html">Hiero 移除名称中的版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="motion_distort.html">运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance_timers.html">性能监控</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyblish.html">发布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_dopesheet.html">RotoPaint 摄影表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_motion_distort.html">RotoPaint 运动扭曲</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rotopaint_uv_map.html">RotoPaint UV映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="script_use_seq.html">转换为序列工程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">正则拆分图层组</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../menu.html">菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pref.html">首选项设置</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../env-vars.html">环境变量</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../features.html">功能</a><ul>
+      <li>Previous: <a href="script_use_seq.html" title="上一章">转换为序列工程</a></li>
+      <li>Next: <a href="../menu.html" title="下一章">菜单</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="转向" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2017-2021, 北京吾立方数码科技有限公司.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/features/split_layer_group_by_re.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
