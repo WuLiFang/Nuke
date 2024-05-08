@@ -24,6 +24,8 @@ steps:
         fi
       - export DEPLOY_KEY
       - bash ./scripts/ci-build-docs.sh
+node:
+  nuke: true
 ---
 kind: pipeline
 name: notification
