@@ -30,7 +30,7 @@ def create_html_url(body, accept_scheme=()):
     fd, name = tempfile.mkstemp(".html", text=True)
     with io.open(fd, "w", encoding="utf-8") as f:
         f.write(body)
-    
+
     def dispose():
         try:
             os.unlink(name)
@@ -38,4 +38,6 @@ def create_html_url(body, accept_scheme=()):
             pass
 
     atexit.register(dispose)
-    return "file://%s" % (urllib_parse.quote(name.replace("\\", "/"), safe="/:"),)
+    return "file:///%s" % (
+        urllib_parse.quote(name.replace("\\", "/").lstrip("/"), safe="/:"),
+    )
