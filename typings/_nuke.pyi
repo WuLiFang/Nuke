@@ -2070,7 +2070,7 @@ class File_Knob(EvalString_Knob):
         """
         ...
 
-    def getValue(self, *args, **kwargs):
+    def getValue(self) -> Str:
         """
         self.getEvaluatedValue() -> String.
 
@@ -3451,7 +3451,7 @@ class Knob:
         """
         ...
 
-    def setTooltip(self, s) -> None:
+    def setTooltip(self, s: Str) -> None:
         """
         @param s: New tooltip.
 

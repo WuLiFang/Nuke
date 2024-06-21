@@ -5,7 +5,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 TYPE_CHECKING = False
 if TYPE_CHECKING:
-    from typing import Text, Optional, Iterable, Iterator
+    from typing import Text, Optional, Iterable, Iterator, Generator
 
 import re
 from wulifang.vendor.six.moves import xrange
@@ -21,7 +21,7 @@ def _iter_possible_frames(s):
 
 
 def _iter_possible_frame_placeholder(s):
-    # type: (Text) -> Text
+    # type: (Text) -> Generator[Text]
     if s.startswith("0"):
         yield "%%0%dd" % (len(s),)
         yield "#" * len(s)
@@ -88,6 +88,11 @@ class FileSequence(object):
             return m % (frame,)
 
         return cls._frame_placeholder_pattern.sub(repl, expr)
+
+    @classmethod
+    def is_sequence(cls, expr):
+        # type: (Text) -> bool
+        return cls.expand_frame(expr, 1) != expr
 
     @classmethod
     def from_paths(cls, paths, frame_count_gt=0):

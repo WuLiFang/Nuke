@@ -41,3 +41,4 @@ from ._wlf_write_node import wlf_write_node
 from ._process_events import process_events
 from ._sample_node_by_grid import sample_node_by_grid
 from ._sanitize_layer_name import sanitize_layer_name
+from ._supports_write import supports_write

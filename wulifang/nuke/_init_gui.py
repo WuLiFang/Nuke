@@ -76,6 +76,7 @@ from . import (
     _split_layers,
     _split_psd_layers,
     _split_rgba,
+    _generate_proxy,
 )
 
 TYPE_CHECKING = False
@@ -425,6 +426,11 @@ def _init_menu():
                         _fix_read.fix(_must_selected_nodes()),
                         verbose=True,
                     ),
+                    icon="Read.png",
+                ),
+                _Command(
+                    "Read: 生成代理 #SCDL",
+                    lambda: _generate_proxy.dialog(_must_selected_nodes()),
                     icon="Read.png",
                 ),
                 _Command(

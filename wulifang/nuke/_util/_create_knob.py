@@ -26,6 +26,7 @@ def create_knob(
     flags=0,  # type: int
     value=None,  # type: object
     expression="",  # type: Text
+    tooltip="",  # type: Text
 ):
     # type: (...) -> T
 
@@ -49,4 +50,6 @@ def create_knob(
             raise RuntimeError("not implemented: %r", _class)
     if expression:
         k.setExpression(cast_str(expression))
+    if tooltip:
+        k.setTooltip(cast_str(tooltip))
     return k
