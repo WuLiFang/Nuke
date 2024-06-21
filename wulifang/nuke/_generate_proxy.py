@@ -108,7 +108,7 @@ class _Dialog(Panel):
             value=_OUT_DIR.get(),
             tooltip="代理文件存储目录，输入相对路径时相对于输入文件所在目录。\n"
             "尽量使用高性能的硬盘（比如本地固态）。\n"
-            "可手动输出文件以释放存储空间，丢失代理文件再次运行生成即可还原。",
+            "可手动删除输出文件以释放存储空间，丢失代理文件再次运行生成即可还原。",
         )
         self.addKnob(self._knob_out_dir)
         self._knob_scale = create_knob(
@@ -117,7 +117,7 @@ class _Dialog(Panel):
             "缩放比例",
             value=_SCALE.get(),
             tooltip="输出文件分辨率缩放比例。\n"
-            "如果低于项目的代理缩放比例，会同时更新项目项目设置。",
+            "低于项目的代理缩放比例时会同时更新项目设置。",
         )
         self.addKnob(self._knob_scale)
         self._knob_force = create_knob(
@@ -125,7 +125,7 @@ class _Dialog(Panel):
             "force",
             "强制重新生成",
             nuke.STARTLINE,
-            tooltip="默认不会替换非当前插件生成的代理文件和渲染已有文件，启用此项以强制执行.",
+            tooltip="默认不会替换非当前插件生成的代理文件和渲染已有文件，启用此项以强制执行。",
         )
         self.addKnob(self._knob_force)
 
