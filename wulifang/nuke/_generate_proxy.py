@@ -106,7 +106,9 @@ class _Dialog(Panel):
             "outDir",
             "输出目录",
             value=_OUT_DIR.get(),
-            tooltip="代理文件存储目录，输入相对路径时相对于输入文件所在目录。\n尽量使用高性能的硬盘（比如本地固态）。\n可手动输出文件以释放存储空间，丢失代理文件再次运行生成即可还原。",
+            tooltip="代理文件存储目录，输入相对路径时相对于输入文件所在目录。\n"
+            "尽量使用高性能的硬盘（比如本地固态）。\n"
+            "可手动输出文件以释放存储空间，丢失代理文件再次运行生成即可还原。",
         )
         self.addKnob(self._knob_out_dir)
         self._knob_scale = create_knob(
@@ -114,7 +116,8 @@ class _Dialog(Panel):
             "scale",
             "缩放比例",
             value=_SCALE.get(),
-            tooltip="输出文件分辨率缩放比例。\n如果低于项目的代理缩放比例，会同时更新项目项目设置。",
+            tooltip="输出文件分辨率缩放比例。\n"
+            "如果低于项目的代理缩放比例，会同时更新项目项目设置。",
         )
         self.addKnob(self._knob_scale)
         self._knob_force = create_knob(
