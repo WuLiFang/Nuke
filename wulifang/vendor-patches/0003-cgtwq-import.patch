@@ -49,19 +49,14 @@ diff -ru a/vendor/cgtwq/account.py b/vendor/cgtwq/account.py
 diff -ru a/vendor/cgtwq/client/desktop/client.py b/vendor/cgtwq/client/desktop/client.py
 --- a/vendor/cgtwq/client/desktop/client.py	2023-06-26 13:48:44.189743000 +0800
 +++ b/vendor/cgtwq/client/desktop/client.py	2023-06-26 12:28:28.672668200 +0800
-@@ -8,11 +8,14 @@
+@@ -8,10 +8,10 @@
  from functools import partial
  from subprocess import Popen
  
--import psutil
 -import websocket as ws
 -from deprecated import deprecated
 -from six import text_type
 -from six.moves import configparser
-+try:
-+    from wulifang.vendor import psutil
-+except ImportError:
-+    import psutil
 +import wulifang.vendor.websocket as ws
 +from wulifang.vendor.deprecated import deprecated
 +from wulifang.vendor.six import text_type

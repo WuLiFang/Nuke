@@ -3,7 +3,6 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import time
 import webbrowser
 
 import nuke
@@ -13,7 +12,8 @@ import wulifang.license
 import wulifang.nuke
 from wulifang.nuke.infrastructure import pyblish
 from wulifang.nuke.infrastructure.autolabel_service import AutolabelService
-from wulifang.vendor import cgtwq, cgtwq_uploader
+from wulifang.vendor import cgtwq_uploader
+from wulifang.vendor.cgtwq import desktop as cgtw
 from wulifang._util import cast_str, workspace_path, assert_not_none
 from wulifang.nuke._util import (
     gizmo_to_group,
@@ -26,7 +26,6 @@ from wulifang.nuke._util import (
 )
 from wulifang.nuke.infrastructure.cgteamwork import (
     dialog_create_dirs as cgt_create_dirs_dialog,
-    dialog_login as cgt_login_dialog,
 )
 from wulifang import (
     _find_empty_dir,
@@ -110,7 +109,8 @@ def _selected_gizmo_to_group():
 
 
 def _init_cgtw():
-    if not cgtwq.DesktopClient.executable():
+    exe = cgtw.default_executable()
+    if not exe:
         return
     Panel.register(
         "com.wlf.uploader",
@@ -120,10 +120,6 @@ def _init_cgtw():
     _Menu(
         "CGTeamwork",
         (
-            _Command(
-                "登录",
-                cgt_login_dialog.dialog_login,
-            ),
             _Command(
                 "按镜头创建文件夹",
                 cgt_create_dirs_dialog.dialog_create_dirs,
@@ -135,20 +131,6 @@ def _init_cgtw():
         ),
         icon="cgteamwork.png",
     ).create(nuke.menu(cast_str("Nuke")))
-    client = cgtwq.DesktopClient()
-
-    started = time.time()
-    while time.time() - started < 10:
-        try:
-            client.start()
-            wulifang.nuke.callback.on_script_load(lambda: client.connect())
-            if client.is_logged_in():
-                client.connect()
-            break
-        except:
-            import traceback
-
-            traceback.print_exc()
 
 
 def _must_selected_nodes():

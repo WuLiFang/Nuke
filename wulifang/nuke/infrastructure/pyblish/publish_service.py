@@ -20,7 +20,7 @@ from wulifang.vendor.pyblish_lite import app, settings
 from wulifang.vendor.Qt.QtCore import Signal
 from wulifang.vendor.Qt.QtWidgets import QApplication
 from wulifang.vendor.six.moves import queue
-import wulifang.vendor.cgtwq as cgtwq
+from wulifang.vendor.cgtwq import desktop as cgtw
 from wulifang._util import cast_str, assert_isinstance
 from wulifang.nuke._util import Panel
 from . import plugins, window
@@ -55,13 +55,13 @@ class PublishService:
         app.install_translator(QApplication.instance())  # type: ignore
         window.set_preferred_fonts("微软雅黑", 1.2)
         plugins.register()
-        if cgtwq.DesktopClient().executable():
+        if cgtw.default_executable():
             plugins.cgteamwork.register()
 
     def _show_window(self):
         if not self._window:
             if window.Window.last_instance:
-                self._window =window.Window.last_instance
+                self._window = window.Window.last_instance
                 self._show_window()
                 return
 

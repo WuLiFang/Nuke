@@ -9,7 +9,7 @@ import webbrowser
 import nuke
 import wulifang
 
-from wulifang.vendor import cgtwq
+from wulifang.vendor.cgtwq import desktop as cgtw, F
 from wulifang.vendor.wlf.progress import CancelledError, progress
 from wulifang._util import cast_str, cast_text
 
@@ -27,7 +27,10 @@ def dialog_create_dirs():
     confirm = panel.show()
     if not confirm:
         return
-
+    client = cgtw.current_client()
+    if not client:
+        wulifang.message.error("无法连接 CGTeamwork 客户端，请检查客户端是否运行")
+        return
     try:
         database = cast_text(panel.value(cast_str(database_input_name)))
         save_path = cast_text(panel.value(cast_str(folder_input_name)))
@@ -41,22 +44,20 @@ def dialog_create_dirs():
             ],
             "创建文件夹",
         ):
-            try:
-                select = (
-                    cgtwq.Database(database)
-                    .module("shot")
-                    .filter(cgtwq.Field("pipeline") == "合成")
-                )
-                for name in progress(select["shot.entity"], "创建文件夹"):
-                    if not name or not name.startswith(prefix):
-                        continue
-                    _path = os.path.join(save_path, name)
-                    if not os.path.exists(_path):
-                        os.makedirs(_path)
-            except cgtwq.IDError as ex:
-                nuke.message(cast_str("找不到对应条目\n{}".format(ex)))
-                return
 
+            match_count = 0
+            for (name,) in client.table(
+                database, "shot", "task", filter_by=F("pipeline").equal("合成")
+            ).rows("shot.entity"):
+                if not name or not name.startswith(prefix):
+                    continue
+                match_count += 1
+                _path = os.path.join(save_path, name)
+                if not os.path.exists(_path):
+                    os.makedirs(_path)
+            if match_count == 0:
+                nuke.message(cast_str("找不到对应条目"))
+                return
         _ = webbrowser.open(save_path)
     except CancelledError:
         wulifang.message.debug("用户取消创建文件夹")
