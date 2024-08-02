@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 
 import nuke
 
-from wulifang.vendor import cgtwq
 from wulifang.vendor.pyblish import api
 from wulifang.vendor.pathlib2_unicode import Path
 
@@ -20,7 +19,7 @@ from wulifang.nuke._util import (
     ignore_modification,
     knob_of,
 )
-from ._context_task import context_task
+from ._context_task import context_task, Task
 from .._context_manifest import context_manifest
 
 
@@ -34,16 +33,17 @@ class CollectAnimationVideo(api.InstancePlugin):
     file_box_sign = "animation_videos"
     node_name = "动画视频"
 
-    def obtain_node(self, entry, shot, sign, node_name):
-        # type: (cgtwq.Entry, Text, Text, Text) -> Optional[nuke.Node]
+    def obtain_node(self, task, shot, sign, node_name):
+        # type: (Task, Text, Text, Text) -> Optional[nuke.Node]
 
         n = nuke.toNode(cast_str(node_name))
         if n is None:
             try:
-                dir_ = cast_text(entry.filebox.get(sign).path)  # type: ignore
-            except ValueError:
+                dir_ = task.client.file_box.get_by_sign(task.id, sign).path
+            except:
                 raise ValueError(
-                    "找不到标识为 %s 的文件框，无法获取动画文件。可联系管理员进行设置" % (self.file_box_sign,)
+                    "找不到标识为 %s 的文件框，无法获取动画文件。可联系管理员进行设置"
+                    % (self.file_box_sign,)
                 )
             videos = Path(dir_).glob("{}.*".format(shot))  # type: ignore
             for video in videos:  # type: ignore

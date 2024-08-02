@@ -19,7 +19,6 @@ from wulifang._util import (
     cast_text,
     assert_not_none,
 )
-from .._copy_file import copy_file
 from .._context_manifest import context_manifest
 from ._context_task import context_task
 
@@ -40,7 +39,7 @@ class UploadImage(api.InstancePlugin):
         obj = instance
         ctx = obj.context
         try:
-            entry = context_task(ctx)
+            task = context_task(ctx)
             m = context_manifest(ctx)
             n = wlf_write_node()
             src = cast_text(
@@ -71,10 +70,11 @@ class UploadImage(api.InstancePlugin):
             )
             dest_name = name + ext
             self.log.info("单帧图上传为: %s" % (dest_name,))
-            dest_dir = cast_text(entry.filebox.get("review").path)  # type: ignore
+            image = task.client.image.upload(task.id.database, src)
+            dest_dir = next(task.client.file_box.all_submit(task.id)).path  # type: ignore
             dest = os.path.join(dest_dir, dest_name)
-            copy_file(src, dest)
-            instance.data[IMAGE_KEY] = entry.set_image(dest)  # type: ignore
+            task.client.set((task.id,), {"image": image})
+            instance.data[IMAGE_KEY] = (image, dest)  # type: ignore
         except:
             traceback.print_exc()
             raise

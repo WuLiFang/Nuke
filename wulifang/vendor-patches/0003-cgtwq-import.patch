@@ -1,11 +1,12 @@
 diff -ru a/vendor/cgtwq/__init__.py b/vendor/cgtwq/__init__.py
 --- a/vendor/cgtwq/__init__.py	2023-06-26 13:48:44.134111000 +0800
 +++ b/vendor/cgtwq/__init__.py	2023-06-26 13:56:19.273954700 +0800
-@@ -83,7 +83,7 @@
+@@ -89,7 +89,7 @@
+
  from .resultset import ResultSet
  from .selection import Entry, Selection
  from .util import current_account, current_account_id, update_setting
--from deprecated import deprecated # type: ignore
+-from deprecated import deprecated  # type: ignore
 +from wulifang.vendor.deprecated import deprecated # type: ignore
  from . import __version__, compat
  

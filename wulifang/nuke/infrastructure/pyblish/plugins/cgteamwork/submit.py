@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 import nuke
 
 from wulifang._util import cast_text, cast_str
-from wulifang.vendor import cgtwq
+from wulifang.vendor.cgtwq import MessageV2
 from wulifang.vendor.pyblish import api
 from ._context_task import context_task
 from .upload_image import IMAGE_KEY
@@ -27,11 +27,11 @@ class Submit(api.InstancePlugin):
         # type: (api.Instance) -> None
         obj = instance
         ctx = obj.context
-        entry = context_task(ctx)
-
-        if entry["leader_status"] == "Check":
-            self.log.info("任务已经是检查状态, 无需提交。")
-            return
+        task = context_task(ctx)
+        for (status,) in task.table().rows("task.status"):
+            if status == "Check":
+                self.log.info("任务已经是检查状态, 无需提交。")
+                return
 
         note = nuke.getInput(
             cast_str("CGTeamWork任务提交备注(Cancel则不提交)"),
@@ -43,14 +43,19 @@ class Submit(api.InstancePlugin):
             return
         note = cast_text(note)
 
-        message = cgtwq.Message(note)
+        message = MessageV2(note)
         filenames = []  # type: List[Text]
-        submit_image = obj.data.get(IMAGE_KEY)
-        if submit_image:
-            filenames.append(cast_text(submit_image.path))
-            message.images.append(submit_image)  # type: ignore
+        image_data = obj.data.get(IMAGE_KEY)
+        if image_data:
+            image, path = image_data
+            filenames.append(cast_text(path))
+            message.images = (image,)
 
         if not filenames:
             self.log.warning("缺少可提交的文件")
             return
-        entry.flow.submit(filenames=tuple(filenames), message=message)
+        task.client.flow.submit(
+            task.id,
+            filenames,
+            message,
+        )
