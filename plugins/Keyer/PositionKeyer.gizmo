@@ -129,6 +129,7 @@ except NameError:
  addUserKnob {32 bt_update l INVISIBLE +INVISIBLE +STARTLINE}
  addUserKnob {6 __initiated l INVISIBLE +INVISIBLE +STARTLINE}
  __initiated false
+ addUserKnob {26 docs l "" +STARTLINE T "位置键出\n获取不随镜头变化的固定位置。\ntips: 也可用于depth层来得到随镜头变化的远近范围,不过此时旋转无效(因为depth只有一个通道)。\n\n1. 将节点连接至拥有位置层的节点,并设置sample layer(通常是P层)\n2. 拖动查看器中的控制器, p1代表要的部分, p0代表不要的部分\n3. 结果为输出的alpha, r,g,b通道分别显示在x,y,z轴上的输出\n\n© 2017-2024 北京吾立方数码科技有限公司"}
 }
  Input {
   inputs 0
