@@ -103,6 +103,10 @@ class Window(window.Window):
         raise ValueError("No such parent")
 
 
+# XXX: will be called by nuke.PanelNode.createWidget
+setattr(Window, "updateValue", lambda *args, **kwargs: None)
+
+
 def set_preferred_fonts(font, scale_factor=None):
     # type: (Text, Optional[float]) -> None
     """Set preferred font."""
