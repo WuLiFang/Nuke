@@ -1,5 +1,16 @@
 const URL = "https://github.com/WuLiFang/Nuke";
 
+const pathLib = require("path");
+
+/**
+ * 生成工作区路径。
+ * @param {string[]} parts - 路径部分
+ * @returns {string} 解析后的绝对路径
+ */
+function workspacePath(...parts) {
+  return pathLib.resolve(__dirname, ...parts);
+}
+
 /**
  * @type {import("standard-version").Options}
  * @link https://github.com/conventional-changelog/conventional-changelog-config-spec/blob/master/versions/2.1.0/README.md#compareurlformat-string
@@ -34,6 +45,6 @@ module.exports = {
     },
   ],
   scripts: {
-    postchangelog: "bash scripts/postchangelog.sh",
+    postchangelog: `bash ${workspacePath("scripts/postchangelog.sh")}`,
   },
 };
