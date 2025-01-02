@@ -9,12 +9,12 @@ from __future__ import (absolute_import, division, print_function,
 
 from datetime import datetime
 
-VERSION = '2024.1.0'
-RELEASE_DATE = datetime.fromtimestamp(1714962291)
-LAST_GIT_COMMIT_DESCRIBE = 'v2024.0.0-8-g6f10dac'
-LAST_GIT_COMMIT_HASH = '6f10dac56e95cfd7e84f598c58964e944ec4410f'
+VERSION = '2025.0.0'
+RELEASE_DATE = datetime.fromtimestamp(1735789428)
+LAST_GIT_COMMIT_DESCRIBE = 'v2024.1.0-18-g6a78e2c5'
+LAST_GIT_COMMIT_HASH = '6a78e2c5420ecad154c9d842186937803400e9bd'
 LAST_GIT_COMMIT_AUTHOR_NAME = 'NateScarlet'
 LAST_GIT_COMMIT_AUTHOR_EMAIL = 'NateScarlet@Gmail.com'
-LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1714962062)
-LAST_GIT_COMMIT_SUBJECT = 'feat: update expire time to 2025-01-01'
+LAST_GIT_COMMIT_AUTHOR_DATE = datetime.fromtimestamp(1735789410)
+LAST_GIT_COMMIT_SUBJECT = 'chore: update .versionrc.js'
 LAST_GIT_COMMIT_BODY = ''
