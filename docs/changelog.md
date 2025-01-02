@@ -1,5 +1,19 @@
 # 更新日志
 
+## [2025.0.0](https://github.com/WuLiFang/Nuke/compare/v2024.1.0...v2025.0.0) (2025-01-02)
+
+### 新功能
+
+- **nuke:** 不自动启动cgtw客户端 ([160068e](https://github.com/WuLiFang/Nuke/commit/160068e756ea2dd49a49acf97d58141a7b9bedff))
+- **nuke:** 支持批量替换文件路径 ([f647b10](https://github.com/WuLiFang/Nuke/commit/f647b10b1c8aa12cd50af5300ab5967c7d9ede5b))
+- **nuke:** 支持cgteamwork7 ([d8ac625](https://github.com/WuLiFang/Nuke/commit/d8ac6259b6a37c0c910c63c7b84aca905ca56117))
+- **nuke:** 支持生成proxy文件 ([79084c9](https://github.com/WuLiFang/Nuke/commit/79084c919a07b34ef9ca97eee8d8a08e83936f48))
+- 更新过期时间为2026-01-01 ([76f026d](https://github.com/WuLiFang/Nuke/commit/76f026d7375b3a3f1b88149c75bb05c3d24a41a2))
+
+### 问题修复
+
+- 修复Windows路径中错误的文件URL使用 ([66e3909](https://github.com/WuLiFang/Nuke/commit/66e390905a6d4c6809b2edb7609646f8a1856a10))
+
 ## [2024.1.0](https://github.com/WuLiFang/Nuke/compare/v2024.0.0...v2024.1.0) (2024-05-06)
 
 ### 特性
