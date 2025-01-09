@@ -1,0 +1,545 @@
+#! C:/Program Files/Nuke11.3v6/nuke-11.3.6.dll -nx
+version 11.3 v6
+Group {
+name eFibonacciGlow1
+inputs 2
+tile_color 0xcc804eff
+addUserKnob {20 eFibonacciGlow}
+addUserKnob {68 type l fall-off M {Fibonacci Tribonacci Quadratic "" ""}}
+type Quadratic
+addUserKnob {41 channels T Blur15.channels}
+addUserKnob {41 tint T Grade2.gamma}
+addUserKnob {41 gain T CONTROL.gain}
+addUserKnob {41 shrink_black l "shrink black" T CONTROL.shrink_black}
+addUserKnob {41 shrink_white l "shrink white" T CONTROL.shrink_white}
+addUserKnob {41 tolerance T CONTROL.expansion}
+addUserKnob {41 effect_only l "effect only" T CONTROL.effect_only}
+addUserKnob {26 ""}
+addUserKnob {41 size T CONTROL.fibo_blur}
+addUserKnob {41 mix T Keymix1.mix}
+addUserKnob {41 crop_to_format l "crop to format" T CONTROL.crop_to_format}
+addUserKnob {26 ""}
+addUserKnob {26 credits l "" +STARTLINE T "eFibonacciGlow v4.0 | by Giovanni Ermes Vincenti | 2020"}
+}
+Input {
+inputs 0
+name mask
+selected true
+xpos 772
+ypos 2117
+number 1
+}
+Dot {
+name Dot8
+xpos 806
+ypos 2214
+}
+Input {
+inputs 0
+name Input
+xpos 498
+ypos -585
+}
+NoOp {
+name CONTROL
+xpos 498
+ypos -545
+addUserKnob {20 User}
+addUserKnob {7 gain}
+gain 0.4
+addUserKnob {16 fi}
+fi 1.618033989
+addUserKnob {7 fibo_blur R 0 100}
+fibo_blur 40
+addUserKnob {7 shrink_black}
+addUserKnob {7 shrink_white}
+shrink_white 1
+addUserKnob {7 expansion R 0.1 10}
+expansion 0.8
+addUserKnob {6 effect_only +STARTLINE}
+addUserKnob {6 crop_to_format +STARTLINE}
+}
+Dot {
+name Dot9
+xpos 532
+ypos -156
+}
+set N65f53400 [stack 0]
+Dot {
+name Dot2
+xpos 180
+ypos -156
+}
+set N759ec00 [stack 0]
+Dot {
+name Dot7
+xpos 8
+ypos -156
+}
+set Nf14d2c00 [stack 0]
+Dot {
+name Dot6
+xpos 8
+ypos 2214
+}
+push $Nf14d2c00
+Dot {
+name Dot4
+xpos -118
+ypos -156
+}
+Remove {
+name KILL_RGB
+xpos -152
+ypos 3
+}
+Dot {
+name Dot3
+xpos -118
+ypos 240
+}
+push $N759ec00
+Switch {
+inputs 2
+which {{parent.CONTROL.effect_only}}
+name Switch1
+xpos 146
+ypos 236
+}
+Dot {
+name Dot1
+xpos 180
+ypos 2114
+}
+set Na3462000 [stack 0]
+Shuffle {
+alpha white
+name Shuffle1
+xpos 323
+ypos 2040
+}
+push $N65f53400
+Dot {
+name Dot10
+xpos 983
+ypos -156
+}
+Keyer {
+operation "luminance key"
+range {{parent.CONTROL.shrink_black} {parent.CONTROL.shrink_white} 1 1}
+name Keyer2
+xpos 949
+ypos 5
+}
+Premult {
+name Premult2
+xpos 949
+ypos 86
+}
+Shuffle {
+alpha black
+name Shuffle2
+xpos 949
+ypos 153
+}
+Grade {
+white {{parent.CONTROL.gain}}
+white_clamp true
+name Grade2
+xpos 949
+ypos 313
+}
+set N52147800 [stack 0]
+Dot {
+name Dot11
+xpos 983
+ypos 507
+}
+set N39b40c00 [stack 0]
+Dot {
+name Dot12
+xpos 983
+ypos 700
+}
+set N39b40000 [stack 0]
+Dot {
+name Dot13
+xpos 983
+ypos 880
+}
+set N9fe6c000 [stack 0]
+Dot {
+name Dot14
+xpos 983
+ypos 1075
+}
+set N9fe6c400 [stack 0]
+Dot {
+name Dot15
+xpos 983
+ypos 1271
+}
+set N9fe6c800 [stack 0]
+Dot {
+name Dot16
+xpos 983
+ypos 1466
+}
+set N9fe6cc00 [stack 0]
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur20.size*2}}
+crop false
+name Blur21
+xpos 1318
+ypos 1456
+}
+push $N9fe6cc00
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur10.size+Blur11.size+Blur12.size}}
+crop false
+name Blur9
+xpos 825
+ypos 1456
+}
+push $N9fe6cc00
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur5.size+Blur4.size}}
+crop false
+name Blur6
+xpos 1066
+ypos 1456
+}
+Switch {
+inputs 3
+which {{type}}
+name Switch2
+xpos 825
+ypos 1502
+}
+set C5229e400 [stack 0]
+Multiply {
+value {{parent.Multiply9.value/CONTROL.expansion}}
+name Multiply8
+xpos 669
+ypos 1456
+}
+push $N9fe6c800
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur19.size*2}}
+crop false
+name Blur20
+xpos 1317
+ypos 1261
+}
+push $N9fe6c800
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur11.size+Blur12.size+Blur13.size}}
+crop false
+name Blur10
+xpos 815
+ypos 1261
+}
+push $N9fe6c800
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur4.size+Blur3.size}}
+crop false
+name Blur5
+xpos 1068
+ypos 1261
+}
+clone $C5229e400 {
+inputs 3
+xpos 815
+ypos 1333
+selected false
+}
+Multiply {
+value {{parent.Multiply10.value/CONTROL.expansion}}
+name Multiply9
+xpos 670
+ypos 1261
+}
+push $N9fe6c400
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur18.size*2}}
+crop false
+name Blur19
+xpos 1308
+ypos 1065
+}
+push $N9fe6c400
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur12.size+Blur13.size+Blur14.size}}
+crop false
+name Blur11
+xpos 829
+ypos 1065
+}
+push $N9fe6c400
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur3.size+Blur2.size}}
+crop false
+name Blur4
+xpos 1068
+ypos 1065
+}
+clone $C5229e400 {
+inputs 3
+xpos 816
+ypos 1133
+selected false
+}
+Multiply {
+value {{parent.Multiply11.value/CONTROL.expansion}}
+name Multiply10
+xpos 668
+ypos 1065
+}
+push $N9fe6c000
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur17.size*2}}
+crop false
+name Blur18
+xpos 1311
+ypos 870
+}
+push $N9fe6c000
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur13.size+Blur14.size+Blur15.size}}
+crop false
+name Blur12
+xpos 834
+ypos 870
+}
+push $N9fe6c000
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur2.size+Blur1.size}}
+crop false
+name Blur3
+xpos 1070
+ypos 870
+}
+clone $C5229e400 {
+inputs 3
+xpos 834
+ypos 931
+selected false
+}
+Multiply {
+value {{parent.Multiply12.value/CONTROL.expansion}}
+name Multiply11
+xpos 668
+ypos 870
+}
+push $N39b40000
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur16.size*2}}
+crop false
+name Blur17
+xpos 1310
+ypos 690
+}
+push $N39b40000
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur14.size+Blur15.size}}
+crop false
+name Blur13
+xpos 832
+ypos 690
+}
+push $N39b40000
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{Blur1.size+Blur7.size}}
+crop false
+name Blur2
+xpos 1067
+ypos 690
+}
+clone $C5229e400 {
+inputs 3
+xpos 832
+ypos 753
+selected false
+}
+Multiply {
+value {{parent.Multiply13.value/CONTROL.expansion}}
+name Multiply12
+xpos 670
+ypos 690
+}
+push $N39b40c00
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur8.size}}
+crop false
+name Blur16
+xpos 1311
+ypos 497
+}
+push $N39b40c00
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur15.size}}
+crop false
+name Blur14
+xpos 830
+ypos 497
+}
+push $N39b40c00
+Blur {
+channels {{{parent.Blur15.channels}}}
+size {{parent.Blur7.size}}
+crop false
+name Blur1
+xpos 1069
+ypos 497
+}
+clone $C5229e400 {
+inputs 3
+xpos 830
+ypos 596
+selected false
+}
+Multiply {
+value {{parent.Multiply14.value/CONTROL.expansion}}
+name Multiply13
+xpos 667
+ypos 497
+}
+push $N65f53400
+push $N52147800
+Dot {
+name Dot5
+xpos 1346
+ypos 317
+}
+Blur {
+size {{parent.CONTROL.fibo_blur}}
+name Blur8
+xpos 1312
+ypos 417
+}
+push $N52147800
+Blur {
+size {{parent.CONTROL.fibo_blur}}
+name Blur15
+xpos 839
+ypos 307
+}
+push $N52147800
+Blur {
+size {{parent.CONTROL.fibo_blur}}
+name Blur7
+xpos 1073
+ypos 344
+}
+clone $C5229e400 {
+inputs 3
+xpos 839
+ypos 423
+selected false
+}
+Multiply {
+name Multiply14
+xpos 661
+ypos 320
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus7
+xpos 498
+ypos 326
+disable {{parent.CONTROL.effect_only}}
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus8
+xpos 498
+ypos 503
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus9
+xpos 498
+ypos 696
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus10
+xpos 498
+ypos 876
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus11
+xpos 498
+ypos 1071
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus12
+xpos 498
+ypos 1267
+}
+Merge2 {
+inputs 2
+operation plus
+name Plus13
+xpos 498
+ypos 1462
+}
+Crop {
+box {0 0 {width} {height}}
+name Crop1
+xpos 498
+ypos 1936
+disable {{!parent.CONTROL.crop_to_format}}
+}
+push $Na3462000
+Keymix {
+inputs 3
+name Keymix1
+xpos 498
+ypos 2104
+}
+Keymix {
+inputs 3
+invertMask true
+name Keymix2
+xpos 498
+ypos 2204
+disable {{"!\[exists parent.input1] & !\[exists parent.input2]" x100 0}}
+}
+Output {
+name Output1
+xpos 498
+ypos 2310
+}
+Viewer {
+frame_range 1-100
+name Viewer1
+xpos 869
+ypos 2310
+}
+end_group
