@@ -60,5 +60,5 @@ def add_channel(
     """
 
     layer, channel = _channel_from_input(name)
-    nuke.Layer(cast_str(layer), [cast_str(channel)])
+    nuke.Layer(cast_str(layer), [cast_str(name)])
     return "%s.%s" % (layer, channel)
