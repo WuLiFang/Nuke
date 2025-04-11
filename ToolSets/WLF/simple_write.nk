@@ -13,7 +13,7 @@ Text2 {
  transforms {{0 2}
    }
  cursor_position 49
- font {{ SimHei : Regular : simhei.ttf : 0 }}
+ font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
  global_font_scale 0.65
  scale {1 1}
  cursor_initialised true
@@ -48,7 +48,7 @@ Text2 {
  transforms {{0 2}
    }
  cursor_position 3
- font {{ SimHei : Regular : simhei.ttf : 0 }}
+ font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
  global_font_scale 0.65
  scale {1 1}
  cursor_initialised true

@@ -34,7 +34,7 @@ Group {
   transforms {{0 2}
     }
   cursor_position 62
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
   global_font_scale {{Input.format.r*0.00015625}}
   scale {1 1}
   cursor_initialised true
@@ -70,7 +70,7 @@ Group {
   transforms {{0 2}
     }
   cursor_position 4
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
   global_font_scale {{Input.format.r*0.00015625}}
   scale {1 1}
   cursor_initialised true
@@ -108,7 +108,7 @@ Group {
   transforms {{0 2}
     }
   cursor_position 57
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
   global_font_scale {{Input.format.r*0.00015625}}
   font_width 200
   scale {1 1}
@@ -145,7 +145,7 @@ Group {
   xjustify center
   transforms {{0 2}
     }
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
   global_font_scale {{Input.format.r*0.00015625}}
   scale {1 1}
   cursor_initialised true
@@ -183,7 +183,7 @@ Group {
   transforms {{0 2}
     }
   cursor_position 139
-  font {{ SimHei : Regular : simhei.ttf : 0 }}
+  font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
   global_font_scale {{Input.format.r*0.00015625}}
   scale {1 1}
   cursor_initialised true

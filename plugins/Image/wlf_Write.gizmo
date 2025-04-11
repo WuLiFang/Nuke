@@ -275,7 +275,7 @@ box {20 20 1000 75}
 transforms {{0 2}
   }
 cursor_position 50
-font {{ SimHei : Regular : simhei.ttf : 0 }}
+font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
 global_font_scale 0.65
 scale {1 1}
 cursor_initialised true
@@ -307,7 +307,7 @@ xjustify right
 transforms {{0 2}
   }
 cursor_position 3
-font {{ SimHei : Regular : simhei.ttf : 0 }}
+font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
 global_font_scale 0.65
 scale {1 1}
 cursor_initialised true
@@ -333,7 +333,7 @@ box {1098 1000.5 1900 1055.5}
 xjustify right
 transforms {{0 2}
   }
-font {{ SimHei : Regular : simhei.ttf : 0 }}
+font {{ Source Han Sans SC : Normal : SourceHanSansSC-Normal.otf : 0 }}
 global_font_scale 0.5
 scale {1 1}
 cursor_initialised true
