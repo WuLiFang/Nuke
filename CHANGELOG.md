@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2025.1.0](https://github.com/WuLiFang/Nuke/compare/v2025.0.0...v2025.1.0) (2025-06-03)
+
+### Features
+
+- **nuke:** add ToolSet `third_party/eFibonacciGlow4` ([a6d5fe9](https://github.com/WuLiFang/Nuke/commit/a6d5fe9599d0dc10417a7a942b07aacfcee15958))
+- **nuke:** wlf_Write: use bundled font ([e96211b](https://github.com/WuLiFang/Nuke/commit/e96211b691d9dd50e645dab378ea15714a0f0941))
+- update expire time to 2026-06-01 ([e0e1bc4](https://github.com/WuLiFang/Nuke/commit/e0e1bc4ee6997c20e3851b72f104031d7d465e03))
+
+### Bug Fixes
+
+- **nuke:** should use full channel name when add new layer ([5018102](https://github.com/WuLiFang/Nuke/commit/5018102a62d9b639df8691612d442ce80c810bca))
+
 ## [2025.0.0](https://github.com/WuLiFang/Nuke/compare/v2024.1.0...v2025.0.0) (2025-01-02)
 
 ### Features
