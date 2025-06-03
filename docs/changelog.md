@@ -6,7 +6,7 @@
 
 - **nuke:** 添加工具集 `third_party/eFibonacciGlow4` ([a6d5fe9](https://github.com/WuLiFang/Nuke/commit/a6d5fe9599d0dc10417a7a942b07aacfcee15958))
 - **nuke:** wlf_Write: 使用插件自带字体 ([e96211b](https://github.com/WuLiFang/Nuke/commit/e96211b691d9dd50e645dab378ea15714a0f0941))
-- 更新过期时间为 to 2026-06-01 ([e0e1bc4](https://github.com/WuLiFang/Nuke/commit/e0e1bc4ee6997c20e3851b72f104031d7d465e03))
+- 更新过期时间为 2026-06-01 ([e0e1bc4](https://github.com/WuLiFang/Nuke/commit/e0e1bc4ee6997c20e3851b72f104031d7d465e03))
 
 ### 问题修复
 
