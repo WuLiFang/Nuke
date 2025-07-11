@@ -88,7 +88,7 @@ def prune(
         p.set_message("列出所有节点...")
         nodes = sorted(nodes, key=lambda n: (n.ypos(), n.xpos()), reverse=True)
 
-        for n in nodes:
+        for n in list(nodes):
             p.set_message(
                 "1/2: %s" % (cast_text(n.fullName())),
             )
