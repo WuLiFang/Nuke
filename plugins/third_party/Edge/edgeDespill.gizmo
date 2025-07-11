@@ -674,17 +674,6 @@ push $Ndc882d0
    xpos 299
    ypos -61
   }
-push $Ndaa6e90
-push $Ndba8fb0
-  Viewer {
-   inputs 2
-   viewerProcess rec709
-   input_process false
-   name Viewer1
-   selected true
-   xpos 85
-   ypos -331
-  }
  end_group
  Blur {
   inputs 1+1
@@ -760,15 +749,5 @@ set Ndb5e020 [stack 0]
   name Blur1
   xpos 1494
   ypos 388
- }
-push $Ndb403b0
-push $Ndb5e020
- Viewer {
-  inputs 2
-  viewerProcess rec709
-  input_process false
-  name Viewer1
-  xpos 1373
-  ypos -135
  }
 end_group

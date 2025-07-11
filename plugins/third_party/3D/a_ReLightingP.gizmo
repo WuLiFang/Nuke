@@ -98,13 +98,4 @@ set Nd2c3f400 [stack 0]
   xpos 95
   ypos 839
  }
-push $Nd2c3f400
- Viewer {
-  frame_range 1001-1158
-  input_process false
-  name Viewer1
-  selected true
-  xpos 433
-  ypos 813
- }
 end_group

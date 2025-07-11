@@ -682,19 +682,4 @@ push $N3fda71e0
   xpos 556
   ypos 644
  }
-push $Ne4d5d40
-push 0
-push $Ne4d56e0
-push $N3fda1040
-push $Ne4d56e0
-push $N3fda16a0
-push $N3fda09d0
- Viewer {
-  inputs 7
-  viewerProcess None
-  input_process false
-  name Viewer1
-  xpos -110
-  ypos -96
- }
 end_group

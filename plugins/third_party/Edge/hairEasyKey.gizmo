@@ -190,14 +190,4 @@ push $N14991f70
   xpos 248
   ypos 1045
  }
-push $N1493f550
-push $N149c56d0
- Viewer {
-  inputs 2
-  viewerProcess rec709
-  input_process false
-  name Viewer1
-  xpos -154
-  ypos 997
- }
 end_group

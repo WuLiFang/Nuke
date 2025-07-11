@@ -61,16 +61,6 @@ xpos -260
 ypos -230
 }
 set N9f1bd400 [stack 0]
-Viewer {
-frame_range 1-100
-fps 25
-input_process false
-name Viewer1
-gl_color 0x32f9ff00
-note_font 微软雅黑
-xpos -260
-ypos -186
-}
 push $N9f1bd400
 push $N9f1bd400
 push $N28aae000

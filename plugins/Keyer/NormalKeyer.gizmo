@@ -189,13 +189,6 @@ set N8aa8400 [stack 0]
    xpos 95
    ypos 839
   }
-push $N8aa8400
-  Viewer {
-   name Viewer1
-   gl_color 0xff443200
-   xpos -78
-   ypos 627
-  }
  end_group
  Dot {
   name Dot2

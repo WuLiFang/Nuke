@@ -118,11 +118,4 @@ set N781b780 [stack 0]
   xpos 95
   ypos 839
  }
-push $N781b780
- Viewer {
-  name Viewer1
-  selected true
-  xpos -78
-  ypos 627
- }
 end_group

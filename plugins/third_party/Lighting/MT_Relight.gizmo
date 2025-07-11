@@ -208,13 +208,6 @@ push $N1d2de6b0
   xpos 116
   ypos 286
  }
-set N1d30a1f0 [stack 0]
- Viewer {
-  name Viewer1
-  xpos 316
-  ypos 399
- }
-push $N1d30a1f0
  Output {
   name Output1
   xpos 116

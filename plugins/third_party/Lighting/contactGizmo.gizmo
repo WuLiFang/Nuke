@@ -108,9 +108,4 @@ push 0
   xpos 435
   ypos 560
  }
- Viewer {
-  name Viewer1
-  xpos 435
-  ypos 605
- }
 end_group

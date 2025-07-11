@@ -1668,11 +1668,4 @@ push $N1097ab70
   xpos 3214
   ypos 1164
  }
- Viewer {
-  frame 316
-  input_process false
-  name Viewer1
-  xpos 3464
-  ypos 1164
- }
 end_group

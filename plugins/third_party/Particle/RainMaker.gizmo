@@ -1043,12 +1043,4 @@ push $Ne63924d0
   xpos 2097
   ypos 474
  }
-push $N2e4e5d30
- Viewer {
-  frame 476
-  input_process false
-  name Viewer1
-  xpos 878
-  ypos -11
- }
 end_group

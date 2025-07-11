@@ -390,13 +390,4 @@ push $Nb44c7c00
   xpos 0
   ypos -30
  }
-push $Nb44fd800
- Viewer {
-  frame_range 1-1
-  fps 25
-  input_process false
-  name Viewer1
-  xpos 110
-  ypos -188
- }
 end_group

@@ -151,12 +151,4 @@ push $N715c8cd0
   xpos 418
   ypos 133
  }
-push $N71593000
- Viewer {
-  input_process false
-  name Viewer1
-  selected true
-  xpos 540
-  ypos -258
- }
 end_group

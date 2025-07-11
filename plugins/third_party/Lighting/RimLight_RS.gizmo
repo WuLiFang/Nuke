@@ -222,10 +222,4 @@ push $N7866950
   ypos -130
   disable true
  }
-push $N78d4da0
- Viewer {
-  name Viewer1
-  xpos 90
-  ypos -225
- }
 end_group

@@ -90,18 +90,6 @@ Gizmo {
   bdwidth 222
   bdheight 220
  }
- Viewer {
-  inputs 0
-  frame 33
-  frame_range 1-100
-  colour_sample_bbox {0.03229166567 0.21875 0.03333333507 0.2197916657}
-  samplepoints {{0.03229166567 0.21875}
-    }
-  input_process false
-  name Viewer1
-  xpos -194
-  ypos 2103
- }
  Input {
   inputs 0
   name Source

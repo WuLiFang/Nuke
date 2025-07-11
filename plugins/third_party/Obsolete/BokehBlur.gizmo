@@ -1471,12 +1471,4 @@ clone $C2c076f50 {
   addUserKnob {7 intensity t "Intensity of the twinkle effect."}
   intensity 0.09
  }
-push $N2c076f50
- Viewer {
-  frame 49
-  input_process false
-  name Viewer1
-  xpos -1757
-  ypos -1271
- }
 end_group

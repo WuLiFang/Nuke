@@ -366,21 +366,9 @@ push $N30a5dc00
   xpos -542
   ypos 922
  }
-set N34f2f400 [stack 0]
  Output {
   name Output
   xpos -542
   ypos 1043
- }
-push $N30a5c400
-push $N34f2f400
- Viewer {
-  inputs 2
-  fps 30
-  input_number 1
-  input_process false
-  name Viewer1
-  xpos 129
-  ypos 1209
  }
 end_group

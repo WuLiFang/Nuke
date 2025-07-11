@@ -469,21 +469,4 @@ add_layer {ID ID.red ID.green ID.blue ID.alpha}
   xpos 684
   ypos 1100
  }
-set N6d591350 [stack 0]
-push 0
-push 0
-push 0
-push 0
-push 0
-push 0
-push 0
-push $N6d591350
-push $N6d591350
- Viewer {
-  inputs 10
-  input_process false
-  name Viewer1
-  xpos 117
-  ypos 1100
- }
 end_group

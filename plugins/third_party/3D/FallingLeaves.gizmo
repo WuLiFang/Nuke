@@ -2516,15 +2516,4 @@ push $N90695650
   xpos -63
   ypos -754
  }
-push $N9024d7e0
- Viewer {
-  frame 83
-  frame_range 1-100
-  colour_sample_bbox {1.149999976 -0.6200000048 1.150500059 -0.6194999814}
-  input_process false
-  name Viewer1
-  selected true
-  xpos -234
-  ypos 1299
- }
 end_group

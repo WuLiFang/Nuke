@@ -160,10 +160,4 @@ push $N19953c10
   addUserKnob {7 mixRay}
   mixRay 0.065
  }
- Viewer {
-  inputs 0
-  name Viewer1
-  xpos 32
-  ypos 229
- }
 end_group

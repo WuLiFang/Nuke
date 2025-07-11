@@ -15352,23 +15352,4 @@ push $N2780d0c0
   xpos -474
   ypos 11138
  }
-push $N26e991d0
-push 0
-push 0
-push 0
-push 0
-push 0
-push 0
-push 0
-push 0
-push $Ne90d9d0
- Viewer {
-  inputs 10
-  input_process false
-  translate {-1.164000034 -0.5619999766}
-  gauge 0.5282895607
-  name Viewer1
-  xpos -16
-  ypos 10663
- }
 end_group

@@ -564,17 +564,6 @@ name Output1
 xpos 1398
 ypos 1780
 }
-push $N94872000
-push $N91ae9400
-Viewer {
-inputs 2
-frame_range 1-2
-fps 25
-input_process false
-name Viewer1
-xpos 1659
-ypos 1660
-}
 StickyNote {
 inputs 0
 name font_size_control

@@ -180,16 +180,6 @@ set N2544f970 [stack 0]
    xpos -643
    ypos -298
   }
-push $N2544f970
-push 0
-push $N25057bf0
-  Viewer {
-   inputs 3
-   input_process false
-   name Viewer1
-   xpos -343
-   ypos -558
-  }
  end_group
 push $N25057880
  Blur {
@@ -294,12 +284,5 @@ push $N250b5820
   name Output1
   xpos -554
   ypos 1042
- }
-push $N254514f0
- Viewer {
-  viewerProcess None
-  name Viewer1
-  xpos -76
-  ypos 1218
  }
 end_group

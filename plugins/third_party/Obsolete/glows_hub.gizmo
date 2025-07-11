@@ -622,11 +622,4 @@ push $N13077690
   xpos 661
   ypos 1195
  }
-push $N13078350
- Viewer {
-  input_process false
-  name Viewer1
-  xpos 247
-  ypos 739
- }
 end_group

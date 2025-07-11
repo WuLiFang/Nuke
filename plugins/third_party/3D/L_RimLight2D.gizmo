@@ -133,17 +133,9 @@ push $N4ccc850
   xpos -119
   ypos 137
  }
-set N4cce330 [stack 0]
  Output {
   name Output1
   xpos -119
   ypos 276
- }
-push $N4cce330
- Viewer {
-  input_process false
-  name Viewer1
-  xpos -229
-  ypos 428
  }
 end_group

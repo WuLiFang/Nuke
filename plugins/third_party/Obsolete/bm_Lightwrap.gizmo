@@ -262,17 +262,6 @@ push $N23925850
   xpos -527
   ypos 497
  }
-set N239acf30 [stack 0]
- Viewer {
-  inputs 2
-  frame 0
-  input_process false
-  name Viewer1
-  xpos 290
-  ypos -9
-  hide_input true
- }
-push $N23925f30
  Dot {
   name Dot12
   label "  "

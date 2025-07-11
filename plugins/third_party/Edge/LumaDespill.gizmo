@@ -193,10 +193,4 @@ push $N5b44180
   xpos 492
   ypos 422
  }
-push $N5b89550
- Viewer {
-  name Viewer1
-  xpos 732
-  ypos 454
- }
 end_group

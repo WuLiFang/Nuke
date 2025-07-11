@@ -319,11 +319,4 @@ set N3d746000 [stack 0]
   xpos -577
   ypos 590
  }
-push $N3d746000
- Viewer {
-  frame_range 1-100
-  name Viewer1
-  xpos -1140
-  ypos 175
- }
 end_group

@@ -6510,13 +6510,6 @@ push $N63328800
   ypos 1236
  }
 push $N6310f600
- Viewer {
-  frame_range 1-100
-  input_process false
-  name Viewer1
-  xpos -260
-  ypos 189
- }
  StickyNote {
   inputs 0
   name control_font

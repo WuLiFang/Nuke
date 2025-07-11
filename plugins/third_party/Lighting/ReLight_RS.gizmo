@@ -1463,10 +1463,4 @@ set N7e76430 [stack 0]
   xpos -360
   ypos 1814
  }
-push $N7e76430
- Viewer {
-  name Viewer1
-  xpos 33
-  ypos 158
- }
 end_group

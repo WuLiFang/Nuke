@@ -89,12 +89,4 @@ set N59b58430 [stack 0]
   xpos 596
   ypos 584
  }
-push $N59b58430
- Viewer {
-  input_process false
-  name Viewer1
-  selected true
-  xpos 873
-  ypos 310
- }
 end_group

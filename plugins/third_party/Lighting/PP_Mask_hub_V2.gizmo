@@ -716,22 +716,6 @@ set N215867b0 [stack 0]
   xpos 566
   ypos 613
  }
-push $N21499960
-push 0
-push $N18ed6ee0
-push $N21582f40
-push $N18ed6ee0
-push $N215867b0
-push $N21584f80
- Viewer {
-  inputs 7
-  input_number 1
-  viewerProcess None
-  input_process false
-  name Viewer1
-  xpos -110
-  ypos -96
- }
 end_group
 #! C:/Program Files/Nuke6.2v4/Nuke6.2.exe -nx
 version 6.2 v4
@@ -1450,21 +1434,5 @@ set N215867b0 [stack 0]
   name Output1
   xpos 566
   ypos 613
- }
-push $N21499960
-push 0
-push $N18ed6ee0
-push $N21582f40
-push $N18ed6ee0
-push $N215867b0
-push $N21584f80
- Viewer {
-  inputs 7
-  input_number 1
-  viewerProcess None
-  input_process false
-  name Viewer1
-  xpos -110
-  ypos -96
  }
 end_group

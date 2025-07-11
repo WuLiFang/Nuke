@@ -167,14 +167,6 @@ push $N567c750
   xpos -411
   ypos 452
  }
-set Nfd09d70 [stack 0]
- Viewer {
-  input_process false
-  name Viewer1
-  xpos -125
-  ypos 710
- }
-push $Nfd09d70
  Output {
   name Output1
   xpos -411
