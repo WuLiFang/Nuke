@@ -110,15 +110,6 @@ push $Nfad268e0
   xpos 448
   ypos 760
  }
-set Nbe334250 [stack 0]
- Viewer {
-  viewerProcess rec709
-  input_process false
-  name Viewer1
-  xpos 592
-  ypos 472
- }
-push $Nbe334250
  Output {
   name Output1
   xpos 448
