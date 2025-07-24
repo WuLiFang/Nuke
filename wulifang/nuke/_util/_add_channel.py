@@ -26,9 +26,11 @@ def _channel_from_input(
         text (str): Text for escaped
 
     Returns:
-        str: Escaped text.
+        tuple[str, str]: layer and channel.
 
     Example:
+        >>> _channel_from_input('')
+        'other._'
         >>> _channel_from_input('apple')
         'other.apple'
         >>> _channel_from_input('tree.apple')
@@ -41,12 +43,12 @@ def _channel_from_input(
 
 
     s = _sanitize_ascii(s).replace(" ", "_")
-    if "." not in s:
-        # `other` is nuke default layer
-        s = "other.%s" % (s,)
-
     layer, _, channel = s.partition(".")
-    channel = channel.replace(".", "_")
+    if channel == "" :
+        layer, channel = "", layer
+    # `other` is nuke default layer
+    layer = layer or "other"
+    channel = channel.replace(".", "_") or "_"
     return layer, channel
 
 
@@ -60,5 +62,6 @@ def add_channel(
     """
 
     layer, channel = _channel_from_input(name)
-    nuke.Layer(cast_str(layer), [cast_str(name)])
-    return "%s.%s" % (layer, channel)
+    full_channel = "%s.%s" % (layer, channel)
+    nuke.Layer(cast_str(layer), [cast_str( full_channel)])
+    return full_channel
