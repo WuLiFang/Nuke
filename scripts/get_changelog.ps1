@@ -23,7 +23,7 @@ foreach ($line in Get-Content -Encoding utf8 docs/changelog.md) {
 }
 
 if ($ret.Length -eq 0) {
-    throw "Version not found: $Version"
+    throw "Version not found in docs/changelog.md: $Version"
 }
 
 
