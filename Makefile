@@ -2,7 +2,8 @@
 
 ifeq ($(OS), Windows_NT)
 PYTHON27?=C:/Python27/python.exe
-NUKE_PYTHON?=C:/Program Files/Nuke10.5v7/python.exe
+# 自动获取最高版本Nuke
+NUKE_PYTHON?=$(shell for /d in "C:/Program Files/Nuke*" do @echo %~f0\\python.exe 2>nul | findstr /v "None" | sort /r | head -1)
 # abspath not work on windows
 VENV_SITEPATH=.venv/Lib/site-packages
 PYTHONPATH:=$(PYTHONPATH);lib/site-packages;lib;../lib/site-packages;../lib
@@ -44,7 +45,7 @@ $(VENV_SITEPATH)/lib.pth: lib/site-packages/.sentinel
 
 .venv: PYTHONPATH=
 .venv:
-	virtualenv --python "$(PYTHON27)" --clear .venv
+	"$(PYTHON27)" -m virtualenv --python "$(PYTHON27)" --clear .venv
 
 .venv/.sentinel: .venv dev-requirements.txt $(VENV_SITEPATH)/nuke.pth $(VENV_SITEPATH)/lib.pth
 	. ./scripts/activate-venv.sh &&\
