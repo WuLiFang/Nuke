@@ -20,8 +20,7 @@ deploy:
   release: $(APPVEYOR_REPO_TAG_NAME)
   description: $(APPVEYOR_RELEASE_DESCRIPTION)
   provider: GitHub
-  auth_token:
-    secure: F3Yyeg/9CKfhBQ6baTP5XsOqnquey/5hXl1EtPqmk0WptSzV6STE7M4Pa+BJnTZ2
+  auth_token: $(GITHUB_TOKEN)
   artifact: /.*\.zip/
   draft: false
   prerelease: false
