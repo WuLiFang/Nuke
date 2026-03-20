@@ -1,6 +1,17 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [2026.0.0](https://github.com/WuLiFang/Nuke/compare/v2025.1.0...v2026.0.0) (2026-03-20)
+
+### Features
+
+- **nuke:** remove viewer node in all plugins ef862e6
+- update expire time to 2027-06-01 a76e64c
+
+### Bug Fixes
+
+- **nuke:** prune-node: should not modify list during iteration a204e3d
 
 ## [2025.1.0](https://github.com/WuLiFang/Nuke/compare/v2025.0.0...v2025.1.0) (2025-06-03)
 
